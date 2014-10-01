@@ -5,4 +5,7 @@
 	<category name="osinergmin">
 		<portlet id="gartFormato12A"/>
 	</category>
+	<category name="category.sample">
+		<portlet id="prueba"></portlet>
+	</category>
 </display>
