@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/fise-projects-portlet">
+    <ResourceLink global="jdbc/fiseref" name="jdbc/fiseref" type="oracle.jdbc.OracleDriver" />
+</Context>
