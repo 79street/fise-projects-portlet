@@ -3,7 +3,6 @@
 	<name>fise-projects-portlet</name>
 	<comment></comment>
 	<projects>
-		<project>fise-data-access</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
