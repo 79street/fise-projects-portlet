@@ -5,11 +5,13 @@ import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
+import gob.osinergmin.fise.domain.FiseFormato14AD;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.json.Formato12AGartJSON;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
+import gob.osinergmin.fise.gart.service.Formato14AGartService;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
 
@@ -36,12 +38,11 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.hssf.model.Workbook;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,10 @@ public class Formato12AGartController {
 	@Autowired
 	@Qualifier("fiseZonaBenefGartServiceImpl")
 	FiseZonaBenefGartService zonaBenefService;
+	
+	@Autowired
+	@Qualifier("formato14AGartServiceImpl")
+	Formato14AGartService formato14Service;
 	
 	//@Autowired
 	List<FiseFormato12AC> listaFormato;
@@ -450,6 +455,71 @@ public class Formato12AGartController {
 		}
 	}
 	
+	@ResourceMapping("request_data")
+  	public void requestData(SessionStatus status, ResourceRequest request,ResourceResponse response){
+		try {			
+  			response.setContentType("applicacion/json");
+  			JSONArray jsonArray = new JSONArray();			
+  			//String tipo = request.getParameter("tipo");			
+  			//Map<String, Object> parametros = new HashMap<String, Object>();
+  			FiseFormato14AD detalleRuralPadre = null;
+  			FiseFormato14AD detalleProvinciaPadre = null;
+  			FiseFormato14AD detalleLimaPadre = null;
+  			
+  			String codEmpresa = request.getParameter("s_empresa");
+  			String anioPresent = request.getParameter("i_aniopresent");
+  			
+  			BigDecimal costoUnitEmpR = null;
+  			BigDecimal costoUnitAgentR = null;
+  			BigDecimal costoUnitEmpP = null;
+  			BigDecimal costoUnitAgentP = null;
+  			BigDecimal costoUnitEmpL = null;
+  			BigDecimal costoUnitAgentL = null;
+  			
+  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, anioPresent.equals("")?0:Long.parseLong(anioPresent), FiseConstants.ZONABENEF_RURAL);
+  			if( detalleRuralPadre!=null ){
+  				costoUnitEmpR = detalleRuralPadre.getCostoUnitarioEmpadronamiento();
+  				costoUnitAgentR = detalleRuralPadre.getCostoUntitarioAgenteGlp();
+  			}else{
+  				costoUnitEmpR = new BigDecimal(0.00);
+  				costoUnitAgentR = new BigDecimal(0.00);
+  			}
+  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, anioPresent.equals("")?0:Long.parseLong(anioPresent), FiseConstants.ZONABENEF_PROVINCIA);
+  			if( detalleProvinciaPadre!=null ){
+  				costoUnitEmpP = detalleProvinciaPadre.getCostoUnitarioEmpadronamiento();
+  				costoUnitAgentP = detalleProvinciaPadre.getCostoUntitarioAgenteGlp();
+  			}else{
+  				costoUnitEmpP = new BigDecimal(0.00);
+  				costoUnitAgentP = new BigDecimal(0.00);
+  			}
+  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, anioPresent.equals("")?0:Long.parseLong(anioPresent), FiseConstants.ZONABENEF_LIMA);
+  			if( detalleLimaPadre!=null ){
+  				costoUnitEmpL = detalleLimaPadre.getCostoUnitarioEmpadronamiento();
+  				costoUnitAgentL = detalleLimaPadre.getCostoUntitarioAgenteGlp();
+  			}else{
+  				costoUnitEmpL = new BigDecimal(0.00);
+  				costoUnitAgentL = new BigDecimal(0.00);
+  			}
+  			
+  			JSONObject jsonObj = new JSONObject();
+  			jsonObj.put("costoEmpR", costoUnitEmpR);
+  			jsonObj.put("costoAgentR", costoUnitAgentR);
+  			jsonObj.put("costoEmpP", costoUnitEmpP);
+  			jsonObj.put("costoAgentP", costoUnitAgentP);
+  			jsonObj.put("costoEmpL", costoUnitEmpL);
+  			jsonObj.put("costoAgentL", costoUnitAgentL);
+  			//jsonArray.put(jsonObj);					 
+  		    PrintWriter pw = response.getWriter();
+  		    //pw.write(jsonArray.toString());
+  		    pw.write(jsonObj.toString());
+  		    pw.flush();
+  		    pw.close();							
+  		}catch (Exception e) {
+  			// TODO: handle exception
+  			e.printStackTrace();
+  		}
+	}
+	
 	@ActionMapping(params="action=cargar")
 	public void subirDocumento(ActionRequest request,ActionResponse response){
 		
@@ -620,7 +690,6 @@ public class Formato12AGartController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		 return fileEntry;
 		
 	}
@@ -634,7 +703,7 @@ public class Formato12AGartController {
 		
 		try {
 			if (archivo != null) {
-				Workbook libro = null;
+				HSSFWorkbook libro = null;
 				try {
 					is=archivo.getContentStream();
 					libro = new HSSFWorkbook(is);//Se lee libro xls
@@ -643,7 +712,7 @@ public class Formato12AGartController {
 					logger.warn("El archivo no es formato XLS");
 				}
 				
-				if(libro==null){
+				/*if(libro==null){
 					try {
 						is=archivo.getContentStream();
 						libro = new XSSFWorkbook(is); //Se lee el libro xlsx
@@ -651,7 +720,7 @@ public class Formato12AGartController {
 					} catch (Exception e1) {
 						logger.warn("El archivo no es formato XLSX");
 					}
-				}
+				}*/
 
 				int nroHojaSelec=0;
 				
@@ -659,95 +728,95 @@ public class Formato12AGartController {
 					//el excel puede tener varias hojas, se tiene qie leer el total de hojas y encontrar la que necesitemos
 					logger.info("nro de hojas:"+ libro.getNumberOfSheets());
 					for (int sheetNro = 0; sheetNro < libro.getNumberOfSheets(); sheetNro++){
-						logger.info("nombre de hoja "+sheetNro+":"+ libro.getSheetAt(sheetNro).getSheetName());
-						if( "F12A_Remision".equals(libro.getSheetAt(sheetNro).getSheetName()) ){
+						logger.info("nombre de hoja "+sheetNro+":"+ libro.getSheetName(sheetNro));
+						if( "F12A_Remision".equals(libro.getSheetName(sheetNro)) ){
 							nroHojaSelec = sheetNro;
 							break;
 						}
 					}
 					logger.info("nro de hoja seleccionada "+nroHojaSelec);
-					Sheet hojaF12 = libro.getSheetAt(nroHojaSelec);
+					HSSFSheet hojaF12 = libro.getSheetAt(nroHojaSelec);
 					//int nroFilas = hojaF12.getLastRowNum()+1;
 					
-					Row filaEmpresa = hojaF12.getRow(4);					//COD EMPRESA
-					Row filaAnioMes = hojaF12.getRow(5);					//ANO MES PRESENTACION
-					//Row filaZonaBenef = hojaF12.getRow(10);			//RURAL-PROVINCIA-LIMA
-					Row filaNroEmpad = hojaF12.getRow(12);			//NRO EMPADRONADOS
-					Row filaCostoUnitEmpad = hojaF12.getRow(13);//COSTO UNIT EMPAD
-					Row filaNroAgent = hojaF12.getRow(16);				//NRO AGENTES
-					Row filaCostoUnitAgent = hojaF12.getRow(17);	//COSTO UNIT AGENT
-					Row filaDespPersonal = hojaF12.getRow(19);		//DESPLAZ. PERSONAL
-					Row filaActivExtraord = hojaF12.getRow(20);	//ACTIV. EXTRAORDINARIAS
+					HSSFRow filaEmpresa = hojaF12.getRow(4);					//COD EMPRESA
+					HSSFRow filaAnioMes = hojaF12.getRow(5);					//ANO MES PRESENTACION
+					//Row filaZonaBenef = hojaF12.getRow(10);						//RURAL-PROVINCIA-LIMA
+					HSSFRow filaNroEmpad = hojaF12.getRow(12);				//NRO EMPADRONADOS
+					//Row filaCostoUnitEmpad = hojaF12.getRow(13);			//COSTO UNIT EMPAD
+					HSSFRow filaNroAgent = hojaF12.getRow(16);				//NRO AGENTES
+					//Row filaCostoUnitAgent = hojaF12.getRow(17);			//COSTO UNIT AGENT
+					HSSFRow filaDespPersonal = hojaF12.getRow(19);			//DESPLAZ. PERSONAL
+					HSSFRow filaActivExtraord = hojaF12.getRow(20);		//ACTIV. EXTRAORDINARIAS
 
 					//guardar valores del formulario para su grabacion
 					Formato12ACBean formulario = new Formato12ACBean();
 					
-					Cell celdaEmpresa = filaEmpresa.getCell(5);
-					Cell celdaAnio = filaAnioMes.getCell(5);
-					Cell celdaMes = filaAnioMes.getCell(6);
+					HSSFCell celdaEmpresa = filaEmpresa.getCell(5);
+					HSSFCell celdaAnio = filaAnioMes.getCell(5);
+					HSSFCell celdaMes = filaAnioMes.getCell(6);
 					
 					///Se capturaran los valores de las 3 columnas tanto RURAL - PROVINCIA - LIMA
-					Cell nroEmpadRural = filaNroEmpad.getCell(7);
-					Cell nroEmpadProv = filaNroEmpad.getCell(8);
-					Cell nroEmpadLima = filaNroEmpad.getCell(9);
+					HSSFCell nroEmpadRural = filaNroEmpad.getCell(7);
+					HSSFCell nroEmpadProv = filaNroEmpad.getCell(8);
+					HSSFCell nroEmpadLima = filaNroEmpad.getCell(9);
 					
-					Cell costoUnitEmpRural = filaCostoUnitEmpad.getCell(7);
-					Cell costoUnitEmpProv = filaCostoUnitEmpad.getCell(8);
-					Cell costoUnitEmpLima = filaCostoUnitEmpad.getCell(9);
+					//Cell costoUnitEmpRural = filaCostoUnitEmpad.getCell(7);
+					//Cell costoUnitEmpProv = filaCostoUnitEmpad.getCell(8);
+					//Cell costoUnitEmpLima = filaCostoUnitEmpad.getCell(9);
 					
-					Cell nroAgentRural = filaNroAgent.getCell(7);
-					Cell nroAgentProv = filaNroAgent.getCell(8);
-					Cell nroAgentLima = filaNroAgent.getCell(9);
+					HSSFCell nroAgentRural = filaNroAgent.getCell(7);
+					HSSFCell nroAgentProv = filaNroAgent.getCell(8);
+					HSSFCell nroAgentLima = filaNroAgent.getCell(9);
 					
-					Cell costoUnitAgentRural = filaCostoUnitAgent.getCell(7);
-					Cell costoUnitAgentProv = filaCostoUnitAgent.getCell(8);
-					Cell costoUnitAgentLima = filaCostoUnitAgent.getCell(9);
+					//Cell costoUnitAgentRural = filaCostoUnitAgent.getCell(7);
+					//Cell costoUnitAgentProv = filaCostoUnitAgent.getCell(8);
+					//Cell costoUnitAgentLima = filaCostoUnitAgent.getCell(9);
 					
-					Cell despPersonalR = filaDespPersonal.getCell(7);
-					Cell despPersonalP = filaDespPersonal.getCell(8);
-					Cell despPersonalL = filaDespPersonal.getCell(9);
+					HSSFCell despPersonalR = filaDespPersonal.getCell(7);
+					HSSFCell despPersonalP = filaDespPersonal.getCell(8);
+					HSSFCell despPersonalL = filaDespPersonal.getCell(9);
 					
-					Cell activExtraordR = filaActivExtraord.getCell(7);
-					Cell activExtraordP = filaActivExtraord.getCell(8);
-					Cell activExtraordL = filaActivExtraord.getCell(9);
+					HSSFCell activExtraordR = filaActivExtraord.getCell(7);
+					HSSFCell activExtraordP = filaActivExtraord.getCell(8);
+					HSSFCell activExtraordL = filaActivExtraord.getCell(9);
 					
 					//tipos
-					if( Cell.CELL_TYPE_STRING == celdaEmpresa.getCellType()  ){
-						formulario.setCodigoEmpresa(celdaEmpresa.getStringCellValue());
+					if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType()  ){
+						formulario.setCodigoEmpresa(celdaEmpresa.toString());
 					}else{
 						formulario.setCodigoEmpresa("");
 					}
-					if( Cell.CELL_TYPE_STRING == celdaAnio.getCellType()  ){
-						formulario.setAnioPresent(Long.parseLong(celdaAnio.getStringCellValue()));
-						formulario.setAnioEjecuc(Long.parseLong(celdaAnio.getStringCellValue()));
+					if( HSSFCell.CELL_TYPE_STRING == celdaAnio.getCellType()  ){
+						formulario.setAnioPresent(Long.parseLong(celdaAnio.toString()));
+						formulario.setAnioEjecuc(Long.parseLong(celdaAnio.toString()));
 					}else{
 						formulario.setAnioPresent(0);
 						formulario.setAnioEjecuc(0);
 					}
-					if( Cell.CELL_TYPE_STRING == celdaMes.getCellType()  ){
-						formulario.setMesPresent(Long.parseLong(celdaMes.getStringCellValue()));
-						formulario.setMesEjecuc(Long.parseLong(celdaMes.getStringCellValue()));
+					if( HSSFCell.CELL_TYPE_STRING == celdaMes.getCellType()  ){
+						formulario.setMesPresent(Long.parseLong(celdaMes.toString()));
+						formulario.setMesEjecuc(Long.parseLong(celdaMes.toString()));
 					}else{
 						formulario.setMesPresent(0);
 						formulario.setMesEjecuc(0);
 					}
-					if( Cell.CELL_TYPE_NUMERIC == nroEmpadRural.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadRural.getCellType()  ){
 						formulario.setNroEmpadR(new Double(nroEmpadRural.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadR(0);
 					}
-					if( Cell.CELL_TYPE_NUMERIC == nroEmpadProv.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadProv.getCellType()  ){
 						formulario.setNroEmpadP(new Double(nroEmpadProv.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadP(0);
 					}
-					if( Cell.CELL_TYPE_NUMERIC == nroEmpadLima.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadLima.getCellType()  ){
 						formulario.setNroEmpadL(new Double(nroEmpadLima.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadL(0);
 					}
 					//
-					if( Cell.CELL_TYPE_NUMERIC == costoUnitEmpRural.getCellType()  ){
+					/*if( Cell.CELL_TYPE_NUMERIC == costoUnitEmpRural.getCellType()  ){
 						formulario.setCostoUnitEmpadR(new BigDecimal(costoUnitEmpRural.getNumericCellValue()));
 					}else{
 						formulario.setCostoUnitEmpadR(new BigDecimal(0));
@@ -761,25 +830,25 @@ public class Formato12AGartController {
 						formulario.setCostoUnitEmpadL(new BigDecimal(costoUnitEmpLima.getNumericCellValue()));
 					}else{
 						formulario.setCostoUnitEmpadL(new BigDecimal(0));
-					}
+					}*/
 					//
-					if( Cell.CELL_TYPE_NUMERIC == nroAgentRural.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentRural.getCellType()  ){
 						formulario.setNroAgentR(new Double(nroAgentRural.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroAgentR(0);
 					}
-					if( Cell.CELL_TYPE_NUMERIC == nroAgentProv.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentProv.getCellType()  ){
 						formulario.setNroAgentP(new Double(nroAgentProv.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroAgentP(0);
 					}
-					if( Cell.CELL_TYPE_NUMERIC == nroAgentLima.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentLima.getCellType()  ){
 						formulario.setNroAgentL(new Double(nroAgentLima.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroAgentL(0);
 					}
 					//
-					if( Cell.CELL_TYPE_NUMERIC == costoUnitAgentRural.getCellType()  ){
+					/*if( Cell.CELL_TYPE_NUMERIC == costoUnitAgentRural.getCellType()  ){
 						formulario.setCostoUnitAgentR(new BigDecimal(costoUnitAgentRural.getNumericCellValue()));
 					}else{
 						formulario.setCostoUnitAgentR(new BigDecimal(0));
@@ -793,39 +862,70 @@ public class Formato12AGartController {
 						formulario.setCostoUnitAgentL(new BigDecimal(costoUnitAgentLima.getNumericCellValue()));
 					}else{
 						formulario.setCostoUnitAgentL(new BigDecimal(0));
-					}
+					}*/
 					//
-					if( Cell.CELL_TYPE_NUMERIC == despPersonalR.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalR.getCellType()  ){
 						formulario.setDesplPersonalR(new BigDecimal(despPersonalR.getNumericCellValue()));
 					}else{
-						formulario.setDesplPersonalR(new BigDecimal(0));
+						formulario.setDesplPersonalR(new BigDecimal(0.00));
 					}
-					if( Cell.CELL_TYPE_NUMERIC == despPersonalP.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalP.getCellType()  ){
 						formulario.setDesplPersonalP(new BigDecimal(despPersonalP.getNumericCellValue()));
 					}else{
-						formulario.setDesplPersonalP(new BigDecimal(0));
+						formulario.setDesplPersonalP(new BigDecimal(0.00));
 					}
-					if( Cell.CELL_TYPE_NUMERIC == despPersonalL.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalL.getCellType()  ){
 						formulario.setDesplPersonalL(new BigDecimal(despPersonalL.getNumericCellValue()));
 					}else{
-						formulario.setDesplPersonalL(new BigDecimal(0));
+						formulario.setDesplPersonalL(new BigDecimal(0.00));
 					}
-					if( Cell.CELL_TYPE_NUMERIC == activExtraordR.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordR.getCellType()  ){
 						formulario.setActivExtraordR(new BigDecimal(activExtraordR.getNumericCellValue()));
 					}else{
-						formulario.setActivExtraordR(new BigDecimal(0));
+						formulario.setActivExtraordR(new BigDecimal(0.00));
 					}
-					if( Cell.CELL_TYPE_NUMERIC == activExtraordP.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordP.getCellType()  ){
 						formulario.setActivExtraordP(new BigDecimal(activExtraordP.getNumericCellValue()));
 					}else{
-						formulario.setActivExtraordP(new BigDecimal(0));
+						formulario.setActivExtraordP(new BigDecimal(0.00));
 					}
-					if( Cell.CELL_TYPE_NUMERIC == activExtraordL.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordL.getCellType()  ){
 						formulario.setActivExtraordL(new BigDecimal(activExtraordL.getNumericCellValue()));
 					}else{
-						formulario.setActivExtraordL(new BigDecimal(0));
+						formulario.setActivExtraordL(new BigDecimal(0.00));
 					}
 					//validar luego si va a ver campos en blanco y mandar los errores en una traza
+					
+					//obtenemos los costos unitarios del formato padre
+					FiseFormato14AD detalleRuralPadre = null;
+		  			FiseFormato14AD detalleProvinciaPadre = null;
+		  			FiseFormato14AD detalleLimaPadre = null;
+		  			
+		  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_RURAL);
+		  			if( detalleRuralPadre!=null ){
+		  				formulario.setCostoUnitEmpadR(detalleRuralPadre.getCostoUnitarioEmpadronamiento());
+		  				formulario.setCostoUnitAgentR(detalleRuralPadre.getCostoUntitarioAgenteGlp());
+		  			}else{
+		  				formulario.setCostoUnitEmpadR(new BigDecimal(0.00));
+		  				formulario.setCostoUnitAgentR(new BigDecimal(0.00));
+		  			}
+		  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_PROVINCIA);
+		  			if( detalleProvinciaPadre!=null ){
+		  				formulario.setCostoUnitEmpadP(detalleProvinciaPadre.getCostoUnitarioEmpadronamiento());
+		  				formulario.setCostoUnitAgentP(detalleProvinciaPadre.getCostoUntitarioAgenteGlp());
+		  			}else{
+		  				formulario.setCostoUnitEmpadP(new BigDecimal(0.00));
+		  				formulario.setCostoUnitAgentP(new BigDecimal(0.00));
+		  			}
+		  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_LIMA);
+		  			if( detalleLimaPadre!=null ){
+		  				formulario.setCostoUnitEmpadL(detalleLimaPadre.getCostoUnitarioEmpadronamiento());
+		  				formulario.setCostoUnitAgentL(detalleLimaPadre.getCostoUntitarioAgenteGlp());
+		  			}else{
+		  				formulario.setCostoUnitEmpadL(new BigDecimal(0.00));
+		  				formulario.setCostoUnitAgentL(new BigDecimal(0.00));
+		  			}
+					//
 					
 					formulario.setUsuario(user.getLogin());
 					formulario.setTerminal(user.getLoginIP());
