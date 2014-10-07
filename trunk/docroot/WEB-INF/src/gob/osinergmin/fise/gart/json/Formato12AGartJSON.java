@@ -25,6 +25,12 @@ public class Formato12AGartJSON {
 	private String mesPres;
 	private String anoEjec;
 	private String mesEjec;
+	//
+	private String anioDesde;
+	private String mesDesde;
+	private String anioHasta;
+	private String mesHasta;
+	private String codEtapa;
 
 	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC) throws JSONException{
 		
@@ -243,6 +249,46 @@ public class Formato12AGartJSON {
 
 	public void setDescMesEjecucion(String descMesEjecucion) {
 		this.descMesEjecucion = descMesEjecucion;
+	}
+
+	public String getAnioDesde() {
+		return anioDesde;
+	}
+
+	public void setAnioDesde(String anioDesde) {
+		this.anioDesde = anioDesde;
+	}
+
+	public String getMesDesde() {
+		return mesDesde;
+	}
+
+	public void setMesDesde(String mesDesde) {
+		this.mesDesde = mesDesde;
+	}
+
+	public String getAnioHasta() {
+		return anioHasta;
+	}
+
+	public void setAnioHasta(String anioHasta) {
+		this.anioHasta = anioHasta;
+	}
+
+	public String getMesHasta() {
+		return mesHasta;
+	}
+
+	public void setMesHasta(String mesHasta) {
+		this.mesHasta = mesHasta;
+	}
+
+	public String getCodEtapa() {
+		return codEtapa;
+	}
+
+	public void setCodEtapa(String codEtapa) {
+		this.codEtapa = codEtapa;
 	}
 
 }
