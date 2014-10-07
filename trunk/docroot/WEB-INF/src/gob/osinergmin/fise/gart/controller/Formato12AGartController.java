@@ -80,7 +80,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
-@Controller
+@Controller("formato12AGartController")
 @RequestMapping("VIEW")
 public class Formato12AGartController {
 	
