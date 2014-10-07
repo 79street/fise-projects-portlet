@@ -37,13 +37,15 @@ $(document).ready(function () {
 	 $("#<portlet:namespace/>guardarFormato").click(function() {<portlet:namespace/>guardarFormato();});
 	 $("#<portlet:namespace/>regresarFormato").click(function(){<portlet:namespace/>regresar();});
 	 $("#<portlet:namespace/>buscarFormato").click(function() {<portlet:namespace/>buscar();});
-	 $("#<portlet:namespace/>cargarFormato").click(function() {<portlet:namespace/>cargarFormato();});
+	 $("#<portlet:namespace/>cargarFormatoExcel").click(function() {<portlet:namespace/>cargarFormatoExcel();});
+	 $("#<portlet:namespace/>cargarFormatoTexto").click(function() {<portlet:namespace/>cargarFormatoTexto();});
 	 $("#s_empresa").change(function(){<portlet:namespace/>loadCostosUnitarios();});
 	 $("#i_aniopresent").blur(function(){<portlet:namespace/>loadCostosUnitarios();});
 	 $("#<portlet:namespace/>cargaExcel").click(function() {<portlet:namespace/>mostrarFormularioCargaExcel();});
+	 $("#<portlet:namespace/>cargaTxt").click(function() {<portlet:namespace/>mostrarFormularioCargaTexto();});
 	 initDialogs();
 	 initBlockUI();		
-	 
+	 //
 	 var codEmpSes = $("#codEmpresaSes").val();
 	 var anioPresSes = $("#anioPresSes").val();
 	 var mesPresSes = $("#mesPresSes").val();
@@ -54,6 +56,13 @@ $(document).ready(function () {
 	 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes != '' && mesEjeSes != '' && etapaSes != ''){
 	 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioEjeSes, mesEjeSes, etapaSes);
 	 }
+	 //
+	 $("#i_anio_d").val($("#anioDesdeSes").val());
+	 $("#s_mes_d").val(parseInt($("#mesDesdeSes").val()));
+	 $("#i_anio_h").val($("#anioHastaSes").val());
+	 $("#s_mes_h").val(parseInt($("#mesHastaSes").val()));
+	 $("#s_etapa").val($("#codEtapaSes").val());
+	 <portlet:namespace/>buscar();
 	 
 });
 
@@ -112,12 +121,12 @@ function inicializarFormulario(){
 	
 }
 function soloNumerosEnteros(){
-	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',4,0)");
-	$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_p',4,0)");
-	$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_l',4,0)");
-	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_r',4,0)");
-	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',4,0)");
-	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',4,0)");
+	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',7,0)");
+	$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_p',7,0)");
+	$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_l',7,0)");
+	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_r',7,0)");
+	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',7,0)");
+	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',7,0)");
 }
 
 function realizarCalculoCampos(){
@@ -409,6 +418,7 @@ function validarBusqueda() {
 		  var numstr = trim($('#i_anio_d').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  alert('Ingrese un año desde válido');
+			  document.getElementById('i_anio_d').focus();
 			  return false;
 		  }
 	  }
@@ -420,7 +430,8 @@ function validarBusqueda() {
 	  if($('#i_anio_h').val().length != '' ) {		  
 		  var numstr = trim($('#i_anio_h').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  alert('Ingrese un año desde válido');
+			  alert('Ingrese un año hasta válido');
+			  document.getElementById('i_anio_h').focus();
 			  return false;
 		  }
 	  }
@@ -429,24 +440,28 @@ function validarBusqueda() {
 		    document.getElementById('dsc_corta_empresa').focus();
 		    return false; 
 	  }*/
+	  if($('#i_anio_d').val().length != '' && $('#i_anio_h').val().length != '' ) {
+		  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){
+				alert('El año desde no puede exceder al año hasta');
+				return false;
+		  }
+	  }
+	  
 	  if($('#s_etapa').val().length == '' ) { 	    
 		    alert('Seleccione una etapa');
-		    document.getElementById('dsc_empresa').focus();
+		    document.getElementById('s_etapa').focus();
 		    return false; 
 	  }
 	  //validar el desde hasta
-	  if( $('#i_anio_d').val().length != '' && $('#i_anio_h').val().length == '' ){
+	  /*if( $('#i_anio_d').val().length != '' && $('#i_anio_h').val().length == '' ){
 			alert('Debe seleccionar el año hasta', idBoton);
 			return false;
 		}
 	  if( $('#i_anio_d').val().length == '' && $('#i_anio_h').val().length != '' ){
 			alert('Debe seleccionar el año desde', idBoton);
 			return false;
-		}
-	  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){
-			alert('El año desde no puede exceder al año hasta', idBoton);
-			return false;
-		}
+		}*/
+	  
 	  return true; 
 	}
 	
@@ -605,7 +620,7 @@ function initDialogs(){
 		autoOpen: false,
 		buttons: {
 			"Si": function() {
-				eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion);
+				eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion,codEtapa);
 				$( this ).dialog( "close" );
 			},
 			"No": function() {				
@@ -696,7 +711,7 @@ function buildGrids() {
       			var cl = ids[i];
       			var ret = jQuery("#grid_formato").jqGrid('getRowData',cl);            		
       			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
-      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"Confirmareliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
+      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
       			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{edit:edit});
       			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{elim:elem});
       		}
@@ -704,8 +719,8 @@ function buildGrids() {
   	});
 	jQuery("#grid_formato").jqGrid('navGrid','#pager_formato',{add:false,edit:false,del:false,search: false,refresh: false});	
 }
-function Confirmareliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
-	var addhtml='¿Está seguro que desea eliminar el registro: '+cod_empresa+'?';
+function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
+	var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 	$("#dialog-confirm-content").html(addhtml);		 
 	$("#dialog-confirm").dialog("open");
 	codEmpresa=cod_empresa;
@@ -713,8 +728,9 @@ function Confirmareliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecuc
 	mes_Presentacion=mesPresentacion;
 	ano_Ejecucion=anoEjecucion;
 	mes_Ejecucion=mesEjecucion;
+	codEtapa=etapa;
 }
-function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion){			
+function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion,codEtapa){			
 	$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>' });
 	jQuery.ajax({
 		url: '<portlet:resourceURL id="crud" />',
@@ -726,18 +742,19 @@ function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecuc
 		   <portlet:namespace />anoPresentacion: ano_Presentacion,
 		   <portlet:namespace />mesPresentacion: mes_Presentacion,
 		   <portlet:namespace />anoEjecucion: ano_Ejecucion,
-		   <portlet:namespace />mesEjecucion: mes_Ejecucion		
+		   <portlet:namespace />mesEjecucion: mes_Ejecucion,
+		   <portlet:namespace />etapa: codEtapa
 			},
 		success: function(data) {
 			if (data.resultado == "OK"){
-				var addhtml2='Dato Eliminado con éxito';					
+				var addhtml2='Registro eliminado con éxito';					
 				$("#dialog-message-content").html(addhtml2);
 				$("#dialog-message").dialog( "open" );					
 				//limpiar();
 				initBlockUI();
 			}
 			else{
-				alert("Error al recuperar los datos del empresa");
+				alert("Error al eliminar el registro");
 				initBlockUI();
 			}
 		}
@@ -750,6 +767,14 @@ function <portlet:namespace/>crearFormato(){
 	$("#etapaEdit").val("");
 	$("#div_formato").show();
 	$("#div_home").hide();
+	$('#flagCarga').val('1');
+	//document.getElementById('flagCarga').value='1';
+	//
+	 $("#i_aniopresent").val($("#anioDesdeSes").val());
+	 $("#s_mes_present").val(parseInt($("#mesDesdeSes").val()));
+	 $("#i_anioejecuc").val($("#anioHastaSes").val());
+	 $("#s_mes_ejecuc").val(parseInt($("#mesHastaSes").val()));
+	
 }
 function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
 	$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
@@ -770,6 +795,7 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 				if (data.resultado == "OK"){
 					$("#Estado").val("UPDATE");
 					$("#etapaEdit").val(etapa);
+					//se deja el formulario activo
 					$("#div_formato").show();
 					$("#div_home").hide();
 					//document.getElementById("cod_empresa").setAttribute('readonly','readonly');
@@ -782,7 +808,7 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 					initBlockUI();
 				}
 				else{
-					alert("Error al recuperar los datos de formato 12A");
+					alert("Error al recuperar los datos del registro seleccionado");
 					initBlockUI();
 				}
 			}
@@ -858,6 +884,8 @@ function FillEditformato(row){
 	soloNumerosEnteros();
 	formularioCompletarDecimales();
 	
+	//document.getElementById('flagCarga').value='2';
+	$('#flagCarga').val('2');
 }
 //////CRUD
 function <portlet:namespace/>guardarFormato(){
@@ -908,14 +936,14 @@ function <portlet:namespace/>guardarFormato(){
 			},
 		success: function(data) {			
 			if (data.resultado == "OK"){				
-				var addhtml2='Datos Guardados Satisfactoriamente';
+				var addhtml2='Datos guardados satisfactoriamente';
 				$("#dialog-message-content").html(addhtml2);
 				$("#dialog-message").dialog( "open" );
 				//limpiar();				
 				initBlockUI();
 			}
 			else if(data.resultado == "Error"){				
-				var addhtml2='Pk Existe';
+				var addhtml2='Se produjo un error al guardar los datos';
 				$("#dialog-message-content").html(addhtml2);
 				$("#dialog-message").dialog( "open" );
 				//<portlet:namespace/>filtrar();
@@ -923,9 +951,22 @@ function <portlet:namespace/>guardarFormato(){
 			}
 		}
 	});
+   	//se deja el formulario activo
 	$("#div_formato").hide();
 	$("#div_home").show();
+	
 	}
+	//
+	 var codEmpM = $("#s_empresa").val();
+	 var anioPresM = $("#i_aniopresent").val();
+	 var mesPresM = $("#s_mes_present").val();
+	 var anioEjeM = $("#i_anioejecuc").val();
+	 var mesEjeM = $("#s_mes_ejecuc").val();
+	 var etapaM = "SOLICITUD";
+	 //alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
+	 if(codEmpM != '' && anioPresM != '' && mesPresM != '' && anioEjeM != '' && mesEjeM != '' && etapaM != ''){
+	 	 editarFormato(codEmpM, anioPresM, mesPresM, anioEjeM, mesEjeM, etapaM);
+	 }
 }
 
 
@@ -959,11 +1000,12 @@ function <portlet:namespace/>loadCostosUnitarios() {
 
 
 //////CARGAR ARCHIVO EXCEL
-function <portlet:namespace/>cargarFormato(){
-	//alert(1);
-	 var frm = document.getElementById('form-formatofise12a');
-	 //alert(frm);
-	 //alert(frm.value);
+function <portlet:namespace/>cargarFormatoExcel(){
+	var frm = document.getElementById('form-formatofise12a');
+	frm.submit();
+}
+function <portlet:namespace/>cargarFormatoTexto(){
+	var frm = document.getElementById('form-formatofise12a');
 	frm.submit();
 }
 ////////////
@@ -1111,17 +1153,20 @@ function validaAnio(id){
     }  
 }
 function <portlet:namespace/>mostrarFormularioCargaExcel(){
-    //$("#dialog-form-carga").dialog("open");
-    
-    $.blockUI({ message: null });
-    $.blockUI({ css: { cursor: 'default'} });
-    $("#dialog-form-carga2").show();
+    $.blockUI({ message: '' });
+    $("#dialog-form-cargaExcel").show();
 }
 function regresarFormularioCargaExcel(){
-	alert(111);
-	$("#dialog-form-carga2").hide();
+	$("#dialog-form-cargaExcel").hide();
 	$.unblockUI();
-	//initBlockUI();
+}
+function <portlet:namespace/>mostrarFormularioCargaTexto(){
+    $.blockUI({ message: '' });
+    $("#dialog-form-cargaTexto").show();
+}
+function regresarFormularioCargaTexto(){
+	$("#dialog-form-cargaTexto").hide();
+	$.unblockUI();
 }
 
 //////////
@@ -1144,9 +1189,17 @@ function regresarFormularioCargaExcel(){
 	<input type="hidden" id="anioEjecSes" value="${model.anoEjec}" />	
 	<input type="hidden" id="mesEjecSes" value="${model.mesEjec}" />	
 	<input type="hidden" id="etapaSes" value="${model.etapa}" />	
+	<!-- valores por defecto -->
+	<input type="hidden" id="anioDesdeSes" value="${model.anioDesde}" />
+	<input type="hidden" id="mesDesdeSes" value="${model.mesDesde}" />
+	<input type="hidden" id="anioHastaSes" value="${model.anioHasta}" />
+	<input type="hidden" id="mesHastaSes" value="${model.mesHasta}" />
+	<input type="hidden" id="codEtapaSes" value="${model.codEtapa}" />
 
 	<input type="hidden" id="Estado" value="" />	
 	<input type="hidden" id="flag" value="" />
+	<input type="hidden" id="flagCarga" value="" />
+	
 
 	<div id="d_listado" class="net-frame-listado"> 
 		<div id="d_filtro">
@@ -1180,7 +1233,7 @@ function regresarFormularioCargaExcel(){
 													<output>Empresa:</output>
 												</td>
 												<td colspan="7">
-													<select id="s_empresa_b" name="s_empresa_b" style="width:375px;" class="select" >
+													<select id="s_empresa_b" name="s_empresa_b" style="width:375px;" class="select"  >
 							   							<option value="">-Seleccione-</option>
 														<c:forEach items="${listaEmpresa}" var="emp">																
 															<option value="${emp.codEmpresa}">${emp.dscEmpresa}</option>
@@ -1196,7 +1249,7 @@ function regresarFormularioCargaExcel(){
 													<output>Desde año:</output>
 												</td>
 												<td>
-													<input type="text" name="i_anio_d" id="i_anio_d" style="width:50px;" maxlength="4" >
+													<input type="text" name="i_anio_d" id="i_anio_d" style="width:50px;text-align:right;" maxlength="4"  >
 												</td>
 												<td>
 													<output>Mes:</output>
@@ -1213,7 +1266,7 @@ function regresarFormularioCargaExcel(){
 													<output>Hasta año:</output>
 												</td>
 												<td>
-													<input type="text" name="i_anio_h" id="i_anio_h" style="width:50px;" maxlength="4">
+													<input type="text" name="i_anio_h" id="i_anio_h" style="width:50px;text-align:right;" maxlength="4" >
 												</td>
 												<td>
 													<output>Mes:</output>
@@ -1675,21 +1728,38 @@ function regresarFormularioCargaExcel(){
 									   						<td colspan="4">
 									   							<table style="width:100%">
 									   								<tr>
-									   									<td colspan="2">
-									   										<fieldset>
-									   											<input type="button" class="net-button-small"   id="<portlet:namespace/>cargaExcel" name="<portlet:namespace/>cargaExcel" value="EXCEL" />
-									   											&nbsp;
-									   											<input type="button" class="net-button-small"   id="<portlet:namespace/>cargaTxt" name="<portlet:namespace/>cargaTxt" value="TXT" />
+									   									<td colspan="2" width="40%">
+									   										<fieldset class="net-frame-border">
+									   											<table style="width:100%">
+									   												<tr>
+									   													<td width="50%">
+									   														<input type="button" class="net-button-small"   id="<portlet:namespace/>cargaExcel" name="<portlet:namespace/>cargaExcel" value="EXCEL" />
+									   													</td>
+									   													<td width="50%">
+									   														<input type="button" class="net-button-small"   id="<portlet:namespace/>cargaTxt" name="<portlet:namespace/>cargaTxt" value="TXT" />
+									   													</td>
+									   												</tr>
+									   											</table>
 									   										</fieldset>
 									   									</td>
-									   									<td colspan="3">
-									   										<input type="button" class="net-button-small"   id="<portlet:namespace/>guardarFormato" name="<portlet:namespace/>guardarFormato" value="Grabar" />
-												   							&nbsp;
-												   							<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormato" name="<portlet:namespace/>regresarFormato" value="Regresar" />
-												   							&nbsp;
-												   							<input type="button" class="net-button-small"   id="<portlet:namespace/>validacion" name="<portlet:namespace/>validacion" value="Validacion" />
-												   							&nbsp;
-												   							<input type="button" class="net-button-small"   id="<portlet:namespace/>enviodefinitivo" name="<portlet:namespace/>enviodefinitivo" value="Envío Definitivo" />
+									   									<td colspan="3" width="60%">
+									   										<table style="width:100%">
+								   												<tr>
+								   													<td width="25%">
+								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>guardarFormato" name="<portlet:namespace/>guardarFormato" value="Grabar" />
+								   													</td>
+								   													<td width="25%">
+								   														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormato" name="<portlet:namespace/>regresarFormato" value="Regresar" />
+								   													</td>
+								   													<td width="25%">
+								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>validacion" name="<portlet:namespace/>validacion" value="Validación" />
+								   													</td>
+								   													<td width="25%">
+								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>enviodefinitivo" name="<portlet:namespace/>enviodefinitivo" value="Envío Def." />
+								   													</td>
+								   												</tr>
+									   											</table>
+									   										
 									   									</td>
 									   								</tr>
 									   							</table>
@@ -1704,7 +1774,7 @@ function regresarFormularioCargaExcel(){
 									   			</td>
 									   		</tr>
 									   		
-									   		<tr>
+									   		<%-- <tr>
 									   			<td>
 									   				<table>
 														<tr>
@@ -1730,7 +1800,7 @@ function regresarFormularioCargaExcel(){
 														</tr>
 													</table>
 									   			</td>
-									   		</tr>
+									   		</tr> --%>
 									   		
 									   </table>
 									
@@ -1745,12 +1815,10 @@ function regresarFormularioCargaExcel(){
 					</div>	
 					
 					<!-- prueba inicio -->
-					<div id="dialog-form-carga2"  style="display: none; z-index: 1002; outline: 0px none; position: absolute; height: auto; width: 400px; top: 646.667px; left: 471px;" 
-					class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+					<div id="dialog-form-cargaExcel"  style="display: none; z-index: 1002; outline: 0px none; position: absolute; height: auto; width: 400px; top: 646.667px; left: 471px;" 
+						class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
 						<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo excel </span>
-							url("images/ui_icons_white.png")
-							
 							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
 								onclick="regresarFormularioCargaExcel();" >
 								<span class="ui-icon ui-icon-closethick">close</span>
@@ -1770,7 +1838,7 @@ function regresarFormularioCargaExcel(){
 								<tr>
 									<td>Archivo:</td>
 									<td>
-										<input  type="file" id="archivoExcel2"name="archivo4"/>
+										<input  type="file" id="archivoExcel"name="archivoExcel"/>
 									</td>
 								</tr>
 								<tr>
@@ -1779,7 +1847,7 @@ function regresarFormularioCargaExcel(){
 								<tr>
 									<td></td>
 									<td>
-										<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormato4" id="<portlet:namespace/>cargarFormato4" value="Cargar"/>
+										<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel" id="<portlet:namespace/>cargarFormatoExcel" value="Cargar"/>
 									</td>
 								</tr>
 								<tr>
@@ -1790,23 +1858,75 @@ function regresarFormularioCargaExcel(){
 							
 							
 						</div>
-						<div class="ui-resizable-handle ui-resizable-n" style="z-index: 1000;">
-						</div>
-						<div class="ui-resizable-handle ui-resizable-e" style="z-index: 1000;">
-						</div>
-						<div class="ui-resizable-handle ui-resizable-s" style="z-index: 1000;">
-						</div>
-						<div class="ui-resizable-handle ui-resizable-w" style="z-index: 1000;"></div>
+						
 						<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" 
 						style="z-index: 1000;">
 						</div>
-						<div class="ui-resizable-handle ui-resizable-sw" style="z-index: 1000;"></div>
-						<div class="ui-resizable-handle ui-resizable-ne" style="z-index: 1000;"></div>
-						<div class="ui-resizable-handle ui-resizable-nw" style="z-index: 1000;"></div>
+
 						<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 							<div class="ui-dialog-buttonset">
 							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
 								onclick="regresarFormularioCargaExcel();" >
+								<span class="ui-button-text">Cerrar</span>
+							</button>
+							</div>
+						</div>
+					</div>
+					<!-- prueba fin -->
+					
+					<!-- prueba inicio -->
+					<div id="dialog-form-cargaTexto"  style="display: none; z-index: 1002; outline: 0px none; position: absolute; height: auto; width: 400px; top: 646.667px; left: 471px;" 
+						class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+						<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo de texto </span>
+							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+								onclick="regresarFormularioCargaTexto();" >
+								<span class="ui-icon ui-icon-closethick">close</span>
+							</button>
+						
+						</div>
+					
+						<div style="background: none repeat scroll 0% 0% rgb(255, 255, 255); width: auto; min-height: 0px; height: 130.833px;" 
+							class="net-frame-border ui-dialog-content ui-widget-content" id="dialog-form-carga33" scrolltop="0" scrollleft="0"> 
+							<!--tabla-->
+							
+							<fieldset class="">
+							<table>
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Archivo:</td>
+									<td>
+										<input  type="file" id="archivoTxt"name="archivoTxt"/>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto" id="<portlet:namespace/>cargarFormatoTexto" value="Cargar"/>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+								</tr>
+							</table>
+						</fieldset>
+							
+							
+						</div>
+						
+						<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" 
+						style="z-index: 1000;">
+						</div>
+
+						<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+							<div class="ui-dialog-buttonset">
+							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+								onclick="regresarFormularioCargaTexto();" >
 								<span class="ui-button-text">Cerrar</span>
 							</button>
 							</div>
@@ -1866,6 +1986,6 @@ function regresarFormularioCargaExcel(){
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="dialog-confirm-content">¿Está seguro?</label>
 		</p>
-	</div>	
+	</div>
 
 </form> 
