@@ -31,6 +31,8 @@ public class Formato12AGartJSON {
 	private String anioHasta;
 	private String mesHasta;
 	private String codEtapa;
+	
+	private String mensaje;
 
 	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC) throws JSONException{
 		
@@ -289,6 +291,14 @@ public class Formato12AGartJSON {
 
 	public void setCodEtapa(String codEtapa) {
 		this.codEtapa = codEtapa;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
 	}
 
 }

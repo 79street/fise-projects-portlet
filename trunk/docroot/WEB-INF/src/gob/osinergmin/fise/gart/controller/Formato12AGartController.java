@@ -3,12 +3,15 @@ package gob.osinergmin.fise.gart.controller;
 import gob.osinergmin.fise.bean.Formato12ACBean;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
+import gob.osinergmin.fise.domain.CfgCampo;
+import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
 import gob.osinergmin.fise.domain.FiseFormato14AD;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.json.Formato12AGartJSON;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
+import gob.osinergmin.fise.gart.service.CfgCampoGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
@@ -16,10 +19,7 @@ import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -41,12 +42,12 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.hsqldb.lib.HashSet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
@@ -75,9 +75,11 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 @Controller("formato12AGartController")
@@ -103,6 +105,10 @@ public class Formato12AGartController {
 	@Qualifier("formato14AGartServiceImpl")
 	Formato14AGartService formato14Service;
 	
+	@Autowired
+	@Qualifier("cfgCampoGartServiceImpl")
+	CfgCampoGartService campoService;
+	
 	//@Autowired
 	List<FiseFormato12AC> listaFormato;
 	private Map<Long,String> listaMes;
@@ -124,6 +130,7 @@ public class Formato12AGartController {
 		String mesEjecucion = (String)pRequest.getPortletSession().getAttribute("mesEjecucion", PortletSession.APPLICATION_SCOPE);
 		String etapa = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
 		//
+		String msg = (String)pRequest.getPortletSession().getAttribute("mensajeInformacion", PortletSession.APPLICATION_SCOPE);
 		
 		obj.setCodEmpresa(codEmpresa!=null?codEmpresa:"");
 		obj.setAnoPres(anioPresentacion!=null?anioPresentacion:"");
@@ -131,7 +138,8 @@ public class Formato12AGartController {
 		obj.setAnoEjec(anioPresentacion!=null?anioEjecucion:"");
 		obj.setMesEjec(anioPresentacion!=null?mesEjecucion:"");
 		obj.setEtapa(etapa!=null?etapa:"");
-		
+		//
+		obj.setMensaje(msg!=null?msg:"");
 		
 		pRequest.getPortletSession().setAttribute("codEmpresa", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("anoPresentacion", "", PortletSession.APPLICATION_SCOPE);
@@ -139,12 +147,14 @@ public class Formato12AGartController {
 	    pRequest.getPortletSession().setAttribute("anoEjecucion", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("mesEjecucion", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
+	    //
+	    pRequest.getPortletSession().setAttribute("mensajeInformacion", "", PortletSession.APPLICATION_SCOPE);
 		
 		cargaInicial();
 		model.addAttribute("listaMes", listaMes);
 		model.addAttribute("listaEmpresa", listaEmpresa);
 		model.addAttribute("listaZonaBenef", listaZonaBenef);
-		//cargamos valores por defecto para el formulario de busqueda
+		
 		String anioDesde = FechaUtil.obtenerNroAnioFechaActual();
 		String mesDesde = String.valueOf(Integer.parseInt(FechaUtil.obtenerNroMesFechaActual())-1);
 		String anioHasta = FechaUtil.obtenerNroAnioFechaActual();
@@ -156,15 +166,7 @@ public class Formato12AGartController {
 		obj.setMesHasta(mesHasta!=null?mesHasta:"");
 		obj.setCodEtapa(FiseConstants.ETAPA_SOLICITUD);
 		
-		
-		
-		//model.put("model", obj);
 		model.addAttribute("model", obj);
-		
-		/*model.addAttribute("anioDesde", FechaUtil.obtenerNroAnioFechaActual());
-		model.addAttribute("mesDesde", String.valueOf(Integer.parseInt(FechaUtil.obtenerNroMesFechaActual())-1));
-		model.addAttribute("anioHasta", FechaUtil.obtenerNroAnioFechaActual());
-		model.addAttribute("mesHasta", FechaUtil.obtenerNroMesFechaActual());*/
 		
 		return "formato12A";
 	}
@@ -193,11 +195,8 @@ public class Formato12AGartController {
   	public void grid(SessionStatus status, ResourceRequest request,ResourceResponse response) {
   		try {
   			response.setContentType("application/json");	
-  			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
-		    //HttpSession session = req.getSession();
-		    
+  			
 		    JSONArray jsonArray = new JSONArray();
-  			//Map<String,Object> parametros = new HashMap<String,Object>();			   	   
   			String codEmpresa = request.getParameter("s_empresa_b");
   			String anioDesde = request.getParameter("i_anio_d");
   			String mesDesde = request.getParameter("s_mes_d");
@@ -205,8 +204,6 @@ public class Formato12AGartController {
   			String mesHasta = request.getParameter("s_mes_h");
   			String etapa = request.getParameter("s_etapa");
   			//
-  			String flagCarga = request.getParameter("flagCarga");
-  			
   			logger.info("valores "+ codEmpresa);
   			logger.info("valores "+ anioDesde);
   			logger.info("valores "+ mesDesde);
@@ -276,10 +273,25 @@ public class Formato12AGartController {
 		        
 		        formato = formatoService.obtenerFormato12ACByPK(pk);
 		        
+		        if( formato != null ){
+		        	//guardamos valores en sesion
+					PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+					pRequest.getPortletSession().setAttribute("codEmpresa", formato.getId().getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("anoPresentacion", String.valueOf(formato.getId().getAnoPresentacion()), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("mesPresentacion", String.valueOf(formato.getId().getMesPresentacion()), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("anoEjecucion", String.valueOf(formato.getId().getAnoEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("mesEjecucion", String.valueOf(formato.getId().getMesEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("etapa", formato.getId().getEtapa(), PortletSession.APPLICATION_SCOPE);
+		        }
+		        
 		        JSONObject jsonent = new Formato12AGartJSON().asJSONObject(formato);
 		        logger.info("jsonformato:"+jsonent);
 		        jsonObj.put("formato",jsonent);
 				jsonObj.put("resultado", "OK");
+				
+				
+				
+				
 			}else if(tipo.equals(FiseConstants.COD_SAVE)){ 
 				try {
 					Formato12ACBean formulario = new Formato12ACBean();
@@ -420,10 +432,6 @@ public class Formato12AGartController {
 			        pk.setAnoEjecucionGasto(new Long(anoEjecucion));
 			        pk.setMesEjecucionGasto(new Long(mesEjecucion));
 			        pk.setEtapa(etapa);
-			        logger.info("llego aqui ");
-			        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-			        
-			        logger.info("llego tambien aqui ");
 			        
 			        formato = formatoService.obtenerFormato12ACByPK(pk);
 					
@@ -488,9 +496,6 @@ public class Formato12AGartController {
   	public void requestData(SessionStatus status, ResourceRequest request,ResourceResponse response){
 		try {			
   			response.setContentType("applicacion/json");
-  			JSONArray jsonArray = new JSONArray();			
-  			//String tipo = request.getParameter("tipo");			
-  			//Map<String, Object> parametros = new HashMap<String, Object>();
   			FiseFormato14AD detalleRuralPadre = null;
   			FiseFormato14AD detalleProvinciaPadre = null;
   			FiseFormato14AD detalleLimaPadre = null;
@@ -554,187 +559,134 @@ public class Formato12AGartController {
 		
 		logger.info("--- cargar documento");
 		FiseFormato12AC formato = new FiseFormato12AC();
-		
+		String sMsg = "";
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		
-		//obtenemos parámetros del request
-    	UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
-    	//String flagCarga = uploadPortletRequest.getParameter("flagCarga");
-    	String flagCarga = request.getParameter("flagCarga");
-    	String flagCarga2 = uploadPortletRequest.getParameter("flagCarga");
-    	String codEmpresaEdit = request.getParameter("s_empresa");
-		String anioPresEdit = request.getParameter("i_aniopresent");
-		String mesPresEdit = request.getParameter("s_mes_present");
-		String anioEjecEdit = request.getParameter("i_anioejecuc");
-		String mesEjecEdit = request.getParameter("s_mes_ejecuc");
-		
-		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) || flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
-			FileEntry fileEntry=this.subirDocumento(request);
-			formato = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit);
-		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) || flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
-			File file = uploadPortletRequest.getFile("archivoTxt");
-			if(file.getName().contains(".txt")){
-				formato =	readTxtFile(file, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit);
-			}
-		}
-		
-		
-		
-		String codEmpresa = formato.getId().getCodEmpresa();
-		String anoPresentacion = String.valueOf(formato.getId().getAnoPresentacion());
-		String mesPresentacion = String.valueOf(formato.getId().getMesPresentacion());
-		String anoEjecucion = String.valueOf(formato.getId().getAnoEjecucionGasto());
-		String mesEjecucion = String.valueOf(formato.getId().getMesEjecucionGasto());
-		String etapa = String.valueOf(formato.getId().getEtapa());
-		
-		/*response.setRenderParameter("codEmpresa", codEmpresa);
-		response.setRenderParameter("anoPresentacion", anoPresentacion);
-		response.setRenderParameter("mesPresentacion", mesPresentacion);
-		response.setRenderParameter("anoEjecucion", anoPresentacion);
-		response.setRenderParameter("mesEjecucion", mesPresentacion);
-		response.setRenderParameter("etapa", anoPresentacion);*/
+		String flagCarga = uploadPortletRequest.getParameter("flagCarga");
+    	String codEmpresaNew = uploadPortletRequest.getParameter("s_empresa");
+		String anioPresNew = uploadPortletRequest.getParameter("i_aniopresent");
+		String mesPresNew = uploadPortletRequest.getParameter("s_mes_present");
+		//String anioEjecNew = uploadPortletRequest.getParameter("i_anioejecuc");
+		//String mesEjecNew = uploadPortletRequest.getParameter("s_mes_ejecuc");
 		
 		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
-		/*PortletSession pSession = request.getPortletSession();
-		pSession.setAttribute("codEmpresa", codEmpresa, PortletSession.APPLICATION_SCOPE);
-		pSession.setAttribute("anoPresentacion", anoPresentacion, PortletSession.APPLICATION_SCOPE);
-		pSession.setAttribute("mesPresentacion", mesPresentacion, PortletSession.APPLICATION_SCOPE);
-		pSession.setAttribute("anoEjecucion", anoEjecucion, PortletSession.APPLICATION_SCOPE);
-		pSession.setAttribute("mesEjecucion", mesEjecucion, PortletSession.APPLICATION_SCOPE);
-		pSession.setAttribute("etapa", etapa, PortletSession.APPLICATION_SCOPE);*/
-		
-		pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresa, PortletSession.APPLICATION_SCOPE);
-	    pRequest.getPortletSession().setAttribute("anoPresentacion", anoPresentacion, PortletSession.APPLICATION_SCOPE);
-	    pRequest.getPortletSession().setAttribute("mesPresentacion", mesPresentacion, PortletSession.APPLICATION_SCOPE);
-	    pRequest.getPortletSession().setAttribute("anoEjecucion", anoEjecucion, PortletSession.APPLICATION_SCOPE);
-	    pRequest.getPortletSession().setAttribute("mesEjecucion", mesEjecucion, PortletSession.APPLICATION_SCOPE);
-	    pRequest.getPortletSession().setAttribute("etapa", etapa, PortletSession.APPLICATION_SCOPE);
-		
-		//-----formato = formatoService.otroReadExcelFile(fileEntry, themeDisplay.getUser());
-		//Registro BD
-		/*String respuesta="OK";
-		
-		String codEmpresa = formato.getId().getCodEmpresa();
-		String anoPresentacion = String.valueOf(formato.getId().getAnoPresentacion());
-		String mesPresentacion = String.valueOf(formato.getId().getMesPresentacion());
-		//---String zonaBenef = String.valueOf(formato.getIdGrupoInformacion());
-		
-		response.setRenderParameter("action", "exito");
-		
-		response.setRenderParameter("codEmpresa", codEmpresa);
-		response.setRenderParameter("anoPresentacion", anoPresentacion);
-		response.setRenderParameter("mesPresentacion", mesPresentacion);*/
-		//---response.setRenderParameter("zonaBenef", zonaBenef);
-		
-	}
-	
-	@RequestMapping(params="action=exito")
-	public  String mostrarSubida(RenderRequest request,RenderResponse response,ModelMap model,
-			@RequestParam("codEmpresa")String codEmpresa,
-			@RequestParam("anoPresentacion")String anoPresentacion,
-			@RequestParam("mesPresentacion")String mesPresentacion,
-			@RequestParam("zonaBenef")String zonaBenef,
-			@RequestParam("nroEmpad")String nroEmpad,
-			@RequestParam("costoUnitEmpad")String costoUnitEmpad,
-			@RequestParam("nroAgent")String nroAgent,
-			@RequestParam("costoUnitAgent")String costoUnitAgent,
-			@RequestParam("despPersonal")String despPersonal,
-			@RequestParam("activExtraord")String activExtraord
-			){
-		logger.info("--- mostrarResultados cargar");
-		
-		String mm="";
-		
-		if(codEmpresa!=null){
-			mm = "1";
-			model.addAttribute("flag", mm);
-			
-			model.addAttribute("s_empresa", codEmpresa);
-			model.addAttribute("i_aniopresent", anoPresentacion);
-			model.addAttribute("s_mes_present", mesPresentacion);
-			model.addAttribute("s_zonabenef", zonaBenef);
-			model.addAttribute("i_nroEmpad_r", nroEmpad);
-			model.addAttribute("i_costoUnitEmpad_r", costoUnitEmpad);
-			model.addAttribute("i_nroAgentGlp_r", nroAgent);
-			model.addAttribute("i_costoUnitAgent_r", costoUnitAgent);
-			model.addAttribute("i_despPersonal_r", despPersonal);
-			model.addAttribute("i_activExtraord_r", activExtraord);
-
-			
+		String codEmpresaEdit = (String)pRequest.getPortletSession().getAttribute("codEmpresa", PortletSession.APPLICATION_SCOPE);
+		String anioPresEdit = (String)pRequest.getPortletSession().getAttribute("anoPresentacion", PortletSession.APPLICATION_SCOPE);
+		String mesPresEdit = (String)pRequest.getPortletSession().getAttribute("mesPresentacion", PortletSession.APPLICATION_SCOPE);
+		String anioEjecEdit = (String)pRequest.getPortletSession().getAttribute("anoEjecucion", PortletSession.APPLICATION_SCOPE);
+		String mesEjecEdit = (String)pRequest.getPortletSession().getAttribute("mesEjecucion", PortletSession.APPLICATION_SCOPE);
+		String etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
+		FileEntry fileEntry=null;
+		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
+			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+			formato = readExcelFile(fileEntry, sMsg, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioPresNew, mesPresNew, FiseConstants.ETAPA_SOLICITUD);
+		}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
+			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+			formato = readExcelFile(fileEntry, sMsg, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioPresNew, mesPresEdit, etapaEdit);
+		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
+			fileEntry =this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+			formato =	readTxtFile(fileEntry, sMsg, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioPresNew, mesPresNew, FiseConstants.ETAPA_SOLICITUD);
+		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
+			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+			formato =	readTxtFile(fileEntry, sMsg, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit, etapaEdit);
 		}
 		
+		if( formato!=null ){
+			String codEmpresa = formato.getId().getCodEmpresa();
+			String anoPresentacion = String.valueOf(formato.getId().getAnoPresentacion());
+			String mesPresentacion = String.valueOf(formato.getId().getMesPresentacion());
+			String anoEjecucion = String.valueOf(formato.getId().getAnoEjecucionGasto());
+			String mesEjecucion = String.valueOf(formato.getId().getMesEjecucionGasto());
+			String etapa = String.valueOf(formato.getId().getEtapa());
+			
+			pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresa, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anoPresentacion", anoPresentacion, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mesPresentacion", mesPresentacion, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anoEjecucion", anoEjecucion, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mesEjecucion", mesEjecucion, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("etapa", etapa, PortletSession.APPLICATION_SCOPE);
+		}
 		
+		pRequest.getPortletSession().setAttribute("mensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
 		
-		//setear atributos
-		
-		
-		return "buscarFormatoFise12A";
 	}
 	
 	/////////////////////////////////////////////////////////////////
-	///////////////////////CARGA EXCEL/////////////////////////
+	///////////////////CARGA EXCEL - TXT//////////////////////
 	/////////////////////////////////////////////////////////////////
 	
-	public FileEntry subirDocumento(PortletRequest request) {
+	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) {
 		// TODO Auto-generated method stub
 		FileEntry fileEntry=null;
-		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
-		ThemeDisplay themeDisplay = (ThemeDisplay) request
-                .getAttribute(WebKeys.THEME_DISPLAY);
-		 try {
-			 String[] mimeTypes = new String[]{"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
-			 long maxUploadFileSize =2097152;//bytes = 2MB
-			 DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(themeDisplay.getScopeGroupId(), 0, "Backup");
-			 
-			 if (dlFolder.getGroupId() != themeDisplay.getScopeGroupId()) {
-			 	throw new NoSuchFolderException();
-			 }
-			 
-			 File file = uploadPortletRequest.getFile("archivoExcel");
-			 String mimeType = uploadPortletRequest.getContentType("archivoExcel");
-			 long size = uploadPortletRequest.getSize("archivoExcel");
-			 String sourceFileName = uploadPortletRequest.getFileName("archivoExcel");
-
-			 logger.info("MIME ARCHIVO:"+mimeType);
-			 if (Arrays.binarySearch(mimeTypes, mimeType) < 0) {
-					throw new FileMimeTypeException(mimeType);
-			 }
+		//--UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		try {
+			String[] mimeTypesXls = new String[]{"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
+			String[] mimeTypesTxt = new String[]{"text/plain"};
+			String[] mimeTypes = new String[]{};
+			long maxUploadFileSize =2097152;//bytes = 2MB
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(themeDisplay.getScopeGroupId(), 0, "Backup");
 			
-			 String contenType=MimeTypesUtil.getContentType(file,"archivoExcel");
-			 logger.info("MIME CONTENT TYPE:"+contenType);
-			 if (Arrays.binarySearch(mimeTypes, contenType) < 0) {
+			if (dlFolder.getGroupId() != themeDisplay.getScopeGroupId()) {
+				throw new NoSuchFolderException();
+			}
+			 
+			String nameFileInput = null;
+			if( FiseConstants.TIPOARCHIVO_XLS.equals(tipoArchivo) ){
+				nameFileInput = "archivoExcel";
+				mimeTypes = mimeTypesXls;
+			}else if( FiseConstants.TIPOARCHIVO_TXT.equals(tipoArchivo) ){
+				nameFileInput = "archivoTxt";
+				mimeTypes = mimeTypesTxt;
+			}else{
+				throw new Exception("Archivo de formato diferente");
+			}
+			
+			File file = uploadPortletRequest.getFile(nameFileInput);
+			String mimeType = uploadPortletRequest.getContentType(nameFileInput);
+			long size = uploadPortletRequest.getSize(nameFileInput);
+			String sourceFileName = uploadPortletRequest.getFileName(nameFileInput);
+
+			logger.info("MIME ARCHIVO:"+mimeType);
+			if (Arrays.binarySearch(mimeTypes, mimeType) < 0) {
+				throw new FileMimeTypeException(mimeType);
+			}
+			//solo para txt/verificar luego
+			/*if( FiseConstants.TIPOARCHIVO_XLS.equals(tipoArchivo) ){
+				String contenType=MimeTypesUtil.getContentType(file,nameFileInput);
+				logger.info("MIME CONTENT TYPE:"+contenType);
+				if (Arrays.binarySearch(mimeTypes, contenType) < 0) {
 					throw new FileMimeTypeException(contenType);
-			 }
+				}
+			}*/
 			
-			 
-			 logger.info("Size:"+size+" bytes");
-			 logger.info("Max Size:"+maxUploadFileSize+" bytes");
-			 
-			 if(size>maxUploadFileSize){
-				 throw new FileSizeException(String.valueOf(maxUploadFileSize));
-			 }
-			 
-			 SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-			 String hoy=sdf.format(new Date());
-			 long userId=themeDisplay.getUserId();
-			 
-			 long repositoryId=dlFolder.getRepositoryId();
-			 long folderId=dlFolder.getFolderId();
-			 //String ext =FileUtil.getExtension(sourceFileName);
-			 
-			 String title = hoy+"-"+sourceFileName;
+						 
+			logger.info("Size:"+size+" bytes");
+			logger.info("Max Size:"+maxUploadFileSize+" bytes");
 			
-			 //long basicDocument=DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
-
+			if(size>maxUploadFileSize){
+			 throw new FileSizeException(String.valueOf(maxUploadFileSize));
+			}
+			 
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+			String hoy=sdf.format(new Date());
+			long userId=themeDisplay.getUserId();
+			
+			long repositoryId=dlFolder.getRepositoryId();
+			long folderId=dlFolder.getFolderId();
+			//String ext =FileUtil.getExtension(sourceFileName);
+			//--String title = hoy+"-"+sourceFileName;
+			String title = sourceFileName;
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), request);
-			
-			fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, "", "Subido el "+hoy, file, serviceContext);
-			
-			DLAppLocalServiceUtil.updateFileEntry(fileEntry.getUserId(), 
-					fileEntry.getFileEntryId(), 
-					sourceFileName, mimeType, title, fileEntry.getDescription(), "Actualizo estado", true, file, serviceContext);
-			
+			try {
+				fileEntry = DLAppServiceUtil.getFileEntry(dlFolder.getGroupId(), folderId, sourceFileName);
+			} catch (NoSuchFileEntryException e) {
+				logger.info("el archivo no existe en el folder del repositorio");
+				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, "", "Subido el "+hoy, file, serviceContext);
+			}
+			DLAppLocalServiceUtil.updateFileEntry(fileEntry.getUserId(), fileEntry.getFileEntryId(),sourceFileName, mimeType, title, fileEntry.getDescription(), "Actualizo estado", true, file, serviceContext);
 			logger.info("Archivo subido:"+sourceFileName);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -743,21 +695,16 @@ public class Formato12AGartController {
 		
 	}
 	
-	public FiseFormato12AC readExcelFile(FileEntry archivo, User user, String flagCarga, String codEmpresa, String anioPres, String mesPres, String anioEjec, String mesEjec) {
+	public FiseFormato12AC readExcelFile(FileEntry archivo, String sMsg, User user, String flagCarga, String codEmpresa, 	String anioPres, String mesPres, String anioEjec, String mesEjec, String etapaEdit) {
 		
 		//---------------------
 		//FLAG CARGA:
-		//	0: para registros nuevos
-		//	1: para registros modificados
+		//	1: para registros nuevos
+		//	2: para registros modificados
 		//---------------------
-		
-		//StringBuilder html=new StringBuilder();
 		InputStream is=null;
-		
 		FiseFormato12AC objeto = null;
-		//JSONObject json = new JSONObject();
-		
-		String sMsg = "";
+		//String sMsg = "";
 		
 		try {
 			if (archivo != null) {
@@ -765,23 +712,11 @@ public class Formato12AGartController {
 				try {
 					is=archivo.getContentStream();
 					libro = new HSSFWorkbook(is);//Se lee libro xls
-					
 				} catch (Exception e1) {
 					logger.warn("El archivo no es formato XLS");
-					sMsg = sMsg + "El archivo " + archivo.getDescription() + " no corresponde al formato XLS. ";
+					sMsg = sMsg + "El archivo " + archivo.getDescription() + " no corresponde al formato XLS.";
 					throw new Exception("El archivo no corresponde al formato XLS.");
 				}
-				
-				/*if(libro==null){
-					try {
-						is=archivo.getContentStream();
-						libro = new XSSFWorkbook(is); //Se lee el libro xlsx
-					
-					} catch (Exception e1) {
-						logger.warn("El archivo no es formato XLSX");
-					}
-				}*/
-
 				int nroHojaSelec=0;
 				
 				if (libro != null) {
@@ -800,42 +735,25 @@ public class Formato12AGartController {
 					
 					HSSFRow filaEmpresa = hojaF12.getRow(FiseConstants.NRO_FILA_CODEMPRESA_FORMATO12A);					//COD EMPRESA
 					HSSFRow filaAnioMes = hojaF12.getRow(FiseConstants.NRO_FILA_ANIOMES_FORMATO12A);					//ANO MES PRESENTACION
-					//Row filaZonaBenef = hojaF12.getRow(10);						//RURAL-PROVINCIA-LIMA
 					HSSFRow filaNroEmpad = hojaF12.getRow(FiseConstants.NRO_FILA_EMPAD_FORMATO12A);				//NRO EMPADRONADOS
-					//Row filaCostoUnitEmpad = hojaF12.getRow(13);			//COSTO UNIT EMPAD
 					HSSFRow filaNroAgent = hojaF12.getRow(FiseConstants.NRO_FILA_AGENT_FORMATO12A);				//NRO AGENTES
-					//Row filaCostoUnitAgent = hojaF12.getRow(17);			//COSTO UNIT AGENT
 					HSSFRow filaDespPersonal = hojaF12.getRow(FiseConstants.NRO_FILA_DESPLPERSON_FORMATO12A);			//DESPLAZ. PERSONAL
 					HSSFRow filaActivExtraord = hojaF12.getRow(FiseConstants.NRO_FILA_ACTIVEXTR_FORMATO12A);		//ACTIV. EXTRAORDINARIAS
 
-					//guardar valores del formulario para su grabacion
 					Formato12ACBean formulario = new Formato12ACBean();
 					
 					HSSFCell celdaEmpresa = filaEmpresa.getCell(FiseConstants.NRO_CELDA_EMPRESA);
 					HSSFCell celdaAnio = filaAnioMes.getCell(FiseConstants.NRO_CELDA_ANIO);
 					HSSFCell celdaMes = filaAnioMes.getCell(FiseConstants.NRO_CELDA_MES);
-					
-					///Se capturaran los valores de las 3 columnas tanto RURAL - PROVINCIA - LIMA
 					HSSFCell nroEmpadRural = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_RURAL);
 					HSSFCell nroEmpadProv = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_PROVINCIA);
 					HSSFCell nroEmpadLima = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_LIMA);
-					
-					//Cell costoUnitEmpRural = filaCostoUnitEmpad.getCell(7);
-					//Cell costoUnitEmpProv = filaCostoUnitEmpad.getCell(8);
-					//Cell costoUnitEmpLima = filaCostoUnitEmpad.getCell(9);
-					
 					HSSFCell nroAgentRural = filaNroAgent.getCell(FiseConstants.NRO_CELDA_RURAL);
 					HSSFCell nroAgentProv = filaNroAgent.getCell(FiseConstants.NRO_CELDA_PROVINCIA);
 					HSSFCell nroAgentLima = filaNroAgent.getCell(FiseConstants.NRO_CELDA_LIMA);
-					
-					//Cell costoUnitAgentRural = filaCostoUnitAgent.getCell(7);
-					//Cell costoUnitAgentProv = filaCostoUnitAgent.getCell(8);
-					//Cell costoUnitAgentLima = filaCostoUnitAgent.getCell(9);
-					
 					HSSFCell despPersonalR = filaDespPersonal.getCell(FiseConstants.NRO_CELDA_RURAL);
 					HSSFCell despPersonalP = filaDespPersonal.getCell(FiseConstants.NRO_CELDA_PROVINCIA);
 					HSSFCell despPersonalL = filaDespPersonal.getCell(FiseConstants.NRO_CELDA_LIMA);
-					
 					HSSFCell activExtraordR = filaActivExtraord.getCell(FiseConstants.NRO_CELDA_RURAL);
 					HSSFCell activExtraordP = filaActivExtraord.getCell(FiseConstants.NRO_CELDA_PROVINCIA);
 					HSSFCell activExtraordL = filaActivExtraord.getCell(FiseConstants.NRO_CELDA_LIMA);
@@ -845,7 +763,7 @@ public class Formato12AGartController {
 						formulario.setCodigoEmpresa(celdaEmpresa.toString());
 					}else{
 						formulario.setCodigoEmpresa("");
-						sMsg = sMsg + "El codigo de empresa no corresponde al formato requerido.";
+						sMsg = sMsg + "El codigo de empresa no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_STRING == celdaAnio.getCellType()  ){
 						formulario.setAnioPresent(Long.parseLong(celdaAnio.toString()));
@@ -853,7 +771,7 @@ public class Formato12AGartController {
 					}else{
 						formulario.setAnioPresent(0);
 						formulario.setAnioEjecuc(0);
-						sMsg = sMsg + "El Año y mes de presentación no corresponde al formato requerido.";
+						sMsg = sMsg + "El Año y mes de presentación no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_STRING == celdaMes.getCellType()  ){
 						formulario.setMesPresent(Long.parseLong(celdaMes.toString()));
@@ -866,107 +784,75 @@ public class Formato12AGartController {
 						formulario.setNroEmpadR(new Double(nroEmpadRural.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadR(0);
-						sMsg = sMsg + "El número de empadronados Rural no corresponde al formato requerido.";
+						sMsg = sMsg + "El número de empadronados Rural no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadProv.getCellType()  ){
 						formulario.setNroEmpadP(new Double(nroEmpadProv.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadP(0);
-						sMsg = sMsg + "El número de empadronados Provincia no corresponde al formato requerido.";
+						sMsg = sMsg + "El número de empadronados Provincia no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadLima.getCellType()  ){
 						formulario.setNroEmpadL(new Double(nroEmpadLima.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadL(0);
-						sMsg = sMsg + "El número de empadronados Lima no corresponde al formato requerido.";
+						sMsg = sMsg + "El número de empadronados Lima no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
-					//
-					/*if( Cell.CELL_TYPE_NUMERIC == costoUnitEmpRural.getCellType()  ){
-						formulario.setCostoUnitEmpadR(new BigDecimal(costoUnitEmpRural.getNumericCellValue()));
-					}else{
-						formulario.setCostoUnitEmpadR(new BigDecimal(0));
-					}
-					if( Cell.CELL_TYPE_NUMERIC == costoUnitEmpProv.getCellType()  ){
-						formulario.setCostoUnitEmpadP(new BigDecimal(costoUnitEmpProv.getNumericCellValue()));
-					}else{
-						formulario.setCostoUnitEmpadP(new BigDecimal(0));
-					}
-					if( Cell.CELL_TYPE_NUMERIC == costoUnitEmpLima.getCellType()  ){
-						formulario.setCostoUnitEmpadL(new BigDecimal(costoUnitEmpLima.getNumericCellValue()));
-					}else{
-						formulario.setCostoUnitEmpadL(new BigDecimal(0));
-					}*/
 					//
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentRural.getCellType()  ){
 						formulario.setNroAgentR(new Double(nroAgentRural.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroAgentR(0);
-						sMsg = sMsg + "El número de agentes Rural no corresponde al formato requerido.";
+						sMsg = sMsg + "El número de agentes Rural no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentProv.getCellType()  ){
 						formulario.setNroAgentP(new Double(nroAgentProv.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroAgentP(0);
-						sMsg = sMsg + "El número de agentes Provincia no corresponde al formato requerido.";
+						sMsg = sMsg + "El número de agentes Provincia no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentLima.getCellType()  ){
 						formulario.setNroAgentL(new Double(nroAgentLima.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroAgentL(0);
-						sMsg = sMsg + "El número de agentes Lima no corresponde al formato requerido.";
+						sMsg = sMsg + "El número de agentes Lima no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
-					//
-					/*if( Cell.CELL_TYPE_NUMERIC == costoUnitAgentRural.getCellType()  ){
-						formulario.setCostoUnitAgentR(new BigDecimal(costoUnitAgentRural.getNumericCellValue()));
-					}else{
-						formulario.setCostoUnitAgentR(new BigDecimal(0));
-					}
-					if( Cell.CELL_TYPE_NUMERIC == costoUnitAgentProv.getCellType()  ){
-						formulario.setCostoUnitAgentP(new BigDecimal(costoUnitAgentProv.getNumericCellValue()));
-					}else{
-						formulario.setCostoUnitAgentP(new BigDecimal(0));
-					}
-					if( Cell.CELL_TYPE_NUMERIC == costoUnitAgentLima.getCellType()  ){
-						formulario.setCostoUnitAgentL(new BigDecimal(costoUnitAgentLima.getNumericCellValue()));
-					}else{
-						formulario.setCostoUnitAgentL(new BigDecimal(0));
-					}*/
 					//
 					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalR.getCellType()  ){
 						formulario.setDesplPersonalR(new BigDecimal(despPersonalR.getNumericCellValue()));
 					}else{
 						formulario.setDesplPersonalR(new BigDecimal(0.00));
-						sMsg = sMsg + "El desplazamiento personal Rural no corresponde al formato requerido.";
+						sMsg = sMsg + "El desplazamiento personal Rural no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalP.getCellType()  ){
 						formulario.setDesplPersonalP(new BigDecimal(despPersonalP.getNumericCellValue()));
 					}else{
 						formulario.setDesplPersonalP(new BigDecimal(0.00));
-						sMsg = sMsg + "El desplazamiento personal Provincia no corresponde al formato requerido.";
+						sMsg = sMsg + "El desplazamiento personal Provincia no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalL.getCellType()  ){
 						formulario.setDesplPersonalL(new BigDecimal(despPersonalL.getNumericCellValue()));
 					}else{
 						formulario.setDesplPersonalL(new BigDecimal(0.00));
-						sMsg = sMsg + "El desplazamiento personal Lima no corresponde al formato requerido.";
+						sMsg = sMsg + "El desplazamiento personal Lima no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordR.getCellType()  ){
 						formulario.setActivExtraordR(new BigDecimal(activExtraordR.getNumericCellValue()));
 					}else{
 						formulario.setActivExtraordR(new BigDecimal(0.00));
-						sMsg = sMsg + "Las actividades extraordinarias Rural no corresponde al formato requerido.";
+						sMsg = sMsg + "Las actividades extraordinarias Rural no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordP.getCellType()  ){
 						formulario.setActivExtraordP(new BigDecimal(activExtraordP.getNumericCellValue()));
 					}else{
 						formulario.setActivExtraordP(new BigDecimal(0.00));
-						sMsg = sMsg + "Las actividades extraordinarias Provincia no corresponde al formato requerido.";
+						sMsg = sMsg + "Las actividades extraordinarias Provincia no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordL.getCellType()  ){
 						formulario.setActivExtraordL(new BigDecimal(activExtraordL.getNumericCellValue()));
 					}else{
 						formulario.setActivExtraordL(new BigDecimal(0.00));
-						sMsg = sMsg + "Las actividades extraordinarias Lima no corresponde al formato requerido.";
+						sMsg = sMsg + "Las actividades extraordinarias Lima no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
 					}
 					//obtenemos los costos unitarios del formato padre
 					FiseFormato14AD detalleRuralPadre = null;
@@ -1000,17 +886,17 @@ public class Formato12AGartController {
 					//
 					formulario.setUsuario(user.getLogin());
 					formulario.setTerminal(user.getLoginIP());
+					formulario.setNombreArchivo(archivo.getTitle());
 					//
-					if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO.equals(flagCarga) ){
-						objeto = formatoService.registrarFormato12AC(formulario);
-					}else if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION.equals(flagCarga) ){
-						//
-						if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
-								anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
-								mesPres.equals(String.valueOf(formulario.getMesPresent())) &&
-								anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
-								mesEjec.equals(String.valueOf(formulario.getMesPresent())) 
-								){
+					if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+							anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
+							mesPres.equals(String.valueOf(formulario.getMesPresent())) &&
+							anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
+							mesEjec.equals(String.valueOf(formulario.getMesPresent())) 
+							){
+						if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO.equals(flagCarga) ){
+							objeto = formatoService.registrarFormato12AC(formulario);
+						}else if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION.equals(flagCarga) ){
 							FiseFormato12AC formatoModif = new FiseFormato12AC();
 							FiseFormato12ACPK id = new FiseFormato12ACPK();
 							id.setCodEmpresa(formulario.getCodigoEmpresa());
@@ -1020,14 +906,10 @@ public class Formato12AGartController {
 							id.setMesEjecucionGasto(formulario.getMesPresent());
 							id.setEtapa(FiseConstants.ETAPA_SOLICITUD);
 							formatoModif = formatoService.obtenerFormato12ACByPK(id);
-							
 							objeto = formatoService.modificarFormato12AC(formulario, formatoModif);
-						
-						}else{
-							//el archivo cargado no coincide con el archivo que se esta modificando
-							sMsg = sMsg + "El archivo cargado no corresponde al registro que se esta modificando.";
 						}
-						
+					}else{
+						sMsg = sMsg + "El archivo cargado no corresponde a los valores del registro del formulario."+FiseConstants.SALTO_LINEA;
 					}
 					
 				}
@@ -1042,44 +924,201 @@ public class Formato12AGartController {
 		return objeto;
 	}
 	
-	public FiseFormato12AC readTxtFile(File archivo, User user, String flagCarga, String codEmpresa, String anioPres, String mesPres, String anioEjec, String mesEjec) {
+	public FiseFormato12AC readTxtFile(FileEntry archivo, String sMsg, UploadPortletRequest uploadPortletRequest, User user, String flagCarga, String codEmpresaEdit, String anioPresEdit, String mesPresEdit, String anioEjecEdit, String mesEjecEdit, String etapaEdit) {
 		
+		//---------------------
+		//FLAG CARGA:
+		//	3: para registros nuevos
+		//	4: para registros modificados
+		//---------------------
+		InputStream is=null;
+		FiseFormato12AC objeto = null;
+		//String sMsg = "";
 		int cont = 0;
-		
+		List<CfgCampo> listaCampo = null;
 		try{
-			String sCurrentLine;
-			
-			FileInputStream fis = new FileInputStream(archivo);
-			int BUFFER_SIZE = 8192;
-			BufferedReader br = new BufferedReader( new InputStreamReader(fis, "utf8"),BUFFER_SIZE);
-			File aTemporal = File.createTempFile(codEmpresa+"_"+anioPres+"_"+mesPres+"_"+anioPres+"_"+anioEjec+"_"+mesEjec+"_",".tmp");
-			//tempFile.deleteOnExit();
-			BufferedWriter out = new BufferedWriter(new FileWriter(aTemporal));
-			while ((sCurrentLine = br.readLine()) != null) {
-				cont++;
-				if( sCurrentLine.length()>0 ){
-					if( sCurrentLine.length() == 159 ){
-						sCurrentLine = sCurrentLine.substring(0, sCurrentLine.length()-1);
-						System.out.println(sCurrentLine);
+			CfgTabla tabla = new CfgTabla();
+			tabla.setIdTabla(FiseConstants.ID_TABLA_FORMATO12A);
+			listaCampo = campoService.listarCamposByTabla(tabla);
+			if( listaCampo != null ){
+				int longitudMaxima = campoService.longitudMaximaRegistro(listaCampo);
+				int posicionCodEmpresa = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_COD_EMPRESA);
+				int posicionAnioPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_PRESENTACION);
+				int posicionMesPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_MES_PRESENTACION);
+				int posicionMesEjecucion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_MES_EJECUCION);
+				int posicionZonaBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ZONA_BENEFICIARIO);
+				int posicionNroEmpad = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NRO_EMPADRONADOS);
+				int posicionTotalEmpad = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_EMPADRONADOS);
+				int posicionNroAgent = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NRO_AGENTES_AUTOR);
+				int posicionTotalAgent = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_AGENTES);
+				int posicionDesplPersonal = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_DESPLAZ_PERSONAL);
+				int posicionActivExtraord = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ACTIVID_EXTRAORD);
+				
+				String sCurrentLine;
+				is=uploadPortletRequest.getFileAsStream("archivoTxt");
+				int BUFFER_SIZE = 8192;
+				BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
+				List<String> listaDetalleTxt= new ArrayList<String>();
+				sCurrentLine = br.readLine();
+				while(sCurrentLine!=null){
+					cont++;
+					if( sCurrentLine.length()>0 ){
+						if( sCurrentLine.length() == longitudMaxima ){
+							listaDetalleTxt.add(sCurrentLine);
+						}else{
+							sMsg = sMsg + "Los datos contenidos en el archivo no estan completos ."+FiseConstants.SALTO_LINEA;
+						}
 					}else{
-						//el tamano de los registros no alcanza el permitido
+						sMsg = sMsg + "El archivo cargado debe contener datos para poder ser procesado."+FiseConstants.SALTO_LINEA;
 					}
-				}else{
-					//no hay linea de text para leer
+					sCurrentLine = br.readLine();
+					if( cont>3 ){
+						sMsg = sMsg + "El archivo no debe contener más de 3 lineas de detalle."+FiseConstants.SALTO_LINEA;
+						break;
+					}
 				}
 				
-				 sCurrentLine = sCurrentLine.substring(0, sCurrentLine.length()-1);					   
+				String key1,key2,key3="";//,key4,key5,key6="";
+				if( listaDetalleTxt.size()>0 ){
+					key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
+					key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+					key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
+					//key4 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_MES_PRESENTACION, FiseConstants.POSICION_ANIO_EJECUCION) ;
+					//key5 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION) ;
+					//key6 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_MES_EJECUCION, FiseConstants.POSICION_ZONA_BENEFICIARIO) ;
+					boolean process = true;
+					Set<String> zonaSet = new java.util.HashSet<String>();
+					for (String s : listaDetalleTxt) {
+						String codEmp = s.substring(0, posicionCodEmpresa).trim();
+						String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+						String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+						//String anioEje = s.substring(FiseConstants.POSICION_MES_PRESENTACION, FiseConstants.POSICION_ANIO_EJECUCION);
+						//String mesEje = s.substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION);
+						String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
+						if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) &&
+								(FiseConstants.ZONABENEF_RURAL == Long.parseLong(zonaBenef) ||
+								FiseConstants.ZONABENEF_PROVINCIA == Long.parseLong(zonaBenef) ||
+								FiseConstants.ZONABENEF_LIMA == Long.parseLong(zonaBenef) )
+								){
+							if( zonaSet.contains(zonaBenef) ){
+								sMsg = sMsg + "Hay registros que contienen el mismo Zona de Beneficiario."+FiseConstants.SALTO_LINEA;
+								process=false;
+								break;
+							}else{
+								zonaSet.add(zonaBenef);
+								process=true;
+							}
+						}else{
+							sMsg = sMsg + "Los datos contenidos en el archivo no son consistentes."+FiseConstants.SALTO_LINEA;
+							process=false;
+							break;
+						}
+					}
+					if(process){
+						Formato12ACBean formulario = new Formato12ACBean();
+						//nuevamente recorremos la lista para armar los objetos
+						formulario.setCodigoEmpresa(key1);
+						formulario.setAnioPresent(Long.parseLong(key2));
+						formulario.setMesPresent(Long.parseLong(key3));
+						formulario.setAnioEjecuc(Long.parseLong(key2));
+						formulario.setMesEjecuc(Long.parseLong(key3));
+
+						if( codEmpresaEdit.equals(formulario.getCodigoEmpresa()) &&
+								anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
+								mesPresEdit.equals(String.valueOf(formulario.getMesPresent())) &&
+								anioEjecEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
+								mesEjecEdit.equals(String.valueOf(formulario.getMesPresent())) 
+								){
+							
+							//
+							for (String s : listaDetalleTxt) {
+								String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
+								String nroEmpad=s.substring(posicionZonaBenef, posicionNroEmpad).trim();
+								String nroAgent=s.substring(posicionTotalEmpad, posicionNroAgent).trim();
+								String desplazPersonal=s.substring(posicionTotalAgent, posicionDesplPersonal).trim();
+								String activExtraord=s.substring(posicionDesplPersonal, posicionActivExtraord).trim();
+								FiseFormato14AD detalle = formato14Service.obtenerFormato14ADVigente(key1, Long.parseLong(key2), Long.parseLong(zonaBenef));
+								if( FiseConstants.ZONABENEF_RURAL == Long.parseLong(zonaBenef) ){
+									formulario.setNroEmpadR(Long.parseLong(nroEmpad));
+									formulario.setNroAgentR(Long.parseLong(nroAgent));
+									formulario.setDesplPersonalR(new BigDecimal(desplazPersonal));
+									formulario.setActivExtraordR(new BigDecimal(activExtraord));
+									if(detalle!=null){
+										formulario.setCostoUnitEmpadR(detalle.getCostoUnitarioEmpadronamiento());
+										formulario.setCostoUnitAgentR(detalle.getCostoUntitarioAgenteGlp());
+									}else{
+										formulario.setCostoUnitEmpadR(new BigDecimal(0.00));
+										formulario.setCostoUnitAgentR(new BigDecimal(0.00));
+									}
+								}else if( FiseConstants.ZONABENEF_PROVINCIA == Long.parseLong(zonaBenef) ){
+									formulario.setNroEmpadP(Long.parseLong(nroEmpad));
+									formulario.setNroAgentP(Long.parseLong(nroAgent));
+									formulario.setDesplPersonalP(new BigDecimal(desplazPersonal));
+									formulario.setActivExtraordP(new BigDecimal(activExtraord));
+									if(detalle!=null){
+										formulario.setCostoUnitEmpadP(detalle.getCostoUnitarioEmpadronamiento());
+										formulario.setCostoUnitAgentP(detalle.getCostoUntitarioAgenteGlp());
+									}else{
+										formulario.setCostoUnitEmpadP(new BigDecimal(0.00));
+										formulario.setCostoUnitAgentP(new BigDecimal(0.00));
+									}
+								}else if( FiseConstants.ZONABENEF_LIMA == Long.parseLong(zonaBenef) ){
+									formulario.setNroEmpadL(Long.parseLong(nroEmpad));
+									formulario.setNroAgentL(Long.parseLong(nroAgent));
+									formulario.setDesplPersonalL(new BigDecimal(desplazPersonal));
+									formulario.setActivExtraordL(new BigDecimal(activExtraord));
+									if(detalle!=null){
+										formulario.setCostoUnitEmpadL(detalle.getCostoUnitarioEmpadronamiento());
+										formulario.setCostoUnitAgentL(detalle.getCostoUntitarioAgenteGlp());
+									}else{
+										formulario.setCostoUnitEmpadL(new BigDecimal(0.00));
+										formulario.setCostoUnitAgentL(new BigDecimal(0.00));
+									}
+								}
+							}
+							//
+							formulario.setUsuario(user.getLogin());
+							formulario.setTerminal(user.getLoginIP());
+							formulario.setNombreArchivo(archivo.getTitle());
+							//
+							
+							if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
+								objeto = formatoService.registrarFormato12AC(formulario);
+							}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
+								FiseFormato12AC formatoModif = new FiseFormato12AC();
+								FiseFormato12ACPK id = new FiseFormato12ACPK();
+								id.setCodEmpresa(formulario.getCodigoEmpresa());
+								id.setAnoPresentacion(formulario.getAnioPresent());
+								id.setMesPresentacion(formulario.getMesPresent());
+								id.setAnoEjecucionGasto(formulario.getAnioPresent());
+								id.setMesEjecucionGasto(formulario.getMesPresent());
+								id.setEtapa(FiseConstants.ETAPA_SOLICITUD);
+								formatoModif = formatoService.obtenerFormato12ACByPK(id);
+								objeto = formatoService.modificarFormato12AC(formulario, formatoModif);
+							}
+						}else{
+							sMsg = sMsg + "El archivo cargado no corresponde a los valores del registro del formulario."+FiseConstants.SALTO_LINEA;
+						}
+						
+					}else{
+						sMsg = sMsg + "Los datos contenidos en el archivo no coinciden entre ellos."+FiseConstants.SALTO_LINEA;
+					}
+				}
+				
+			}else{
+				throw new Exception("No está configurado los campos de las tablas del Formato 12A");
 			}
-			
 			
 		}catch (Exception e) {			   
 			  //refer.setCondicion(false);				  
 			  String error = e.getMessage();
+			  sMsg = sMsg+error;	        	
 			  System.out.println(error);
 			  //throw new Exception(error); 
 			  			   
 		  }
-		return null;
+		//pRequest.getPortletSession().setAttribute("MensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
+		return objeto;
 	}
 	
 }

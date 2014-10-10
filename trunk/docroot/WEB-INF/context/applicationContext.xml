@@ -33,11 +33,14 @@
     <beans:property name="persistenceUnitName" value="fisePU"/>
     <beans:property name="dataSource" ref="dataSource"/>
     <beans:property name="jpaVendorAdapter">
-			<beans:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<beans:property name="database" value="ORACLE" />
-				<beans:property name="showSql" value="true"  />
-			</beans:bean>
-		</beans:property>
+		<beans:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+			<beans:property name="database" value="ORACLE" />
+			<beans:property name="showSql" value="true"  />
+		</beans:bean>
+	</beans:property>
+	<beans:property name="loadTimeWeaver">
+        <beans:bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+    </beans:property>
   </beans:bean>
    
   <!-- Transaction Manager -->
