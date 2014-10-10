@@ -63,6 +63,12 @@ $(document).ready(function () {
 	 $("#s_mes_h").val(parseInt($("#mesHastaSes").val()));
 	 $("#s_etapa").val($("#codEtapaSes").val());
 	 <portlet:namespace/>buscar();
+	 var mensajeInfo = $("#mensajeInfo").val();
+	 
+	 if(mensajeInfo!=''){
+		 $("#dialog-message-content").html(mensajeInfo);
+		 $("#dialog-message").dialog( "open" );
+	 }
 	 
 });
 
@@ -600,6 +606,48 @@ function validarFormulario() {
 	  
 	  return true; 
 	}
+function validarArchivoCarga() {		
+  if($('#s_empresa').val().length == '' ) { 	
+    alert('Seleccione una empresa para proceder con la carga de archivo'); 
+    document.getElementById('s_empresa').focus();
+    return false; 
+  }
+  if($('#i_aniopresent').val().length == '' ) {		  
+	    alert('Debe ingresar el año de presentación para proceder con la carga de archivo');
+	    document.getElementById('i_aniopresent').focus();
+	    return false; 
+  }else{
+	  var numstr = trim($('#i_aniopresent').val());
+	  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+		  alert('Ingrese un año de presentación válido para proceder con la carga de archivo');
+		  return false;
+	  }
+  }
+  if($('#s_mes_present').val().length == '' ) {		  
+	    alert('Debe ingresar el mes de presentación para proceder con la carga de archivo');
+	    document.getElementById('s_mes_present').focus();
+	    return false; 
+  }
+  /*if($('#i_anioejecuc').val().length == '' ) {		  
+	    alert('Debe ingresar el año de ejecucion');
+	    document.getElementById('i_anioejecuc').focus();
+	    return false; 
+  }else{
+	  var numstr = trim($('#i_anioejecuc').val());
+	  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+		  alert('Ingrese un año de ejecucion válido');
+		  return false;
+	  }
+  }
+  if($('#s_mes_ejecuc').val().length == '' ) {		  
+	    alert('Debe ingresar el mes de ejecucion');
+	    document.getElementById('s_mes_ejecuc').focus();
+	    return false; 
+  }*/
+ 
+  return true; 
+}
+	
 function initBlockUI(){
 	$(document).ajaxStop($.unblockUI); 		
 }
@@ -767,7 +815,7 @@ function <portlet:namespace/>crearFormato(){
 	$("#etapaEdit").val("");
 	$("#div_formato").show();
 	$("#div_home").hide();
-	$('#flagCarga').val('1');
+	$('#flagCarga').val('0');
 	//document.getElementById('flagCarga').value='1';
 	//
 	 $("#i_aniopresent").val($("#anioDesdeSes").val());
@@ -885,7 +933,7 @@ function FillEditformato(row){
 	formularioCompletarDecimales();
 	
 	//document.getElementById('flagCarga').value='2';
-	$('#flagCarga').val('2');
+	$('#flagCarga').val('1');
 }
 //////CRUD
 function <portlet:namespace/>guardarFormato(){
@@ -1153,20 +1201,51 @@ function validaAnio(id){
     }  
 }
 function <portlet:namespace/>mostrarFormularioCargaExcel(){
-    $.blockUI({ message: '' });
-    $("#dialog-form-cargaExcel").show();
+	//alert($(window).width());
+	//alert($(window).height());
+	if (validarArchivoCarga()){
+		if( $('#flagCarga').val()=='0' ){
+			$('#flagCarga').val('2');
+		}else if( $('#flagCarga').val()=='1' ){
+			$('#flagCarga').val('3');
+		}
+	    //$.blockUI({ message: '' });
+	    $('.ui-widget-overlay').show();
+	    $("#dialog-form-cargaExcel").show();
+	    $("#dialog-form-cargaExcel").css({ 
+	        'left': ($(window).width() / 2 - $("#dialog-form-cargaExcel").width() / 2) + 'px', 
+	        'top': ($(window).height() / 2 - $("#dialog-form-cargaExcel").height() / 2) + 'px'
+	    });
+	}
 }
 function regresarFormularioCargaExcel(){
+	$('#flagCarga').val('');
 	$("#dialog-form-cargaExcel").hide();
-	$.unblockUI();
+	//$.unblockUI();
+	$('.ui-widget-overlay').hide();   
 }
 function <portlet:namespace/>mostrarFormularioCargaTexto(){
-    $.blockUI({ message: '' });
-    $("#dialog-form-cargaTexto").show();
+	//$("#dialog-form-carga").dialog("open");
+	if (validarArchivoCarga()){
+		if( $('#flagCarga').val()=='0' ){
+			$('#flagCarga').val('4');
+		}else if( $('#flagCarga').val()=='1' ){
+			$('#flagCarga').val('5');
+		}
+	    //$.blockUI({ message: '' });
+	    $('.ui-widget-overlay').show();
+	    $("#dialog-form-cargaTexto").show();
+	    $("#dialog-form-cargaTexto").css({ 
+	        'left': ($(window).width() / 2 - $("#dialog-form-cargaTexto").width() / 2) + 'px', 
+	        'top': ($(window).height() / 2 - $("#dialog-form-cargaTexto").height() / 2) + 'px'
+	    });
+	}
 }
 function regresarFormularioCargaTexto(){
+	$('#flagCarga').val('');
 	$("#dialog-form-cargaTexto").hide();
-	$.unblockUI();
+	//$.unblockUI();
+	$('.ui-widget-overlay').hide();   
 }
 
 //////////
@@ -1195,10 +1274,12 @@ function regresarFormularioCargaTexto(){
 	<input type="hidden" id="anioHastaSes" value="${model.anioHasta}" />
 	<input type="hidden" id="mesHastaSes" value="${model.mesHasta}" />
 	<input type="hidden" id="codEtapaSes" value="${model.codEtapa}" />
+	
+	<input type="hidden" id="mensajeInfo" value="${model.mensaje}" />
 
 	<input type="hidden" id="Estado" value="" />	
 	<input type="hidden" id="flag" value="" />
-	<input type="hidden" id="flagCarga" value="" />
+	
 	
 
 	<div id="d_listado" class="net-frame-listado"> 
@@ -1764,7 +1845,7 @@ function regresarFormularioCargaTexto(){
 									   								</tr>
 									   							</table>
 									   						
-									   							
+									   							<input type="hidden" id="flagCarga" name="flagCarga" value="" style="display:none;"  />
 									   							
 									   						</td>
 									   					</tr>
@@ -1815,19 +1896,17 @@ function regresarFormularioCargaTexto(){
 					</div>	
 					
 					<!-- prueba inicio -->
-					<div id="dialog-form-cargaExcel"  style="display: none; z-index: 1002; outline: 0px none; position: absolute; height: auto; width: 400px; top: 646.667px; left: 471px;" 
-						class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+					<div id="dialog-form-cargaExcel" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"  
+						style="display: none;z-index:1002;position:absolute;width:400px;" >
 						<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo excel </span>
-							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-								onclick="regresarFormularioCargaExcel();" >
+							<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="regresarFormularioCargaExcel();">
 								<span class="ui-icon ui-icon-closethick">close</span>
-							</button>
+							</a>
 						
 						</div>
 					
-						<div style="background: none repeat scroll 0% 0% rgb(255, 255, 255); width: auto; min-height: 0px; height: 130.833px;" 
-							class="net-frame-border ui-dialog-content ui-widget-content" id="dialog-form-carga33" scrolltop="0" scrollleft="0"> 
+						<div > 
 							<!--tabla-->
 							
 							<fieldset class="">
@@ -1858,10 +1937,6 @@ function regresarFormularioCargaTexto(){
 							
 							
 						</div>
-						
-						<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" 
-						style="z-index: 1000;">
-						</div>
 
 						<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 							<div class="ui-dialog-buttonset">
@@ -1875,19 +1950,15 @@ function regresarFormularioCargaTexto(){
 					<!-- prueba fin -->
 					
 					<!-- prueba inicio -->
-					<div id="dialog-form-cargaTexto"  style="display: none; z-index: 1002; outline: 0px none; position: absolute; height: auto; width: 400px; top: 646.667px; left: 471px;" 
-						class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+					<div id="dialog-form-cargaTexto" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable" 
+						style="display: none;z-index:1002;position:absolute;width:400px;" >
 						<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
-						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo de texto </span>
-							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-								onclick="regresarFormularioCargaTexto();" >
+							<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo de texto </span>
+							<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="regresarFormularioCargaTexto();">
 								<span class="ui-icon ui-icon-closethick">close</span>
-							</button>
-						
+							</a>
 						</div>
-					
-						<div style="background: none repeat scroll 0% 0% rgb(255, 255, 255); width: auto; min-height: 0px; height: 130.833px;" 
-							class="net-frame-border ui-dialog-content ui-widget-content" id="dialog-form-carga33" scrolltop="0" scrollleft="0"> 
+						<div  > 
 							<!--tabla-->
 							
 							<fieldset class="">
@@ -1919,9 +1990,6 @@ function regresarFormularioCargaTexto(){
 							
 						</div>
 						
-						<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" 
-						style="z-index: 1000;">
-						</div>
 
 						<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 							<div class="ui-dialog-buttonset">
@@ -1945,7 +2013,7 @@ function regresarFormularioCargaTexto(){
 								<tr>
 									<td>Archivo:</td>
 									<td>
-										<input  type="file" id="archivoExcel2"name="archivo2"/>
+										<input  type="file" id="archivoTxt2"name="archivoTxt2"/>
 									</td>
 								</tr>
 								<tr>
@@ -1954,7 +2022,7 @@ function regresarFormularioCargaTexto(){
 								<tr>
 									<td></td>
 									<td>
-										<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormato2" id="<portlet:namespace/>cargarFormato2" value="Cargar"/>
+										<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto2" id="<portlet:namespace/>cargarFormatoTexto2" value="Cargar"/>
 									</td>
 								</tr>
 								<tr>
