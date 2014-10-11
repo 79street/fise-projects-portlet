@@ -72,8 +72,8 @@ $(document).ready(function () {
 			 $("#i_aniopresent").val(anioPresSes);
 			 $("#s_mes_present").val(mesPresSes);
 		 }
-		 $("#dialog-message-content").html(mensajeInfo);
-		 $("#dialog-message").dialog( "open" );
+		 //$("#dialog-message-content").html(mensajeInfo);
+		 $("#dialog-form-error").dialog( "open" );
 	 }
 	 
 });
@@ -663,6 +663,16 @@ function initDialogs(){
 		},
 		close: function() {
 			//Limpiar_FormFuncion();
+		}
+	});
+	$( "#dialog-form-error" ).dialog({
+		modal: true,
+		width: 700,
+		autoOpen: false,
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
 		}
 	});
 }
@@ -2008,7 +2018,7 @@ function regresarFormularioCargaTexto(){
 						<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 							<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo de texto </span>
 							<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="regresarFormularioCargaTexto();">
-								<span class="ui-icon ui-icon-closethick">close</span>
+								<span class="ui-icon ui-icon-closethick" onmouseover="ui-state-hover">close</span>
 							</a>
 						</div>
 						<div class="ui-dialog-content ui-widget-content"  > 
@@ -2088,6 +2098,24 @@ function regresarFormularioCargaTexto(){
 						</fieldset>
 						<br>
 					</div>			
+					
+					<div id="dialog-form-error" class="net-frame-border" style="display:none;background:#fff;" title=" Errores de archivo de carga ">				
+						<fieldset class="net-frame-border">							
+							<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla">
+								<tr class="titulo_tabla">
+				            		<td width="40">Nro.</td>
+				            		<td width="378" height="37">Descripción</td>
+				            	</tr>
+		                 		<c:forEach items="${listaError}" var="error" varStatus="status">															
+								<tr class="detalleTablaContenido">
+			                    	<td align="center">${status.count}</td> 
+			                    	<td align="center">${error.descripcion}</td>     
+			                 	 </tr>				
+								</c:forEach>            
+		                	</table>
+						</fieldset>
+						<br>
+					</div>					
 					
 					<!-- fin -->
 
