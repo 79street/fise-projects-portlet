@@ -66,6 +66,12 @@ $(document).ready(function () {
 	 var mensajeInfo = $("#mensajeInfo").val();
 	 
 	 if(mensajeInfo!=''){
+		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes == '' && mesEjeSes == '' && etapaSes == ''){
+			 mostrarUltimoFormato();
+			 $("#s_empresa").val(codEmpSes);
+			 $("#i_aniopresent").val(anioPresSes);
+			 $("#s_mes_present").val(mesPresSes);
+		 }
 		 $("#dialog-message-content").html(mensajeInfo);
 		 $("#dialog-message").dialog( "open" );
 	 }
@@ -404,22 +410,20 @@ function formularioCompletarDecimales(){
 	completarDecimal('i_importeActivExtraord',2);
 	
 	completarDecimal('i_totalGeneral',2);
-	
-	
 }
 
 function <portlet:namespace/>regresar(){
-	 $("#Estado").val("");
-	 $("#etapaEdit").val("");
-	 $("#div_formato").hide();
-	 $("#div_home").show();		
+	$("#Estado").val("");
+	$("#etapaEdit").val("");
+	$("#div_formato").hide();
+	$("#div_home").show();		
+	//se visualizan los componentes escondidos
+	$('#<portlet:namespace/>guardarFormato').css('display','');
+	$('#panelCargaArchivos').css('display','');
+	$('#<portlet:namespace/>validacion').css('display','');
+	$('#<portlet:namespace/>enviodefinitivo').css('display','');
 }
 function validarBusqueda() {		
-	  /*if($('#s_empresa_b').val().length == '' ) { 	
-	    alert('Seleccione una empresa'); 
-	    document.getElementById('cod_empresa').focus();
-	    return false; 
-	  }*/
 	  if($('#i_anio_d').val().length != '' ) {		  
 		  var numstr = trim($('#i_anio_d').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
@@ -428,11 +432,6 @@ function validarBusqueda() {
 			  return false;
 		  }
 	  }
-	  /*if($('#s_mes_d').val().length == '' ) {		  
-		    alert('Debe ingresar el mes desde');
-		    document.getElementById('dsc_corta_empresa').focus();
-		    return false; 
-	  }*/
 	  if($('#i_anio_h').val().length != '' ) {		  
 		  var numstr = trim($('#i_anio_h').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
@@ -441,11 +440,6 @@ function validarBusqueda() {
 			  return false;
 		  }
 	  }
-	  /*if($('#s_mes_h').val().length == '' ) {		  
-		    alert('Debe ingresar el mes hasta');
-		    document.getElementById('dsc_corta_empresa').focus();
-		    return false; 
-	  }*/
 	  if($('#i_anio_d').val().length != '' && $('#i_anio_h').val().length != '' ) {
 		  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){
 				alert('El año desde no puede exceder al año hasta');
@@ -458,16 +452,7 @@ function validarBusqueda() {
 		    document.getElementById('s_etapa').focus();
 		    return false; 
 	  }
-	  //validar el desde hasta
-	  /*if( $('#i_anio_d').val().length != '' && $('#i_anio_h').val().length == '' ){
-			alert('Debe seleccionar el año hasta', idBoton);
-			return false;
-		}
-	  if( $('#i_anio_d').val().length == '' && $('#i_anio_h').val().length != '' ){
-			alert('Debe seleccionar el año desde', idBoton);
-			return false;
-		}*/
-	  
+	 
 	  return true; 
 	}
 	
@@ -628,23 +613,7 @@ function validarArchivoCarga() {
 	    document.getElementById('s_mes_present').focus();
 	    return false; 
   }
-  /*if($('#i_anioejecuc').val().length == '' ) {		  
-	    alert('Debe ingresar el año de ejecucion');
-	    document.getElementById('i_anioejecuc').focus();
-	    return false; 
-  }else{
-	  var numstr = trim($('#i_anioejecuc').val());
-	  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-		  alert('Ingrese un año de ejecucion válido');
-		  return false;
-	  }
-  }
-  if($('#s_mes_ejecuc').val().length == '' ) {		  
-	    alert('Debe ingresar el mes de ejecucion');
-	    document.getElementById('s_mes_ejecuc').focus();
-	    return false; 
-  }*/
- 
+
   return true; 
 }
 	
@@ -757,15 +726,24 @@ function buildGrids() {
       		var ids = jQuery("#grid_formato").jqGrid('getDataIDs');
       		for(var i=0;i < ids.length;i++){
       			var cl = ids[i];
-      			var ret = jQuery("#grid_formato").jqGrid('getRowData',cl);            		
+      			var ret = jQuery("#grid_formato").jqGrid('getRowData',cl);           
+      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
       			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
       			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
+      			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{view:view});
       			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{edit:edit});
       			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{elim:elem});
       		}
       }
   	});
 	jQuery("#grid_formato").jqGrid('navGrid','#pager_formato',{add:false,edit:false,del:false,search: false,refresh: false});	
+	jQuery("#grid_formato").jqGrid('navButtonAdd','#pager_formato',{
+	       caption:"Exportar a Excel",
+	       buttonicon: "ui-icon-bookmark",
+	       onClickButton : function () {
+	           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+	       } 
+	}); 
 }
 function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
 	var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
@@ -816,13 +794,59 @@ function <portlet:namespace/>crearFormato(){
 	$("#div_formato").show();
 	$("#div_home").hide();
 	$('#flagCarga').val('0');
-	//document.getElementById('flagCarga').value='1';
 	//
 	 $("#i_aniopresent").val($("#anioDesdeSes").val());
 	 $("#s_mes_present").val(parseInt($("#mesDesdeSes").val()));
-	 $("#i_anioejecuc").val($("#anioHastaSes").val());
-	 $("#s_mes_ejecuc").val(parseInt($("#mesHastaSes").val()));
+	 $("#i_anioejecuc").val($("#anioDesdeSes").val());
+	 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
 	
+}
+function mostrarUltimoFormato(){	
+	inicializarFormulario();
+	//data_funcion = [];
+	$('#Estado').val('SAVE');
+	$("#etapaEdit").val("");
+	$("#div_formato").show();
+	$("#div_home").hide();
+	$('#flagCarga').val('0');
+	//
+	 //$("#i_aniopresent").val($("#anioDesdeSes").val());
+	 //$("#s_mes_present").val(parseInt($("#mesDesdeSes").val()));
+	 //$("#i_anioejecuc").val($("#anioDesdeSes").val());
+	 //$("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
+	
+}
+function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
+	$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
+	jQuery.ajax({
+			url: '<portlet:resourceURL id="crud" />',
+			type: 'post',
+			dataType: 'json',
+			data: {
+			   <portlet:namespace />tipo: "GET",
+			   <portlet:namespace />codEmpresa: codEmpresa,
+			   <portlet:namespace />anoPresentacion: anoPresentacion,
+			   <portlet:namespace />mesPresentacion: mesPresentacion,
+			   <portlet:namespace />anoEjecucion: anoEjecucion,
+			   <portlet:namespace />mesEjecucion: mesEjecucion,
+			   <portlet:namespace />etapa: etapa
+				},
+			success: function(data) {				
+				if (data.resultado == "OK"){
+					$("#Estado").val("UPDATE");
+					$("#etapaEdit").val(etapa);
+					$("#div_formato").show();
+					$("#div_home").hide();
+					FillEditformato(data.formato);
+					deshabiliarControlerView();
+					initBlockUI();
+				}
+				else{
+					alert("Error al recuperar los datos del registro seleccionado");
+					initBlockUI();
+				}
+			}
+	});	
 }
 function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
 	$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
@@ -846,13 +870,7 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 					//se deja el formulario activo
 					$("#div_formato").show();
 					$("#div_home").hide();
-					//document.getElementById("cod_empresa").setAttribute('readonly','readonly');
-					//alert('data.formato:'+data.formato);
 					FillEditformato(data.formato);
-					//data_funcion = data.lstFuncion;
-					//$('#grid_funcion').clearGridData(true);
-					//$('#grid_funcion').jqGrid('setGridParam', {data: data_funcion}).trigger('reloadGrid');
-					//$("#grid_funcion")[0].refreshIndex();
 					initBlockUI();
 				}
 				else{
@@ -935,74 +953,88 @@ function FillEditformato(row){
 	//document.getElementById('flagCarga').value='2';
 	$('#flagCarga').val('1');
 }
+function deshabiliarControlerView(){
+	$('#i_nroEmpad_r').attr("disabled",true);
+	$('#i_nroEmpad_p').attr("disabled",true);
+	$('#i_nroEmpad_l').attr("disabled",true);
+	
+	$('#i_nroAgentGlp_r').attr("disabled",true);
+	$('#i_nroAgentGlp_p').attr("disabled",true);
+	$('#i_nroAgentGlp_l').attr("disabled",true);
+	
+	$('#i_despPersonal_r').attr("disabled",true);
+	$('#i_despPersonal_p').attr("disabled",true);
+	$('#i_despPersonal_l').attr("disabled",true);
+	
+	$('#i_activExtraord_r').attr("disabled",true);
+	$('#i_activExtraord_p').attr("disabled",true);
+	$('#i_activExtraord_l').attr("disabled",true);
+	
+	$('#<portlet:namespace/>guardarFormato').css('display','none');
+	$('#panelCargaArchivos').css('display','none');
+	$('#<portlet:namespace/>validacion').css('display','none');
+	$('#<portlet:namespace/>enviodefinitivo').css('display','none');
+	
+}
 //////CRUD
 function <portlet:namespace/>guardarFormato(){
 	if (validarFormulario()){
 		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>' });
-		//var lstfuncion = "";
-   	/*for(i = 0; i<data_funcion.length; i++) {
-	    	if (i > 0)
-	    		lstfuncion = lstfuncion + "|";	    
-	    	lstfuncion = lstfuncion + ((data_funcion[i].id == '') ? '0' : data_funcion[i].id)+  
-	    	"\t" + data_funcion[i].cod_proc_supervision + "\t" + 
-	   		data_funcion[i].cod_funcion_proc_superv+ "\t" +data_funcion[i].cod_tipo_empresa ;	    
-   	}*/
-   jQuery.ajax({
-		url: '<portlet:resourceURL id="crud" />',
-		type: 'post',
-		dataType: 'json',
-		data: {
-			<portlet:namespace />tipo: $("#Estado").val(),
-			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-			<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
-			<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
-			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
-			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
-			//
-			<portlet:namespace />etapa: $('#etapaEdit').val(),
-			//<portlet:namespace />zonaBenef: $('#s_zonabenef').val(),
-			<portlet:namespace />nroEmpadR: $('#i_nroEmpad_r').val(),
-			<portlet:namespace />costoUnitEmpadR: $('#i_costoUnitEmpad_r').val(),
-			<portlet:namespace />nroAgentR: $('#i_nroAgentGlp_r').val(),
-			<portlet:namespace />costoUnitAgentR: $('#i_costoUnitAgent_r').val(),
-			<portlet:namespace />despPersonalR: $('#i_despPersonal_r').val(),
-			<portlet:namespace />activExtraordR: $('#i_activExtraord_r').val(),
-			//
-			<portlet:namespace />nroEmpadP: $('#i_nroEmpad_p').val(),
-			<portlet:namespace />costoUnitEmpadP: $('#i_costoUnitEmpad_p').val(),
-			<portlet:namespace />nroAgentP: $('#i_nroAgentGlp_p').val(),
-			<portlet:namespace />costoUnitAgentP: $('#i_costoUnitAgent_p').val(),
-			<portlet:namespace />despPersonalP: $('#i_despPersonal_p').val(),
-			<portlet:namespace />activExtraordP: $('#i_activExtraord_p').val(),
-			//
-			<portlet:namespace />nroEmpadL: $('#i_nroEmpad_l').val(),
-			<portlet:namespace />costoUnitEmpadL: $('#i_costoUnitEmpad_l').val(),
-			<portlet:namespace />nroAgentL: $('#i_nroAgentGlp_l').val(),
-			<portlet:namespace />costoUnitAgentL: $('#i_costoUnitAgent_l').val(),
-			<portlet:namespace />despPersonalL: $('#i_despPersonal_l').val(),
-			<portlet:namespace />activExtraordL: $('#i_activExtraord_l').val()
-			},
-		success: function(data) {			
-			if (data.resultado == "OK"){				
-				var addhtml2='Datos guardados satisfactoriamente';
-				$("#dialog-message-content").html(addhtml2);
-				$("#dialog-message").dialog( "open" );
-				//limpiar();				
-				initBlockUI();
+		 jQuery.ajax({
+			url: '<portlet:resourceURL id="crud" />',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				<portlet:namespace />tipo: $("#Estado").val(),
+				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
+				<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
+				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+				//
+				<portlet:namespace />etapa: $('#etapaEdit').val(),
+				//<portlet:namespace />zonaBenef: $('#s_zonabenef').val(),
+				<portlet:namespace />nroEmpadR: $('#i_nroEmpad_r').val(),
+				<portlet:namespace />costoUnitEmpadR: $('#i_costoUnitEmpad_r').val(),
+				<portlet:namespace />nroAgentR: $('#i_nroAgentGlp_r').val(),
+				<portlet:namespace />costoUnitAgentR: $('#i_costoUnitAgent_r').val(),
+				<portlet:namespace />despPersonalR: $('#i_despPersonal_r').val(),
+				<portlet:namespace />activExtraordR: $('#i_activExtraord_r').val(),
+				//
+				<portlet:namespace />nroEmpadP: $('#i_nroEmpad_p').val(),
+				<portlet:namespace />costoUnitEmpadP: $('#i_costoUnitEmpad_p').val(),
+				<portlet:namespace />nroAgentP: $('#i_nroAgentGlp_p').val(),
+				<portlet:namespace />costoUnitAgentP: $('#i_costoUnitAgent_p').val(),
+				<portlet:namespace />despPersonalP: $('#i_despPersonal_p').val(),
+				<portlet:namespace />activExtraordP: $('#i_activExtraord_p').val(),
+				//
+				<portlet:namespace />nroEmpadL: $('#i_nroEmpad_l').val(),
+				<portlet:namespace />costoUnitEmpadL: $('#i_costoUnitEmpad_l').val(),
+				<portlet:namespace />nroAgentL: $('#i_nroAgentGlp_l').val(),
+				<portlet:namespace />costoUnitAgentL: $('#i_costoUnitAgent_l').val(),
+				<portlet:namespace />despPersonalL: $('#i_despPersonal_l').val(),
+				<portlet:namespace />activExtraordL: $('#i_activExtraord_l').val()
+				},
+			success: function(data) {			
+				if (data.resultado == "OK"){				
+					var addhtml2='Datos guardados satisfactoriamente';
+					$("#dialog-message-content").html(addhtml2);
+					$("#dialog-message").dialog( "open" );
+					//limpiar();				
+					initBlockUI();
+				}
+				else if(data.resultado == "Error"){				
+					var addhtml2='Se produjo un error al guardar los datos';
+					$("#dialog-message-content").html(addhtml2);
+					$("#dialog-message").dialog( "open" );
+					//<portlet:namespace/>filtrar();
+					initBlockUI();
+				}
 			}
-			else if(data.resultado == "Error"){				
-				var addhtml2='Se produjo un error al guardar los datos';
-				$("#dialog-message-content").html(addhtml2);
-				$("#dialog-message").dialog( "open" );
-				//<portlet:namespace/>filtrar();
-				initBlockUI();
-			}
-		}
-	});
-   	//se deja el formulario activo
-	$("#div_formato").hide();
-	$("#div_home").show();
-	
+		});
+	   	//se deja el formulario activo
+		$("#div_formato").hide();
+		$("#div_home").show();
 	}
 	//
 	 var codEmpM = $("#s_empresa").val();
@@ -1029,12 +1061,6 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				<portlet:namespace />i_aniopresent: $('#i_aniopresent').val()
 				},
 			success: function(data) {				
-				//dwr.util.removeAllOptions("cod_ubigeo");
-				//dwr.util.addOptions("cod_ubigeo", ['- Seleccione -']);
-				//dwr.util.addOptions("cod_ubigeo", data,"cod_ubigeo","nom_ubigeo");
-				//alert(data);
-				//alert(data.value);
-				//alert(data.costoEmpR);
 				dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
 				dwr.util.setValue("i_costoUnitAgent_r", data.costoAgentR);
 				dwr.util.setValue("i_costoUnitEmpad_p", data.costoEmpP);
@@ -1210,11 +1236,11 @@ function <portlet:namespace/>mostrarFormularioCargaExcel(){
 			$('#flagCarga').val('3');
 		}
 	    //$.blockUI({ message: '' });
-	    $('.ui-widget-overlay').show();
+	    $('#divOverlay').show();
 	    $("#dialog-form-cargaExcel").show();
 	    $("#dialog-form-cargaExcel").css({ 
 	        'left': ($(window).width() / 2 - $("#dialog-form-cargaExcel").width() / 2) + 'px', 
-	        'top': ($(window).height() / 2 - $("#dialog-form-cargaExcel").height() / 2) + 'px'
+	        'top': ($(window).height()  - $("#dialog-form-cargaExcel").height() ) + 'px'
 	    });
 	}
 }
@@ -1222,9 +1248,13 @@ function regresarFormularioCargaExcel(){
 	$('#flagCarga').val('');
 	$("#dialog-form-cargaExcel").hide();
 	//$.unblockUI();
-	$('.ui-widget-overlay').hide();   
+	$('#divOverlay').hide();   
 }
 function <portlet:namespace/>mostrarFormularioCargaTexto(){
+	//alert($(window).width());
+	//alert($(window).height());
+	//alert($("#dialog-form-cargaTexto").width());
+	//alert($("#dialog-form-cargaTexto").height());
 	//$("#dialog-form-carga").dialog("open");
 	if (validarArchivoCarga()){
 		if( $('#flagCarga').val()=='0' ){
@@ -1233,11 +1263,11 @@ function <portlet:namespace/>mostrarFormularioCargaTexto(){
 			$('#flagCarga').val('5');
 		}
 	    //$.blockUI({ message: '' });
-	    $('.ui-widget-overlay').show();
+	    $('#divOverlay').show();
 	    $("#dialog-form-cargaTexto").show();
 	    $("#dialog-form-cargaTexto").css({ 
 	        'left': ($(window).width() / 2 - $("#dialog-form-cargaTexto").width() / 2) + 'px', 
-	        'top': ($(window).height() / 2 - $("#dialog-form-cargaTexto").height() / 2) + 'px'
+	        'top': ($(window).height() - $("#dialog-form-cargaTexto").height() ) + 'px'
 	    });
 	}
 }
@@ -1245,7 +1275,7 @@ function regresarFormularioCargaTexto(){
 	$('#flagCarga').val('');
 	$("#dialog-form-cargaTexto").hide();
 	//$.unblockUI();
-	$('.ui-widget-overlay').hide();   
+	$('#divOverlay').hide();   
 }
 
 //////////
@@ -1256,7 +1286,7 @@ function regresarFormularioCargaTexto(){
 .inputText-dashed {
 	border-style: dashed; 
 	border-color: black;
-	width:60px;
+	width:100px;
 }
 </style>
 
@@ -1416,7 +1446,7 @@ function regresarFormularioCargaTexto(){
 									<table style="width: 100%;" border="0">
 										<tr>
 												<td>
-													<input type="button" class="net-button-small" id="<portlet:namespace/>excelFormato" name="<portlet:namespace/>excelFormato"  value="Excel" />
+													<%-- <input type="button" class="net-button-small" id="<portlet:namespace/>excelFormato" name="<portlet:namespace/>excelFormato"  value="Excel" /> --%>
 												</td>
 												<td></td>
 												<td></td>
@@ -1429,7 +1459,7 @@ function regresarFormularioCargaTexto(){
 													</div> 	
 												</td>
 												<td align="right" width="90px">
-													<input type="button" class="net-button-small" id="<portlet:namespace/>salirFormato" name="<portlet:namespace/>salirFormato"  value="Salir" />
+													<%-- <input type="button" class="net-button-small" id="<portlet:namespace/>salirFormato" name="<portlet:namespace/>salirFormato"  value="Salir" /> --%>
 												</td>
 											</tr>
 									</table>
@@ -1478,24 +1508,28 @@ function regresarFormularioCargaTexto(){
 									   				</table>
 												</td>
 											</tr>
-									   		<tr class="filete-bottom">
+											<tr height="10px">
+												<td></td>
+											</tr>
+									   		<tr>
 									   			<td>
 									   				<table class="" style="width: 100%;" border="0">
 									   					<tr>
 									   						<td>
-									   							<fieldset>
+									   							<fieldset class="net-frame-border" >
 									   								<table>
 									   									<tr>
-									   										<td colspan="4">
+									   										<td colspan="5">
 									   											<output class="net-titulo">Periodo a declarar</output>
 									   										</td>
 									   									</tr>
 									   									<tr>
-									   										<td>Año:</td>
+									   										<td width="40px">Año:</td>
 									   										<td>
 									   											<input type="text" name="i_aniopresent" id="i_aniopresent" style="width:50px;" maxlength="4" >
 									   										</td>
-									   										<td>Mes</td>
+									   										<td width="10px" ></td>
+									   										<td width="40px">Mes:</td>
 									   										<td>
 									   											<select id="s_mes_present" name="s_mes_present" class="select" style="width:104px;" >
 																					<option value="">-Seleccione-</option>
@@ -1511,19 +1545,20 @@ function regresarFormularioCargaTexto(){
 									   						<td width="10px">
 									   						</td>
 									   						<td>
-									   							<fieldset>
+									   							<fieldset class="net-frame-border" >
 									   								<table>
 									   									<tr>
-									   										<td colspan="4">
+									   										<td colspan="5">
 									   											<output class="net-titulo">Periodo a ejecución</output>
 									   										</td>
 									   									</tr>
 									   									<tr>
-									   										<td>Año:</td>
+									   										<td width="40px">Año:</td>
 									   										<td>
 									   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" >
 									   										</td>
-									   										<td>Mes</td>
+									   										<td width="10px" ></td>
+									   										<td width="40px">Mes:</td>
 									   										<td>
 									   											<select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width:104px;" >
 																					<option value="">-Seleccione-</option>
@@ -1540,7 +1575,10 @@ function regresarFormularioCargaTexto(){
 									   				</table>
 									   			</td>
 									   		</tr>
-									   		<tr height="10px">
+									   		<tr height="10px"  class="filete-bottom">
+												<td></td>
+											</tr>
+											<tr height="10px">
 												<td></td>
 											</tr>
 									   		<tr>
@@ -1583,6 +1621,10 @@ function regresarFormularioCargaTexto(){
 									   							</table>
 									   						</td>
 									   					</tr>
+									   					<tr height="10px" >
+									   						<td colspan="4">
+									   						</td>
+									   					</tr>
 									   					<tr height="10px" class="filete-top">
 									   						<td colspan="4">
 									   						</td>
@@ -1598,35 +1640,35 @@ function regresarFormularioCargaTexto(){
 									   					</tr>
 									   					<tr>
 									   						<td>
-									   						&nbsp;&nbsp;1.1 Número de Empadronados
+									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 Número de Empadronados
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroEmpad_r" id="i_nroEmpad_r" style="width:60px;"  >
+									   							<input type="text" name="i_nroEmpad_r" id="i_nroEmpad_r" style="width:100px;"  >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroEmpad_p" id="i_nroEmpad_p" style="width:60px;" >
+									   							<input type="text" name="i_nroEmpad_p" id="i_nroEmpad_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroEmpad_l" id="i_nroEmpad_l" style="width:60px;"  >
+									   							<input type="text" name="i_nroEmpad_l" id="i_nroEmpad_l" style="width:100px;"  >
 									   						</td>
 									   					</tr>
 									   					<tr>
 									   						<td>
-									   						&nbsp;&nbsp;1.2 Costo Estándar Unitario
+									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Costo Estándar Unitario
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_costoUnitEmpad_r" id="i_costoUnitEmpad_r" style="width:60px;" >
+									   							<input type="text" name="i_costoUnitEmpad_r" id="i_costoUnitEmpad_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_costoUnitEmpad_p" id="i_costoUnitEmpad_p" style="width:60px;" >
+									   							<input type="text" name="i_costoUnitEmpad_p" id="i_costoUnitEmpad_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_costoUnitEmpad_l" id="i_costoUnitEmpad_l" style="width:60px;" >
+									   							<input type="text" name="i_costoUnitEmpad_l" id="i_costoUnitEmpad_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr>
 									   						<td>
-									   						&nbsp;&nbsp;1.3 Costo Total Empadronamiento
+									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.3 Costo Total Empadronamiento
 									   						</td>
 									   						<td align="center">
 									   							<input type="text" name="i_costoTotalEmpad_r" id="i_costoTotalEmpad_r" class="inputText-dashed">
@@ -1653,35 +1695,35 @@ function regresarFormularioCargaTexto(){
 									   					</tr>
 									   					<tr>
 									   						<td>
-									   						&nbsp;&nbsp;2.1 Número de Agentes Autorizados GLP
+									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Número de Agentes Autorizados GLP
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroAgentGlp_r" id="i_nroAgentGlp_r" style="width:60px;" >
+									   							<input type="text" name="i_nroAgentGlp_r" id="i_nroAgentGlp_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroAgentGlp_p" id="i_nroAgentGlp_p" style="width:60px;" >
+									   							<input type="text" name="i_nroAgentGlp_p" id="i_nroAgentGlp_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroAgentGlp_l" id="i_nroAgentGlp_l" style="width:60px;" >
+									   							<input type="text" name="i_nroAgentGlp_l" id="i_nroAgentGlp_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr>
 									   						<td>
-									   						&nbsp;&nbsp;2.2 Costo Estándar Unitario
+									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Costo Estándar Unitario
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_costoUnitAgent_r" id="i_costoUnitAgent_r" style="width:60px;" >
+									   							<input type="text" name="i_costoUnitAgent_r" id="i_costoUnitAgent_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_costoUnitAgent_p" id="i_costoUnitAgent_p" style="width:60px;" >
+									   							<input type="text" name="i_costoUnitAgent_p" id="i_costoUnitAgent_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_costoUnitAgent_l" id="i_costoUnitAgent_l" style="width:60px;" >
+									   							<input type="text" name="i_costoUnitAgent_l" id="i_costoUnitAgent_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr>
 									   						<td>
-									   						&nbsp;&nbsp;2.3 Costo Total Gestión de Red de Agentes GLP
+									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.3 Costo Total Gestión de Red de Agentes GLP
 									   						</td>
 									   						<td align="center">
 									   							<input type="text" name="i_costoTotalAgent_r" id="i_costoTotalAgent_r" class="inputText-dashed" >
@@ -1702,13 +1744,13 @@ function regresarFormularioCargaTexto(){
 									   						3. Desplazamiento de Personal
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_despPersonal_r" id="i_despPersonal_r" style="width:60px;" >
+									   							<input type="text" name="i_despPersonal_r" id="i_despPersonal_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_despPersonal_p" id="i_despPersonal_p" style="width:60px;" >
+									   							<input type="text" name="i_despPersonal_p" id="i_despPersonal_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_despPersonal_l" id="i_despPersonal_l" style="width:60px;" >
+									   							<input type="text" name="i_despPersonal_l" id="i_despPersonal_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr>
@@ -1716,16 +1758,16 @@ function regresarFormularioCargaTexto(){
 									   						4. Actividades Extraordinarias
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_activExtraord_r" id="i_activExtraord_r" style="width:60px;" >
+									   							<input type="text" name="i_activExtraord_r" id="i_activExtraord_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_activExtraord_p" id="i_activExtraord_p" style="width:60px;" >
+									   							<input type="text" name="i_activExtraord_p" id="i_activExtraord_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_activExtraord_l" id="i_activExtraord_l" style="width:60px;" >
+									   							<input type="text" name="i_activExtraord_l" id="i_activExtraord_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
-									   					<tr>
+									   					<tr height="10px">
 									   						<td colspan="4">
 									   						</td>
 									   					</tr>
@@ -1733,7 +1775,7 @@ function regresarFormularioCargaTexto(){
 									   						<td colspan="4">
 									   						</td>
 									   					</tr>
-									   					<tr>
+									   					<tr height="10px">
 									   						<td colspan="4">
 									   						</td>
 									   					</tr>
@@ -1805,38 +1847,41 @@ function regresarFormularioCargaTexto(){
 									   					<tr height="10px">
 															<td colspan="4"></td>
 														</tr>
-									   					<tr class="filete">
+									   					<tr class="filete-top">
 									   						<td colspan="4">
 									   							<table style="width:100%">
 									   								<tr>
-									   									<td colspan="2" width="40%">
-									   										<fieldset class="net-frame-border">
+									   									<td width="35%">
+									   										<fieldset id="panelCargaArchivos"  class="net-frame-border">
+									   											<legend>Subir de:  </legend>		
 									   											<table style="width:100%">
 									   												<tr>
-									   													<td width="50%">
+									   													<td width="50%" align="center">
 									   														<input type="button" class="net-button-small"   id="<portlet:namespace/>cargaExcel" name="<portlet:namespace/>cargaExcel" value="EXCEL" />
 									   													</td>
-									   													<td width="50%">
+									   													<td width="50%" align="center">
 									   														<input type="button" class="net-button-small"   id="<portlet:namespace/>cargaTxt" name="<portlet:namespace/>cargaTxt" value="TXT" />
 									   													</td>
 									   												</tr>
 									   											</table>
 									   										</fieldset>
 									   									</td>
-									   									<td colspan="3" width="60%">
+									   									<td width="10%">
+									   									</td>
+									   									<td width="55%">
 									   										<table style="width:100%">
 								   												<tr>
-								   													<td width="25%">
+								   													<td width="25%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>guardarFormato" name="<portlet:namespace/>guardarFormato" value="Grabar" />
 								   													</td>
-								   													<td width="25%">
-								   														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormato" name="<portlet:namespace/>regresarFormato" value="Regresar" />
-								   													</td>
-								   													<td width="25%">
+								   													<td width="25%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>validacion" name="<portlet:namespace/>validacion" value="Validación" />
 								   													</td>
-								   													<td width="25%">
+								   													<td width="25%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>enviodefinitivo" name="<portlet:namespace/>enviodefinitivo" value="Envío Def." />
+								   													</td>
+								   													<td width="25%" align="center">
+								   														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormato" name="<portlet:namespace/>regresarFormato" value="Regresar" />
 								   													</td>
 								   												</tr>
 									   											</table>
@@ -1849,7 +1894,12 @@ function regresarFormularioCargaTexto(){
 									   							
 									   						</td>
 									   					</tr>
-									   					
+									   					<tr height="10px" class="filete-bottom">
+															<td colspan="4"></td>
+														</tr>
+														<tr height="10px">
+															<td colspan="4"></td>
+														</tr>
 									   					
 									   				</table>
 									   			</td>
@@ -1906,11 +1956,11 @@ function regresarFormularioCargaTexto(){
 						
 						</div>
 					
-						<div > 
+						<div class="ui-dialog-content ui-widget-content" > 
 							<!--tabla-->
 							
 							<fieldset class="">
-							<table>
+							<table style="width:100%;">
 								<tr>
 									<td></td>
 								</tr>
@@ -1920,7 +1970,7 @@ function regresarFormularioCargaTexto(){
 										<input  type="file" id="archivoExcel"name="archivoExcel"/>
 									</td>
 								</tr>
-								<tr>
+<%-- 								<tr>
 									<td></td>
 								</tr>
 								<tr>
@@ -1931,7 +1981,7 @@ function regresarFormularioCargaTexto(){
 								</tr>
 								<tr>
 									<td></td>
-								</tr>
+								</tr> --%>
 							</table>
 						</fieldset>
 							
@@ -1940,10 +1990,13 @@ function regresarFormularioCargaTexto(){
 
 						<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 							<div class="ui-dialog-buttonset">
-							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-								onclick="regresarFormularioCargaExcel();" >
-								<span class="ui-button-text">Cerrar</span>
-							</button>
+								<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel" id="<portlet:namespace/>cargarFormatoExcel" value="Cargar"/>
+								<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoExcel" 
+									id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar" onclick="regresarFormularioCargaExcel();"/>
+								<!-- <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+									onclick="regresarFormularioCargaExcel();" >
+									<span class="ui-button-text">Cerrar</span>
+								</button> -->
 							</div>
 						</div>
 					</div>
@@ -1958,11 +2011,11 @@ function regresarFormularioCargaTexto(){
 								<span class="ui-icon ui-icon-closethick">close</span>
 							</a>
 						</div>
-						<div  > 
+						<div class="ui-dialog-content ui-widget-content"  > 
 							<!--tabla-->
 							
 							<fieldset class="">
-							<table>
+							<table style="width:100%;">
 								<tr>
 									<td></td>
 								</tr>
@@ -1972,7 +2025,7 @@ function regresarFormularioCargaTexto(){
 										<input  type="file" id="archivoTxt"name="archivoTxt"/>
 									</td>
 								</tr>
-								<tr>
+<%-- 								<tr>
 									<td></td>
 								</tr>
 								<tr>
@@ -1983,7 +2036,7 @@ function regresarFormularioCargaTexto(){
 								</tr>
 								<tr>
 									<td></td>
-								</tr>
+								</tr> --%>
 							</table>
 						</fieldset>
 							
@@ -1993,10 +2046,13 @@ function regresarFormularioCargaTexto(){
 
 						<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 							<div class="ui-dialog-buttonset">
-							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-								onclick="regresarFormularioCargaTexto();" >
-								<span class="ui-button-text">Cerrar</span>
-							</button>
+								<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto" id="<portlet:namespace/>cargarFormatoTexto" value="Cargar"/>
+								<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoTexto" 
+									id="<portlet:namespace/>cerrarFormatoTexto" value="Cerrar" onclick="regresarFormularioCargaTexto();"/>
+								<!-- <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+									onclick="regresarFormularioCargaTexto();" >
+										<span class="ui-button-text">Cerrar</span>
+								</button> -->
 							</div>
 						</div>
 					</div>
@@ -2054,6 +2110,9 @@ function regresarFormularioCargaTexto(){
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="dialog-confirm-content">¿Está seguro?</label>
 		</p>
+	</div>
+
+	<div id="divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
 	</div>
 
 </form> 
