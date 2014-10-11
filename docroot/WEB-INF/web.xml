@@ -29,10 +29,23 @@
          <load-on-startup>1</load-on-startup>  
      </servlet>  
    
+   <servlet>
+		<description></description>
+		<display-name>ExportExcelPlus</display-name>
+		<servlet-name>ExportExcelPlus</servlet-name>
+		<servlet-class>gob.osinergmin.fise.gart.servlet.ServletExportExcelPlus</servlet-class>
+  </servlet>
+   
      <servlet-mapping>  
          <servlet-name>ViewRendererServlet</servlet-name>  
          <url-pattern>/WEB-INF/servlet/view</url-pattern>  
      </servlet-mapping> 
+     
+     <servlet-mapping>
+		<servlet-name>ExportExcelPlus</servlet-name>
+		<url-pattern>/ExportExcelPlus</url-pattern>
+	</servlet-mapping>
+     
   <jsp-config>
   	<taglib>
   		<taglib-uri>http://java.sun.com/portlet_2_0</taglib-uri>

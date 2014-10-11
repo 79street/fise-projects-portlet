@@ -1,6 +1,7 @@
 package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.Formato12ACBean;
+import gob.osinergmin.fise.bean.Formato12AMensajeBean;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.CfgCampo;
@@ -17,6 +18,9 @@ import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
+import gob.osinergmin.fise.xls.XlsTableConfig;
+import gob.osinergmin.fise.xls.XlsWorkbookConfig;
+import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,12 +47,13 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.hsqldb.lib.HashSet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +85,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 @Controller("formato12AGartController")
@@ -196,6 +201,9 @@ public class Formato12AGartController {
   		try {
   			response.setContentType("application/json");	
   			
+  			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
+	        HttpSession session = req.getSession();
+  			
 		    JSONArray jsonArray = new JSONArray();
   			String codEmpresa = request.getParameter("s_empresa_b");
   			String anioDesde = request.getParameter("i_anio_d");
@@ -227,6 +235,19 @@ public class Formato12AGartController {
   				fiseFormato12AC.setDescMesEjecucion(listaMes.get(fiseFormato12AC.getId().getMesEjecucionGasto()));
   				jsonArray.put(new Formato12AGartJSON().asJSONObject(fiseFormato12AC));
   			}
+  			
+  			//************************************************************************
+			//Generamos la configuración de la exportación a Excel
+			//************************************************************************
+  			XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
+			xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_FORMATO12A);
+			List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
+			tables.add(new XlsTableConfig(listaFormato,FiseConstants.TIPO_FORMATO_12));
+			List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
+			sheets.add(new XlsWorksheetConfig(FiseConstants.NOMBRE_HOJA_FORMATO12A,tables));
+			xlsWorkbookConfig.setSheets(sheets);
+			session.setAttribute(FiseConstants.KEY_CFG_EXCEL_EXPORT,xlsWorkbookConfig);	
+		    
   			logger.info("arreglo json:"+jsonArray);
   			PrintWriter pw = response.getWriter();
   			pw.write(jsonArray.toString());
@@ -558,8 +579,9 @@ public class Formato12AGartController {
 	public void subirDocumento(ActionRequest request,ActionResponse response){
 		
 		logger.info("--- cargar documento");
-		FiseFormato12AC formato = new FiseFormato12AC();
-		String sMsg = "";
+		//FiseFormato12AC formato = new FiseFormato12AC();
+		Formato12AMensajeBean formatoMensaje = new Formato12AMensajeBean();
+		//StringBuffer sMsg = new StringBuffer();
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		
@@ -581,25 +603,25 @@ public class Formato12AGartController {
 		FileEntry fileEntry=null;
 		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			formato = readExcelFile(fileEntry, sMsg, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioPresNew, mesPresNew, FiseConstants.ETAPA_SOLICITUD);
+			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioPresNew, mesPresNew, FiseConstants.ETAPA_SOLICITUD);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			formato = readExcelFile(fileEntry, sMsg, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioPresNew, mesPresEdit, etapaEdit);
+			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioPresNew, mesPresEdit, etapaEdit);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
 			fileEntry =this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-			formato =	readTxtFile(fileEntry, sMsg, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioPresNew, mesPresNew, FiseConstants.ETAPA_SOLICITUD);
+			formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioPresNew, mesPresNew, FiseConstants.ETAPA_SOLICITUD);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-			formato =	readTxtFile(fileEntry, sMsg, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit, etapaEdit);
+			formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit, etapaEdit);
 		}
 		
-		if( formato!=null ){
-			String codEmpresa = formato.getId().getCodEmpresa();
-			String anoPresentacion = String.valueOf(formato.getId().getAnoPresentacion());
-			String mesPresentacion = String.valueOf(formato.getId().getMesPresentacion());
-			String anoEjecucion = String.valueOf(formato.getId().getAnoEjecucionGasto());
-			String mesEjecucion = String.valueOf(formato.getId().getMesEjecucionGasto());
-			String etapa = String.valueOf(formato.getId().getEtapa());
+		if( formatoMensaje.getFiseFormato12AC()!=null ){
+			String codEmpresa = formatoMensaje.getFiseFormato12AC().getId().getCodEmpresa();
+			String anoPresentacion = String.valueOf(formatoMensaje.getFiseFormato12AC().getId().getAnoPresentacion());
+			String mesPresentacion = String.valueOf(formatoMensaje.getFiseFormato12AC().getId().getMesPresentacion());
+			String anoEjecucion = String.valueOf(formatoMensaje.getFiseFormato12AC().getId().getAnoEjecucionGasto());
+			String mesEjecucion = String.valueOf(formatoMensaje.getFiseFormato12AC().getId().getMesEjecucionGasto());
+			String etapa = String.valueOf(formatoMensaje.getFiseFormato12AC().getId().getEtapa());
 			
 			pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresa, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anoPresentacion", anoPresentacion, PortletSession.APPLICATION_SCOPE);
@@ -607,10 +629,28 @@ public class Formato12AGartController {
 		    pRequest.getPortletSession().setAttribute("anoEjecucion", anoEjecucion, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("mesEjecucion", mesEjecucion, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("etapa", etapa, PortletSession.APPLICATION_SCOPE);
+		}else{
+			if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) || flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
+				pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresaNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoPresentacion", anioPresNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesPresentacion", mesPresNew, PortletSession.APPLICATION_SCOPE);
+			    //pRequest.getPortletSession().setAttribute("anoEjecucion", anioEjecEdit, PortletSession.APPLICATION_SCOPE);
+			    //pRequest.getPortletSession().setAttribute("mesEjecucion", mesEjecEdit, PortletSession.APPLICATION_SCOPE);
+			}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) || flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
+				pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresaEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoPresentacion", anioPresEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesPresentacion", mesPresEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoEjecucion", anioEjecEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesEjecucion", mesEjecEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("etapa", etapaEdit, PortletSession.APPLICATION_SCOPE);
+			}
+			
 		}
-		
-		pRequest.getPortletSession().setAttribute("mensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
-		
+		if(formatoMensaje.getMensajeInformacion()!=null && !formatoMensaje.getMensajeInformacion().equals(FiseConstants.BLANCO)){
+			//System.out.println(sMsg);
+			pRequest.getPortletSession().setAttribute("mensajeInformacion", formatoMensaje.getMensajeInformacion(), PortletSession.APPLICATION_SCOPE);
+		}
+
 	}
 	
 	/////////////////////////////////////////////////////////////////
@@ -654,13 +694,14 @@ public class Formato12AGartController {
 				throw new FileMimeTypeException(mimeType);
 			}
 			//solo para txt/verificar luego
-			/*if( FiseConstants.TIPOARCHIVO_XLS.equals(tipoArchivo) ){
-				String contenType=MimeTypesUtil.getContentType(file,nameFileInput);
-				logger.info("MIME CONTENT TYPE:"+contenType);
-				if (Arrays.binarySearch(mimeTypes, contenType) < 0) {
-					throw new FileMimeTypeException(contenType);
-				}
-			}*/
+			//if( FiseConstants.TIPOARCHIVO_XLS.equals(tipoArchivo) ){
+				//String contenType=MimeTypesUtil.getContentType(file,nameFileInput);´
+				//String contenType=MimeTypesUtil.getContentType(file);
+				//logger.info("MIME CONTENT TYPE:"+contenType);
+				//if (Arrays.binarySearch(mimeTypes, contenType) < 0) {
+				//	throw new FileMimeTypeException(contenType);
+				//}
+			//}
 			
 						 
 			logger.info("Size:"+size+" bytes");
@@ -681,7 +722,7 @@ public class Formato12AGartController {
 			String title = sourceFileName;
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), request);
 			try {
-				fileEntry = DLAppServiceUtil.getFileEntry(dlFolder.getGroupId(), folderId, sourceFileName);
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(dlFolder.getGroupId(), folderId, sourceFileName);
 			} catch (NoSuchFileEntryException e) {
 				logger.info("el archivo no existe en el folder del repositorio");
 				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, "", "Subido el "+hoy, file, serviceContext);
@@ -695,16 +736,18 @@ public class Formato12AGartController {
 		
 	}
 	
-	public FiseFormato12AC readExcelFile(FileEntry archivo, String sMsg, User user, String flagCarga, String codEmpresa, 	String anioPres, String mesPres, String anioEjec, String mesEjec, String etapaEdit) {
+	public Formato12AMensajeBean readExcelFile(FileEntry archivo, User user, String flagCarga, String codEmpresa, 	String anioPres, String mesPres, String anioEjec, String mesEjec, String etapaEdit) {
 		
 		//---------------------
 		//FLAG CARGA:
 		//	1: para registros nuevos
 		//	2: para registros modificados
 		//---------------------
+		Formato12AMensajeBean formatoMensaje = new Formato12AMensajeBean();
+		
 		InputStream is=null;
 		FiseFormato12AC objeto = null;
-		//String sMsg = "";
+		String sMsg = "";
 		
 		try {
 			if (archivo != null) {
@@ -908,6 +951,7 @@ public class Formato12AGartController {
 							formatoModif = formatoService.obtenerFormato12ACByPK(id);
 							objeto = formatoService.modificarFormato12AC(formulario, formatoModif);
 						}
+						
 					}else{
 						sMsg = sMsg + "El archivo cargado no corresponde a los valores del registro del formulario."+FiseConstants.SALTO_LINEA;
 					}
@@ -915,25 +959,29 @@ public class Formato12AGartController {
 				}
 					
 			}
+			is.close();
 
 		} catch (Exception e) {
 			logger.error("Error al leer el archivo excel:",e);
 		}finally{
 			StreamUtil.cleanUp(is);
 		}
-		return objeto;
+		formatoMensaje.setMensajeInformacion(sMsg);
+		formatoMensaje.setFiseFormato12AC(objeto);
+		return formatoMensaje;
 	}
 	
-	public FiseFormato12AC readTxtFile(FileEntry archivo, String sMsg, UploadPortletRequest uploadPortletRequest, User user, String flagCarga, String codEmpresaEdit, String anioPresEdit, String mesPresEdit, String anioEjecEdit, String mesEjecEdit, String etapaEdit) {
+	public Formato12AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest uploadPortletRequest, User user, String flagCarga, String codEmpresaEdit, String anioPresEdit, String mesPresEdit, String anioEjecEdit, String mesEjecEdit, String etapaEdit) {
 		
 		//---------------------
 		//FLAG CARGA:
 		//	3: para registros nuevos
 		//	4: para registros modificados
 		//---------------------
+		Formato12AMensajeBean formatoMensaje = new Formato12AMensajeBean();
 		InputStream is=null;
 		FiseFormato12AC objeto = null;
-		//String sMsg = "";
+		String sMsg = "";
 		int cont = 0;
 		List<CfgCampo> listaCampo = null;
 		try{
@@ -1104,7 +1152,7 @@ public class Formato12AGartController {
 						sMsg = sMsg + "Los datos contenidos en el archivo no coinciden entre ellos."+FiseConstants.SALTO_LINEA;
 					}
 				}
-				
+				is.close();
 			}else{
 				throw new Exception("No está configurado los campos de las tablas del Formato 12A");
 			}
@@ -1118,7 +1166,10 @@ public class Formato12AGartController {
 			  			   
 		  }
 		//pRequest.getPortletSession().setAttribute("MensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
-		return objeto;
+		formatoMensaje.setFiseFormato12AC(objeto);
+		formatoMensaje.setMensajeInformacion(sMsg);
+		
+		return formatoMensaje;
 	}
 	
 }
