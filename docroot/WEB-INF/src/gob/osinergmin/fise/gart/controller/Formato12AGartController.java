@@ -2,6 +2,7 @@ package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.Formato12ACBean;
 import gob.osinergmin.fise.bean.Formato12AMensajeBean;
+import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.CfgCampo;
@@ -70,7 +71,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
@@ -136,6 +136,7 @@ public class Formato12AGartController {
 		String etapa = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
 		//
 		String msg = (String)pRequest.getPortletSession().getAttribute("mensajeInformacion", PortletSession.APPLICATION_SCOPE);
+		List<MensajeErrorBean> listaError = (List<MensajeErrorBean>)pRequest.getPortletSession().getAttribute("listaError", PortletSession.APPLICATION_SCOPE);
 		
 		obj.setCodEmpresa(codEmpresa!=null?codEmpresa:"");
 		obj.setAnoPres(anioPresentacion!=null?anioPresentacion:"");
@@ -159,6 +160,9 @@ public class Formato12AGartController {
 		model.addAttribute("listaMes", listaMes);
 		model.addAttribute("listaEmpresa", listaEmpresa);
 		model.addAttribute("listaZonaBenef", listaZonaBenef);
+		if( listaError!=null && listaError.size()>0){
+			model.addAttribute("listaError", listaError);
+		}
 		
 		String anioDesde = FechaUtil.obtenerNroAnioFechaActual();
 		String mesDesde = String.valueOf(Integer.parseInt(FechaUtil.obtenerNroMesFechaActual())-1);
@@ -646,8 +650,10 @@ public class Formato12AGartController {
 			}
 			
 		}
-		if(formatoMensaje.getMensajeInformacion()!=null && !formatoMensaje.getMensajeInformacion().equals(FiseConstants.BLANCO)){
+		if(formatoMensaje.getListaMensajeError()!=null && formatoMensaje.getListaMensajeError().size()>0){
 			//System.out.println(sMsg);
+			pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
+			//tambien ha generado la tira del error.
 			pRequest.getPortletSession().setAttribute("mensajeInformacion", formatoMensaje.getMensajeInformacion(), PortletSession.APPLICATION_SCOPE);
 		}
 
@@ -748,6 +754,8 @@ public class Formato12AGartController {
 		InputStream is=null;
 		FiseFormato12AC objeto = null;
 		String sMsg = "";
+		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
+		int cont = 0;
 		
 		try {
 			if (archivo != null) {
@@ -757,7 +765,12 @@ public class Formato12AGartController {
 					libro = new HSSFWorkbook(is);//Se lee libro xls
 				} catch (Exception e1) {
 					logger.warn("El archivo no es formato XLS");
+					cont++;
 					sMsg = sMsg + "El archivo " + archivo.getDescription() + " no corresponde al formato XLS.";
+					MensajeErrorBean error = new MensajeErrorBean();
+					error.setId(cont);
+					error.setDescripcion("El archivo " + archivo.getDescription() + " no corresponde al formato XLS.");
+					listaError.add(error);
 					throw new Exception("El archivo no corresponde al formato XLS.");
 				}
 				int nroHojaSelec=0;
@@ -807,6 +820,11 @@ public class Formato12AGartController {
 					}else{
 						formulario.setCodigoEmpresa("");
 						sMsg = sMsg + "El codigo de empresa no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El codigo de empresa no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_STRING == celdaAnio.getCellType()  ){
 						formulario.setAnioPresent(Long.parseLong(celdaAnio.toString()));
@@ -814,7 +832,12 @@ public class Formato12AGartController {
 					}else{
 						formulario.setAnioPresent(0);
 						formulario.setAnioEjecuc(0);
-						sMsg = sMsg + "El Año y mes de presentación no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						sMsg = sMsg + "El Año de presentación no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El Año de presentación no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_STRING == celdaMes.getCellType()  ){
 						formulario.setMesPresent(Long.parseLong(celdaMes.toString()));
@@ -822,24 +845,44 @@ public class Formato12AGartController {
 					}else{
 						formulario.setMesPresent(0);
 						formulario.setMesEjecuc(0);
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El mes de presentación no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadRural.getCellType()  ){
 						formulario.setNroEmpadR(new Double(nroEmpadRural.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadR(0);
 						sMsg = sMsg + "El número de empadronados Rural no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El número de empadronados Rural no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadProv.getCellType()  ){
 						formulario.setNroEmpadP(new Double(nroEmpadProv.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadP(0);
 						sMsg = sMsg + "El número de empadronados Provincia no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El número de empadronados Provincia no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadLima.getCellType()  ){
 						formulario.setNroEmpadL(new Double(nroEmpadLima.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroEmpadL(0);
 						sMsg = sMsg + "El número de empadronados Lima no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El número de empadronados Lima no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					//
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentRural.getCellType()  ){
@@ -847,18 +890,33 @@ public class Formato12AGartController {
 					}else{
 						formulario.setNroAgentR(0);
 						sMsg = sMsg + "El número de agentes Rural no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El número de agentes Rural no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentProv.getCellType()  ){
 						formulario.setNroAgentP(new Double(nroAgentProv.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroAgentP(0);
 						sMsg = sMsg + "El número de agentes Provincia no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El número de agentes Provincia no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentLima.getCellType()  ){
 						formulario.setNroAgentL(new Double(nroAgentLima.getNumericCellValue()).longValue());
 					}else{
 						formulario.setNroAgentL(0);
 						sMsg = sMsg + "El número de agentes Lima no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El número de agentes Lima no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					//
 					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalR.getCellType()  ){
@@ -866,36 +924,66 @@ public class Formato12AGartController {
 					}else{
 						formulario.setDesplPersonalR(new BigDecimal(0.00));
 						sMsg = sMsg + "El desplazamiento personal Rural no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El desplazamiento personal Rural no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalP.getCellType()  ){
 						formulario.setDesplPersonalP(new BigDecimal(despPersonalP.getNumericCellValue()));
 					}else{
 						formulario.setDesplPersonalP(new BigDecimal(0.00));
 						sMsg = sMsg + "El desplazamiento personal Provincia no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El desplazamiento personal Provincia no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalL.getCellType()  ){
 						formulario.setDesplPersonalL(new BigDecimal(despPersonalL.getNumericCellValue()));
 					}else{
 						formulario.setDesplPersonalL(new BigDecimal(0.00));
 						sMsg = sMsg + "El desplazamiento personal Lima no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El desplazamiento personal Lima no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordR.getCellType()  ){
 						formulario.setActivExtraordR(new BigDecimal(activExtraordR.getNumericCellValue()));
 					}else{
 						formulario.setActivExtraordR(new BigDecimal(0.00));
 						sMsg = sMsg + "Las actividades extraordinarias Rural no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("Las actividades extraordinarias Rural no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordP.getCellType()  ){
 						formulario.setActivExtraordP(new BigDecimal(activExtraordP.getNumericCellValue()));
 					}else{
 						formulario.setActivExtraordP(new BigDecimal(0.00));
 						sMsg = sMsg + "Las actividades extraordinarias Provincia no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("Las actividades extraordinarias Provincia no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordL.getCellType()  ){
 						formulario.setActivExtraordL(new BigDecimal(activExtraordL.getNumericCellValue()));
 					}else{
 						formulario.setActivExtraordL(new BigDecimal(0.00));
 						sMsg = sMsg + "Las actividades extraordinarias Lima no corresponde al formato requerido."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("Las actividades extraordinarias Lima no corresponde al formato requerido.");
+						listaError.add(error);
 					}
 					//obtenemos los costos unitarios del formato padre
 					FiseFormato14AD detalleRuralPadre = null;
@@ -954,6 +1042,11 @@ public class Formato12AGartController {
 						
 					}else{
 						sMsg = sMsg + "El archivo cargado no corresponde a los valores del registro del formulario."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El archivo cargado no corresponde a los valores del registro del formulario.");
+						listaError.add(error);
 					}
 					
 				}
@@ -962,12 +1055,20 @@ public class Formato12AGartController {
 			is.close();
 
 		} catch (Exception e) {
-			logger.error("Error al leer el archivo excel:",e);
+			logger.error("Error al leer el archivo excel.",e);
+			cont++;
+			MensajeErrorBean errorBean = new MensajeErrorBean();
+			errorBean.setId(cont);
+			errorBean.setDescripcion("Error al leer el archivo excel:");
+			listaError.add(errorBean);
 		}finally{
 			StreamUtil.cleanUp(is);
 		}
 		formatoMensaje.setMensajeInformacion(sMsg);
 		formatoMensaje.setFiseFormato12AC(objeto);
+		if(listaError.size()>0)
+			formatoMensaje.setListaMensajeError(listaError);
+		
 		return formatoMensaje;
 	}
 	
@@ -981,6 +1082,7 @@ public class Formato12AGartController {
 		Formato12AMensajeBean formatoMensaje = new Formato12AMensajeBean();
 		InputStream is=null;
 		FiseFormato12AC objeto = null;
+		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
 		String sMsg = "";
 		int cont = 0;
 		List<CfgCampo> listaCampo = null;
@@ -1015,13 +1117,28 @@ public class Formato12AGartController {
 							listaDetalleTxt.add(sCurrentLine);
 						}else{
 							sMsg = sMsg + "Los datos contenidos en el archivo no estan completos ."+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion("Los datos contenidos en el archivo no estan completos .");
+							listaError.add(error);
 						}
 					}else{
 						sMsg = sMsg + "El archivo cargado debe contener datos para poder ser procesado."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El archivo cargado debe contener datos para poder ser procesado.");
+						listaError.add(error);
 					}
 					sCurrentLine = br.readLine();
 					if( cont>3 ){
 						sMsg = sMsg + "El archivo no debe contener más de 3 lineas de detalle."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("El archivo no debe contener más de 3 lineas de detalle.");
+						listaError.add(error);
 						break;
 					}
 				}
@@ -1051,6 +1168,11 @@ public class Formato12AGartController {
 							if( zonaSet.contains(zonaBenef) ){
 								sMsg = sMsg + "Hay registros que contienen el mismo Zona de Beneficiario."+FiseConstants.SALTO_LINEA;
 								process=false;
+								cont++;
+								MensajeErrorBean error = new MensajeErrorBean();
+								error.setId(cont);
+								error.setDescripcion("Hay registros que contienen el mismo Zona de Beneficiario.");
+								listaError.add(error);
 								break;
 							}else{
 								zonaSet.add(zonaBenef);
@@ -1059,6 +1181,11 @@ public class Formato12AGartController {
 						}else{
 							sMsg = sMsg + "Los datos contenidos en el archivo no son consistentes."+FiseConstants.SALTO_LINEA;
 							process=false;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion("Los datos contenidos en el archivo no son consistentes.");
+							listaError.add(error);
 							break;
 						}
 					}
@@ -1146,10 +1273,20 @@ public class Formato12AGartController {
 							}
 						}else{
 							sMsg = sMsg + "El archivo cargado no corresponde a los valores del registro del formulario."+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion("El archivo cargado no corresponde a los valores del registro del formulario.");
+							listaError.add(error);
 						}
 						
 					}else{
 						sMsg = sMsg + "Los datos contenidos en el archivo no coinciden entre ellos."+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion("Los datos contenidos en el archivo no coinciden entre ellos.");
+						listaError.add(error);
 					}
 				}
 				is.close();
@@ -1159,15 +1296,22 @@ public class Formato12AGartController {
 			
 		}catch (Exception e) {			   
 			  //refer.setCondicion(false);				  
-			  String error = e.getMessage();
-			  sMsg = sMsg+error;	        	
-			  System.out.println(error);
+			String error = e.getMessage();
+			sMsg = sMsg+error;	        	
+			System.out.println(error);
+			cont++;
+			MensajeErrorBean errorBean = new MensajeErrorBean();
+			errorBean.setId(cont);
+			errorBean.setDescripcion("Los datos contenidos en el archivo no coinciden entre ellos.");
+			listaError.add(errorBean);
 			  //throw new Exception(error); 
 			  			   
 		  }
 		//pRequest.getPortletSession().setAttribute("MensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
 		formatoMensaje.setFiseFormato12AC(objeto);
 		formatoMensaje.setMensajeInformacion(sMsg);
+		if(listaError.size()>0)
+			formatoMensaje.setListaMensajeError(listaError);
 		
 		return formatoMensaje;
 	}
