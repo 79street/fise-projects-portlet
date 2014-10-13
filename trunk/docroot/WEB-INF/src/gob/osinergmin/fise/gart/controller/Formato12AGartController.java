@@ -73,7 +73,11 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -86,6 +90,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.expando.model.ExpandoTableConstants;
+import com.liferay.portlet.expando.model.ExpandoValueModel;
+import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 
 @Controller("formato12AGartController")
 @RequestMapping("VIEW")
@@ -122,6 +129,7 @@ public class Formato12AGartController {
 	
 	private Map<String, String> mapaEmpresa;
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping
 	public  String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse){
 		logger.info("--- defaultView");
@@ -156,7 +164,7 @@ public class Formato12AGartController {
 	    //
 	    pRequest.getPortletSession().setAttribute("mensajeInformacion", "", PortletSession.APPLICATION_SCOPE);
 		
-		cargaInicial();
+		cargaInicial(renderRequest);
 		model.addAttribute("listaMes", listaMes);
 		model.addAttribute("listaEmpresa", listaEmpresa);
 		model.addAttribute("listaZonaBenef", listaZonaBenef);
@@ -180,14 +188,65 @@ public class Formato12AGartController {
 		return "formato12A";
 	}
 	
-	public void cargaInicial(){
+	public void cargaInicial(RenderRequest renderRequest){
 		listaMes = new HashMap<Long, String>();
 		listaEmpresa = new ArrayList<AdmEmpresa>();
 		listaZonaBenef = new ArrayList<FiseZonaBenef>();
 		
 		listaMes = FechaUtil.cargarMapaMeses();
 		logger.info("lista mes"+listaMes);
-		listaEmpresa = admEmpresaService.listarAdmEmpresa();
+		
+		//listaEmpresa = admEmpresaService.listarAdmEmpresa();
+		
+		//Cargar Listas
+		try {
+			ThemeDisplay theme = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			PermissionChecker permissionChecker = PermissionCheckerFactoryUtil.create(theme.getUser(), false);
+			
+			String cod_proceso = "FISE";    		
+			String cod_funcion = "REMISION";
+			String cadenaEmpresas ="";
+			
+			long groupId = theme.getScopeGroupId();
+			String name = theme.getPortletDisplay().getRootPortletId();
+			String primKey = theme.getPortletDisplay().getResourcePK();//portlet.getPortletId();
+			String actionAdministrador = "ADMINISTRADOR";
+			boolean bAdministrador = permissionChecker.hasPermission(groupId, name, primKey, actionAdministrador);
+		
+			List<Organization> lstOrgUser = OrganizationLocalServiceUtil.getUserOrganizations(theme.getUserId());
+			for (Organization organization : lstOrgUser) {
+				String codigo=null;
+				ExpandoValueModel dato = ExpandoValueLocalServiceUtil.getValue(organization.getCompanyId(), Organization.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, "cod_empresa", organization.getOrganizationId());
+				if (dato != null){
+					codigo=dato.getData();
+				}	
+				
+				if(codigo == null)
+					continue;
+				
+				if(codigo.trim().equals(""))
+					continue;
+				
+				if(cadenaEmpresas.trim().equals(""))									
+					cadenaEmpresas = "'"+codigo.trim()+"'";
+				else
+					cadenaEmpresas = cadenaEmpresas+",'"+codigo.trim()+"'";
+				
+			}
+			
+			if(cadenaEmpresas.trim().equals(""))
+				cadenaEmpresas="'XXX'";
+			
+			if(bAdministrador)
+				listaEmpresa = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,"");
+			else    			
+				listaEmpresa = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,cadenaEmpresas);
+				
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		
 		logger.info("lista empresa"+listaEmpresa);
 		listaZonaBenef = zonaBenefService.listarFiseZonaBenef();
 		logger.info("lista fise"+listaZonaBenef);
