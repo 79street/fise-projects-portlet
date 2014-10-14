@@ -9,7 +9,6 @@ import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
-import gob.osinergmin.fise.domain.FiseFormato12AD;
 import gob.osinergmin.fise.domain.FiseFormato14AD;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.json.Formato12AGartJSON;
@@ -194,10 +193,12 @@ public class Formato12AGartController {
 		listaEmpresa = new ArrayList<AdmEmpresa>();
 		listaZonaBenef = new ArrayList<FiseZonaBenef>();
 		
+		List<AdmEmpresa> listaEmpresaBD = new ArrayList<AdmEmpresa>();
+		
 		listaMes = FechaUtil.cargarMapaMeses();
 		logger.info("lista mes"+listaMes);
 		
-		//listaEmpresa = admEmpresaService.listarAdmEmpresa();
+		listaEmpresaBD = admEmpresaService.listarAdmEmpresa();
 		
 		//Cargar Listas
 		try {
@@ -253,7 +254,7 @@ public class Formato12AGartController {
 		logger.info("lista fise"+listaZonaBenef);
 		
 		mapaEmpresa = new HashMap<String, String>();
-		for (AdmEmpresa admEmpresa : listaEmpresa) {
+		for (AdmEmpresa admEmpresa : listaEmpresaBD) {
 			logger.info("codEmpresa: "+admEmpresa.getCodEmpresa()+" desccortaempresa: "+admEmpresa.getDscCortaEmpresa());
 			mapaEmpresa.put(admEmpresa.getCodEmpresa(), admEmpresa.getDscCortaEmpresa());
 		}
@@ -785,7 +786,8 @@ public class Formato12AGartController {
 			long folderId=dlFolder.getFolderId();
 			//String ext =FileUtil.getExtension(sourceFileName);
 			//--String title = hoy+"-"+sourceFileName;
-			String title = sourceFileName;
+			int secuencia = formatoService.obtenerSecuencia();
+			String title = secuencia+FiseConstants.UNDERLINE+sourceFileName;
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), request);
 			try {
 				fileEntry = DLAppLocalServiceUtil.getFileEntry(dlFolder.getGroupId(), folderId, sourceFileName);
@@ -1077,6 +1079,7 @@ public class Formato12AGartController {
 					//
 					formulario.setUsuario(user.getLogin());
 					formulario.setTerminal(user.getLoginIP());
+					formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_XLS);
 					formulario.setNombreArchivo(archivo.getTitle());
 					//
 					if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
@@ -1314,6 +1317,7 @@ public class Formato12AGartController {
 							//
 							formulario.setUsuario(user.getLogin());
 							formulario.setTerminal(user.getLoginIP());
+							formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
 							formulario.setNombreArchivo(archivo.getTitle());
 							//
 							

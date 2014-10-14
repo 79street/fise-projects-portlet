@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +24,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-@WebServlet("/ServletViewReport")
 public class ServletViewReport extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -42,46 +40,38 @@ public class ServletViewReport extends HttpServlet {
 		BufferedOutputStream output = null;
 		
 		String directorio = null;
-		directorio =  "/reports/report1.jasper";
+		directorio =  "/reports/formato12A.jasper";
 
 		String nombreReporte = (String) sesion.getAttribute("nombreReporte");
 		String nombreArchivo = (String) sesion.getAttribute("nombreArchivo");
 		String tipoFormato = (String) sesion.getAttribute("tipoFormato");
 		Map<String, Object> parametros = (Map<String, Object>) sesion.getAttribute("mapa");
+		
+		parametros.put("REPORT_LOCALE", new java.util.Locale("es","ES"));
+		
 
 		File reportFile = new File(getServletConfig().getServletContext().getRealPath(directorio));
 
 		byte[] bytes = null;
 		try {
 			
-			//se obtendra la lista como parametro
-			//Map<String, Object> parametros = new HashMap<String, Object>();
-			//List<FiseFormato12AD> listaFormatoDetalle = null;
-			String ruta= null;
+			//directorio =  "/reports/"+nombreReporte+".jasper";
 			
-			//nombreReporte
 			if( FiseConstants.TIPO_FORMATO_12.equals(tipoFormato) ){
 				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
 			}
 			
-			
 			if (bytes != null) {
 				int size = bytes.length;
-				//String nombreArchivo = "Lista";
-
 				response.reset();
 				response.setBufferSize(DEFAULT_BUFFER_SIZE);
 				response.setHeader("Content-Length", String.valueOf(size));
-				response.setHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".pdf" + "\"");
+				response.setHeader("Content-Disposition", "attachment;filename=\"" + nombreArchivo + ".pdf" + "\"");
 				response.setHeader("Content-Type", "application/pdf");
-				output = new BufferedOutputStream(response.getOutputStream(),
-						DEFAULT_BUFFER_SIZE);
+				output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
 				output.write(bytes);
+				response.setContentType("application/pdf");
 			}
-			
-			//response.setContentType("application/pdf");
-			//response.setContentLength(bytes.length);
-			servletOutputStream.write(bytes, 0, bytes.length);
 			servletOutputStream.flush();
 			servletOutputStream.close();
 		} catch (Exception e) {
