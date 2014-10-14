@@ -10,7 +10,7 @@
 	<parameter name="DESC_MES_EJECUCION" class="java.lang.String"/>
 	<parameter name="NRO_EMPAD_R" class="java.lang.Long"/>
 	<parameter name="COSTO_UNIT_EMPAD_R" class="java.math.BigDecimal"/>
-	<parameter name="COSTO_TOTAL_EMPAD_R" class="java.lang.String"/>
+	<parameter name="COSTO_TOTAL_EMPAD_R" class="java.math.BigDecimal"/>
 	<parameter name="NRO_AGENT_R" class="java.lang.Long"/>
 	<parameter name="COSTO_UNIT_AGENT_R" class="java.math.BigDecimal"/>
 	<parameter name="COSTO_TOTAL_AGENT_R" class="java.math.BigDecimal"/>
@@ -35,7 +35,7 @@
 	<parameter name="TOTAL_EMPAD" class="java.math.BigDecimal"/>
 	<parameter name="TOTAL_AGENT" class="java.math.BigDecimal"/>
 	<parameter name="TOTAL_DESPL_PERSONAL" class="java.math.BigDecimal"/>
-	<parameter name="TOTAL_ACTIV_ESTRAORD" class="java.math.BigDecimal"/>
+	<parameter name="TOTAL_ACTIV_EXTRAORD" class="java.math.BigDecimal"/>
 	<parameter name="TOTAL_GENERAL" class="java.math.BigDecimal"/>
 	<queryString>
 		<![CDATA[]]>
@@ -245,38 +245,38 @@
 				</textElement>
 				<text><![CDATA[Por empadronamiento]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="177" y="10" width="350" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="103" y="74" width="100" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="103" y="94" width="100" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="379" y="74" width="100" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_EJECUCION}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="379" y="94" width="100" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_EJECUCION}]]></textFieldExpression>
 			</textField>
@@ -341,42 +341,42 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_EMPAD_L}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="379" y="270" width="68" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_EMPAD_L}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="379" y="290" width="68" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_EMPAD_L}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_EMPAD_P}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="379" y="356" width="68" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENT_L}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENT_P}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="379" y="376" width="68" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_AGENT_L}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_AGENT_P}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="379" y="396" width="68" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_AGENT_L}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_AGENT_P}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="379" y="430" width="68" height="20"/>
@@ -474,7 +474,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{TOTAL_ACTIV_ESTRAORD}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{TOTAL_ACTIV_EXTRAORD}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="295" y="615" width="68" height="20"/>
