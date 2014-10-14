@@ -9,6 +9,7 @@ import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
+import gob.osinergmin.fise.domain.FiseFormato12AD;
 import gob.osinergmin.fise.domain.FiseFormato14AD;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.json.Formato12AGartJSON;
@@ -732,7 +733,7 @@ public class Formato12AGartController {
 			String[] mimeTypesTxt = new String[]{"text/plain"};
 			String[] mimeTypes = new String[]{};
 			long maxUploadFileSize =2097152;//bytes = 2MB
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(themeDisplay.getScopeGroupId(), 0, "Backup");
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(themeDisplay.getScopeGroupId(), 0, "FormatosDeclarados");
 			
 			if (dlFolder.getGroupId() != themeDisplay.getScopeGroupId()) {
 				throw new NoSuchFolderException();
@@ -1375,4 +1376,59 @@ public class Formato12AGartController {
 		return formatoMensaje;
 	}
 	
+	@ResourceMapping("reporte")
+	public void reporte(SessionStatus status, ResourceRequest request,ResourceResponse response) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();	
+		    FiseFormato12AC formato = new FiseFormato12AC();
+		    
+		    Formato12ACBean bean = new Formato12ACBean();
+		    
+		    
+		    String codEmpresa = request.getParameter("codEmpresa").trim();
+		    String anoPresentacion = request.getParameter("anoPresentacion").trim();
+		    String mesPresentacion = request.getParameter("mesPresentacion").trim();
+		    String anoEjecucion = request.getParameter("anoEjecucion").trim();
+		    String mesEjecucion = request.getParameter("mesEjecucion").trim();
+		    String etapa = request.getParameter("etapa").trim();
+		    
+		    String nombreReporte = request.getParameter("nombreReporte").trim();
+		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_12;
+		   
+		    session.setAttribute("nombreReporte",nombreReporte);
+		    session.setAttribute("nombreArchivo",nombreArchivo);
+		    session.setAttribute("tipoFormato",tipoFormato);
+
+		    FiseFormato12ACPK pk = new FiseFormato12ACPK();
+		    pk.setCodEmpresa(codEmpresa);
+	        pk.setAnoPresentacion(new Long(anoPresentacion));
+	        pk.setMesPresentacion(new Long(mesPresentacion));
+	        pk.setAnoEjecucionGasto(new Long(anoEjecucion));
+	        pk.setMesEjecucionGasto(new Long(mesEjecucion));
+	        pk.setEtapa(etapa);
+
+	        formato = formatoService.obtenerFormato12ACByPK(pk);
+	        if( formato!=null ){
+	        	//setamos los valores en el bean
+	        	bean = formatoService.estructurarFormato12ABeanByFiseFormato12AC(formato);
+	        	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
+	        	bean.setDescMesPresentacion(listaMes.get(formato.getId().getMesPresentacion()));
+	        	bean.setDescMesEjecucion(listaMes.get(formato.getId().getMesEjecucionGasto()));
+	        	//
+	        	session.setAttribute("mapa", formatoService.mapearParametrosFormato12A(bean));
+	        }
+	        
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

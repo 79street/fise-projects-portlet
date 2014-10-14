@@ -25,8 +25,8 @@
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" type="text/css" media="screen" href="/net-theme/css/net-portlet.css" />
-<script type="text/javascript" src="/net-theme/js/portlet-include.js"></script>
+<!-- <link rel="stylesheet" type="text/css" media="screen" href="/net-theme/css/net-portlet.css" />
+<script type="text/javascript" src="/net-theme/js/portlet-include.js"></script> -->
 
 <script type="text/javascript">
 var data_funcion = []; 
@@ -43,6 +43,7 @@ $(document).ready(function () {
 	 $("#i_aniopresent").blur(function(){<portlet:namespace/>loadCostosUnitarios();});
 	 $("#<portlet:namespace/>cargaExcel").click(function() {<portlet:namespace/>mostrarFormularioCargaExcel();});
 	 $("#<portlet:namespace/>cargaTxt").click(function() {<portlet:namespace/>mostrarFormularioCargaTexto();});
+	 $("#<portlet:namespace/>reporte").click(function() {<portlet:namespace/>mostrarReporte();});
 	 initDialogs();
 	 initBlockUI();		
 	 //
@@ -1287,7 +1288,23 @@ function regresarFormularioCargaTexto(){
 	//$.unblockUI();
 	$('#divOverlay').hide();   
 }
-
+function <portlet:namespace/>mostrarReporte(){
+	jQuery.ajax({
+		url : '<portlet:resourceURL id="reporte" />',
+		type : 'post',
+		dataType : 'json',
+		data : {
+			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+			<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
+			<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
+			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
+		},
+		success : function(gridData) {
+			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
+		}
+	});
+}
 //////////
 </script>
 
@@ -1855,7 +1872,11 @@ function regresarFormularioCargaTexto(){
 									   						</td>
 									   					</tr>
 									   					<tr height="10px">
-															<td colspan="4"></td>
+															<td colspan="4">
+															<!-- luego eliminar -->
+															<input type="button" class="boton" name="<portlet:namespace/>reporte" id="<portlet:namespace/>reporte" class="button net-button-small"  value="Imprimir"/>
+															<!-- fin eliminar -->
+															</td>
 														</tr>
 									   					<tr class="filete-top">
 									   						<td colspan="4">
