@@ -36,6 +36,13 @@
 		<servlet-class>gob.osinergmin.fise.gart.servlet.ServletExportExcelPlus</servlet-class>
   </servlet>
    
+   	<servlet>
+   		<description></description>
+    	<display-name>ViewReport</display-name>
+    	<servlet-name>ViewReport</servlet-name>
+    	<servlet-class>gob.osinergmin.fise.gart.servlet.ServletViewReport</servlet-class>
+    </servlet>
+   
      <servlet-mapping>  
          <servlet-name>ViewRendererServlet</servlet-name>  
          <url-pattern>/WEB-INF/servlet/view</url-pattern>  
@@ -45,6 +52,11 @@
 		<servlet-name>ExportExcelPlus</servlet-name>
 		<url-pattern>/ExportExcelPlus</url-pattern>
 	</servlet-mapping>
+     
+    <servlet-mapping>
+    	<servlet-name>ViewReport</servlet-name>
+    	<url-pattern>/ViewReport</url-pattern>
+  	</servlet-mapping>
      
   <jsp-config>
   	<taglib>
