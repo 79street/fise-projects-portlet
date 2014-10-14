@@ -68,11 +68,11 @@ $(document).ready(function () {
 	 
 	 if(mensajeInfo!=''){
 		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes == '' && mesEjeSes == '' && etapaSes == ''){
-			 mostrarUltimoFormato();
+			 çmostrarUltimoFormato();
 			 $("#s_empresa").val(codEmpSes);
 			 $("#i_aniopresent").val(anioPresSes);
 			 $("#s_mes_present").val(mesPresSes);
-		 }
+		}
 		 //$("#dialog-message-content").html(mensajeInfo);
 		 $("#dialog-form-error").dialog( "open" );
 	 }
@@ -189,6 +189,46 @@ function deshabilitarCampos(){
 	//
 	$('#i_totalGeneral').attr("disabled",true);
 	//
+}
+function removerDeshabilitados(){
+	$('#s_empresa').removeAttr("disabled");
+	$('#i_aniopresent').removeAttr("disabled");
+	$('#s_mes_present').removeAttr("disabled");
+	$('#i_anioejecuc').removeAttr("disabled");
+	$('#s_mes_ejecuc').removeAttr("disabled");
+	//
+	$('#i_nroEmpad_r').removeAttr("disabled");
+	$('#i_costoUnitEmpad_r').removeAttr("disabled");
+	$('#i_costoTotalEmpad_r').removeAttr("disabled");
+	$('#i_nroAgentGlp_r').removeAttr("disabled");
+	$('#i_costoUnitAgent_r').removeAttr("disabled");
+	$('#i_costoTotalAgent_r').removeAttr("disabled");
+	$('#i_despPersonal_r').removeAttr("disabled");
+	$('#i_activExtraord_r').removeAttr("disabled");
+	//
+	$('#i_nroEmpad_p').removeAttr("disabled");
+	$('#i_costoUnitEmpad_p').removeAttr("disabled");
+	$('#i_costoTotalEmpad_p').removeAttr("disabled");
+	$('#i_nroAgentGlp_p').removeAttr("disabled");
+	$('#i_costoUnitAgent_p').removeAttr("disabled");
+	$('#i_costoTotalAgent_p').removeAttr("disabled");
+	$('#i_despPersonal_p').removeAttr("disabled");
+	$('#i_activExtraord_p').removeAttr("disabled");
+	//
+	$('#i_nroEmpad_l').removeAttr("disabled");
+	$('#i_costoUnitEmpad_l').removeAttr("disabled");
+	$('#i_costoTotalEmpad_l').removeAttr("disabled");
+	$('#i_nroAgentGlp_l').removeAttr("disabled");
+	$('#i_costoUnitAgent_l').removeAttr("disabled");
+	$('#i_costoTotalAgent_l').removeAttr("disabled");
+	$('#i_despPersonal_l').removeAttr("disabled");
+	$('#i_activExtraord_l').removeAttr("disabled");
+	//
+	$('#i_importeEmpad').removeAttr("disabled");
+	$('#i_importeAgent').removeAttr("disabled");
+	$('#i_importeDespPersonal').removeAttr("disabled");
+	$('#i_importeActivExtraord').removeAttr("disabled");
+	$('#i_totalGeneral').removeAttr("disabled");
 }
 function totalEmpadronamientoRural(){
 	var nroEmpad;
@@ -418,6 +458,8 @@ function <portlet:namespace/>regresar(){
 	$("#etapaEdit").val("");
 	$("#div_formato").hide();
 	$("#div_home").show();		
+	//
+	removerDeshabilitados();
 	//se visualizan los componentes escondidos
 	$('#<portlet:namespace/>guardarFormato').css('display','');
 	$('#panelCargaArchivos').css('display','');
@@ -892,8 +934,9 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 	});	
 }
 function FillEditformato(row){
-	
-	$('#s_empresa').val(row.codEmpresa);
+	//alert(row);
+	//alert(row.codEmpresa);
+	$('#s_empresa').val(trim(row.codEmpresa));
 	
 	$('#i_aniopresent').val(row.anoPresentacion).css('text-align','right');
 	$('#s_mes_present').val(row.mesPresentacion);
@@ -1298,12 +1341,19 @@ function <portlet:namespace/>mostrarReporte(){
 			<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
 			<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
 			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
-			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
+			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+			<portlet:namespace />etapa: $('#etapaEdit').val(),
+			<portlet:namespace />nombreReporte: 'formato12A',
+			<portlet:namespace />nombreArchivo: 'formato12A'
 		},
 		success : function(gridData) {
-			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
+			//alert('entro');
+			verReporte();
 		}
 	});
+}
+function verReporte(){
+	location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>';
 }
 //////////
 </script>
