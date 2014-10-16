@@ -39,13 +39,13 @@ $(document).ready(function () {
 	 $("#<portlet:namespace/>buscarFormato").click(function() {<portlet:namespace/>buscar();});
 	 $("#<portlet:namespace/>cargarFormatoExcel").click(function() {<portlet:namespace/>cargarFormatoExcel();});
 	 $("#<portlet:namespace/>cargarFormatoTexto").click(function() {<portlet:namespace/>cargarFormatoTexto();});
-	 $("#s_empresa").change(function(){<portlet:namespace/>loadCostosUnitarios();});
-	 $("#i_aniopresent").blur(function(){<portlet:namespace/>loadCostosUnitarios();});
+	 $("#s_empresa").change(function(){cargarPeriodoYCostos();});
+	 $("#s_periodoenvio_present").change(function(){cargarPeriodoYCostos();});
 	 $("#<portlet:namespace/>cargaExcel").click(function() {<portlet:namespace/>mostrarFormularioCargaExcel();});
 	 $("#<portlet:namespace/>cargaTxt").click(function() {<portlet:namespace/>mostrarFormularioCargaTexto();});
 	 $("#<portlet:namespace/>reporte").click(function() {<portlet:namespace/>mostrarReporte();});
 	 initDialogs();
-	 initBlockUI();		
+	 //initBlockUI();		
 	 //
 	 var codEmpSes = $("#codEmpresaSes").val();
 	 var anioPresSes = $("#anioPresSes").val();
@@ -66,24 +66,39 @@ $(document).ready(function () {
 	 <portlet:namespace/>buscar();
 	 var mensajeInfo = $("#mensajeInfo").val();
 	 
+	 //alert(mensajeInfo);
 	 if(mensajeInfo!=''){
 		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes == '' && mesEjeSes == '' && etapaSes == ''){
-			 çmostrarUltimoFormato();
+			 mostrarUltimoFormato();
 			 $("#s_empresa").val(codEmpSes);
-			 $("#i_aniopresent").val(anioPresSes);
-			 $("#s_mes_present").val(mesPresSes);
+			 $("#s_periodoenvio_present").val(anioPresSes+mesPresSes+etapaSes);
+			 //$("#i_aniopresent").val(anioPresSes);
+			 //$("#s_mes_present").val(mesPresSes);
 		}
 		 //$("#dialog-message-content").html(mensajeInfo);
 		 $("#dialog-form-error").dialog( "open" );
+		 //initBlockUI();
 	 }
+	 //limpiar variables
+	 $("#codEmpresaSes").val('');
+	 $("#anioPresSes").val('');
+	 $("#mesPresSes").val('');
+	 $("#anioEjecSes").val('');
+	 $("#mesEjecSes").val('');
+	 $("#etapaSes").val('');
 	 
+	 initBlockUI();	
 });
 
 ////////VALIDACIONES
 function inicializarFormulario(){
 	$('#s_empresa').val('');
-	$('#i_aniopresent').val('').css('text-align','right');
-	$('#s_mes_present').val('');
+	
+	
+	$('#s_periodoenvio_present').val('');
+	
+	//$('#i_aniopresent').val('').css('text-align','right');
+	//$('#s_mes_present').val('');
 	$('#i_anioejecuc').val('').css('text-align','right');
 	$('#s_mes_ejecuc').val('');
 	//
@@ -123,8 +138,9 @@ function inicializarFormulario(){
 	realizarCalculoCampos();
 	//
 	$('#s_empresa').attr("disabled",false);
-	$('#i_aniopresent').attr("disabled",false);
-	$('#s_mes_present').attr("disabled",false);
+	$('#s_periodoenvio_present').attr("disabled",false);
+	//$('#i_aniopresent').attr("disabled",false);
+	//$('#s_mes_present').attr("disabled",false);
 	$('#i_anioejecuc').attr("disabled",false);
 	$('#s_mes_ejecuc').attr("disabled",false);
 	//
@@ -192,8 +208,9 @@ function deshabilitarCampos(){
 }
 function removerDeshabilitados(){
 	$('#s_empresa').removeAttr("disabled");
-	$('#i_aniopresent').removeAttr("disabled");
-	$('#s_mes_present').removeAttr("disabled");
+	$('#s_periodoenvio_present').removeAttr("disabled");
+	//$('#i_aniopresent').removeAttr("disabled");
+	//$('#s_mes_present').removeAttr("disabled");
 	$('#i_anioejecuc').removeAttr("disabled");
 	$('#s_mes_ejecuc').removeAttr("disabled");
 	//
@@ -505,7 +522,12 @@ function validarFormulario() {
 	    document.getElementById('s_empresa').focus();
 	    return false; 
 	  }
-	  if($('#i_aniopresent').val().length == '' ) {		  
+	  if($('#s_periodoenvio_present').val().length == '' ) {		  
+		    alert('Debe ingresar el periodo de presentacion');
+		    document.getElementById('s_periodoenvio_present').focus();
+		    return false; 
+	  }
+	  /*if($('#i_aniopresent').val().length == '' ) {		  
 		    alert('Debe ingresar el año de presentacion');
 		    document.getElementById('i_aniopresent').focus();
 		    return false; 
@@ -520,7 +542,7 @@ function validarFormulario() {
 		    alert('Debe ingresar el mes de presentacion');
 		    document.getElementById('s_mes_present').focus();
 		    return false; 
-	  }
+	  }*/
 	  if($('#i_anioejecuc').val().length == '' ) {		  
 		    alert('Debe ingresar el año de ejecucion');
 		    document.getElementById('i_anioejecuc').focus();
@@ -640,7 +662,12 @@ function validarArchivoCarga() {
     document.getElementById('s_empresa').focus();
     return false; 
   }
-  if($('#i_aniopresent').val().length == '' ) {		  
+  if($('#s_periodoenvio_present').val().length == '' ) {		  
+	    alert('Debe ingresar el periodo de presentación');
+	    document.getElementById('s_periodoenvio_present').focus();
+	    return false; 
+  }
+  /*if($('#i_aniopresent').val().length == '' ) {		  
 	    alert('Debe ingresar el año de presentación para proceder con la carga de archivo');
 	    document.getElementById('i_aniopresent').focus();
 	    return false; 
@@ -655,7 +682,7 @@ function validarArchivoCarga() {
 	    alert('Debe ingresar el mes de presentación para proceder con la carga de archivo');
 	    document.getElementById('s_mes_present').focus();
 	    return false; 
-  }
+  }*/
 
   return true; 
 }
@@ -848,10 +875,12 @@ function <portlet:namespace/>crearFormato(){
 	$("#div_home").hide();
 	$('#flagCarga').val('0');
 	//
-	 $("#i_aniopresent").val($("#anioDesdeSes").val());
-	 $("#s_mes_present").val(parseInt($("#mesDesdeSes").val()));
+	 //$("#i_aniopresent").val($("#anioDesdeSes").val());
+	 //$("#s_mes_present").val(parseInt($("#mesDesdeSes").val()));
 	 $("#i_anioejecuc").val($("#anioDesdeSes").val());
 	 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
+	 
+	 cargarPeriodoYCostos();
 	
 }
 function mostrarUltimoFormato(){	
@@ -890,6 +919,8 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 					$("#etapaEdit").val(etapa);
 					$("#div_formato").show();
 					$("#div_home").hide();
+					dwr.util.removeAllOptions("s_periodoenvio_present");
+					dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
 					FillEditformato(data.formato);
 					deshabiliarControlerView();
 					initBlockUI();
@@ -923,6 +954,8 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 					//se deja el formulario activo
 					$("#div_formato").show();
 					$("#div_home").hide();
+					dwr.util.removeAllOptions("s_periodoenvio_present");
+					dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
 					FillEditformato(data.formato);
 					initBlockUI();
 				}
@@ -936,10 +969,12 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 function FillEditformato(row){
 	//alert(row);
 	//alert(row.codEmpresa);
-	$('#s_empresa').val(trim(row.codEmpresa));
+	$('#s_empresa').val(row.codEmpresa);
+	//seteamos el concatenado
+	$('#s_periodoenvio_present').val(row.anoPresentacion+row.mesPresentacion+row.etapa);
 	
-	$('#i_aniopresent').val(row.anoPresentacion).css('text-align','right');
-	$('#s_mes_present').val(row.mesPresentacion);
+	//$('#i_aniopresent').val(row.anoPresentacion).css('text-align','right');
+	//$('#s_mes_present').val(row.mesPresentacion);
 	$('#i_anioejecuc').val(row.anoEjecucion).css('text-align','right');
 	$('#s_mes_ejecuc').val(row.mesEjecucion);
 	
@@ -981,8 +1016,9 @@ function FillEditformato(row){
 	
 	//
 	$('#s_empresa').attr("disabled",true);
-	$('#i_aniopresent').attr("disabled",true);
-	$('#s_mes_present').attr("disabled",true);
+	$('#s_periodoenvio_present').attr("disabled",true);
+	//$('#i_aniopresent').attr("disabled",true);
+	//$('#s_mes_present').attr("disabled",true);
 	$('#i_anioejecuc').attr("disabled",true);
 	$('#s_mes_ejecuc').attr("disabled",true);
 	//
@@ -1041,8 +1077,11 @@ function <portlet:namespace/>guardarFormato(){
 			data: {
 				<portlet:namespace />tipo: $("#Estado").val(),
 				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-				<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
-				<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
+				
+				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+				
+				//<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
+				//<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
 				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 				//
@@ -1092,8 +1131,10 @@ function <portlet:namespace/>guardarFormato(){
 	}
 	//
 	 var codEmpM = $("#s_empresa").val();
-	 var anioPresM = $("#i_aniopresent").val();
-	 var mesPresM = $("#s_mes_present").val();
+	 var anioPresM = $("#s_periodoenvio_present").val().substring(0,4);
+	 var mesPresM = $("#s_periodoenvio_present").val().substring(4,6);
+	//var anioPresM = $("#i_aniopresent").val();
+	 //var mesPresM = $("#s_mes_present").val();
 	 var anioEjeM = $("#i_anioejecuc").val();
 	 var mesEjeM = $("#s_mes_ejecuc").val();
 	 var etapaM = "SOLICITUD";
@@ -1103,16 +1144,62 @@ function <portlet:namespace/>guardarFormato(){
 	 }
 }
 
+function cargarPeriodoYCostos(){
+	//alert(1);
+	<portlet:namespace/>loadPeriodo();
+	//alert(2);
+	<portlet:namespace/>loadCostosUnitarios();
+	//alert(3);
+}
 
-function <portlet:namespace/>loadCostosUnitarios() {
+function <portlet:namespace/>loadPeriodo() {
 	//---$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando Distrito </h3>' });
 	jQuery.ajax({
 			url: '<portlet:resourceURL id="request_data" />',
 			type: 'post',
 			dataType: 'json',
 			data: {
+				<portlet:namespace />s_empresa: $('#s_empresa').val()//,
+				},
+			success: function(data) {		
+				dwr.util.removeAllOptions("s_periodoenvio_present");
+				dwr.util.addOptions("s_periodoenvio_present", data,"codigoItem","descripcionItem");
+				//setear al combo de ejecucion
+				//dwr.util.setValue("u_provincia", prov_selected);
+				/*dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
+				dwr.util.setValue("i_costoUnitAgent_r", data.costoAgentR);
+				dwr.util.setValue("i_costoUnitEmpad_p", data.costoEmpP);
+				dwr.util.setValue("i_costoUnitAgent_p", data.costoAgentP);
+				dwr.util.setValue("i_costoUnitEmpad_l", data.costoEmpL);
+				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);*/
+				//---initBlockUI();
+			}
+	});
+	recargarPeriodoEjecucion();
+}
+
+function recargarPeriodoEjecucion(){
+	var ano;
+	var mes;
+	if( $('#s_periodoenvio_present').val() != null ){
+		ano = $('#s_periodoenvio_present').val().substring(0,4);
+		mes = $('#s_periodoenvio_present').val().substring(4,6);
+		$('#i_anioejecuc').val(ano);
+		$('#s_mes_ejecuc').val(parseFloat(mes));
+	}
+}
+
+function <portlet:namespace/>loadCostosUnitarios() {
+	//---$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando Distrito </h3>' });
+	jQuery.ajax({
+			url: '<portlet:resourceURL id="request_data2" />',
+			type: 'post',
+			dataType: 'json',
+			data: {
 				<portlet:namespace />s_empresa: $('#s_empresa').val(),
-				<portlet:namespace />i_aniopresent: $('#i_aniopresent').val()
+				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val()
+				//<portlet:namespace />i_aniopresent: $('#i_aniopresent').val()
+				//<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val()
 				},
 			success: function(data) {				
 				dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
@@ -1338,8 +1425,9 @@ function <portlet:namespace/>mostrarReporte(){
 		dataType : 'json',
 		data : {
 			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-			<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
-			<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
+			<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+			//<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
+			//<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
 			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 			<portlet:namespace />etapa: $('#etapaEdit').val(),
@@ -1354,6 +1442,13 @@ function <portlet:namespace/>mostrarReporte(){
 }
 function verReporte(){
 	location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>';
+}
+function rellenarEspacios(cadena,tamanio){ 
+	var i; 
+	//var m=cadena.length;
+	for( i=0; i<tamanio-cadena.length; i++) 
+		cadena=cadena+" "; 
+	return cadena;
 }
 //////////
 </script>
@@ -1422,7 +1517,7 @@ function verReporte(){
 												</td>
 												<td colspan="7">
 													<select id="s_empresa_b" name="s_empresa_b" style="width:375px;" class="select"  >
-							   							<option value="">-Seleccione-</option>
+							   							<!-- <option value="">-Seleccione-</option> -->
 														<c:forEach items="${listaEmpresa}" var="emp">																
 															<option value="${emp.codEmpresa}">${emp.dscEmpresa}</option>
 														</c:forEach>
@@ -1477,7 +1572,7 @@ function verReporte(){
 												</td>
 												<td colspan="7">
 													<select id="s_etapa" name="s_etapa" style="width:140px;" class="select" >
-														<option value="">-Seleccione-</option>
+														<!-- <option value="">-Seleccione-</option> -->
 														<option value="SOLICITUD">SOLICITUD</option>
 														<option value="LEV.OBS">LEV.OBS</option>
 														<option value="RECONSIDERACION">RECONSIDERACION</option>
@@ -1575,7 +1670,7 @@ function verReporte(){
 									   						<td>Distribuidora Eléctrica:</td>
 									   						<td>
 									   							<select id="s_empresa" name="s_empresa" style="width:375px;" class="select" >
-									   							<option value="">-Seleccione-</option>
+									   							<!-- <option value="">-Seleccione-</option> -->
 																<c:forEach items="${listaEmpresa}" var="emp">																
 																	<option value="${emp.codEmpresa}">${emp.dscEmpresa}</option>
 																</c:forEach>
@@ -1601,6 +1696,15 @@ function verReporte(){
 									   										</td>
 									   									</tr>
 									   									<tr>
+									   										<td colspan="5">
+									   											<select id="s_periodoenvio_present" name="s_periodoenvio_present" class="select" style="width:300px;" >
+																					<c:forEach items="${listaPeriodoEnvio}" var="periodo">																
+																						<option value="${periodo.codigoItem}">${periodo.descripcionItem}</option>
+																					</c:forEach>
+																				</select>
+									   										</td>
+									   									</tr>
+									   									<%-- <tr>
 									   										<td width="40px">Año:</td>
 									   										<td>
 									   											<input type="text" name="i_aniopresent" id="i_aniopresent" style="width:50px;" maxlength="4" >
@@ -1615,7 +1719,7 @@ function verReporte(){
 																					</c:forEach>
 																				</select>
 									   										</td>
-									   									</tr>
+									   									</tr> --%>
 									   								</table>
 									   							</fieldset>
 									   						</td>
@@ -1924,7 +2028,7 @@ function verReporte(){
 									   					<tr height="10px">
 															<td colspan="4">
 															<!-- luego eliminar -->
-															<input type="button" class="boton" name="<portlet:namespace/>reporte" id="<portlet:namespace/>reporte" class="button net-button-small"  value="Imprimir"/>
+															
 															<!-- fin eliminar -->
 															</td>
 														</tr>
@@ -1952,16 +2056,19 @@ function verReporte(){
 									   									<td width="55%">
 									   										<table style="width:100%">
 								   												<tr>
-								   													<td width="25%" align="center">
+								   													<td width="20%" align="center">
+								   														<input type="button" class="boton" name="<portlet:namespace/>reporte" id="<portlet:namespace/>reporte" class="button net-button-small"  value="Imprimir"/>
+								   													</td>
+								   													<td width="20%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>guardarFormato" name="<portlet:namespace/>guardarFormato" value="Grabar" />
 								   													</td>
-								   													<td width="25%" align="center">
+								   													<td width="20%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>validacion" name="<portlet:namespace/>validacion" value="Validación" />
 								   													</td>
-								   													<td width="25%" align="center">
+								   													<td width="20%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>enviodefinitivo" name="<portlet:namespace/>enviodefinitivo" value="Envío Def." />
 								   													</td>
-								   													<td width="25%" align="center">
+								   													<td width="20%" align="center">
 								   														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormato" name="<portlet:namespace/>regresarFormato" value="Regresar" />
 								   													</td>
 								   												</tr>
@@ -2180,7 +2287,7 @@ function verReporte(){
 		                 		<c:forEach items="${listaError}" var="error" varStatus="status">															
 								<tr class="detalleTablaContenido">
 			                    	<td align="center">${status.count}</td> 
-			                    	<td align="center">${error.descripcion}</td>     
+			                    	<td align="left">${error.descripcion}</td>     
 			                 	 </tr>				
 								</c:forEach>            
 		                	</table>
