@@ -256,7 +256,7 @@ public class Formato12AGartController {
 				listaEmpresa = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,"");
 			}else    			
 				listaEmpresa = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,cadenaEmpresas);
-				
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -278,6 +278,10 @@ public class Formato12AGartController {
 			mapaErrores.put(error.getIdObservacion(), error.getDescripcion());
 		}
 
+		for (AdmEmpresa admEmpresa : listaEmpresa) {
+			logger.info("codEmpresa: "+admEmpresa.getCodEmpresa()+" desccortaempresa: "+admEmpresa.getDscCortaEmpresa());
+		}
+		
 	}
 	
 	@ResourceMapping("grid")
@@ -494,6 +498,9 @@ public class Formato12AGartController {
 					FiseFormato12AC formato = new FiseFormato12AC();
 					FiseFormato12ACPK pk = new FiseFormato12ACPK();
 					String codEmpresa = request.getParameter("codEmpresa");
+					
+					String periodoEnvio = request.getParameter("periodoEnvio");
+					
 					String anoPresentacion = request.getParameter("anoPresentacion");
 					String mesPresentacion = request.getParameter("mesPresentacion");
 					String anoEjecucion = request.getParameter("anoEjecucion");
@@ -548,15 +555,27 @@ public class Formato12AGartController {
 					formulario.setActivExtraordL(new BigDecimal(activExtraordL));
 					
 					formulario.setCodigoEmpresa(codEmpresa);
-					formulario.setAnioPresent(Long.parseLong(anoPresentacion));
-					formulario.setMesPresent(Long.parseLong(mesPresentacion));
 					
-					pk.setCodEmpresa(codEmpresa);
+					if( periodoEnvio.length()>6 ){
+						formulario.setAnioPresent(Long.parseLong(periodoEnvio.substring(0, 4)));
+						formulario.setMesPresent(Long.parseLong(periodoEnvio.substring(4, 6)));
+						formulario.setEtapa(periodoEnvio.substring(6, periodoEnvio.length()));
+					}
+					//formulario.setAnioPresent(Long.parseLong(anoPresentacion));
+					//formulario.setMesPresent(Long.parseLong(mesPresentacion));
+					
+					/*pk.setCodEmpresa(codEmpresa);
 			        pk.setAnoPresentacion(new Long(anoPresentacion));
 			        pk.setMesPresentacion(new Long(mesPresentacion));
 			        pk.setAnoEjecucionGasto(new Long(anoEjecucion));
 			        pk.setMesEjecucionGasto(new Long(mesEjecucion));
-			        pk.setEtapa(etapa);
+			        pk.setEtapa(etapa);*/
+					pk.setCodEmpresa(formulario.getCodigoEmpresa());
+			        pk.setAnoPresentacion(formulario.getAnioPresent());
+			        pk.setMesPresentacion(formulario.getMesPresent());
+			        pk.setAnoEjecucionGasto(new Long(anoEjecucion));
+			        pk.setMesEjecucionGasto(new Long(mesEjecucion));
+			        pk.setEtapa(formulario.getEtapa());
 			        
 			        formato = formatoService.obtenerFormato12ACByPK(pk);
 					
@@ -1615,7 +1634,7 @@ public class Formato12AGartController {
 	        	bean = formatoService.estructurarFormato12ABeanByFiseFormato12AC(formato);
 	        	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
 	        	bean.setDescMesPresentacion(listaMes.get(formato.getId().getMesPresentacion()));
-	        	bean.setDescMesEjecucion(listaMes.get(formato.getId().getMesEjecucionGasto()));
+	        	//bean.setDescMesEjecucion(listaMes.get(formato.getId().getMesEjecucionGasto()));
 	        	//
 	        	session.setAttribute("mapa", formatoService.mapearParametrosFormato12A(bean));
 	        }

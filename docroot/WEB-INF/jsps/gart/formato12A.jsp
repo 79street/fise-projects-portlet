@@ -478,6 +478,7 @@ function <portlet:namespace/>regresar(){
 	//
 	removerDeshabilitados();
 	//se visualizan los componentes escondidos
+	$('#<portlet:namespace/>reporte').css('display','none');
 	$('#<portlet:namespace/>guardarFormato').css('display','');
 	$('#panelCargaArchivos').css('display','');
 	$('#<portlet:namespace/>validacion').css('display','');
@@ -968,10 +969,10 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 }
 function FillEditformato(row){
 	//alert(row);
-	//alert(row.codEmpresa);
+	//alert(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
 	$('#s_empresa').val(row.codEmpresa);
 	//seteamos el concatenado
-	$('#s_periodoenvio_present').val(row.anoPresentacion+row.mesPresentacion+row.etapa);
+	$('#s_periodoenvio_present').val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
 	
 	//$('#i_aniopresent').val(row.anoPresentacion).css('text-align','right');
 	//$('#s_mes_present').val(row.mesPresentacion);
@@ -1060,6 +1061,7 @@ function deshabiliarControlerView(){
 	$('#i_activExtraord_p').attr("disabled",true);
 	$('#i_activExtraord_l').attr("disabled",true);
 	
+	$('#<portlet:namespace/>reporte').css('display','');
 	$('#<portlet:namespace/>guardarFormato').css('display','none');
 	$('#panelCargaArchivos').css('display','none');
 	$('#<portlet:namespace/>validacion').css('display','none');
@@ -1449,6 +1451,12 @@ function rellenarEspacios(cadena,tamanio){
 	for( i=0; i<tamanio-cadena.length; i++) 
 		cadena=cadena+" "; 
 	return cadena;
+}
+function completarCerosIzq(cadena,longitud) {
+	cadena = cadena.toString();
+    while( cadena.length < longitud )
+    	cadena = "0"+cadena;
+    return cadena;
 }
 //////////
 </script>
@@ -2057,7 +2065,8 @@ function rellenarEspacios(cadena,tamanio){
 									   										<table style="width:100%">
 								   												<tr>
 								   													<td width="20%" align="center">
-								   														<input type="button" class="boton" name="<portlet:namespace/>reporte" id="<portlet:namespace/>reporte" class="button net-button-small"  value="Imprimir"/>
+								   														<input type="button" class="boton" name="<portlet:namespace/>reporte" style="display:none;" 
+								   															id="<portlet:namespace/>reporte" class="button net-button-small"  value="Imprimir"/>
 								   													</td>
 								   													<td width="20%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>guardarFormato" name="<portlet:namespace/>guardarFormato" value="Grabar" />
