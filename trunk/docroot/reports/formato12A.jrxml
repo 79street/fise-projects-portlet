@@ -44,7 +44,7 @@
 	<title>
 		<band height="89" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="36" width="555" height="18" forecolor="#006699"/>
+				<reportElement x="0" y="53" width="555" height="18" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
