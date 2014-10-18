@@ -1,3 +1,4 @@
+<%@page import="javax.portlet.PortletSession"%>
 <%
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -86,6 +87,14 @@ $(document).ready(function () {
 	 $("#anioEjecSes").val('');
 	 $("#mesEjecSes").val('');
 	 $("#etapaSes").val('');
+	 <%
+	 portletSession.setAttribute("codEmpresa", "", PortletSession.APPLICATION_SCOPE);
+	 portletSession.setAttribute("anoPresentacion", "", PortletSession.APPLICATION_SCOPE);
+	 portletSession.setAttribute("mesPresentacion", "", PortletSession.APPLICATION_SCOPE);
+	 portletSession.setAttribute("anoEjecucion", "", PortletSession.APPLICATION_SCOPE);
+	 portletSession.setAttribute("mesEjecucion", "", PortletSession.APPLICATION_SCOPE);
+	 portletSession.setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
+     %>
 	 
 	 initBlockUI();	
 });
@@ -1443,7 +1452,8 @@ function <portlet:namespace/>mostrarReporte(){
 	});
 }
 function verReporte(){
-	location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>';
+	window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
+	<%-- location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>'; --%>
 }
 function rellenarEspacios(cadena,tamanio){ 
 	var i; 
@@ -1501,7 +1511,7 @@ function completarCerosIzq(cadena,longitud) {
 						<table style="width: 100%;" border="0">
 							<tr>
 								<td>
-									<output class="net-titulo">Situación actual de la declaración de Gastos</output>
+									<!-- <output class="net-titulo">Situación actual de la declaración de Gastos</output> -->
 								</td>
 							</tr>
 							<tr height="10px">
@@ -1679,7 +1689,7 @@ function completarCerosIzq(cadena,longitud) {
 									   						<td>
 									   							<select id="s_empresa" name="s_empresa" style="width:375px;" class="select" >
 									   							<!-- <option value="">-Seleccione-</option> -->
-																<c:forEach items="${listaEmpresa}" var="emp">																
+																<c:forEach items="${listaEmpresaNew}" var="emp">																
 																	<option value="${emp.codEmpresa}">${emp.dscEmpresa}</option>
 																</c:forEach>
 															</select>
