@@ -1,11 +1,11 @@
 package gob.osinergmin.fise.gart.servlet;
 
-import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.gart.controller.Formato12AGartController;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -40,24 +46,55 @@ public class ServletViewReport extends HttpServlet {
 		BufferedOutputStream output = null;
 		
 		String directorio = null;
-		directorio =  "/reports/formato12A.jasper";
+		//directorio =  "/reports/formato12A.jasper";
 
 		String nombreReporte = (String) sesion.getAttribute("nombreReporte");
 		String nombreArchivo = (String) sesion.getAttribute("nombreArchivo");
 		String tipoFormato = (String) sesion.getAttribute("tipoFormato");
 		Map<String, Object> parametros = (Map<String, Object>) sesion.getAttribute("mapa");
 		
-		parametros.put("REPORT_LOCALE", new java.util.Locale("es","ES"));
-		
+		parametros.put("IMG",request.getSession().getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+		parametros.put(JRParameter.REPORT_LOCALE, Locale.US);
+		directorio =  "/reports/"+nombreReporte+".jasper";
 
 		File reportFile = new File(getServletConfig().getServletContext().getRealPath(directorio));
 
 		byte[] bytes = null;
 		try {
+			//EXPORTAR A EXCEL
+			JasperPrint print = JasperFillManager.fillReport(reportFile.getPath(), parametros, new JREmptyDataSource());
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			response.addHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".xlsx" + "\"");
+			ServletOutputStream outputStream = response.getOutputStream();
+			JRXlsxExporter exporter = new JRXlsxExporter();
+			/*exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,outputStream);*/
 			
-			//directorio =  "/reports/"+nombreReporte+".jasper";
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputStream);
+			/*exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+			exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+			exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+			exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+			*/
+			exporter.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.FALSE);
+			exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.FALSE);
+			exporter.setParameter(JRXlsExporterParameter.IS_FONT_SIZE_FIX_ENABLED, Boolean.TRUE);
+			exporter.exportReport();
+			outputStream.flush();
+			outputStream.close();
 			
-			if( FiseConstants.TIPO_FORMATO_12.equals(tipoFormato) ){
+			
+			
+			
+			
+			
+			
+			
+			
+			//EXPORTAR A PDF
+			
+			/*if( FiseConstants.TIPO_FORMATO_12.equals(tipoFormato) ){
 				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
 			}
 			
@@ -66,12 +103,13 @@ public class ServletViewReport extends HttpServlet {
 				response.reset();
 				response.setBufferSize(DEFAULT_BUFFER_SIZE);
 				response.setHeader("Content-Length", String.valueOf(size));
-				response.setHeader("Content-Disposition", "attachment;filename=\"" + nombreArchivo + ".pdf" + "\"");
+				//response.setHeader("Content-Disposition", "attachment;filename=\"" + nombreArchivo + ".pdf" + "\"");
+				response.setHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".pdf" + "\"");
 				response.setHeader("Content-Type", "application/pdf");
 				output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
 				output.write(bytes);
-				response.setContentType("application/pdf");
-			}
+				//response.setContentType("application/pdf");
+			}*/
 			servletOutputStream.flush();
 			servletOutputStream.close();
 		} catch (Exception e) {

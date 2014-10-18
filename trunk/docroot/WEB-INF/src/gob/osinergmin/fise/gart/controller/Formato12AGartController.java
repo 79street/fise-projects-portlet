@@ -132,6 +132,7 @@ public class Formato12AGartController {
 	List<FiseFormato12AC> listaFormato;
 	private Map<Long,String> listaMes;
 	private List<AdmEmpresa> listaEmpresa;
+	private List<AdmEmpresa> listaEmpresaNew;
 	private List<FiseZonaBenef> listaZonaBenef;
 	private Map<String, String> mapaEmpresa;
 	private List<FiseObservacion> listaFiseObservacion;
@@ -177,6 +178,7 @@ public class Formato12AGartController {
 		cargaInicial(renderRequest);
 		model.addAttribute("listaMes", listaMes);
 		model.addAttribute("listaEmpresa", listaEmpresa);
+		model.addAttribute("listaEmpresaNew", listaEmpresaNew);
 		model.addAttribute("listaZonaBenef", listaZonaBenef);
 		if( listaError!=null && listaError.size()>0){
 			model.addAttribute("listaError", listaError);
@@ -201,6 +203,7 @@ public class Formato12AGartController {
 	public void cargaInicial(RenderRequest renderRequest){
 		listaMes = new HashMap<Long, String>();
 		listaEmpresa = new ArrayList<AdmEmpresa>();
+		listaEmpresaNew = new ArrayList<AdmEmpresa>();
 		listaZonaBenef = new ArrayList<FiseZonaBenef>();
 		
 		listaFiseObservacion = new ArrayList<FiseObservacion>();
@@ -248,14 +251,24 @@ public class Formato12AGartController {
 			if(cadenaEmpresas.trim().equals(""))
 				cadenaEmpresas="'XXX'";
 			
+			logger.info("es administrador"+bAdministrador);
 			if(bAdministrador){
+				logger.info("genera un item TODOS al inicio");
 				AdmEmpresa admEmpresaTodos = new AdmEmpresa();
 				admEmpresaTodos.setCodEmpresa(FiseConstants.ITEM_TODOS_VALUE);
 				admEmpresaTodos.setDscEmpresa(FiseConstants.ITEM_TODOS_DESCRIPCION);
 				listaEmpresa.add(admEmpresaTodos);
-				listaEmpresa = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,"");
-			}else    			
+				List<AdmEmpresa> lista = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,"");
+				if( lista!=null ){
+					listaEmpresa.addAll(lista);
+					listaEmpresaNew.addAll(lista);
+				}
+				//listaEmpresa = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,"");
+			}else{
 				listaEmpresa = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,cadenaEmpresas);
+				listaEmpresaNew.addAll(listaEmpresa);
+			}
+				
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -350,7 +363,7 @@ public class Formato12AGartController {
   	}
 	
 	@ResourceMapping("crud")
-	public void crud(SessionStatus status, ResourceRequest request,ResourceResponse response) {
+	public void crud(ModelMap model, SessionStatus status, ResourceRequest request,ResourceResponse response) {
  	
 		try {
 			JSONObject jsonObj = new JSONObject();
@@ -382,16 +395,27 @@ public class Formato12AGartController {
 		        
 		        formato = formatoService.obtenerFormato12ACByPK(pk);
 		        
+		        Formato12AGartJSON obj = new Formato12AGartJSON();
+		        
 		        if( formato != null ){
 		        	//guardamos valores en sesion
-					PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+					/*PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 					pRequest.getPortletSession().setAttribute("codEmpresa", formato.getId().getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
 				    pRequest.getPortletSession().setAttribute("anoPresentacion", String.valueOf(formato.getId().getAnoPresentacion()), PortletSession.APPLICATION_SCOPE);
 				    pRequest.getPortletSession().setAttribute("mesPresentacion", String.valueOf(formato.getId().getMesPresentacion()), PortletSession.APPLICATION_SCOPE);
 				    pRequest.getPortletSession().setAttribute("anoEjecucion", String.valueOf(formato.getId().getAnoEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
 				    pRequest.getPortletSession().setAttribute("mesEjecucion", String.valueOf(formato.getId().getMesEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
-				    pRequest.getPortletSession().setAttribute("etapa", formato.getId().getEtapa(), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("etapa", formato.getId().getEtapa(), PortletSession.APPLICATION_SCOPE);*/
 				    
+				    obj.setCodEmpresa(formato.getId().getCodEmpresa());
+					obj.setAnoPres(String.valueOf(formato.getId().getAnoPresentacion()));
+					obj.setMesPres(String.valueOf(formato.getId().getMesPresentacion()));
+					obj.setAnoEjec(String.valueOf(formato.getId().getAnoEjecucionGasto()));
+					obj.setMesEjec(String.valueOf(formato.getId().getMesEjecucionGasto()));
+					obj.setEtapa(formato.getId().getEtapa());
+				    
+					model.addAttribute("model", obj);
+					
 				    //setear la lista de periodo correspondiente al registro
 				    listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.NOMBRE_FORMATO_12A);
 				    JSONArray jsonArray = new JSONArray();
@@ -637,7 +661,7 @@ public class Formato12AGartController {
 	}
 	
 	@ResourceMapping("request_data")
-  	public void requestData(SessionStatus status, ResourceRequest request,ResourceResponse response){
+  	public void requestData(ModelMap model, SessionStatus status, ResourceRequest request,ResourceResponse response){
 		try {			
   			response.setContentType("applicacion/json");
   			String codEmpresa = request.getParameter("s_empresa");
@@ -652,6 +676,14 @@ public class Formato12AGartController {
 				jsonObj.put("descripcionItem", periodo.getDescripcionItem());					
 				jsonArray.put(jsonObj);		
 			}
+  			
+  			//response.setRenderParameter("action", "exito");
+  			if( listaEmpresaNew !=null ){
+  				model.addAttribute("s_empresa", listaEmpresaNew.get(0));
+  			}
+  			if( listaPeriodoEnvio != null ){
+  				model.addAttribute("s_periodoenvio_present", listaPeriodoEnvio.get(0));
+  			}
   			
   		    PrintWriter pw = response.getWriter();
   		    pw.write(jsonArray.toString());
@@ -672,7 +704,11 @@ public class Formato12AGartController {
   			FiseFormato14AD detalleLimaPadre = null;
   			
   			String codEmpresa = request.getParameter("s_empresa");
-  			String anoPresentacion = request.getParameter("s_periodoenvio_present").substring(0, 4);
+  			String periodoEnvio = request.getParameter("s_periodoenvio_present");
+  			String anoPresentacion ="";
+  			if( periodoEnvio!=null && periodoEnvio.length()>4 ){
+  				anoPresentacion = periodoEnvio.substring(0, 4);
+  			}
   			
   			BigDecimal costoUnitEmpR = null;
   			BigDecimal costoUnitAgentR = null;
