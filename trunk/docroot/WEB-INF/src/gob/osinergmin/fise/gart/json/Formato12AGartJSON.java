@@ -31,10 +31,11 @@ public class Formato12AGartJSON {
 	private String anioHasta;
 	private String mesHasta;
 	private String codEtapa;
-	
-	private String mensaje;
+	//
+	private String mensajeInfo;
+	private String mensajeError;
 
-	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC) throws JSONException{
+	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC, String flagPeriodoEjecucion) throws JSONException{
 		
 		JSONObject jsonObj = new JSONObject();
 		
@@ -50,6 +51,9 @@ public class Formato12AGartJSON {
 		this.estado=fiseFormato12AC.getDescEstado();
 		//verificar despues si el objeto grupoinfo siempre va a venir seteado
 		jsonObj.put("codEmpresa", fiseFormato12AC.getId().getCodEmpresa());
+		//formar flag de verificado
+		jsonObj.put("flagPeriodoEjecucion", flagPeriodoEjecucion);
+		
 		jsonObj.put("descEmpresa", fiseFormato12AC.getDescEmpresa());
 		jsonObj.put("anoPresentacion", fiseFormato12AC.getId().getAnoPresentacion());
 		jsonObj.put("mesPresentacion", fiseFormato12AC.getId().getMesPresentacion());
@@ -293,12 +297,20 @@ public class Formato12AGartJSON {
 		this.codEtapa = codEtapa;
 	}
 
-	public String getMensaje() {
-		return mensaje;
+	public String getMensajeInfo() {
+		return mensajeInfo;
 	}
 
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
+	public void setMensajeInfo(String mensajeInfo) {
+		this.mensajeInfo = mensajeInfo;
+	}
+
+	public String getMensajeError() {
+		return mensajeError;
+	}
+
+	public void setMensajeError(String mensajeError) {
+		this.mensajeError = mensajeError;
 	}
 
 }

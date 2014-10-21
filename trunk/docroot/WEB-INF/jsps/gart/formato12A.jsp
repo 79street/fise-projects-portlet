@@ -1,4 +1,3 @@
-<%@page import="javax.portlet.PortletSession"%>
 <%
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -40,14 +39,15 @@ $(document).ready(function () {
 	 $("#<portlet:namespace/>buscarFormato").click(function() {<portlet:namespace/>buscar();});
 	 $("#<portlet:namespace/>cargarFormatoExcel").click(function() {<portlet:namespace/>cargarFormatoExcel();});
 	 $("#<portlet:namespace/>cargarFormatoTexto").click(function() {<portlet:namespace/>cargarFormatoTexto();});
-	 $("#s_empresa").change(function(){cargarPeriodoYCostos();});
-	 $("#s_periodoenvio_present").change(function(){cargarPeriodoYCostos();});
+	 $("#s_empresa").change(function(){cargarPeriodoYCostos(this.value,'');});
+	 $("#s_periodoenvio_present").change(function(){cargarPeriodoYCostos('',this.value);});
 	 $("#<portlet:namespace/>cargaExcel").click(function() {<portlet:namespace/>mostrarFormularioCargaExcel();});
 	 $("#<portlet:namespace/>cargaTxt").click(function() {<portlet:namespace/>mostrarFormularioCargaTexto();});
-	 $("#<portlet:namespace/>reporte").click(function() {<portlet:namespace/>mostrarReporte();});
+	 $("#<portlet:namespace/>reportePdf").click(function() {<portlet:namespace/>mostrarReportePdf();});
+	 $("#<portlet:namespace/>reporteExcel").click(function() {<portlet:namespace/>mostrarReporteExcel();});
 	 initDialogs();
 	 //initBlockUI();		
-	 //
+	 //SE CARGA VARIABLES EN SESION PARA MOSTRAR LOS PANELES DE NUEVO O EDICION MANEJADOS
 	 var codEmpSes = $("#codEmpresaSes").val();
 	 var anioPresSes = $("#anioPresSes").val();
 	 var mesPresSes = $("#mesPresSes").val();
@@ -58,7 +58,7 @@ $(document).ready(function () {
 	 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes != '' && mesEjeSes != '' && etapaSes != ''){
 	 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioEjeSes, mesEjeSes, etapaSes);
 	 }
-	 //
+	 //SE CARGA VALORES POR DEFECTO PARA LA BUSQUEDA
 	 $("#i_anio_d").val($("#anioDesdeSes").val());
 	 $("#s_mes_d").val(parseInt($("#mesDesdeSes").val()));
 	 $("#i_anio_h").val($("#anioHastaSes").val());
@@ -66,19 +66,23 @@ $(document).ready(function () {
 	 $("#s_etapa").val($("#codEtapaSes").val());
 	 <portlet:namespace/>buscar();
 	 var mensajeInfo = $("#mensajeInfo").val();
-	 
-	 //alert(mensajeInfo);
-	 if(mensajeInfo!=''){
+	 var mensajeError = $("#mensajeError").val();
+	 //SE MUESTRAN LOS MENSAJES DE ERROR PARA LA CARGA DE LOS ARCHIVOS
+	 if(mensajeError!=''){
 		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes == '' && mesEjeSes == '' && etapaSes == ''){
+			 inicializarFormulario();
 			 mostrarUltimoFormato();
 			 $("#s_empresa").val(codEmpSes);
 			 $("#s_periodoenvio_present").val(anioPresSes+mesPresSes+etapaSes);
-			 //$("#i_aniopresent").val(anioPresSes);
-			 //$("#s_mes_present").val(mesPresSes);
 		}
-		 //$("#dialog-message-content").html(mensajeInfo);
-		 $("#dialog-form-error").dialog( "open" );
-		 //initBlockUI();
+		 //se muestra el panel de errores si se produce en la carga de archivos
+		$("#dialog-form-error").dialog( "open" );
+	}else{
+		//Se muestra el mensaje de informacion exitosa
+		 if(mensajeInfo!=''){
+			$("#dialog-message-content").html(mensajeInfo);
+			$("#dialog-message").dialog( "open" );			
+		 }
 	 }
 	 //limpiar variables
 	 $("#codEmpresaSes").val('');
@@ -87,14 +91,6 @@ $(document).ready(function () {
 	 $("#anioEjecSes").val('');
 	 $("#mesEjecSes").val('');
 	 $("#etapaSes").val('');
-	 <%
-	 portletSession.setAttribute("codEmpresa", "", PortletSession.APPLICATION_SCOPE);
-	 portletSession.setAttribute("anoPresentacion", "", PortletSession.APPLICATION_SCOPE);
-	 portletSession.setAttribute("mesPresentacion", "", PortletSession.APPLICATION_SCOPE);
-	 portletSession.setAttribute("anoEjecucion", "", PortletSession.APPLICATION_SCOPE);
-	 portletSession.setAttribute("mesEjecucion", "", PortletSession.APPLICATION_SCOPE);
-	 portletSession.setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
-     %>
 	 
 	 initBlockUI();	
 });
@@ -102,14 +98,13 @@ $(document).ready(function () {
 ////////VALIDACIONES
 function inicializarFormulario(){
 	$('#s_empresa').val('');
-	
-	
 	$('#s_periodoenvio_present').val('');
-	
-	//$('#i_aniopresent').val('').css('text-align','right');
-	//$('#s_mes_present').val('');
-	$('#i_anioejecuc').val('').css('text-align','right');
-	$('#s_mes_ejecuc').val('');
+	if( $('#flagPeriodoEjecucion').val()=='S' ){
+		$('#i_anioejecuc').val('').css('text-align','right');
+		$('#s_mes_ejecuc').val('');
+		$('#i_anioejecuc').attr("disabled",false);
+		$('#s_mes_ejecuc').attr("disabled",false);
+	}
 	//
 	$('#i_nroEmpad_r').val('0').css('text-align','right');
 	$('#i_costoUnitEmpad_r').val('0').css('text-align','right');
@@ -145,18 +140,12 @@ function inicializarFormulario(){
 	$('#i_totalGeneral').val('0.00').css('text-align','right');
 	//
 	realizarCalculoCampos();
-	//
+	//quitamos los componentes deshabilitados
 	$('#s_empresa').attr("disabled",false);
 	$('#s_periodoenvio_present').attr("disabled",false);
-	//$('#i_aniopresent').attr("disabled",false);
-	//$('#s_mes_present').attr("disabled",false);
-	$('#i_anioejecuc').attr("disabled",false);
-	$('#s_mes_ejecuc').attr("disabled",false);
 	//
 	deshabilitarCampos();
-	
 	soloNumerosEnteros();
-	
 }
 function soloNumerosEnteros(){
 	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',7,0)");
@@ -166,7 +155,6 @@ function soloNumerosEnteros(){
 	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',7,0)");
 	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',7,0)");
 }
-
 function realizarCalculoCampos(){
 	$('#i_nroEmpad_r').attr("onchange","calculoTotal()");
 	$('#i_costoUnitEmpad_r').attr("onchange","calculoTotal()");
@@ -218,10 +206,10 @@ function deshabilitarCampos(){
 function removerDeshabilitados(){
 	$('#s_empresa').removeAttr("disabled");
 	$('#s_periodoenvio_present').removeAttr("disabled");
-	//$('#i_aniopresent').removeAttr("disabled");
-	//$('#s_mes_present').removeAttr("disabled");
-	$('#i_anioejecuc').removeAttr("disabled");
-	$('#s_mes_ejecuc').removeAttr("disabled");
+	if( $('#flagPeriodoEjecucion').val()=='S' ){
+		$('#i_anioejecuc').removeAttr("disabled");
+		$('#s_mes_ejecuc').removeAttr("disabled");
+	}
 	//
 	$('#i_nroEmpad_r').removeAttr("disabled");
 	$('#i_costoUnitEmpad_r').removeAttr("disabled");
@@ -487,11 +475,13 @@ function <portlet:namespace/>regresar(){
 	//
 	removerDeshabilitados();
 	//se visualizan los componentes escondidos
-	$('#<portlet:namespace/>reporte').css('display','none');
+	$('#<portlet:namespace/>reportePdf').css('display','none');
+	$('#<portlet:namespace/>reporteExcel').css('display','none');
 	$('#<portlet:namespace/>guardarFormato').css('display','');
 	$('#panelCargaArchivos').css('display','');
 	$('#<portlet:namespace/>validacion').css('display','');
 	$('#<portlet:namespace/>enviodefinitivo').css('display','');
+	<portlet:namespace/>buscar();
 }
 function validarBusqueda() {		
 	  if($('#i_anio_d').val().length != '' ) {		  
@@ -537,37 +527,23 @@ function validarFormulario() {
 		    document.getElementById('s_periodoenvio_present').focus();
 		    return false; 
 	  }
-	  /*if($('#i_aniopresent').val().length == '' ) {		  
-		    alert('Debe ingresar el año de presentacion');
-		    document.getElementById('i_aniopresent').focus();
-		    return false; 
-	  }else{
-		  var numstr = trim($('#i_aniopresent').val());
-		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  alert('Ingrese un año de presentacion válido');
-			  return false;
+	  if( $('#flagPeriodoEjecucion').val()=='S' ){
+		  if($('#i_anioejecuc').val().length == '' ) {		  
+			    alert('Debe ingresar el año de ejecucion');
+			    document.getElementById('i_anioejecuc').focus();
+			    return false; 
+		  }else{
+			  var numstr = trim($('#i_anioejecuc').val());
+			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+				  alert('Ingrese un año de ejecucion válido');
+				  return false;
+			  }
 		  }
-	  }
-	  if($('#s_mes_present').val().length == '' ) {		  
-		    alert('Debe ingresar el mes de presentacion');
-		    document.getElementById('s_mes_present').focus();
-		    return false; 
-	  }*/
-	  if($('#i_anioejecuc').val().length == '' ) {		  
-		    alert('Debe ingresar el año de ejecucion');
-		    document.getElementById('i_anioejecuc').focus();
-		    return false; 
-	  }else{
-		  var numstr = trim($('#i_anioejecuc').val());
-		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  alert('Ingrese un año de ejecucion válido');
-			  return false;
+		  if($('#s_mes_ejecuc').val().length == '' ) {		  
+			    alert('Debe ingresar el mes de ejecucion');
+			    document.getElementById('s_mes_ejecuc').focus();
+			    return false; 
 		  }
-	  }
-	  if($('#s_mes_ejecuc').val().length == '' ) {		  
-		    alert('Debe ingresar el mes de ejecucion');
-		    document.getElementById('s_mes_ejecuc').focus();
-		    return false; 
 	  }
 	  //valores de formulario
 	  if($('#i_nroEmpad_r').val().length == '' ) {		  
@@ -663,7 +639,6 @@ function validarFormulario() {
 		    return false; 
 	  }
 	  //
-	  
 	  return true; 
 	}
 function validarArchivoCarga() {		
@@ -677,22 +652,6 @@ function validarArchivoCarga() {
 	    document.getElementById('s_periodoenvio_present').focus();
 	    return false; 
   }
-  /*if($('#i_aniopresent').val().length == '' ) {		  
-	    alert('Debe ingresar el año de presentación para proceder con la carga de archivo');
-	    document.getElementById('i_aniopresent').focus();
-	    return false; 
-  }else{
-	  var numstr = trim($('#i_aniopresent').val());
-	  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-		  alert('Ingrese un año de presentación válido para proceder con la carga de archivo');
-		  return false;
-	  }
-  }
-  if($('#s_mes_present').val().length == '' ) {		  
-	    alert('Debe ingresar el mes de presentación para proceder con la carga de archivo');
-	    document.getElementById('s_mes_present').focus();
-	    return false; 
-  }*/
 
   return true; 
 }
@@ -777,7 +736,10 @@ function <portlet:namespace/>buscar() {
 					$('#grid_formato').jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 					$("#grid_formato")[0].refreshIndex();
 					initBlockUI();
-				}				
+				},error : function(){
+					alert("Error de conexión.");
+					initBlockUI();
+				}
 		});
 	}
 }
@@ -866,13 +828,16 @@ function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecuc
 				var addhtml2='Registro eliminado con éxito';					
 				$("#dialog-message-content").html(addhtml2);
 				$("#dialog-message").dialog( "open" );					
-				//limpiar();
+				<portlet:namespace/>buscar();
 				initBlockUI();
 			}
 			else{
 				alert("Error al eliminar el registro");
 				initBlockUI();
 			}
+		},error : function(){
+			alert("Error de conexión.");
+			initBlockUI();
 		}
 });
 }
@@ -885,28 +850,18 @@ function <portlet:namespace/>crearFormato(){
 	$("#div_home").hide();
 	$('#flagCarga').val('0');
 	//
-	 //$("#i_aniopresent").val($("#anioDesdeSes").val());
-	 //$("#s_mes_present").val(parseInt($("#mesDesdeSes").val()));
-	 $("#i_anioejecuc").val($("#anioDesdeSes").val());
-	 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
-	 
-	 cargarPeriodoYCostos();
-	
+	if( $('#flagPeriodoEjecucion').val()=='S' ){
+		 $("#i_anioejecuc").val($("#anioDesdeSes").val());
+		 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
+	}
+	cargarPeriodoYCostos('','');
 }
 function mostrarUltimoFormato(){	
-	inicializarFormulario();
-	//data_funcion = [];
 	$('#Estado').val('SAVE');
 	$("#etapaEdit").val("");
 	$("#div_formato").show();
 	$("#div_home").hide();
 	$('#flagCarga').val('0');
-	//
-	 //$("#i_aniopresent").val($("#anioDesdeSes").val());
-	 //$("#s_mes_present").val(parseInt($("#mesDesdeSes").val()));
-	 //$("#i_anioejecuc").val($("#anioDesdeSes").val());
-	 //$("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
-	
 }
 function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
 	$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
@@ -939,6 +894,9 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 					alert("Error al recuperar los datos del registro seleccionado");
 					initBlockUI();
 				}
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
 			}
 	});	
 }
@@ -973,23 +931,24 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 					alert("Error al recuperar los datos del registro seleccionado");
 					initBlockUI();
 				}
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
 			}
 	});	
 }
 function FillEditformato(row){
-	//alert(row);
-	//alert(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
 	$('#s_empresa').val(row.codEmpresa);
 	//seteamos el concatenado
 	$('#s_periodoenvio_present').val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
-	
-	//$('#i_aniopresent').val(row.anoPresentacion).css('text-align','right');
-	//$('#s_mes_present').val(row.mesPresentacion);
-	$('#i_anioejecuc').val(row.anoEjecucion).css('text-align','right');
-	$('#s_mes_ejecuc').val(row.mesEjecucion);
-	
+	$('#flagPeriodoEjecucion').val(row.flagPeriodoEjecucion);
+	if( $('#flagPeriodoEjecucion').val()=='S' ){
+		$('#i_anioejecuc').val(row.anoEjecucion).css('text-align','right');
+		$('#s_mes_ejecuc').val(row.mesEjecucion);
+		$('#i_anioejecuc').attr("disabled",true);
+		$('#s_mes_ejecuc').attr("disabled",true);
+	}
 	$("#etapaEdit").val(row.etapa);
-	
 	$('#i_nroEmpad_r').val(row.nroEmpadR).css('text-align','right');
 	$('#i_costoUnitEmpad_r').val(row.costoUnitEmpadR).css('text-align','right');
 	$('#i_costoTotalEmpad_r').css('text-align','right');
@@ -1023,16 +982,10 @@ function FillEditformato(row){
 	$('#i_importeActivExtraord').css('text-align','right');
 	
 	$('#i_totalGeneral').css('text-align','right');
-	
 	//
 	$('#s_empresa').attr("disabled",true);
 	$('#s_periodoenvio_present').attr("disabled",true);
-	//$('#i_aniopresent').attr("disabled",true);
-	//$('#s_mes_present').attr("disabled",true);
-	$('#i_anioejecuc').attr("disabled",true);
-	$('#s_mes_ejecuc').attr("disabled",true);
 	//
-	
 	realizarCalculoCampos();
 	deshabilitarCampos();
 	//
@@ -1049,9 +1002,8 @@ function FillEditformato(row){
 	
 	soloNumerosEnteros();
 	formularioCompletarDecimales();
-	
-	//document.getElementById('flagCarga').value='2';
 	$('#flagCarga').val('1');
+	mostrarPeriodoEjecucion();
 }
 function deshabiliarControlerView(){
 	$('#i_nroEmpad_r').attr("disabled",true);
@@ -1070,7 +1022,8 @@ function deshabiliarControlerView(){
 	$('#i_activExtraord_p').attr("disabled",true);
 	$('#i_activExtraord_l').attr("disabled",true);
 	
-	$('#<portlet:namespace/>reporte').css('display','');
+	$('#<portlet:namespace/>reportePdf').css('display','');
+	$('#<portlet:namespace/>reporteExcel').css('display','');
 	$('#<portlet:namespace/>guardarFormato').css('display','none');
 	$('#panelCargaArchivos').css('display','none');
 	$('#<portlet:namespace/>validacion').css('display','none');
@@ -1088,16 +1041,11 @@ function <portlet:namespace/>guardarFormato(){
 			data: {
 				<portlet:namespace />tipo: $("#Estado").val(),
 				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-				
 				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
-				
-				//<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
-				//<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
+				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
 				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
-				//
 				<portlet:namespace />etapa: $('#etapaEdit').val(),
-				//<portlet:namespace />zonaBenef: $('#s_zonabenef').val(),
 				<portlet:namespace />nroEmpadR: $('#i_nroEmpad_r').val(),
 				<portlet:namespace />costoUnitEmpadR: $('#i_costoUnitEmpad_r').val(),
 				<portlet:namespace />nroAgentR: $('#i_nroAgentGlp_r').val(),
@@ -1128,12 +1076,15 @@ function <portlet:namespace/>guardarFormato(){
 					initBlockUI();
 				}
 				else if(data.resultado == "Error"){				
-					var addhtml2='Se produjo un error al guardar los datos';
+					var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
 					$("#dialog-message-content").html(addhtml2);
 					$("#dialog-message").dialog( "open" );
 					//<portlet:namespace/>filtrar();
 					initBlockUI();
 				}
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
 			}
 		});
 	   	//se deja el formulario activo
@@ -1144,49 +1095,53 @@ function <portlet:namespace/>guardarFormato(){
 	 var codEmpM = $("#s_empresa").val();
 	 var anioPresM = $("#s_periodoenvio_present").val().substring(0,4);
 	 var mesPresM = $("#s_periodoenvio_present").val().substring(4,6);
-	//var anioPresM = $("#i_aniopresent").val();
-	 //var mesPresM = $("#s_mes_present").val();
-	 var anioEjeM = $("#i_anioejecuc").val();
-	 var mesEjeM = $("#s_mes_ejecuc").val();
-	 var etapaM = "SOLICITUD";
-	 //alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
-	 if(codEmpM != '' && anioPresM != '' && mesPresM != '' && anioEjeM != '' && mesEjeM != '' && etapaM != ''){
-	 	 editarFormato(codEmpM, anioPresM, mesPresM, anioEjeM, mesEjeM, etapaM);
+	 var anioEjeM;
+	 var mesEjeM;
+	 if( $('#flagPeriodoEjecucion').val()=='S' ){
+		 anioEjeM = $("#i_anioejecuc").val();
+		 mesEjeM = $("#s_mes_ejecuc").val();
+	 }else{
+		 anioEjeM = anioPresM;
+		 mesEjeM = mesPresM;
 	 }
+	 var etapaM = "SOLICITUD";
+	 if( $('#flagCarga').val()=='0' ){
+		 mostrarUltimoFormato();
+	 }else{
+		//alert(codEmpM+','+anioPresM+','+mesPresM+','+anioEjeM+','+mesEjeM+','+etapaM);
+		 if(codEmpM != '' && anioPresM != '' && mesPresM != '' && anioEjeM != '' && mesEjeM != '' && etapaM != ''){
+		 	 editarFormato(codEmpM, anioPresM, mesPresM, anioEjeM, mesEjeM, etapaM);
+		 }
+	 }
+	 
 }
 
-function cargarPeriodoYCostos(){
-	//alert(1);
-	<portlet:namespace/>loadPeriodo();
-	//alert(2);
-	<portlet:namespace/>loadCostosUnitarios();
-	//alert(3);
+function cargarPeriodoYCostos(valCodEmpresa, valPeriodo){
+	<portlet:namespace/>loadPeriodo(valPeriodo);
 }
 
-function <portlet:namespace/>loadPeriodo() {
-	//---$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando Distrito </h3>' });
+function <portlet:namespace/>loadPeriodo(valPeriodo) {
 	jQuery.ajax({
 			url: '<portlet:resourceURL id="request_data" />',
 			type: 'post',
 			dataType: 'json',
 			data: {
-				<portlet:namespace />s_empresa: $('#s_empresa').val()//,
+				<portlet:namespace />s_empresa: $('#s_empresa').val(),
+				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val()
 				},
 			success: function(data) {		
 				dwr.util.removeAllOptions("s_periodoenvio_present");
 				dwr.util.addOptions("s_periodoenvio_present", data,"codigoItem","descripcionItem");
-				//setear al combo de ejecucion
-				//dwr.util.setValue("u_provincia", prov_selected);
-				/*dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
-				dwr.util.setValue("i_costoUnitAgent_r", data.costoAgentR);
-				dwr.util.setValue("i_costoUnitEmpad_p", data.costoEmpP);
-				dwr.util.setValue("i_costoUnitAgent_p", data.costoAgentP);
-				dwr.util.setValue("i_costoUnitEmpad_l", data.costoEmpL);
-				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);*/
-				//---initBlockUI();
+				if( valPeriodo.length!='' ){
+					dwr.util.setValue("s_periodoenvio_present", valPeriodo);
+				}
+				<portlet:namespace/>loadCostosUnitarios();
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
 			}
 	});
-	recargarPeriodoEjecucion();
+	
 }
 
 function recargarPeriodoEjecucion(){
@@ -1195,13 +1150,13 @@ function recargarPeriodoEjecucion(){
 	if( $('#s_periodoenvio_present').val() != null ){
 		ano = $('#s_periodoenvio_present').val().substring(0,4);
 		mes = $('#s_periodoenvio_present').val().substring(4,6);
-		$('#i_anioejecuc').val(ano);
-		$('#s_mes_ejecuc').val(parseFloat(mes));
+		if( $('#flagPeriodoEjecucion').val()=='S' ){
+			$('#i_anioejecuc').val(ano);
+			$('#s_mes_ejecuc').val(parseFloat(mes));
+		}
 	}
 }
-
 function <portlet:namespace/>loadCostosUnitarios() {
-	//---$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando Distrito </h3>' });
 	jQuery.ajax({
 			url: '<portlet:resourceURL id="request_data2" />',
 			type: 'post',
@@ -1209,8 +1164,6 @@ function <portlet:namespace/>loadCostosUnitarios() {
 			data: {
 				<portlet:namespace />s_empresa: $('#s_empresa').val(),
 				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val()
-				//<portlet:namespace />i_aniopresent: $('#i_aniopresent').val()
-				//<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val()
 				},
 			success: function(data) {				
 				dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
@@ -1219,11 +1172,25 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				dwr.util.setValue("i_costoUnitAgent_p", data.costoAgentP);
 				dwr.util.setValue("i_costoUnitEmpad_l", data.costoEmpL);
 				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);
+				//
+				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
+				recargarPeriodoEjecucion();
+				mostrarPeriodoEjecucion();
 				//---initBlockUI();
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
 			}
 	});	 
+	
 }
-
+function mostrarPeriodoEjecucion(){
+	if( $('#flagPeriodoEjecucion').val()=='S' ){
+		$('#divPeriodoEjecucion').show();  
+	}else{
+		$('#divPeriodoEjecucion').hide();  
+	}
+}
 
 //////CARGAR ARCHIVO EXCEL
 function <portlet:namespace/>cargarFormatoExcel(){
@@ -1379,15 +1346,12 @@ function validaAnio(id){
     }  
 }
 function <portlet:namespace/>mostrarFormularioCargaExcel(){
-	//alert($(window).width());
-	//alert($(window).height());
 	if (validarArchivoCarga()){
 		if( $('#flagCarga').val()=='0' ){
 			$('#flagCarga').val('2');
 		}else if( $('#flagCarga').val()=='1' ){
 			$('#flagCarga').val('3');
 		}
-	    //$.blockUI({ message: '' });
 	    $('#divOverlay').show();
 	    $("#dialog-form-cargaExcel").show();
 	    $("#dialog-form-cargaExcel").css({ 
@@ -1399,22 +1363,15 @@ function <portlet:namespace/>mostrarFormularioCargaExcel(){
 function regresarFormularioCargaExcel(){
 	$('#flagCarga').val('');
 	$("#dialog-form-cargaExcel").hide();
-	//$.unblockUI();
 	$('#divOverlay').hide();   
 }
 function <portlet:namespace/>mostrarFormularioCargaTexto(){
-	//alert($(window).width());
-	//alert($(window).height());
-	//alert($("#dialog-form-cargaTexto").width());
-	//alert($("#dialog-form-cargaTexto").height());
-	//$("#dialog-form-carga").dialog("open");
 	if (validarArchivoCarga()){
 		if( $('#flagCarga').val()=='0' ){
 			$('#flagCarga').val('4');
 		}else if( $('#flagCarga').val()=='1' ){
 			$('#flagCarga').val('5');
 		}
-	    //$.blockUI({ message: '' });
 	    $('#divOverlay').show();
 	    $("#dialog-form-cargaTexto").show();
 	    $("#dialog-form-cargaTexto").css({ 
@@ -1426,10 +1383,9 @@ function <portlet:namespace/>mostrarFormularioCargaTexto(){
 function regresarFormularioCargaTexto(){
 	$('#flagCarga').val('');
 	$("#dialog-form-cargaTexto").hide();
-	//$.unblockUI();
 	$('#divOverlay').hide();   
 }
-function <portlet:namespace/>mostrarReporte(){
+function <portlet:namespace/>mostrarReportePdf(){
 	jQuery.ajax({
 		url : '<portlet:resourceURL id="reporte" />',
 		type : 'post',
@@ -1437,17 +1393,42 @@ function <portlet:namespace/>mostrarReporte(){
 		data : {
 			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
 			<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
-			//<portlet:namespace />anoPresentacion: $('#i_aniopresent').val(),
-			//<portlet:namespace />mesPresentacion: $('#s_mes_present').val(),
 			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 			<portlet:namespace />etapa: $('#etapaEdit').val(),
 			<portlet:namespace />nombreReporte: 'formato12A',
-			<portlet:namespace />nombreArchivo: 'formato12A'
+			<portlet:namespace />nombreArchivo: 'formato12A',
+			<portlet:namespace />tipoArchivo: '0'//PDF
+		},
+		success : function(gridData) {
+			verReporte();
+		},error : function(){
+			alert("Error de conexión.");
+			initBlockUI();
+		}
+	});
+}
+function <portlet:namespace/>mostrarReporteExcel(){
+	jQuery.ajax({
+		url : '<portlet:resourceURL id="reporte" />',
+		type : 'post',
+		dataType : 'json',
+		data : {
+			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+			<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+			<portlet:namespace />etapa: $('#etapaEdit').val(),
+			<portlet:namespace />nombreReporte: 'formato12A',
+			<portlet:namespace />nombreArchivo: 'formato12A',
+			<portlet:namespace />tipoArchivo: '1'//XLS
 		},
 		success : function(gridData) {
 			//alert('entro');
 			verReporte();
+		},error : function(){
+			alert("Error de conexión.");
+			initBlockUI();
 		}
 	});
 }
@@ -1495,7 +1476,8 @@ function completarCerosIzq(cadena,longitud) {
 	<input type="hidden" id="mesHastaSes" value="${model.mesHasta}" />
 	<input type="hidden" id="codEtapaSes" value="${model.codEtapa}" />
 	
-	<input type="hidden" id="mensajeInfo" value="${model.mensaje}" />
+	<input type="hidden" id="mensajeError" value="${model.mensajeError}" />
+	<input type="hidden" id="mensajeInfo" value="${model.mensajeInfo}" />
 
 	<input type="hidden" id="Estado" value="" />	
 	<input type="hidden" id="flag" value="" />
@@ -1705,7 +1687,7 @@ function completarCerosIzq(cadena,longitud) {
 									   			<td>
 									   				<table class="" style="width: 100%;" border="0">
 									   					<tr>
-									   						<td>
+									   						<td width="45%">
 									   							<fieldset class="net-frame-border" >
 									   								<table>
 									   									<tr>
@@ -1741,34 +1723,70 @@ function completarCerosIzq(cadena,longitud) {
 									   								</table>
 									   							</fieldset>
 									   						</td>
-									   						<td width="10px">
+									   						<td width="10%">
+									   							<input type="hidden" id="flagPeriodoEjecucion" value="" />
+									   							<div id="divPrueba" style="display:none;">
+									   								hola mundo
+									   							</div>
 									   						</td>
-									   						<td>
-									   							<fieldset class="net-frame-border" >
-									   								<table>
-									   									<tr>
-									   										<td colspan="5">
-									   											<output class="net-titulo">Periodo a ejecución</output>
-									   										</td>
-									   									</tr>
-									   									<tr>
-									   										<td width="40px">Año:</td>
-									   										<td>
-									   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" >
-									   										</td>
-									   										<td width="10px" ></td>
-									   										<td width="40px">Mes:</td>
-									   										<td>
-									   											<select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width:104px;" >
-																					<option value="">-Seleccione-</option>
-																					<c:forEach items="${listaMes}" var="mes">																
-																						<option value="${mes.key}">${mes.value}</option>
-																					</c:forEach>
-																				</select>
-									   										</td>
-									   									</tr>
-									   								</table>
-									   							</fieldset>
+									   						<td width="45%">
+									   							<div id="divPeriodoEjecucion" style="display:none;" >
+									   								<fieldset class="net-frame-border" >
+										   								<table>
+										   									<tr>
+										   										<td colspan="5">
+										   											<output class="net-titulo">Periodo a ejecución</output>
+										   										</td>
+										   									</tr>
+										   									<tr>
+										   										<td width="40px">Año:</td>
+										   										<td>
+										   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" >
+										   										</td>
+										   										<td width="10px" ></td>
+										   										<td width="40px">Mes:</td>
+										   										<td>
+										   											<select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width:104px;" >
+																						<option value="">-Seleccione-</option>
+																						<c:forEach items="${listaMes}" var="mes">																
+																							<option value="${mes.key}">${mes.value}</option>
+																						</c:forEach>
+																					</select>
+										   										</td>
+										   									</tr>
+										   								</table>
+										   							</fieldset>
+									   							</div>
+									   							
+									   							
+									   							<c:if test="${flagMostrarPeriodoEjecucion=='S' }">
+									   								<fieldset class="net-frame-border" >
+										   								<table>
+										   									<tr>
+										   										<td colspan="5">
+										   											<output class="net-titulo">Periodo a ejecución</output>
+										   										</td>
+										   									</tr>
+										   									<tr>
+										   										<td width="40px">Año:</td>
+										   										<td>
+										   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" >
+										   										</td>
+										   										<td width="10px" ></td>
+										   										<td width="40px">Mes:</td>
+										   										<td>
+										   											<select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width:104px;" >
+																						<option value="">-Seleccione-</option>
+																						<c:forEach items="${listaMes}" var="mes">																
+																							<option value="${mes.key}">${mes.value}</option>
+																						</c:forEach>
+																					</select>
+										   										</td>
+										   									</tr>
+										   								</table>
+										   							</fieldset>
+									   							</c:if>
+									   							
 									   						</td>
 									   					</tr>
 									   				</table>
@@ -2054,7 +2072,7 @@ function completarCerosIzq(cadena,longitud) {
 									   						<td colspan="4">
 									   							<table style="width:100%">
 									   								<tr>
-									   									<td width="35%">
+									   									<td width="25%">
 									   										<fieldset id="panelCargaArchivos"  class="net-frame-border">
 									   											<legend>Subir de:  </legend>		
 									   											<table style="width:100%">
@@ -2071,23 +2089,27 @@ function completarCerosIzq(cadena,longitud) {
 									   									</td>
 									   									<td width="10%">
 									   									</td>
-									   									<td width="55%">
+									   									<td width="65%">
 									   										<table style="width:100%">
 								   												<tr>
-								   													<td width="20%" align="center">
-								   														<input type="button" class="boton" name="<portlet:namespace/>reporte" style="display:none;" 
-								   															id="<portlet:namespace/>reporte" class="button net-button-small"  value="Imprimir"/>
+								   													<td width="16%" align="center">
+								   														<input type="button" class="boton" name="<portlet:namespace/>reportePdf" style="display:none;" 
+								   															id="<portlet:namespace/>reportePdf" class="button net-button-small"  value="Imprimir PDF"/>
 								   													</td>
-								   													<td width="20%" align="center">
+								   													<td width="16%" align="center">
+								   														<input type="button" class="boton" name="<portlet:namespace/>reporteExcel" style="display:none;" 
+								   															id="<portlet:namespace/>reporteExcel" class="button net-button-small"  value="Imprimir XLS"/>
+								   													</td>
+								   													<td width="17%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>guardarFormato" name="<portlet:namespace/>guardarFormato" value="Grabar" />
 								   													</td>
-								   													<td width="20%" align="center">
+								   													<td width="17%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>validacion" name="<portlet:namespace/>validacion" value="Validación" />
 								   													</td>
-								   													<td width="20%" align="center">
+								   													<td width="17%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>enviodefinitivo" name="<portlet:namespace/>enviodefinitivo" value="Envío Def." />
 								   													</td>
-								   													<td width="20%" align="center">
+								   													<td width="17%" align="center">
 								   														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormato" name="<portlet:namespace/>regresarFormato" value="Regresar" />
 								   													</td>
 								   												</tr>

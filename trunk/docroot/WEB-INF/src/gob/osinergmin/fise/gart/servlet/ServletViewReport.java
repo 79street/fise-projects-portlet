@@ -1,5 +1,6 @@
 package gob.osinergmin.fise.gart.servlet;
 
+import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.gart.controller.Formato12AGartController;
 
 import java.io.BufferedOutputStream;
@@ -20,7 +21,7 @@ import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 
@@ -51,6 +52,7 @@ public class ServletViewReport extends HttpServlet {
 		String nombreReporte = (String) sesion.getAttribute("nombreReporte");
 		String nombreArchivo = (String) sesion.getAttribute("nombreArchivo");
 		String tipoFormato = (String) sesion.getAttribute("tipoFormato");
+		String tipoArchivo = (String) sesion.getAttribute("tipoArchivo");
 		Map<String, Object> parametros = (Map<String, Object>) sesion.getAttribute("mapa");
 		
 		parametros.put("IMG",request.getSession().getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
@@ -61,60 +63,40 @@ public class ServletViewReport extends HttpServlet {
 
 		byte[] bytes = null;
 		try {
-			//EXPORTAR A EXCEL
-			JasperPrint print = JasperFillManager.fillReport(reportFile.getPath(), parametros, new JREmptyDataSource());
-			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			response.addHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".xlsx" + "\"");
-			ServletOutputStream outputStream = response.getOutputStream();
-			JRXlsxExporter exporter = new JRXlsxExporter();
-			/*exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,outputStream);*/
 			
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputStream);
-			/*exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
-			exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
-			exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
-			exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
-			*/
-			exporter.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.FALSE);
-			exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.FALSE);
-			exporter.setParameter(JRXlsExporterParameter.IS_FONT_SIZE_FIX_ENABLED, Boolean.TRUE);
-			exporter.exportReport();
-			outputStream.flush();
-			outputStream.close();
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			//EXPORTAR A PDF
-			
-			/*if( FiseConstants.TIPO_FORMATO_12.equals(tipoFormato) ){
+			if( FiseConstants.FORMATO_EXPORT_PDF.equals(tipoArchivo) ){
 				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				if (bytes != null) {
+					int size = bytes.length;
+					response.reset();
+					response.setBufferSize(DEFAULT_BUFFER_SIZE);
+					response.setHeader("Content-Length", String.valueOf(size));
+					response.setContentType("application/pdf");
+					//response.setHeader("Content-Disposition", "attachment;filename=\"" + nombreArchivo + ".pdf" + "\"");
+					response.setHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".pdf" + "\"");
+					output = new BufferedOutputStream(servletOutputStream, DEFAULT_BUFFER_SIZE);
+					output.write(bytes);
+				}
+			}else if( FiseConstants.FORMATO_EXPORT_XLS.equals(tipoArchivo) ){
+				//EXPORTAR A EXCEL
+				JasperPrint print = JasperFillManager.fillReport(reportFile.getPath(), parametros, new JREmptyDataSource());
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				response.setHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".xlsx" + "\"");
+				JRXlsxExporter exporter = new JRXlsxExporter();		
+				exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, servletOutputStream);
+				exporter.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.FALSE);
+				exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.FALSE);
+				exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+				exporter.setParameter(JRXlsExporterParameter.IS_FONT_SIZE_FIX_ENABLED, Boolean.TRUE);
+				exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+				exporter.exportReport();
 			}
-			
-			if (bytes != null) {
-				int size = bytes.length;
-				response.reset();
-				response.setBufferSize(DEFAULT_BUFFER_SIZE);
-				response.setHeader("Content-Length", String.valueOf(size));
-				//response.setHeader("Content-Disposition", "attachment;filename=\"" + nombreArchivo + ".pdf" + "\"");
-				response.setHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".pdf" + "\"");
-				response.setHeader("Content-Type", "application/pdf");
-				output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
-				output.write(bytes);
-				//response.setContentType("application/pdf");
-			}*/
 			servletOutputStream.flush();
 			servletOutputStream.close();
 		} catch (Exception e) {
 			if (logger.isInfoEnabled())
-				logger.info("Excepcion al exportar a pdf : " + e.getMessage(), e);
+				logger.info("Excepcion al exportar: " + e.getMessage(), e);
 		}finally {
 			if (output != null) {
 				output.close();
