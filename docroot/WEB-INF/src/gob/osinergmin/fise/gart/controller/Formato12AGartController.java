@@ -138,6 +138,8 @@ public class Formato12AGartController {
 	private List<FiseObservacion> listaFiseObservacion;
 	private Map<String, String> mapaErrores;
 	private List<FisePeriodoEnvio> listaPeriodoEnvio;
+	//private String flagMostrarPeriodoEjecucion;
+	
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping
@@ -146,6 +148,8 @@ public class Formato12AGartController {
 		PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		Formato12AGartJSON obj = new Formato12AGartJSON();
 		
+		//flagMostrarPeriodoEjecucion = "";
+		
 		String codEmpresa = (String)pRequest.getPortletSession().getAttribute("codEmpresa", PortletSession.APPLICATION_SCOPE);
 		String anioPresentacion = (String)pRequest.getPortletSession().getAttribute("anoPresentacion", PortletSession.APPLICATION_SCOPE);
 		String mesPresentacion = (String)pRequest.getPortletSession().getAttribute("mesPresentacion", PortletSession.APPLICATION_SCOPE);
@@ -153,8 +157,9 @@ public class Formato12AGartController {
 		String mesEjecucion = (String)pRequest.getPortletSession().getAttribute("mesEjecucion", PortletSession.APPLICATION_SCOPE);
 		String etapa = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
 		//
-		String msg = (String)pRequest.getPortletSession().getAttribute("mensajeInformacion", PortletSession.APPLICATION_SCOPE);
+		String msgError = (String)pRequest.getPortletSession().getAttribute("mensajeError", PortletSession.APPLICATION_SCOPE);
 		List<MensajeErrorBean> listaError = (List<MensajeErrorBean>)pRequest.getPortletSession().getAttribute("listaError", PortletSession.APPLICATION_SCOPE);
+		String msgInfo = (String)pRequest.getPortletSession().getAttribute("mensajeInformacion", PortletSession.APPLICATION_SCOPE);
 		
 		obj.setCodEmpresa(codEmpresa!=null?codEmpresa:"");
 		obj.setAnoPres(anioPresentacion!=null?anioPresentacion:"");
@@ -163,7 +168,8 @@ public class Formato12AGartController {
 		obj.setMesEjec(anioPresentacion!=null?mesEjecucion:"");
 		obj.setEtapa(etapa!=null?etapa:"");
 		//
-		obj.setMensaje(msg!=null?msg:"");
+		obj.setMensajeError(msgError!=null?msgError:"");
+		obj.setMensajeInfo(msgInfo!=null?msgInfo:"");
 		
 		pRequest.getPortletSession().setAttribute("codEmpresa", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("anoPresentacion", "", PortletSession.APPLICATION_SCOPE);
@@ -172,9 +178,10 @@ public class Formato12AGartController {
 	    pRequest.getPortletSession().setAttribute("mesEjecucion", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
 	    //
-	    pRequest.getPortletSession().setAttribute("mensajeInformacion", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("mensajeError", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("listaError", null, PortletSession.APPLICATION_SCOPE);
-		
+	    pRequest.getPortletSession().setAttribute("mensajeInformacion", "", PortletSession.APPLICATION_SCOPE);
+	    
 		cargaInicial(renderRequest);
 		model.addAttribute("listaMes", listaMes);
 		model.addAttribute("listaEmpresa", listaEmpresa);
@@ -334,7 +341,7 @@ public class Formato12AGartController {
   				fiseFormato12AC.setDescEmpresa(mapaEmpresa.get(fiseFormato12AC.getId().getCodEmpresa()));
   				fiseFormato12AC.setDescMesPresentacion(listaMes.get(fiseFormato12AC.getId().getMesPresentacion()));
   				fiseFormato12AC.setDescMesEjecucion(listaMes.get(fiseFormato12AC.getId().getMesEjecucionGasto()));
-  				jsonArray.put(new Formato12AGartJSON().asJSONObject(fiseFormato12AC));
+  				jsonArray.put(new Formato12AGartJSON().asJSONObject(fiseFormato12AC,""));
   			}
   			
   			//************************************************************************
@@ -396,16 +403,18 @@ public class Formato12AGartController {
 		        formato = formatoService.obtenerFormato12ACByPK(pk);
 		        
 		        Formato12AGartJSON obj = new Formato12AGartJSON();
+		        String codigoPeriodoEnvio="";
+		        String flagPeriodo="";
 		        
 		        if( formato != null ){
 		        	//guardamos valores en sesion
-					/*PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-					pRequest.getPortletSession().setAttribute("codEmpresa", formato.getId().getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
-				    pRequest.getPortletSession().setAttribute("anoPresentacion", String.valueOf(formato.getId().getAnoPresentacion()), PortletSession.APPLICATION_SCOPE);
-				    pRequest.getPortletSession().setAttribute("mesPresentacion", String.valueOf(formato.getId().getMesPresentacion()), PortletSession.APPLICATION_SCOPE);
-				    pRequest.getPortletSession().setAttribute("anoEjecucion", String.valueOf(formato.getId().getAnoEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
-				    pRequest.getPortletSession().setAttribute("mesEjecucion", String.valueOf(formato.getId().getMesEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
-				    pRequest.getPortletSession().setAttribute("etapa", formato.getId().getEtapa(), PortletSession.APPLICATION_SCOPE);*/
+					PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+					pRequest.getPortletSession().setAttribute("codEmpresaEdit", formato.getId().getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("anoPresentacionEdit", String.valueOf(formato.getId().getAnoPresentacion()), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("mesPresentacionEdit", String.valueOf(formato.getId().getMesPresentacion()), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("anoEjecucionEdit", String.valueOf(formato.getId().getAnoEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("mesEjecucionEdit", String.valueOf(formato.getId().getMesEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
+				    pRequest.getPortletSession().setAttribute("etapaEdit", formato.getId().getEtapa(), PortletSession.APPLICATION_SCOPE);
 				    
 				    obj.setCodEmpresa(formato.getId().getCodEmpresa());
 					obj.setAnoPres(String.valueOf(formato.getId().getAnoPresentacion()));
@@ -426,9 +435,19 @@ public class Formato12AGartController {
 						jsonArray.put(jsonObj2);		
 					}
 		  			jsonObj.put("periodoEnvio",jsonArray);
+		  			codigoPeriodoEnvio =String.valueOf(formato.getId().getAnoPresentacion())+
+		        			FormatoUtil.rellenaIzquierda(String.valueOf(formato.getId().getMesPresentacion()), '0', 2)+
+		        			formato.getId().getEtapa();
 		        }
 		        
-		        JSONObject jsonent = new Formato12AGartJSON().asJSONObject(formato);
+		        for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+					if( codigoPeriodoEnvio.equals(p.getCodigoItem()) ){
+						flagPeriodo= p.getFlagPeriodoEjecucion();
+						break;
+					}
+				}
+		        
+		        JSONObject jsonent = new Formato12AGartJSON().asJSONObject(formato,flagPeriodo);
 		        logger.info("jsonformato:"+jsonent);
 		        jsonObj.put("formato",jsonent);
 				jsonObj.put("resultado", "OK");
@@ -445,8 +464,18 @@ public class Formato12AGartController {
 					
 					String anoPresentacion = request.getParameter("anoPresentacion");
 					String mesPresentacion = request.getParameter("mesPresentacion");
-					String anoEjecucion = request.getParameter("anoEjecucion");
-					String mesEjecucion = request.getParameter("mesEjecucion");
+					
+					String flagPeriodoEjecucion = request.getParameter("flagPeriodoEjecucion");
+					String anoEjecucion="";
+					String mesEjecucion="";
+					if( "S".equals(flagPeriodoEjecucion) ){
+						anoEjecucion = request.getParameter("anoEjecucion");
+						mesEjecucion = request.getParameter("mesEjecucion");
+					}
+					
+					
+					//String anoEjecucion = request.getParameter("anoEjecucion");
+					//String mesEjecucion = request.getParameter("mesEjecucion");
 					//String zonaBenef = request.getParameter("zonaBenef");
 					String nroEmpadR = request.getParameter("nroEmpadR");
 					String costoUnitEmpadR = request.getParameter("costoUnitEmpadR");
@@ -473,11 +502,21 @@ public class Formato12AGartController {
 						formulario.setAnioPresent(Long.parseLong(periodoEnvio.substring(0, 4)));
 						formulario.setMesPresent(Long.parseLong(periodoEnvio.substring(4, 6)));
 						formulario.setEtapa(periodoEnvio.substring(6, periodoEnvio.length()));
+						if( "S".equals(flagPeriodoEjecucion) ){
+							formulario.setAnioEjecuc(Long.parseLong(anoEjecucion));
+							formulario.setMesEjecuc(Long.parseLong(mesEjecucion));
+						}else{
+							formulario.setAnioEjecuc(formulario.getAnioPresent());
+							formulario.setMesEjecuc(formulario.getMesPresent());
+						}
+					
 					}
 					/*formulario.setAnioPresent(Long.parseLong(anoPresentacion));
 					formulario.setMesPresent(Long.parseLong(mesPresentacion));*/
-					formulario.setAnioEjecuc(Long.parseLong(anoEjecucion));
-					formulario.setMesEjecuc(Long.parseLong(mesEjecucion));
+					
+					
+					
+					
 					//formulario.setIdGrupoInfo(Long.parseLong(zonaBenef));
 					formulario.setNroEmpadR(Long.parseLong(nroEmpadR));
 					formulario.setCostoUnitEmpadR(new BigDecimal(costoUnitEmpadR));
@@ -511,6 +550,7 @@ public class Formato12AGartController {
 	   				
 				} catch (Exception e) {
 					jsonObj.put("resultado", "Error");
+					jsonObj.put("mensaje", e.getMessage());
 					logger.error("Error al guardar los datos: "+e.getMessage());
 				}   				   				
 					 					 				
@@ -527,8 +567,17 @@ public class Formato12AGartController {
 					
 					String anoPresentacion = request.getParameter("anoPresentacion");
 					String mesPresentacion = request.getParameter("mesPresentacion");
-					String anoEjecucion = request.getParameter("anoEjecucion");
-					String mesEjecucion = request.getParameter("mesEjecucion");
+					
+					String flagPeriodoEjecucion = request.getParameter("flagPeriodoEjecucion");
+					String anoEjecucion="";
+					String mesEjecucion="";
+					if( "S".equals(flagPeriodoEjecucion) ){
+						anoEjecucion = request.getParameter("anoEjecucion");
+						mesEjecucion = request.getParameter("mesEjecucion");
+					}
+					
+					//String anoEjecucion = request.getParameter("anoEjecucion");
+					//String mesEjecucion = request.getParameter("mesEjecucion");
 					String etapa = request.getParameter("etapa");
 					
 					logger.info("codempresa "+codEmpresa);
@@ -584,6 +633,13 @@ public class Formato12AGartController {
 						formulario.setAnioPresent(Long.parseLong(periodoEnvio.substring(0, 4)));
 						formulario.setMesPresent(Long.parseLong(periodoEnvio.substring(4, 6)));
 						formulario.setEtapa(periodoEnvio.substring(6, periodoEnvio.length()));
+						if( "S".equals(flagPeriodoEjecucion) ){
+							formulario.setAnioEjecuc(Long.parseLong(anoEjecucion));
+							formulario.setMesEjecuc(Long.parseLong(mesEjecucion));
+						}else{
+							formulario.setAnioEjecuc(formulario.getAnioPresent());
+							formulario.setMesEjecuc(formulario.getMesPresent());
+						}
 					}
 					//formulario.setAnioPresent(Long.parseLong(anoPresentacion));
 					//formulario.setMesPresent(Long.parseLong(mesPresentacion));
@@ -597,8 +653,10 @@ public class Formato12AGartController {
 					pk.setCodEmpresa(formulario.getCodigoEmpresa());
 			        pk.setAnoPresentacion(formulario.getAnioPresent());
 			        pk.setMesPresentacion(formulario.getMesPresent());
-			        pk.setAnoEjecucionGasto(new Long(anoEjecucion));
-			        pk.setMesEjecucionGasto(new Long(mesEjecucion));
+			        //pk.setAnoEjecucionGasto(new Long(anoEjecucion));
+			        //pk.setMesEjecucionGasto(new Long(mesEjecucion));
+			        pk.setAnoEjecucionGasto(formulario.getAnioEjecuc());
+			        pk.setMesEjecucionGasto(formulario.getMesEjecuc());
 			        pk.setEtapa(formulario.getEtapa());
 			        
 			        formato = formatoService.obtenerFormato12ACByPK(pk);
@@ -609,6 +667,7 @@ public class Formato12AGartController {
 					jsonObj.put("resultado", "OK"); 	
 				} catch (Exception e) {
 					jsonObj.put("resultado", "Error");
+					jsonObj.put("mensaje", e.getMessage());
 					System.out.println("Error al guardar la tabla fiseformato12A: "+e.getMessage());
 				}
 					
@@ -646,6 +705,7 @@ public class Formato12AGartController {
 			        jsonObj.put("resultado", "OK");
 				} catch (Exception e) {
 					jsonObj.put("resultado", "Error");
+					jsonObj.put("mensaje", e.getMessage());
 					System.out.println("Error al eliminar datos "+e.getMessage());
 				}   				   				
 				
@@ -665,7 +725,7 @@ public class Formato12AGartController {
 		try {			
   			response.setContentType("applicacion/json");
   			String codEmpresa = request.getParameter("s_empresa");
-  			//String anoPresentacion = request.getParameter("s_periodoenvio_present").substring(0, 4);
+  			String anoPresentacion = request.getParameter("s_periodoenvio_present");
   			
   			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.NOMBRE_FORMATO_12A);
   			
@@ -673,16 +733,36 @@ public class Formato12AGartController {
   			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
   				JSONObject jsonObj = new JSONObject();
 				jsonObj.put("codigoItem", periodo.getCodigoItem());				
-				jsonObj.put("descripcionItem", periodo.getDescripcionItem());					
+				jsonObj.put("descripcionItem", periodo.getDescripcionItem());			
+				jsonObj.put("flagPeriodoEjecucion", periodo.getFlagPeriodoEjecucion());	
+				//agregar los valores
 				jsonArray.put(jsonObj);		
 			}
   			
   			//response.setRenderParameter("action", "exito");
-  			if( listaEmpresaNew !=null ){
-  				model.addAttribute("s_empresa", listaEmpresaNew.get(0));
+  			if( listaEmpresaNew !=null && listaEmpresaNew.size()>0 ){
+  				if( codEmpresa==null || codEmpresa.equals("null") ){
+  					model.addAttribute("s_empresa", listaEmpresaNew.get(0));
+  				}else{
+  					model.addAttribute("s_empresa", codEmpresa);
+  				}
   			}
-  			if( listaPeriodoEnvio != null ){
-  				model.addAttribute("s_periodoenvio_present", listaPeriodoEnvio.get(0));
+  			if( listaPeriodoEnvio != null && listaPeriodoEnvio.size()>0 ){
+  				if( anoPresentacion==null || anoPresentacion.equals("null") ){
+  					model.addAttribute("s_periodoenvio_present", listaPeriodoEnvio.get(0));
+  					//flagMostrarPeriodoEjecucion = listaPeriodoEnvio.get(0).getFlagPeriodoEjecucion();
+  					//model.addAttribute("flagPeriodoEjecucion", flagMostrarPeriodoEjecucion);
+  				}else{
+  					model.addAttribute("s_periodoenvio_present", anoPresentacion);
+  					//for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+					//	if( anoPresentacion.equals(p.getCodigoItem()) ){
+					//		flagMostrarPeriodoEjecucion = p.getFlagPeriodoEjecucion();
+					//		model.addAttribute("flagPeriodoEjecucion", flagMostrarPeriodoEjecucion);
+					//		break;
+					//	}
+					//}
+  				}
+  				
   			}
   			
   		    PrintWriter pw = response.getWriter();
@@ -720,7 +800,7 @@ public class Formato12AGartController {
   			/*listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.NOMBRE_FORMATO_12A);*/
   			
   			
-  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, anoPresentacion.equals("null")?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_RURAL);
+  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_RURAL);
   			if( detalleRuralPadre!=null ){
   				costoUnitEmpR = detalleRuralPadre.getCostoUnitarioEmpadronamiento();
   				costoUnitAgentR = detalleRuralPadre.getCostoUntitarioAgenteGlp();
@@ -728,7 +808,7 @@ public class Formato12AGartController {
   				costoUnitEmpR = new BigDecimal(0.00);
   				costoUnitAgentR = new BigDecimal(0.00);
   			}
-  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, anoPresentacion.equals("null")?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_PROVINCIA);
+  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_PROVINCIA);
   			if( detalleProvinciaPadre!=null ){
   				costoUnitEmpP = detalleProvinciaPadre.getCostoUnitarioEmpadronamiento();
   				costoUnitAgentP = detalleProvinciaPadre.getCostoUntitarioAgenteGlp();
@@ -736,7 +816,7 @@ public class Formato12AGartController {
   				costoUnitEmpP = new BigDecimal(0.00);
   				costoUnitAgentP = new BigDecimal(0.00);
   			}
-  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, anoPresentacion.equals("null")?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_LIMA);
+  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_LIMA);
   			if( detalleLimaPadre!=null ){
   				costoUnitEmpL = detalleLimaPadre.getCostoUnitarioEmpadronamiento();
   				costoUnitAgentL = detalleLimaPadre.getCostoUntitarioAgenteGlp();
@@ -752,6 +832,15 @@ public class Formato12AGartController {
   			jsonObj.put("costoAgentP", costoUnitAgentP);
   			jsonObj.put("costoEmpL", costoUnitEmpL);
   			jsonObj.put("costoAgentL", costoUnitAgentL);
+  			
+  			//jsonObj.put("costoAgentL", costoUnitAgentL);
+  			
+  			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+				if( periodoEnvio.equals(p.getCodigoItem()) ){
+					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
+					break;
+				}
+			}
   			//se anade los periodo de envio
   			/*JSONArray jsonArray = new JSONArray();
   			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
@@ -781,9 +870,7 @@ public class Formato12AGartController {
 	public void subirDocumento(ActionRequest request,ActionResponse response){
 		
 		logger.info("--- cargar documento");
-		//FiseFormato12AC formato = new FiseFormato12AC();
 		Formato12AMensajeBean formatoMensaje = new Formato12AMensajeBean();
-		//StringBuffer sMsg = new StringBuffer();
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		
@@ -805,12 +892,12 @@ public class Formato12AGartController {
 		
 		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
-		String codEmpresaEdit = (String)pRequest.getPortletSession().getAttribute("codEmpresa", PortletSession.APPLICATION_SCOPE);
-		String anioPresEdit = (String)pRequest.getPortletSession().getAttribute("anoPresentacion", PortletSession.APPLICATION_SCOPE);
-		String mesPresEdit = (String)pRequest.getPortletSession().getAttribute("mesPresentacion", PortletSession.APPLICATION_SCOPE);
-		String anioEjecEdit = (String)pRequest.getPortletSession().getAttribute("anoEjecucion", PortletSession.APPLICATION_SCOPE);
-		String mesEjecEdit = (String)pRequest.getPortletSession().getAttribute("mesEjecucion", PortletSession.APPLICATION_SCOPE);
-		String etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
+		String codEmpresaEdit = (String)pRequest.getPortletSession().getAttribute("codEmpresaEdit", PortletSession.APPLICATION_SCOPE);
+		String anioPresEdit = (String)pRequest.getPortletSession().getAttribute("anoPresentacionEdit", PortletSession.APPLICATION_SCOPE);
+		String mesPresEdit = (String)pRequest.getPortletSession().getAttribute("mesPresentacionEdit", PortletSession.APPLICATION_SCOPE);
+		String anioEjecEdit = (String)pRequest.getPortletSession().getAttribute("anoEjecucionEdit", PortletSession.APPLICATION_SCOPE);
+		String mesEjecEdit = (String)pRequest.getPortletSession().getAttribute("mesEjecucionEdit", PortletSession.APPLICATION_SCOPE);
+		String etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapaEdit", PortletSession.APPLICATION_SCOPE);
 		FileEntry fileEntry=null;
 		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
@@ -858,12 +945,19 @@ public class Formato12AGartController {
 			
 		}
 		if(formatoMensaje.getListaMensajeError()!=null && formatoMensaje.getListaMensajeError().size()>0){
-			//System.out.println(sMsg);
 			pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
-			//tambien ha generado la tira del error.
-			pRequest.getPortletSession().setAttribute("mensajeInformacion", formatoMensaje.getMensajeInformacion(), PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("mensajeError", formatoMensaje.getMensajeError(), PortletSession.APPLICATION_SCOPE);
+		}else{
+			pRequest.getPortletSession().setAttribute("mensajeInformacion", "Datos guardados satisfactoriamente.", PortletSession.APPLICATION_SCOPE);
 		}
-
+		//limpiamos las variables en sesion utilizados para la edicion de archivos de carga
+		pRequest.getPortletSession().setAttribute("codEmpresaEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("anoPresentacionEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("mesPresentacionEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("anoEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("mesEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("etapaEdit", "", PortletSession.APPLICATION_SCOPE);
+		
 	}
 	
 	/////////////////////////////////////////////////////////////////
@@ -1365,7 +1459,7 @@ public class Formato12AGartController {
 		}finally{
 			StreamUtil.cleanUp(is);
 		}
-		formatoMensaje.setMensajeInformacion(sMsg);
+		formatoMensaje.setMensajeError(sMsg);
 		formatoMensaje.setFiseFormato12AC(objeto);
 		if(listaError.size()>0)
 			formatoMensaje.setListaMensajeError(listaError);
@@ -1611,7 +1705,7 @@ public class Formato12AGartController {
 		  }
 		//pRequest.getPortletSession().setAttribute("MensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
 		formatoMensaje.setFiseFormato12AC(objeto);
-		formatoMensaje.setMensajeInformacion(sMsg);
+		formatoMensaje.setMensajeError(sMsg);
 		if(listaError.size()>0)
 			formatoMensaje.setListaMensajeError(listaError);
 		
@@ -1643,18 +1737,18 @@ public class Formato12AGartController {
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_12;
+		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
 		   
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
 		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
 
 		    if( periodoEnvio.length()>6 ){
 		    	anoPresentacion = periodoEnvio.substring(0, 4);
 		    	mesPresentacion = periodoEnvio.substring(4, 6);
 		    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
 		    }
-		    
-		    
 		    
 		    FiseFormato12ACPK pk = new FiseFormato12ACPK();
 		    pk.setCodEmpresa(codEmpresa);
