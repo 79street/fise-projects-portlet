@@ -6,6 +6,7 @@ import gob.osinergmin.fise.gart.controller.Formato12AGartController;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 
@@ -54,9 +56,13 @@ public class ServletViewReport extends HttpServlet {
 		String tipoFormato = (String) sesion.getAttribute("tipoFormato");
 		String tipoArchivo = (String) sesion.getAttribute("tipoArchivo");
 		Map<String, Object> parametros = (Map<String, Object>) sesion.getAttribute("mapa");
+		List lista = (List)sesion.getAttribute("lista");
 		
-		parametros.put("IMG",request.getSession().getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
-		parametros.put(JRParameter.REPORT_LOCALE, Locale.US);
+		if(parametros!=null){
+			parametros.put("IMG",request.getSession().getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+			parametros.put(JRParameter.REPORT_LOCALE, Locale.US);
+		}
+		
 		directorio =  "/reports/"+nombreReporte+".jasper";
 
 		File reportFile = new File(getServletConfig().getServletContext().getRealPath(directorio));
@@ -65,7 +71,30 @@ public class ServletViewReport extends HttpServlet {
 		try {
 			
 			if( FiseConstants.FORMATO_EXPORT_PDF.equals(tipoArchivo) ){
-				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				//validar los tipos de formato, ya que de estos dependera si se envia lista o no
+				if( FiseConstants.TIPO_FORMATO_12A.equals(tipoFormato) ){
+					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				}else if( FiseConstants.TIPO_FORMATO_12B.equals(tipoFormato) ){
+					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				}else if( FiseConstants.TIPO_FORMATO_12C.equals(tipoFormato) ){
+					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				}else if( FiseConstants.TIPO_FORMATO_12D.equals(tipoFormato) ){
+					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				}else if( FiseConstants.TIPO_FORMATO_13A.equals(tipoFormato) ){
+					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				}else if( FiseConstants.TIPO_FORMATO_14A.equals(tipoFormato) ){
+					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				}else if( FiseConstants.TIPO_FORMATO_14B.equals(tipoFormato) ){
+					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				}else if( FiseConstants.TIPO_FORMATO_14C.equals(tipoFormato) ){
+					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
+				}
+				//
+				else if( FiseConstants.TIPO_FORMATO_VAL.equals(tipoFormato) ){
+					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JRBeanCollectionDataSource(lista));
+				}
+				
+				
 				if (bytes != null) {
 					int size = bytes.length;
 					response.reset();
