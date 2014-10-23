@@ -24,7 +24,7 @@
 </portlet:actionURL>
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
-
+<script type="text/javascript" src="/fise-projects-portlet/js/third-party/Osinergmin.Table.Pagination.js"></script>
 <!-- <link rel="stylesheet" type="text/css" media="screen" href="/net-theme/css/net-portlet.css" />
 <script type="text/javascript" src="/net-theme/js/portlet-include.js"></script> -->
 
@@ -33,6 +33,7 @@ var data_funcion = [];
 
 $(document).ready(function () {	
 	 buildGrids();
+	 buidGridsObservacion();
 	 $("#<portlet:namespace/>crearFormato").click(function() {<portlet:namespace/>crearFormato();});
 	 $("#<portlet:namespace/>guardarFormato").click(function() {<portlet:namespace/>guardarFormato();});
 	 $("#<portlet:namespace/>regresarFormato").click(function(){<portlet:namespace/>regresar();});
@@ -45,6 +46,8 @@ $(document).ready(function () {
 	 $("#<portlet:namespace/>cargaTxt").click(function() {<portlet:namespace/>mostrarFormularioCargaTexto();});
 	 $("#<portlet:namespace/>reportePdf").click(function() {<portlet:namespace/>mostrarReportePdf();});
 	 $("#<portlet:namespace/>reporteExcel").click(function() {<portlet:namespace/>mostrarReporteExcel();});
+	 $("#<portlet:namespace/>validacionFormato").click(function() {<portlet:namespace/>validacionFormato();});
+	 //$("#<portlet:namespace/>reporteValidacion").click(function() {<portlet:namespace/>mostrarReporteValidacion();});
 	 initDialogs();
 	 //initBlockUI();		
 	 //SE CARGA VARIABLES EN SESION PARA MOSTRAR LOS PANELES DE NUEVO O EDICION MANEJADOS
@@ -479,7 +482,7 @@ function <portlet:namespace/>regresar(){
 	$('#<portlet:namespace/>reporteExcel').css('display','none');
 	$('#<portlet:namespace/>guardarFormato').css('display','');
 	$('#panelCargaArchivos').css('display','');
-	$('#<portlet:namespace/>validacion').css('display','');
+	$('#<portlet:namespace/>validacionFormato').css('display','');
 	$('#<portlet:namespace/>enviodefinitivo').css('display','');
 	<portlet:namespace/>buscar();
 }
@@ -714,6 +717,16 @@ function initDialogs(){
 			}
 		}
 	});
+	$( "#dialog-form-observacion" ).dialog({
+		modal: true,
+		width: 700,
+		autoOpen: false,
+		buttons: {
+			Cerrar: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
 }
 ///////////////
 function <portlet:namespace/>buscar() {	
@@ -854,6 +867,7 @@ function <portlet:namespace/>crearFormato(){
 		 $("#i_anioejecuc").val($("#anioDesdeSes").val());
 		 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
 	}
+	$('#<portlet:namespace/>validacionFormato').css('display','none');
 	cargarPeriodoYCostos('','');
 }
 function mostrarUltimoFormato(){	
@@ -1026,7 +1040,7 @@ function deshabiliarControlerView(){
 	$('#<portlet:namespace/>reporteExcel').css('display','');
 	$('#<portlet:namespace/>guardarFormato').css('display','none');
 	$('#panelCargaArchivos').css('display','none');
-	$('#<portlet:namespace/>validacion').css('display','none');
+	$('#<portlet:namespace/>validacionFormato').css('display','none');
 	$('#<portlet:namespace/>enviodefinitivo').css('display','none');
 	
 }
@@ -1072,7 +1086,8 @@ function <portlet:namespace/>guardarFormato(){
 					var addhtml2='Datos guardados satisfactoriamente';
 					$("#dialog-message-content").html(addhtml2);
 					$("#dialog-message").dialog( "open" );
-					//limpiar();				
+					//limpiar();		
+					mostrarFormularioModificado();
 					initBlockUI();
 				}
 				else if(data.resultado == "Error"){				
@@ -1092,7 +1107,11 @@ function <portlet:namespace/>guardarFormato(){
 		$("#div_home").show();
 	}
 	//
-	 var codEmpM = $("#s_empresa").val();
+	 
+	 
+}
+function mostrarFormularioModificado(){
+	var codEmpM = $("#s_empresa").val();
 	 var anioPresM = $("#s_periodoenvio_present").val().substring(0,4);
 	 var mesPresM = $("#s_periodoenvio_present").val().substring(4,6);
 	 var anioEjeM;
@@ -1105,6 +1124,7 @@ function <portlet:namespace/>guardarFormato(){
 		 mesEjeM = mesPresM;
 	 }
 	 var etapaM = "SOLICITUD";
+	 //var etapaM = $("#s_periodoenvio_present").val().substring(6,$("#s_periodoenvio_present").val().length);
 	 if( $('#flagCarga').val()=='0' ){
 		 mostrarUltimoFormato();
 	 }else{
@@ -1113,9 +1133,8 @@ function <portlet:namespace/>guardarFormato(){
 		 	 editarFormato(codEmpM, anioPresM, mesPresM, anioEjeM, mesEjeM, etapaM);
 		 }
 	 }
-	 
+	 $('#<portlet:namespace/>validacionFormato').css('display','');
 }
-
 function cargarPeriodoYCostos(valCodEmpresa, valPeriodo){
 	<portlet:namespace/>loadPeriodo(valPeriodo);
 }
@@ -1393,6 +1412,7 @@ function <portlet:namespace/>mostrarReportePdf(){
 		data : {
 			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
 			<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+			<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
 			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 			<portlet:namespace />etapa: $('#etapaEdit').val(),
@@ -1416,6 +1436,7 @@ function <portlet:namespace/>mostrarReporteExcel(){
 		data : {
 			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
 			<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+			<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
 			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 			<portlet:namespace />etapa: $('#etapaEdit').val(),
@@ -1448,6 +1469,151 @@ function completarCerosIzq(cadena,longitud) {
     while( cadena.length < longitud )
     	cadena = "0"+cadena;
     return cadena;
+}
+//////////
+//validar formato
+function <portlet:namespace/>validacionFormato(){
+	jQuery.ajax({
+		url : '<portlet:resourceURL id="validacion" />',
+		type : 'post',
+		dataType : 'json',
+		data : {
+			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+			<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+			<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
+			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
+		},
+		success : function(data) {
+			
+			
+			if( data!=null ){
+				$("#dialog-form-observacion").dialog( "open" );
+				 /*$("table#tblLista").html('');
+				  $("table#tblLista").addClass('tabla');
+				  $("table#tblLista").append("<tr class='titulo_tabla'> "+
+						   "<td width='40'>Nro.</td>"+
+							"<td width='80'>Grupo Zona</td>"+
+							"<td width='378'>Descripción</td>"+
+						   " </tr>");*/
+				  //var registro=0;
+				   /* $.each(data, function (i, item) {
+				  	$("table#tblLista").append("<tr class='detalleTablaContenido'><td align='center'>" +item.id +"</td>" + 
+				  			"<td align='left'>" +item.codigo + "</td>" +                      
+				  			"<td align='left'>" +item.descripcion +
+	             		                           "</td></tr>");
+				  	//registro++;
+				  	});*/
+				    
+				    $('#grid_observacion').clearGridData(true);
+					$('#grid_observacion').jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+					$("#grid_observacion")[0].refreshIndex();
+					
+				    
+				    
+				   
+				    
+				    
+				   /* multiselect: false,
+					rowNum:10,
+				   	rowList:[10,20,50],
+					height: 'auto',
+				   	autowidth: true,
+					rownumbers: true,
+				    viewrecords: true,
+				    pager:"pager_periodo",*/
+				    
+				/* $('table#tblLista').tablePagination({});*/
+				  
+				 initBlockUI();
+			}
+			
+			
+			
+			
+			
+			
+			/*if (data.resultado == "OK"){
+				alert('prueba');
+				//$("#dialog-form-observacion").dialog( "open" );
+				initBlockUI();
+			}
+			else if(data.resultado == "Error"){				
+				var addhtml2='Se produjo un error al realizar la validación del formato';
+				$("#dialog-message-content").html(addhtml2);
+				$("#dialog-message").dialog( "open" );
+				initBlockUI();
+			}*/
+		},error : function(){
+			alert("Error de conexión.");
+			initBlockUI();
+		}
+	});
+}
+function buidGridsObservacion(){
+	 jQuery("#grid_observacion").jqGrid({
+			datatype: "local",
+			 colNames: ['Grupo Zona','Código','Descripción'],
+		        colModel: [
+						{ name: 'descZonaBenef', index: 'descZonaBenef', width: 150 ,align: 'left'},
+						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
+		                { name: 'descripcion', index: 'descripcion', width: 420 ,align: 'left'}               
+			   	    ],
+		   	 multiselect: false,
+				rowNum:10,
+			   	rowList:[10,20,50],
+				height: 'auto',
+			   	autowidth: true,
+			   	//width:'100%',
+				rownumbers: true,
+			    viewrecords: true,
+			    pager:"pager_observacion",
+			   	sortorder: "asc"//,
+		    /*gridComplete: function(){
+	       		var ids = jQuery("#grid_periodo").jqGrid('getDataIDs');
+	       		for(var i=0;i < ids.length;i++){
+	       			var cl = ids[i];
+	       			var ret = jQuery("#grid_periodo").jqGrid('getRowData',cl);            			
+	       			//edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarPeriodo('"+ret.id_periodo_excepcional+"');\" /></a> ";
+	       			//elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"Confirmareliminar('"+ret.id_periodo_excepcional+"');\" /></a> ";              			
+	       			jQuery("#grid_periodo").jqGrid('setRowData',ids[i]);
+	       			//jQuery("#grid_periodo").jqGrid('setRowData',ids[i],{});
+	       		}
+	       }*/
+	   	});
+	 jQuery("#grid_observacion").jqGrid('navGrid','#pager_observacion',{add:false,edit:false,del:false,search: false,refresh: false});	
+		jQuery("#grid_observacion").jqGrid('navButtonAdd','#pager_observacion',{
+		       caption:"Exportar a Excel",
+		       buttonicon: "ui-icon-bookmark",
+		       onClickButton : function () {
+		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		       } 
+		});
+		jQuery("#grid_observacion").jqGrid('navButtonAdd','#pager_observacion',{
+		       caption:"Exportar a Pdf",
+		       buttonicon: "ui-icon-bookmark",
+		       onClickButton : function () {
+		    	   <portlet:namespace/>mostrarReporteValidacion();
+		       } 
+		});
+}
+function <portlet:namespace/>mostrarReporteValidacion(){
+	jQuery.ajax({
+		url : '<portlet:resourceURL id="reporteValidacion" />',
+		type : 'post',
+		dataType : 'json',
+		data : {
+			<portlet:namespace />nombreReporte: 'validacion',
+			<portlet:namespace />nombreArchivo: 'validacion',
+			<portlet:namespace />tipoArchivo: '0'//PDF
+		},
+		success : function(gridData) {
+			verReporte();
+		},error : function(){
+			alert("Error de conexión.");
+			initBlockUI();
+		}
+	});
 }
 //////////
 </script>
@@ -2098,13 +2264,13 @@ function completarCerosIzq(cadena,longitud) {
 								   													</td>
 								   													<td width="16%" align="center">
 								   														<input type="button" class="boton" name="<portlet:namespace/>reporteExcel" style="display:none;" 
-								   															id="<portlet:namespace/>reporteExcel" class="button net-button-small"  value="Imprimir XLS"/>
+								   															id="<portlet:namespace/>reporteExcel" class="button net-button-small"  value="Exportar excel"/>
 								   													</td>
 								   													<td width="17%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>guardarFormato" name="<portlet:namespace/>guardarFormato" value="Grabar" />
 								   													</td>
 								   													<td width="17%" align="center">
-								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>validacion" name="<portlet:namespace/>validacion" value="Validación" />
+								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>validacionFormato" name="<portlet:namespace/>validacionFormato" value="Validación" />
 								   													</td>
 								   													<td width="17%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>enviodefinitivo" name="<portlet:namespace/>enviodefinitivo" value="Envío Def." />
@@ -2133,34 +2299,7 @@ function completarCerosIzq(cadena,longitud) {
 									   				</table>
 									   			</td>
 									   		</tr>
-									   		
-									   		<%-- <tr>
-									   			<td>
-									   				<table>
-														<tr>
-															<td></td>
-														</tr>
-														<tr>
-															<td>Archivo:</td>
-															<td>
-																<input  type="file" id="archivoExcel"name="archivo"/>
-															</td>
-														</tr>
-														<tr>
-															<td></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td>
-																<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormato" id="<portlet:namespace/>cargarFormato" value="Cargar"/>
-															</td>
-														</tr>
-														<tr>
-															<td></td>
-														</tr>
-													</table>
-									   			</td>
-									   		</tr> --%>
+
 									   		
 									   </table>
 									
@@ -2199,18 +2338,6 @@ function completarCerosIzq(cadena,longitud) {
 										<input  type="file" id="archivoExcel"name="archivoExcel"/>
 									</td>
 								</tr>
-<%-- 								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel" id="<portlet:namespace/>cargarFormatoExcel" value="Cargar"/>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr> --%>
 							</table>
 						</fieldset>
 							
@@ -2222,10 +2349,6 @@ function completarCerosIzq(cadena,longitud) {
 								<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel" id="<portlet:namespace/>cargarFormatoExcel" value="Cargar"/>
 								<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoExcel" 
 									id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar" onclick="regresarFormularioCargaExcel();"/>
-								<!-- <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-									onclick="regresarFormularioCargaExcel();" >
-									<span class="ui-button-text">Cerrar</span>
-								</button> -->
 							</div>
 						</div>
 					</div>
@@ -2254,18 +2377,6 @@ function completarCerosIzq(cadena,longitud) {
 										<input  type="file" id="archivoTxt"name="archivoTxt"/>
 									</td>
 								</tr>
-<%-- 								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto" id="<portlet:namespace/>cargarFormatoTexto" value="Cargar"/>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr> --%>
 							</table>
 						</fieldset>
 							
@@ -2278,45 +2389,10 @@ function completarCerosIzq(cadena,longitud) {
 								<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto" id="<portlet:namespace/>cargarFormatoTexto" value="Cargar"/>
 								<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoTexto" 
 									id="<portlet:namespace/>cerrarFormatoTexto" value="Cerrar" onclick="regresarFormularioCargaTexto();"/>
-								<!-- <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-									onclick="regresarFormularioCargaTexto();" >
-										<span class="ui-button-text">Cerrar</span>
-								</button> -->
 							</div>
 						</div>
 					</div>
 					<!-- prueba fin -->
-					
-					
-					<!-- formulario de arga de excel -->
-					<div id="dialog-form-carga" class="net-frame-border" style="display:none;background:#fff;" title=" Cargar archivo excel ">				
-						<fieldset class="">
-							<table>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Archivo:</td>
-									<td>
-										<input  type="file" id="archivoTxt2"name="archivoTxt2"/>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto2" id="<portlet:namespace/>cargarFormatoTexto2" value="Cargar"/>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-							</table>
-						</fieldset>
-						<br>
-					</div>			
 					
 					<div id="dialog-form-error" class="net-frame-border" style="display:none;background:#fff;" title=" Errores de archivo de carga ">				
 						<fieldset class="net-frame-border">							
@@ -2334,7 +2410,45 @@ function completarCerosIzq(cadena,longitud) {
 		                	</table>
 						</fieldset>
 						<br>
-					</div>					
+					</div>		
+					
+					<div id="dialog-form-observacion" class="net-frame-border" style="display:none;background:#fff;" title=" Resultados de validación ">				
+						<fieldset class="net-frame-border">							
+							<%-- <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla">
+								<tr class="titulo_tabla">
+				            		<td width="40">Nro.</td>
+				            		<td width="80">Grupo Zona</td>
+				            		<td width="378" height="37">Descripción</td>
+				            	</tr>
+		                 		<c:forEach items="${listaObservaciones}" var="error" varStatus="status">															
+								<tr class="detalleTablaContenido">
+			                    	<td align="center">${status.count}</td> 
+			                    	<td align="left">${error.codigo}</td>
+			                    	<td align="left">${error.descripcion}</td>     
+			                 	 </tr>				
+								</c:forEach>            
+		                	</table> --%>
+		                	<!-- <table cellpadding="0" cellspacing="0" border="0" id="tblLista" width="100%">
+						       <thead>
+							    <tr>
+								   <td width="40">Nro.</td>
+				            		<td width="80">Grupo Zona</td>
+				            		<td width="378" height="37">Descripción</td>
+							   </tr>
+						      </thead>
+						      <tbody>
+							    <tr>
+								  
+							    </tr>
+						     </tbody>
+				        </table> -->
+				        <table id="grid_observacion" width="100%">
+							</table>
+				        <div id="pager_observacion">
+						</div>
+						</fieldset>
+						<br>
+					</div>			
 					
 					<!-- fin -->
 

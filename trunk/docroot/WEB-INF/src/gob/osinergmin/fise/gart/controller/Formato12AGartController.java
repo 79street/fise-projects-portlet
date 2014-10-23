@@ -9,6 +9,8 @@ import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
+import gob.osinergmin.fise.domain.FiseFormato12AD;
+import gob.osinergmin.fise.domain.FiseFormato12ADOb;
 import gob.osinergmin.fise.domain.FiseFormato14AD;
 import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
@@ -138,8 +140,9 @@ public class Formato12AGartController {
 	private List<FiseObservacion> listaFiseObservacion;
 	private Map<String, String> mapaErrores;
 	private List<FisePeriodoEnvio> listaPeriodoEnvio;
+	private Map<Long, String> mapaZonaBenef;
 	//private String flagMostrarPeriodoEjecucion;
-	
+	private List<MensajeErrorBean> listaObservaciones;
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping
@@ -216,6 +219,8 @@ public class Formato12AGartController {
 		listaFiseObservacion = new ArrayList<FiseObservacion>();
 		listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
 		
+		//listaObservaciones=new ArrayList<MensajeErrorBean>();
+		
 		List<AdmEmpresa> listaEmpresaBD = new ArrayList<AdmEmpresa>();
 		
 		listaMes = FechaUtil.cargarMapaMeses();
@@ -280,6 +285,7 @@ public class Formato12AGartController {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		//cargar mapas para su consulta posterior
 		logger.info("lista empresa"+listaEmpresa);
 		listaZonaBenef = zonaBenefService.listarFiseZonaBenef();
 		logger.info("lista fise"+listaZonaBenef);
@@ -300,6 +306,12 @@ public class Formato12AGartController {
 
 		for (AdmEmpresa admEmpresa : listaEmpresa) {
 			logger.info("codEmpresa: "+admEmpresa.getCodEmpresa()+" desccortaempresa: "+admEmpresa.getDscCortaEmpresa());
+		}
+		
+		mapaZonaBenef = new HashMap<Long, String>();
+		for (FiseZonaBenef zonaBenef : listaZonaBenef) {
+			logger.info("idZona: "+zonaBenef.getIdZonaBenef()+" descZona: "+zonaBenef.getDescripcion());
+			mapaZonaBenef.put(zonaBenef.getIdZonaBenef(), zonaBenef.getDescripcion());
 		}
 		
 	}
@@ -350,7 +362,7 @@ public class Formato12AGartController {
   			XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
 			xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_FORMATO12A);
 			List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
-			tables.add(new XlsTableConfig(listaFormato,FiseConstants.TIPO_FORMATO_12));
+			tables.add(new XlsTableConfig(listaFormato,FiseConstants.TIPO_FORMATO_12A));
 			List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
 			sheets.add(new XlsWorksheetConfig(FiseConstants.NOMBRE_HOJA_FORMATO12A,tables));
 			xlsWorkbookConfig.setSheets(sheets);
@@ -800,7 +812,7 @@ public class Formato12AGartController {
   			/*listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.NOMBRE_FORMATO_12A);*/
   			
   			
-  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_RURAL);
+  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_RURAL_COD);
   			if( detalleRuralPadre!=null ){
   				costoUnitEmpR = detalleRuralPadre.getCostoUnitarioEmpadronamiento();
   				costoUnitAgentR = detalleRuralPadre.getCostoUntitarioAgenteGlp();
@@ -808,7 +820,7 @@ public class Formato12AGartController {
   				costoUnitEmpR = new BigDecimal(0.00);
   				costoUnitAgentR = new BigDecimal(0.00);
   			}
-  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_PROVINCIA);
+  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_PROVINCIA_COD);
   			if( detalleProvinciaPadre!=null ){
   				costoUnitEmpP = detalleProvinciaPadre.getCostoUnitarioEmpadronamiento();
   				costoUnitAgentP = detalleProvinciaPadre.getCostoUntitarioAgenteGlp();
@@ -816,7 +828,7 @@ public class Formato12AGartController {
   				costoUnitEmpP = new BigDecimal(0.00);
   				costoUnitAgentP = new BigDecimal(0.00);
   			}
-  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_LIMA);
+  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_LIMA_COD);
   			if( detalleLimaPadre!=null ){
   				costoUnitEmpL = detalleLimaPadre.getCostoUnitarioEmpadronamiento();
   				costoUnitAgentL = detalleLimaPadre.getCostoUntitarioAgenteGlp();
@@ -1381,7 +1393,7 @@ public class Formato12AGartController {
 			  			FiseFormato14AD detalleProvinciaPadre = null;
 			  			FiseFormato14AD detalleLimaPadre = null;
 			  			
-			  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_RURAL);
+			  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_RURAL_COD);
 			  			if( detalleRuralPadre!=null ){
 			  				formulario.setCostoUnitEmpadR(detalleRuralPadre.getCostoUnitarioEmpadronamiento());
 			  				formulario.setCostoUnitAgentR(detalleRuralPadre.getCostoUntitarioAgenteGlp());
@@ -1389,7 +1401,7 @@ public class Formato12AGartController {
 			  				formulario.setCostoUnitEmpadR(new BigDecimal(0.00));
 			  				formulario.setCostoUnitAgentR(new BigDecimal(0.00));
 			  			}
-			  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_PROVINCIA);
+			  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_PROVINCIA_COD);
 			  			if( detalleProvinciaPadre!=null ){
 			  				formulario.setCostoUnitEmpadP(detalleProvinciaPadre.getCostoUnitarioEmpadronamiento());
 			  				formulario.setCostoUnitAgentP(detalleProvinciaPadre.getCostoUntitarioAgenteGlp());
@@ -1397,7 +1409,7 @@ public class Formato12AGartController {
 			  				formulario.setCostoUnitEmpadP(new BigDecimal(0.00));
 			  				formulario.setCostoUnitAgentP(new BigDecimal(0.00));
 			  			}
-			  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_LIMA);
+			  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_LIMA_COD);
 			  			if( detalleLimaPadre!=null ){
 			  				formulario.setCostoUnitEmpadL(detalleLimaPadre.getCostoUnitarioEmpadronamiento());
 			  				formulario.setCostoUnitAgentL(detalleLimaPadre.getCostoUntitarioAgenteGlp());
@@ -1556,9 +1568,9 @@ public class Formato12AGartController {
 						//String mesEje = s.substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION);
 						String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
 						if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) &&
-								(FiseConstants.ZONABENEF_RURAL == Long.parseLong(zonaBenef) ||
-								FiseConstants.ZONABENEF_PROVINCIA == Long.parseLong(zonaBenef) ||
-								FiseConstants.ZONABENEF_LIMA == Long.parseLong(zonaBenef) )
+								(FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ||
+								FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ||
+								FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) )
 								){
 							if( zonaSet.contains(zonaBenef) ){
 								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_280)+FiseConstants.SALTO_LINEA;
@@ -1608,7 +1620,7 @@ public class Formato12AGartController {
 								String desplazPersonal=s.substring(posicionTotalAgent, posicionDesplPersonal).trim();
 								String activExtraord=s.substring(posicionDesplPersonal, posicionActivExtraord).trim();
 								FiseFormato14AD detalle = formato14Service.obtenerFormato14ADVigente(key1, Long.parseLong(key2), Long.parseLong(zonaBenef));
-								if( FiseConstants.ZONABENEF_RURAL == Long.parseLong(zonaBenef) ){
+								if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
 									formulario.setNroEmpadR(Long.parseLong(nroEmpad));
 									formulario.setNroAgentR(Long.parseLong(nroAgent));
 									formulario.setDesplPersonalR(new BigDecimal(desplazPersonal));
@@ -1620,7 +1632,7 @@ public class Formato12AGartController {
 										formulario.setCostoUnitEmpadR(new BigDecimal(0.00));
 										formulario.setCostoUnitAgentR(new BigDecimal(0.00));
 									}
-								}else if( FiseConstants.ZONABENEF_PROVINCIA == Long.parseLong(zonaBenef) ){
+								}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
 									formulario.setNroEmpadP(Long.parseLong(nroEmpad));
 									formulario.setNroAgentP(Long.parseLong(nroAgent));
 									formulario.setDesplPersonalP(new BigDecimal(desplazPersonal));
@@ -1632,7 +1644,7 @@ public class Formato12AGartController {
 										formulario.setCostoUnitEmpadP(new BigDecimal(0.00));
 										formulario.setCostoUnitAgentP(new BigDecimal(0.00));
 									}
-								}else if( FiseConstants.ZONABENEF_LIMA == Long.parseLong(zonaBenef) ){
+								}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
 									formulario.setNroEmpadL(Long.parseLong(nroEmpad));
 									formulario.setNroAgentL(Long.parseLong(nroAgent));
 									formulario.setDesplPersonalL(new BigDecimal(desplazPersonal));
@@ -1723,20 +1735,18 @@ public class Formato12AGartController {
 		    
 		    Formato12ACBean bean = new Formato12ACBean();
 		    
-		    
 		    String codEmpresa = request.getParameter("codEmpresa").trim();
-		    
 		    String periodoEnvio = request.getParameter("periodoEnvio").trim();
-		    
+		    String flagPeriodoEjecucion = request.getParameter("flagPeriodoEjecucion");
 		    String anoPresentacion = "";//request.getParameter("anoPresentacion").trim();
 		    String mesPresentacion = "";//request.getParameter("mesPresentacion").trim();
-		    String anoEjecucion = request.getParameter("anoEjecucion").trim();
-		    String mesEjecucion = request.getParameter("mesEjecucion").trim();
+		    String anoEjecucion = "";//request.getParameter("anoEjecucion").trim();
+		    String mesEjecucion = "";//request.getParameter("mesEjecucion").trim();
 		    String etapa = "";//request.getParameter("etapa").trim();
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-		    String tipoFormato = FiseConstants.TIPO_FORMATO_12;
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_12A;
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
 		   
 		    session.setAttribute("nombreReporte",nombreReporte);
@@ -1748,6 +1758,13 @@ public class Formato12AGartController {
 		    	anoPresentacion = periodoEnvio.substring(0, 4);
 		    	mesPresentacion = periodoEnvio.substring(4, 6);
 		    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
+		    	if( "S".equals(flagPeriodoEjecucion) ){
+		    		anoEjecucion = request.getParameter("anoEjecucion").trim();
+					mesEjecucion = request.getParameter("mesEjecucion").trim();
+				}else{
+					anoEjecucion = anoPresentacion;
+					mesEjecucion = mesPresentacion;
+				}
 		    }
 		    
 		    FiseFormato12ACPK pk = new FiseFormato12ACPK();
@@ -1778,4 +1795,150 @@ public class Formato12AGartController {
 			e.printStackTrace();
 		}
 	}
+	
+	/**Validacion de Formato**/
+	
+	@ResourceMapping("validacion")
+  	public void validacion(ModelMap model, SessionStatus status, ResourceRequest request,ResourceResponse response) {
+		//JSONObject jsonObj = new JSONObject();
+		HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
+        HttpSession session = req.getSession();
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		try {
+			FiseFormato12AC formato = new FiseFormato12AC();
+			//List<MensajeErrorBean> listaObservaciones = new ArrayList<MensajeErrorBean>();
+			listaObservaciones = new ArrayList<MensajeErrorBean>();
+			JSONArray jsonArray = new JSONArray();
+  			
+			String codEmpresa = request.getParameter("codEmpresa").trim();
+		    String periodoEnvio = request.getParameter("periodoEnvio").trim();
+		    String flagPeriodoEjecucion = request.getParameter("flagPeriodoEjecucion");
+		    String anoPresentacion = "";
+		    String mesPresentacion = "";
+		    String anoEjecucion = "";
+		    String mesEjecucion = "";
+		    String etapa = "";
+		    
+		    if( periodoEnvio.length()>6 ){
+		    	anoPresentacion = periodoEnvio.substring(0, 4);
+		    	mesPresentacion = periodoEnvio.substring(4, 6);
+		    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
+		    	if( "S".equals(flagPeriodoEjecucion) ){
+		    		anoEjecucion = request.getParameter("anoEjecucion").trim();
+					mesEjecucion = request.getParameter("mesEjecucion").trim();
+				}else{
+					anoEjecucion = anoPresentacion;
+					mesEjecucion = mesPresentacion;
+				}
+		    }
+		    FiseFormato12ACPK pk = new FiseFormato12ACPK();
+			pk.setCodEmpresa(codEmpresa);
+			pk.setAnoPresentacion(new Long(anoPresentacion));
+	        pk.setMesPresentacion(new Long(mesPresentacion));
+	        pk.setAnoEjecucionGasto(new Long(anoEjecucion));
+	        pk.setMesEjecucionGasto(new Long(mesEjecucion));
+	        pk.setEtapa(etapa);
+		        
+		    formato = formatoService.obtenerFormato12ACByPK(pk);
+		    if( formato!=null ){
+		    	int cont=0;
+		    	int i = formatoService.validarFormato12A(formato, FiseConstants.NOMBRE_FORMATO_12A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLogin());
+			    if(i==0){
+			    	//se tendra que setear todos las observaciones a cada detalle de los 
+			    	for (FiseFormato12AD detalle : formato.getFiseFormato12ADs()) {
+						detalle.setFiseFormato12ADObs(formatoService.listarFormato12ADObByFormato12AD(detalle));
+						List<FiseFormato12ADOb> listaObser = formatoService.listarFormato12ADObByFormato12AD(detalle);
+						for (FiseFormato12ADOb observacion : listaObser) {
+							cont++;
+							MensajeErrorBean obs = new MensajeErrorBean();
+							obs.setId(cont);
+							/*String zonaBenef = "";
+							if( FiseConstants.ZONABENEF_RURAL_COD==observacion.getId().getIdZonaBenef() ){
+								zonaBenef = FiseConstants.ZONABENEF_RURAL_DESC;
+							}else if( FiseConstants.ZONABENEF_PROVINCIA_COD==observacion.getId().getIdZonaBenef() ){
+								zonaBenef = FiseConstants.ZONABENEF_PROVINCIA_DESC;
+							}else if( FiseConstants.ZONABENEF_LIMA_COD==observacion.getId().getIdZonaBenef() ){
+								zonaBenef = FiseConstants.ZONABENEF_LIMA_DESC;
+							}*/
+							obs.setDescZonaBenef(mapaZonaBenef.get(observacion.getId().getIdZonaBenef()));
+							obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
+							obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+							listaObservaciones.add(obs);
+						}
+						
+					}
+			    	//model.addAttribute("listaObservaciones", listaObservaciones);
+			    	for (MensajeErrorBean error : listaObservaciones) {
+		  				JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());	
+						jsonObj.put("descZonaBenef", error.getDescZonaBenef());
+						jsonObj.put("codigo", error.getCodigo());			
+						jsonObj.put("descripcion", error.getDescripcion());	
+						//agregar los valores
+						jsonArray.put(jsonObj);		
+					}
+			    			
+			    	/**exportar excel*/
+			    	XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
+					xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_VALIDACION);
+					List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
+					tables.add(new XlsTableConfig(listaObservaciones,FiseConstants.TIPO_FORMATO_VAL));
+					List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
+					sheets.add(new XlsWorksheetConfig(FiseConstants.NOMBRE_HOJA_VALIDACION,tables));
+					xlsWorkbookConfig.setSheets(sheets);
+					session.setAttribute(FiseConstants.KEY_CFG_EXCEL_EXPORT,xlsWorkbookConfig);
+			    	/***/
+			    	
+			    	
+			    	//jsonObj.put("resultado", "OK");
+			    }else{
+			    	//jsonObj.put("resultado", "Error");
+			    }
+		    }
+		    
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    //pw.write(jsonObj.toString());
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@ResourceMapping("reporteValidacion")
+	public void reporteValidacion(SessionStatus status, ResourceRequest request,ResourceResponse response) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();	
+		    
+		    String nombreReporte = request.getParameter("nombreReporte").trim();
+		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
+		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
+		   
+		    session.setAttribute("nombreReporte",nombreReporte);
+		    session.setAttribute("nombreArchivo",nombreArchivo);
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+
+		    if( listaObservaciones!=null ){
+		    	session.setAttribute("lista", listaObservaciones);
+		    }
+	        
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
