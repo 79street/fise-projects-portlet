@@ -24,7 +24,6 @@
 </portlet:actionURL>
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/fise-projects-portlet/js/third-party/Osinergmin.Table.Pagination.js"></script>
 <!-- <link rel="stylesheet" type="text/css" media="screen" href="/net-theme/css/net-portlet.css" />
 <script type="text/javascript" src="/net-theme/js/portlet-include.js"></script> -->
 
