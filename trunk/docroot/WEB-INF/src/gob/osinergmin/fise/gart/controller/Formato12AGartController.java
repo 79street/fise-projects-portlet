@@ -16,6 +16,7 @@ import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.json.Formato12AGartJSON;
+import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
 import gob.osinergmin.fise.gart.service.CfgCampoGartService;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
@@ -29,10 +30,12 @@ import gob.osinergmin.fise.xls.XlsTableConfig;
 import gob.osinergmin.fise.xls.XlsWorkbookConfig;
 import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -42,9 +45,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
@@ -54,8 +59,14 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -72,10 +83,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
+import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -879,7 +893,7 @@ public class Formato12AGartController {
 	
 	
 	@ActionMapping(params="action=cargar")
-	public void subirDocumento(ActionRequest request,ActionResponse response){
+	public void cargarDocumento(ActionRequest request,ActionResponse response){
 		
 		logger.info("--- cargar documento");
 		Formato12AMensajeBean formatoMensaje = new Formato12AMensajeBean();
@@ -1808,7 +1822,7 @@ public class Formato12AGartController {
 		try {
 			FiseFormato12AC formato = new FiseFormato12AC();
 			//List<MensajeErrorBean> listaObservaciones = new ArrayList<MensajeErrorBean>();
-			listaObservaciones = new ArrayList<MensajeErrorBean>();
+			
 			JSONArray jsonArray = new JSONArray();
   			
 			String codEmpresa = request.getParameter("codEmpresa").trim();
@@ -1842,32 +1856,25 @@ public class Formato12AGartController {
 		        
 		    formato = formatoService.obtenerFormato12ACByPK(pk);
 		    if( formato!=null ){
-		    	int cont=0;
+		    	//int cont=0;
 		    	int i = formatoService.validarFormato12A(formato, FiseConstants.NOMBRE_FORMATO_12A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLogin());
 			    if(i==0){
 			    	//se tendra que setear todos las observaciones a cada detalle de los 
-			    	for (FiseFormato12AD detalle : formato.getFiseFormato12ADs()) {
+			    	/*for (FiseFormato12AD detalle : formato.getFiseFormato12ADs()) {
 						detalle.setFiseFormato12ADObs(formatoService.listarFormato12ADObByFormato12AD(detalle));
 						List<FiseFormato12ADOb> listaObser = formatoService.listarFormato12ADObByFormato12AD(detalle);
 						for (FiseFormato12ADOb observacion : listaObser) {
 							cont++;
 							MensajeErrorBean obs = new MensajeErrorBean();
 							obs.setId(cont);
-							/*String zonaBenef = "";
-							if( FiseConstants.ZONABENEF_RURAL_COD==observacion.getId().getIdZonaBenef() ){
-								zonaBenef = FiseConstants.ZONABENEF_RURAL_DESC;
-							}else if( FiseConstants.ZONABENEF_PROVINCIA_COD==observacion.getId().getIdZonaBenef() ){
-								zonaBenef = FiseConstants.ZONABENEF_PROVINCIA_DESC;
-							}else if( FiseConstants.ZONABENEF_LIMA_COD==observacion.getId().getIdZonaBenef() ){
-								zonaBenef = FiseConstants.ZONABENEF_LIMA_DESC;
-							}*/
 							obs.setDescZonaBenef(mapaZonaBenef.get(observacion.getId().getIdZonaBenef()));
 							obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
 							obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
 							listaObservaciones.add(obs);
 						}
 						
-					}
+					}*/
+			    	cargarListaObservaciones(formato.getFiseFormato12ADs());
 			    	//model.addAttribute("listaObservaciones", listaObservaciones);
 			    	for (MensajeErrorBean error : listaObservaciones) {
 		  				JSONObject jsonObj = new JSONObject();
@@ -1938,6 +1945,214 @@ public class Formato12AGartController {
 		    pw.close();
 		}catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@ResourceMapping("envioDefinitivo")
+	public void envioDefinitivo(SessionStatus status, ResourceRequest request,ResourceResponse response) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		    JSONArray jsonArray = new JSONArray();	
+		    //FileEntry archivo=null;
+		    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 
+		    
+		    FiseFormato12AC formato = new FiseFormato12AC();
+		    
+		    Formato12ACBean bean = new Formato12ACBean();
+		    Map<String, Object> mapa = null;
+		    String directorio = null;
+		    //OutputStream outputStream = response.getPortletOutputStream();
+		    
+		    String codEmpresa = request.getParameter("codEmpresa").trim();
+		    String periodoEnvio = request.getParameter("periodoEnvio").trim();
+		    String flagPeriodoEjecucion = request.getParameter("flagPeriodoEjecucion");
+		    String anoPresentacion = "";
+		    String mesPresentacion = "";
+		    String anoEjecucion = "";
+		    String mesEjecucion = "";
+		    String etapa = "";
+		    
+		    String nombreReporte = request.getParameter("nombreReporte").trim();
+		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
+		    //String tipoFormato = FiseConstants.TIPO_FORMATO_12A;
+		    //String tipoArchivo = request.getParameter("tipoArchivo").trim();
+
+		    if( periodoEnvio.length()>6 ){
+		    	anoPresentacion = periodoEnvio.substring(0, 4);
+		    	mesPresentacion = periodoEnvio.substring(4, 6);
+		    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
+		    	if( "S".equals(flagPeriodoEjecucion) ){
+		    		anoEjecucion = request.getParameter("anoEjecucion").trim();
+					mesEjecucion = request.getParameter("mesEjecucion").trim();
+				}else{
+					anoEjecucion = anoPresentacion;
+					mesEjecucion = mesPresentacion;
+				}
+		    }
+		    
+		    FiseFormato12ACPK pk = new FiseFormato12ACPK();
+		    pk.setCodEmpresa(codEmpresa);
+	        pk.setAnoPresentacion(new Long(anoPresentacion));
+	        pk.setMesPresentacion(new Long(mesPresentacion));
+	        pk.setAnoEjecucionGasto(new Long(anoEjecucion));
+	        pk.setMesEjecucionGasto(new Long(mesEjecucion));
+	        pk.setEtapa(etapa);
+
+	        formato = formatoService.obtenerFormato12ACByPK(pk);
+	        if( formato!=null ){
+	        	bean = formatoService.estructurarFormato12ABeanByFiseFormato12AC(formato);
+	        	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
+	        	bean.setDescMesPresentacion(listaMes.get(formato.getId().getMesPresentacion()));
+	        	mapa = formatoService.mapearParametrosFormato12A(bean);
+	        	if(mapa!=null){
+	        		mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+	        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+	        		//verificar si ponerlo aca o no
+	        		mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+	        		mapa.put("NOMBRE_FORMATO", FiseConstants.NOMBRE_FORMATO_12A);
+	 			}
+	        	int i = formatoService.validarFormato12A(formato, FiseConstants.NOMBRE_FORMATO_12A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
+			    if(i==0){
+			    	cargarListaObservaciones(formato.getFiseFormato12ADs());
+			    } 
+	        }
+	        /**REPORTE FORMATO 12A*/
+	       nombreReporte = "formato12A";
+	       nombreArchivo = nombreReporte;
+	       directorio =  "/reports/"+nombreReporte+".jasper";
+	       File reportFile = new File(session.getServletContext().getRealPath(directorio));
+	       byte[] bytes = null;
+	       bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
+	       if (bytes != null) {
+	    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+	    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
+	    	   if( archivo!=null ){
+	    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	    		   fileEntryJsp.setNombreArchivo(nombre);
+	    		   fileEntryJsp.setFileEntry(archivo);
+	    		   listaArchivo.add(fileEntryJsp);
+	    	   }
+	       }
+	       /**REPORTE OBSERVACIONES*/
+	       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
+	    	   nombreReporte = "validacion12A";
+	    	   nombreArchivo = nombreReporte;
+		       directorio =  "/reports/"+nombreReporte+".jasper";
+		       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
+	    	   byte[] bytes2 = null;
+		       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
+	    	   //bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), null, new JRBeanCollectionDataSource(listaObservaciones));
+		       if (bytes != null) {
+		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+		    	   FileEntry archivo2 = this.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
+		    	   if( archivo2!=null ){
+		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+		    		   fileEntryJsp.setNombreArchivo(nombre);
+		    		   fileEntryJsp.setFileEntry(archivo2);
+		    		   listaArchivo.add(fileEntryJsp);
+		    	   }
+		       }
+	       }
+	       /**REPORTE ACTA DE ENVIO*/
+	       nombreReporte = "actaEnvio";
+	       nombreArchivo = nombreReporte;
+	       directorio =  "/reports/"+nombreReporte+".jasper";
+	       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
+	       byte[] bytes3 = null;
+	       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
+	       if (bytes3 != null) {
+	    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+	    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
+	    	   if( archivo!=null ){
+	    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	    		   fileEntryJsp.setNombreArchivo(nombre);
+	    		   fileEntryJsp.setFileEntry(archivo);
+	    		   listaArchivo.add(fileEntryJsp);
+	    	   }
+	       }
+	       //
+	       if( listaArchivo!=null && listaArchivo.size()>0 ){
+	    	   this.enviarMailAdjunto(listaArchivo);
+	       }
+	       response.setContentType("application/json");
+	       PrintWriter pw = response.getWriter();
+		   pw.write(jsonArray.toString());
+		   pw.flush();
+		   pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void enviarMailAdjunto(List<FileEntryJSP> listaArchivo) {
+		//File adjunto=null;
+		try {
+			String correoR="informacion@sphere.com.pe";//el que envia
+			String correoD="edwin.heredia@sphere.com.pe";//al que le llega
+			//String nombreArchivo="NuevoArchivo.pdf";
+			//adjunto=FileUtil.createTempFile(archivo.getContentStream());
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.setHTMLFormat(true);
+			mailMessage.setBody("<html><head></head><body>Envio de Correo de pruebas</body></html>");
+			mailMessage.setFrom(new InternetAddress(correoR));
+			mailMessage.setSubject("Ejemplo de correo");
+			mailMessage.setTo(new InternetAddress(correoD));
+			for (FileEntryJSP fej : listaArchivo) {
+				mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
+			}
+			//mailMessage.addFileAttachment(adjunto,nombreArchivo);
+			//mailMessage.addFileAttachment(adjunto);
+			MailServiceUtil.sendEmail(mailMessage);
+			System.out.println("prueba de envio de correo");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public FileEntry subirDocumentoBytes(PortletRequest request, byte[] bytes, String mimeType, String sourceFileName) {
+		FileEntry fileEntry=null;
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		try {
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(themeDisplay.getScopeGroupId(), 0, "FormatosDeclarados");
+					 
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+			String hoy=sdf.format(new Date());
+			long userId=themeDisplay.getUserId();
+			
+			int secuencia = formatoService.obtenerSecuencia();
+			String title = secuencia+FiseConstants.UNDERLINE+sourceFileName;
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), request);
+			try {
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(dlFolder.getGroupId(), dlFolder.getFolderId(), sourceFileName);
+			} catch (NoSuchFileEntryException e) {
+				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, dlFolder.getRepositoryId(), dlFolder.getFolderId(), sourceFileName, mimeType,title, "", "Subido el "+hoy, bytes, serviceContext);
+			}
+			DLAppLocalServiceUtil.updateFileEntry(fileEntry.getUserId(), fileEntry.getFileEntryId(),sourceFileName, mimeType, title, fileEntry.getDescription(), "Actualizo estado", true, bytes, serviceContext);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		 return fileEntry;
+		
+	}
+	
+	public void cargarListaObservaciones(List<FiseFormato12AD> listaDetalle){
+		int cont=0;
+		listaObservaciones = new ArrayList<MensajeErrorBean>();
+		for (FiseFormato12AD detalle : listaDetalle) {
+			detalle.setFiseFormato12ADObs(formatoService.listarFormato12ADObByFormato12AD(detalle));
+			List<FiseFormato12ADOb> listaObser = formatoService.listarFormato12ADObByFormato12AD(detalle);
+			for (FiseFormato12ADOb observacion : listaObser) {
+				cont++;
+				MensajeErrorBean obs = new MensajeErrorBean();
+				obs.setId(cont);
+				obs.setDescZonaBenef(mapaZonaBenef.get(observacion.getId().getIdZonaBenef()));
+				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
+				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				listaObservaciones.add(obs);
+			}
 		}
 	}
 	
