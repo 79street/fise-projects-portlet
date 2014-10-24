@@ -209,8 +209,8 @@ public class FormatoExcelExport {
 		dateCellStyle.setDataFormat((short) 15);
 		
 		HSSFCellStyle dateCellStyleCentrado = _wb.createCellStyle();
-		dateCellStyle.cloneStyleFrom(dataCellStyle);
-		dateCellStyle.setDataFormat((short) 15);
+		dateCellStyleCentrado.cloneStyleFrom(dateCellStyleCentrado);
+		dateCellStyleCentrado.setDataFormat((short) 15);
 		dateCellStyleCentrado.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
 		//HSSFRow row = _xlsSheet.createRow(iRow);
