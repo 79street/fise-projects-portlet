@@ -30,12 +30,10 @@ import gob.osinergmin.fise.xls.XlsTableConfig;
 import gob.osinergmin.fise.xls.XlsWorkbookConfig;
 import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -59,7 +57,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -165,8 +162,6 @@ public class Formato12AGartController {
 		PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		Formato12AGartJSON obj = new Formato12AGartJSON();
 		
-		//flagMostrarPeriodoEjecucion = "";
-		
 		String codEmpresa = (String)pRequest.getPortletSession().getAttribute("codEmpresa", PortletSession.APPLICATION_SCOPE);
 		String anioPresentacion = (String)pRequest.getPortletSession().getAttribute("anoPresentacion", PortletSession.APPLICATION_SCOPE);
 		String mesPresentacion = (String)pRequest.getPortletSession().getAttribute("mesPresentacion", PortletSession.APPLICATION_SCOPE);
@@ -232,8 +227,6 @@ public class Formato12AGartController {
 		
 		listaFiseObservacion = new ArrayList<FiseObservacion>();
 		listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
-		
-		//listaObservaciones=new ArrayList<MensajeErrorBean>();
 		
 		List<AdmEmpresa> listaEmpresaBD = new ArrayList<AdmEmpresa>();
 		
@@ -499,10 +492,6 @@ public class Formato12AGartController {
 						mesEjecucion = request.getParameter("mesEjecucion");
 					}
 					
-					
-					//String anoEjecucion = request.getParameter("anoEjecucion");
-					//String mesEjecucion = request.getParameter("mesEjecucion");
-					//String zonaBenef = request.getParameter("zonaBenef");
 					String nroEmpadR = request.getParameter("nroEmpadR");
 					String costoUnitEmpadR = request.getParameter("costoUnitEmpadR");
 					String nroAgentR = request.getParameter("nroAgentR");
@@ -539,10 +528,6 @@ public class Formato12AGartController {
 					}
 					/*formulario.setAnioPresent(Long.parseLong(anoPresentacion));
 					formulario.setMesPresent(Long.parseLong(mesPresentacion));*/
-					
-					
-					
-					
 					//formulario.setIdGrupoInfo(Long.parseLong(zonaBenef));
 					formulario.setNroEmpadR(Long.parseLong(nroEmpadR));
 					formulario.setCostoUnitEmpadR(new BigDecimal(costoUnitEmpadR));
@@ -776,17 +761,8 @@ public class Formato12AGartController {
   			if( listaPeriodoEnvio != null && listaPeriodoEnvio.size()>0 ){
   				if( anoPresentacion==null || anoPresentacion.equals("null") ){
   					model.addAttribute("s_periodoenvio_present", listaPeriodoEnvio.get(0));
-  					//flagMostrarPeriodoEjecucion = listaPeriodoEnvio.get(0).getFlagPeriodoEjecucion();
-  					//model.addAttribute("flagPeriodoEjecucion", flagMostrarPeriodoEjecucion);
   				}else{
   					model.addAttribute("s_periodoenvio_present", anoPresentacion);
-  					//for (FisePeriodoEnvio p : listaPeriodoEnvio) {
-					//	if( anoPresentacion.equals(p.getCodigoItem()) ){
-					//		flagMostrarPeriodoEjecucion = p.getFlagPeriodoEjecucion();
-					//		model.addAttribute("flagPeriodoEjecucion", flagMostrarPeriodoEjecucion);
-					//		break;
-					//	}
-					//}
   				}
   				
   			}
@@ -822,9 +798,6 @@ public class Formato12AGartController {
   			BigDecimal costoUnitAgentP = null;
   			BigDecimal costoUnitEmpL = null;
   			BigDecimal costoUnitAgentL = null;
-  			
-  			/*listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.NOMBRE_FORMATO_12A);*/
-  			
   			
   			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(codEmpresa, (anoPresentacion==null || FiseConstants.BLANCO.equals(anoPresentacion))?0:Long.parseLong(anoPresentacion), FiseConstants.ZONABENEF_RURAL_COD);
   			if( detalleRuralPadre!=null ){
