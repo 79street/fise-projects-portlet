@@ -4,5 +4,12 @@
 <display>
 	<category name="osinergmin">
 		<portlet id="gartFormato12A"/>
+		<portlet id="gartFormato12B"/>
+		<portlet id="gartFormato12C"/>
+		<portlet id="gartFormato12D"/>
+		<portlet id="gartFormato13A"/>
+		<portlet id="gartFormato14A"/>
+		<portlet id="gartFormato14B"/>
+		<portlet id="gartFormato14C"/>
 	</category>
 </display>
