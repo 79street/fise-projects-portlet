@@ -1429,8 +1429,10 @@ function <portlet:namespace/>envioDefinitivo(){
 			<portlet:namespace />tipoArchivo: '0'//PDF
 		},
 		success : function(gridData) {
-			//verReporte();
-			alert('verificar si se envio correo');
+			var addhtml='Se realizó el envío satisfactoriamente';					
+			$("#dialog-message-content").html(addhtml);
+			$("#dialog-message").dialog( "open" );					
+			initBlockUI();
 		},error : function(){
 			alert("Error de conexión.");
 			initBlockUI();
