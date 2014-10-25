@@ -48,6 +48,8 @@
     <beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
   </beans:bean>
    
+   <beans:bean id="fiseUtil"  class="gob.osinergmin.fise.common.util.FiseUtil" />
+   
   <!-- Enable @Transactional annotation -->
   <tx:annotation-driven/>
 
