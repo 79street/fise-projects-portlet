@@ -90,7 +90,7 @@ public class ServletViewReport extends HttpServlet {
 					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
 				}
 				//
-				else if( FiseConstants.TIPO_FORMATO_VAL.equals(tipoFormato) ){
+				else if( FiseConstants.TIPO_FORMATO_VAL_12A.equals(tipoFormato) ){
 					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JRBeanCollectionDataSource(lista));
 				}
 				

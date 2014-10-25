@@ -284,7 +284,7 @@ public class FormatoExcelExport {
 			}
 			//poner los otros formato
 			//ponemos la lista de observaciones
-			else if( FiseConstants.TIPO_FORMATO_VAL.equals(xlsTableConfig.getTipoFormato()) ){
+			else if( FiseConstants.TIPO_FORMATO_VAL_12A.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelObservaciones(xlsTableConfig.getLista());
 			}
 		}

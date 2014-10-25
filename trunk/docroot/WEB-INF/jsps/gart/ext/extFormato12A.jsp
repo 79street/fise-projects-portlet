@@ -69,7 +69,7 @@ $(document).ready(function () {
 			 inicializarFormulario();
 			 mostrarUltimoFormato();
 			 $("#s_empresa").val(codEmpSes);
-			 $("#s_periodoenvio_present").val(anioPresSes+mesPresSes+etapaSes);
+			 $("#s_periodoenvio_present").val(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
 		}
 		 //se muestra el panel de errores si se produce en la carga de archivos
 		$("#dialog-form-error").dialog( "open" );
