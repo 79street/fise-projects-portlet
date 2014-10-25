@@ -1863,7 +1863,7 @@ public class Formato12AGartController {
 			    	XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
 					xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_VALIDACION);
 					List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
-					tables.add(new XlsTableConfig(listaObservaciones,FiseConstants.TIPO_FORMATO_VAL));
+					tables.add(new XlsTableConfig(listaObservaciones,FiseConstants.TIPO_FORMATO_VAL_12A));
 					List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
 					sheets.add(new XlsWorksheetConfig(FiseConstants.NOMBRE_HOJA_VALIDACION,tables));
 					xlsWorkbookConfig.setSheets(sheets);
@@ -1899,7 +1899,7 @@ public class Formato12AGartController {
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL_12A;
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
 		   
 		    session.setAttribute("nombreReporte",nombreReporte);
@@ -1990,65 +1990,71 @@ public class Formato12AGartController {
 			    if(i==0){
 			    	cargarListaObservaciones(formato.getFiseFormato12ADs());
 			    } 
-	        }
-	        /**REPORTE FORMATO 12A*/
-	       nombreReporte = "formato12A";
-	       nombreArchivo = nombreReporte;
-	       directorio =  "/reports/"+nombreReporte+".jasper";
-	       File reportFile = new File(session.getServletContext().getRealPath(directorio));
-	       byte[] bytes = null;
-	       bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
-	       if (bytes != null) {
-	    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
-	    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
-	    	   if( archivo!=null ){
-	    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-	    		   fileEntryJsp.setNombreArchivo(nombre);
-	    		   fileEntryJsp.setFileEntry(archivo);
-	    		   listaArchivo.add(fileEntryJsp);
-	    	   }
-	       }
-	       /**REPORTE OBSERVACIONES*/
-	       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
-	    	   nombreReporte = "validacion12A";
-	    	   nombreArchivo = nombreReporte;
+		        /**REPORTE FORMATO 12A*/
+		       nombreReporte = "formato12A";
+		       nombreArchivo = nombreReporte;
 		       directorio =  "/reports/"+nombreReporte+".jasper";
-		       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
-	    	   byte[] bytes2 = null;
-		       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
-	    	   //bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), null, new JRBeanCollectionDataSource(listaObservaciones));
+		       File reportFile = new File(session.getServletContext().getRealPath(directorio));
+		       byte[] bytes = null;
+		       bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
 		       if (bytes != null) {
 		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
-		    	   FileEntry archivo2 = this.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
-		    	   if( archivo2!=null ){
+		    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
+		    	   if( archivo!=null ){
 		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
 		    		   fileEntryJsp.setNombreArchivo(nombre);
-		    		   fileEntryJsp.setFileEntry(archivo2);
+		    		   fileEntryJsp.setFileEntry(archivo);
 		    		   listaArchivo.add(fileEntryJsp);
 		    	   }
 		       }
-	       }
-	       /**REPORTE ACTA DE ENVIO*/
-	       nombreReporte = "actaEnvio";
-	       nombreArchivo = nombreReporte;
-	       directorio =  "/reports/"+nombreReporte+".jasper";
-	       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
-	       byte[] bytes3 = null;
-	       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
-	       if (bytes3 != null) {
-	    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
-	    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
-	    	   if( archivo!=null ){
-	    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-	    		   fileEntryJsp.setNombreArchivo(nombre);
-	    		   fileEntryJsp.setFileEntry(archivo);
-	    		   listaArchivo.add(fileEntryJsp);
-	    	   }
-	       }
-	       //
-	       if( listaArchivo!=null && listaArchivo.size()>0 ){
-	    	   this.enviarMailAdjunto(listaArchivo);
-	       }
+		       /**REPORTE OBSERVACIONES*/
+		       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
+		    	   nombreReporte = "validacion12A";
+		    	   nombreArchivo = nombreReporte;
+			       directorio =  "/reports/"+nombreReporte+".jasper";
+			       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
+		    	   byte[] bytes2 = null;
+			       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
+		    	   //bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), null, new JRBeanCollectionDataSource(listaObservaciones));
+			       if (bytes != null) {
+			    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+			    	   FileEntry archivo2 = this.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
+			    	   if( archivo2!=null ){
+			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+			    		   fileEntryJsp.setNombreArchivo(nombre);
+			    		   fileEntryJsp.setFileEntry(archivo2);
+			    		   listaArchivo.add(fileEntryJsp);
+			    	   }
+			       }
+		       }
+		       /**REPORTE ACTA DE ENVIO*/
+		       nombreReporte = "actaEnvio";
+		       nombreArchivo = nombreReporte;
+		       directorio =  "/reports/"+nombreReporte+".jasper";
+		       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
+		       byte[] bytes3 = null;
+		       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
+		       if (bytes3 != null) {
+		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+		    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
+		    	   if( archivo!=null ){
+		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+		    		   fileEntryJsp.setNombreArchivo(nombre);
+		    		   fileEntryJsp.setFileEntry(archivo);
+		    		   listaArchivo.add(fileEntryJsp);
+		    	   }
+		       }
+		       //
+		       if( listaArchivo!=null && listaArchivo.size()>0 ){
+		    	   this.enviarMailAdjunto(listaArchivo);
+		    	   //guardamos la fecha de envio
+		    	   Formato12ACBean form = new Formato12ACBean();
+		    	   form.setUsuario(themeDisplay.getUser().getLogin());
+		    	   form.setTerminal(themeDisplay.getUser().getLoginIP());
+		    	   formatoService.modificarEnvioDefinitivoFormato12AC(form, formato);
+		       }
+	        }
+
 	       response.setContentType("application/json");
 	       PrintWriter pw = response.getWriter();
 		   pw.write(jsonArray.toString());
@@ -2059,11 +2065,11 @@ public class Formato12AGartController {
 		}
 	}
 	
-	public void enviarMailAdjunto(List<FileEntryJSP> listaArchivo) {
+	public void enviarMailAdjunto(List<FileEntryJSP> listaArchivo) throws Exception {
 		//File adjunto=null;
 		try {
 			String correoR="informacion@sphere.com.pe";//el que envia
-			String correoD="edwin.heredia@sphere.com.pe";//al que le llega
+			String correoD="sandro.romero@sphere.com.pe";//al que le llega
 			//String nombreArchivo="NuevoArchivo.pdf";
 			//adjunto=FileUtil.createTempFile(archivo.getContentStream());
 			MailMessage mailMessage = new MailMessage();
@@ -2082,6 +2088,7 @@ public class Formato12AGartController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	
