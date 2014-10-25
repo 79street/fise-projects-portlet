@@ -1,24 +1,4 @@
-
-<%
-/**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
-%>
-
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<portlet:defineObjects />
+<%@include file="/WEB-INF/jsps/gart/ext/extFormato13A.jsp"%>
 
 <portlet:actionURL var="accionURL" name="actionNormal">
 	<portlet:param name="action" value="cargar" />
@@ -28,9 +8,9 @@
 	type="text/css">
 
 <script type="text/javascript">
-var data_funcion = []; 
-
-//////////
+$(document).ready(function () {	
+	formato13A.init();
+});
 </script>
 
 <style>
@@ -87,8 +67,8 @@ var data_funcion = [];
 										</tr>
 										<tr>
 											<td><output>Desde año:</output></td>
-											<td><input type="text" name="i_anio_d" id="i_anio_d"
-												style="width: 50px; text-align: right;" maxlength="4">
+											<td>
+												<form:input path="anioInicio" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
@@ -99,8 +79,8 @@ var data_funcion = [];
 												
 											</td>
 											<td><output>Hasta año:</output></td>
-											<td><input type="text" name="i_anio_h" id="i_anio_h"
-												style="width: 50px; text-align: right;" maxlength="4">
+											<td>
+												<form:input path="anioFin" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
@@ -149,9 +129,9 @@ var data_funcion = [];
 						</tr>
 						<tr>
 							<td>
-								<table id="grid_formato">
+								<table id="<portlet:namespace/>grid_formato">
 								</table>
-								<div id="pager_formato"></div>
+								<div id="<portlet:namespace/>pager_formato"></div>
 							</td>
 						</tr>
 						<tr height="10px">

@@ -1,6 +1,7 @@
 package gob.osinergmin.fise.gart.command;
 
 import gob.osinergmin.fise.domain.AdmEmpresa;
+import gob.osinergmin.fise.util.FechaUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -10,10 +11,10 @@ public class Formato13AGartCommand {
 	private Map<Long,String> listaMes;
 	private List<AdmEmpresa> listaEmpresas;
 	private String codEmpresa;
-	private Long mesInicio;
-	private Long anioInicio;
-	private Long mesFin;
-	private Long anioFin;
+	private String mesInicio;
+	private String anioInicio;
+	private String mesFin;
+	private String anioFin;
 	private String etapa;
 	private boolean admin;
 	
@@ -41,35 +42,35 @@ public class Formato13AGartCommand {
 		this.listaMes = listaMes;
 	}
 
-	public Long getMesInicio() {
+	public String getMesInicio() {
 		return mesInicio;
 	}
 
-	public void setMesInicio(Long mesInicio) {
+	public void setMesInicio(String mesInicio) {
 		this.mesInicio = mesInicio;
 	}
 
-	public Long getAnioInicio() {
+	public String getAnioInicio() {
 		return anioInicio;
 	}
 
-	public void setAnioInicio(Long anioInicio) {
+	public void setAnioInicio(String anioInicio) {
 		this.anioInicio = anioInicio;
 	}
 
-	public Long getMesFin() {
+	public String getMesFin() {
 		return mesFin;
 	}
 
-	public void setMesFin(Long mesFin) {
+	public void setMesFin(String mesFin) {
 		this.mesFin = mesFin;
 	}
 
-	public Long getAnioFin() {
+	public String getAnioFin() {
 		return anioFin;
 	}
 
-	public void setAnioFin(Long anioFin) {
+	public void setAnioFin(String anioFin) {
 		this.anioFin = anioFin;
 	}
 

@@ -82,6 +82,13 @@ public class FiseUtil {
 		return FechaUtil.cargarMapaMeses();
 	}
 	
+	public String obtenerNroAnioFechaActual(){
+		return FechaUtil.obtenerNroAnioFechaActual();
+	}
+	public String obtenerNroMesFechaActual(){
+		return FechaUtil.obtenerNroMesFechaActual();
+	}
+	
 	public boolean esAdministrador(PortletRequest request){
 		try {
 			ThemeDisplay theme = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
