@@ -1,14 +1,21 @@
 package gob.osinergmin.fise.common.util;
 
+import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
 import gob.osinergmin.fise.util.FechaUtil;
+import gob.osinergmin.fise.xls.XlsTableConfig;
+import gob.osinergmin.fise.xls.XlsWorkbookConfig;
+import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -78,6 +85,14 @@ public class FiseUtil {
 		return listaEmpresas;
 	}
 	
+	public Map<String, String> getMapaEmpresa(){
+		Map<String, String> mapaEmpresa = new HashMap<String, String>();
+		for (AdmEmpresa admEmpresa : admEmpresaService.listarAdmEmpresa()) {
+			mapaEmpresa.put(admEmpresa.getCodEmpresa(), admEmpresa.getDscCortaEmpresa());
+		}
+		return mapaEmpresa;
+	}
+	
 	public Map<Long,String> getMapaMeses(){
 		return FechaUtil.cargarMapaMeses();
 	}
@@ -103,4 +118,16 @@ public class FiseUtil {
 			return false;
 		}
 	}
+	
+	public void configuracionExportarExcel(HttpSession session, String tipoFormato, String nombreExcel, String nombreHoja, List<?> lista){
+		XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
+		xlsWorkbookConfig.setName(nombreExcel);
+		List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
+		tables.add(new XlsTableConfig(lista, tipoFormato));
+		List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
+		sheets.add(new XlsWorksheetConfig(nombreHoja, tables));
+		xlsWorkbookConfig.setSheets(sheets);
+		session.setAttribute(FiseConstants.KEY_CFG_EXCEL_EXPORT,xlsWorkbookConfig);	
+	}
+	
 }
