@@ -55,7 +55,7 @@ $(document).ready(function () {
 											<td colspan="7">
 												<form:select path="codEmpresa" cssClass="select" cssStyle="width: 375px;">
 
-													<c:if test="${formato13AGartCommand.admin}">
+													<c:if test="${esAdministrador}">
 														<form:option value="">-Todos-</form:option>
 													</c:if>
 													<form:options items="${formato13AGartCommand.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>

@@ -1,7 +1,6 @@
 package gob.osinergmin.fise.gart.command;
 
 import gob.osinergmin.fise.domain.AdmEmpresa;
-import gob.osinergmin.fise.util.FechaUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,7 @@ public class Formato13AGartCommand {
 	private String mesFin;
 	private String anioFin;
 	private String etapa;
-	private boolean admin;
+	
 	
 	public List<AdmEmpresa> getListaEmpresas() {
 		return listaEmpresas;
@@ -81,14 +80,4 @@ public class Formato13AGartCommand {
 	public void setEtapa(String etapa) {
 		this.etapa = etapa;
 	}
-
-	public boolean isAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
-
-	
 }

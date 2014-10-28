@@ -2,7 +2,6 @@ package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
-import gob.osinergmin.fise.util.FechaUtil;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -18,13 +17,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 
+@SessionAttributes({"esAdministrador"})
 @Controller("formato13AGartController")
 @RequestMapping("VIEW")
 public class Formato13AGartController {
@@ -35,34 +35,30 @@ public class Formato13AGartController {
 	@Qualifier("fiseUtil")
 	FiseUtil fiseUtil;
 
-	@ModelAttribute("formato13AGartCommand")
-	public Formato13AGartCommand inicializar(){
-		Formato13AGartCommand command=new Formato13AGartCommand();
+	
+	@RequestMapping
+	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+
+
+		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		command.setListaMes(fiseUtil.getMapaMeses());
 		command.setAnioInicio(fiseUtil.obtenerNroAnioFechaActual());
 		command.setMesInicio( String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));
 		command.setAnioFin(fiseUtil.obtenerNroAnioFechaActual());
 		command.setMesFin(fiseUtil.obtenerNroMesFechaActual());
-		logger.info("INICIALIZACION formato13AGartCommand");
-		return command;
-	}
-	
-	@RequestMapping
-	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
 
-		if(command.getListaEmpresas()==null){
-			command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
-		}
-		command.setAdmin(fiseUtil.esAdministrador(renderRequest));
+		model.addAttribute("esAdministrador", fiseUtil.esAdministrador(renderRequest));
+		
+		logger.info("admin1.1:"+model.get("esAdministrador"));
 		
 		return "formato13A";
 	}
 	
 	@ResourceMapping("busqueda")
-  	public void grid(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+  	public void grid(ModelMap model,ResourceRequest request,ResourceResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
 		
 		response.setContentType("application/json");	
-			
+		logger.info("admin2.1:"+model.get("esAdministrador"));
 		HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
         HttpSession session = req.getSession();
 			
@@ -79,6 +75,5 @@ public class Formato13AGartController {
   			logger.info("valores "+ anioHasta);
   			logger.info("valores "+ mesHasta);
   			logger.info("valores "+ etapa);
-  			logger.info("admin "+ command.isAdmin());
 	}
 }
