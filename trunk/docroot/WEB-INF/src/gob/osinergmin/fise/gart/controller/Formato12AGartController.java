@@ -168,6 +168,7 @@ public class Formato12AGartController {
 		String anioEjecucion = (String)pRequest.getPortletSession().getAttribute("anoEjecucion", PortletSession.APPLICATION_SCOPE);
 		String mesEjecucion = (String)pRequest.getPortletSession().getAttribute("mesEjecucion", PortletSession.APPLICATION_SCOPE);
 		String etapa = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
+		String flag = (String)pRequest.getPortletSession().getAttribute("flag", PortletSession.APPLICATION_SCOPE);
 		//
 		String msgError = (String)pRequest.getPortletSession().getAttribute("mensajeError", PortletSession.APPLICATION_SCOPE);
 		List<MensajeErrorBean> listaError = (List<MensajeErrorBean>)pRequest.getPortletSession().getAttribute("listaError", PortletSession.APPLICATION_SCOPE);
@@ -182,6 +183,9 @@ public class Formato12AGartController {
 		//
 		obj.setMensajeError(msgError!=null?msgError:"");
 		obj.setMensajeInfo(msgInfo!=null?msgInfo:"");
+		obj.setEtapa(etapa!=null?etapa:"");
+		//
+		obj.setFlag(flag!=null?flag:"");
 		
 		pRequest.getPortletSession().setAttribute("codEmpresa", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("anoPresentacion", "", PortletSession.APPLICATION_SCOPE);
@@ -875,15 +879,27 @@ public class Formato12AGartController {
 		
 		String flagCarga = uploadPortletRequest.getParameter("flagCarga");
     	String codEmpresaNew = uploadPortletRequest.getParameter("s_empresa");
-    	
     	String periodoEnvioPresNew = uploadPortletRequest.getParameter("s_periodoenvio_present");
+    	String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
+    	
     	String anioPresNew = "";
 		String mesPresNew = "";
+		String anioEjecNew = "";
+		String mesEjecNew = "";
+		String etapaNew = "";
 		/*String anioPresNew = uploadPortletRequest.getParameter("i_aniopresent");
 		String mesPresNew = uploadPortletRequest.getParameter("s_mes_present");*/
     	if(periodoEnvioPresNew!=null && periodoEnvioPresNew.length()>6){
     		anioPresNew = periodoEnvioPresNew.substring(0, 4);
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
+    		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
+    		if( "S".equals(flagPeriodoEjecucion) ){
+    			anioEjecNew = uploadPortletRequest.getParameter("i_anioejecuc");
+    			mesEjecNew = uploadPortletRequest.getParameter("s_mes_ejecuc");
+			}else{
+				anioEjecNew = anioPresNew;
+		    	mesEjecNew = mesPresNew;
+			}
     	}
     	
 		//String anioEjecNew = uploadPortletRequest.getParameter("i_anioejecuc");
@@ -900,13 +916,13 @@ public class Formato12AGartController {
 		FileEntry fileEntry=null;
 		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioPresNew, mesPresNew, FiseConstants.ETAPA_SOLICITUD);
+			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioEjecNew, mesEjecNew, etapaNew);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioPresEdit, mesPresEdit, etapaEdit);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
 			fileEntry =this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-			formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioPresNew, mesPresNew, FiseConstants.ETAPA_SOLICITUD);
+			formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioEjecNew, mesEjecNew, etapaNew);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit, etapaEdit);
@@ -931,8 +947,10 @@ public class Formato12AGartController {
 				pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresaNew, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anoPresentacion", anioPresNew, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("mesPresentacion", mesPresNew, PortletSession.APPLICATION_SCOPE);
-			    //pRequest.getPortletSession().setAttribute("anoEjecucion", anioEjecEdit, PortletSession.APPLICATION_SCOPE);
-			    //pRequest.getPortletSession().setAttribute("mesEjecucion", mesEjecEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoEjecucion", anioEjecNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesEjecucion", mesEjecNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("etapa", etapaNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("flag", "N", PortletSession.APPLICATION_SCOPE);//para control de mostrar formulario a ingresar
 			}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) || flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
 				pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresaEdit, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anoPresentacion", anioPresEdit, PortletSession.APPLICATION_SCOPE);
