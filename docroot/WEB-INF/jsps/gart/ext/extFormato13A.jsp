@@ -9,11 +9,13 @@ var formato13A= {
 	paginadoResultados:null,
 	urlBusqueda: null,
 	botonBuscar:null,
+	formBusqueda: null,
 	init : function(){
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
 		this.paginadoResultados='#<portlet:namespace/>pager_formato';
 		this.urlBusqueda='<portlet:resourceURL id="busqueda" />';
-		this.botonBuscar=$("#<portlet:namespace/>buscarFormato")
+		this.botonBuscar=$("#<portlet:namespace/>buscarFormato");
+		this.formBusqueda=$('#formato13AGartCommand');
 		formato13A.botonBuscar.click(function() {
 			formato13A.buscar();
 		});
@@ -75,9 +77,9 @@ var formato13A= {
 		}); 
 	},
 	buscar : function () {	
-/*
+
 			$.ajax({			
-					url: formato13A.urlBusqueda,
+					url: formato13A.urlBusqueda+'&'+formato13A.formBusqueda.serialize(),
 					type: 'post',
 					dataType: 'json',
 					beforeSend:function(){
@@ -93,7 +95,7 @@ var formato13A= {
 						formato13A.unblockUI();
 					}
 			});
-*/
+
 
 	},
 	blockUI : function(){
