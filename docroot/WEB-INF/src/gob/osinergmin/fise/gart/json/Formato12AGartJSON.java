@@ -34,6 +34,8 @@ public class Formato12AGartJSON {
 	//
 	private String mensajeInfo;
 	private String mensajeError;
+	//
+	private String flag;//flag para controlar mostrar el formulario de ingreso cuando hay un error en carga de formulario excel o texto
 
 	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC, String flagPeriodoEjecucion) throws JSONException{
 		
@@ -311,6 +313,14 @@ public class Formato12AGartJSON {
 
 	public void setMensajeError(String mensajeError) {
 		this.mensajeError = mensajeError;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 
 }

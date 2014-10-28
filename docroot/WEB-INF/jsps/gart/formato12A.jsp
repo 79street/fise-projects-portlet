@@ -54,7 +54,7 @@
 	<input type="hidden" id="mensajeInfo" value="${model.mensajeInfo}" />
 
 	<input type="hidden" id="Estado" value="" />	
-	<input type="hidden" id="flag" value="" />
+	<input type="hidden" id="flag" value="${model.flag}" />
 	
 	
 

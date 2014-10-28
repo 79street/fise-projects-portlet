@@ -50,10 +50,31 @@ $(document).ready(function () {
 	 var anioEjeSes = $("#anioEjecSes").val();
 	 var mesEjeSes = $("#mesEjecSes").val();
 	 var etapaSes = $("#etapaSes").val();
-	 //alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
-	 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes != '' && mesEjeSes != '' && etapaSes != ''){
-	 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioEjeSes, mesEjeSes, etapaSes);
+	 //
+	 var flag = $("#flag").val();
+	 //alert('flagdecarga:'+flag);
+	 if( $('#flag').val()=='N' ){//solo ocurre cuando hay un error en la carga de formularios, sino se muestra el proceso normal
+		 inicializarFormulario();
+		 mostrarUltimoFormato();
+		 $("#s_empresa").val(codEmpSes);
+		 //$("#s_periodoenvio_present").val(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
+		 if( $('#flagPeriodoEjecucion').val()=='S' ){
+			 $("#i_anioejecuc").val(anioEjeSes);
+			 $("#s_mes_ejecuc").val(mesEjeSes);
+		}else{
+			$("#i_anioejecuc").val(anioPresSes);
+			 $("#s_mes_ejecuc").val(mesPresSes);
+		}
+		$('#<portlet:namespace/>validacionFormato').css('display','none');
+		cargarPeriodoYCostos('',anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
+	 }else{
+		//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
+		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes != '' && mesEjeSes != '' && etapaSes != ''){
+		 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioEjeSes, mesEjeSes, etapaSes);
+		 }
 	 }
+	 
+	 
 	 //SE CARGA VALORES POR DEFECTO PARA LA BUSQUEDA
 	 $("#i_anio_d").val($("#anioDesdeSes").val());
 	 $("#s_mes_d").val(parseInt($("#mesDesdeSes").val()));
@@ -65,12 +86,12 @@ $(document).ready(function () {
 	 var mensajeError = $("#mensajeError").val();
 	 //SE MUESTRAN LOS MENSAJES DE ERROR PARA LA CARGA DE LOS ARCHIVOS
 	 if(mensajeError!=''){
-		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes == '' && mesEjeSes == '' && etapaSes == ''){
+		 /*if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes == '' && mesEjeSes == '' && etapaSes == ''){
 			 inicializarFormulario();
 			 mostrarUltimoFormato();
 			 $("#s_empresa").val(codEmpSes);
 			 $("#s_periodoenvio_present").val(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
-		}
+		}*/
 		 //se muestra el panel de errores si se produce en la carga de archivos
 		$("#dialog-form-error").dialog( "open" );
 	}else{
@@ -419,12 +440,12 @@ function calculoTotal(){
 	totalImportes();
 	totalGeneral();
 	//completar nulos
-	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',4,0)");
-	$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_p',4,0)");
-	$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_l',4,0)");
-	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_r',4,0)");
-	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',4,0)");
-	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',4,0)");
+	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',7,0)");
+	$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_p',7,0)");
+	$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_l',7,0)");
+	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_r',7,0)");
+	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',7,0)");
+	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',7,0)");
 	completarBlanco('i_nroEmpad_r');
 	completarBlanco('i_nroEmpad_p');
 	completarBlanco('i_nroEmpad_l');
@@ -1103,6 +1124,7 @@ function <portlet:namespace/>guardarFormato(){
 					$("#dialog-message-content").html(addhtml2);
 					$("#dialog-message").dialog( "open" );
 					//<portlet:namespace/>filtrar();
+					mostrarUltimoFormato();
 					initBlockUI();
 				}
 			},error : function(){
