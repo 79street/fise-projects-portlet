@@ -7,11 +7,31 @@
 var formato14A= {
 	tablaResultados:null,
 	paginadoResultados:null,
+	//
 	urlBusqueda: null,
-	formBusqueda: null,
+	urlCargaPeriodo:null,
+	urlCargaFlagPeriodo:null,
+	urlCrud:null,
+	//
+	mensajeCargando:null,
+	mensajeObteniendoDatos:null,
+	mensajeEliminando:null,
+	mensajeGuardando:null,
+	//valores hidden
+	procesoEstado:null,
+	etapaEdit:null,
+	//
+	formCommand: null,
 	botonBuscar:null,
 	botonNuevo:null,
 	botonRegresar:null,
+	botonReportePdf:null,
+	botonReporteExcel:null,
+	botonGrabar:null,
+	botonValidacion:null,
+	botonEnvioDefinitivo:null,
+	//
+	panelCargaArchivo:null,
 	//
 	i_codEmpresaB:null,
 	i_anioDesde:null,
@@ -26,12 +46,16 @@ var formato14A= {
 	dialogCarga:null,
 	dialogError:null,
 	dialogObservacion:null,
+	dialogMessageContent:null,
+	dialogConfirmContent:null,
 	//divs
 	divHome:null,
 	divFormato:null,
+	divPeriodoEjecucion:null,
 	//formulario
 	f_empresa:null,
-	//f_empresa:null,
+	f_periodoEnvio:null,
+	f_flagPeriodo:null,
 	//RURAL
 	f_sumEmpadDifR:null,f_totalEmpadR:null,f_impEsqInvR:null,f_impDeclJuradaR:null,f_impFichaVerifR:null,f_repEsqInvR:null,f_verifInfoR:null,f_elabArchBenefR:null,f_digitFichaR:null,
 	f_totalDifIniProgR:null,f_impVolanteR:	null,f_impAficheR:null,f_repFolletoR:null,f_spotPublicTvR:null,f_spotPublicRadioR:null,f_nroBenefR:null,f_costoUnitEmpadR:null,
@@ -48,8 +72,21 @@ var formato14A= {
 	init : function(){
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
 		this.paginadoResultados='#<portlet:namespace/>pager_formato';
+		//
 		this.urlBusqueda='<portlet:resourceURL id="busqueda" />';
-		this.formBusqueda=$('#formato14ACBean');
+		this.urlCargaPeriodo='<portlet:resourceURL id="cargaPeriodo" />';
+		this.urlCargaFlagPeriodo='<portlet:resourceURL id="cargaFlagPeriodo" />';
+		this.urlCrud='<portlet:resourceURL id="crud" />';
+		//mensajes
+		this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
+		this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
+		this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
+		this.mensajeGuardando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>';
+		//valores hidden utilitarios
+		this.procesoEstado=$('#<portlet:namespace/>Estado');
+		this.etapaEdit=$('#<portlet:namespace/>etapaEdit');
+		//
+		this.formCommand=$('#formato14ACBean');
 		//
 		this.i_codEmpresaB=$('#codEmpresaB');
 		this.i_anioDesde=$('#anioDesde');
@@ -64,11 +101,16 @@ var formato14A= {
 		this.dialogCarga=$("#dialog-form-carga");
 		this.dialogError=$("#dialog-form-error");
 		this.dialogObservacion=$("#dialog-form-observacion");
+		this.dialogMessageContent=$("#dialog-message-content");
+		this.dialogConfirmContent=$('#dialog-confirm-content');
 		//divs
 		this.divHome=$("#<portlet:namespace/>div_home");
 		this.divFormato=$("#<portlet:namespace/>div_formato");
+		this.divPeriodoEjecucion=$("#<portlet:namespace/>divPeriodoEjecucion");
 		//formulario
 		this.f_empresa=$('#codigoEmpresa');
+		this.f_periodoEnvio=$('#periodoEnvio');
+		this.f_flagPeriodo=$("#flagPeriodoEjecucion");
 		//
 		this.f_sumEmpadDifR=$('#sumEmpadDifusionR');
 		this.f_totalEmpadR=$('#totalEmpadR');
@@ -146,16 +188,25 @@ var formato14A= {
 		this.botonNuevo=$("#<portlet:namespace/>crearFormato");
 		this.botonBuscar=$("#<portlet:namespace/>buscarFormato");	
 		this.botonRegresar=$("#<portlet:namespace/>regresarFormato");
+		this.botonReportePdf=$("#<portlet:namespace/>reportePdf");
+		this.botonReporteExcel=$("#<portlet:namespace/>reporteExcel");
+		this.botonGrabar=$("#<portlet:namespace/>guardarFormato");
+		this.botonValidacion=$("#<portlet:namespace/>validacionFormato");
+		this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivo");
+		//
+		this.panelCargaArchivo=$("#<portlet:namespace/>panelCargaArchivos");
 		//eventos
 		formato14A.botonNuevo.click(function() {formato14A.<portlet:namespace/>crearFormato();});
 		formato14A.botonBuscar.click(function() {formato14A.buscar();});
+		formato14A.botonGrabar.click(function() {formato14A.<portlet:namespace/>guardarFormato();});
 		formato14A.botonRegresar.click(function() {formato14A.<portlet:namespace/>regresar();});
+		formato14A.f_empresa.change(function(){formato14A.<portlet:namespace/>loadPeriodo('');});
+		formato14A.f_periodoEnvio.change(function(){formato14A.<portlet:namespace/>loadPeriodo(this.value);});
 		//eventos por defecto
 		formato14A.botonBuscar.trigger('click');
 		formato14A.initBlockUI();
 		//$('input[type=text].target').on('change', function(){
-		$('input[type=text]').on('change', function(){
-			//$(".target").
+		$('input.target[type=text]').on('change', function(){
 			formato14A.calculoTotal();
 		});
 	},
@@ -194,9 +245,9 @@ var formato14A= {
 	      		for(var i=0;i < ids.length;i++){
 	      			var cl = ids[i];
 	      			var ret = formato14A.tablaResultados.jqGrid('getRowData',cl);           
-	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
-	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
-	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";              			
+	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato14A.verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
+	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato14A.editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
+	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato14A.confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";              			
 	      			formato14A.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 	      			formato14A.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 	      			formato14A.tablaResultados.jqGrid('setRowData',ids[i],{elim:elem});
@@ -213,11 +264,10 @@ var formato14A= {
 		}); 
 	},
 	buscar : function () {
-		//alert('entro a buscar');
 		if(formato14A.validarBusqueda()){
 			formato14A.blockUI();
 			jQuery.ajax({			
-					url: formato14A.urlBusqueda+'&'+formato14A.formBusqueda.serialize(),
+					url: formato14A.urlBusqueda+'&'+formato14A.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',				
 					success: function(gridData) {					
@@ -255,60 +305,57 @@ var formato14A= {
 					return false;
 			  }
 		  }
-		  
 		  if(formato14A.i_etapaB.val().length == '' ) { 	    
 			    alert('Seleccione una etapa');
 			    formato14A.i_etapaB.focus();
 			    return false; 
 		  }
-		 
-		  return true; 
+		 return true; 
 	},
 	<portlet:namespace/>crearFormato :  function(){	
-		//alert('entro a crear');
 		formato14A.inicializarFormulario();
-		//data_funcion = [];
-		//$('#Estado').val('SAVE');
-		//$("#etapaEdit").val("");
+		formato14A.procesoEstado.val('SAVE');
+		formato14A.etapaEdit.val("");
 		formato14A.divFormato.show();
 		formato14A.divHome.hide();
 		//$('#flagCarga').val('0');
 		//
+		if( formato14A.f_flagPeriodo.val()=='S' ){
+			//poner valores guardadose en sesion
+		}
 		//if( $('#flagPeriodoEjecucion').val()=='S' ){
 		//	 $("#i_anioejecuc").val($("#anioDesdeSes").val());
 		//	 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
 		//}
-		//$('#<portlet:namespace/>validacionFormato').css('display','none');
-		//cargarPeriodoYCostos('','');
+		formato14A.botonValidacion.css('display','none');
+		formato14A.<portlet:namespace/>loadPeriodo('');
 	},
 	<portlet:namespace/>regresar : function(){
-		//$("#Estado").val("");
-		//$("#etapaEdit").val("");
+		formato14A.procesoEstado.val('');
+		formato14A.etapaEdit.val("");
 		formato14A.divFormato.hide();
 		formato14A.divHome.show();		
 		//
-		//removerDeshabilitados();
+		formato14A.removerDeshabilitados();
 		//se visualizan los componentes escondidos
-		/*$('#<portlet:namespace/>reportePdf').css('display','none');
-		$('#<portlet:namespace/>reporteExcel').css('display','none');
-		$('#<portlet:namespace/>guardarFormato').css('display','');
-		$('#panelCargaArchivos').css('display','');
-		$('#<portlet:namespace/>validacionFormato').css('display','');
-		$('#<portlet:namespace/>envioDefinitivo').css('display','');*/
+		formato14A.botonReportePdf.css('display','none');
+		formato14A.botonReporteExcel.css('display','none');
+		formato14A.botonGrabar.css('display','');
+		formato14A.botonValidacion.css('display','');
+		formato14A.botonEnvioDefinitivo.css('display','');
+		
+		formato14A.panelCargaArchivo.css('display','');
+
 		formato14A.botonBuscar.trigger('click');
-		//<portlet:namespace/>buscar();
 	},
 	inicializarFormulario : function(){
 		formato14A.f_empresa.val('');
-		
-		/*$('#s_periodoenvio_present').val('');
-		if( $('#flagPeriodoEjecucion').val()=='S' ){
-			$('#i_anioejecuc').val('');
-			$('#s_mes_ejecuc').val('');
-			$('#i_anioejecuc').attr("disabled",false);
-			$('#s_mes_ejecuc').attr("disabled",false);
-		}*/
-		
+		if( formato14A.f_flagPeriodo.val()=='S' ){
+			$('#anioInicioVigencia').val('');
+			$('#anioFinVigencia').val('');
+			$('#anioInicioVigencia').attr("disabled",false);
+			$('#anioFinVigencia').attr("disabled",false);
+		}
 		//RURAL
 		formato14A.f_sumEmpadDifR.val('0.00');
 		formato14A.f_totalEmpadR.val('0.00');
@@ -382,41 +429,140 @@ var formato14A= {
 		formato14A.f_nroAgentL.val('0');
 		formato14A.f_costoUnitAgentL.val('0.00');
 		
-		//realizarCalculoCampos();
 		//quitamos los componentes deshabilitados
-		//$('#s_empresa').attr("disabled",false);
-		//$('#s_periodoenvio_present').attr("disabled",false);
+		formato14A.f_empresa.attr("disabled",false);
+		formato14A.f_periodoEnvio.attr("disabled",false);
 		//
-		//deshabilitarCampos();
-		//soloNumerosEnteros();
+		//formato14A.deshabilitarCampos();
+		//
+		formato14A.soloNumerosEnteros();
+		formato14A.soloNumerosDecimales();
 	},
-	calculoTotal : function(){
-		totalEmpadronamientoRural();
-		totalEmpadronamientoProvincia();
-		totalEmpadronamientoLima();
+	removerDeshabilitados : function(){
+		formato14A.f_empresa.removeAttr("disabled");
+		formato14A.f_periodoEnvio.removeAttr("disabled");
+		if( formato14A.f_flagPeriodo.val()=='S' ){
+			$('#anioInicioVigencia').removeAttr("disabled");
+			$('#anioFinVigencia').removeAttr("disabled");
+		}
+		//RURAL
+		formato14A.f_impEsqInvR.removeAttr("disabled");
+		formato14A.f_impDeclJuradaR.removeAttr("disabled");
+		formato14A.f_impFichaVerifR.removeAttr("disabled");
+		formato14A.f_repEsqInvR.removeAttr("disabled");
+		formato14A.f_verifInfoR.removeAttr("disabled");
+		formato14A.f_elabArchBenefR.removeAttr("disabled");
+		formato14A.f_digitFichaR.removeAttr("disabled");
+		formato14A.f_impVolanteR.removeAttr("disabled");
+		formato14A.f_impAficheR.removeAttr("disabled");
+		formato14A.f_repFolletoR.removeAttr("disabled");
+		formato14A.f_spotPublicTvR.removeAttr("disabled");
+		formato14A.f_spotPublicRadioR.removeAttr("disabled");
+		formato14A.f_nroBenefR.removeAttr("disabled");
+		formato14A.f_promConvR.removeAttr("disabled");
+		formato14A.f_regFirmaConvR.removeAttr("disabled");
+		formato14A.f_impBandR.removeAttr("disabled");
+		formato14A.f_nroAgentR.removeAttr("disabled");
+		//PROVINCIA
+		formato14A.f_impEsqInvP.removeAttr("disabled");
+		formato14A.f_impDeclJuradaP.removeAttr("disabled");
+		formato14A.f_impFichaVerifP.removeAttr("disabled");
+		formato14A.f_repEsqInvP.removeAttr("disabled");
+		formato14A.f_verifInfoP.removeAttr("disabled");
+		formato14A.f_elabArchBenefP.removeAttr("disabled");
+		formato14A.f_digitFichaP.removeAttr("disabled");
+		formato14A.f_impVolanteP.removeAttr("disabled");
+		formato14A.f_impAficheP.removeAttr("disabled");
+		formato14A.f_repFolletoP.removeAttr("disabled");
+		formato14A.f_spotPublicTvP.removeAttr("disabled");
+		formato14A.f_spotPublicRadioP.removeAttr("disabled");
+		formato14A.f_nroBenefP.removeAttr("disabled");
+		formato14A.f_promConvP.removeAttr("disabled");
+		formato14A.f_regFirmaConvP.removeAttr("disabled");
+		formato14A.f_impBandP.removeAttr("disabled");
+		formato14A.f_nroAgentP.removeAttr("disabled");
+		//LIMA
+		formato14A.f_impEsqInvL.removeAttr("disabled");
+		formato14A.f_impDeclJuradaL.removeAttr("disabled");
+		formato14A.f_impFichaVerifL.removeAttr("disabled");
+		formato14A.f_repEsqInvL.removeAttr("disabled");
+		formato14A.f_verifInfoL.removeAttr("disabled");
+		formato14A.f_elabArchBenefL.removeAttr("disabled");
+		formato14A.f_digitFichaL.removeAttr("disabled");
+		formato14A.f_impVolanteL.removeAttr("disabled");
+		formato14A.f_impAficheL.removeAttr("disabled");
+		formato14A.f_repFolletoL.removeAttr("disabled");
+		formato14A.f_spotPublicTvL.removeAttr("disabled");
+		formato14A.f_spotPublicRadioL.removeAttr("disabled");
+		formato14A.f_nroBenefL.removeAttr("disabled");
+		formato14A.f_promConvL.removeAttr("disabled");
+		formato14A.f_regFirmaConvL.removeAttr("disabled");
+		formato14A.f_impBandL.removeAttr("disabled");
+		formato14A.f_nroAgentL.removeAttr("disabled");
+	},
+	deshabilitarCamposView : function(){
+		//RURAL
+		formato14A.f_impEsqInvR.attr("disabled",true);
+		formato14A.f_impDeclJuradaR.attr("disabled",true);
+		formato14A.f_impFichaVerifR.attr("disabled",true);
+		formato14A.f_repEsqInvR.attr("disabled",true);
+		formato14A.f_verifInfoR.attr("disabled",true);
+		formato14A.f_elabArchBenefR.attr("disabled",true);
+		formato14A.f_digitFichaR.attr("disabled",true);
+		formato14A.f_impVolanteR.attr("disabled",true);
+		formato14A.f_impAficheR.attr("disabled",true);
+		formato14A.f_repFolletoR.attr("disabled",true);
+		formato14A.f_spotPublicTvR.attr("disabled",true);
+		formato14A.f_spotPublicRadioR.attr("disabled",true);
+		formato14A.f_nroBenefR.attr("disabled",true);
+		formato14A.f_promConvR.attr("disabled",true);
+		formato14A.f_regFirmaConvR.attr("disabled",true);
+		formato14A.f_impBandR.attr("disabled",true);
+		formato14A.f_nroAgentR.attr("disabled",true);
+		//PROVINCIA
+		formato14A.f_impEsqInvP.attr("disabled",true);
+		formato14A.f_impDeclJuradaP.attr("disabled",true);
+		formato14A.f_impFichaVerifP.attr("disabled",true);
+		formato14A.f_repEsqInvP.attr("disabled",true);
+		formato14A.f_verifInfoP.attr("disabled",true);
+		formato14A.f_elabArchBenefP.attr("disabled",true);
+		formato14A.f_digitFichaP.attr("disabled",true);
+		formato14A.f_impVolanteP.attr("disabled",true);
+		formato14A.f_impAficheP.attr("disabled",true);
+		formato14A.f_repFolletoP.attr("disabled",true);
+		formato14A.f_spotPublicTvP.attr("disabled",true);
+		formato14A.f_spotPublicRadioP.attr("disabled",true);
+		formato14A.f_nroBenefP.attr("disabled",true);
+		formato14A.f_promConvP.attr("disabled",true);
+		formato14A.f_regFirmaConvP.attr("disabled",true);
+		formato14A.f_impBandP.attr("disabled",true);
+		formato14A.f_nroAgentP.attr("disabled",true);
+		//LIMA
+		formato14A.f_impEsqInvL.attr("disabled",true);
+		formato14A.f_impDeclJuradaL.attr("disabled",true);
+		formato14A.f_impFichaVerifL.attr("disabled",true);
+		formato14A.f_repEsqInvL.attr("disabled",true);
+		formato14A.f_verifInfoL.attr("disabled",true);
+		formato14A.f_elabArchBenefL.attr("disabled",true);
+		formato14A.f_digitFichaL.attr("disabled",true);
+		formato14A.f_impVolanteL.attr("disabled",true);
+		formato14A.f_impAficheL.attr("disabled",true);
+		formato14A.f_repFolletoL.attr("disabled",true);
+		formato14A.f_spotPublicTvL.attr("disabled",true);
+		formato14A.f_spotPublicRadioL.attr("disabled",true);
+		formato14A.f_nroBenefL.attr("disabled",true);
+		formato14A.f_promConvL.attr("disabled",true);
+		formato14A.f_regFirmaConvL.attr("disabled",true);
+		formato14A.f_impBandL.attr("disabled",true);
+		formato14A.f_nroAgentL.attr("disabled",true);
 		//
-		totalRedAgentesRural();
-		totalRedAgentesProvincia();
-		totalRedAgentesLima();
+		formato14A.botonReportePdf.css('display','');
+		formato14A.botonReporteExcel.css('display','');
+		formato14A.botonGrabar.css('display','none');
+		formato14A.botonValidacion.css('display','none');
+		formato14A.botonEnvioDefinitivo.css('display','none');
 		//
-		totalImportes();
-		totalGeneral();
-		//completar nulos
-		$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',7,0)");
-		$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_p',7,0)");
-		$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_l',7,0)");
-		$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_r',7,0)");
-		$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',7,0)");
-		$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',7,0)");
-		completarBlanco('i_nroEmpad_r');
-		completarBlanco('i_nroEmpad_p');
-		completarBlanco('i_nroEmpad_l');
-		completarBlanco('i_nroAgentGlp_r');
-		completarBlanco('i_nroAgentGlp_p');
-		completarBlanco('i_nroAgentGlp_l');
-		//completar decimales
-		formularioCompletarDecimales();
-
+		formato14A.panelCargaArchivo.css('display','none');
 	},
 	//CALCULO RURAL
 	sumaEmpadDifusionRural : function(){
@@ -450,6 +596,7 @@ var formato14A= {
 		totalEmpadronamiento = parseFloat(impresionEsquela)+parseFloat(impresionDeclaJurada)+parseFloat(impresionFichas)+parseFloat(repartoEsquela)
 			+parseFloat(verifInformacion)+parseFloat(elabArchivo)+parseFloat(digitacionFichas);
 		totalEmpadronamiento = redondeo(totalEmpadronamiento, 2);
+		//alert(totalEmpadronamiento);
 		formato14A.f_totalEmpadR.val(parseFloat(totalEmpadronamiento));
 	},
 	totalDifusionRural : function(){
@@ -724,6 +871,470 @@ var formato14A= {
 		formato14A.costoUnitarioAgentesRural();
 		formato14A.costoUnitarioAgentesProvincia();
 		formato14A.costoUnitarioAgentesLima();
+		
+		formato14A.formularioCompletarDecimales();
+	},
+	soloNumerosEnteros : function(){
+		formato14A.f_nroBenefR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroBenefEmpadR',7,0)");
+		formato14A.f_nroAgentR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroAgentR',7,0)");
+		formato14A.f_nroBenefP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroBenefEmpadP',7,0)");
+		formato14A.f_nroAgentP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroAgentP',7,0)");
+		formato14A.f_nroBenefL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroBenefEmpadL',7,0)");
+		formato14A.f_nroAgentL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroAgentL',7,0)");
+	},
+	soloNumerosDecimales : function(){
+		//RURAL
+		formato14A.f_impEsqInvR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_impDeclJuradaR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_impFichaVerifR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_repEsqInvR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_verifInfoR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_elabArchBenefR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_digitFichaR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_impVolanteR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_impAficheR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_repFolletoR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_spotPublicTvR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_spotPublicRadioR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_promConvR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_regFirmaConvR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		formato14A.f_impBandR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadR',7,2)");
+		//PROVINCIA
+		formato14A.f_impEsqInvP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_impDeclJuradaP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_impFichaVerifP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_repEsqInvP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_verifInfoP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_elabArchBenefP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_digitFichaP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_impVolanteP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_impAficheP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_repFolletoP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_spotPublicTvP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_spotPublicRadioP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_promConvP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_regFirmaConvP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		formato14A.f_impBandP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadP',7,2)");
+		//LIMA
+		formato14A.f_impEsqInvL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_impDeclJuradaL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_impFichaVerifL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_repEsqInvL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_verifInfoL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_elabArchBenefL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_digitFichaL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_impVolanteL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_impAficheL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_repFolletoL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_spotPublicTvL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_spotPublicRadioL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_promConvL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_regFirmaConvL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+		formato14A.f_impBandL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'nroBenefEmpadL',7,2)");
+	},
+	formularioCompletarDecimales : function(){
+		//RURAL
+		completarDecimal('sumEmpadDifusionR',2);
+		completarDecimal('totalEmpadR',2);
+		completarDecimal('imprEsqInvitR',2);
+		completarDecimal('imprDeclaJuradaR',2);
+		completarDecimal('imprFichaVerifR',2);
+		completarDecimal('repartoEsqInvitR',2);
+		completarDecimal('verifInfoR',2);
+		completarDecimal('elabArchivoBenefR',2);
+		completarDecimal('digitFichaBenefR',2);
+		completarDecimal('totalDifIniProgR',2);
+		completarDecimal('imprVolantesR',2);
+		completarDecimal('imprAfichesR',2);
+		completarDecimal('repFolletosR',2);
+		completarDecimal('spotPublTvR',2);
+		completarDecimal('spotPublRadioR',2);
+		completarDecimal('costoUnitEmpadR',2);
+		//
+		completarDecimal('totalCostoAgentR',2);
+		completarDecimal('promConvAgentR',2);
+		completarDecimal('regConvAgentR',2);
+		completarDecimal('impEntrBandR',2);
+		completarDecimal('costoUnitAgentR',2);
+		//PROVINCIA
+		completarDecimal('sumEmpadDifusionP',2);
+		completarDecimal('totalEmpadP',2);
+		completarDecimal('imprEsqInvitP',2);
+		completarDecimal('imprDeclaJuradaP',2);
+		completarDecimal('imprFichaVerifP',2);
+		completarDecimal('repartoEsqInvitP',2);
+		completarDecimal('verifInfoP',2);
+		completarDecimal('elabArchivoBenefP',2);
+		completarDecimal('digitFichaBenefP',2);
+		completarDecimal('totalDifIniProgP',2);
+		completarDecimal('imprVolantesP',2);
+		completarDecimal('imprAfichesP',2);
+		completarDecimal('repFolletosP',2);
+		completarDecimal('spotPublTvP',2);
+		completarDecimal('spotPublRadioP',2);
+		completarDecimal('costoUnitEmpadP',2);
+		//
+		completarDecimal('totalCostoAgentP',2);
+		completarDecimal('promConvAgentP',2);
+		completarDecimal('regConvAgentP',2);
+		completarDecimal('impEntrBandP',2);
+		completarDecimal('costoUnitAgentP',2);
+		//LIMA
+		completarDecimal('sumEmpadDifusionL',2);
+		completarDecimal('totalEmpadL',2);
+		completarDecimal('imprEsqInvitL',2);
+		completarDecimal('imprDeclaJuradaL',2);
+		completarDecimal('imprFichaVerifL',2);
+		completarDecimal('repartoEsqInvitL',2);
+		completarDecimal('verifInfoL',2);
+		completarDecimal('elabArchivoBenefL',2);
+		completarDecimal('digitFichaBenefL',2);
+		completarDecimal('totalDifIniProgL',2);
+		completarDecimal('imprVolantesL',2);
+		completarDecimal('imprAfichesL',2);
+		completarDecimal('repFolletosL',2);
+		completarDecimal('spotPublTvL',2);
+		completarDecimal('spotPublRadioL',2);
+		completarDecimal('costoUnitEmpadL',2);
+		//
+		completarDecimal('totalCostoAgentL',2);
+		completarDecimal('promConvAgentL',2);
+		completarDecimal('regConvAgentL',2);
+		completarDecimal('impEntrBandL',2);
+		completarDecimal('costoUnitAgentL',2);
+	},
+	<portlet:namespace/>loadPeriodo : function(valPeriodo){
+		jQuery.ajax({
+				url: formato14A.urlCargaPeriodo+'&'+formato14A.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				success: function(data) {		
+					dwr.util.removeAllOptions("periodoEnvio");
+					dwr.util.addOptions("periodoEnvio", data,"codigoItem","descripcionItem");
+					if( valPeriodo.length!='' ){
+						dwr.util.setValue("periodoEnvio", valPeriodo);
+					}
+					formato14A.<portlet:namespace/>loadCargaFlagPeriodo();
+				},error : function(){
+					alert("Error de conexión.");
+					formato14A.initBlockUI();
+				}
+		});
+	},
+	<portlet:namespace/>loadCargaFlagPeriodo : function() {
+		jQuery.ajax({
+			url: formato14A.urlCargaFlagPeriodo+'&'+formato14A.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				success: function(data) {				
+					dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
+					formato14A.recargarPeriodoEjecucion();
+					formato14A.mostrarPeriodoEjecucion();
+				},error : function(){
+					alert("Error de conexión.");
+					formato14A.initBlockUI();
+				}
+		});
+	},
+	mostrarPeriodoEjecucion : function(){
+		if( formato14A.f_flagPeriodo.val()=='S' ){
+			formato14A.divPeriodoEjecucion.show();  
+		}else{
+			formato14A.divPeriodoEjecucion.hide();  
+		}
+	},
+	recargarPeriodoEjecucion : function(){
+		var anoInicio;
+		var anoFin;
+		if( formato14A.f_periodoEnvio.val() != null ){
+			anoInicio = formato14A.f_periodoEnvio.val().substring(0,4);
+			anoFin = formato14A.f_periodoEnvio.val().substring(0,4);
+			if( formato14A.f_flagPeriodo.val()=='S' ){
+				$('#anioInicioVigencia').val(anoInicio);
+				$('#anioFinVigencia').val(anoFin);
+			}
+		}
+	},
+	//FORMULARIOS DE VIEW Y EDICION
+	verFormato : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
+		$.blockUI({ message: formato14A.mensajeObteniendoDatos });
+		jQuery.ajax({
+				url: formato14A.urlCrud+'&'+formato14A.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data: {
+				   <portlet:namespace />tipo: "GET",
+				   <portlet:namespace />codEmpresa: codEmpresa,
+				   <portlet:namespace />anoPresentacion: anoPresentacion,
+				   <portlet:namespace />mesPresentacion: mesPresentacion,
+				   <portlet:namespace />anoIniVigencia: anoIniVigencia,
+				   <portlet:namespace />anoFinVigencia: anoFinVigencia,
+				   <portlet:namespace />etapa: etapa
+					},
+				success: function(data) {				
+					if (data.resultado == "OK"){
+						formato14A.procesoEstado.val("UPDATE");
+						formato14A.etapaEdit.val(etapa);
+						formato14A.divFormato.show();
+						formato14A.divHome.hide();
+						dwr.util.removeAllOptions("periodoEnvio");
+						dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
+						formato14A.FillEditformato(data.formato);
+						formato14A.deshabilitarCamposView();
+						formato14A.initBlockUI();
+					}
+					else{
+						alert("Error al recuperar los datos del registro seleccionado");
+						formato14A.initBlockUI();
+					}
+				},error : function(){
+					alert("Error de conexión.");
+					formato14A.initBlockUI();
+				}
+		});	
+	},
+	editarFormato : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
+		$.blockUI({ message: formato14A.mensajeObteniendoDatos });
+		jQuery.ajax({
+				url: formato14A.urlCrud+'&'+formato14A.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data: {
+				   <portlet:namespace />tipo: "GET",
+				   <portlet:namespace />codEmpresa: codEmpresa,
+				   <portlet:namespace />anoPresentacion: anoPresentacion,
+				   <portlet:namespace />mesPresentacion: mesPresentacion,
+				   <portlet:namespace />anoIniVigencia: anoIniVigencia,
+				   <portlet:namespace />anoFinVigencia: anoFinVigencia,
+				   <portlet:namespace />etapa: etapa
+					},
+				success: function(data) {				
+					if (data.resultado == "OK"){
+						formato14A.procesoEstado.val("UPDATE");
+						formato14A.etapaEdit.val(etapa);
+						formato14A.divFormato.show();
+						formato14A.divHome.hide();
+						dwr.util.removeAllOptions("periodoEnvio");
+						dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
+						formato14A.FillEditformato(data.formato);
+						formato14A.initBlockUI();
+					}
+					else{
+						alert("Error al recuperar los datos del registro seleccionado");
+						formato14A.initBlockUI();
+					}
+				},error : function(){
+					alert("Error de conexión.");
+					formato14A.initBlockUI();
+				}
+		});	
+	},
+	FillEditformato : function(row){
+		
+		formato14A.f_empresa.val(row.codEmpresa);
+		//seteamos el concatenado
+		formato14A.f_periodoEnvio.val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
+		formato14A.f_flagPeriodo.val(row.flagPeriodoEjecucion);
+		if( formato14A.f_flagPeriodo.val()=='S' ){
+			$('#anioInicioVigencia').val(row.anoIniVigencia);
+			$('#anioFinVigencia').val(row.anoFinVigencia);
+			$('#anioInicioVigencia').attr("disabled",true);
+			$('#anioFinVigencia').attr("disabled",true);
+		}
+		formato14A.etapaEdit.val(row.etapa);
+		//RURAL
+		//formato14A.f_sumEmpadDifR.val(row.);
+		//alert(row.totalEmpadR);
+		formato14A.f_totalEmpadR.val(row.totalEmpadR);
+		formato14A.f_impEsqInvR.val(row.impEsqInvR);
+		formato14A.f_impDeclJuradaR.val(row.impDeclJuradaR);
+		formato14A.f_impFichaVerifR.val(row.impFichaVerifR);
+		formato14A.f_repEsqInvR.val(row.repEsqInvR);
+		formato14A.f_verifInfoR.val(row.verifInfoR);
+		formato14A.f_elabArchBenefR.val(row.elabArchBenefR);
+		formato14A.f_digitFichaR.val(row.digitFichaBenefR);
+		formato14A.f_totalDifIniProgR.val(row.totalDifusionIniProgR);
+		formato14A.f_impVolanteR.val(row.impVolanteR);
+		formato14A.f_impAficheR.val(row.impAficheR);
+		formato14A.f_repFolletoR.val(row.repFolletoBenefR);
+		formato14A.f_spotPublicTvR.val(row.spotPublicTvR);
+		formato14A.f_spotPublicRadioR.val(row.spotPublicRadioR);
+		formato14A.f_nroBenefR.val(row.nroBenefEmpadR);
+		formato14A.f_costoUnitEmpadR.val(row.costoUnitEmpadR);
+		formato14A.f_totalAgentR.val(row.totalCostoAgentR);
+		formato14A.f_promConvR.val(row.promConvAgentR);
+		formato14A.f_regFirmaConvR.val(row.regFirmaConvR);
+		formato14A.f_impBandR.val(row.impEntregaBandR);
+		formato14A.f_nroAgentR.val(row.nroAgentR);
+		formato14A.f_costoUnitAgentR.val(row.costoUnitAgentR);
+		//PROVINCIA
+		formato14A.f_totalEmpadP.val(row.totalEmpadP);
+		formato14A.f_impEsqInvP.val(row.impEsqInvP);
+		formato14A.f_impDeclJuradaP.val(row.impDeclJuradaP);
+		formato14A.f_impFichaVerifP.val(row.impFichaVerifP);
+		formato14A.f_repEsqInvP.val(row.repEsqInvP);
+		formato14A.f_verifInfoP.val(row.verifInfoP);
+		formato14A.f_elabArchBenefP.val(row.elabArchBenefP);
+		formato14A.f_digitFichaP.val(row.digitFichaBenefP);
+		formato14A.f_totalDifIniProgP.val(row.totalDifusionIniProgP);
+		formato14A.f_impVolanteP.val(row.impVolanteP);
+		formato14A.f_impAficheP.val(row.impAficheP);
+		formato14A.f_repFolletoP.val(row.repFolletoBenefP);
+		formato14A.f_spotPublicTvP.val(row.spotPublicTvP);
+		formato14A.f_spotPublicRadioP.val(row.spotPublicRadioP);
+		formato14A.f_nroBenefP.val(row.nroBenefEmpadP);
+		formato14A.f_costoUnitEmpadP.val(row.costoUnitEmpadP);
+		formato14A.f_totalAgentP.val(row.totalCostoAgentP);
+		formato14A.f_promConvP.val(row.promConvAgentP);
+		formato14A.f_regFirmaConvP.val(row.regFirmaConvP);
+		formato14A.f_impBandP.val(row.impEntregaBandP);
+		formato14A.f_nroAgentP.val(row.nroAgentP);
+		formato14A.f_costoUnitAgentP.val(row.costoUnitAgentP);
+		//LIMA
+		formato14A.f_totalEmpadL.val(row.totalEmpadL);
+		formato14A.f_impEsqInvL.val(row.impEsqInvL);
+		formato14A.f_impDeclJuradaL.val(row.impDeclJuradaL);
+		formato14A.f_impFichaVerifL.val(row.impFichaVerifL);
+		formato14A.f_repEsqInvL.val(row.repEsqInvL);
+		formato14A.f_verifInfoL.val(row.verifInfoL);
+		formato14A.f_elabArchBenefL.val(row.elabArchBenefL);
+		formato14A.f_digitFichaL.val(row.digitFichaBenefL);
+		formato14A.f_totalDifIniProgL.val(row.totalDifusionIniProgL);
+		formato14A.f_impVolanteL.val(row.impVolanteL);
+		formato14A.f_impAficheL.val(row.impAficheL);
+		formato14A.f_repFolletoL.val(row.repFolletoBenefL);
+		formato14A.f_spotPublicTvL.val(row.spotPublicTvL);
+		formato14A.f_spotPublicRadioL.val(row.spotPublicRadioL);
+		formato14A.f_nroBenefL.val(row.nroBenefEmpadL);
+		formato14A.f_costoUnitEmpadL.val(row.costoUnitEmpadL);
+		formato14A.f_totalAgentL.val(row.totalCostoAgentL);
+		formato14A.f_promConvL.val(row.promConvAgentL);
+		formato14A.f_regFirmaConvL.val(row.regFirmaConvL);
+		formato14A.f_impBandL.val(row.impEntregaBandL);
+		formato14A.f_nroAgentL.val(row.nroAgentL);
+		formato14A.f_costoUnitAgentL.val(row.costoUnitAgentL);
+		
+		formato14A.f_empresa.attr("disabled",true);
+		formato14A.f_periodoEnvio.attr("disabled",true);
+		//
+		formato14A.calculoTotal();
+		
+		formato14A.soloNumerosEnteros();
+		formato14A.soloNumerosDecimales();
+		formato14A.formularioCompletarDecimales();
+		//---$('#flagCarga').val('1');
+		formato14A.mostrarPeriodoEjecucion();
+	},
+//////CRUD
+	<portlet:namespace/>guardarFormato : function(){
+		//---if (validarFormulario()){
+			$.blockUI({ message: formato14A.mensajeGuardando });
+			 jQuery.ajax({
+				 url: formato14A.urlCrud+'&'+formato14A.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data: {
+					<portlet:namespace />tipo: formato14A.procesoEstado.val(),
+					<portlet:namespace />codEmpresa: formato14A.f_empresa.val(),
+					<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
+					<portlet:namespace />flagPeriodo: formato14A.f_flagPeriodo.val(),
+					<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+					<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
+					<portlet:namespace />etapa: formato14A.etapaEdit.val()/*,
+					<portlet:namespace />nroEmpadR: $('#i_nroEmpad_r').val(),
+					<portlet:namespace />costoUnitEmpadR: $('#i_costoUnitEmpad_r').val(),
+					<portlet:namespace />nroAgentR: $('#i_nroAgentGlp_r').val(),
+					<portlet:namespace />costoUnitAgentR: $('#i_costoUnitAgent_r').val(),
+					<portlet:namespace />despPersonalR: $('#i_despPersonal_r').val(),
+					<portlet:namespace />activExtraordR: $('#i_activExtraord_r').val(),
+					//
+					<portlet:namespace />nroEmpadP: $('#i_nroEmpad_p').val(),
+					<portlet:namespace />costoUnitEmpadP: $('#i_costoUnitEmpad_p').val(),
+					<portlet:namespace />nroAgentP: $('#i_nroAgentGlp_p').val(),
+					<portlet:namespace />costoUnitAgentP: $('#i_costoUnitAgent_p').val(),
+					<portlet:namespace />despPersonalP: $('#i_despPersonal_p').val(),
+					<portlet:namespace />activExtraordP: $('#i_activExtraord_p').val(),
+					//
+					<portlet:namespace />nroEmpadL: $('#i_nroEmpad_l').val(),
+					<portlet:namespace />costoUnitEmpadL: $('#i_costoUnitEmpad_l').val(),
+					<portlet:namespace />nroAgentL: $('#i_nroAgentGlp_l').val(),
+					<portlet:namespace />costoUnitAgentL: $('#i_costoUnitAgent_l').val(),
+					<portlet:namespace />despPersonalL: $('#i_despPersonal_l').val(),
+					<portlet:namespace />activExtraordL: $('#i_activExtraord_l').val()*/
+					},
+				success: function(data) {			
+					if (data.resultado == "OK"){				
+						var addhtml2='Datos guardados satisfactoriamente';
+						formato14A.dialogMessageContent.html(addhtml2);
+						formato14A.dialogMessage.dialog("open");
+						//limpiar();		
+						//---mostrarFormularioModificado();
+						formato14A.initBlockUI();
+					}
+					else if(data.resultado == "Error"){				
+						var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
+						formato14A.dialogMessageContent.html(addhtml2);
+						formato14A.dialogMessage.dialog("open");
+						//<portlet:namespace/>filtrar();
+						//---mostrarUltimoFormato();
+						formato14A.initBlockUI();
+					}
+				},error : function(){
+					alert("Error de conexión.");
+					formato14A.initBlockUI();
+				}
+			});
+		   	//se deja el formulario activo
+			formato14A.divFormato.hide();
+			formato14A.divHome.show();
+		//---}
+		//
+		 
+		 
+	},
+	confirmarEliminar : function(cod_empresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
+		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+		formato14A.dialogConfirmContent.html(addhtml);
+		formato14A.dialogConfirm.dialog("open");
+		codEmpresa=cod_empresa;
+		ano_Presentacion=anoPresentacion;
+		mes_Presentacion=mesPresentacion;
+		ano_Ejecucion=anoEjecucion;
+		mes_Ejecucion=mesEjecucion;
+		codEtapa=etapa;
+	},
+	eliminarFormato : function(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion,codEtapa){			
+		$.blockUI({ message: formato14A.mensajeEliminando });
+		jQuery.ajax({
+			url: formato14A.urlCrud+'&'+formato14A.formCommand.serialize(),
+			type: 'post',
+			dataType: 'json',
+			data: {
+			   <portlet:namespace />tipo: "DELETE",
+			   <portlet:namespace />codEmpresa: codEmpresa,
+			   <portlet:namespace />anoPresentacion: ano_Presentacion,
+			   <portlet:namespace />mesPresentacion: mes_Presentacion,
+			   <portlet:namespace />anoEjecucion: ano_Ejecucion,
+			   <portlet:namespace />mesEjecucion: mes_Ejecucion,
+			   <portlet:namespace />etapa: codEtapa
+				},
+			success: function(data) {
+				if (data.resultado == "OK"){
+					var addhtml2='Registro eliminado con éxito';					
+					formato14A.dialogMessageContent.html(addhtml2);
+					formato14A.dialogMessage.dialog("open");
+					formato14A.<portlet:namespace/>buscar();
+					formato14A.initBlockUI();
+				}
+				else{
+					alert("Error al eliminar el registro");
+					formato14A.initBlockUI();
+				}
+			},error : function(){
+				alert("Error de conexión.");
+				formato14A.initBlockUI();
+			}
+		});
 	},
 	//
 	blockUI : function(){

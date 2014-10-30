@@ -24,6 +24,8 @@ $(document).ready(function () {
 
 <form:form method="POST" modelAttribute="formato14ACBean">
 
+	<input type="hidden" id="<portlet:namespace/>Estado" value="" />
+
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
@@ -173,7 +175,7 @@ $(document).ready(function () {
 				<!-- vamos a formar el div que contenga el formato de creacion -->
 	
 				<div id="<portlet:namespace/>div_formato" class="net-frame-border" style="display: none;">
-					<input type="hidden" id="etapaEdit" value="" />
+					<input type="hidden" id="<portlet:namespace/>etapaEdit" value="" />
 					<table border="0" width="100%">
 						<tr>
 							<td>
@@ -210,71 +212,45 @@ $(document).ready(function () {
 													<tr>
 														<td width="45%">
 															<fieldset class="net-frame-border">
-																<table>
+																<table style="width: 100%;" border="0">
 																	<tr>
 																		<td colspan="5"><output class="net-titulo">Periodo a declarar</output></td>
 																	</tr>
 																	<tr>
-																		<td colspan="5"><select id="s_periodoenvio_present" name="s_periodoenvio_present" class="select"
-																			style="width: 300px;">
+																		<td colspan="5">
+																			<form:select path="periodoEnvio" cssClass="select" cssStyle="width: 300px;">
 																				<c:forEach items="${listaPeriodoEnvio}" var="periodo">
 																					<option value="${periodo.codigoItem}">${periodo.descripcionItem}</option>
 																				</c:forEach>
-																		</select></td>
+																		</form:select></td>
 																	</tr>
 																</table>
 															</fieldset>
 														</td>
 														<td width="10%">
-															<input type="hidden" id="flagPeriodoEjecucion" value="" />
+															<form:input path="flagPeriodoEjecucion" cssStyle="display:none;" />
 														</td>
 														<td width="45%">
-															<div id="divPeriodoEjecucion" style="display: none;">
+															<div id="<portlet:namespace/>divPeriodoEjecucion" style="display: none;">
 																<fieldset class="net-frame-border">
 																	<table>
 																		<tr>
-																			<td colspan="5"><output class="net-titulo">Periodo a ejecución</output></td>
+																			<td colspan="5"><output class="net-titulo">Periodo de vigencia</output></td>
 																		</tr>
 																		<tr>
-																			<td width="40px">Año:</td>
-																			<td><input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width: 50px" maxlength="4">
+																			<td width="110px">Año Inicio Vigencia:</td>
+																			<td>
+																				<form:input path="anioInicioVigencia" style="width: 50px" maxlength="4" />
 																			</td>
 																			<td width="10px"></td>
-																			<td width="40px">Mes:</td>
-																			<td><select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width: 104px;">
-																					<option value="">-Seleccione-</option>
-																					<c:forEach items="${listaMes}" var="mes">
-																						<option value="${mes.key}">${mes.value}</option>
-																					</c:forEach>
-																			</select></td>
+																			<td width="110px">Año Fin Vigencia:</td>
+																			<td>
+																				<form:input path="anioFinVigencia" style="width: 50px" maxlength="4" />	
+																			</td>
 																		</tr>
 																	</table>
 																</fieldset>
 															</div> 
-															<c:if test="${flagMostrarPeriodoEjecucion=='S' }">
-																<fieldset class="net-frame-border">
-																	<table>
-																		<tr>
-																			<td colspan="5"><output class="net-titulo">Periodo a ejecución</output></td>
-																		</tr>
-																		<tr>
-																			<td width="40px">Año:</td>
-																			<td>
-																				<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width: 50px" maxlength="4">
-																			</td>
-																			<td width="10px"></td>
-																			<td width="40px">Mes:</td>
-																			<td>
-																				<select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width: 104px;">
-																					<option value="">-Seleccione-</option>
-																					<c:forEach items="${listaMes}" var="mes">
-																						<option value="${mes.key}">${mes.value}</option>
-																					</c:forEach>
-																			</select></td>
-																		</tr>
-																	</table>
-																</fieldset>
-															</c:if>
 	
 														</td>
 													</tr>
@@ -622,13 +598,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Número de Agentes</td>
 														<td align="center">
-															<form:input path="nroAgentR" cssClass="inputText-dashed" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroAgentP" cssClass="inputText-dashed" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroAgentL" cssClass="inputText-dashed" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -658,7 +634,7 @@ $(document).ready(function () {
 															<table style="width: 100%">
 																<tr>
 																	<td width="25%">
-																		<fieldset id="panelCargaArchivos"
+																		<fieldset id="<portlet:namespace/>panelCargaArchivos"
 																			class="net-frame-border">
 																			<legend>Subir de: </legend>
 																			<table style="width: 100%">
