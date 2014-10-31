@@ -176,9 +176,9 @@ public class Formato12AGartController {
 		
 		obj.setCodEmpresa(codEmpresa!=null?codEmpresa:"");
 		obj.setAnoPres(anioPresentacion!=null?anioPresentacion:"");
-		obj.setMesPres(anioPresentacion!=null?mesPresentacion:"");
-		obj.setAnoEjec(anioPresentacion!=null?anioEjecucion:"");
-		obj.setMesEjec(anioPresentacion!=null?mesEjecucion:"");
+		obj.setMesPres(mesPresentacion!=null?mesPresentacion:"");
+		obj.setAnoEjec(anioEjecucion!=null?anioEjecucion:"");
+		obj.setMesEjec(mesEjecucion!=null?mesEjecucion:"");
 		obj.setEtapa(etapa!=null?etapa:"");
 		//
 		obj.setMensajeError(msgError!=null?msgError:"");

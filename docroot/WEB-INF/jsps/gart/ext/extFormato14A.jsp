@@ -6,12 +6,18 @@
 <script type="text/javascript">
 var formato14A= {
 	tablaResultados:null,
+	tablaObservacion:null,
 	paginadoResultados:null,
+	paginadoObservacion:null,
 	//
 	urlBusqueda: null,
 	urlCargaPeriodo:null,
 	urlCargaFlagPeriodo:null,
 	urlCrud:null,
+	urlReporte:null,
+	urlValidacion:null,
+	urlReporteValidacion:null,
+	urlEnvioDefinitivo:null,
 	//
 	mensajeCargando:null,
 	mensajeObteniendoDatos:null,
@@ -20,6 +26,24 @@ var formato14A= {
 	//valores hidden
 	procesoEstado:null,
 	etapaEdit:null,
+	flagCarga:null,
+	//valores en sesion, verificar si estas variables se guardan en el bean para no usarlas
+	codEmpresaSes:null,
+	anioPresSes:null,
+	mesPresSes:null,
+	anioIniVigSes:null,
+	anioFinVigSes:null,
+	etapaSes:null,
+	//
+	anioDesdeSes:null,
+	mesDesdeSes:null,
+	anioHastaSes:null,
+	mesHastaSes:null,
+	codEtapaSes:null,
+	//
+	mensajeError:null,
+	mensajeInfo:null,
+	flag:null,
 	//
 	formCommand: null,
 	botonBuscar:null,
@@ -30,6 +54,11 @@ var formato14A= {
 	botonGrabar:null,
 	botonValidacion:null,
 	botonEnvioDefinitivo:null,
+	//cargarchivos
+	botonCargaExcel:null,
+	botonCargaTxt:null,
+	botonCargarFormatoExcel:null,
+	botonCargarFormatoTexto:null,
 	//
 	panelCargaArchivo:null,
 	//
@@ -48,10 +77,14 @@ var formato14A= {
 	dialogObservacion:null,
 	dialogMessageContent:null,
 	dialogConfirmContent:null,
+	dialogConfirmEnvioContent:null,
+	dialogCargaExcel:null,
+	dialogCargaTexto:null,
 	//divs
 	divHome:null,
 	divFormato:null,
 	divPeriodoEjecucion:null,
+	divOverlay:null,
 	//formulario
 	f_empresa:null,
 	f_periodoEnvio:null,
@@ -71,12 +104,18 @@ var formato14A= {
 	//
 	init : function(){
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
+		this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
 		this.paginadoResultados='#<portlet:namespace/>pager_formato';
+		this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
 		//
 		this.urlBusqueda='<portlet:resourceURL id="busqueda" />';
 		this.urlCargaPeriodo='<portlet:resourceURL id="cargaPeriodo" />';
 		this.urlCargaFlagPeriodo='<portlet:resourceURL id="cargaFlagPeriodo" />';
 		this.urlCrud='<portlet:resourceURL id="crud" />';
+		this.urlReporte='<portlet:resourceURL id="reporte" />';
+		this.urlValidacion='<portlet:resourceURL id="validacion" />';
+		this.urlReporteValidacion='<portlet:resourceURL id="reporteValidacion" />';
+		this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivo" />';
 		//mensajes
 		this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
 		this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
@@ -85,6 +124,21 @@ var formato14A= {
 		//valores hidden utilitarios
 		this.procesoEstado=$('#<portlet:namespace/>Estado');
 		this.etapaEdit=$('#<portlet:namespace/>etapaEdit');
+		this.flagCarga=$('#<portlet:namespace/>flagCarga');
+		this.codEmpresaSes=$('#<portlet:namespace/>codEmpresaSes');
+		this.anioPresSes=$('#<portlet:namespace/>anioPresSes');
+		this.mesPresSes=$('#<portlet:namespace/>mesPresSes');
+		this.anioIniVigSes=$('#<portlet:namespace/>anioIniVigSes');
+		this.anioFinVigSes=$('#<portlet:namespace/>anioFinVigSes');
+		this.etapaSes=$('#<portlet:namespace/>etapaSes');
+		this.anioDesdeSes=$('#<portlet:namespace/>anioDesdeSes');
+		this.mesDesdeSes=$('#<portlet:namespace/>mesDesdeSes');
+		this.anioHastaSes=$('#<portlet:namespace/>anioHastaSes');
+		this.mesHastaSes=$('#<portlet:namespace/>mesHastaSes');
+		this.codEtapaSes=$('#<portlet:namespace/>codEtapaSes');
+		this.mensajeError=$('#<portlet:namespace/>mensajeError');
+		this.mensajeInfo=$('#<portlet:namespace/>mensajeInfo');
+		this.flag=$('#<portlet:namespace/>flag');//solo para controlar los errores al subir archivos excel o de texto
 		//
 		this.formCommand=$('#formato14ACBean');
 		//
@@ -95,18 +149,22 @@ var formato14A= {
 		this.i_mesHasta=$('#mesHasta');
 		this.i_etapaB=$('#etapaB');
 		//carga de dialogs id
-		this.dialogMessage=$("#dialog-message");
-		this.dialogConfirm=$("#dialog-confirm");
-		this.dialogConfirmEnvio=$("#dialog-confirm-envio");
-		this.dialogCarga=$("#dialog-form-carga");
-		this.dialogError=$("#dialog-form-error");
-		this.dialogObservacion=$("#dialog-form-observacion");
-		this.dialogMessageContent=$("#dialog-message-content");
-		this.dialogConfirmContent=$('#dialog-confirm-content');
+		this.dialogMessage=$("#<portlet:namespace/>dialog-message");
+		this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");
+		this.dialogConfirmEnvio=$("#<portlet:namespace/>dialog-confirm-envio");
+		this.dialogCarga=$("#<portlet:namespace/>dialog-form-carga");
+		this.dialogError=$("#<portlet:namespace/>dialog-form-error");
+		this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");
+		this.dialogMessageContent=$("#<portlet:namespace/>dialog-message-content");
+		this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");
+		this.dialogConfirmEnvioContent=$("#<portlet:namespace/>dialog-confirm-envio-content");
+		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
+		this.dialogCargaTexto=$("#<portlet:namespace/>dialog-form-cargaTexto");
 		//divs
 		this.divHome=$("#<portlet:namespace/>div_home");
 		this.divFormato=$("#<portlet:namespace/>div_formato");
 		this.divPeriodoEjecucion=$("#<portlet:namespace/>divPeriodoEjecucion");
+		this.divOverlay=$("#<portlet:namespace/>divOverlay");
 		//formulario
 		this.f_empresa=$('#codigoEmpresa');
 		this.f_periodoEnvio=$('#periodoEnvio');
@@ -185,6 +243,7 @@ var formato14A= {
 		this.f_costoUnitAgentL=$('#costoUnitAgentL');
 		//
 		this.buildGrids();
+		this.buildGridsObservacion();
 		this.botonNuevo=$("#<portlet:namespace/>crearFormato");
 		this.botonBuscar=$("#<portlet:namespace/>buscarFormato");	
 		this.botonRegresar=$("#<portlet:namespace/>regresarFormato");
@@ -193,6 +252,11 @@ var formato14A= {
 		this.botonGrabar=$("#<portlet:namespace/>guardarFormato");
 		this.botonValidacion=$("#<portlet:namespace/>validacionFormato");
 		this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivo");
+		//cargaarchivos
+		this.botonCargaExcel=$("#<portlet:namespace/>cargaExcel");
+		this.botonCargaTxt=$("#<portlet:namespace/>cargaTxt");
+		this.botonCargarFormatoExcel=$("#<portlet:namespace/>cargarFormatoExcel");
+		this.botonCargarFormatoTexto=$("#<portlet:namespace/>cargarFormatoTexto");
 		//
 		this.panelCargaArchivo=$("#<portlet:namespace/>panelCargaArchivos");
 		//eventos
@@ -202,6 +266,14 @@ var formato14A= {
 		formato14A.botonRegresar.click(function() {formato14A.<portlet:namespace/>regresar();});
 		formato14A.f_empresa.change(function(){formato14A.<portlet:namespace/>loadPeriodo('');});
 		formato14A.f_periodoEnvio.change(function(){formato14A.<portlet:namespace/>loadPeriodo(this.value);});
+		//cargaarchivos
+		formato14A.botonCargaExcel.click(function() {formato14A.<portlet:namespace/>mostrarFormularioCargaExcel();});
+		formato14A.botonCargaTxt.click(function() {formato14A.<portlet:namespace/>mostrarFormularioCargaTexto();});
+		formato14A.botonCargarFormatoExcel.click(function() {formato14A.<portlet:namespace/>cargarFormatoExcel();});
+		formato14A.botonCargarFormatoTexto.click(function() {formato14A.<portlet:namespace/>cargarFormatoTexto();});
+		
+		formato14A.initDialogs();
+		formato14A.cargaInicial();
 		//eventos por defecto
 		formato14A.botonBuscar.trigger('click');
 		formato14A.initBlockUI();
@@ -209,6 +281,63 @@ var formato14A= {
 		$('input.target[type=text]').on('change', function(){
 			formato14A.calculoTotal();
 		});
+	},
+	cargaInicial : function(){
+		//SE CARGA VARIABLES EN SESION PARA MOSTRAR LOS PANELES DE NUEVO O EDICION MANEJADOS
+		 var codEmpSes = formato14A.codEmpresaSes.val();
+		 var anioPresSes = formato14A.anioPresSes.val();
+		 var mesPresSes = formato14A.mesPresSes.val();
+		 var anioIniVigSes = formato14A.anioIniVigSes.val();
+		 var anioFinVigSes = formato14A.anioFinVigSes.val();
+		 var etapaSes = formato14A.etapaSes.val();
+		 //
+		 var flag = formato14A.flag.val();
+		 if( flag=='N' ){//solo ocurre cuando hay un error en la carga de formularios, sino se muestra el proceso normal
+			 formato14A.inicializarFormulario();
+			 formato14A.mostrarUltimoFormato();
+			 formato14A.f_empresa.val(codEmpSes);
+			 if( formato14A.f_periodoEnvio.val()=='S' ){
+				 $("#anioInicioVigencia").val(anioIniVigSes);
+				 $("#anioFinVigencia").val(anioFinVigSes);
+			}else{
+				$("#anioInicioVigencia").val(anioPresSes);
+				 $("#anioFinVigencia").val(anioPresSes);
+			}
+			formato14A.botonValidacion.css('display','none');
+			formato14A.<portlet:namespace/>loadPeriodo(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
+		}else{
+			//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
+			 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioIniVigSes != '' && anioFinVigSes != '' && etapaSes != ''){
+			 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes);
+			 }
+		 }
+		 //SE CARGA VALORES POR DEFECTO PARA LA BUSQUEDA
+		 /*formato14A.i_anioDesde.val(formato14A.anioDesdeSes.val());
+		 formato14A.i_mesDesde.val(formato14A.mesDesdeSes.val());
+		 formato14A.i_anioHasta.val(formato14A.anioHastaSes.val());
+		 formato14A.i_mesHasta.val(formato14A.mesHastaSes.val());
+		 formato14A.i_etapaB.val(formato14A.codEtapaSes.val());*/
+		 
+		 var mensajeInfo = formato14A.mensajeInfo.val();
+		 var mensajeError = formato14A.mensajeError.val();
+		 //SE MUESTRAN LOS MENSAJES DE ERROR PARA LA CARGA DE LOS ARCHIVOS
+		 if(mensajeError!=''){
+			 //se muestra el panel de errores si se produce en la carga de archivos
+			formato14A.dialogError.dialog("open");
+		}else{
+			//Se muestra el mensaje de informacion exitosa
+			 if(mensajeInfo!=''){
+				formato14A.dialogMessageContent.html(mensajeInfo);
+				formato14A.dialogMessage.dialog("open");			
+			 }
+		 }
+		 //limpiar variables
+		 formato14A.codEmpresaSes.val('');
+		 formato14A.anioPresSes.val('');
+		 formato14A.mesPresSes.val('');
+		 formato14A.anioIniVigSes.val('');
+		 formato14A.anioFinVigSes.val('');
+		 formato14A.etapaSes.val('');
 	},
 	buildGrids : function () {	
 		formato14A.tablaResultados.jqGrid({
@@ -318,15 +447,13 @@ var formato14A= {
 		formato14A.etapaEdit.val("");
 		formato14A.divFormato.show();
 		formato14A.divHome.hide();
-		//$('#flagCarga').val('0');
+		formato14A.flagCarga.val('0');
 		//
 		if( formato14A.f_flagPeriodo.val()=='S' ){
 			//poner valores guardadose en sesion
+			$("#anioInicioVigencia").val(formato14A.i_anioDesde.val());
+			$("#anioFinVigencia").val(formato14A.i_anioDesde.val());
 		}
-		//if( $('#flagPeriodoEjecucion').val()=='S' ){
-		//	 $("#i_anioejecuc").val($("#anioDesdeSes").val());
-		//	 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
-		//}
 		formato14A.botonValidacion.css('display','none');
 		formato14A.<portlet:namespace/>loadPeriodo('');
 	},
@@ -1222,12 +1349,14 @@ var formato14A= {
 		formato14A.soloNumerosEnteros();
 		formato14A.soloNumerosDecimales();
 		formato14A.formularioCompletarDecimales();
-		//---$('#flagCarga').val('1');
+		
+		formato14A.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
+		
 		formato14A.mostrarPeriodoEjecucion();
 	},
 //////CRUD
 	<portlet:namespace/>guardarFormato : function(){
-		//---if (validarFormulario()){
+		if (formato14A.validarFormulario()){
 			$.blockUI({ message: formato14A.mensajeGuardando });
 			 jQuery.ajax({
 				 url: formato14A.urlCrud+'&'+formato14A.formCommand.serialize(),
@@ -1267,7 +1396,6 @@ var formato14A= {
 						var addhtml2='Datos guardados satisfactoriamente';
 						formato14A.dialogMessageContent.html(addhtml2);
 						formato14A.dialogMessage.dialog("open");
-						//limpiar();		
 						//---mostrarFormularioModificado();
 						formato14A.initBlockUI();
 					}
@@ -1275,7 +1403,6 @@ var formato14A= {
 						var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
 						formato14A.dialogMessageContent.html(addhtml2);
 						formato14A.dialogMessage.dialog("open");
-						//<portlet:namespace/>filtrar();
 						//---mostrarUltimoFormato();
 						formato14A.initBlockUI();
 					}
@@ -1287,23 +1414,20 @@ var formato14A= {
 		   	//se deja el formulario activo
 			formato14A.divFormato.hide();
 			formato14A.divHome.show();
-		//---}
-		//
-		 
-		 
+		}
 	},
-	confirmarEliminar : function(cod_empresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
+	confirmarEliminar : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
 		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 		formato14A.dialogConfirmContent.html(addhtml);
 		formato14A.dialogConfirm.dialog("open");
-		codEmpresa=cod_empresa;
+		cod_Empresa=codEmpresa;
 		ano_Presentacion=anoPresentacion;
 		mes_Presentacion=mesPresentacion;
-		ano_Ejecucion=anoEjecucion;
-		mes_Ejecucion=mesEjecucion;
-		codEtapa=etapa;
+		ano_Inicio_Vigencia=anoIniVigencia;
+		ano_Fin_Vigencia=anoFinVigencia;
+		cod_Etapa=etapa;
 	},
-	eliminarFormato : function(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion,codEtapa){			
+	eliminarFormato : function(cod_Empresa,ano_Presentacion,mes_Presentacion,ano_Inicio_Vigencia,ano_Fin_Vigencia,cod_Etapa){			
 		$.blockUI({ message: formato14A.mensajeEliminando });
 		jQuery.ajax({
 			url: formato14A.urlCrud+'&'+formato14A.formCommand.serialize(),
@@ -1311,19 +1435,19 @@ var formato14A= {
 			dataType: 'json',
 			data: {
 			   <portlet:namespace />tipo: "DELETE",
-			   <portlet:namespace />codEmpresa: codEmpresa,
+			   <portlet:namespace />codEmpresa: cod_Empresa,
 			   <portlet:namespace />anoPresentacion: ano_Presentacion,
 			   <portlet:namespace />mesPresentacion: mes_Presentacion,
-			   <portlet:namespace />anoEjecucion: ano_Ejecucion,
-			   <portlet:namespace />mesEjecucion: mes_Ejecucion,
-			   <portlet:namespace />etapa: codEtapa
+			   <portlet:namespace />anoInicioVigencia: ano_Inicio_Vigencia,
+			   <portlet:namespace />anoFinVigencia: ano_Fin_Vigencia,
+			   <portlet:namespace />etapa: cod_Etapa
 				},
 			success: function(data) {
 				if (data.resultado == "OK"){
 					var addhtml2='Registro eliminado con éxito';					
 					formato14A.dialogMessageContent.html(addhtml2);
 					formato14A.dialogMessage.dialog("open");
-					formato14A.<portlet:namespace/>buscar();
+					formato14A.buscar();
 					formato14A.initBlockUI();
 				}
 				else{
@@ -1334,6 +1458,336 @@ var formato14A= {
 				alert("Error de conexión.");
 				formato14A.initBlockUI();
 			}
+		});
+	},
+	mostrarFormularioModificado : function(){
+		var codEmpM = formato14A.f_empresa.val();
+		var anioPresM = formato14A.f_periodoEnvio.val().substring(0,4);
+		//----var mesPresM = formato14A.f_periodoEnvio.substring(4,6);
+		var anioIniVigM;
+		var anioFinVigM;
+		 if( formato14A.f_flagPeriodo.val()=='S' ){
+			 anioIniVigM = $("#anioInicioVigencia").val();
+			 anioFinVigM = $("#anioFinVigencia").val();
+		 }else{
+			 anioIniVigM = anioPresM;
+			 anioFinVigM = anioPresM;
+		 }
+		 //var etapaM = "SOLICITUD";
+		 var etapaM = formato14A.f_periodoEnvio.val().substring(6,formato14A.f_periodoEnvio.val().length);
+		 if( formato14A.flagCarga.val()=='0' ){
+			 formato14A.mostrarUltimoFormato();
+		 }else{
+			//alert(codEmpM+','+anioPresM+','+mesPresM+','+anioIniVigM+','+anioFinVigM+','+etapaM);
+			 if(codEmpM != '' && anioPresM != '' && mesPresM != '' && anioIniVigM != '' && anioFinVigM != '' && etapaM != ''){
+			 	 formato14A.editarFormato(codEmpM, anioPresM, mesPresM, anioIniVigM, anioFinVigM, etapaM);
+			 }
+		 }
+		 formato14A.botonValidacion.css('display','');
+	},
+	mostrarUltimoFormato : function(){	
+		formato14A.procesoEstado.val('SAVE');
+		formato14A.etapaEdit.val("");
+		formato14A.divFormato.show();
+		formato14A.divHome.hide();
+		formato14A.flagCarga.val('0');
+	},
+	validarFormulario : function() {		
+		if(formato14A.f_empresa.val().length == '' ) { 	
+			alert('Seleccione una empresa'); 
+			formato14A.f_empresa.focus();
+		  	return false; 
+		}
+		if(formato14A.f_periodoEnvio.val().length == '' ) {		  
+			alert('Debe ingresar el periodo de presentacion');
+			formato14A.f_periodoEnvio.focus();
+			return false; 
+		}
+		if( formato14A.f_flagPeriodo.val()=='S' ){
+			if($('#anioInicioVigencia').val().length == '' ) {		  
+				alert('Debe ingresar el año de inicio de vigencia');
+				$('#anioInicioVigencia').focus();
+				return false; 
+			}else{
+				var numstr = trim($('#anioInicioVigencia').val());
+				if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+					alert('Ingrese un año de inicio de inicio de vigencia válido');
+					return false;
+			 	}
+		 	}
+			if($('#anioFinVigencia').val().length == '' ) {		  
+				alert('Debe ingresar el año de fin de vigencia');
+				$('#anioFinVigencia').focus();
+				return false; 
+			}else{
+				var numstr = trim($('#anioFinVigencia').val());
+				if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+					alert('Ingrese un año de fin de vigencia válido');
+					return false;
+				}
+		 	}
+		}
+		//valores de formulario
+		if(formato14A.f_nroBenefR.val().length == '' ) {		  
+			alert('Debe ingresar el número de empadronados para Rural');
+			formato14A.f_nroBenefR.focus();
+			return false; 
+		}
+		if(formato14A.f_nroAgentR.val().length == '' ) {		  
+			alert('Debe ingresar el numero de agentes para Rural');
+			formato14A.f_nroAgentR.focus();
+			return false; 
+		}
+		////////////////////
+		if(formato14A.f_nroBenefP.val().length == '' ) {		  
+			alert('Debe ingresar el número de empadronados para Provincia');
+			formato14A.f_nroBenefP.focus();
+			return false; 
+		}
+		if(formato14A.f_nroAgentP.val().length == '' ) {		  
+			alert('Debe ingresar el numero de agentes para Provincia');
+			formato14A.f_nroAgentP.focus();
+			return false; 
+		}
+		///////////////////
+		if(formato14A.f_nroBenefL.val().length == '' ) {		  
+			alert('Debe ingresar el número de empadronados para Lima');
+			formato14A.f_nroBenefL.focus();
+			return false; 
+		}
+		if(formato14A.f_nroAgentL.val().length == '' ) {		  
+			alert('Debe ingresar el numero de agentes para Lima');
+			formato14A.f_nroAgentL.focus();
+			return false; 
+		}
+		return true; 
+	},
+	validarArchivoCarga : function() {		
+		if(formato14A.f_empresa.val().length == '' ) { 	
+			alert('Seleccione una empresa para proceder con la carga de archivo'); 
+			formato14A.f_empresa.focus();
+			return false; 
+		}
+		if(formato14A.f_periodoEnvio.val().length == '' ) {		  
+			alert('Debe ingresar el periodo de presentación');
+			formato14A.f_periodoEnvio.focus();
+			return false; 
+		}
+		return true; 
+	},
+	////
+	<portlet:namespace/>cargarFormatoExcel : function(){
+		var frm = document.getElementById('form-formatofise14a');
+		frm.submit();
+	},
+	<portlet:namespace/>cargarFormatoTexto : function(){
+		var frm = document.getElementById('form-formatofise14a');
+		frm.submit();
+	},
+	<portlet:namespace/>mostrarFormularioCargaExcel : function(){
+		if (formato14A.validarArchivoCarga()){
+			if( formato14A.flagCarga.val()=='0' ){//proviene de archivos nuevos
+				formato14A.flagCarga.val('2');//para cargar archivos excel
+			}else if( formato14A.flagCarga.val()=='1' ){//proviene de archivos modificados
+				formato14A.flagCarga.val('3');//para cargar archivos excel
+			}
+			formato14A.divOverlay.show();
+		    formato14A.dialogCargaExcel.show();
+		    formato14A.dialogCargaExcel.show();
+		    formato14A.dialogCargaExcel.css({ 
+		        'left': ($(window).width() / 2 - formato14A.dialogCargaExcel.width() / 2) + 'px', 
+		        'top': ($(window).height()  - formato14A.dialogCargaExcel.height() ) + 'px'
+		    });
+		}
+	},
+	regresarFormularioCargaExcel : function(){
+		formato14A.flagCarga.val('');
+		formato14A.dialogCargaExcel.hide();
+		formato14A.divOverlay.hide();   
+	},
+	<portlet:namespace/>mostrarFormularioCargaTexto : function(){
+		if (formato14A.validarArchivoCarga()){
+			if( formato14A.flagCarga.val()=='0' ){//proviene de un archivo nuevo
+				formato14A.flagCarga.val('4');//para cargar archivos texto
+			}else if( formato14A.flagCarga.val()=='1' ){//proviene de un archivo modificado
+				formato14A.flagCarga.val('5');//para archivos texto
+			}
+			formato14A.divOverlay.show();
+			formato14A.dialogCargaTexto.show();
+			formato14A.dialogCargaTexto.css({ 
+		        'left': ($(window).width() / 2 - formato14A.dialogCargaTexto.width() / 2) + 'px', 
+		        'top': ($(window).height() - formato14A.dialogCargaTexto.height() ) + 'px'
+		    });
+		}
+	},
+	regresarFormularioCargaTexto : function(){
+		formato14A.flagCarga.val('');
+		formato14A.dialogCargaTexto.hide();
+		formato14A.divOverlay.hide();   
+	},
+	<portlet:namespace/>mostrarReportePdf : function(){
+		jQuery.ajax({
+			url : formato14A.urlReporte+'&'+formato14A.formCommand.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
+				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+				<portlet:namespace />etapa: $('#etapaEdit').val(),
+				<portlet:namespace />nombreReporte: 'formato12A',
+				<portlet:namespace />nombreArchivo: 'formato12A',
+				<portlet:namespace />tipoArchivo: '0'//PDF
+			},
+			success : function(gridData) {
+				formato14A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato14A.initBlockUI();
+			}
+		});
+	},
+	<portlet:namespace/>mostrarReporteExcel : function(){
+		jQuery.ajax({
+			url : formato14A.urlReporte+'&'+formato14A.formCommand.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
+				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+				<portlet:namespace />etapa: $('#etapaEdit').val(),
+				<portlet:namespace />nombreReporte: 'formato12A',
+				<portlet:namespace />nombreArchivo: 'formato12A',
+				<portlet:namespace />tipoArchivo: '1'//XLS
+			},
+			success : function(gridData) {
+				//alert('entro');
+				formato14A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato14A.initBlockUI();
+			}
+		});
+	},
+	verReporte : function(){
+		window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
+	},
+	<portlet:namespace/>validacionFormato : function(){
+		jQuery.ajax({
+			url: formato14A.urlValidacion+'&'+formato14A.formCommand.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
+				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
+			},
+			success : function(data) {
+				if( data!=null ){
+					formato14A.dialogObservacion.dialog("open");
+					formato14.tablaObservacion.clearGridData(true);
+					formato14.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+					formato14.tablaObservacion[0].refreshIndex();
+					formato14A.initBlockUI();
+				}
+
+			},error : function(){
+				alert("Error de conexión.");
+				formato14A.initBlockUI();
+			}
+		});
+	},
+	<portlet:namespace/>mostrarReporteValidacion : function(){
+		jQuery.ajax({
+			url: formato14A.urlReporteValidacion+'&'+formato14A.formCommand.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />nombreReporte: 'validacion14A',
+				<portlet:namespace />nombreArchivo: 'validacion14A',
+				<portlet:namespace />tipoArchivo: '0'//PDF
+			},
+			success : function(gridData) {
+				formato14A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato14A.initBlockUI();
+			}
+		});
+	},
+	confirmarEnvioDefinitivo : function(){	
+		var addhtml='¿Está seguro que desea realizar el envío definitivo?';
+		formato14A.dialogConfirmEnvioContent.html(addhtml);
+		formato14A.dialogConfirmEnvio.dialog("open");
+	},
+	<portlet:namespace/>envioDefinitivo : function(){
+		jQuery.ajax({
+			url: formato14A.urlEnvioDefinitivo+'&'+formato14A.formCommand.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
+				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+				<portlet:namespace />nombreReporte: 'formato14A',
+				<portlet:namespace />nombreArchivo: 'formato14A',
+				<portlet:namespace />tipoArchivo: '0'//PDF
+			},
+			success : function(gridData) {
+				var addhtml='Se realizó el envío satisfactoriamente';					
+				formato14A.dialogMessageContent.html(addhtml);
+				formato14A.dialogMessage.dialog("open");
+				formato14A.initBlockUI();
+			},error : function(){
+				alert("Error de conexión.");
+				formato14A.initBlockUI();
+			}
+		});
+	},
+	buildGridsObservacion : function () {	
+		formato14A.tablaObservacion.jqGrid({
+		   datatype: "local",
+	       colNames: ['Grupo Zona','Código','Descripción'],
+	       colModel: [
+						{ name: 'descZonaBenef', index: 'descZonaBenef', width: 150 ,align: 'left'},
+						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
+		                { name: 'descripcion', index: 'descripcion', width: 420 ,align: 'left'}               
+			   	    ],
+		   	 multiselect: false,
+				rowNum:10,
+			   	rowList:[10,20,50],
+				height: 'auto',
+			   	autowidth: true,
+				rownumbers: true,
+				//shrinkToFit:true,
+				pager: formato14A.paginadoObservacion,
+			    viewrecords: true,
+			   	//caption: "Formatos",
+			    sortorder: "asc"
+	  	});
+		formato14A.tablaObservacion.jqGrid('navGrid',formato14A.paginadoObservacion,{add:false,edit:false,del:false,search: false,refresh: false});	
+		formato14A.tablaObservacion.jqGrid('navButtonAdd',formato14A.paginadoObservacion,{
+		       caption:"Exportar a Excel",
+		       buttonicon: "ui-icon-bookmark",
+		       onClickButton : function () {
+		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		       } 
+		}); 
+		formato14A.tablaObservacion.jqGrid('navButtonAdd',formato14A.paginadoObservacion,{
+		       caption:"Exportar a Pdf",
+		       buttonicon: "ui-icon-bookmark",
+		       onClickButton : function () {
+		    	   formato14A.<portlet:namespace/>mostrarReporteValidacion();
+		       } 
 		});
 	},
 	//
@@ -1363,7 +1817,7 @@ var formato14A= {
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
-					//eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion,codEtapa);
+					formato14A.eliminarFormato(cod_Empresa,ano_Presentacion,mes_Presentacion,ano_Inicio_Vigencia,ano_Fin_Vigencia,cod_Etapa);
 					$( this ).dialog("close");
 				},
 				"No": function() {				
