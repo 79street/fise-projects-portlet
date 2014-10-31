@@ -568,22 +568,22 @@ function validarFormulario() {
 		    document.getElementById('i_nroEmpad_r').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitEmpad_r').val().length == '' ) {		  
+	  /*if($('#i_costoUnitEmpad_r').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de empadronados para Rural');
 		    document.getElementById('i_costoUnitEmpad_r').focus();
 		    return false; 
-	  }
+	  }*/
 	  if($('#i_nroAgentGlp_r').val().length == '' ) {		  
 		    alert('Debe ingresar el numero de agentes para Rural');
 		    document.getElementById('i_nroAgentGlp_r').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitAgent_r').val().length == '' ) {		  
+	  /*if($('#i_costoUnitAgent_r').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de agentes para Rural');
 		    document.getElementById('i_costoUnitAgent_r').focus();
 		    return false; 
-	  }
-	  if($('#i_despPersonal_r').val().length == '' ) {		  
+	  }*/
+	  /*if($('#i_despPersonal_r').val().length == '' ) {		  
 		    alert('Debe ingresar el monto de descripcion de personal para Rural');
 		    document.getElementById('i_despPersonal_r').focus();
 		    return false; 
@@ -592,24 +592,24 @@ function validarFormulario() {
 		    alert('Debe ingresar el monto de actividades extraordinarias para Rural');
 		    document.getElementById('i_activExtraord_r').focus();
 		    return false; 
-	  }
+	  }*/
 	  ////////////////////
 	  if($('#i_nroEmpad_p').val().length == '' ) {		  
 		    alert('Debe ingresar el número de empadronados para Provincia');
 		    document.getElementById('i_nroEmpad_p').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitEmpad_p').val().length == '' ) {		  
+	  /*if($('#i_costoUnitEmpad_p').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de empadronados para Provincia');
 		    document.getElementById('i_costoUnitEmpad_p').focus();
 		    return false; 
-	  }
+	  }*/
 	  if($('#i_nroAgentGlp_p').val().length == '' ) {		  
 		    alert('Debe ingresar el numero de agentes para Provincia');
 		    document.getElementById('i_nroAgentGlp_p').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitAgent_p').val().length == '' ) {		  
+	  /*if($('#i_costoUnitAgent_p').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de agentes para Provincia');
 		    document.getElementById('i_costoUnitAgent_p').focus();
 		    return false; 
@@ -623,24 +623,24 @@ function validarFormulario() {
 		    alert('Debe ingresar el monto de actividades extraordinarias para Provincia');
 		    document.getElementById('i_activExtraord_p').focus();
 		    return false; 
-	  }
+	  }*/
 	  ///////////
 	  if($('#i_nroEmpad_l').val().length == '' ) {		  
 		    alert('Debe ingresar el número de empadronados para Lima');
 		    document.getElementById('i_nroEmpad_l').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitEmpad_l').val().length == '' ) {		  
+	  /*if($('#i_costoUnitEmpad_l').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de empadronados para Lima');
 		    document.getElementById('i_costoUnitEmpad_l').focus();
 		    return false; 
-	  }
+	  }*/
 	  if($('#i_nroAgentGlp_l').val().length == '' ) {		  
 		    alert('Debe ingresar el numero de agentes para Lima');
 		    document.getElementById('i_nroAgentGlp_l').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitAgent_l').val().length == '' ) {		  
+	  /*if($('#i_costoUnitAgent_l').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de agentes para Lima');
 		    document.getElementById('i_costoUnitAgent_l').focus();
 		    return false; 
@@ -654,7 +654,7 @@ function validarFormulario() {
 		    alert('Debe ingresar el monto de actividades extraordinarias para Lima');
 		    document.getElementById('i_activExtraord_l').focus();
 		    return false; 
-	  }
+	  }*/
 	  //
 	  return true; 
 	}

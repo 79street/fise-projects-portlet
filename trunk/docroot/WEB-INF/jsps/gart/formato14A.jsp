@@ -24,7 +24,24 @@ $(document).ready(function () {
 
 <form:form method="POST" modelAttribute="formato14ACBean">
 
+	<input type="hidden" id="<portlet:namespace/>codEmpresaSes" value="${model.codEmpresa}" />
+	<input type="hidden" id="<portlet:namespace/>anioPresSes" value="${model.anoPres}" />	
+	<input type="hidden" id="<portlet:namespace/>mesPresSes" value="${model.mesPres}" />	
+	<input type="hidden" id="<portlet:namespace/>anioIniVigSes" value="${model.anoIniVig}" />	
+	<input type="hidden" id="<portlet:namespace/>anioFinVigSes" value="${model.anoFinVig}" />	
+	<input type="hidden" id="<portlet:namespace/>etapaSes" value="${model.etapa}" />	
+	<!-- valores por defecto -->
+<%-- 	<input type="hidden" id="<portlet:namespace/>anioDesdeSes" value="${model.anioDesde}" />
+	<input type="hidden" id="<portlet:namespace/>mesDesdeSes" value="${model.mesDesde}" />
+	<input type="hidden" id="<portlet:namespace/>anioHastaSes" value="${model.anioHasta}" />
+	<input type="hidden" id="<portlet:namespace/>mesHastaSes" value="${model.mesHasta}" />
+	<input type="hidden" id="<portlet:namespace/>codEtapaSes" value="${model.codEtapa}" /> --%>
+	
+	<input type="hidden" id="<portlet:namespace/>mensajeError" value="${model.mensajeError}" />
+	<input type="hidden" id="<portlet:namespace/>mensajeInfo" value="${model.mensajeInfo}" />
+
 	<input type="hidden" id="<portlet:namespace/>Estado" value="" />
+	<input type="hidden" id="<portlet:namespace/>flag" value="${model.flag}" />
 
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
@@ -117,8 +134,7 @@ $(document).ready(function () {
 											<td></td>
 											<td></td>
 											<td></td>
-											<td><input name="<portlet:namespace/>buscarFormato"
-												id="<portlet:namespace/>buscarFormato" type="button"
+											<td><input name="<portlet:namespace/>buscarFormato" id="<portlet:namespace/>buscarFormato" type="button"
 												class="net-button-small" value="Buscar" style="aling: center" />
 											</td>
 										</tr>
@@ -153,8 +169,7 @@ $(document).ready(function () {
 										<td></td>
 										<td align="right" width="90px">
 											<div id="d_opc_crear">
-												<input type="button" class="net-button-small"
-													id="<portlet:namespace/>crearFormato"
+												<input type="button" class="net-button-small" id="<portlet:namespace/>crearFormato"
 													name="<portlet:namespace/>crearFormato" value="Nuevo" />
 											</div>
 										</td>
@@ -684,8 +699,7 @@ $(document).ready(function () {
 	
 																	</td>
 																</tr>
-															</table> <input type="hidden" id="flagCarga" name="flagCarga"
-															value="" style="display: none;" />
+															</table> <input type="hidden" id="<portlet:namespace/>flagCarga" name="flagCarga" value="" style="display: none;" />
 	
 														</td>
 													</tr>
@@ -714,18 +728,13 @@ $(document).ready(function () {
 				</div>
 	
 				<!-- prueba inicio -->
-				<div id="dialog-form-cargaExcel"
-					class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
-					style="display: none; z-index: 1002; position: absolute; width: 400px;">
-					<div
-						class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
-						<span class="ui-dialog-title"
-							id="ui-dialog-title-dialog-form-carga"> Cargar archivo
-							excel </span> <a href="#" class="ui-dialog-titlebar-close ui-corner-all"
-							role="button" onclick="regresarFormularioCargaExcel();"> <span
-							class="ui-icon ui-icon-closethick">close</span>
+				<div id="<portlet:namespace/>dialog-form-cargaExcel" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
+						style="display: none; z-index: 1002; position: absolute; width: 400px;">
+					<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo excel </span> 
+						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="regresarFormularioCargaExcel();"> 
+							<span class="ui-icon ui-icon-closethick">close</span>
 						</a>
-	
 					</div>
 	
 					<div class="ui-dialog-content ui-widget-content">
@@ -747,32 +756,24 @@ $(document).ready(function () {
 	
 					</div>
 	
-					<div
-						class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 						<div class="ui-dialog-buttonset">
-							<input type="button" class="net-button-small"
-								name="<portlet:namespace/>cargarFormatoExcel"
-								id="<portlet:namespace/>cargarFormatoExcel" value="Cargar" /> <input
-								type="button" class="net-button-small"
-								name="<portlet:namespace/>cerrarFormatoExcel"
-								id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar"
-								onclick="regresarFormularioCargaExcel();" />
+							<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel"
+								id="<portlet:namespace/>cargarFormatoExcel" value="Cargar" /> 
+							<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoExcel"
+								id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar" onclick="regresarFormularioCargaExcel();" />
 						</div>
 					</div>
 				</div>
 				<!-- prueba fin -->
 	
 				<!-- prueba inicio -->
-				<div id="dialog-form-cargaTexto"
-					class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
-					style="display: none; z-index: 1002; position: absolute; width: 400px;">
-					<div
-						class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
-						<span class="ui-dialog-title"
-							id="ui-dialog-title-dialog-form-carga"> Cargar archivo de
-							texto </span> <a href="#" class="ui-dialog-titlebar-close ui-corner-all"
-							role="button" onclick="regresarFormularioCargaTexto();"> <span
-							class="ui-icon ui-icon-closethick" onmouseover="ui-state-hover">close</span>
+				<div id="<portlet:namespace/>dialog-form-cargaTexto" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
+						style="display: none; z-index: 1002; position: absolute; width: 400px;">
+					<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo de texto </span> 
+						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="regresarFormularioCargaTexto();"> 
+						<span class="ui-icon ui-icon-closethick" onmouseover="ui-state-hover">close</span>
 						</a>
 					</div>
 					<div class="ui-dialog-content ui-widget-content">
@@ -795,27 +796,20 @@ $(document).ready(function () {
 					</div>
 	
 	
-					<div
-						class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 						<div class="ui-dialog-buttonset">
-							<input type="button" class="net-button-small"
-								name="<portlet:namespace/>cargarFormatoTexto"
-								id="<portlet:namespace/>cargarFormatoTexto" value="Cargar" /> <input
-								type="button" class="net-button-small"
-								name="<portlet:namespace/>cerrarFormatoTexto"
-								id="<portlet:namespace/>cerrarFormatoTexto" value="Cerrar"
-								onclick="regresarFormularioCargaTexto();" />
+							<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto"
+								id="<portlet:namespace/>cargarFormatoTexto" value="Cargar" /> 
+							<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoTexto"
+								id="<portlet:namespace/>cerrarFormatoTexto" value="Cerrar" onclick="regresarFormularioCargaTexto();" />
 						</div>
 					</div>
 				</div>
 				<!-- prueba fin -->
 	
-				<div id="dialog-form-error" class="net-frame-border"
-					style="display: none; background: #fff;"
-					title=" Errores de archivo de carga ">
+				<div id="<portlet:namespace/>dialog-form-error" class="net-frame-border" style="display: none; background: #fff;" title=" Errores de archivo de carga ">
 					<fieldset class="net-frame-border">
-						<table width="100%" border="0" cellpadding="0" cellspacing="0"
-							class="tabla">
+						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla">
 							<tr class="titulo_tabla">
 								<td width="40">Nro.</td>
 								<td width="378" height="37">Descripción</td>
@@ -831,13 +825,13 @@ $(document).ready(function () {
 					<br>
 				</div>
 	
-				<div id="dialog-form-observacion" class="net-frame-border"
+				<div id="<portlet:namespace/>dialog-form-observacion" class="net-frame-border"
 					style="display: none; background: #fff;"
 					title=" Resultados de validación ">
 					<fieldset class="net-frame-border">
-						<table id="grid_observacion" width="100%">
+						<table id="<portlet:namespace/>grid_observacion" width="100%">
 						</table>
-						<div id="pager_observacion"></div>
+						<div id="<portlet:namespace/>pager_observacion"></div>
 					</fieldset>
 					<br>
 				</div>
@@ -847,4 +841,32 @@ $(document).ready(function () {
 			</div>
 		</div>
 	</div>
+	
+	
+	<div id="<portlet:namespace/>dialog-message" title="Osinergmin">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="<portlet:namespace/>dialog-message-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
+	
+	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
+		</p>
+	</div>`
+	
+	<div id="<portlet:namespace/>dialog-confirm-envio" title="Confirmar acci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-envio-content">¿Está seguro?</label>
+		</p>
+	</div>
+
+	<div id="<portlet:namespace/>divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
+	</div>
+	
 </form:form>

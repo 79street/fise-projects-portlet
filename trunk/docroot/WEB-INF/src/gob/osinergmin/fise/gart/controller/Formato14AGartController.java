@@ -1,11 +1,13 @@
 package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.Formato14ACBean;
+import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato14AC;
 import gob.osinergmin.fise.domain.FiseFormato14ACPK;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
+import gob.osinergmin.fise.gart.json.Formato12AGartJSON;
 import gob.osinergmin.fise.gart.json.Formato14AGartJSON;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
@@ -62,24 +64,47 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 	List<FiseFormato14AC> listaFormato;
 	Map<String, String> mapaEmpresa;
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
-
-	/*@ModelAttribute("formato14ACBean")
-	public Formato14ACBean inicializar(){
-		Formato14ACBean command=new Formato14ACBean();
-		command.setListaMes(fiseUtil.getMapaMeses());
-		command.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
-		command.setMesDesde( String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));
-		command.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
-		command.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
-		command.setEtapaB(FiseConstants.ETAPA_SOLICITUD);
-		logger.info("INICIALIZACION formato14ACBean");
-		return command;
-	}*/
 	
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato14ACBean")Formato14ACBean command){
 
 		listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
+		
+		PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+		Formato14AGartJSON obj = new Formato14AGartJSON();
+		
+		String codEmpresa = (String)pRequest.getPortletSession().getAttribute("codEmpresa", PortletSession.APPLICATION_SCOPE);
+		String anioPresentacion = (String)pRequest.getPortletSession().getAttribute("anoPresentacion", PortletSession.APPLICATION_SCOPE);
+		String mesPresentacion = (String)pRequest.getPortletSession().getAttribute("mesPresentacion", PortletSession.APPLICATION_SCOPE);
+		String anoInicioVigencia = (String)pRequest.getPortletSession().getAttribute("anoInicioVigencia", PortletSession.APPLICATION_SCOPE);
+		String anoFinVigencia = (String)pRequest.getPortletSession().getAttribute("anoFinVigencia", PortletSession.APPLICATION_SCOPE);
+		String etapa = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
+		String flag = (String)pRequest.getPortletSession().getAttribute("flag", PortletSession.APPLICATION_SCOPE);
+		String msgError = (String)pRequest.getPortletSession().getAttribute("mensajeError", PortletSession.APPLICATION_SCOPE);
+		List<MensajeErrorBean> listaError = (List<MensajeErrorBean>)pRequest.getPortletSession().getAttribute("listaError", PortletSession.APPLICATION_SCOPE);
+		String msgInfo = (String)pRequest.getPortletSession().getAttribute("mensajeInformacion", PortletSession.APPLICATION_SCOPE);
+		
+		obj.setCodEmpresa(codEmpresa!=null?codEmpresa:"");
+		obj.setAnoPres(anioPresentacion!=null?anioPresentacion:"");
+		obj.setMesPres(mesPresentacion!=null?mesPresentacion:"");
+		obj.setAnoIniVig(anoInicioVigencia!=null?anoInicioVigencia:"");
+		obj.setAnoFinVig(anoFinVigencia!=null?anoFinVigencia:"");
+		obj.setEtapa(etapa!=null?etapa:"");
+		obj.setMensajeError(msgError!=null?msgError:"");
+		obj.setMensajeInfo(msgInfo!=null?msgInfo:"");
+		obj.setEtapa(etapa!=null?etapa:"");
+		obj.setFlag(flag!=null?flag:"");
+		
+		pRequest.getPortletSession().setAttribute("codEmpresa", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("anoPresentacion", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("mesPresentacion", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("anoInicioVigencia", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("anoFinVigencia", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("mensajeError", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("listaError", null, PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("mensajeInformacion", "", PortletSession.APPLICATION_SCOPE);
+		
 		
 		command.setListaMes(fiseUtil.getMapaMeses());
 		command.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
