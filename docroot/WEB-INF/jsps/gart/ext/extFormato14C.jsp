@@ -9,39 +9,41 @@ var formato14C= {
 		tablaResultados:null,
 		paginadoResultados:null,
 		urlBusqueda: null,
+		formCommand: null,
 		botonBuscar:null,
-		formBusqueda: null,
+		divHome:null,
 		init : function(){
-			this.buildGrids();
 			this.tablaResultados=$("#<portlet:namespace/>grid_formato");
 			this.paginadoResultados='#<portlet:namespace/>pager_formato';
+			this.buildGrids();
+			this.divHome=$("#<portlet:namespace/>div_home");
 			this.urlBusqueda='<portlet:resourceURL id="busqueda" />';
-			this.botonBuscar=$("#<portlet:namespace/>buscarFormato14C");
-			this.formBusqueda=$('#formato14CBean');
-			//evento para buscar
+			this.formCommand=$('#formato14CBean'); 
+			this.botonBuscar=$("#<portlet:namespace/>buscarFormato");
 			formato14C.botonBuscar.click(function() {
 				formato14C.buscar();
-			});		
-			//busqueda por defecto al momento de cargar el portlet busca
+			});
+			//eventos por defecto
 			//formato14C.botonBuscar.trigger('click');
-			
+			formato14C.initBlockUI();
 		},
 		buildGrids : function () {	
 			formato14C.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Inicio Vigencia.','Año Fin Vigencia.','Grupo Inf','Visualizar','Editar','Anular','Estado','',''],
+		       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Visualizar','Editar','Anular','Estado','','',''],
 		       colModel: [
-					 { name: 'descEmpresa', index: 'descEmpresa', width: 50},
+					   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
 		               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
 		               { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
-		               { name: 'anoIniVigencia', index: 'anoIniVigencia', width: 30 },   //anoIniVigencia id de la clase json
+		               { name: 'anoIniVigencia', index: 'anoIniVigencia', width: 30 },   
 		               { name: 'anoFinVigencia', index: 'anoFinVigencia', width: 30},
 		               { name: 'grupoInfo', index: 'grupoInfo', width: 50},
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },
 		               { name: 'estado', index: 'estado', width: 50,align:'center'},
-		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},		              
+		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
+		               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
 		               { name: 'etapa', index: 'etapa', hidden: true}
 			   	    ],
 			   	 multiselect: false,
@@ -53,23 +55,22 @@ var formato14C= {
 					shrinkToFit:true,
 					pager: formato14C.paginadoResultados,
 				    viewrecords: true,
-				   	caption: "Formatos",//titulo de la grilla
+				   	caption: "Formatos",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = formato14C.tablaResultados.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = formato14C.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";//son los id de la clase json
-		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
-		      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";              			
+		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato14C.verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato14C.editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
+		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato14C.confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";              			
 		      			formato14C.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			formato14C.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
-		      			formato14C.tablaResultados.jqGrid('setRowData',ids[i],{elim:elem});
+		      			formato14C.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
 		      		}
 		      }
 		  	});
-			//navGrid son variables del jquery
 			formato14C.tablaResultados.jqGrid('navGrid',formato14C.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});	
 			formato14C.tablaResultados.jqGrid('navButtonAdd',formato14C.paginadoResultados,{
 			       caption:"Exportar a Excel",
@@ -79,32 +80,33 @@ var formato14C= {
 			       } 
 			}); 
 		},
-		buscar : function () {	
-				$.ajax({			
-						url: formato14C.urlBusqueda+'&'+formato14C.formBusqueda.serialize(),
+		buscar : function () {
+			//if(formato14C.validarBusqueda()){
+				formato14C.blockUI();
+				jQuery.ajax({			
+						url: formato14C.urlBusqueda+'&'+formato14C.formCommand.serialize(),
 						type: 'post',
-						dataType: 'json',
-						beforeSend:function(){
-							formato14C.blockUI();
-						},				
+						dataType: 'json',				
 						success: function(gridData) {					
 							formato14C.tablaResultados.clearGridData(true);
 							formato14C.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 							formato14C.tablaResultados[0].refreshIndex();
-							formato14C.unblockUI();
+							formato14C.initBlockUI();
 						},error : function(){
 							alert("Error de conexión.");
-							formato14C.unblockUI();
+							formato14C.initBlockUI();
 						}
 				});
-
-
+			//}
 		},
 		blockUI : function(){
 			$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
 		},
 		unblockUI : function(){
 			$.unblockUI();
+		},
+		initBlockUI : function(){
+			$(document).ajaxStop($.unblockUI); 		
 		}
 	};
 </script>
