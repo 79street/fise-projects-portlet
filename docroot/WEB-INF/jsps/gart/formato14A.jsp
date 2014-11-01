@@ -16,13 +16,8 @@ $(document).ready(function () {
 <style>
 </style>
 
-<form id="form-formatofise14a" name="form-formatofise14a" method="POST"
-	style="padding: 17px; padding-top: 0px;" action="${accionURL}">
-
-
-</form>
-
-<form:form method="POST" modelAttribute="formato14ACBean">
+<form:form id="form-formatofise14a" name="form-formatofise14a"  method="POST" modelAttribute="formato14ACBean"  
+	style="padding: 17px; padding-top: 0px;" action="${accionURL}" enctype="multipart/form-data" >
 
 	<input type="hidden" id="<portlet:namespace/>codEmpresaSes" value="${model.codEmpresa}" />
 	<input type="hidden" id="<portlet:namespace/>anioPresSes" value="${model.anoPres}" />	
@@ -732,7 +727,7 @@ $(document).ready(function () {
 						style="display: none; z-index: 1002; position: absolute; width: 400px;">
 					<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo excel </span> 
-						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="regresarFormularioCargaExcel();"> 
+						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="formato14A.regresarFormularioCargaExcel();"> 
 							<span class="ui-icon ui-icon-closethick">close</span>
 						</a>
 					</div>
@@ -761,7 +756,7 @@ $(document).ready(function () {
 							<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel"
 								id="<portlet:namespace/>cargarFormatoExcel" value="Cargar" /> 
 							<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoExcel"
-								id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar" onclick="regresarFormularioCargaExcel();" />
+								id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar" onclick="formato14A.regresarFormularioCargaExcel();" />
 						</div>
 					</div>
 				</div>
@@ -772,7 +767,7 @@ $(document).ready(function () {
 						style="display: none; z-index: 1002; position: absolute; width: 400px;">
 					<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo de texto </span> 
-						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="regresarFormularioCargaTexto();"> 
+						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="formato14A.regresarFormularioCargaTexto();"> 
 						<span class="ui-icon ui-icon-closethick" onmouseover="ui-state-hover">close</span>
 						</a>
 					</div>
@@ -801,7 +796,7 @@ $(document).ready(function () {
 							<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto"
 								id="<portlet:namespace/>cargarFormatoTexto" value="Cargar" /> 
 							<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoTexto"
-								id="<portlet:namespace/>cerrarFormatoTexto" value="Cerrar" onclick="regresarFormularioCargaTexto();" />
+								id="<portlet:namespace/>cerrarFormatoTexto" value="Cerrar" onclick="formato14A.regresarFormularioCargaTexto();" />
 						</div>
 					</div>
 				</div>
