@@ -144,6 +144,8 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 		
 		mapaErrores = fiseUtil.getMapaErrores();
 		
+		model.addAttribute("model", obj);
+		
 		return "formato14A";
 	}
 	
