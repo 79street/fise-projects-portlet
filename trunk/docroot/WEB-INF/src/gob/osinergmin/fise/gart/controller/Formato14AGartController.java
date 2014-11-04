@@ -627,7 +627,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 	}
 	
 	@ActionMapping(params="action=cargar")
-	public void cargarDocumento(ActionRequest request,ActionResponse response){
+	public void cargarDocumento(ActionRequest request,ActionResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command){
 		
 		logger.info("--- cargar documento");
 		Formato14AMensajeBean formatoMensaje = new Formato14AMensajeBean();
@@ -635,8 +635,8 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		
 		String flagCarga = uploadPortletRequest.getParameter("flagCarga");
-    	String codEmpresaNew = uploadPortletRequest.getParameter("s_empresa");
-    	String periodoEnvioPresNew = uploadPortletRequest.getParameter("s_periodoenvio_present");
+    	String codEmpresaNew = uploadPortletRequest.getParameter("codigoEmpresa");
+    	String periodoEnvioPresNew = uploadPortletRequest.getParameter("periodoEnvio");
     	String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
     	
     	String anioPresNew = "";
@@ -949,11 +949,11 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifR.getCellType()  ){
-						formulario.setImprAfichesR(new BigDecimal(celdaImpFichaVerifR.getNumericCellValue()));
+						formulario.setImprFichaVerifR(new BigDecimal(celdaImpFichaVerifR.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifR.getCellType()  ){
-						formulario.setImprAfichesR(new BigDecimal(0.00));
+						formulario.setImprFichaVerifR(new BigDecimal(0.00));
 					}else{
-						formulario.setImprAfichesR(new BigDecimal(0.00));
+						formulario.setImprFichaVerifR(new BigDecimal(0.00));
 						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_150)+FiseConstants.SALTO_LINEA;
 						cont++;
 						MensajeErrorBean error = new MensajeErrorBean();
@@ -1174,11 +1174,11 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifP.getCellType()  ){
-						formulario.setImprAfichesP(new BigDecimal(celdaImpFichaVerifP.getNumericCellValue()));
+						formulario.setImprFichaVerifP(new BigDecimal(celdaImpFichaVerifP.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifP.getCellType()  ){
-						formulario.setImprAfichesP(new BigDecimal(0.00));
+						formulario.setImprFichaVerifP(new BigDecimal(0.00));
 					}else{
-						formulario.setImprAfichesP(new BigDecimal(0.00));
+						formulario.setImprFichaVerifP(new BigDecimal(0.00));
 						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_150)+FiseConstants.SALTO_LINEA;
 						cont++;
 						MensajeErrorBean error = new MensajeErrorBean();
@@ -1399,11 +1399,11 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						listaError.add(error);
 					}
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifL.getCellType()  ){
-						formulario.setImprAfichesL(new BigDecimal(celdaImpFichaVerifL.getNumericCellValue()));
+						formulario.setImprFichaVerifL(new BigDecimal(celdaImpFichaVerifL.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifL.getCellType()  ){
-						formulario.setImprAfichesL(new BigDecimal(0.00));
+						formulario.setImprFichaVerifL(new BigDecimal(0.00));
 					}else{
-						formulario.setImprAfichesL(new BigDecimal(0.00));
+						formulario.setImprFichaVerifL(new BigDecimal(0.00));
 						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_150)+FiseConstants.SALTO_LINEA;
 						cont++;
 						MensajeErrorBean error = new MensajeErrorBean();
@@ -1740,21 +1740,27 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 			int posicionImpDeclaJurada = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_DECLARACION_JURADA);
 			int posicionImpFichaVerif = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_FICHAS_VERIFICACION);
 			int posicionRepEsqInvit= campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REPARTO_ESQUELA_INVITACION);
-			int posicionVerifInfo = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ACTIVID_EXTRAORD);
+			int posicionVerifInfo = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_VERIFICACION_INFORMACION);
 			int posicionElabArchivo = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ELABORACION_ARCHIVO_BENEF);
 			int posicionDigitFichas = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_DIGITACION_FICHA_BENEF);
+			int posicionTotalEmpad = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_EMPADRONAMIENTO);
+			
 			int posicionImpVolantes = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_VOLANTES);
 			int posicionImpAfiches = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_AFICHES);
 			int posicionRepFolletos = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REPARTO_FOLLETO_POTENCIA_BENEF);
 			int posicionSpotPublicTv = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_SPOT_PUBLICITARIO_TV);
 			int posicionSpotPublicRadio = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_SPOT_PUBLICITARIO_RADIO);
-			int posicionNroBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NRO_EMPADRONADOS);
+			int posicionTotalDifusion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_DIFUSION_INICIO_PRG_FISE);
+			
+			int posicionNroBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NUMERO_BENEF_EMPADRO_MES_DIC);
 			int posicionCostoUnitBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_COSTO_UNITARIO_EMPADRONAMIENTO);
 			
 			int posicionPromConvenios = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_PROMOCION_CONVENIO_AG_AUT_GLP);
 			int posicionRegFirmaConvenios = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REGISTRO_FIRMA_CONV_AG_AUT_GLP);
 			int posicionImpEntBanderla = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_ENTREGA_BANDEROLA);
-			int posicionNroAgentes = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NRO_AGENTES_AUTOR);
+			
+			int posicionTotalCostoGestion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_COSTO_GESTION_RED_AG_GLP);
+			int posicionNroAgentes = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NUMERO_AGENTES);
 			
 			String sCurrentLine;
 			is=uploadPortletRequest.getFileAsStream("archivoTxt");
@@ -1863,16 +1869,16 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 							String verifInfo = s.substring(posicionRepEsqInvit, posicionVerifInfo).trim();
 							String elabArch = s.substring(posicionVerifInfo, posicionElabArchivo).trim();
 							String digitFicha = s.substring(posicionElabArchivo, posicionDigitFichas).trim();
-							String impVolantes = s.substring(posicionDigitFichas, posicionImpVolantes).trim();
+							String impVolantes = s.substring(posicionTotalEmpad, posicionImpVolantes).trim();
 							String impAfiches = s.substring(posicionImpVolantes, posicionImpAfiches).trim();
 							String repFolletos = s.substring(posicionImpAfiches, posicionRepFolletos).trim();
 							String spotPublicTv = s.substring(posicionRepFolletos, posicionSpotPublicTv).trim();
 							String spotPublicRad = s.substring(posicionSpotPublicTv, posicionSpotPublicRadio).trim();
-							String nroBenef = s.substring(posicionSpotPublicRadio, posicionNroBenef).trim();
+							String nroBenef = s.substring(posicionTotalDifusion, posicionNroBenef).trim();
 							String promConv = s.substring(posicionCostoUnitBenef, posicionPromConvenios).trim();
-							String regConv = s.substring(posicionSpotPublicRadio, posicionRegFirmaConvenios).trim();
+							String regConv = s.substring(posicionPromConvenios, posicionRegFirmaConvenios).trim();
 							String impBander = s.substring(posicionRegFirmaConvenios, posicionImpEntBanderla).trim();
-							String nroAgentes = s.substring(posicionImpEntBanderla, posicionNroAgentes).trim();
+							String nroAgentes = s.substring(posicionTotalCostoGestion, posicionNroAgentes).trim();
 							
 							if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
 								formulario.setImprEsqInvitR(new BigDecimal(impEsqInvit));
