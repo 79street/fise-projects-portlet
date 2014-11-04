@@ -199,7 +199,6 @@ public class FiseUtil {
 				//	throw new FileMimeTypeException(contenType);
 				//}
 			//}
-			
 						 
 			logger.info("Size:"+size+" bytes");
 			logger.info("Max Size:"+maxUploadFileSize+" bytes");
