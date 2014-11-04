@@ -1418,8 +1418,8 @@ function <portlet:namespace/>mostrarReporteValidacion(){
 		type : 'post',
 		dataType : 'json',
 		data : {
-			<portlet:namespace />nombreReporte: 'validacion12A',
-			<portlet:namespace />nombreArchivo: 'validacion12A',
+			<portlet:namespace />nombreReporte: 'validacion',
+			<portlet:namespace />nombreArchivo: 'validacion',
 			<portlet:namespace />tipoArchivo: '0'//PDF
 		},
 		success : function(gridData) {

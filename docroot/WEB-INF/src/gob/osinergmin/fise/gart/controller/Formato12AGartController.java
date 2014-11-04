@@ -2027,7 +2027,7 @@ public class Formato12AGartController {
 		       }
 		       /**REPORTE OBSERVACIONES*/
 		       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
-		    	   nombreReporte = "validacion12A";
+		    	   nombreReporte = "validacion";
 		    	   nombreArchivo = nombreReporte;
 			       directorio =  "/reports/"+nombreReporte+".jasper";
 			       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
