@@ -1,6 +1,7 @@
 package gob.osinergmin.fise.gart.json;
 
 import gob.osinergmin.fise.domain.FiseFormato13AC;
+import gob.osinergmin.fise.domain.FiseFormato13AD;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +29,24 @@ public class Formato13AGartJSON {
 		jsonObj.put("descEmpresa",fiseFormato13AC.getDescEmpresa());
 		jsonObj.put("descMesPresentacion",fiseFormato13AC.getDescMesPresentacion());
 		jsonObj.put("descGrupoInformacion",fiseFormato13AC.getDescGrupoInformacion());
+		return jsonObj;
+	}
+	
+	public JSONObject asJSONObject(FiseFormato13AD fiseFormato13AD) throws JSONException{
+		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("codEmpresa",fiseFormato13AD.getId().getCodEmpresa() );
+		jsonObj.put("anoPresentacion",fiseFormato13AD.getId().getAnoPresentacion() );
+		jsonObj.put("mesPresentacion",fiseFormato13AD.getId().getMesPresentacion() );
+		jsonObj.put("etapa",fiseFormato13AD.getId().getEtapa());
+		jsonObj.put("codUbigeo",fiseFormato13AD.getId().getCodUbigeo());
+		jsonObj.put("codSectorTipico",fiseFormato13AD.getId().getCodSectorTipico());
+		jsonObj.put("idZonaBenef",fiseFormato13AD.getId().getIdZonaBenef());
+		
+		jsonObj.put("anioMesAlta",fiseFormato13AD.getAnoAlta()+"-"+fiseFormato13AD.getMesAlta());
+		jsonObj.put("descripcionLocalidad",fiseFormato13AD.getDescripcionLocalidad());
+		jsonObj.put("numeroBenefiPoteSectTipico",fiseFormato13AD.getNumeroBenefiPoteSectTipico());
+		jsonObj.put("nombreSedeAtiende",fiseFormato13AD.getNombreSedeAtiende());
 		return jsonObj;
 	}
 

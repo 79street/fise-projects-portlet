@@ -3,6 +3,8 @@ package gob.osinergmin.fise.gart.controller;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
+import gob.osinergmin.fise.domain.FiseFormato13ACPK;
+import gob.osinergmin.fise.domain.FiseFormato13AD;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
 import gob.osinergmin.fise.gart.json.Formato13AGartJSON;
@@ -182,5 +184,85 @@ public class Formato13AGartController {
   			// TODO: handle exception
   			e.printStackTrace();
   		}
+	}
+	
+	@ResourceMapping("busquedaDetalle")
+  	public void gridDetalle(ModelMap model,ResourceRequest request,ResourceResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+		
+		try {
+			response.setContentType("application/json");	
+			logger.info("admin2.1:"+model.get("esAdministrador"));
+			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
+	        HttpSession session = req.getSession();
+	        List<FiseFormato13AD> listaFormato;	
+		    JSONArray jsonArray = new JSONArray();
+		    Map<String, String> mapaEmpresa = fiseUtil.getMapaEmpresa();
+		    Map<Long,String> listaMes=fiseUtil.getMapaMeses();
+		    
+				String codEmpresa = command.getCodEmpresa();
+				String periodoDeclaracion=command.getPeridoDeclaracion();
+				String anioPresentacion="";
+				String mesPresentacion="";
+				String etapa="";
+				logger.info("valores "+ codEmpresa);
+	  			logger.info("valores "+ periodoDeclaracion);
+
+	  			
+	  			if(periodoDeclaracion!=null && periodoDeclaracion.length()>6){
+	  				int maximo=periodoDeclaracion.length();
+	  				//"hamburger".substring(4, 8) returns "urge"
+	  				 //"smiles".substring(1, 5) returns "mile"
+
+	  				anioPresentacion=periodoDeclaracion.substring(0,4);
+	  				mesPresentacion=periodoDeclaracion.substring(4,6);
+	  				
+	  				 //"unhappy".substring(2) returns "happy"
+	  				 //"Harbison".substring(3) returns "bison"
+	  				 //"emptiness".substring(9) returns "" (an empty string)
+
+	  				etapa=periodoDeclaracion.substring(6);
+	  			}
+	  			FiseFormato13AC formato13AC=new FiseFormato13AC();
+	  			formato13AC.setId(new FiseFormato13ACPK());
+	  			formato13AC.getId().setCodEmpresa(codEmpresa!=""?FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4):"");
+	  			formato13AC.getId().setAnoPresentacion(anioPresentacion!=""?Long.parseLong(anioPresentacion):0);
+	  			formato13AC.getId().setMesPresentacion(mesPresentacion!=""?Long.parseLong(mesPresentacion):0);
+	  			formato13AC.getId().setEtapa(etapa);
+	  			
+	  			if(anioPresentacion.equalsIgnoreCase("")|| mesPresentacion.equalsIgnoreCase("")|| etapa.equalsIgnoreCase("")){
+	  				throw new Exception("Error al buscar detalle: Empresa no seleccionada");
+	  			}
+	  			
+	  			listaFormato = formatoService.listarFormato13ADByFormato13AC(formato13AC);
+	  			
+	  			logger.info("arreglo lista:"+listaFormato);
+	  			for(FiseFormato13AD fiseFormato13AD : listaFormato){
+	  				//seteamos la descripcion de la empresa
+	  				logger.info("empresa "+mapaEmpresa.get(fiseFormato13AD.getId().getCodEmpresa()));
+					jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AD));
+					
+	  			}
+	  			
+	  		//************************************************************************
+				//Generamos la configuración de la exportación a Excel
+				//************************************************************************
+	  			XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
+				xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_FORMATO13A);
+				List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
+				tables.add(new XlsTableConfig(listaFormato,FiseConstants.TIPO_FORMATO_13A));
+				List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
+				sheets.add(new XlsWorksheetConfig(FiseConstants.NOMBRE_HOJA_FORMATO13A,tables));
+				xlsWorkbookConfig.setSheets(sheets);
+				session.setAttribute(FiseConstants.KEY_CFG_EXCEL_EXPORT,xlsWorkbookConfig);	
+			    
+	  			logger.info("arreglo json:"+jsonArray);
+	  			PrintWriter pw = response.getWriter();
+	  			pw.write(jsonArray.toString());
+	  			pw.flush();
+	  			pw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 }
