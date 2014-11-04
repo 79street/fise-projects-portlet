@@ -1577,11 +1577,11 @@ var formato14A= {
 	},
 	////
 	<portlet:namespace/>cargarFormatoExcel : function(){
-		var frm = document.getElementById('form-formatofise14a');
+		var frm = document.getElementById('formato14ACBean');
 		frm.submit();
 	},
 	<portlet:namespace/>cargarFormatoTexto : function(){
-		var frm = document.getElementById('form-formatofise14a');
+		var frm = document.getElementById('formato14ACBean');
 		frm.submit();
 	},
 	<portlet:namespace/>mostrarFormularioCargaExcel : function(){
@@ -1631,7 +1631,7 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				/*<portlet:namespace />codEmpresa: $('#s_empresa').val(),
 				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
 				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
 				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
@@ -1639,7 +1639,7 @@ var formato14A= {
 				<portlet:namespace />etapa: $('#etapaEdit').val(),
 				<portlet:namespace />nombreReporte: 'formato12A',
 				<portlet:namespace />nombreArchivo: 'formato12A',
-				<portlet:namespace />tipoArchivo: '0'//PDF
+				<portlet:namespace />tipoArchivo: '0'//PDF*/
 			},
 			success : function(gridData) {
 				formato14A.verReporte();
@@ -1655,7 +1655,7 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				/*<portlet:namespace />codEmpresa: $('#s_empresa').val(),
 				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
 				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
 				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
@@ -1663,7 +1663,7 @@ var formato14A= {
 				<portlet:namespace />etapa: $('#etapaEdit').val(),
 				<portlet:namespace />nombreReporte: 'formato12A',
 				<portlet:namespace />nombreArchivo: 'formato12A',
-				<portlet:namespace />tipoArchivo: '1'//XLS
+				<portlet:namespace />tipoArchivo: '1'//XLS*/
 			},
 			success : function(gridData) {
 				//alert('entro');
@@ -1683,11 +1683,11 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				/*<portlet:namespace />codEmpresa: $('#s_empresa').val(),
 				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
 				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
 				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
-				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()*/
 			},
 			success : function(data) {
 				if( data!=null ){
@@ -1710,9 +1710,9 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				<portlet:namespace />nombreReporte: 'validacion14A',
+				/*<portlet:namespace />nombreReporte: 'validacion14A',
 				<portlet:namespace />nombreArchivo: 'validacion14A',
-				<portlet:namespace />tipoArchivo: '0'//PDF
+				<portlet:namespace />tipoArchivo: '0'//PDF*/
 			},
 			success : function(gridData) {
 				formato14A.verReporte();
@@ -1733,14 +1733,14 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				/*<portlet:namespace />codEmpresa: $('#s_empresa').val(),
 				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
 				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
 				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 				<portlet:namespace />nombreReporte: 'formato14A',
 				<portlet:namespace />nombreArchivo: 'formato14A',
-				<portlet:namespace />tipoArchivo: '0'//PDF
+				<portlet:namespace />tipoArchivo: '0'//PDF*/
 			},
 			success : function(gridData) {
 				var addhtml='Se realizó el envío satisfactoriamente';					

@@ -16,7 +16,7 @@ $(document).ready(function () {
 <style>
 </style>
 
-<form:form id="form-formatofise14a" name="form-formatofise14a"  method="POST" modelAttribute="formato14ACBean"  
+<form:form method="POST" modelAttribute="formato14ACBean"  
 	style="padding: 17px; padding-top: 0px;" action="${accionURL}" enctype="multipart/form-data" >
 
 	<input type="hidden" id="<portlet:namespace/>codEmpresaSes" value="${model.codEmpresa}" />
