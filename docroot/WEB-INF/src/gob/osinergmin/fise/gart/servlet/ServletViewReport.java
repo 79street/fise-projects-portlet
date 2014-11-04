@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRParameter;
@@ -26,9 +27,6 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,7 +39,7 @@ public class ServletViewReport extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		WebApplicationContext springContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		//WebApplicationContext springContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		HttpSession sesion = request.getSession();
 		ServletOutputStream servletOutputStream = response.getOutputStream();
 		
@@ -55,8 +53,10 @@ public class ServletViewReport extends HttpServlet {
 		String nombreArchivo = (String) sesion.getAttribute("nombreArchivo");
 		String tipoFormato = (String) sesion.getAttribute("tipoFormato");
 		String tipoArchivo = (String) sesion.getAttribute("tipoArchivo");
+		
+		@SuppressWarnings("unchecked")
 		Map<String, Object> parametros = (Map<String, Object>) sesion.getAttribute("mapa");
-		List lista = (List)sesion.getAttribute("lista");
+		List<?> lista = (List<?>)sesion.getAttribute("lista");
 		
 		if(parametros!=null){
 			parametros.put("IMG",request.getSession().getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
@@ -70,30 +70,31 @@ public class ServletViewReport extends HttpServlet {
 		byte[] bytes = null;
 		try {
 			
+			JRDataSource coleccion = new JREmptyDataSource();
+			if( FiseConstants.TIPO_FORMATO_12A.equals(tipoFormato) ){
+				coleccion = new JREmptyDataSource();
+			}else if( FiseConstants.TIPO_FORMATO_12B.equals(tipoFormato) ){
+				coleccion = new JREmptyDataSource();
+			}else if( FiseConstants.TIPO_FORMATO_12C.equals(tipoFormato) ){
+				coleccion = new JRBeanCollectionDataSource(lista);
+			}else if( FiseConstants.TIPO_FORMATO_12D.equals(tipoFormato) ){
+				coleccion = new JRBeanCollectionDataSource(lista);
+			}else if( FiseConstants.TIPO_FORMATO_13A.equals(tipoFormato) ){
+				//colocar si se va a enviar lista o vacio
+			}else if( FiseConstants.TIPO_FORMATO_14A.equals(tipoFormato) ){
+				coleccion = new JREmptyDataSource();
+			}else if( FiseConstants.TIPO_FORMATO_14B.equals(tipoFormato) ){
+				coleccion = new JREmptyDataSource();
+			}else if( FiseConstants.TIPO_FORMATO_14C.equals(tipoFormato) ){
+				//colocar si se va a enviar lista o vacio
+			}
+			//
+			else if( FiseConstants.TIPO_FORMATO_VAL_12A.equals(tipoFormato) ){
+				coleccion = new JRBeanCollectionDataSource(lista);
+			}
+			
 			if( FiseConstants.FORMATO_EXPORT_PDF.equals(tipoArchivo) ){
-				//validar los tipos de formato, ya que de estos dependera si se envia lista o no
-				if( FiseConstants.TIPO_FORMATO_12A.equals(tipoFormato) ){
-					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
-				}else if( FiseConstants.TIPO_FORMATO_12B.equals(tipoFormato) ){
-					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
-				}else if( FiseConstants.TIPO_FORMATO_12C.equals(tipoFormato) ){
-					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
-				}else if( FiseConstants.TIPO_FORMATO_12D.equals(tipoFormato) ){
-					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
-				}else if( FiseConstants.TIPO_FORMATO_13A.equals(tipoFormato) ){
-					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
-				}else if( FiseConstants.TIPO_FORMATO_14A.equals(tipoFormato) ){
-					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
-				}else if( FiseConstants.TIPO_FORMATO_14B.equals(tipoFormato) ){
-					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
-				}else if( FiseConstants.TIPO_FORMATO_14C.equals(tipoFormato) ){
-					//bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JREmptyDataSource());
-				}
-				//
-				else if( FiseConstants.TIPO_FORMATO_VAL_12A.equals(tipoFormato) ){
-					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, new JRBeanCollectionDataSource(lista));
-				}
-				
+				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, coleccion);
 				
 				if (bytes != null) {
 					int size = bytes.length;
@@ -108,7 +109,7 @@ public class ServletViewReport extends HttpServlet {
 				}
 			}else if( FiseConstants.FORMATO_EXPORT_XLS.equals(tipoArchivo) ){
 				//EXPORTAR A EXCEL
-				JasperPrint print = JasperFillManager.fillReport(reportFile.getPath(), parametros, new JREmptyDataSource());
+				JasperPrint print = JasperFillManager.fillReport(reportFile.getPath(), parametros, coleccion);
 				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 				response.setHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".xlsx" + "\"");
 				JRXlsxExporter exporter = new JRXlsxExporter();		
