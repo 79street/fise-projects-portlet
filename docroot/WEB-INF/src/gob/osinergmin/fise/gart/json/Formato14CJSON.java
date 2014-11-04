@@ -28,7 +28,7 @@ public class Formato14CJSON {
 		
 		JSONObject jsonObj = new JSONObject();
 		
-		this.descEmpresa=f.getDescEmpresa();
+		/*this.descEmpresa=f.getDescEmpresa();
 		this.anoPresentacion=f.getId().getAnoPresentacion();
 		this.mesPresentacion=f.getId().getMesPresentacion();
 		this.anoIniVigencia=f.getId().getAnoInicioVigencia();
@@ -51,7 +51,7 @@ public class Formato14CJSON {
 		jsonObj.put("descMesPresentacion", f.getDescMesPresentacion());
 		//jsonObj.put("grupoInfo", f.getDescGrupoInformacion());
 		jsonObj.put("grupoInfo", " HOLA");
-		jsonObj.put("estado", f.getDescEstado());			
+		jsonObj.put("estado", f.getDescEstado());			*/
 		return jsonObj;
 	}
 	

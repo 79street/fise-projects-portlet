@@ -15,6 +15,8 @@ public class Formato13AGartCommand {
 	private String mesFin;
 	private String anioFin;
 	private String etapa;
+	//Nuevo
+	private String peridoDeclaracion; 
 	
 	
 	public List<AdmEmpresa> getListaEmpresas() {
@@ -79,5 +81,13 @@ public class Formato13AGartCommand {
 
 	public void setEtapa(String etapa) {
 		this.etapa = etapa;
+	}
+
+	public String getPeridoDeclaracion() {
+		return peridoDeclaracion;
+	}
+
+	public void setPeridoDeclaracion(String peridoDeclaracion) {
+		this.peridoDeclaracion = peridoDeclaracion;
 	}
 }
