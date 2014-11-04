@@ -271,6 +271,11 @@ var formato14A= {
 		formato14A.botonCargaTxt.click(function() {formato14A.<portlet:namespace/>mostrarFormularioCargaTexto();});
 		formato14A.botonCargarFormatoExcel.click(function() {formato14A.<portlet:namespace/>cargarFormatoExcel();});
 		formato14A.botonCargarFormatoTexto.click(function() {formato14A.<portlet:namespace/>cargarFormatoTexto();});
+		//
+		formato14A.botonReportePdf.click(function() {formato14A.<portlet:namespace/>mostrarReportePdf();});
+		formato14A.botonReporteExcel.click(function() {formato14A.<portlet:namespace/>mostrarReporteExcel();});
+		formato14A.botonValidacion.click(function() {formato14A.<portlet:namespace/>validacionFormato();});
+		formato14A.botonEnvioDefinitivo.click(function() {formato14A.confirmarEnvioDefinitivo();});
 		
 		formato14A.initDialogs();
 		formato14A.cargaInicial();
@@ -1613,15 +1618,13 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				/*<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
-				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
-				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
-				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
-				<portlet:namespace />etapa: $('#etapaEdit').val(),
-				<portlet:namespace />nombreReporte: 'formato12A',
-				<portlet:namespace />nombreArchivo: 'formato12A',
-				<portlet:namespace />tipoArchivo: '0'//PDF*/
+				<portlet:namespace />codEmpresa: formato14A.f_empresa.val(),
+				<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
+				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
+				<portlet:namespace />nombreReporte: 'formato14A',
+				<portlet:namespace />nombreArchivo: 'formato14A',
+				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
 				formato14A.verReporte();
