@@ -1,7 +1,22 @@
 package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.common.util.FiseUtil;
+import gob.osinergmin.fise.constant.FiseConstants;
+import gob.osinergmin.fise.domain.FiseFormato13AC;
+import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
+import gob.osinergmin.fise.gart.json.Formato13AGartJSON;
+import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
+import gob.osinergmin.fise.gart.service.Formato13AGartService;
+import gob.osinergmin.fise.util.FormatoUtil;
+import gob.osinergmin.fise.xls.XlsTableConfig;
+import gob.osinergmin.fise.xls.XlsWorkbookConfig;
+import gob.osinergmin.fise.xls.XlsWorksheetConfig;
+
+import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -11,13 +26,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.log.Log;
@@ -33,8 +51,15 @@ public class Formato13AGartController {
 	
 	@Autowired
 	@Qualifier("fiseUtil")
-	FiseUtil fiseUtil;
+	private FiseUtil fiseUtil;
 
+	@Autowired
+	@Qualifier("formato13AGartServiceImpl")
+	private Formato13AGartService formatoService;
+	
+	@Autowired
+	@Qualifier("fisePeriodoEnvioGartServiceImpl")
+	FisePeriodoEnvioGartService periodoService;
 	
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
@@ -51,29 +76,111 @@ public class Formato13AGartController {
 		
 		logger.info("admin1.1:"+model.get("esAdministrador"));
 		
-		return "formato13A";
+		return "formato13AInicio";
 	}
 	
 	@ResourceMapping("busqueda")
   	public void grid(ModelMap model,ResourceRequest request,ResourceResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
 		
-		response.setContentType("application/json");	
-		logger.info("admin2.1:"+model.get("esAdministrador"));
-		HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
-        HttpSession session = req.getSession();
-			
-	    JSONArray jsonArray = new JSONArray();
-			String codEmpresa = command.getCodEmpresa();
-			String anioDesde = command.getAnioInicio();
-			String mesDesde = command.getMesInicio();
-			String anioHasta = command.getAnioFin();
-			String mesHasta = command.getMesFin();
-			String etapa = command.getEtapa();
-			logger.info("valores "+ codEmpresa);
-  			logger.info("valores "+ anioDesde);
-  			logger.info("valores "+ mesDesde);
-  			logger.info("valores "+ anioHasta);
-  			logger.info("valores "+ mesHasta);
-  			logger.info("valores "+ etapa);
+		try {
+			response.setContentType("application/json");	
+			logger.info("admin2.1:"+model.get("esAdministrador"));
+			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
+	        HttpSession session = req.getSession();
+	        List<FiseFormato13AC> listaFormato;	
+		    JSONArray jsonArray = new JSONArray();
+		    Map<String, String> mapaEmpresa = fiseUtil.getMapaEmpresa();
+		    Map<Long,String> listaMes=fiseUtil.getMapaMeses();
+		    
+				String codEmpresa = command.getCodEmpresa();
+				String anioDesde = command.getAnioInicio();
+				String mesDesde = command.getMesInicio();
+				String anioHasta = command.getAnioFin();
+				String mesHasta = command.getMesFin();
+				String etapa = command.getEtapa();
+				logger.info("valores "+ codEmpresa);
+	  			logger.info("valores "+ anioDesde);
+	  			logger.info("valores "+ mesDesde);
+	  			logger.info("valores "+ anioHasta);
+	  			logger.info("valores "+ mesHasta);
+	  			logger.info("valores "+ etapa);
+	  			
+	  			listaFormato = formatoService.buscarFormato13AC(
+	  					codEmpresa!=""?FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4):"", 
+	  					anioDesde!=""?Long.parseLong(anioDesde):0, 
+	  					mesDesde!=""?Long.parseLong(mesDesde):0, 
+	  					anioHasta!=""?Long.parseLong(anioHasta):0, 
+	  					mesHasta!=""?Long.parseLong(mesHasta):0, 
+	  					etapa);
+	  			
+	  			logger.info("arreglo lista:"+listaFormato);
+	  			for(FiseFormato13AC fiseFormato13AC : listaFormato){
+	  				//seteamos la descripcion de la empresa
+	  				logger.info("empresa "+mapaEmpresa.get(fiseFormato13AC.getId().getCodEmpresa()));
+	  				fiseFormato13AC.setDescEmpresa(mapaEmpresa.get(fiseFormato13AC.getId().getCodEmpresa()));
+	  				fiseFormato13AC.setDescMesPresentacion(listaMes.get(fiseFormato13AC.getId().getMesPresentacion()));
+					jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AC));
+					
+	  			}
+	  			
+	  		//************************************************************************
+				//Generamos la configuración de la exportación a Excel
+				//************************************************************************
+	  			XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
+				xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_FORMATO13A);
+				List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
+				tables.add(new XlsTableConfig(listaFormato,FiseConstants.TIPO_FORMATO_13A));
+				List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
+				sheets.add(new XlsWorksheetConfig(FiseConstants.NOMBRE_HOJA_FORMATO13A,tables));
+				xlsWorkbookConfig.setSheets(sheets);
+				session.setAttribute(FiseConstants.KEY_CFG_EXCEL_EXPORT,xlsWorkbookConfig);	
+			    
+	  			logger.info("arreglo json:"+jsonArray);
+	  			PrintWriter pw = response.getWriter();
+	  			pw.write(jsonArray.toString());
+	  			pw.flush();
+	  			pw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(params="action=nuevo")
+	public String nuevoFormato(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+		
+		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
+		model.addAttribute("crud", "CREATE");
+		return "formato13ACRUD";
+	}
+	
+	@ResourceMapping("cargaPeriodoDeclaracion")
+  	public void cargaPeriodoDeclaracion(ModelMap model, SessionStatus status, ResourceRequest request,ResourceResponse response,
+  			@RequestParam("codEmpresa")String codEmpresa){
+		try {			
+  			logger.info("cargaPeriodoDeclaracion");
+  			logger.debug("-->cargaPeriodoDeclaracion");
+			response.setContentType("applicacion/json");
+  			
+  			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, "F13A"/*FiseConstants.NOMBRE_FORMATO_13A*/);
+  			
+  			JSONArray jsonArray = new JSONArray();
+  			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
+  				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("codigoItem", periodo.getCodigoItem());				
+				jsonObj.put("descripcionItem", periodo.getDescripcionItem());			
+				jsonObj.put("flagPeriodoEjecucion", periodo.getFlagPeriodoEjecucion());	
+				//agregar los valores
+				jsonArray.put(jsonObj);		
+			}
+  			
+  		    PrintWriter pw = response.getWriter();
+  		    pw.write(jsonArray.toString());
+  		    pw.flush();
+  		    pw.close();							
+  		}catch (Exception e) {
+  			// TODO: handle exception
+  			e.printStackTrace();
+  		}
 	}
 }

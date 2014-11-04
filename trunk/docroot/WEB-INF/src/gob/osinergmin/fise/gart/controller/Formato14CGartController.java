@@ -71,7 +71,7 @@ public class Formato14CGartController {
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,
 			     @ModelAttribute("formato14CBean")Formato14CBean f){
 
-		f.setListaMes(fiseUtil.getMapaMeses());
+		/*f.setListaMes(fiseUtil.getMapaMeses());
 		f.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
 		f.setMesDesde( String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));
 		f.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
@@ -81,13 +81,13 @@ public class Formato14CGartController {
 		if(f.getListaEmpresas()==null){
 			f.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		}
-		f.setAdmin(true);
+		f.setAdmin(true);*/
 		mapaEmpresa = fiseUtil.getMapaEmpresa();
 		
 		return "formato14C";
 	}
 	
-	
+	/*
 	@ResourceMapping("busqueda")
   	public void busqueda(ResourceRequest request,ResourceResponse response,
   			@ModelAttribute("formato14CBean")Formato14CBean f){
@@ -164,6 +164,6 @@ public class Formato14CGartController {
 	
 	
 	
-	
+	*/
 
 }
