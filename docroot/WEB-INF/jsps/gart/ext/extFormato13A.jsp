@@ -10,6 +10,7 @@ var formato13A= {
 	tablaDeclaracion:null,
 	paginadoDeclaracion:null,
 	urlBusqueda: null,
+	urlBusquedaDetalle: null,
 	urlCargaDeclaracion: null,
 	botonBuscar:null,
 	formBusqueda: null,
@@ -31,7 +32,7 @@ var formato13A= {
 		});
 		
 		formato13A.botonBuscar.click(function() {
-			formato13A.buscar();
+			formato13A.buscarFormatos();
 		});
 		
 		formato13A.buildGridsBusqueda();
@@ -40,16 +41,23 @@ var formato13A= {
 	},
 	initCRUD : function(operacion){
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
+		this.urlBusquedaDetalle='<portlet:resourceURL id="busquedaDetalle" />';
 		this.formNuevo=$('#formato13AGartCommand');
 		this.codEmpresa=$('#codEmpresa');
 		this.peridoDeclaracion=$('#peridoDeclaracion');
 		this.tablaDeclaracion=$("#<portlet:namespace/>grid_formato_declaracion");
 		this.paginadoDeclaracion='#<portlet:namespace/>pager_formato_declaracion';
 		
+		formato13A.buildGridsDeclaracion();
+		
 		if(operacion=='CREATE'){
 			
 			formato13A.codEmpresa.change(function(){
-				formato13A.cargarPeriodoDeclaracion();
+				$.when( formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
+			});
+			
+			formato13A.peridoDeclaracion.change(function(){
+				formato13A.buscarDetalles();
 			});
 			formato13A.codEmpresa.trigger('change');
 		}
@@ -63,7 +71,7 @@ var formato13A= {
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
 	               { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
 	               { name: 'etapa', index: 'etapa',width: 50},
-	               { name: 'descGrupoInformacion', index: 'anoEjecucion', width: 50},
+	               { name: 'descGrupoInformacion', index: 'descGrupoInformacion', width: 50},
 	               { name: 'view', index: 'view', width: 20,align:'center' },
 	               { name: 'edit', index: 'edit', width: 20,align:'center' },
 	               { name: 'elim', index: 'elim', width: 20,align:'center' },
@@ -104,7 +112,7 @@ var formato13A= {
 		       } 
 		}); 
 	},
-	buscar : function () {	
+	buscarFormatos : function () {	
 
 		jQuery.ajax({			
 					url: formato13A.urlBusqueda+'&'+formato13A.formBusqueda.serialize(),
@@ -133,7 +141,7 @@ var formato13A= {
 		$.unblockUI();
 	},
 	cargarPeriodoDeclaracion : function(){
-		jQuery.ajax({
+		return jQuery.ajax({
 			url: formato13A.urlCargaDeclaracion,
 			type: 'post',
 			dataType: 'json',
@@ -157,18 +165,22 @@ var formato13A= {
 	buildGridsDeclaracion : function () {	
 		formato13A.tablaDeclaracion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año / Mes Alta','Cód. Ubigeo','Loc.','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede Atención','Visualizar','Editar','Anular','',''],
+	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST','Num.Benef','Sede que Atiende','Visualizar','Editar','Anular','','','','',''],
 	       colModel: [
-					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
-	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
-	               { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
-	               { name: 'etapa', index: 'etapa',width: 50},
-	               { name: 'descGrupoInformacion', index: 'anoEjecucion', width: 50},
+					{ name: 'anioMesAlta', index: 'anioMesAlta', width: 50},
+		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
+		            { name: 'descripcionLocalidad', index: 'descripcionLocalidad', width: 50},
+	                { name: 'codSectorTipico', index: 'codSectorTipico', width: 50},
+	                { name: 'numeroBenefiPoteSectTipico', index: 'numeroBenefiPoteSectTipico', width: 50},
+	                { name: 'nombreSedeAtiende', index: 'nombreSedeAtiende', width: 50},
 	               { name: 'view', index: 'view', width: 20,align:'center' },
 	               { name: 'edit', index: 'edit', width: 20,align:'center' },
 	               { name: 'elim', index: 'elim', width: 20,align:'center' },
 	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
-	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true}
+	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
+	               { name: 'anoPresentacion', index: 'anoPresentacion', hidden: true },   
+	               { name: 'etapa', index: 'etapa',hidden: true},
+	               { name: 'idZonaBenef', index: 'idZonaBenef', hidden: true}
 		   	    ],
 		   	 multiselect: false,
 				rowNum:10,
@@ -203,6 +215,28 @@ var formato13A= {
 		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
 		       } 
 		}); 
+	},
+	buscarDetalles : function () {	
+
+		return jQuery.ajax({			
+					url: formato13A.urlBusquedaDetalle+'&'+formato13A.formNuevo.serialize(),
+					type: 'post',
+					dataType: 'json',
+					beforeSend:function(){
+						formato13A.blockUI();
+					},				
+					success: function(gridData) {					
+						formato13A.tablaDeclaracion.clearGridData(true);
+						formato13A.tablaDeclaracion.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+						formato13A.tablaDeclaracion[0].refreshIndex();
+						formato13A.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato13A.unblockUI();
+					}
+			});
+
+
 	}
 };
 </script>
