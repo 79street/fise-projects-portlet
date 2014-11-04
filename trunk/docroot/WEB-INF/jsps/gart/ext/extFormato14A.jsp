@@ -291,7 +291,9 @@ var formato14A= {
 		 var anioFinVigSes = formato14A.anioFinVigSes.val();
 		 var etapaSes = formato14A.etapaSes.val();
 		 //
+		 
 		 var flag = formato14A.flag.val();
+		 //alert('hola mundo '+flag);
 		 if( flag=='N' ){//solo ocurre cuando hay un error en la carga de formularios, sino se muestra el proceso normal
 			 formato14A.inicializarFormulario();
 			 formato14A.mostrarUltimoFormato();
@@ -306,9 +308,9 @@ var formato14A= {
 			formato14A.botonValidacion.css('display','none');
 			formato14A.<portlet:namespace/>loadPeriodo(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
 		}else{
-			//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
+			//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioIniVigSes+','+anioFinVigSes+','+etapaSes);
 			 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioIniVigSes != '' && anioFinVigSes != '' && etapaSes != ''){
-			 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes);
+				 formato14A.editarFormato(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes);
 			 }
 		 }
 		 //SE CARGA VALORES POR DEFECTO PARA LA BUSQUEDA
@@ -1369,41 +1371,21 @@ var formato14A= {
 					<portlet:namespace />flagPeriodo: formato14A.f_flagPeriodo.val(),
 					<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
 					<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
-					<portlet:namespace />etapa: formato14A.etapaEdit.val()/*,
-					<portlet:namespace />nroEmpadR: $('#i_nroEmpad_r').val(),
-					<portlet:namespace />costoUnitEmpadR: $('#i_costoUnitEmpad_r').val(),
-					<portlet:namespace />nroAgentR: $('#i_nroAgentGlp_r').val(),
-					<portlet:namespace />costoUnitAgentR: $('#i_costoUnitAgent_r').val(),
-					<portlet:namespace />despPersonalR: $('#i_despPersonal_r').val(),
-					<portlet:namespace />activExtraordR: $('#i_activExtraord_r').val(),
-					//
-					<portlet:namespace />nroEmpadP: $('#i_nroEmpad_p').val(),
-					<portlet:namespace />costoUnitEmpadP: $('#i_costoUnitEmpad_p').val(),
-					<portlet:namespace />nroAgentP: $('#i_nroAgentGlp_p').val(),
-					<portlet:namespace />costoUnitAgentP: $('#i_costoUnitAgent_p').val(),
-					<portlet:namespace />despPersonalP: $('#i_despPersonal_p').val(),
-					<portlet:namespace />activExtraordP: $('#i_activExtraord_p').val(),
-					//
-					<portlet:namespace />nroEmpadL: $('#i_nroEmpad_l').val(),
-					<portlet:namespace />costoUnitEmpadL: $('#i_costoUnitEmpad_l').val(),
-					<portlet:namespace />nroAgentL: $('#i_nroAgentGlp_l').val(),
-					<portlet:namespace />costoUnitAgentL: $('#i_costoUnitAgent_l').val(),
-					<portlet:namespace />despPersonalL: $('#i_despPersonal_l').val(),
-					<portlet:namespace />activExtraordL: $('#i_activExtraord_l').val()*/
+					<portlet:namespace />etapa: formato14A.etapaEdit.val()
 					},
 				success: function(data) {			
 					if (data.resultado == "OK"){				
 						var addhtml2='Datos guardados satisfactoriamente';
 						formato14A.dialogMessageContent.html(addhtml2);
 						formato14A.dialogMessage.dialog("open");
-						//---mostrarFormularioModificado();
+						formato14A.mostrarFormularioModificado();
 						formato14A.initBlockUI();
 					}
 					else if(data.resultado == "Error"){				
 						var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
 						formato14A.dialogMessageContent.html(addhtml2);
 						formato14A.dialogMessage.dialog("open");
-						//---mostrarUltimoFormato();
+						formato14A.mostrarUltimoFormato();
 						formato14A.initBlockUI();
 					}
 				},error : function(){
@@ -1463,7 +1445,7 @@ var formato14A= {
 	mostrarFormularioModificado : function(){
 		var codEmpM = formato14A.f_empresa.val();
 		var anioPresM = formato14A.f_periodoEnvio.val().substring(0,4);
-		//----var mesPresM = formato14A.f_periodoEnvio.substring(4,6);
+		var mesPresM = formato14A.f_periodoEnvio.val().substring(4,6);
 		var anioIniVigM;
 		var anioFinVigM;
 		 if( formato14A.f_flagPeriodo.val()=='S' ){
