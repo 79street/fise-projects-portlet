@@ -1879,7 +1879,7 @@ public class Formato12AGartController {
 			    			
 			    	/**exportar excel*/
 			    	XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
-					xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_VALIDACION);
+					xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_VALIDACION_F12A);
 					List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
 					tables.add(new XlsTableConfig(listaObservaciones,FiseConstants.TIPO_FORMATO_VAL_12A));
 					List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
