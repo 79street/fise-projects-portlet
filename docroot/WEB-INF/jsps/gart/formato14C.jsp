@@ -15,6 +15,11 @@ $(document).ready(function () {
 
 <form:form method="POST" modelAttribute="formato14CBean">
 
+   <!-- VALORES HIDDEN -->
+   <input type="hidden" id="<portlet:namespace/>Estado" value="" />
+
+
+
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
@@ -166,7 +171,7 @@ $(document).ready(function () {
 			 
 				<div id="<portlet:namespace/>div_nuevo" class="net-frame-border" style="display: none;">
 					
-					<input type="hidden" id="etapaEdit" value="" />
+					<input type="hidden" id="<portlet:namespace/>etapaEdit" value="" />
 					
 					<table border="0" width="100%">
 						<tr>
@@ -373,16 +378,20 @@ $(document).ready(function () {
 													 <label style="margin-left: 0.5cm;">1.2 Número Total Beneficiarios Empadronados a Diciembre del periodo anterior</label>
 													</td>
 													<!-- RURAL -->
-													<td style="text-align:center"><form:input id="numRural" path="numRural" size="5"/></td>
+													<td style="text-align:center">
+													   <form:input id="numRural" path="numRural" size="5" cssClass="target" cssStyle="text-align: right;"/>
+													</td>
 													<td style="text-align:center" colspan="4"></td> 
 													<!-- URBANA PROVINCIAS -->
-													<td style="text-align:center"><form:input id="numUrbProv" path="numUrbProv" size="5"/></td>
+													<td style="text-align:center">
+													   <form:input id="numUrbProv" path="numUrbProv" size="5" cssClass="target" cssStyle="text-align: right;"/>
+													</td>
 													<td style="text-align:center" colspan="4"></td> 
 													<!-- URBANA LIMA -->
-													<td style="text-align:center"><form:input id="numUrbLima" path="numUrbLima" size="5"/></td>
+													<td style="text-align:center"><form:input id="numUrbLima" path="numUrbLima" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
 													<td style="text-align:center" colspan="4"></td> 	
 													<!-- TOTAL -->
-													<td style="text-align:center"><form:input id="numTotal" path="numTotal" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="numTotal" path="numTotal" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<td style="text-align:center;display:none"></td>	 				
 												</tr>
 												<tr>
@@ -404,130 +413,130 @@ $(document).ready(function () {
 													 <label  style="margin-left: 0.5cm;">2.1  Costo de Coordinador</label> 
 													</td>
 													<!-- RURAL -->
-													<td style="text-align:center"><form:input id="canDRCoord" path="canDRCoord" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDRCoord" path="costDRCoord" size="5"/></td> 
-													<td style="text-align:center"><form:input id="canIRCoord" path="canIRCoord" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costIRCoord" path="costIRCoord" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalRCoord" path="costTotalRCoord" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="canDRCoord" path="canDRCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDRCoord" path="costDRCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canIRCoord" path="canIRCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costIRCoord" path="costIRCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalRCoord" path="costTotalRCoord" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<!-- URBANA PROVINCIAS -->
-													<td style="text-align:center"><form:input id="canDPCoord" path="canDPCoord" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDPCoord" path="costDPCoord" size="5"/></td> 
-													<td style="text-align:center"><form:input id="canIPCoord" path="canIPCoord" size="5" /></td>
-													<td style="text-align:center"><form:input id="costIPCoord" path="costIPCoord" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalPCoord" path="costTotalPCoord" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="canDPCoord" path="canDPCoord" size="5" cssClass="target" cssStyle="text-align: right;" /></td> 
+													<td style="text-align:center"><form:input id="costDPCoord" path="costDPCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canIPCoord" path="canIPCoord" size="5" cssClass="target" cssStyle="text-align: right;" /></td>
+													<td style="text-align:center"><form:input id="costIPCoord" path="costIPCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalPCoord" path="costTotalPCoord" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<!-- URBANA LIMA -->
-													<td style="text-align:center"><form:input id="canDLCoord" path="canDLCoord" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDLCoord" path="costDLCoord" size="5"/></td> 
-													<td style="text-align:center"><form:input id="canILCoord" path="canILCoord" size="5" /></td>
-													<td style="text-align:center"><form:input id="costILCoord" path="costILCoord" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalLCoord" path="costTotalLCoord" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="canDLCoord" path="canDLCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDLCoord" path="costDLCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canILCoord" path="canILCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costILCoord" path="costILCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalLCoord" path="costTotalLCoord" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<!-- TOTAL -->	
-													<td style="text-align:center"><form:input id="canTotalCoord" path="canTotalCoord" size="5" disabled="true"/></td>
-													<td style="text-align:center"><form:input id="costTotalCoord" path="costTotalCoord" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canTotalCoord" path="canTotalCoord" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costTotalCoord" path="costTotalCoord" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 												</tr>
 												<tr>
 													<td colspan="2">
 													 <label style="margin-left: 0.5cm;">2.2  Costo de Supervisor</label>
 													</td>
 													<!-- RURAL -->
-													<td style="text-align:center"><form:input id="canDRSupe" path="canDRSupe" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDRSupe" path="costDRSupe" size="5"/></td> 
-													<td style="text-align:center"><form:input id="canIRSupe" path="canIRSupe" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costIRSupe" path="costIRSupe" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalRSupe" path="costTotalRSupe" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canDRSupe" path="canDRSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDRSupe" path="costDRSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canIRSupe" path="canIRSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costIRSupe" path="costIRSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalRSupe" path="costTotalRSupe" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 													<!-- URBANA PROVINCIAS -->	
-													<td style="text-align:center"><form:input id="canDPSupe" path="canDPSupe" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDPSupe" path="costDPSupe" size="5"/></td> 
-													<td style="text-align:center"><form:input id="canIPSupe" path="canIPSupe" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costIPSupe" path="costIPSupe" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalPSupe" path="costTotalPSupe" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="canDPSupe" path="canDPSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDPSupe" path="costDPSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canIPSupe" path="canIPSupe" size="5" cssClass="target" cssStyle="text-align: right;" /></td> 
+													<td style="text-align:center"><form:input id="costIPSupe" path="costIPSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalPSupe" path="costTotalPSupe" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<!-- URBANA LIMA -->	
-													<td style="text-align:center"><form:input id="canDLSupe" path="canDLSupe" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDLSupe" path="costDLSupe" size="5"/></td> 
-													<td style="text-align:center"><form:input id="canILSupe" path="canILSupe" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costILSupe" path="costILSupe" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalPSupe" path="costTotalPSupe" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canDLSupe" path="canDLSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDLSupe" path="costDLSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canILSupe" path="canILSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costILSupe" path="costILSupe" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalLSupe" path="costTotalLSupe" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 													<!-- TOTAL -->	
-													<td style="text-align:center"><form:input id="canTotalSupe" path="canTotalSupe" size="5" disabled="true"/></td>
-													<td style="text-align:center"><form:input id="costTotalSupe" path="costTotalSupe" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canTotalSupe" path="canTotalSupe" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costTotalSupe" path="costTotalSupe" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 												</tr>
 												<tr>
 													<td colspan="2">
 													 <label style="margin-left: 0.5cm;">2.3  Costo de Gestor</label>
 													</td>
 													<!-- RURAL -->
-													<td style="text-align:center"><form:input id="canDRGest" path="canDRGest" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDRGest" path="costDRGest" size="5"/></td>
-													<td style="text-align:center"><form:input id="canIRGest" path="canIRGest" size="5" /></td>  
-													<td style="text-align:center"><form:input id="costIRGest" path="costIRGest" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalRGest" path="costTotalRGest" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="canDRGest" path="canDRGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDRGest" path="costDRGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="canIRGest" path="canIRGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td>  
+													<td style="text-align:center"><form:input id="costIRGest" path="costIRGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalRGest" path="costTotalRGest" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<!-- URBANA PROVINCIAS -->
-													<td style="text-align:center"><form:input id="canDPGest" path="canDPGest" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDPGest" path="costDPGest" size="5"/></td> 
-													<td style="text-align:center"><form:input id="canIPGest" path="canIPGest" size="5" /></td>
-													<td style="text-align:center"><form:input id="costIPGest" path="costIPGest" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalPGest" path="costTotalPGest" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="canDPGest" path="canDPGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDPGest" path="costDPGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canIPGest" path="canIPGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costIPGest" path="costIPGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalPGest" path="costTotalPGest" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<!-- URBANA LIMA -->
-													<td style="text-align:center"><form:input id="canDLGest" path="canDLGest" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDLGest" path="costDLGest" size="5"/></td> 
-													<td style="text-align:center"><form:input id="canILGest" path="canILGest" size="5" /></td>
-													<td style="text-align:center"><form:input id="costILGest" path="costILGest" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalLGest" path="costTotalLGest" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canDLGest" path="canDLGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDLGest" path="costDLGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canILGest" path="canILGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costILGest" path="costILGest" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalLGest" path="costTotalLGest" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 													<!-- TOTAL -->	
-													<td style="text-align:center"><form:input id="canTotalGest" path="canTotalGest" size="5" disabled="true"/></td>
-													<td style="text-align:center"><form:input id="costTotalGest" path="costTotalGest" size="5" disabled="true"/></td>		
+													<td style="text-align:center"><form:input id="canTotalGest" path="canTotalGest" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costTotalGest" path="costTotalGest" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>		
 												</tr>
 												<tr>
 													<td colspan="2">
 													 <label style="margin-left: 0.5cm;">2.4  Costo de Asistente y/o Auxiliar</label>
 													</td>
 													<!-- RURAL -->
-													<td style="text-align:center"><form:input id="canDRAsist" path="canDRAsist" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDRAsist" path="costDRAsist" size="5"/></td>
-													<td style="text-align:center"><form:input id="canIRAsist" path="canIRAsist" size="5" /></td>  
-													<td style="text-align:center"><form:input id="costIRAsist" path="costIRAsist" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalRAsist" path="costTotalRAsist" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canDRAsist" path="canDRAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDRAsist" path="costDRAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="canIRAsist" path="canIRAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td>  
+													<td style="text-align:center"><form:input id="costIRAsist" path="costIRAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalRAsist" path="costTotalRAsist" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 													<!-- URBANA PROVINCIAS -->	
-													<td style="text-align:center"><form:input id="canDPAsist" path="canDPAsist" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDPAsist" path="costDPAsist" size="5"/></td>
-													<td style="text-align:center"><form:input id="canIPAsist" path="canIPAsist" size="5" /></td>  
-													<td style="text-align:center"><form:input id="costIPAsist" path="costIPAsist" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalPAsist" path="costTotalPAsist" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="canDPAsist" path="canDPAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDPAsist" path="costDPAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="canIPAsist" path="canIPAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td>  
+													<td style="text-align:center"><form:input id="costIPAsist" path="costIPAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalPAsist" path="costTotalPAsist" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<!-- URBANA LIMA -->	
-													<td style="text-align:center"><form:input id="canDLAsist" path="canDLAsist" size="5" /></td> 
-													<td style="text-align:center"><form:input id="costDLAsist" path="costDLAsist" size="5"/></td>
-													<td style="text-align:center"><form:input id="canILAsist" path="canILAsist" size="5" /></td>  
-													<td style="text-align:center"><form:input id="costILAsist" path="costILAsist" size="5"/></td> 
-													<td style="text-align:center"><form:input id="costTotalLAsist" path="costTotalLAsist" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canDLAsist" path="canDLAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDLAsist" path="costDLAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="canILAsist" path="canILAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td>  
+													<td style="text-align:center"><form:input id="costILAsist" path="costILAsist" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costTotalLAsist" path="costTotalLAsist" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 													<!-- TOTAL -->	
-													<td style="text-align:center"><form:input id="canTotalAsist" path="canTotalAsist" size="5" disabled="true"/></td>
-													<td style="text-align:center"><form:input id="costTotalAsist" path="costTotalAsist" size="5" disabled="true"/></td>			
+													<td style="text-align:center"><form:input id="canTotalAsist" path="canTotalAsist" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costTotalAsist" path="costTotalAsist" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>			
 												</tr>
 												<tr>
 													<td colspan="2">
 													 <label style="margin-left: 0.5cm;font-weight:bold">2.5  Costo Total por Gestion de Personal (2.1)+(2.2)+(2.3)+(2.4)</label>
 													</td>
 													<!-- RURAL -->
-													<td style="text-align:center"><form:input id="canDRGP" path="canDRGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="costDRGP" path="costDRGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="canIRGP" path="canIRGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="costIRGP" path="costIRGP" size="5" disabled="true"/></td>
-													<td style="text-align:center"><form:input id="costTotalRGP" path="costTotalRGP" size="5" disabled="true"/></td>
+													<td style="text-align:center"><form:input id="canDRGP" path="canDRGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDRGP" path="costDRGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canIRGP" path="canIRGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costIRGP" path="costIRGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costTotalRGP" path="costTotalRGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
 													<!-- URBANA PROVINCIAS -->
-													<td style="text-align:center"><form:input id="canDPGP" path="canDPGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="costDPGP" path="costDPGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="canIPGP" path="canIPGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="costIPGP" path="costIPGP" size="5" disabled="true"/></td>
-													<td style="text-align:center"><form:input id="costTotalPGP" path="costTotalPGP" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canDPGP" path="canDPGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDPGP" path="costDPGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canIPGP" path="canIPGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costIPGP" path="costIPGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costTotalPGP" path="costTotalPGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 													<!-- URBANA LIMA -->
-													<td style="text-align:center"><form:input id="canDLGP" path="canDLGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="costDLGP" path="costDLGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="canILGP" path="canILGP" size="5" disabled="true"/></td> 
-													<td style="text-align:center"><form:input id="costILGP" path="costILGP" size="5" disabled="true"/></td>
-													<td style="text-align:center"><form:input id="costTotalLGP" path="costTotalLGP" size="5" disabled="true"/></td>	
+													<td style="text-align:center"><form:input id="canDLGP" path="canDLGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costDLGP" path="costDLGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canILGP" path="canILGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="costILGP" path="costILGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costTotalLGP" path="costTotalLGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>	
 													<!-- TOTAL -->	
-													<td style="text-align:center"><form:input id="canTotalGP" path="canTotalGP" size="5" disabled="true"/></td>
-													<td style="text-align:center"><form:input id="costTotalGP" path="costTotalGP" size="5" disabled="true"/></td>				
+													<td style="text-align:center"><form:input id="canTotalGP" path="canTotalGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="costTotalGP" path="costTotalGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>				
 												</tr>
 												<tr>
 													<td colspan="2"> 
@@ -535,25 +544,25 @@ $(document).ready(function () {
 													</td>
 													<!-- RURAL -->
 													<td style="text-align:center"></td>
-													<td style="text-align:center"><form:input id="costoPromRural" path="costoPromRural" size="5"/></td>
+													<td style="text-align:center"><form:input id="costoPromRural" path="costoPromRural" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
 													<td style="text-align:center"></td>
 													<td style="text-align:center"></td>
 													<td style="text-align:center"></td>
 													<!-- URBANA PROVINCIAS --> 
 													<td style="text-align:center"></td>
-													<td style="text-align:center"><form:input id="costoPromUrbProv" path="costoPromUrbProv" size="5"/></td>
+													<td style="text-align:center"><form:input id="costoPromUrbProv" path="costoPromUrbProv" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
 													<td style="text-align:center"></td>
 													<td style="text-align:center"></td>
 													<td style="text-align:center"></td>
 													<!-- URBANA LIMA --> 
 													<td style="text-align:center"></td>
-													<td style="text-align:center"><form:input id="costoPromUrbLima" path="costoPromUrbLima" size="5"/></td>
+													<td style="text-align:center"><form:input id="costoPromUrbLima" path="costoPromUrbLima" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
 													<td style="text-align:center"></td>
 													<td style="text-align:center"></td>
 													<td style="text-align:center"></td>
 													<!-- TOTAL --> 
 													<td style="text-align:center"></td>
-													<td style="text-align:center"><form:input id="costTotalPromedio" path="costTotalPromedio" size="5"/></td>
+													<td style="text-align:center"><form:input id="costTotalPromedio" path="costTotalPromedio" disabled="true" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
 																					
 												</tr>
 											</table> 	
