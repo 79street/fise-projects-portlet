@@ -266,8 +266,8 @@ public class Formato14CGartController {
 						f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 						
 						
-						//f.setAnioInicioVig("2009");
-						//f.setAnioFinVig("2014");
+						f.setAnioInicioVig("2009");
+						f.setAnioFinVig("2014");
 						
 						/*if( "S".equals(f.getFlagPeriodoEjecucion()) ){
 							f.setAnioInicioVigencia(f.getAnioInicioVigencia());
@@ -278,8 +278,8 @@ public class Formato14CGartController {
 						}*/					
 					}					
 					ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);					
-					//f.setUsuario(themeDisplay.getUser().getLogin());
-					//f.setTerminal(themeDisplay.getUser().getLoginIP());		
+					f.setUsuario(themeDisplay.getUser().getLogin());
+					f.setTerminal(themeDisplay.getUser().getLoginIP());		
 					logger.info("Enviando el formulario al service"); 
 					formato14CGartService.insertarDatosFormato14C(f);
 					jsonObj.put("resultado", "OK");	   				
@@ -291,8 +291,7 @@ public class Formato14CGartController {
 					 					 				
 			}else if(tipo.equals(FiseConstants.COD_UPDATE)){
 				logger.info("entro a modificar valores en el formato 14C");				
-				try {
-					
+				try {					
 					//FiseFormato14AC formato = new FiseFormato14AC();
 					//FiseFormato14ACPK pk = new FiseFormato14ACPK();
 					String codEmpresa = request.getParameter("codEmpresa");
