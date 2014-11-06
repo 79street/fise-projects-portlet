@@ -1,5 +1,7 @@
 package gob.osinergmin.fise.common.util;
 
+import gob.osinergmin.fise.bean.CorreoBean;
+import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.FiseObservacion;
@@ -39,6 +41,8 @@ import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -293,17 +297,28 @@ public class FiseUtil {
 		return mapaZonaBenef;
 	}
 	
-	public void enviarMailAdjunto(List<FileEntryJSP> listaArchivo) throws Exception {
+	public void enviarMailAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo, String descripcionFormato) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		try {
-			//validar los correos remitente y destino
-			String correoR="informacion@sphere.com.pe";//el que envia
-			String correoD="edwin.heredia@sphere.com.pe";//al que le llega
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
-			mailMessage.setBody("<html><head></head><body>Envio de Correo de pruebas</body></html>");
+			
+			String nombreUsuario=themeDisplay.getUser().getLogin();
+			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
+			String correoD = themeDisplay.getUser().getEmailAddress();
+			
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
+			
 			mailMessage.setFrom(new InternetAddress(correoR));
-			mailMessage.setSubject("Ejemplo de correo");
+			mailMessage.setSubject(" Notificación de Envío de Formato FISE");
 			mailMessage.setTo(new InternetAddress(correoD));
+			if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
+				mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
+			}
+			mailMessage.setBody("<html><head></head><body><p>Usuario "
+					+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que OSINERGMIN-GART ha recepcionado el "
+					+ descripcionFormato + "<u></u><u></u></p><p><u></u><u></u></p><p>Se adjunta la constancia de envío, el formato y las observaciones<u></u><u></u></p>"
+					+ "<p><u></u>&nbsp;<u></u></p><p>Atentamente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 			for (FileEntryJSP fej : listaArchivo) {
 				mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 			}
@@ -313,6 +328,30 @@ public class FiseUtil {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+	
+	public InternetAddress[] getArrayCorreoDestinatarios(List<CorreoBean> listaCorreo) throws Exception{
+		InternetAddress[] arrayCorreo = new InternetAddress[listaCorreo.size()];
+        for (int i = 0; i < listaCorreo.size(); i++){
+        	arrayCorreo[i] = new InternetAddress(listaCorreo.get(i).getDireccionCorreo());
+        }
+        return arrayCorreo;
+	}
+	
+	public String agregarErrorBeanConMensaje(String mensaje,Map<String,String> mapaError, List<MensajeErrorBean> listaError, int idError, String codigoError){
+		mensaje = mensaje + mapaError.get(codigoError)+FiseConstants.SALTO_LINEA;
+		MensajeErrorBean error = new MensajeErrorBean();
+		error.setId(idError);
+		error.setDescripcion(mapaError.get(codigoError));
+		listaError.add(error);
+		return mensaje;
+	}
+	
+	public void agregarErrorBean(Map<String,String> mapaError, List<MensajeErrorBean> listaError, int idError, String codigoError){
+		MensajeErrorBean error = new MensajeErrorBean();
+		error.setId(idError);
+		error.setDescripcion(mapaError.get(codigoError));
+		listaError.add(error);
 	}
 	
 }
