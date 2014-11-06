@@ -16,7 +16,7 @@ $(document).ready(function () {
 <form:form method="POST" modelAttribute="formato14CBean">
 
    <!-- VALORES HIDDEN -->
-   <input type="hidden" id="<portlet:namespace/>Estado" value="" />
+   <input type="hidden" id="estadoCrudF14C" value="" />
 
 
 
@@ -169,9 +169,7 @@ $(document).ready(function () {
 			
 			 <!-- DIV PARA NUEVO REGISTRO -->	
 			 
-				<div id="<portlet:namespace/>div_nuevo" class="net-frame-border" style="display: none;">
-					
-					<input type="hidden" id="<portlet:namespace/>etapaEdit" value="" />
+				<div id="<portlet:namespace/>div_nuevo" class="net-frame-border" style="display: none;">			
 					
 					<table border="0" width="100%">
 						<tr>
@@ -610,9 +608,12 @@ $(document).ready(function () {
 														 <input type="button" class="boton" name="<portlet:namespace/>reporteExcelF14C" style="display: none;"
 																id="<portlet:namespace/>reporteExcelF14C" class="button net-button-small" value="Exportar excel" />
 													 </td>
-													<td width="17%" align="center">
+													<td width="17%" align="center">													  
+														  <input type="button" class="net-button-small" id="<portlet:namespace/>actualizarFormatoF14C"
+															   name="<portlet:namespace/>actualizarFormatoF14C" value="Actualizar" style="display: none;"/>
+																												
 														<input type="button" class="net-button-small" id="<portlet:namespace/>guardarFormatoF14C"
-															   name="<portlet:namespace/>guardarFormatoF14C" value="Grabar" />
+															   name="<portlet:namespace/>guardarFormatoF14C" value="Grabar" />									   
 													</td>
 													<td width="17%" align="center">
 														<input type="button" class="net-button-small" id="<portlet:namespace/>validacionFormatoF14C"
