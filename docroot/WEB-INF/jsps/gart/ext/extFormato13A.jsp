@@ -165,13 +165,21 @@ var formato13A= {
 	buildGridsDeclaracion : function () {	
 		formato13A.tablaDeclaracion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST','Num.Benef','Sede que Atiende','Visualizar','Editar','Anular','','','','',''],
+	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','Editar','Anular','','','',''],
 	       colModel: [
 					{ name: 'anioMesAlta', index: 'anioMesAlta', width: 50},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
 		            { name: 'descripcionLocalidad', index: 'descripcionLocalidad', width: 50},
-	                { name: 'codSectorTipico', index: 'codSectorTipico', width: 50},
-	                { name: 'numeroBenefiPoteSectTipico', index: 'numeroBenefiPoteSectTipico', width: 50},
+	                { name: 'st1', index: 'st1', width: 50},
+	                { name: 'st2', index: 'st2', width: 50},
+	                { name: 'st3', index: 'st3', width: 50},
+	                { name: 'st4', index: 'st4', width: 50},
+	                { name: 'st5', index: 'st5', width: 50},
+	                { name: 'st6', index: 'st6', width: 50},
+	                { name: 'stserv', index: 'stserv', width: 50},
+	                { name: 'stesp', index: 'stesp', width: 50},
+	                { name: 'total', index: 'total', width: 50},
+	                { name: 'idZonaBenef', index: 'idZonaBenef', width: 50},
 	                { name: 'nombreSedeAtiende', index: 'nombreSedeAtiende', width: 50},
 	               { name: 'view', index: 'view', width: 20,align:'center' },
 	               { name: 'edit', index: 'edit', width: 20,align:'center' },
@@ -179,8 +187,7 @@ var formato13A= {
 	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', hidden: true },   
-	               { name: 'etapa', index: 'etapa',hidden: true},
-	               { name: 'idZonaBenef', index: 'idZonaBenef', hidden: true}
+	               { name: 'etapa', index: 'etapa',hidden: true}
 		   	    ],
 		   	 multiselect: false,
 				rowNum:10,
