@@ -1268,6 +1268,16 @@ var formato14A= {
 		formato14A.f_empresa.val(row.codEmpresa);
 		//seteamos el concatenado
 		formato14A.f_periodoEnvio.val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
+		
+		//seteamos el periodo envio, cargado de base de datos
+		dwr.util.removeAllOptions("periodoEnvio");
+		var codigo=''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa;
+		var descripcion=formato14A.mostrarDescripcionPeriodo(row.anoPresentacion, row.mesPresentacion, row.etapa);
+   		
+		//alert(formato14A.mostrarDescripcionPeriodo(row.anoPresentacion, row.mesPresentacion, row.etapa));
+		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+   		dwr.util.addOptions("periodoEnvio", dataPeriodo,"codigoItem","descripcionItem");
+		//
 		formato14A.f_flagPeriodo.val(row.flagPeriodoEjecucion);
 		if( formato14A.f_flagPeriodo.val()=='S' ){
 			$('#anioInicioVigencia').val(row.anoIniVigencia);
@@ -1640,15 +1650,13 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				/*<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
-				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
-				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
-				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
-				<portlet:namespace />etapa: $('#etapaEdit').val(),
-				<portlet:namespace />nombreReporte: 'formato12A',
-				<portlet:namespace />nombreArchivo: 'formato12A',
-				<portlet:namespace />tipoArchivo: '1'//XLS*/
+				<portlet:namespace />codEmpresa: formato14A.f_empresa.val(),
+				<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
+				<portlet:namespace />anoEjecucion: $('#anioInicioVigencia').val(),
+				<portlet:namespace />mesEjecucion: $('#anioFinVigencia').val(),
+				<portlet:namespace />nombreReporte: 'formato14A',
+				<portlet:namespace />nombreArchivo: 'formato14A',
+				<portlet:namespace />tipoArchivo: '1'//XLS
 			},
 			success : function(gridData) {
 				//alert('entro');
@@ -1668,18 +1676,17 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				/*<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
-				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
-				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
-				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()*/
+				<portlet:namespace />codEmpresa: formato14A.f_empresa.val(),
+				<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
+				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val()
 			},
 			success : function(data) {
 				if( data!=null ){
 					formato14A.dialogObservacion.dialog("open");
-					formato14.tablaObservacion.clearGridData(true);
-					formato14.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
-					formato14.tablaObservacion[0].refreshIndex();
+					formato14A.tablaObservacion.clearGridData(true);
+					formato14A.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+					formato14A.tablaObservacion[0].refreshIndex();
 					formato14A.initBlockUI();
 				}
 
@@ -1695,9 +1702,9 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				/*<portlet:namespace />nombreReporte: 'validacion14A',
-				<portlet:namespace />nombreArchivo: 'validacion14A',
-				<portlet:namespace />tipoArchivo: '0'//PDF*/
+				<portlet:namespace />nombreReporte: 'validacion',
+				<portlet:namespace />nombreArchivo: 'validacion',
+				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
 				formato14A.verReporte();
@@ -1718,14 +1725,13 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				/*<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
-				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
-				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
-				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+				<portlet:namespace />codEmpresa: formato14A.f_empresa.val(),
+				<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
+				<portlet:namespace />anoEjecucion: $('#anioInicioVigencia').val(),
+				<portlet:namespace />mesEjecucion: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato14A',
 				<portlet:namespace />nombreArchivo: 'formato14A',
-				<portlet:namespace />tipoArchivo: '0'//PDF*/
+				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
 				var addhtml='Se realizó el envío satisfactoriamente';					
@@ -1776,6 +1782,15 @@ var formato14A= {
 		});
 	},
 	//
+	mostrarDescripcionPeriodo : function(anio,mes,etapa){
+		  var monthNames = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+		  var descripcionPeriodo;
+		  //alert(monthNames[mes-1]);
+		  descripcionPeriodo=''+monthNames[mes-1]+'-'+anio+' / '+etapa;
+		  //alert(descripcionPeriodo);
+		  return descripcionPeriodo;
+	},
+	//
 	blockUI : function(){
 		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
 	},
@@ -1817,7 +1832,7 @@ var formato14A= {
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
-					//<portlet:namespace/>envioDefinitivo();
+					formato14A.<portlet:namespace/>envioDefinitivo();
 					$( this ).dialog("close");
 				},
 				"No": function() {				

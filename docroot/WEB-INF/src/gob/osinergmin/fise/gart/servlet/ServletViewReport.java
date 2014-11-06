@@ -89,7 +89,7 @@ public class ServletViewReport extends HttpServlet {
 				//colocar si se va a enviar lista o vacio
 			}
 			//
-			else if( FiseConstants.TIPO_FORMATO_VAL_12A.equals(tipoFormato) ){
+			else if( FiseConstants.TIPO_FORMATO_VAL.equals(tipoFormato) ){
 				coleccion = new JRBeanCollectionDataSource(lista);
 			}
 			
