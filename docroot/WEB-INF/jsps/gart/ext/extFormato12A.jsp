@@ -984,7 +984,16 @@ function FillEditformato(row){
 	$('#s_empresa').val(row.codEmpresa);
 	//seteamos el concatenado
 	$('#s_periodoenvio_present').val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
+	
+	
+	dwr.util.removeAllOptions("s_periodoenvio_present");
+	var codigo=''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa;
+	var descripcion=formato14A.mostrarDescripcionPeriodo(row.anoPresentacion, row.mesPresentacion, row.etapa);
+	var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+	dwr.util.addOptions("s_periodoenvio_present", dataPeriodo,"codigoItem","descripcionItem");
+	
 	$('#flagPeriodoEjecucion').val(row.flagPeriodoEjecucion);
+	
 	if( $('#flagPeriodoEjecucion').val()=='S' ){
 		$('#i_anioejecuc').val(row.anoEjecucion).css('text-align','right');
 		$('#s_mes_ejecuc').val(row.mesEjecucion);
@@ -1460,6 +1469,14 @@ function <portlet:namespace/>envioDefinitivo(){
 			initBlockUI();
 		}
 	});
+}
+function mostrarDescripcionPeriodo(anio,mes,etapa){
+	  var monthNames = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+	  var descripcionPeriodo;
+	  //alert(monthNames[mes-1]);
+	  descripcionPeriodo=''+monthNames[mes-1]+'-'+anio+' / '+etapa;
+	  //alert(descripcionPeriodo);
+	  return descripcionPeriodo;
 }
 </script>
 
