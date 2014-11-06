@@ -1,5 +1,6 @@
 package gob.osinergmin.fise.gart.json;
 
+import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
 
@@ -46,6 +47,35 @@ public class Formato13AGartJSON {
 		jsonObj.put("anioMesAlta",fiseFormato13AD.getAnoAlta()+"-"+fiseFormato13AD.getMesAlta());
 		jsonObj.put("descripcionLocalidad",fiseFormato13AD.getDescripcionLocalidad());
 		jsonObj.put("numeroBenefiPoteSectTipico",fiseFormato13AD.getNumeroBenefiPoteSectTipico());
+		jsonObj.put("nombreSedeAtiende",fiseFormato13AD.getNombreSedeAtiende());
+		return jsonObj;
+	}
+	
+	public JSONObject asJSONObject(Formato13ADReportBean fiseFormato13AD,FiseFormato13AC filtro) throws JSONException{
+		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("codEmpresa",filtro.getId().getCodEmpresa() );
+		jsonObj.put("anoPresentacion",filtro.getId().getAnoPresentacion() );
+		jsonObj.put("mesPresentacion",filtro.getId().getMesPresentacion() );
+		jsonObj.put("etapa",filtro.getId().getEtapa());
+		jsonObj.put("codUbigeo",fiseFormato13AD.getCodUbigeo());
+
+		
+		jsonObj.put("anioMesAlta",fiseFormato13AD.getAnioAlta()+"-"+fiseFormato13AD.getMesAlta());
+		jsonObj.put("descripcionLocalidad",fiseFormato13AD.getDescLocalidad());
+		jsonObj.put("st1",fiseFormato13AD.getNroBenefPoteSecTipico1());
+		jsonObj.put("st2",fiseFormato13AD.getNroBenefPoteSecTipico2());
+		jsonObj.put("st3",fiseFormato13AD.getNroBenefPoteSecTipico3());
+		jsonObj.put("st4",fiseFormato13AD.getNroBenefPoteSecTipico4());
+		jsonObj.put("st5",fiseFormato13AD.getNroBenefPoteSecTipico5());
+		jsonObj.put("st6",fiseFormato13AD.getNroBenefPoteSecTipico6());
+		jsonObj.put("stserv",fiseFormato13AD.getNroBenefPoteSecTipico7());
+		jsonObj.put("stesp",fiseFormato13AD.getNroBenefPoteSecTipico8());
+		jsonObj.put("total", fiseFormato13AD.getNroBenefPoteSecTipico1()+fiseFormato13AD.getNroBenefPoteSecTipico2()+
+				fiseFormato13AD.getNroBenefPoteSecTipico3()+fiseFormato13AD.getNroBenefPoteSecTipico4()+
+				fiseFormato13AD.getNroBenefPoteSecTipico5()+fiseFormato13AD.getNroBenefPoteSecTipico6()+
+				fiseFormato13AD.getNroBenefPoteSecTipico7()+fiseFormato13AD.getNroBenefPoteSecTipico8());
+		jsonObj.put("idZonaBenef",fiseFormato13AD.getIdZonaBenef());
 		jsonObj.put("nombreSedeAtiende",fiseFormato13AD.getNombreSedeAtiende());
 		return jsonObj;
 	}

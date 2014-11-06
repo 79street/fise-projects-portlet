@@ -1,10 +1,10 @@
 package gob.osinergmin.fise.gart.controller;
 
+import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13ACPK;
-import gob.osinergmin.fise.domain.FiseFormato13AD;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
 import gob.osinergmin.fise.gart.json.Formato13AGartJSON;
@@ -194,7 +194,7 @@ public class Formato13AGartController {
 			logger.info("admin2.1:"+model.get("esAdministrador"));
 			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
 	        HttpSession session = req.getSession();
-	        List<FiseFormato13AD> listaFormato;	
+	        List<Formato13ADReportBean> listaFormato;	
 		    JSONArray jsonArray = new JSONArray();
 		    Map<String, String> mapaEmpresa = fiseUtil.getMapaEmpresa();
 		    Map<Long,String> listaMes=fiseUtil.getMapaMeses();
@@ -233,13 +233,13 @@ public class Formato13AGartController {
 	  				throw new Exception("Error al buscar detalle: Empresa no seleccionada");
 	  			}
 	  			
-	  			listaFormato = formatoService.listarFormato13ADByFormato13AC(formato13AC);
+	  			listaFormato = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato13AC);
 	  			
 	  			logger.info("arreglo lista:"+listaFormato);
-	  			for(FiseFormato13AD fiseFormato13AD : listaFormato){
+	  			for(Formato13ADReportBean fiseFormato13AD : listaFormato){
 	  				//seteamos la descripcion de la empresa
-	  				logger.info("empresa "+mapaEmpresa.get(fiseFormato13AD.getId().getCodEmpresa()));
-					jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AD));
+	  				logger.info("empresa "+mapaEmpresa.get(formato13AC.getId().getCodEmpresa()));
+					jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AD,formato13AC));
 					
 	  			}
 	  			
