@@ -95,6 +95,16 @@
 				<reportElement x="0" y="0" width="206" height="50"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="338" y="10" width="93" height="16"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="true">
+				<reportElement x="431" y="10" width="121" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

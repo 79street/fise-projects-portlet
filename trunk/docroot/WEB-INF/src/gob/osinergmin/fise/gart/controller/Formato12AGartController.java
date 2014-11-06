@@ -2086,6 +2086,7 @@ public class Formato12AGartController {
 	public void enviarMailAdjunto(List<FileEntryJSP> listaArchivo) throws Exception {
 		//File adjunto=null;
 		try {
+			//validar los correos remitente y destino
 			String correoR="informacion@sphere.com.pe";//el que envia
 			String correoD="sandro.romero@sphere.com.pe";//al que le llega
 			//String nombreArchivo="NuevoArchivo.pdf";

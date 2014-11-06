@@ -3,8 +3,12 @@ package gob.osinergmin.fise.common.util;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.FiseObservacion;
+import gob.osinergmin.fise.domain.FiseZonaBenef;
+import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
+import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
+import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.xls.XlsTableConfig;
@@ -21,16 +25,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -66,6 +74,12 @@ public class FiseUtil {
 	@Autowired
 	@Qualifier("fiseObservacionGartServiceImpl")
 	FiseObservacionGartService observacionService;
+	@Autowired
+	@Qualifier("fiseZonaBenefGartServiceImpl")
+	FiseZonaBenefGartService zonaBenefService;
+	@Autowired
+	@Qualifier("commonGartServiceImpl")
+	CommonGartService commonService;
 	
 	public List<AdmEmpresa> getEmpresaxUsuario(PortletRequest request){
 		 List<AdmEmpresa> listaEmpresas=new ArrayList<AdmEmpresa>();
@@ -215,7 +229,7 @@ public class FiseUtil {
 			long folderId=dlFolder.getFolderId();
 			//String ext =FileUtil.getExtension(sourceFileName);
 			//--String title = hoy+"-"+sourceFileName;
-			int secuencia = formatoService.obtenerSecuencia();
+			int secuencia = commonService.obtenerSecuencia();
 			String title = secuencia+FiseConstants.UNDERLINE+sourceFileName;
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), request);
 			try {
@@ -267,6 +281,38 @@ public class FiseUtil {
 			mapaErrores.put(error.getIdObservacion(), error.getDescripcion());
 		}
 		return mapaErrores;
+	}
+	
+	public Map<Long, String> getMapaZonaBenef(){
+		List<FiseZonaBenef> listaZonaBenef = zonaBenefService.listarFiseZonaBenef();
+		Map<Long, String> mapaZonaBenef = new HashMap<Long, String>();
+		for (FiseZonaBenef zonaBenef : listaZonaBenef) {
+			logger.info("zonaBenef: "+zonaBenef.getIdZonaBenef()+" zonadesc: "+zonaBenef.getDescripcion());
+			mapaZonaBenef.put(zonaBenef.getIdZonaBenef(), zonaBenef.getDescripcion());
+		}
+		return mapaZonaBenef;
+	}
+	
+	public void enviarMailAdjunto(List<FileEntryJSP> listaArchivo) throws Exception {
+		try {
+			//validar los correos remitente y destino
+			String correoR="informacion@sphere.com.pe";//el que envia
+			String correoD="edwin.heredia@sphere.com.pe";//al que le llega
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.setHTMLFormat(true);
+			mailMessage.setBody("<html><head></head><body>Envio de Correo de pruebas</body></html>");
+			mailMessage.setFrom(new InternetAddress(correoR));
+			mailMessage.setSubject("Ejemplo de correo");
+			mailMessage.setTo(new InternetAddress(correoD));
+			for (FileEntryJSP fej : listaArchivo) {
+				mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
+			}
+			MailServiceUtil.sendEmail(mailMessage);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 }
