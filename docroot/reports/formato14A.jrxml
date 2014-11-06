@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14A" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="0.9313819845887326"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -96,12 +96,12 @@
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="338" y="10" width="93" height="16"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="319" y="10" width="104" height="16"/>
+				<textElement verticalAlignment="Top"/>
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="true">
-				<reportElement x="431" y="10" width="121" height="16"/>
+				<reportElement x="426" y="10" width="126" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
@@ -126,35 +126,37 @@
 			<staticText>
 				<reportElement mode="Opaque" x="426" y="116" width="60" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11"/>
+					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Urbano Provincias]]></text>
+				<text><![CDATA[Urbano
+Provincias]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="363" y="79" width="186" height="34" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11"/>
+					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Grupo Beneficiario segun sector de Distribución Típico]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="363" y="116" width="60" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11"/>
+					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Rural]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="489" y="116" width="60" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11"/>
+					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Urbano Lima]]></text>
+				<text><![CDATA[Urbano
+Lima]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="5" y="79" width="355" height="72" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11"/>
+					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Actividades]]></text>
 			</staticText>
@@ -173,665 +175,667 @@
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="168" y="28" width="125" height="15"/>
+				<reportElement x="184" y="28" width="198" height="15"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="170" width="49" height="15"/>
+				<reportElement x="426" y="170" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_EMPAD_Y_DIFUSION_P}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="36" y="189" width="193" height="15"/>
+				<reportElement x="15" y="187" width="326" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1.1.1.  Empadronamiento:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="170" width="49" height="15"/>
+				<reportElement x="489" y="170" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_EMPAD_Y_DIFUSION_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="187" width="49" height="15"/>
+				<reportElement x="426" y="187" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="187" width="51" height="15"/>
+				<reportElement x="363" y="187" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_EMPAD_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="170" width="51" height="15"/>
+				<reportElement x="363" y="170" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_EMPAD_Y_DIFUSION_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="13" y="172" width="193" height="15"/>
+				<reportElement x="10" y="170" width="331" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1.1 Empadronamiento Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="154" width="185" height="15"/>
+				<reportElement x="5" y="154" width="544" height="15"/>
 				<textElement>
-					<font size="10" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1. Costo de Empadronamiento]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="187" width="49" height="15"/>
+				<reportElement x="489" y="187" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_EMPAD_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="205" width="249" height="15"/>
+				<reportElement x="25" y="204" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.1.1. Impresión de Esquela de invitación ]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="204" width="49" height="15"/>
+				<reportElement x="426" y="204" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_EQL_INV_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="204" width="51" height="15"/>
+				<reportElement x="363" y="204" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_EQL_INV_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="204" width="49" height="15"/>
+				<reportElement x="489" y="204" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_EQL_INV_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="221" width="51" height="15"/>
+				<reportElement x="363" y="221" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_DCL_JUR_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="222" width="249" height="15"/>
+				<reportElement x="25" y="221" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.1.2. Impresión de Declaraciones Juradas]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="221" width="49" height="15"/>
+				<reportElement x="489" y="221" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_DCL_JUR_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="221" width="49" height="15"/>
+				<reportElement x="426" y="221" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_DCL_JUR_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="238" width="49" height="15"/>
+				<reportElement x="426" y="238" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_FCHAS_VRFCION_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="238" width="49" height="15"/>
+				<reportElement x="489" y="238" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_FCHAS_VRFCION_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="239" width="249" height="15"/>
+				<reportElement x="25" y="238" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.1.3. Impresión de Ficha de Verificación]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="238" width="51" height="15"/>
+				<reportElement x="363" y="238" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_FCHAS_VRFCION_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="254" width="49" height="15"/>
+				<reportElement x="489" y="254" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ESQ_INV_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="254" width="51" height="15"/>
+				<reportElement x="363" y="254" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ESQ_INV_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="255" width="250" height="27"/>
+				<reportElement x="25" y="254" width="316" height="27"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[1.1.1.4. Reparto de esquela de invitación, en forma conjunta con el recibo de luz del Potencial Beneficiarios]]></text>
+				<text><![CDATA[1.1.1.4. Reparto de esquela de invitación, en forma conjunta con el recibo
+de luz del Potencial Beneficiarios]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="254" width="49" height="15"/>
+				<reportElement x="426" y="254" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ESQ_INV_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="282" width="49" height="15"/>
+				<reportElement x="489" y="282" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{VRFCION_INF_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="282" width="51" height="15"/>
+				<reportElement x="363" y="282" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{VRFCION_INF_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="283" width="249" height="15"/>
+				<reportElement x="25" y="282" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.1.5. Verificación de la información]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="282" width="49" height="15"/>
+				<reportElement x="426" y="282" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{VRFCION_INF_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="299" width="49" height="15"/>
+				<reportElement x="426" y="299" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ELABOR_ARCH_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="299" width="49" height="15"/>
+				<reportElement x="489" y="299" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ELABOR_ARCH_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="299" width="51" height="15"/>
+				<reportElement x="363" y="299" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ELABOR_ARCH_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="300" width="249" height="15"/>
+				<reportElement x="25" y="299" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.1.6. Elaboración del archivo del beneficiario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="63" y="317" width="249" height="15"/>
+				<reportElement x="25" y="316" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.1.7.Digitación de Fichas de Beneficiarios]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="316" width="51" height="15"/>
+				<reportElement x="363" y="316" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DGTCION_FCHAS_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="316" width="49" height="15"/>
+				<reportElement x="489" y="316" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DGTCION_FCHAS_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="316" width="49" height="15"/>
+				<reportElement x="426" y="316" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DGTCION_FCHAS_P}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="31" y="337" width="281" height="15"/>
+				<reportElement x="15" y="335" width="326" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1.1.2.  Difusión de Inicio del Programa FISE:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="335" width="49" height="15"/>
+				<reportElement x="426" y="335" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_DIFUS_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="335" width="51" height="15"/>
+				<reportElement x="363" y="335" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_DIFUS_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="335" width="49" height="15"/>
+				<reportElement x="489" y="335" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUM_DIFUS_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="370" width="49" height="15"/>
+				<reportElement x="426" y="370" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_AFCHES_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="370" width="49" height="15"/>
+				<reportElement x="489" y="370" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_AFCHES_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="353" width="51" height="15"/>
+				<reportElement x="363" y="353" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_VOL_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="354" width="249" height="15"/>
+				<reportElement x="25" y="353" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.2.1. Impresión de Volantes ]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="353" width="49" height="15"/>
+				<reportElement x="426" y="353" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_VOL_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="387" width="49" height="15"/>
+				<reportElement x="489" y="387" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{RTO_FLLTOS_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="353" width="49" height="15"/>
+				<reportElement x="489" y="353" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_VOL_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="370" width="51" height="15"/>
+				<reportElement x="363" y="370" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_AFCHES_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="387" width="51" height="15"/>
+				<reportElement x="363" y="387" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{RTO_FLLTOS_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="387" width="249" height="27"/>
+				<reportElement x="25" y="387" width="316" height="27"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[1.1.2.3. Reparto de folletos a los Potenciales Beneficiarios, con el recibo de luz del beneficiarios]]></text>
+				<text><![CDATA[1.1.2.3. Reparto de folletos a los Potenciales Beneficiarios, con el recibo
+de luz del beneficiarios]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="387" width="49" height="15"/>
+				<reportElement x="426" y="387" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{RTO_FLLTOS_P}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="371" width="249" height="15"/>
+				<reportElement x="25" y="370" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.2.2. Impresión de Afiches]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="414" width="51" height="15"/>
+				<reportElement x="363" y="415" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SP_PUBLIC_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="414" width="49" height="15"/>
+				<reportElement x="426" y="415" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SP_PUBLIC_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="414" width="49" height="15"/>
+				<reportElement x="489" y="415" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SP_PUBLIC_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="63" y="415" width="249" height="15"/>
+				<reportElement x="25" y="415" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.2.4. Spot Publicitario en TV]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="431" width="49" height="15"/>
+				<reportElement x="426" y="431" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SP_PUBLIC_RADIO_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="431" width="51" height="15"/>
+				<reportElement x="363" y="431" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SP_PUBLIC_RADIO_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="64" y="431" width="249" height="15"/>
+				<reportElement x="25" y="431" width="316" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1.2.5. Spot Publicitario en Radio]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="431" width="49" height="15"/>
+				<reportElement x="489" y="431" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SP_PUBLIC_RADIO_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="373" y="448" width="51" height="15"/>
+				<reportElement x="363" y="448" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_BNFCRIOS_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="437" y="448" width="49" height="15"/>
+				<reportElement x="426" y="448" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_BNFCRIOS_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="499" y="448" width="49" height="15"/>
+				<reportElement x="489" y="448" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_BNFCRIOS_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="14" y="448" width="336" height="15"/>
+				<reportElement x="10" y="448" width="331" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1.2 Número de Beneficiarios empadronados en el mes de diciembre]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="466" width="49" height="15"/>
+				<reportElement x="426" y="466" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{CTO_UNT_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="466" width="51" height="15"/>
+				<reportElement x="363" y="466" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{CTO_UNT_EMPAD_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="466" width="49" height="15"/>
+				<reportElement x="489" y="466" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{CTO_UNT_EMPAD_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="14" y="466" width="336" height="15"/>
+				<reportElement x="10" y="466" width="331" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1.3. Costo Unitario por empadronamamiento (1.1) / (1.2)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="491" width="234" height="15"/>
+				<reportElement x="5" y="491" width="544" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2. Costo de Gestión de Red de Agentes GLP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="14" y="510" width="282" height="15"/>
+				<reportElement x="10" y="510" width="331" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2.1. Costo de la Gestión de Red de Agentes GLP]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="510" width="51" height="15"/>
+				<reportElement x="363" y="510" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_GTION_RED_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="510" width="49" height="15"/>
+				<reportElement x="426" y="510" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_GTION_RED_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="510" width="49" height="15"/>
+				<reportElement x="489" y="510" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_GTION_RED_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="32" y="526" width="324" height="15"/>
+				<reportElement x="23" y="526" width="318" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[2.1.1. Promoción de convenios con Agentes Autorizados de GLP]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="526" width="51" height="15"/>
+				<reportElement x="363" y="526" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{PROM_AGTES_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="526" width="49" height="15"/>
+				<reportElement x="426" y="526" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{PROM_AGTES_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="526" width="49" height="15"/>
+				<reportElement x="489" y="526" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{PROM_AGTES_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="543" width="49" height="15"/>
+				<reportElement x="426" y="543" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{RGTROS_FMAS_P}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="32" y="543" width="324" height="15"/>
+				<reportElement x="23" y="543" width="318" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[2.1.2. Registro y Firma de convenios con Agentes Autorizados de GLP]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="543" width="51" height="15"/>
+				<reportElement x="363" y="543" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{RGTROS_FMAS_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="543" width="49" height="15"/>
+				<reportElement x="489" y="543" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{RGTROS_FMAS_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="559" width="49" height="15"/>
+				<reportElement x="426" y="559" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_ENTREG_BAN_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="559" width="49" height="15"/>
+				<reportElement x="489" y="559" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_ENTREG_BAN_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="32" y="559" width="324" height="15"/>
+				<reportElement x="23" y="559" width="318" height="15"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[2.1.3. Impresión y entrega de Banderola y/o banner]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="559" width="51" height="15"/>
+				<reportElement x="363" y="559" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_ENTREG_BAN_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="373" y="576" width="51" height="15"/>
+				<reportElement x="363" y="576" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENTES_R}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="14" y="576" width="282" height="15"/>
+				<reportElement x="10" y="576" width="331" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2.2. Número de Agentes]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="499" y="576" width="49" height="15"/>
+				<reportElement x="489" y="576" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENTES_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#" isBlankWhenNull="true">
-				<reportElement x="437" y="576" width="49" height="15"/>
+				<reportElement x="426" y="576" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENTES_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="499" y="592" width="49" height="15"/>
+				<reportElement x="489" y="592" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_AGENTE_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="14" y="592" width="282" height="15"/>
+				<reportElement x="10" y="592" width="331" height="15"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2.3. Costo Unitario por Agentes GLP (2.1.) / (2.2)]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="437" y="592" width="49" height="15"/>
+				<reportElement x="426" y="592" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_AGENTE_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="373" y="592" width="51" height="15"/>
+				<reportElement x="363" y="592" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
@@ -852,7 +856,7 @@
 				<text><![CDATA[Frecuencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="611" width="451" height="17"/>
+				<reportElement x="10" y="611" width="539" height="17"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -876,161 +880,161 @@
 				<reportElement mode="Transparent" x="17" y="486" width="524" height="1" forecolor="#006699"/>
 			</line>
 			<staticText>
-				<reportElement x="355" y="170" width="17" height="15"/>
+				<reportElement x="343" y="170" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="187" width="17" height="15"/>
+				<reportElement x="343" y="187" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="204" width="17" height="15"/>
+				<reportElement x="343" y="204" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="221" width="17" height="15"/>
+				<reportElement x="343" y="221" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="238" width="17" height="15"/>
+				<reportElement x="343" y="238" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="254" width="17" height="15"/>
+				<reportElement x="343" y="254" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="282" width="17" height="15"/>
+				<reportElement x="343" y="282" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="299" width="17" height="15"/>
+				<reportElement x="343" y="299" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="316" width="17" height="15"/>
+				<reportElement x="343" y="316" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="335" width="17" height="15"/>
+				<reportElement x="343" y="335" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="353" width="17" height="15"/>
+				<reportElement x="343" y="353" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="370" width="17" height="15"/>
+				<reportElement x="343" y="370" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="387" width="17" height="15"/>
+				<reportElement x="343" y="387" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="414" width="17" height="15"/>
+				<reportElement x="343" y="415" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="431" width="17" height="15"/>
+				<reportElement x="343" y="431" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="466" width="17" height="15"/>
+				<reportElement x="343" y="466" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="448" width="17" height="15"/>
+				<reportElement x="343" y="448" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[N°]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="510" width="17" height="15"/>
+				<reportElement x="343" y="510" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="526" width="17" height="15"/>
+				<reportElement x="343" y="526" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="543" width="17" height="15"/>
+				<reportElement x="343" y="543" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="559" width="17" height="15"/>
+				<reportElement x="343" y="559" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="592" width="17" height="15"/>
+				<reportElement x="343" y="592" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="576" width="17" height="15"/>
+				<reportElement x="343" y="576" width="17" height="15"/>
 				<textElement>
 					<font size="9" isBold="false"/>
 				</textElement>
@@ -1045,6 +1049,11 @@
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Nombre y Firma del Representante Legal de la Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="28" width="10" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[/]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
