@@ -29,18 +29,19 @@ var formato14C= {
 		mensajeCargando:null,
 		mensajeObteniendoDatos:null,
 		mensajeEliminando:null,
-		mensajeGuardando:null,			
+		mensajeGuardando:null,	
+		mensajeActualizando:null,	
 		
 		//valores hidden
 		//valores hidden
-	    procesoEstado:null,
-	    etapaEdit:null,
+	    estadoCrud:null,//flag que indica que proceso es nuevo o actualizar    
 		
 		//urls
 		urlBusqueda: null,
 		urlCargaPeriodo:null,		
-		urlCrud:null,
-		
+		urlGrabar:null,
+		urlEditar:null,
+		urlActualizar:null,
 		//botones
 		botonBuscar:null,
 		botonNuevo:null,
@@ -48,6 +49,8 @@ var formato14C= {
 		botonReportePdf:null,
 		botonReporteExcel:null,
 		botonGrabar:null,
+		botonActualizar:null,
+		
 		botonValidacion:null,
 		botonEnvioDefinitivo:null,
 		
@@ -125,16 +128,17 @@ var formato14C= {
 			this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
 			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
 			this.mensajeGuardando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>';
+			this.mensajeActualizando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Actualizando Datos </h3>';
 			
 			//valores hidden
-			this.procesoEstado=$('#<portlet:namespace/>Estado');
-		    this.etapaEdit=$('#<portlet:namespace/>etapaEdit');
+			this.estadoCrud=$('#estadoCrudF14C'); 
 			
 			//urls
-			this.urlBusqueda='<portlet:resourceURL id="busqueda" />';
-			this.urlCargaPeriodo='<portlet:resourceURL id="cargaPeriodo" />';
-			this.urlCrud='<portlet:resourceURL id="crud" />';
-			
+			this.urlBusqueda='<portlet:resourceURL id="busquedaF14C" />';
+			this.urlCargaPeriodo='<portlet:resourceURL id="cargaPeriodoF14C" />';
+			this.urlGrabar='<portlet:resourceURL id="grabarF14C" />';
+			this.urlEditar='<portlet:resourceURL id="editarF14C" />';
+			this.urlActualizar='<portlet:resourceURL id="actualizarF14C" />';
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarF14C");
 			this.botonNuevo=$("#<portlet:namespace/>btnNuevoF14C");
@@ -142,6 +146,7 @@ var formato14C= {
 			this.botonReportePdf=$("#<portlet:namespace/>reportePdfF14C");
 			this.botonReporteExcel=$("#<portlet:namespace/>reporteExcelF14C");
 			this.botonGrabar=$("#<portlet:namespace/>guardarFormatoF14C");
+			this.botonActualizar=$("#<portlet:namespace/>actualizarFormatoF14C");
 			this.botonValidacion=$("#<portlet:namespace/>validacionFormatoF14C");
 			this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivoF14C");
 			
@@ -270,7 +275,7 @@ var formato14C= {
 			
 			//llamado a la funcion buscar
 			formato14C.botonBuscar.click(function() {
-				formato14C.buscar();
+				formato14C.buscarF14C();
 			});			
 			//llamado a la funcion nuevo
 			formato14C.botonNuevo.click(function() {
@@ -279,6 +284,10 @@ var formato14C= {
 			//llamando funcion guardar
 			formato14C.botonGrabar.click(function() {
 				formato14C.<portlet:namespace/>guardarFormato14C();
+			});
+			//llamando funcion actualizar
+			formato14C.botonActualizar.click(function() {
+				formato14C.<portlet:namespace/>actualizarFormato14C();
 			});
 			//llamando funcion regresar
 		    formato14C.botonRegresar.click(function() {
@@ -410,7 +419,7 @@ var formato14C= {
 			 formato14C.etapaSes.val('');*/
 		},
 		//funcion para buscar
-		buscar : function () {
+		buscarF14C : function () {
 			if(formato14C.validarBusqueda()){
 				formato14C.blockUI();
 				jQuery.ajax({			
@@ -467,12 +476,8 @@ var formato14C= {
 		   }		 
 		},
 		//funcion para nuevo registro
-		<portlet:namespace/>nuevoFormato14C : function(){	
-			//alert('entro a crear');
-			formato14C.inicializarFormulario();
-			//data_funcion = [];
-			//$('#Estado').val('SAVE');
-			//$("#etapaEdit").val("");
+		<portlet:namespace/>nuevoFormato14C : function(){			
+			formato14C.inicializarFormulario();			
 			formato14C.divNuevo.show();
 			formato14C.divBuscar.hide();		
 			//$('#flagCarga').val('0');
@@ -481,14 +486,16 @@ var formato14C= {
 			//	 $("#i_anioejecuc").val($("#anioDesdeSes").val());
 			//	 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
 			//}
-			//$('#<portlet:namespace/>validacionFormato').css('display','none');
+			$('#<portlet:namespace/>guardarFormatoF14C').css('display','block');
+			$('#<portlet:namespace/>actualizarFormatoF14C').css('display','none');
 			formato14C.<portlet:namespace/>loadPeriodo('');
+			formato14C.verElementosEditar();
 		},
 		//Function para Visualizar los datos del formulario
 		verFormato14C : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
 			$.blockUI({ message: formato14C.mensajeObteniendoDatos });
 			jQuery.ajax({
-					url: formato14C.urlCrud+'&'+formato14C.formCommand.serialize(),
+					url: formato14C.grabarF14C+'&'+formato14C.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {
@@ -526,11 +533,10 @@ var formato14C= {
 		editarFormato14C : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
 			$.blockUI({ message: formato14C.mensajeObteniendoDatos });
 			jQuery.ajax({
-					url: formato14C.urlCrud+'&'+formato14C.formCommand.serialize(),
+					url: formato14C.urlEditar+'&'+formato14C.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
-					data: {
-					   <portlet:namespace />tipo: "EDITAR",
+					data: {					  
 					   <portlet:namespace />codEmpresa: codEmpresa,
 					   <portlet:namespace />anioPres: anoPresentacion,
 					   <portlet:namespace />mesPres: mesPresentacion,
@@ -539,16 +545,17 @@ var formato14C= {
 					   <portlet:namespace />etapa: etapa
 						},
 					success: function(data) {				
-						if (data.resultado == "OK"){
-							formato14C.procesoEstado.val("UPDATE");
-							formato14C.etapaEdit.val(etapa);
+						if (data != null){															
 							formato14C.divNuevo.show();
 							formato14C.divBuscar.hide();
 							dwr.util.removeAllOptions("periodoEnvio");//id del select(combo) remover sus valores
 							dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");//llena el selec(combo)
-							//formato14C.FillEditformato(data.formato);
+						    formato14C.llenarDatosEditar(data);
 							formato14C.initBlockUI();
-						}
+							formato14C.ocultarElementosEditar();
+							$('#<portlet:namespace/>guardarFormatoF14C').css('display','none');
+							$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');
+				         }
 						else{
 							alert("Error al recuperar los datos del registro seleccionado");
 							formato14C.initBlockUI();
@@ -559,23 +566,111 @@ var formato14C= {
 					}
 			});	
 		},
-		<portlet:namespace/>regresar : function(){
-			//$("#Estado").val("");
-			//$("#etapaEdit").val("");
-			formato14C.divNuevo.hide();
-			formato14C.divBuscar.show();		
-			//
-			//removerDeshabilitados();
-			//se visualizan los componentes escondidos
-			/*$('#<portlet:namespace/>reportePdf').css('display','none');
-			$('#<portlet:namespace/>reporteExcel').css('display','none');
-			$('#<portlet:namespace/>guardarFormato').css('display','');
-			$('#panelCargaArchivos').css('display','');
-			$('#<portlet:namespace/>validacionFormato').css('display','');
-			$('#<portlet:namespace/>envioDefinitivo').css('display','');*/
-			formato14C.botonBuscar.trigger('click');
-			//<portlet:namespace/>buscar();
+		//funcion  para llenar los campos para editar
+		llenarDatosEditar : function(bean){		
+			/*cabecera*/
+			formato14C.f_empresa.val(bean.codEmpresa);
+			formato14C.f_nombreSede.val(bean.nombreSede);
+			formato14C.f_numRural.val(bean.numRural);
+			formato14C.f_numUrbProv.val(bean.numUrbProv);
+			formato14C.f_numUrbLima.val(bean.numUrbLima);
+			formato14C.f_costoPromRural.val(bean.costoPromRural);
+			formato14C.f_costoPromUrbProv.val(bean.costoPromUrbProv);
+			formato14C.f_costoPromUrbLima.val(bean.costoPromUrbLima);
+			//seteamos el combo de periodo de envio			
+			dwr.util.removeAllOptions("periodoEnvio");
+			var dataPeriodo = [{codigoItem:bean.periodoEnvio, descripcionItem:bean.desperiodoEnvio}];			
+			dwr.util.addOptions("periodoEnvio", dataPeriodo,"codigoItem","descripcionItem");
+			//formato14A.f_flagPeriodo.val(row.flagPeriodoEjecucion);
+			/*if( formato14A.f_flagPeriodo.val()=='S' ){
+				$('#anioInicioVigencia').val(row.anoIniVigencia);
+				$('#anioFinVigencia').val(row.anoFinVigencia);
+				$('#anioInicioVigencia').attr("disabled",true);
+				$('#anioFinVigencia').attr("disabled",true);
+			}*/
+			//formato14A.etapaEdit.val(row.etapa);
+			
+			/**RURAL***/	
+			formato14C.f_canDRCoord.val(bean.canDRCoord);
+			formato14C.f_costDRCoord.val(bean.costDRCoord);
+			formato14C.f_canIRCoord.val(bean.canIRCoord);
+			formato14C.f_costIRCoord.val(bean.costIRCoord);
+			
+			formato14C.f_canDRSupe.val(bean.canDRSupe);
+			formato14C.f_costDRSupe.val(bean.costDRSupe);
+			formato14C.f_canIRSupe.val(bean.canIRSupe);
+			formato14C.f_costIRSupe.val(bean.costIRSupe);
+			
+			formato14C.f_canDRGest.val(bean.canDRGest);
+			formato14C.f_costDRGest.val(bean.costDRGest);
+			formato14C.f_canIRGest.val(bean.canIRGest);
+			formato14C.f_costIRGest.val(bean.costIRGest);
+			
+			formato14C.f_canDRAsist.val(bean.canDRAsist);
+			formato14C.f_costDRAsist.val(bean.costDRAsist);
+			formato14C.f_canIRAsist.val(bean.canIRAsist);
+			formato14C.f_costIRAsist.val(bean.costIRAsist);
+			
+			/**PROVINCIAS*/
+			formato14C.f_canDPCoord.val(bean.canDPCoord);
+			formato14C.f_costDPCoord.val(bean.costDPCoord);
+			formato14C.f_canIPCoord.val(bean.canIPCoord);
+			formato14C.f_costIPCoord.val(bean.costIPCoord);
+			
+			formato14C.f_canDPSupe.val(bean.canDPSupe);
+			formato14C.f_costDPSupe.val(bean.costDPSupe);
+			formato14C.f_canIPSupe.val(bean.canIPSupe);
+			formato14C.f_costIPSupe.val(bean.costIPSupe);
+			
+			formato14C.f_canDPGest.val(bean.canDPGest);
+			formato14C.f_costDPGest.val(bean.costDPGest);
+			formato14C.f_canIPGest.val(bean.canIPGest);
+			formato14C.f_costIPGest.val(bean.costIPGest);
+			
+			formato14C.f_canDPAsist.val(bean.canDPAsist);
+			formato14C.f_costDPAsist.val(bean.costDPAsist);
+			formato14C.f_canIPAsist.val(bean.canIPAsist);
+			formato14C.f_costIPAsist.val(bean.costIPAsist);
+			
+			/**LIMA***/
+			formato14C.f_canDLCoord.val(bean.canDLCoord);
+			formato14C.f_costDLCoord.val(bean.costDLCoord);
+			formato14C.f_canILCoord.val(bean.canILCoord);
+			formato14C.f_costILCoord.val(bean.costILCoord);
+			
+			formato14C.f_canDLSupe.val(bean.canDLSupe);
+			formato14C.f_costDLSupe.val(bean.costDLSupe);
+			formato14C.f_canILSupe.val(bean.canILSupe);
+			formato14C.f_costILSupe.val(bean.costILSupe);
+			
+			formato14C.f_canDLGest.val(bean.canDLGest);
+			formato14C.f_costDLGest.val(bean.costDLGest);
+			formato14C.f_canILGest.val(bean.canILGest);
+			formato14C.f_costILGest.val(bean.costILGest);
+			
+			formato14C.f_canDLAsist.val(bean.canDLAsist);
+			formato14C.f_costDLAsist.val(bean.costDLAsist);
+			formato14C.f_canILAsist.val(bean.canILAsist);
+			formato14C.f_costILAsist.val(bean.costILAsist);
+			
+	        //llamando a las funciones para realizar los calculos
+			formato14C.calculoTotal();			
+			formato14C.soloNumerosEnteros();
+			formato14C.soloNumerosDecimales();
+			formato14C.formularioCompletarDecimales();
+			
+			//formato14A.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
+			
+			//formato14A.mostrarPeriodoEjecucion();
 		},
+		ocultarElementosEditar : function(){	
+			//$('#codEmpresa').prop("disabled",true);
+			//$('#periodoEnvio').prop("disabled",true);
+		},
+        verElementosEditar : function(){	
+        	$('#codEmpresa').attr("disabled",false);
+        	$('#periodoEnvio').attr("disabled",false);
+		},		
 		//function para el evento onchange en empresa para cargar el periodo
 		<portlet:namespace/>loadPeriodo : function(valPeriodo){		
 			jQuery.ajax({
@@ -613,6 +708,7 @@ var formato14C= {
 		//function para inicializar el formulario
 		inicializarFormulario : function(){
 			formato14C.f_empresa.val('');
+			formato14C.f_nombreSede.val('');
 			/*if( formato14C.f_flagPeriodo.val()=='S' ){
 				$('#anioInicioVigencia').val('');
 				$('#anioFinVigencia').val('');
@@ -632,76 +728,117 @@ var formato14C= {
 			formato14C.f_costDRCoord.val('0.00');
 			formato14C.f_canIRCoord.val('0');
 			formato14C.f_costIRCoord.val('0.00');
-			//formato14C.f_costTotalRCoord.val('0.00');
+			//no editables
+			formato14C.f_canDRGP.val('0');
+			formato14C.f_costDRGP.val('0.00');
+			formato14C.f_canIRGP.val('0');
+			formato14C.f_costIRGP.val('0.00');
+			formato14C.f_costTotalRGP.val('0.00');
+			formato14C.f_costTotalRCoord.val('0.00');
+			formato14C.f_costTotalRSupe.val('0.00');
+			formato14C.f_costTotalRGest.val('0.00');
+			formato14C.f_costTotalRAsist.val('0.00');
+			//fin de no editables
 			
 			formato14C.f_canDRSupe.val('0');
 			formato14C.f_costDRSupe.val('0.00');
 			formato14C.f_canIRSupe.val('0');
-			formato14C.f_costIRSupe.val('0.00');
-			//formato14C.f_costTotalRSupe.val('0.00');
+			formato14C.f_costIRSupe.val('0.00');		
 			
 			formato14C.f_canDRGest.val('0');
 			formato14C.f_costDRGest.val('0.00');
 			formato14C.f_canIRGest.val('0');
 			formato14C.f_costIRGest.val('0.00');
-			//formato14C.f_costTotalRGest.val('0.00');			
+		
 			
 			formato14C.f_canDRAsist.val('0');
 			formato14C.f_costDRAsist.val('0.00');
 			formato14C.f_canIRAsist.val('0');
 			formato14C.f_costIRAsist.val('0.00');
-			//formato14C.f_costTotalRAsist.val('0.00');
+			
 			
 			//PROVINCIA
 			formato14C.f_canDPCoord.val('0');
 			formato14C.f_costDPCoord.val('0.00');
 			formato14C.f_canIPCoord.val('0');
 			formato14C.f_costIPCoord.val('0.00');
-			//formato14C.f_costTotalPCoord.val('0.00');
+			
 			
 			formato14C.f_canDPSupe.val('0');
 			formato14C.f_costDPSupe.val('0.00');
 			formato14C.f_canIPSupe.val('0');
 			formato14C.f_costIPSupe.val('0.00');
-			//formato14C.f_costTotalPSupe.val('0.00');
+			
 			
 			formato14C.f_canDPGest.val('0');
 			formato14C.f_costDPGest.val('0.00');
 			formato14C.f_canIPGest.val('0');
 			formato14C.f_costIPGest.val('0.00');
-			//formato14C.f_costTotalPGest.val('0.00');			
+					
 			
 			formato14C.f_canDPAsist.val('0');
 			formato14C.f_costDPAsist.val('0.00');
 			formato14C.f_canIPAsist.val('0');
 			formato14C.f_costIPAsist.val('0.00');
-			//formato14C.f_costTotalPAsist.val('0.00');
+			
+			//no editables
+			formato14C.f_canDPGP.val('0');
+			formato14C.f_costDPGP.val('0.00');
+			formato14C.f_canIPGP.val('0');
+			formato14C.f_costIPGP.val('0.00');
+			formato14C.f_costTotalPGP.val('0.00');
+			formato14C.f_costTotalPCoord.val('0.00');
+			formato14C.f_costTotalPSupe.val('0.00');
+			formato14C.f_costTotalPGest.val('0.00');
+			formato14C.f_costTotalPAsist.val('0.00');
+			//fin de no editables
 			
 			//LIMA
 			formato14C.f_canDLCoord.val('0');
 			formato14C.f_costDLCoord.val('0.00');
 			formato14C.f_canILCoord.val('0');
-			formato14C.f_costILCoord.val('0.00');
-			//formato14C.f_costTotalLCoord.val('0.00');
+			formato14C.f_costILCoord.val('0.00');			
 			
 			formato14C.f_canDLSupe.val('0');
 			formato14C.f_costDLSupe.val('0.00');
 			formato14C.f_canILSupe.val('0');
-			formato14C.f_costILSupe.val('0.00');
-			//formato14C.f_costTotalLSupe.val('0.00');
+			formato14C.f_costILSupe.val('0.00');		
 			
 			formato14C.f_canDLGest.val('0');
 			formato14C.f_costDLGest.val('0.00');
 			formato14C.f_canILGest.val('0');
-			formato14C.f_costILGest.val('0.00');
-			//formato14C.f_costTotalLGest.val('0.00');			
+			formato14C.f_costILGest.val('0.00');		
 			
 			formato14C.f_canDLAsist.val('0');
 			formato14C.f_costDLAsist.val('0.00');
 			formato14C.f_canILAsist.val('0');
-			formato14C.f_costILAsist.val('0.00');
-			//formato14C.f_costTotalLAsist.val('0.00');
+			formato14C.f_costILAsist.val('0.00');			
+			//no editables
+			formato14C.f_canDLGP.val('0');		
+			formato14C.f_costDLGP.val('0.00');		
+			formato14C.f_canILGP.val('0');		
+			formato14C.f_costILGP.val('0.00');		
+			formato14C.f_costTotalLGP.val('0.00');		
+			formato14C.f_costTotalLCoord.val('0.00');		
+			formato14C.f_costTotalLSupe.val('0.00');		
+			formato14C.f_costTotalLGest.val('0.00');		
+			formato14C.f_costTotalLAsist.val('0.00');		
+			//fin de no editables
 			
+			//no editables totales
+			formato14C.f_numTotal.val('0');	
+			formato14C.f_canTotalCoord.val('0');	
+			formato14C.f_costTotalCoord.val('0.00');	
+			formato14C.f_canTotalSupe.val('0');	
+			formato14C.f_costTotalSupe.val('0.00');	
+			formato14C.f_canTotalGest.val('0');	
+			formato14C.f_costTotalGest.val('0.00');	
+			formato14C.f_canTotalAsist.val('0');	
+			formato14C.f_costTotalAsist.val('0.00');	
+			formato14C.f_canTotalGP.val('0');	
+			formato14C.f_costTotalGP.val('0.00');	
+			formato14C.f_costTotalPromedio.val('0.00');	
+			//fin de no editables
 			
 			//quitamos los componentes deshabilitados
 			formato14C.f_empresa.attr("disabled",false);
@@ -1642,12 +1779,12 @@ var formato14C= {
 			//
 			completarDecimal('costTotalPromedio',2);
 		},
-		//Funcion para CRUD
+		//Funcion para Grabar nuevo registro
 		<portlet:namespace/>guardarFormato14C : function(){
 			if (formato14C.validarFormulario()){
 				$.blockUI({ message: formato14C.mensajeGuardando });
 				 jQuery.ajax({
-					 url: formato14C.urlCrud+'&'+formato14C.formCommand.serialize(),
+					 url: formato14C.urlGrabar+'&'+formato14C.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {
@@ -1660,25 +1797,65 @@ var formato14C= {
 						if (data.resultado == "OK"){				
 							var addhtml2='Datos guardados satisfactoriamente';
 							formato14C.dialogMessageContent.html(addhtml2);
-							formato14C.dialogMessage.dialog("open");
-							//---mostrarFormularioModificado();
+							formato14C.dialogMessage.dialog("open");							
 							formato14C.initBlockUI();
-						}
-						else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
+							//regresar a la busqueda
+							//formato14C.divNuevo.hide();
+							//formato14C.divBuscar.show();
+							$('#<portlet:namespace/>guardarFormatoF14C').css('display','none');
+							$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');
+						}else if(data.resultado == "Duplicado"){				
+							var addhtml2='La Empresa ya se encuentra Registrada.';
 							formato14C.dialogMessageContent.html(addhtml2);
-							formato14C.dialogMessage.dialog("open");
-							//---mostrarUltimoFormato();
+							formato14C.dialogMessage.dialog("open");						
+							formato14C.initBlockUI();
+						}else if(data.resultado == "Error"){				
+							var addhtml2='Se produjo un error al guardar los datos.';
+							formato14C.dialogMessageContent.html(addhtml2);
+							formato14C.dialogMessage.dialog("open");						
 							formato14C.initBlockUI();
 						}
 					},error : function(){
 						alert("Error de conexión.");
 						formato14C.initBlockUI();
 					}
-				});
-			   	//se deja el formulario activo
-				formato14C.divNuevo.hide();
-				formato14C.divBuscar.show();
+				});			
+			}
+		},
+		//Funcion para actualizar un registro
+		<portlet:namespace/>actualizarFormato14C : function(){
+			if (formato14C.validarFormulario()){
+				$.blockUI({ message: formato14C.mensajeActualizando });
+				 jQuery.ajax({
+					 url: formato14C.urlActualizar+'&'+formato14C.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data: {
+						//<portlet:namespace />tipo: formato14C.procesoEstado.val(),						
+						//<portlet:namespace />flagPeriodo: formato14C.f_flagPeriodo.val(),
+						//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+						//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),						
+						},
+					success: function(data) {			
+						if (data.resultado == "OK"){				
+							var addhtml2='Datos actualizados satisfactoriamente';
+							formato14C.dialogMessageContent.html(addhtml2);
+							formato14C.dialogMessage.dialog("open");						
+							formato14C.initBlockUI();
+							//regreso a la busqueda
+							formato14C.divNuevo.hide();
+							formato14C.divBuscar.show();		
+						}else if(data.resultado == "Error"){				
+							var addhtml2='Se produjo un error al actualizar los datos.';
+							formato14C.dialogMessageContent.html(addhtml2);
+							formato14C.dialogMessage.dialog("open");						
+							formato14C.initBlockUI();
+						}
+					},error : function(){
+						alert("Error de conexión.");
+						formato14C.initBlockUI();
+					}
+				});						
 			}
 		},	
 		//function para validad ingreso de datos
@@ -1967,7 +2144,7 @@ var formato14C= {
 			
 			//formato14C.panelCargaArchivo.css('display','');
 
-			//formato14C.botonBuscar.trigger('click');
+			formato14C.botonBuscar.trigger('click');
 		},
 		//DIALOGOS
 		initDialogs : function(){	
