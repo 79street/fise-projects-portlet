@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpSession;
@@ -309,24 +310,28 @@ public class FiseUtil {
 			
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
 			
-			mailMessage.setFrom(new InternetAddress(correoR));
-			mailMessage.setSubject(" Notificación de Envío de Formato FISE");
-			mailMessage.setTo(new InternetAddress(correoD));
-			if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
-				mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
+			if( !FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) ){
+				mailMessage.setFrom(new InternetAddress(correoR));
+				mailMessage.setSubject(" Notificación de Envío de Formato FISE");
+				mailMessage.setTo(new InternetAddress(correoD));
+				if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
+					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
+				}
+				mailMessage.setBody("<html><head></head><body><p>Usuario "
+						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que OSINERGMIN-GART ha recepcionado el "
+						+ descripcionFormato + "<u></u><u></u></p><p><u></u><u></u></p><p>Se adjunta la constancia de envío, el formato y las observaciones<u></u><u></u></p>"
+						+ "<p><u></u>&nbsp;<u></u></p><p>Atentamente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+				for (FileEntryJSP fej : listaArchivo) {
+					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
+				}
+				MailServiceUtil.sendEmail(mailMessage);
+			}else{
+				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
 			}
-			mailMessage.setBody("<html><head></head><body><p>Usuario "
-					+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que OSINERGMIN-GART ha recepcionado el "
-					+ descripcionFormato + "<u></u><u></u></p><p><u></u><u></u></p><p>Se adjunta la constancia de envío, el formato y las observaciones<u></u><u></u></p>"
-					+ "<p><u></u>&nbsp;<u></u></p><p>Atentamente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
-			for (FileEntryJSP fej : listaArchivo) {
-				mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
-			}
-			MailServiceUtil.sendEmail(mailMessage);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw e;
+			//throw e;
 		}
 	}
 	

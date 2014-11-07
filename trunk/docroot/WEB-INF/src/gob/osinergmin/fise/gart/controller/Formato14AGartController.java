@@ -146,6 +146,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 	    pRequest.getPortletSession().setAttribute("anoInicioVigencia", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("anoFinVigencia", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("mensajeError", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("listaError", null, PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("mensajeInformacion", "", PortletSession.APPLICATION_SCOPE);
@@ -726,6 +727,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 		    pRequest.getPortletSession().setAttribute("anoInicioVigencia", anoIniVigencia, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anoFinVigencia", anoFinVigencia, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("etapa", etapa, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);//para control de mostrar formulario a ingresar
 		}else{
 			if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) || flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
 				pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresaNew, PortletSession.APPLICATION_SCOPE);
@@ -742,6 +744,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 			    pRequest.getPortletSession().setAttribute("anoInicioVigencia", anioIniVigEdit, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anoFinVigencia", anioFinVigEdit, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("etapa", etapaEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);//para control de mostrar formulario a ingresar
 			}
 			
 		}
@@ -2092,18 +2095,35 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
         	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
         	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
         	mapa = formato14Service.mapearParametrosFormato14A(bean);
-        	if(mapa!=null){
-        		mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
-        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
-        		//verificar si ponerlo aca o no
-        		mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-        		mapa.put("NOMBRE_FORMATO", FiseConstants.NOMBRE_FORMATO_14A);
- 			}
+        	
+        	CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
+        	String descripcionFormato = "";
+        	if( tabla!=null ){
+        		descripcionFormato = tabla.getDescripcionTabla();
+        	}
+        	
         	Formato14Generic formato14Generic = new Formato14Generic(formato);
         	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 		    if(i==0){
 		    	cargarListaObservaciones(formato.getFiseFormato14ADs());
 		    } 
+		    
+		   //guardamos la fecha de envio, en este momento porque necesitamos la fecha de envio para mandar al reporte
+    	   Formato14ACBean form = new Formato14ACBean();
+    	   form.setUsuario(themeDisplay.getUser().getLogin());
+    	   form.setTerminal(themeDisplay.getUser().getLoginIP());
+    	   formato = formato14Service.modificarEnvioDefinitivoFormato14AC(form, formato);
+		   
+    	   if(mapa!=null){
+    		   mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+    		   mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+    		   //verificar si ponerlo aca o no
+    		   mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+    		   mapa.put("NOMBRE_FORMATO", descripcionFormato);
+    		   mapa.put("FECHA_ENVIO", formato.getFechaEnvioDefinitivo());
+    	   }
+    	   
+    	   
 	        /**REPORTE FORMATO 14A*/
 	       nombreReporte = "formato14A";
 	       nombreArchivo = nombreReporte;
@@ -2161,17 +2181,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	       //
 	       if( listaArchivo!=null && listaArchivo.size()>0 ){
 	    	   //obtener e nombre del formato
-	    	   CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
-	    	   String descripcionFormato = "";
-	    	   if( tabla!=null ){
-	    		   descripcionFormato = tabla.getDescripcionTabla();
-	    	   }
 	    	   fiseUtil.enviarMailAdjunto(request,listaArchivo,descripcionFormato);
-	    	   //guardamos la fecha de envio
-	    	   Formato14ACBean form = new Formato14ACBean();
-	    	   form.setUsuario(themeDisplay.getUser().getLogin());
-	    	   form.setTerminal(themeDisplay.getUser().getLoginIP());
-	    	   formato14Service.modificarEnvioDefinitivoFormato14AC(form, formato);
 	       }
         }
 
@@ -2182,6 +2192,8 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	   pw.close();
 	}catch (Exception e) {
 		e.printStackTrace();
+	}finally{
+		
 	}
 }
 
