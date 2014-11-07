@@ -7,7 +7,7 @@
 	<parameter name="NOMBRE_FORMATO" class="java.lang.String"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
-	<parameter name="FECHA_ENVIO" class="java.sql.Time"/>
+	<parameter name="FECHA_ENVIO" class="java.util.Date"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESCRIPCION" class="java.lang.String"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
