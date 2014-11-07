@@ -579,18 +579,18 @@ $(document).ready(function () {
 											<table style="width: 100%">
 											  <tr>
 												<td width="25%">
-												   <fieldset id="<portlet:namespace/>panelCargaArchivos"
+												   <fieldset id="<portlet:namespace/>panelCargaArchivosF14C"
 															class="net-frame-border">
 													<legend>Subir de: </legend>
 												      <table style="width: 100%">
 														<tr>
 														   <td width="50%" align="center">
-															<input type="button" class="net-button-small" id="<portlet:namespace/>cargaExcel"
-																  name="<portlet:namespace/>cargaExcel" value="EXCEL" />
+															<input type="button" class="net-button-small" id="<portlet:namespace/>cargaExcelF14C"
+																  name="<portlet:namespace/>cargaExcelF14C" value="EXCEL" />
 															</td>
 															<td width="50%" align="center">
-															   <input type="button" class="net-button-small" id="<portlet:namespace/>cargaTxt"
-																	  name="<portlet:namespace/>cargaTxt" value="TXT" />
+															   <input type="button" class="net-button-small" id="<portlet:namespace/>cargaTxtF14C"
+																	  name="<portlet:namespace/>cargaTxtF14C" value="TXT" />
 															</td>
 														 </tr>
 														</table>
@@ -653,6 +653,40 @@ $(document).ready(function () {
 					</table>	
 				</div>				 
 			 <!-- FIN DE DIV PARA NUEVO REGISTRO -->
+				
+			 <!-- DIALOGO PARA MOSTRAR OBSERVACIONES -->	
+			  <div id="<portlet:namespace/>dialog-form-observacion" class="net-frame-border"
+					style="display: none; background: #fff;"
+					title=" Resultados de validación ">
+					<fieldset class="net-frame-border">
+						<table id="<portlet:namespace/>grid_observacion" width="100%">
+						</table>
+						<div id="<portlet:namespace/>pager_observacion"></div>
+					</fieldset>
+					<br>
+				</div>	
+			 <!--FIN DIALOGO PARA MOSTRAR OBSERVACIONES -->	
+			 
+			 
+			 <!-- DIALOGO PARA MOSTRAR ERRORES -->			 
+			 <div id="<portlet:namespace/>dialog-form-error" class="net-frame-border" style="display: none; background: #fff;" title=" Errores de archivo de carga ">
+					<fieldset class="net-frame-border">
+						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla">
+							<tr class="titulo_tabla">
+								<td width="40">Nro.</td>
+								<td width="378" height="37">Descripción</td>
+							</tr>
+							<%-- <c:forEach items="${listaError}" var="error" varStatus="status">
+								<tr class="detalleTablaContenido">
+									<td align="center">${status.count}</td>
+									<td align="left">${error.descripcion}</td>
+								</tr>
+							</c:forEach> --%>
+						</table>
+					</fieldset>
+					<br>
+				</div>
+			 <!--FIN DIALOGO PARA MOSTRAR ERRORES -->
 					
 			</div>
 		</div>
@@ -669,10 +703,20 @@ $(document).ready(function () {
 		</p>	
 	</div>
 	
+	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
+		</p>
+	</div>`
 	
 	
-	
-	
+	<div id="<portlet:namespace/>dialog-confirm-envio" title="Confirmar acci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-envio-content">¿Está seguro?</label>
+		</p>
+	</div>
 	
 	
 	
