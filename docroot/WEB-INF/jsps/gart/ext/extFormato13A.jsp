@@ -12,12 +12,19 @@ var formato13A= {
 	urlBusqueda: null,
 	urlBusquedaDetalle: null,
 	urlCargaDeclaracion: null,
+	urlProvincias:null,
+	urlDistritos:null,
 	botonBuscar:null,
 	formBusqueda: null,
 	formNuevo : null,
+	formDetalle : null,
 	botonCrearFormato : null,
+	botonGuardarDetalle:null,
 	codEmpresa : null,
 	peridoDeclaracion : null,
+	codDepa:null,
+	codProv:null,
+	codDist:null,
 	init : function(urlNuevo){
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
 		this.paginadoResultados='#<portlet:namespace/>pager_formato';
@@ -39,7 +46,7 @@ var formato13A= {
 		formato13A.botonBuscar.trigger('click');
 		
 	},
-	initCRUD : function(operacion){
+	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
 		this.urlBusquedaDetalle='<portlet:resourceURL id="busquedaDetalle" />';
 		this.formNuevo=$('#formato13AGartCommand');
@@ -47,6 +54,8 @@ var formato13A= {
 		this.peridoDeclaracion=$('#peridoDeclaracion');
 		this.tablaDeclaracion=$("#<portlet:namespace/>grid_formato_declaracion");
 		this.paginadoDeclaracion='#<portlet:namespace/>pager_formato_declaracion';
+		var botonAnadirFormato=$('#<portlet:namespace/>anadirFormato');
+		var botonRegresarBusqueda=$('#<portlet:namespace/>regresarBusqueda');
 		
 		formato13A.buildGridsDeclaracion();
 		
@@ -60,7 +69,42 @@ var formato13A= {
 				formato13A.buscarDetalles();
 			});
 			formato13A.codEmpresa.trigger('change');
+			
+			botonAnadirFormato.click(function(){
+				formato13A.blockUI();
+				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').submit();
+			});
+			
+			botonRegresarBusqueda.click(function(){
+				formato13A.blockUI();
+				location.href=urlRegresarBusqueda;
+			});
+			
 		}
+	},
+	initCRUDDetalle : function(operacion,urlGuardarDetalle){
+		this.formDetalle=$("#formato13AGartCommand");
+		this.codDepa=$("select[name='codDepartamento']");
+		this.codProv=$("select[name='codProvincia']");
+		this.codDist=$("select[name='codDistrito']");
+		this.urlProvincias='<portlet:resourceURL id="provincias" />';
+		this.urlDistritos='<portlet:resourceURL id="distritos" />';
+		this.botonGuardarDetalle=$('#<portlet:namespace/>guardarDetalle');
+		
+		if(operacion=='CREATE'){
+			formato13A.codDepa.change(function(){
+				formato13A.listarProvincias(formato13A.codDepa.val());
+			});
+			
+			formato13A.codProv.change(function(){
+				formato13A.listarDistritos(formato13A.codProv.val());
+			});
+			
+			formato13A.botonGuardarDetalle.click(function(){
+				formato13A.formDetalle.attr('action',urlGuardarDetalle).submit();
+			});
+		}
+		
 	},
 	buildGridsBusqueda : function () {	
 		formato13A.tablaResultados.jqGrid({
@@ -167,20 +211,20 @@ var formato13A= {
 		   datatype: "local",
 	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','Editar','Anular','','','',''],
 	       colModel: [
-					{ name: 'anioMesAlta', index: 'anioMesAlta', width: 50},
+					{ name: 'anioMesAlta', index: 'anioMesAlta', width: 70},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
 		            { name: 'descripcionLocalidad', index: 'descripcionLocalidad', width: 50},
-	                { name: 'st1', index: 'st1', width: 50},
-	                { name: 'st2', index: 'st2', width: 50},
-	                { name: 'st3', index: 'st3', width: 50},
-	                { name: 'st4', index: 'st4', width: 50},
-	                { name: 'st5', index: 'st5', width: 50},
-	                { name: 'st6', index: 'st6', width: 50},
-	                { name: 'stserv', index: 'stserv', width: 50},
-	                { name: 'stesp', index: 'stesp', width: 50},
-	                { name: 'total', index: 'total', width: 50},
-	                { name: 'idZonaBenef', index: 'idZonaBenef', width: 50},
-	                { name: 'nombreSedeAtiende', index: 'nombreSedeAtiende', width: 50},
+	                { name: 'st1', index: 'st1', width: 20},
+	                { name: 'st2', index: 'st2', width: 20},
+	                { name: 'st3', index: 'st3', width: 20},
+	                { name: 'st4', index: 'st4', width: 20},
+	                { name: 'st5', index: 'st5', width: 20},
+	                { name: 'st6', index: 'st6', width: 20},
+	                { name: 'stserv', index: 'stserv', width: 20},
+	                { name: 'stesp', index: 'stesp', width: 20},
+	                { name: 'total', index: 'total', width: 30},
+	                { name: 'idZonaBenef', index: 'idZonaBenef', width: 70},
+	                { name: 'nombreSedeAtiende', index: 'nombreSedeAtiende', width: 80},
 	               { name: 'view', index: 'view', width: 20,align:'center' },
 	               { name: 'edit', index: 'edit', width: 20,align:'center' },
 	               { name: 'elim', index: 'elim', width: 20,align:'center' },
@@ -201,17 +245,21 @@ var formato13A= {
 			   	caption: "Formatos declarados",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
-	      		var ids = formato13A.tablaDeclaracion.jqGrid('getDataIDs');
-	      		for(var i=0;i < ids.length;i++){
-	      			var cl = ids[i];
-	      			var ret = formato13A.tablaDeclaracion.jqGrid('getRowData',cl);           
-	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
-	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
-	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
-	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{view:view});
-	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{edit:edit});
-	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{elim:elem});
-	      		}
+	    	   AUI().use('liferay-portlet-url', function(A) {
+	    		      var ids = formato13A.tablaDeclaracion.jqGrid('getDataIDs');
+		  	      		for(var i=0;i < ids.length;i++){
+		  	      			var cl = ids[i];
+		  	      			var ret = formato13A.tablaDeclaracion.jqGrid('getRowData',cl);   
+		  	      			var urlView=Liferay.PortletURL.createRenderURL();
+		  	      			urlView.setParameter("action", "nuevoDetalle");
+		  	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
+		  	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
+		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
+		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{view:view});
+		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{edit:edit});
+		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{elim:elem});
+		  	      		}
+	    		   });	
 	      }
 	  	});
 		formato13A.tablaDeclaracion.jqGrid('navGrid',formato13A.paginadoDeclaracion,{add:false,edit:false,del:false,search: false,refresh: false});	
@@ -244,6 +292,66 @@ var formato13A= {
 			});
 
 
+	},
+	listarProvincias : function (codDepartamento) {	
+		jQuery.ajax({			
+					url: formato13A.urlProvincias,
+					type: 'post',
+					dataType: 'json',
+					data:{
+						codDepartamento:codDepartamento
+					},
+					beforeSend:function(){
+						formato13A.blockUI();
+					},				
+					success: function(data) {					
+						dwr.util.removeAllOptions("codProvincia");
+						dwr.util.addOptions("codProvincia", data,"codigoItem","descripcionItem");
+						formato13A.limpiarDistritos();
+						formato13A.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato13A.unblockUI();
+					}
+			});
+
+
+	},
+	listarDistritos : function (codProvincia) {	
+		jQuery.ajax({			
+					url: formato13A.urlDistritos,
+					type: 'post',
+					dataType: 'json',
+					data:{
+						codProvincia:codProvincia
+					},
+					beforeSend:function(){
+						formato13A.blockUI();
+					},				
+					success: function(data) {					
+						dwr.util.removeAllOptions("codDistrito");
+						dwr.util.addOptions("codDistrito", data,"codigoItem","descripcionItem");
+						formato13A.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato13A.unblockUI();
+					}
+			});
+
+
+	},
+	emptySelectObject: function(){
+		var jsonVacio='[{"descripcionItem":"--Seleccione--","codigoItem":""}]';
+		return eval("(" + jsonVacio + ")");
+	},
+	limpiarProvincias:function(){
+		dwr.util.removeAllOptions("codProvincia");
+		dwr.util.addOptions("codProvincia", formato13A.emptySelectObject(),"codigoItem","descripcionItem");
+	},
+	limpiarDistritos:function(){
+		dwr.util.removeAllOptions("codDistrito");
+		dwr.util.addOptions("codDistrito", formato13A.emptySelectObject(),"codigoItem","descripcionItem");
 	}
+	
 };
 </script>
