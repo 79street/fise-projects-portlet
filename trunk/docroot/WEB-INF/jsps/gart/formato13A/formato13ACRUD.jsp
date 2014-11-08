@@ -1,15 +1,16 @@
 <%@include file="/WEB-INF/jsps/gart/ext/extFormato13A.jsp"%>
 
-<portlet:renderURL var="urlNuevo">
-<portlet:param name="action" value="nuevo"/>
-</portlet:renderURL>
-
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet"
 	type="text/css">
+<portlet:actionURL var="urlAnadirFormato">
+	<portlet:param name="action" value="nuevoDetalle"/>
+</portlet:actionURL>
+
+<portlet:renderURL var="urlRegresarBusqueda"/>
 
 <script type="text/javascript">
 $(document).ready(function () {	
-	formato13A.initCRUD('${crud}');
+	formato13A.initCRUD('${crud}','${urlAnadirFormato}','${urlRegresarBusqueda}');
 });
 </script>
 
@@ -159,39 +160,17 @@ $(document).ready(function () {
 																	<td width="65%">
 																		<table style="width: 100%">
 																			<tr>
-																				<td width="16%" align="center"><input
-																					type="button" class="boton"
-																					name="<portlet:namespace/>reportePdf"
-																					style="display: none;"
-																					id="<portlet:namespace/>reportePdf"
-																					class="button net-button-small" value="Imprimir PDF" />
-																				</td>
-																				<td width="16%" align="center"><input
-																					type="button" class="boton"
-																					name="<portlet:namespace/>reporteExcel"
-																					style="display: none;"
-																					id="<portlet:namespace/>reporteExcel"
-																					class="button net-button-small"
-																					value="Exportar excel" /></td>
 																				<td width="17%" align="center"><input
 																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>guardarFormato"
-																					name="<portlet:namespace/>guardarFormato"
-																					value="Grabar" /></td>
+																					id="<portlet:namespace/>anadirFormato"
+																					name="<portlet:namespace/>anadirFormato"
+																					value="Añadir" /></td>
+																				
+																				
 																				<td width="17%" align="center"><input
 																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>validacionFormato"
-																					name="<portlet:namespace/>validacionFormato"
-																					value="Validación" /></td>
-																				<td width="17%" align="center"><input
-																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>envioDefinitivo"
-																					name="<portlet:namespace/>envioDefinitivo"
-																					value="Envío Def." /></td>
-																				<td width="17%" align="center"><input
-																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>regresarFormato"
-																					name="<portlet:namespace/>regresarFormato"
+																					id="<portlet:namespace/>regresarBusqueda"
+																					name="<portlet:namespace/>regresarBusqueda"
 																					value="Regresar" /></td>
 																			</tr>
 																		</table>

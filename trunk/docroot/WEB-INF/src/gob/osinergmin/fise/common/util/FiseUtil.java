@@ -4,10 +4,12 @@ import gob.osinergmin.fise.bean.CorreoBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
+import gob.osinergmin.fise.domain.AdmUbigeo;
 import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
+import gob.osinergmin.fise.gart.service.AdmUbigeoGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
@@ -85,6 +87,9 @@ public class FiseUtil {
 	@Autowired
 	@Qualifier("commonGartServiceImpl")
 	CommonGartService commonService;
+	@Autowired
+	@Qualifier("admUbigeoGartServiceImpl")
+	AdmUbigeoGartService admUbigeoService;
 	
 	public List<AdmEmpresa> getEmpresaxUsuario(PortletRequest request){
 		 List<AdmEmpresa> listaEmpresas=new ArrayList<AdmEmpresa>();
@@ -361,4 +366,15 @@ public class FiseUtil {
 		listaError.add(error);
 	}
 	
+	public List<AdmUbigeo> listaDepartamentos(){
+		return admUbigeoService.listarDepartamentos();
+	}
+	
+	public List<AdmUbigeo> listaProvincias(String codDepartamento){
+		return admUbigeoService.listarProvincias(codDepartamento);
+	}
+	
+	public List<AdmUbigeo> listaDistritos(String codProvincia){
+		return admUbigeoService.listarDistritos(codProvincia);
+	}
 }
