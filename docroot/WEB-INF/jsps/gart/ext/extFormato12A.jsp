@@ -686,6 +686,19 @@ function initDialogs(){
 			}
 		}
 	});
+	$( "#dialog-message-report" ).dialog({
+		modal: true,
+		autoOpen: false,
+		buttons: {
+			'Imprimir Pdf': function() {
+				<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+				$( this ).dialog("close");
+			},
+			Ok: function() {
+				$( this ).dialog("close");
+			}
+		}
+	});
 	$("#dialog-confirm").dialog({
 		modal: true,
 		height: 200,
@@ -1461,8 +1474,8 @@ function <portlet:namespace/>envioDefinitivo(){
 		},
 		success : function(gridData) {
 			var addhtml='Se realizó el envío satisfactoriamente';					
-			$("#dialog-message-content").html(addhtml);
-			$("#dialog-message").dialog( "open" );					
+			$("#dialog-message-report-content").html(addhtml);
+			$("#dialog-message-report").dialog( "open" );					
 			initBlockUI();
 		},error : function(){
 			alert("Error de conexión.");
@@ -1477,6 +1490,22 @@ function mostrarDescripcionPeriodo(anio,mes,etapa){
 	  descripcionPeriodo=''+monthNames[mes-1]+'-'+anio+' / '+etapa;
 	  //alert(descripcionPeriodo);
 	  return descripcionPeriodo;
+}
+function <portlet:namespace/>mostrarReporteEnvioDefinitivo(){
+	jQuery.ajax({
+		url : '<portlet:resourceURL id="reporteEnvioDefinitivo" />',
+		type : 'post',
+		dataType : 'json',
+		data : {
+			<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+		},
+		success : function(gridData) {
+			verReporte();
+		},error : function(){
+			alert("Error de conexión.");
+			initBlockUI();
+		}
+	});
 }
 </script>
 

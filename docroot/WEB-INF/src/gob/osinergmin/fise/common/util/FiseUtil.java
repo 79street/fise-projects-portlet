@@ -42,6 +42,8 @@ import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -303,10 +305,10 @@ public class FiseUtil {
 			mailMessage.setHTMLFormat(true);
 			
 			String nombreUsuario=themeDisplay.getUser().getLogin();
-			//String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
-			//String correoD = themeDisplay.getUser().getEmailAddress();
-			String correoR = "informacion@sphere.com.pe";
-			String correoD = "edwin.heredia@sphere.com.pe";
+			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
+			String correoD = themeDisplay.getUser().getEmailAddress();
+			//String correoR = "informacion@sphere.com.pe";
+			//String correoD = "edwin.heredia@sphere.com.pe";
 			
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
 			
