@@ -887,6 +887,14 @@
 			<label id="dialog-confirm-envio-content">¿Está seguro?</label>
 		</p>
 	</div>
+	
+	<div id="dialog-message-report" title="Osinergmin">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
 
 	<div id="divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
 	</div>

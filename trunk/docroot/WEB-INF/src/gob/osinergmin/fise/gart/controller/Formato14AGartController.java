@@ -2040,6 +2040,9 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 @ResourceMapping("envioDefinitivo")
 public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command) {
 	try {
+		
+		//List<byte[]> listaBytes = new ArrayList<byte[]>();
+		
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
         HttpSession session = httpRequest.getSession();
         ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -2121,6 +2124,9 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     		   mapa.put("USUARIO", themeDisplay.getUser().getLogin());
     		   mapa.put("NOMBRE_FORMATO", descripcionFormato);
     		   mapa.put("FECHA_ENVIO", formato.getFechaEnvioDefinitivo());
+    		   mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
+    		   mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+    		   mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
     	   }
     	   
     	   
@@ -2132,6 +2138,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	       byte[] bytes = null;
 	       bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
 	       if (bytes != null) {
+	    	   //session.setAttribute("bytes1", bytes);
 	    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
 	    	   FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
 	    	   if( archivo!=null ){
@@ -2150,7 +2157,8 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    	   byte[] bytes2 = null;
 		       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
 	    	   //bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), null, new JRBeanCollectionDataSource(listaObservaciones));
-		       if (bytes != null) {
+		       if (bytes2 != null) {
+		    	   //session.setAttribute("bytes2", bytes2);
 		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
 		    	   FileEntry archivo2 = fiseUtil.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
 		    	   if( archivo2!=null ){
@@ -2169,6 +2177,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	       byte[] bytes3 = null;
 	       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
 	       if (bytes3 != null) {
+	    	   session.setAttribute("bytesActaEnvio", bytes3);
 	    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
 	    	   FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
 	    	   if( archivo!=null ){
@@ -2184,7 +2193,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    	   fiseUtil.enviarMailAdjunto(request,listaArchivo,descripcionFormato);
 	       }
         }
-
+        
        response.setContentType("application/json");
        PrintWriter pw = response.getWriter();
 	   pw.write(jsonArray.toString());
@@ -2212,6 +2221,30 @@ public void cargarListaObservaciones(List<FiseFormato14AD> listaDetalle){
 			obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
 			listaObservaciones.add(obs);
 		}
+	}
+}
+
+@ResourceMapping("reporteEnvioDefinitivo")
+public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse response) {
+	try {
+		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+        HttpSession session = httpRequest.getSession();
+        
+	    JSONArray jsonArray = new JSONArray();	
+	    
+	    String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
+	    String tipoArchivo = FiseConstants.FORMATO_EXPORT_ACTAENVIO;
+	   
+	    session.setAttribute("tipoFormato",tipoFormato);
+	    session.setAttribute("tipoArchivo",tipoArchivo);
+        
+	    response.setContentType("application/json");
+	    PrintWriter pw = response.getWriter();
+	    pw.write(jsonArray.toString());
+	    pw.flush();
+	    pw.close();
+	}catch (Exception e) {
+		e.printStackTrace();
 	}
 }
 		

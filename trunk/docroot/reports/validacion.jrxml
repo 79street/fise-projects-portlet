@@ -2,12 +2,13 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="validacion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="79"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="NOMBRE_FORMATO" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
+	<parameter name="NRO_OBSERVACIONES" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -20,9 +21,6 @@
 	<field name="descripcion" class="java.lang.String">
 		<fieldDescription><![CDATA[descripcion]]></fieldDescription>
 	</field>
-	<variable name="CANT_OBSERVACIONES" class="java.lang.String" calculation="Count">
-		<variableExpression><![CDATA[$F{descripcion}]]></variableExpression>
-	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -85,14 +83,14 @@
 				<text><![CDATA[Formato:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="184" y="89" width="279" height="15"/>
+				<reportElement x="162" y="89" width="279" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="113" y="89" width="48" height="16"/>
+				<reportElement x="113" y="89" width="30" height="16"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
 			</textField>
@@ -114,7 +112,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NOMBRE_FORMATO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="164" y="89" width="15" height="16"/>
+				<reportElement x="145" y="89" width="15" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[/]]></text>
 			</staticText>
@@ -170,21 +168,21 @@
 	<columnFooter>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="57" y="2" width="129" height="16"/>
+				<reportElement x="20" y="2" width="130" height="16"/>
 				<textElement/>
 				<text><![CDATA[Cantidad de Observaciones	:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="190" y="2" width="100" height="15"/>
+				<reportElement x="152" y="2" width="100" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{CANT_OBSERVACIONES}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{NRO_OBSERVACIONES}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="20" splitType="Stretch"/>
+		<band height="200" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="20" splitType="Stretch"/>
+		<band height="50" splitType="Stretch"/>
 	</summary>
 </jasperReport>

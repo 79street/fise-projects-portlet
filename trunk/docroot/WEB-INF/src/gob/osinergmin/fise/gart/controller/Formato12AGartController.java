@@ -3,6 +3,7 @@ package gob.osinergmin.fise.gart.controller;
 import gob.osinergmin.fise.bean.Formato12ACBean;
 import gob.osinergmin.fise.bean.Formato12AMensajeBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
+import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.CfgCampo;
@@ -19,6 +20,7 @@ import gob.osinergmin.fise.gart.json.Formato12AGartJSON;
 import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
 import gob.osinergmin.fise.gart.service.CfgCampoGartService;
+import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
@@ -119,6 +121,13 @@ public class Formato12AGartController {
 
 	@Autowired
 	ServletContext context;
+	
+	@Autowired
+	@Qualifier("fiseUtil")
+	FiseUtil fiseUtil;
+	@Autowired
+	@Qualifier("cfgTablaGartServiceImpl")
+	CfgTablaGartService tablaService;
 	
 	@Autowired
 	@Qualifier("formato12AGartServiceImpl")
@@ -1997,17 +2006,37 @@ public class Formato12AGartController {
 	        	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
 	        	bean.setDescMesPresentacion(listaMes.get(formato.getId().getMesPresentacion()));
 	        	mapa = formatoService.mapearParametrosFormato12A(bean);
-	        	if(mapa!=null){
-	        		mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
-	        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
-	        		//verificar si ponerlo aca o no
-	        		mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-	        		mapa.put("NOMBRE_FORMATO", FiseConstants.NOMBRE_FORMATO_12A);
-	 			}
+	        	
+	        	
+	        	CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12A);
+	        	String descripcionFormato = "";
+	        	if( tabla!=null ){
+	        		descripcionFormato = tabla.getDescripcionTabla();
+	        	}
+	        	
 	        	int i = formatoService.validarFormato12A(formato, FiseConstants.NOMBRE_FORMATO_12A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 			    if(i==0){
 			    	cargarListaObservaciones(formato.getFiseFormato12ADs());
 			    } 
+			    
+			  //guardamos la fecha de envio
+	    	   Formato12ACBean form = new Formato12ACBean();
+	    	   form.setUsuario(themeDisplay.getUser().getLogin());
+	    	   form.setTerminal(themeDisplay.getUser().getLoginIP());
+	    	   formatoService.modificarEnvioDefinitivoFormato12AC(form, formato);
+			    
+	    	   if(mapa!=null){
+	        		mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+	        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+	        		//verificar si ponerlo aca o no
+	        		mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+	     		   mapa.put("NOMBRE_FORMATO", descripcionFormato);
+	     		   mapa.put("FECHA_ENVIO", formato.getFechaEnvioDefinitivo());
+	     		   mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
+	     		   mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+	     		   mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
+	 			}
+	    	   
 		        /**REPORTE FORMATO 12A*/
 		       nombreReporte = "formato12A";
 		       nombreArchivo = nombreReporte;
@@ -2053,6 +2082,7 @@ public class Formato12AGartController {
 		       byte[] bytes3 = null;
 		       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
 		       if (bytes3 != null) {
+		    	   session.setAttribute("bytesActaEnvio", bytes3);
 		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
 		    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
 		    	   if( archivo!=null ){
@@ -2064,12 +2094,14 @@ public class Formato12AGartController {
 		       }
 		       //
 		       if( listaArchivo!=null && listaArchivo.size()>0 ){
-		    	   this.enviarMailAdjunto(listaArchivo);
+		    	   fiseUtil.enviarMailAdjunto(request,listaArchivo,descripcionFormato);
+		    	   
+		    	   /*this.enviarMailAdjunto(listaArchivo);
 		    	   //guardamos la fecha de envio
 		    	   Formato12ACBean form = new Formato12ACBean();
 		    	   form.setUsuario(themeDisplay.getUser().getLogin());
 		    	   form.setTerminal(themeDisplay.getUser().getLoginIP());
-		    	   formatoService.modificarEnvioDefinitivoFormato12AC(form, formato);
+		    	   formatoService.modificarEnvioDefinitivoFormato12AC(form, formato);*/
 		       }
 	        }
 
@@ -2152,6 +2184,30 @@ public class Formato12AGartController {
 				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
 				listaObservaciones.add(obs);
 			}
+		}
+	}
+	
+	@ResourceMapping("reporteEnvioDefinitivo")
+	public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse response) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();	
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
+		    String tipoArchivo = FiseConstants.FORMATO_EXPORT_ACTAENVIO;
+		   
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+	        
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

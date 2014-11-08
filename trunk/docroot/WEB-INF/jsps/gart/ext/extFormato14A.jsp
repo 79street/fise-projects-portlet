@@ -18,6 +18,7 @@ var formato14A= {
 	urlValidacion:null,
 	urlReporteValidacion:null,
 	urlEnvioDefinitivo:null,
+	urlReporteEnvioDefinitivo:null,
 	//
 	mensajeCargando:null,
 	mensajeObteniendoDatos:null,
@@ -70,12 +71,14 @@ var formato14A= {
 	i_etapaB:null,
 	//dialogs
 	dialogMessage:null,
+	dialogMessageReporte:null,
 	dialogConfirm:null,
 	dialogConfirmEnvio:null,
 	dialogCarga:null,
 	dialogError:null,
 	dialogObservacion:null,
 	dialogMessageContent:null,
+	dialogMessageReportContent:null,
 	dialogConfirmContent:null,
 	dialogConfirmEnvioContent:null,
 	dialogCargaExcel:null,
@@ -116,6 +119,7 @@ var formato14A= {
 		this.urlValidacion='<portlet:resourceURL id="validacion" />';
 		this.urlReporteValidacion='<portlet:resourceURL id="reporteValidacion" />';
 		this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivo" />';
+		this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivo" />';
 		//mensajes
 		this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
 		this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
@@ -160,6 +164,9 @@ var formato14A= {
 		this.dialogConfirmEnvioContent=$("#<portlet:namespace/>dialog-confirm-envio-content");
 		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
 		this.dialogCargaTexto=$("#<portlet:namespace/>dialog-form-cargaTexto");
+		//
+		this.dialogMessageReport=$("#<portlet:namespace/>dialog-message-report");
+		this.dialogMessageReportContent=$("#<portlet:namespace/>dialog-message-report-content");
 		//divs
 		this.divHome=$("#<portlet:namespace/>div_home");
 		this.divFormato=$("#<portlet:namespace/>div_formato");
@@ -1735,8 +1742,8 @@ var formato14A= {
 			},
 			success : function(gridData) {
 				var addhtml='Se realizó el envío satisfactoriamente';					
-				formato14A.dialogMessageContent.html(addhtml);
-				formato14A.dialogMessage.dialog("open");
+				formato14A.dialogMessageReportContent.html(addhtml);
+				formato14A.dialogMessageReport.dialog("open");
 				formato14A.initBlockUI();
 			},error : function(){
 				alert("Error de conexión.");
@@ -1790,6 +1797,22 @@ var formato14A= {
 		  //alert(descripcionPeriodo);
 		  return descripcionPeriodo;
 	},
+	<portlet:namespace/>mostrarReporteEnvioDefinitivo : function(){
+		jQuery.ajax({
+			url: formato14A.urlReporteEnvioDefinitivo+'&'+formato14A.formCommand.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+			},
+			success : function(gridData) {
+				formato14A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato14A.initBlockUI();
+			}
+		});
+	},
 	//
 	blockUI : function(){
 		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
@@ -1805,6 +1828,19 @@ var formato14A= {
 			modal: true,
 			autoOpen: false,
 			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato14A.dialogMessageReport.dialog({
+			modal: true,
+			autoOpen: false,
+			buttons: {
+				'Imprimir Pdf': function() {
+					formato14A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+					$( this ).dialog("close");
+				},
 				Ok: function() {
 					$( this ).dialog("close");
 				}

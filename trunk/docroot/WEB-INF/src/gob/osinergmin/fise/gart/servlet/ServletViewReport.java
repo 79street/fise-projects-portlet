@@ -89,6 +89,10 @@ public class ServletViewReport extends HttpServlet {
 				//colocar si se va a enviar lista o vacio
 			}
 			//
+			else if( FiseConstants.TIPO_FORMATO_ACTAENVIO.equals(tipoFormato) ){
+				coleccion = new JREmptyDataSource();
+			}
+			//
 			else if( FiseConstants.TIPO_FORMATO_VAL.equals(tipoFormato) ){
 				coleccion = new JRBeanCollectionDataSource(lista);
 			}
@@ -122,6 +126,18 @@ public class ServletViewReport extends HttpServlet {
 				exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
 				exporter.exportReport();
 			}
+			//
+			else if( FiseConstants.FORMATO_EXPORT_ACTAENVIO.equals(tipoArchivo) ){
+				byte[] bytes3 = (byte[])sesion.getAttribute("bytesActaEnvio");
+				response.reset();
+				response.setBufferSize(DEFAULT_BUFFER_SIZE);
+				response.setHeader("Content-Length", String.valueOf(bytes3.length));
+				response.setContentType("application/pdf");
+				response.setHeader("Content-Disposition", "inline;filename=\"" + "actaEnvio" + ".pdf" + "\"");
+				output = new BufferedOutputStream(servletOutputStream, DEFAULT_BUFFER_SIZE);
+				output.write(bytes3);
+			}
+			
 			servletOutputStream.flush();
 			servletOutputStream.close();
 		} catch (Exception e) {
