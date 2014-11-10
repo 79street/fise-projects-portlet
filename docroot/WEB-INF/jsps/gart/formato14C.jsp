@@ -13,14 +13,11 @@ $(document).ready(function () {
 });
 </script>
 
-<form:form method="POST" modelAttribute="formato14CBean">
+<form:form method="POST" modelAttribute="formato14CBean"
+           style="padding: 17px; padding-top: 0px;" action="${accionURL}" enctype="multipart/form-data">
 
-   <!-- VALORES HIDDEN -->
-   <input type="hidden" id="estadoCrudF14C" value="" />
-
-
-
-	<div id="d_listado" class="net-frame-listado">
+  
+  	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
 	
@@ -177,7 +174,7 @@ $(document).ready(function () {
 								<fieldset class="">
 	
 									<table class="" border="0" width="100%">
-										<tr class="filete-bottom">
+									   <tr class="filete-bottom">
 											<td><output class="net-titulo">FORMATO FISE-14C:
 												</output>COSTOS ESTÁNDARES DE IMPLEMENTACIÓN
 											</td>
@@ -186,39 +183,65 @@ $(document).ready(function () {
 											<td></td>
 										</tr>
 										<tr>
-											<td>
-											 <table class="" style="width: 50%;" border="0">
-												  <tr>
-												   <td> <label style="font-size: 12px; font-weight:bold">Distribuidora Eléctrica:</label></td>
-												   <td colspan="2">
-												      <form:select path="codEmpresa" cssClass="select" cssStyle="width: 375px;" >
-																<form:options items="${formato14CBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
-													  </form:select>
-												  </td>	  
-												  </tr>	
-												  <tr>
-												   <td> <label style="font-size: 12px; font-weight:bold">Año/Mes</label></td>
-												   <td colspan="2">
-												     <form:select path="periodoEnvio" cssClass="select" cssStyle="width: 300px;">
-														<c:forEach items="${listaPeriodoEnvio}" var="periodo">
-														     <option value="${periodo.codigoItem}">${periodo.descripcionItem}</option>
-														</c:forEach>
-													 </form:select>
-												   
+									    <td>											
+										   <table style="width: 100%;" border="0">
+											 <tr>
+												<td width="60%">
+												   <table style="width:50%;" border="0">
+													  <tr>
+													   <td> <label style="font-size: 12px; font-weight:bold">Distribuidora Eléctrica:</label></td>
+													   <td colspan="2">
+													      <form:select path="codEmpresa" cssClass="select" cssStyle="width: 200px;" >
+																	<form:options items="${formato14CBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
+														  </form:select>
+													  </td>	  
+													  </tr>	
+													  <tr>
+													   <td> <label style="font-size: 12px; font-weight:bold">Año/Mes</label></td>
+													   <td colspan="2">
+													     <form:select path="periodoEnvio" cssClass="select" cssStyle="width: 200px;">
+															<c:forEach items="${listaPeriodoEnvio}" var="periodo">
+															     <option value="${periodo.codigoItem}">${periodo.descripcionItem}</option>
+															</c:forEach>
+														 </form:select>												   
+													   </td>											       										       												  
+													  </tr>	
+													   <tr>
+													   <td> <label style="font-size: 12px; font-weight:bold">Rubro</label></td>
+													   <td colspan="2"><label>Costos Estándar</label></td> 	  
+													  </tr>	
+													   <tr>
+													   <td> <label style="font-size: 12px; font-weight:bold">Frecuencia</label></td>
+													   <td colspan="2"><label>Bianual</label></td>	   
+													  </tr>	
+											         </table>									
+												</td>
+												<td width="40%">																							
+												 <div id="<portlet:namespace/>divPeriodoEjecucion" style="display: none;">
+																<fieldset class="net-frame-border">
+																	<table style="width:80%;">
+																		<tr>
+																			<td colspan="5"><label style="font-size: 12px; font-weight:bold">Periodo de Vigencia</label></td>
+																		</tr>
+																		<tr>
+																			<td width="110px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
+																			<td>
+																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" />
+																			</td>
+																			<td width="20px"></td>
+																			<td width="110px"><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
+																			<td>
+																				<form:input path="anoFinVigencia" style="width: 50px" maxlength="4" />	
+																			</td>
+																		</tr>
+																	</table>
+																</fieldset>
+													   </div>											
 												   </td>
-												       										       												  
-												  </tr>	
-												   <tr>
-												   <td> <label style="font-size: 12px; font-weight:bold">Rubro</label></td>
-												   <td colspan="2"><label>Costos Estándar</label></td> 	  
-												  </tr>	
-												   <tr>
-												   <td> <label style="font-size: 12px; font-weight:bold">Frecuencia</label></td>
-												   <td colspan="2"><label>Bianual</label></td>	   
-												  </tr>	
-											  </table>											
-											</td>
-										</tr>
+											   </tr>
+										     </table>								 								
+										 </td>
+										</tr>																										
 										<tr height="10px" class="filete-bottom">
 										  <td colspan="2"></td> 
 										</tr>
@@ -633,8 +656,6 @@ $(document).ready(function () {
 											</td>
 											</tr>
 									    </table> 
-									        <input type="hidden" id="<portlet:namespace/>flagCarga" name="flagCarga" value="" style="display: none;" />
-	
 										</td>
 										</tr>
 										<tr height="10px" class="filete-bottom">
@@ -668,6 +689,89 @@ $(document).ready(function () {
 			 <!--FIN DIALOGO PARA MOSTRAR OBSERVACIONES -->	
 			 
 			 
+			 <!-- DIALOGO PARA SUBIR ARCHIVOS DE EXEL -->			 
+			 <div id="<portlet:namespace/>dialog-form-cargaExcel" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
+						style="display: none; z-index: 1002; position: absolute; width: 400px;">
+					<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo excel </span> 
+						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="formato14C.regresarFormularioCargaExcel();"> 
+							<span class="ui-icon ui-icon-closethick">close</span>
+						</a>
+					</div>
+	
+					<div class="ui-dialog-content ui-widget-content">
+						<!--tabla-->
+	
+						<fieldset class="">
+							<table style="width: 100%;">
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Archivo:</td>
+									<td><input type="file" id="archivoExcel"
+										name="archivoExcel" /></td>
+								</tr>
+							</table>
+						</fieldset>
+	
+	
+					</div>
+	
+					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+						<div class="ui-dialog-buttonset">
+							<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel"
+								id="<portlet:namespace/>cargarFormatoExcel" value="Cargar" /> 
+							<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoExcel"
+								id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar" onclick="formato14C.regresarFormularioCargaExcel();" />
+						</div>
+					</div>
+				</div>
+			  <!-- FIN DIALOGO PARA SUBIR ARCHIVOS DE EXEL -->
+			  
+			  
+			  <!-- DIALOGO PARA SUBIR ARCHIVOS DE TEXTO -->
+			  <div id="<portlet:namespace/>dialog-form-cargaTexto" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
+						style="display: none; z-index: 1002; position: absolute; width: 400px;">
+					<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo de texto </span> 
+						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="formato14C.regresarFormularioCargaTexto();"> 
+						<span class="ui-icon ui-icon-closethick" onmouseover="ui-state-hover">close</span>
+						</a>
+					</div>
+					<div class="ui-dialog-content ui-widget-content">
+						<!--tabla-->
+	
+						<fieldset class="">
+							<table style="width: 100%;">
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Archivo:</td>
+									<td><input type="file" id="archivoTxt" name="archivoTxt" />
+									</td>
+								</tr>
+							</table>
+						</fieldset>
+	
+	
+					</div>
+	
+	
+					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+						<div class="ui-dialog-buttonset">
+							<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoTexto"
+								id="<portlet:namespace/>cargarFormatoTexto" value="Cargar" /> 
+							<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoTexto"
+								id="<portlet:namespace/>cerrarFormatoTexto" value="Cerrar" onclick="formato14C.regresarFormularioCargaTexto();" />
+						</div>
+					</div>
+				</div>
+			  <!-- FIN DE DIALOGO PARA SUBIR ARCHIVOS DE TEXTO -->
+			  
+			  
+			 
 			 <!-- DIALOGO PARA MOSTRAR ERRORES -->			 
 			 <div id="<portlet:namespace/>dialog-form-error" class="net-frame-border" style="display: none; background: #fff;" title=" Errores de archivo de carga ">
 					<fieldset class="net-frame-border">
@@ -676,12 +780,12 @@ $(document).ready(function () {
 								<td width="40">Nro.</td>
 								<td width="378" height="37">Descripción</td>
 							</tr>
-							<%-- <c:forEach items="${listaError}" var="error" varStatus="status">
+							 <c:forEach items="${listaError}" var="error" varStatus="status">
 								<tr class="detalleTablaContenido">
 									<td align="center">${status.count}</td>
 									<td align="left">${error.descripcion}</td>
 								</tr>
-							</c:forEach> --%>
+							</c:forEach> 
 						</table>
 					</fieldset>
 					<br>
@@ -718,6 +822,28 @@ $(document).ready(function () {
 		</p>
 	</div>
 	
+	<div id="<portlet:namespace/>divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
+	</div>
+	
+	
+	 <!-- VALORES HIDDEN -->
+    <input type="hidden" id="estadoCrudF14C" value="" />
+   
+    <input type="hidden" id="<portlet:namespace/>codEmpresaSes" value="${model.codEmpresa}" />
+	<input type="hidden" id="<portlet:namespace/>anioPresSes" value="${model.anioPres}" />	
+	<input type="hidden" id="<portlet:namespace/>mesPresSes" value="${model.mesPres}" />	
+	<input type="hidden" id="<portlet:namespace/>anioIniVigSes" value="${model.anoIniVigencia}" />	
+	<input type="hidden" id="<portlet:namespace/>anioFinVigSes" value="${model.anoFinVigencia}" />	
+	<input type="hidden" id="<portlet:namespace/>etapaSes" value="${model.etapa}" />	
+
+    <input type="hidden" id="<portlet:namespace/>mensajeError" value="${model.mensajeError}" />
+	<input type="hidden" id="<portlet:namespace/>mensajeInfo" value="${model.mensajeInfo}" />
+
+    <input type="hidden" id="<portlet:namespace/>flag" value="${model.flag}" />
+    
+    <form:input path="flagPeriodoEjecucion" cssStyle="display:none;" />
+    
+    <input type="hidden" id="<portlet:namespace/>flagCarga" name="flagCarga" value="" style="display: none;" />
 	
 	
 </form:form>
