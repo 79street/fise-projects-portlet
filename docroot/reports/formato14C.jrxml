@@ -1,0 +1,1209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14C" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.683013455365081"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NUMBENEF_EMPAD_CANT_R" class="java.lang.Long"/>
+	<parameter name="COSTO_COORD_CANT_R" class="java.lang.Long"/>
+	<parameter name="COSTO_SUP_CANT_R" class="java.lang.Long"/>
+	<parameter name="COSTO_GEST_CANT_R" class="java.lang.Long"/>
+	<parameter name="COSTO_ASIST_CANT_R" class="java.lang.Long"/>
+	<parameter name="COSTOTOTAL_GESTPER_CANT_R" class="java.lang.Long"/>
+	<parameter name="COSTO_COORD_CD_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_CD_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_CD_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_CD_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_CD_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_COORD_CI_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_CI_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_CI_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_CI_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_CI_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_COORD_TOTAL_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_TOTAL_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_TOTAL_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_TOTAL_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_SUMA_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_COORD_CANT_P" class="java.lang.Long"/>
+	<parameter name="COSTO_SUP_CANT_P" class="java.lang.Long"/>
+	<parameter name="COSTO_GEST_CANT_P" class="java.lang.Long"/>
+	<parameter name="COSTO_ASIST_CANT_P" class="java.lang.Long"/>
+	<parameter name="COSTOTOTAL_GESTPER_CANT_P" class="java.lang.Long"/>
+	<parameter name="COSTO_COORD_CD_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_CD_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_CD_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_CD_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_CD_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_COORD_CI_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_CI_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_CI_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_CI_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_CI_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_COORD_TOTAL_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_TOTAL_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_TOTAL_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_TOTAL_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_SUMA_P" class="java.math.BigDecimal"/>
+	<parameter name="NUMBENEF_EMPAD_CANT_L" class="java.lang.Long"/>
+	<parameter name="COSTO_COORD_CANT_L" class="java.lang.Long"/>
+	<parameter name="COSTO_SUP_CANT_L" class="java.lang.Long"/>
+	<parameter name="COSTO_GEST_CANT_L" class="java.lang.Long"/>
+	<parameter name="COSTO_ASIST_CANT_L" class="java.lang.Long"/>
+	<parameter name="COSTOTOTAL_GESTPER_CANT_L" class="java.lang.Long"/>
+	<parameter name="COSTO_COORD_CD_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_CD_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_CD_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_CD_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_CD_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_COORD_CI_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_CI_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_CI_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_CI_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_CI_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_COORD_TOTAL_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_SUP_TOTAL_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_GEST_TOTAL_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTO_ASIST_TOTAL_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTOTOTAL_GESTPER_SUMA_L" class="java.math.BigDecimal"/>
+	<parameter name="SUMANUMBENEF_EMPAD_CANT_T" class="java.lang.Long"/>
+	<parameter name="SUMACOSTO_COORD_CANT_T" class="java.lang.Long"/>
+	<parameter name="SUMACOSTO_SUP_CANT_T" class="java.lang.Long"/>
+	<parameter name="SUMACOSTO_GEST_CANT_T" class="java.lang.Long"/>
+	<parameter name="SUMACOSTO_ASIST_CANT_T" class="java.lang.Long"/>
+	<parameter name="SUMACOSTOTOTAL_GESTPER_CANT_T" class="java.lang.Long"/>
+	<parameter name="SUMACOSTO_COORD_COSTO_T" class="java.math.BigDecimal"/>
+	<parameter name="SUMACOSTO_SUP_COSTO_T" class="java.math.BigDecimal"/>
+	<parameter name="SUMACOSTO_GEST_COSTO_T" class="java.math.BigDecimal"/>
+	<parameter name="SUMACOSTO_ASIST_COSTO_T" class="java.math.BigDecimal"/>
+	<parameter name="COSTOPROM_MENSUAL_CD_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTOPROM_MENSUAL_TOTAL_R" class="java.math.BigDecimal"/>
+	<parameter name="COSTOPROM_MENS_CD_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTOPROM_MENS_TOTAL_P" class="java.math.BigDecimal"/>
+	<parameter name="COSTOPROM_MENS_CD_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTOPROM_MENS_TOTAL_L" class="java.math.BigDecimal"/>
+	<parameter name="COSTOPROM_MENS_TOTALCOSTO_T" class="java.math.BigDecimal"/>
+	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
+	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
+	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
+	<parameter name="SUMACOSTOTOTAL_GESTPER_COSTO_T" class="java.math.BigDecimal"/>
+	<parameter name="NUMBENEF_EMPAD_CANT_P" class="java.lang.Long"/>
+	<parameter name="NOMBRE_SEDE" class="java.lang.String"/>
+	<parameter name="COSTO_COORD_CANT_CI_R" class="java.lang.Long"/>
+	<parameter name="COSTO_SUP_CANT_CI_R" class="java.lang.Long"/>
+	<parameter name="COSTO_GEST_CANT_CI_R" class="java.lang.Long"/>
+	<parameter name="COSTO_ASIST_CANT_CI_R" class="java.lang.Long"/>
+	<parameter name="COSTOTOTAL_GESTPER_CANT_CI_R" class="java.lang.Long"/>
+	<parameter name="COSTO_COORD_CANT_CI_P" class="java.lang.Long"/>
+	<parameter name="COSTO_SUP_CANT_CI_P" class="java.lang.Long"/>
+	<parameter name="COSTO_GEST_CANT_CI_P" class="java.lang.Long"/>
+	<parameter name="COSTO_ASIST_CANT_CI_P" class="java.lang.Long"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="COSTOTOTAL_GESTPER_CANT_CI_P" class="java.lang.Long"/>
+	<parameter name="COSTO_COORD_CANT_CI_L" class="java.lang.Long"/>
+	<parameter name="COSTO_SUP_CANT_CI_L" class="java.lang.Long"/>
+	<parameter name="COSTO_GEST_CANT_CI_L" class="java.lang.Long"/>
+	<parameter name="COSTO_ASIST_CANT_CI_L" class="java.lang.Long"/>
+	<parameter name="COSTOTOTAL_GESTPER_CANT_CI_L" class="java.lang.Long"/>
+	<parameter name="CSTOTOT_GESTPER_CANT_P" class="java.lang.String"/>
+	<parameter name="IMG" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="117" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="75" width="1150" height="20" forecolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMATO FISE - 14C: Costo de Gestión]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="9" width="258" height="56"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement x="982" y="9" width="162" height="16"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="885" y="9" width="93" height="16"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="615" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="168" y="52" width="54" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="222" y="52" width="54" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="52" width="137" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Año / Mes:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="168" y="35" width="350" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="36" width="137" height="15"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Distribución Eléctrica:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="106" width="255" height="53" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Actividades]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="469" y="123" width="50" height="36" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Costo Total Rural S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="417" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo S/. (2)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="313" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo S/. (1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="12" y="179" width="118" height="15"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="8" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[1.1 Nombre de la Sede]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="161" width="86" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1. Datos Generales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="12" y="196" width="249" height="26"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="8" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[1.2 Número Total Beneficiarios Empadronados a Diciembre del periodo anterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="232" width="257" height="15"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2. Costo por Gestión Personal]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="469" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_TOTAL_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="417" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_CI_R}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="12" y="250" width="249" height="15"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="8" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[2.1 Costo de Coordinador(3)]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="313" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_CD_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="469" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_TOTAL_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="417" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_CI_R}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="12" y="267" width="249" height="15"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="8" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[2.2 Costo de Supervisor]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="313" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_CD_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="313" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_CD_R}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="12" y="284" width="249" height="15"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="8" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[2.3 Costo de Gestor ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="417" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_CI_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="469" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_TOTAL_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="417" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_CI_R}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="12" y="301" width="249" height="15"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="8" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[2.4 Costo de Asistente y/o Auxiliar]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="313" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_CD_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="469" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_TOTAL_R}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="12" y="319" width="249" height="15"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[2.5 Costo Total por Gestión de Personal (2.1)+(2.2)+(2.3)+(2.4)]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="417" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CI_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="313" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CD_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="469" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="7" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_SUMA_R}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="69" width="137" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Rubro:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="86" width="137" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Frecuencia:]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Transparent" x="7" y="226" width="1133" height="1" forecolor="#006699"/>
+			</line>
+			<line>
+				<reportElement mode="Transparent" x="597" y="588" width="346" height="1" forecolor="#006699"/>
+			</line>
+			<staticText>
+				<reportElement x="497" y="593" width="549" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombre y Firma del Representante Legal de la Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="426" width="782" height="12"/>
+				<textElement>
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Los costos de personal son referidos a la organización del personal y deben sustentarse teniendo en cuenta las áreas de servicio, el número de beneficiarios, actividades]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="386" width="326" height="12"/>
+				<textElement>
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[(1) Corresponde a Personal contratado directamente por la Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="399" width="326" height="12"/>
+				<textElement>
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[(2) Corresponde a Personal por Servicio de Terceros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="412" width="326" height="12"/>
+				<textElement>
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[(2) Corresponde a Personal por Servicio de Terceros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="261" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="261" y="106" width="258" height="15" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Zona Rural]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="261" y="204" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NUMBENEF_EMPAD_CANT_R}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="521" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="729" y="123" width="50" height="36" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Costo Total Urbano Provinvia S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="573" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo S/. (1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="521" y="106" width="258" height="15" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Zona Urbano Provincias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="677" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo S/. (2)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="833" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo S/. (1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="781" y="106" width="258" height="15" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Zona Urbano Lima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="989" y="123" width="50" height="36" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Costo Total Urbano Lima S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="937" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo S/. (2)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="781" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1042" y="106" width="102" height="15" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1094" y="123" width="50" height="36" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costos S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1042" y="123" width="50" height="36" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="261" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_COORD_CANT_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="261" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_SUP_CANT_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="261" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_GEST_CANT_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="261" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_ASIST_CANT_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="261" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="521" y="204" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NUMBENEF_EMPAD_CANT_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="521" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_COORD_CANT_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="521" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_SUP_CANT_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="521" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_GEST_CANT_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="521" y="302" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_ASIST_CANT_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="521" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="573" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_CD_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="573" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_CD_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="573" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_CD_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="573" y="302" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_CD_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="573" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CD_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="677" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="677" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="677" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="677" y="302" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="677" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="729" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_TOTAL_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="729" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_TOTAL_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="729" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_TOTAL_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="729" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_TOTAL_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="729" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="7" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_SUMA_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="781" y="204" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NUMBENEF_EMPAD_CANT_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="781" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_COORD_CANT_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="781" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_SUP_CANT_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="781" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_GEST_CANT_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="781" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_ASIST_CANT_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="781" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="833" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_CD_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="833" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_CD_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="833" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_CD_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="833" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_CD_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="833" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CD_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="937" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_CI_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="937" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_CI_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="937" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_CI_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="937" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_CI_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="937" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CI_L}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="337" width="257" height="22"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3. Costo Promedio Mensual por útiles y materiales de oficina]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="991" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_COORD_TOTAL_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="991" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="7" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_SUMA_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="991" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_GEST_TOTAL_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="991" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_SUP_TOTAL_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="991" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_TOTAL_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1042" y="204" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{SUMANUMBENEF_EMPAD_CANT_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1042" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{SUMACOSTO_COORD_CANT_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1042" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{SUMACOSTOTOTAL_GESTPER_CANT_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1042" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{SUMACOSTO_GEST_CANT_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1042" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{SUMACOSTO_SUP_CANT_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1042" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{SUMACOSTO_ASIST_CANT_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1094" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUMACOSTO_COORD_COSTO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1094" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUMACOSTO_SUP_COSTO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1094" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUMACOSTO_GEST_COSTO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1094" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUMACOSTO_ASIST_COSTO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1094" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="7" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUMACOSTOTOTAL_GESTPER_COSTO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="313" y="337" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOPROM_MENSUAL_CD_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="470" y="337" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOPROM_MENSUAL_TOTAL_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="572" y="337" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOPROM_MENS_CD_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="729" y="337" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOPROM_MENS_TOTAL_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="992" y="337" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOPROM_MENS_TOTAL_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="832" y="337" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOPROM_MENS_CD_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1094" y="337" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOPROM_MENS_TOTALCOSTO_T}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="168" y="69" width="137" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Costos Estándar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="84" width="137" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Bianual]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="135" y="179" width="124" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{NOMBRE_SEDE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="365" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="261" y="123" width="102" height="12" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo Directo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="365" y="123" width="102" height="12" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo Indirecto]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="365" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_ASIST_CANT_CI_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="365" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_COORD_CANT_CI_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="365" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_CI_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="365" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_GEST_CANT_CI_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="365" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_SUP_CANT_CI_R}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="625" y="123" width="102" height="12" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo Indirecto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="521" y="123" width="102" height="12" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo Directo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="625" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="625" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_GEST_CANT_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="625" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_SUP_CANT_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="625" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="625" y="302" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_ASIST_CANT_CI_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="625" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_COORD_CANT_CI_P}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="885" y="123" width="102" height="12" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo Indirecto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="781" y="123" width="102" height="12" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Costo Directo]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="884" y="267" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_SUP_CANT_CI_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="884" y="301" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_ASIST_CANT_CI_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="884" y="319" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_CI_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="884" y="250" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_COORD_CANT_CI_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="884" y="284" width="50" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_GEST_CANT_CI_L}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="885" y="137" width="50" height="22" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
