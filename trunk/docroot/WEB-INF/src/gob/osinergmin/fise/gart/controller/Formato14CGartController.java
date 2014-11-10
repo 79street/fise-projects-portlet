@@ -1,11 +1,13 @@
 package gob.osinergmin.fise.gart.controller;
 
+import gob.osinergmin.fise.bean.Formato14AMensajeBean;
 import gob.osinergmin.fise.bean.Formato14CBean;
 import gob.osinergmin.fise.bean.Formato14CReportBean;
 import gob.osinergmin.fise.bean.Formato14Generic;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
+import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
 import gob.osinergmin.fise.domain.FiseFormato14CD;
@@ -13,6 +15,7 @@ import gob.osinergmin.fise.domain.FiseFormato14CDOb;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.json.Formato14CJSON;
 import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
+import gob.osinergmin.fise.gart.service.CfgCampoGartService;
 import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
@@ -20,13 +23,20 @@ import gob.osinergmin.fise.gart.service.Formato14CGartService;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -42,6 +52,10 @@ import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +64,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -86,13 +105,25 @@ public class Formato14CGartController {
 	CfgTablaGartService tablaService;
 	
 	
-	List<FisePeriodoEnvio> listaPeriodoEnvio;
+	@Autowired
+	@Qualifier("cfgCampoGartServiceImpl")
+	CfgCampoGartService campoService;
 	
-	Map<String, String> mapaEmpresa;	
 	
-	Map<String, String> mapaErrores;
-	List<MensajeErrorBean> listaObservaciones;
-	Map<Long, String> mapaZonaBenef;
+	
+	/*@Autowired
+	@Qualifier("leerArchivosF14C")
+	LeerArchivosF14C leerArchivosF14C;*/
+	
+	
+	
+	private List<FisePeriodoEnvio> listaPeriodoEnvio;
+	
+	private Map<String, String> mapaEmpresa;	
+	
+	private Map<String, String> mapaErrores;
+	private List<MensajeErrorBean> listaObservaciones;
+	private Map<Long, String> mapaZonaBenef;
 	
 	
 	@ModelAttribute("formato14CBean")
@@ -101,11 +132,50 @@ public class Formato14CGartController {
         return comman;	        
     }
 	
-	
+	@SuppressWarnings("unchecked")
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,
 			     @ModelAttribute("formato14CBean")Formato14CBean f){
         try {
+        	/***PARA MANEJAR CARGA DE EXEL  Y TEXT***/
+        	PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+        	
+        	String codEmpresa = (String)pRequest.getPortletSession().getAttribute("codEmpresa", PortletSession.APPLICATION_SCOPE);
+    		String anioPresentacion = (String)pRequest.getPortletSession().getAttribute("anoPresentacion", PortletSession.APPLICATION_SCOPE);
+    		String mesPresentacion = (String)pRequest.getPortletSession().getAttribute("mesPresentacion", PortletSession.APPLICATION_SCOPE);
+    		String anoInicioVigencia = (String)pRequest.getPortletSession().getAttribute("anoInicioVigencia", PortletSession.APPLICATION_SCOPE);
+    		String anoFinVigencia = (String)pRequest.getPortletSession().getAttribute("anoFinVigencia", PortletSession.APPLICATION_SCOPE);
+    		String etapa = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
+    		String flag = (String)pRequest.getPortletSession().getAttribute("flag", PortletSession.APPLICATION_SCOPE);
+    		String msgError = (String)pRequest.getPortletSession().getAttribute("mensajeError", PortletSession.APPLICATION_SCOPE);
+    		List<MensajeErrorBean> listaError = (List<MensajeErrorBean>)pRequest.getPortletSession().getAttribute("listaError", PortletSession.APPLICATION_SCOPE);
+    		String msgInfo = (String)pRequest.getPortletSession().getAttribute("mensajeInformacion", PortletSession.APPLICATION_SCOPE);
+    		
+    		f.setCodEmpresa(codEmpresa!=null?codEmpresa:"");
+    		f.setAnioPres(anioPresentacion!=null?anioPresentacion:"");
+    		f.setMesPres(mesPresentacion!=null?mesPresentacion:"");
+    		f.setAnoIniVigencia(anoInicioVigencia!=null?anoInicioVigencia:"");
+    		f.setAnoFinVigencia(anoFinVigencia!=null?anoFinVigencia:"");
+    		f.setEtapa(etapa!=null?etapa:"");
+    		f.setMensajeError(msgError!=null?msgError:"");
+    		f.setMensajeInfo(msgInfo!=null?msgInfo:"");
+    		f.setEtapa(etapa!=null?etapa:"");
+    		f.setFlag(flag!=null?flag:"");
+    		
+    		pRequest.getPortletSession().setAttribute("codEmpresa", "", PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("anoPresentacion", "", PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("mesPresentacion", "", PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("anoInicioVigencia", "", PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("anoFinVigencia", "", PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("mensajeError", "", PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("listaError", null, PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("mensajeInformacion", "", PortletSession.APPLICATION_SCOPE);
+        	
+    	    if( listaError!=null && listaError.size()>0){
+    			model.addAttribute("listaError", listaError);
+    		}       	
+        	
         	listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
         	
         	f.setListaMes(fiseUtil.getMapaMeses());
@@ -125,6 +195,8 @@ public class Formato14CGartController {
     		mapaEmpresa = fiseUtil.getMapaEmpresa();  			
     		mapaErrores = fiseUtil.getMapaErrores();
     		mapaZonaBenef = fiseUtil.getMapaZonaBenef();
+    		
+    		model.addAttribute("model", f);
     		
 		} catch (Exception e) {
 			logger.info("Ocurrio un errror al caragar la pagina del formato 14C"); 
@@ -177,6 +249,8 @@ public class Formato14CGartController {
   			
   			logger.info("tamaño de la lista formato 14c   :"+listaFormato14C.size());
   			for(FiseFormato14CC formato14c : listaFormato14C){
+  				logger.info("Anio Inicio Vigencia: "+formato14c.getId().getAnoInicioVigencia());
+  				logger.info("Anio Fin Vigencia: "+formato14c.getId().getAnoFinVigencia()); 
   				formato14c.setDescEmpresa(mapaEmpresa.get(formato14c.getId().getCodEmpresa()));
   				formato14c.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato14c.getId().getMesPresentacion()));
   				logger.info("Seteando del array de json"); 
@@ -205,14 +279,16 @@ public class Formato14CGartController {
 			logger.info("codempresa "+f.getCodEmpresa());
 			logger.info("anopresent "+f.getAnioPres());
 			logger.info("mespresent "+f.getMesPres());
-			logger.info("anoIniVigencia "+f.getAnioInicioVig());
-			logger.info("anoFinVigencia "+f.getAnioFinVig());
+			String anoIniVigencia = request.getParameter("anoIniVigencia");
+			String anoFinVigencia = request.getParameter("anoFinVigencia");
+			logger.info("anoIniVigencia "+anoIniVigencia);
+			logger.info("anoFinVigencia "+anoFinVigencia);
 			logger.info("etapa "+f.getEtapa());
 			
 			//Formato14CBean formato = new Formato14CBean();
 			
 			f= formato14CGartService.buscarFormato14CEditar(f.getCodEmpresa(),
-					f.getAnioPres(), f.getMesPres(), f.getAnioInicioVig(), f.getAnioFinVig(), f.getEtapa())	;	
+					f.getAnioPres(), f.getMesPres(), f.getAnoIniVigencia(), f.getAnoFinVigencia(), f.getEtapa())	;	
 			
 			String codigoPeriodoEnvio =String.valueOf(f.getAnioPres())+
         			FormatoUtil.rellenaIzquierda(String.valueOf(f.getMesPres()), '0', 2)+
@@ -224,6 +300,15 @@ public class Formato14CGartController {
 			
 			f.setDesperiodoEnvio(desPeriodoEnvio); 
 			
+			/********Guardando en sesion la clave primaria del formato para la carga de exel******/
+			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+			pRequest.getPortletSession().setAttribute("codEmpresaEdit", f.getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anoPresentacionEdit", f.getAnioPres(), PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mesPresentacionEdit", f.getMesPres(), PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anoIniVigenciaEdit",f.getAnoIniVigencia(), PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anoFinVigenciaEdit", f.getAnoFinVigencia(), PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("etapaEdit", f.getEtapa(), PortletSession.APPLICATION_SCOPE);
+						
 			data = toStringJSON(f);						
 			response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
@@ -251,8 +336,8 @@ public class Formato14CGartController {
 			logger.info("Entrando a grabar un registro en el fomato 14C"); 			
 			logger.info("Codigo empresa:  "+ f.getCodEmpresa()); 
 			logger.info("perido de envio:  "+ f.getPeriodoEnvio());	
-			logger.info("anio inicio vigencia:  "+ f.getAnioInicioVig());
-			logger.info("anio fin vigencia:  "+ f.getAnioFinVig());	
+			logger.info("anio inicio vigencia:  "+ f.getAnoIniVigencia());
+			logger.info("anio fin vigencia:  "+ f.getAnoFinVigencia());	
 			logger.info("nombre de sede:  "+ f.getNombreSede());	
 			logger.info("cantidad total rural:  "+ f.getNumRural());	
 
@@ -261,15 +346,13 @@ public class Formato14CGartController {
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 
-				/*if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-							f.setAnioInicioVigencia(f.getAnioInicioVigencia());
-							f.setAnioFinVigencia(f.getAnioFinVigencia());
-						}else{
-							f.setAnioInicioVigencia(f.getAnioPresent());
-							f.setAnioFinVigencia(f.getAnioPresent());
-						}*/	
-				f.setAnioInicioVig("2009");
-				f.setAnioFinVig("2014");
+				if( "S".equals(f.getFlagPeriodoEjecucion()) ){
+					f.setAnoIniVigencia(f.getAnoIniVigencia());
+					f.setAnoFinVigencia(f.getAnoFinVigencia());
+				}else{
+					f.setAnoIniVigencia(f.getAnioPres());
+					f.setAnoFinVigencia(f.getAnioPres());
+				}
 			}					
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);					
 			f.setUsuario(themeDisplay.getUser().getLogin());
@@ -304,8 +387,8 @@ public class Formato14CGartController {
 			logger.info("Entrando a actualizar un registro en el fomato 14C"); 			
 			logger.info("Codigo empresa:  "+ f.getCodEmpresa()); 
 			logger.info("perido de envio:  "+ f.getPeriodoEnvio());	
-			logger.info("anio inicio vigencia:  "+ f.getAnioInicioVig());
-			logger.info("anio fin vigencia:  "+ f.getAnioFinVig());	
+			logger.info("anio inicio vigencia:  "+ f.getAnoIniVigencia());
+			logger.info("anio fin vigencia:  "+ f.getAnoFinVigencia());	
 			logger.info("nombre de sede:  "+ f.getNombreSede());	
 			logger.info("cantidad total rural:  "+ f.getNumRural());	
 
@@ -313,16 +396,13 @@ public class Formato14CGartController {
 				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
-
-				/*if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-							f.setAnioInicioVigencia(f.getAnioInicioVigencia());
-							f.setAnioFinVigencia(f.getAnioFinVigencia());
-						}else{
-							f.setAnioInicioVigencia(f.getAnioPresent());
-							f.setAnioFinVigencia(f.getAnioPresent());
-						}*/	
-				f.setAnioInicioVig("2009");
-				f.setAnioFinVig("2014");
+				if( "S".equals(f.getFlagPeriodoEjecucion()) ){
+					f.setAnoIniVigencia(f.getAnoIniVigencia());
+					f.setAnoFinVigencia(f.getAnoFinVigencia());
+				}else{
+					f.setAnoIniVigencia(f.getAnioPres());
+					f.setAnoFinVigencia(f.getAnioPres());
+				}
 			}					
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);					
 			f.setUsuario(themeDisplay.getUser().getLogin());
@@ -356,8 +436,8 @@ public class Formato14CGartController {
 			logger.info("Codigo empresa:  "+ f.getCodEmpresa()); 
 			logger.info("anio prese:  "+ f.getAnioPres()); 
 			logger.info("mes prese:  "+ f.getMesPres()); 
-			logger.info("anio inicio vigencia:  "+ f.getAnioInicioVig());
-			logger.info("anio fin vigencia:  "+ f.getAnioFinVig());	
+			logger.info("anio inicio vigencia:  "+ f.getAnoIniVigencia());
+			logger.info("anio fin vigencia:  "+ f.getAnoFinVigencia());	
 			logger.info("etapa:  "+ f.getEtapa());
      			
 			logger.info("Enviando el formulario al service"); 
@@ -388,7 +468,8 @@ public class Formato14CGartController {
   			logger.info("Codigo Empresa para cargar el periodo:  "+codEmpresa);
   			//String periodoEnvio = f.getPeriodoEnvio();
   			//lo pongo en la lista porque no persiste las colecciones en el command
-  			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_12C);
+  			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, 
+  					FiseConstants.TIPO_FORMATO_12C);
   			//f.setListaPeriodoEnvio(listaPeriodoEnvio); 
   			logger.info("Tamaño de lista de periodo de envio:  "+listaPeriodoEnvio.size()); 
   			JSONArray jsonArray = new JSONArray();
@@ -412,6 +493,148 @@ public class Formato14CGartController {
   		}
 	}
 	
+	@ResourceMapping("cargaFlagPeriodoF14C")
+  	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("formato14CBean")Formato14CBean f){
+		try {			
+  			response.setContentType("applicacion/json");
+  			String periodoEnvio = f.getPeriodoEnvio();
+  			JSONObject jsonObj = new JSONObject();
+  			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+				if( periodoEnvio.equals(p.getCodigoItem()) ){
+					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
+					break;
+				}
+			}
+  			System.out.println(jsonObj.toString());
+  			PrintWriter pw = response.getWriter();
+  		    pw.write(jsonObj.toString());
+  		    pw.flush();
+  		    pw.close();							
+  		}catch (Exception e) {
+  			// TODO: handle exception
+  			e.printStackTrace();
+  		}
+	}
+	
+	/***Carga de archivos***/
+	
+	@ActionMapping(params="action=cargar")
+	public void cargarDocumento(ActionRequest request,ActionResponse response,
+			@ModelAttribute("formato14CBean")Formato14CBean f){
+		
+		logger.info("--- cargar documento");
+				
+		Formato14AMensajeBean formatoMensaje = new Formato14AMensajeBean();
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
+		
+		String flagCarga = uploadPortletRequest.getParameter("flagCarga");
+    	String codEmpresaNew = uploadPortletRequest.getParameter("codEmpresa");
+    	String periodoEnvioPresNew = uploadPortletRequest.getParameter("periodoEnvio");
+    	String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
+    	
+    	String anioPresNew = "";
+		String mesPresNew = "";
+		String anioIniVigNew = "";
+		String anioFinVigNew = ""; 
+		String etapaNew = ""; 
+		logger.info("Flag de carga:  "+flagCarga);
+		if(periodoEnvioPresNew!=null && periodoEnvioPresNew.length()>6){
+    		anioPresNew = periodoEnvioPresNew.substring(0, 4);
+    		mesPresNew = periodoEnvioPresNew.substring(4, 6);
+    		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
+    		if( "S".equals(flagPeriodoEjecucion) ){
+    			anioIniVigNew = uploadPortletRequest.getParameter("anioInicioVig");
+    			anioFinVigNew = uploadPortletRequest.getParameter("anioFinVig");
+			}else{
+				anioIniVigNew = anioPresNew;
+				anioFinVigNew = anioPresNew;
+			}    		
+    	}    	
+		
+		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+		/*****Recuperando las varibales en sesion la momento de editar un regsitro********/
+		String codEmpresaEdit = (String)pRequest.getPortletSession().getAttribute("codEmpresaEdit", PortletSession.APPLICATION_SCOPE);
+		String anioPresEdit = (String)pRequest.getPortletSession().getAttribute("anoPresentacionEdit", PortletSession.APPLICATION_SCOPE);
+		String mesPresEdit = (String)pRequest.getPortletSession().getAttribute("mesPresentacionEdit", PortletSession.APPLICATION_SCOPE);
+		String anioIniVigEdit = (String)pRequest.getPortletSession().getAttribute("anoIniVigenciaEdit", PortletSession.APPLICATION_SCOPE);
+		String anioFinVigEdit = (String)pRequest.getPortletSession().getAttribute("anoFinVigenciaEdit", PortletSession.APPLICATION_SCOPE);
+		String etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapaEdit", PortletSession.APPLICATION_SCOPE);
+		
+		FileEntry fileEntry=null;
+		
+		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
+			logger.info("Empesando a subir exel registro nuevo."); 
+			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+			logger.info("El archivo exel registro nuevo fue subido correctamente."); 
+			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, 
+					codEmpresaNew, anioPresNew, mesPresNew, anioIniVigNew, anioFinVigNew, etapaNew);
+			logger.info("Valor de retorno al registrar los datos leidos: "+formatoMensaje.getValor()); 
+		}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
+			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, 
+					codEmpresaEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit);
+		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
+			fileEntry =fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+			formatoMensaje = readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), 
+				flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioIniVigNew, anioFinVigNew, etapaNew);
+		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
+			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+			formatoMensaje = readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), 
+					flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit);
+		}
+		
+		if(("1").equals(formatoMensaje.getValor())){
+			String codEmpresa = formatoMensaje.getFormato14CBean().getCodEmpresa();
+			String anoPresentacion = String.valueOf(formatoMensaje.getFormato14CBean().getAnioPres());
+			String mesPresentacion = String.valueOf(formatoMensaje.getFormato14CBean().getMesPres());
+			String anoIniVigencia = String.valueOf(formatoMensaje.getFormato14CBean().getAnoIniVigencia());
+			String anoFinVigencia = String.valueOf(formatoMensaje.getFormato14CBean().getAnoFinVigencia());
+			String etapa = String.valueOf(formatoMensaje.getFormato14CBean().getEtapa());
+			
+			pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresa, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anoPresentacion", anoPresentacion, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mesPresentacion", mesPresentacion, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anoInicioVigencia", anoIniVigencia, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anoFinVigencia", anoFinVigencia, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("etapa", etapa, PortletSession.APPLICATION_SCOPE);
+		}else{
+			if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) || flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
+				pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresaNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoPresentacion", anioPresNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesPresentacion", mesPresNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoInicioVigencia", anioIniVigNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoFinVigencia", anioFinVigNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("etapa", etapaNew, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("flag", "N", PortletSession.APPLICATION_SCOPE);//para control de mostrar formulario a ingresar
+			}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) || flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
+				pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresaEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoPresentacion", anioPresEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesPresentacion", mesPresEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoInicioVigencia", anioIniVigEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anoFinVigencia", anioFinVigEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("etapa", etapaEdit, PortletSession.APPLICATION_SCOPE);
+			}
+			
+		}
+		if(formatoMensaje.getListaMensajeError()!=null && formatoMensaje.getListaMensajeError().size()>0){
+			pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("mensajeError", formatoMensaje.getMensajeError(), PortletSession.APPLICATION_SCOPE);
+		}else{
+			pRequest.getPortletSession().setAttribute("mensajeInformacion", "Datos guardados satisfactoriamente.", PortletSession.APPLICATION_SCOPE);
+		}
+		/***limpiamos las variables en sesion utilizados para la edicion de archivos de carga**/
+		pRequest.getPortletSession().setAttribute("codEmpresaEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("anoPresentacionEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("mesPresentacionEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("anoEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("mesEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
+	    pRequest.getPortletSession().setAttribute("etapaEdit", "", PortletSession.APPLICATION_SCOPE);
+		
+	}	
+	
 	
 	@ResourceMapping("reporteF14C")
 	public void reporte(ResourceRequest request,ResourceResponse response,
@@ -432,7 +655,7 @@ public class Formato14CGartController {
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_14C;
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
 		    
-		    //  String flagPeriodoEjecucion = f.getFlagPeriodoEjecucion();
+		  // String flagPeriodoEjecucion = f.getFlagPeriodoEjecucion();
 		    
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
@@ -444,15 +667,13 @@ public class Formato14CGartController {
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 
-				/*if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-							f.setAnioInicioVigencia(f.getAnioInicioVigencia());
-							f.setAnioFinVigencia(f.getAnioFinVigencia());
-						}else{
-							f.setAnioInicioVigencia(f.getAnioPresent());
-							f.setAnioFinVigencia(f.getAnioPresent());
-						}*/	
-				f.setAnioInicioVig("2009");
-				f.setAnioFinVig("2014");
+				if( "S".equals(f.getFlagPeriodoEjecucion()) ){
+					f.setAnoIniVigencia(f.getAnoIniVigencia());
+					f.setAnoFinVigencia(f.getAnoFinVigencia());
+				}else{
+					f.setAnoIniVigencia(f.getAnioPres());
+					f.setAnoFinVigencia(f.getAnioPres());
+				}		
 			}	 
 			
 			FiseFormato14CC formato = formato14CGartService.obtenerFiseFormato14CC(f);
@@ -494,15 +715,13 @@ public class Formato14CGartController {
 			f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 			f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 
-			/*if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-						f.setAnioInicioVigencia(f.getAnioInicioVigencia());
-						f.setAnioFinVigencia(f.getAnioFinVigencia());
-					}else{
-						f.setAnioInicioVigencia(f.getAnioPresent());
-						f.setAnioFinVigencia(f.getAnioPresent());
-					}*/	
-			f.setAnioInicioVig("2009");
-			f.setAnioFinVig("2014");
+			if( "S".equals(f.getFlagPeriodoEjecucion()) ){
+				f.setAnoIniVigencia(f.getAnoIniVigencia());
+				f.setAnoFinVigencia(f.getAnoFinVigencia());
+			}else{
+				f.setAnoIniVigencia(f.getAnioPres());
+				f.setAnoFinVigencia(f.getAnioPres());
+			}		
 		}	
 		
 		FiseFormato14CC formato = formato14CGartService.obtenerFiseFormato14CC(f);
@@ -542,6 +761,8 @@ public class Formato14CGartController {
 	    
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			
 		}
     }
 	private void cargarListaObservaciones(List<FiseFormato14CD> listaDetalle) throws Exception{
@@ -620,16 +841,14 @@ public class Formato14CGartController {
 				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
-
-				/*if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-							f.setAnioInicioVigencia(f.getAnioInicioVigencia());
-							f.setAnioFinVigencia(f.getAnioFinVigencia());
-						}else{
-							f.setAnioInicioVigencia(f.getAnioPresent());
-							f.setAnioFinVigencia(f.getAnioPresent());
-						}*/	
-				f.setAnioInicioVig("2009");
-				f.setAnioFinVig("2014");
+				
+				if( "S".equals(f.getFlagPeriodoEjecucion()) ){
+					f.setAnoIniVigencia(f.getAnoIniVigencia());
+					f.setAnoFinVigencia(f.getAnoFinVigencia());
+				}else{
+					f.setAnoIniVigencia(f.getAnioPres());
+					f.setAnoFinVigencia(f.getAnioPres());
+				}	
 			}	
 		    f.setUsuario(themeDisplay.getUser().getLogin());
 			f.setTerminal(themeDisplay.getUser().getLoginIP());	
@@ -744,6 +963,1569 @@ public class Formato14CGartController {
 		}
 	 }
 	
-	
+	/****Metodo para leer archivo de exel*****/	
+    private Formato14AMensajeBean readExcelFile(FileEntry archivo, User user,
+		String flagCarga, String codEmpresa,String anioPres, 
+		String mesPres, String anioIniVigencia, 
+		String anioFinVigencia, String etapa) {	
+		//---------------------
+		//FLAG CARGA:
+		//	1: para registros nuevos
+		//	2: para registros modificados
+		//---------------------
+		Formato14AMensajeBean formatoMensaje = new Formato14AMensajeBean();
+		
+		InputStream is=null;	
+		String sMsg = "";
+		String valor="";
+		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
+		int cont = 0;
+		Formato14CBean bean = new Formato14CBean();		
+		try {
+			if (archivo != null) {
+				HSSFWorkbook libro = null;
+				try {
+					is=archivo.getContentStream();
+					libro = new HSSFWorkbook(is);//Se lee libro xls
+				} catch (Exception e1) {
+					logger.info("Error al leer el archivo"); 
+					logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					cont++;
+					sMsg = sMsg +sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
+					throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+				}
+				int nroHojaSelec=0;
+				
+				if (libro != null) {
+					//el excel puede tener varias hojas, se tiene qie leer el total de hojas y encontrar la que necesitemos
+					logger.info("nro de hojas:"+ libro.getNumberOfSheets());
+					for (int sheetNro = 0; sheetNro < libro.getNumberOfSheets(); sheetNro++){
+						logger.info("nombre de hoja "+sheetNro+":"+ libro.getSheetName(sheetNro));
+						if( FiseConstants.NOMBRE_HOJA_FORMATO14C.equals(libro.getSheetName(sheetNro)) ){
+							nroHojaSelec = sheetNro;
+							break;
+						}
+					}					
+					logger.info("nro de hoja seleccionada "+nroHojaSelec);
+					HSSFSheet hojaF14 = libro.getSheetAt(nroHojaSelec);				
+					
+					HSSFRow filaCodEmprea = hojaF14.getRow(FiseConstants.NRO_FILA_CODEMPRESA_F14C);						
+					HSSFRow filaAnioMes = hojaF14.getRow(FiseConstants.NRO_FILA_ANIO_MES_F14C);									
+					HSSFRow filaSede = hojaF14.getRow(FiseConstants.NRO_FILA_SEDE_F14C);					
+					HSSFRow filaTotalBenef = hojaF14.getRow(FiseConstants.NRO_FILA_NROTOTAL_BENEFICIARIOS_F14C);					
+					HSSFRow filaCostoPromedio = hojaF14.getRow(FiseConstants.NRO_FILA_COSTO_PROMEDIO_F14C);	
+					
+					HSSFRow filaCostoCoord = hojaF14.getRow(FiseConstants.NRO_FILA_COSTO_COORD_F14C);	
+					HSSFRow filaCostoSupe = hojaF14.getRow(FiseConstants.NRO_FILA_COSTO_SUPE_F14C);
+					HSSFRow filaCostoGest = hojaF14.getRow(FiseConstants.NRO_FILA_COSTO_GEST_F14C);						
+					HSSFRow filaCostoAsist = hojaF14.getRow(FiseConstants.NRO_FILA_COSTO_ASIST_F14C);					
+					
+					/*********OBTENIENDO VALORES DE CADA CELDA Y SETEANDO AL BEAN PRA DESPUES VALIDAR*********/		
+								
+					HSSFCell celdaCodEmpresa = filaCodEmprea.getCell(FiseConstants.NRO_CELDA_CODEMPRESA_F14C);					
+					logger.info("codigo empresa leido: "+celdaCodEmpresa); 
+					HSSFCell celdaAnio = filaAnioMes.getCell(FiseConstants.NRO_CELDA_ANIO_F14C);
+					logger.info("codigo empresa leido: "+celdaAnio); 
+					HSSFCell celdaMes = filaAnioMes.getCell(FiseConstants.NRO_CELDA_MES_F14C);	
+					logger.info("celdaMesleido: "+celdaMes); 
+					HSSFCell celdaSede = filaSede.getCell(FiseConstants.NRO_CELDA_SEDE_F14C);
+					logger.info("celdaSede leido: "+celdaSede); 
+					
+					HSSFCell celdaNroBenefR = filaTotalBenef.getCell(FiseConstants.NRO_CELDA_NUM_BENEF_RURAL_F14C);
+					logger.info("celdaNroBenefR leido: "+celdaNroBenefR); 
+					HSSFCell celdaNroBenefP = filaTotalBenef.getCell(FiseConstants.NRO_CELDA_NUM_BENEF_PROV_F14C);					
+					logger.info("celdaNroBenefP leido: "+celdaNroBenefP); 
+					HSSFCell celdaNroBenefL = filaTotalBenef.getCell(FiseConstants.NRO_CELDA_NUM_BENEF_LIMA_F14C);					
+					logger.info("celdaNroBenefL leido: "+celdaNroBenefL); 
+					HSSFCell celdaCostPromR = filaCostoPromedio.getCell(FiseConstants.NRO_CELDA_COSTOPROM_RURAL_F14C);
+					logger.info("celdaCostPromR leido: "+celdaCostPromR); 
+					HSSFCell celdaCostPromP = filaCostoPromedio.getCell(FiseConstants.NRO_CELDA_COSTOPROM_PROV_F14C);
+					logger.info("celdaCostPromP leido: "+celdaCostPromP); 
+					HSSFCell celdaCostPromL = filaCostoPromedio.getCell(FiseConstants.NRO_CELDA_COSTOPROM_LIMA_F14C);
+					logger.info("celdaCostPromL leido: "+celdaCostPromL); 
+					//RURAL				
+					HSSFCell celdaCantDRCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_CANTDR_COORD_F14C);					
+					HSSFCell celdaCostDRCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_COSTDR_COORD_F14C);
+					HSSFCell celdaCantIRCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_CANTIR_COORD_F14C);
+					HSSFCell celdaCostIRCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_COSTIR_COORD_F14C);
+					
+					HSSFCell celdaCantDRSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_CANTDR_SUPE_F14C);					
+					HSSFCell celdaCostDRSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_COSTDR_SUPE_F14C);
+					HSSFCell celdaCantIRSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_CANTIR_SUPE_F14C);
+					HSSFCell celdaCostIRSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_COSTIR_SUPE_F14C);
+					
+					HSSFCell celdaCantDRGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_CANTDR_GEST_F14C);					
+					HSSFCell celdaCostDRGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_COSTDR_GEST_F14C);
+					HSSFCell celdaCantIRGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_CANTIR_GEST_F14C);
+					HSSFCell celdaCostIRGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_COSTIR_GEST_F14C);
+					
+					HSSFCell celdaCantDRAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_CANTDR_ASIST_F14C);					
+					HSSFCell celdaCostDRAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_COSTDR_ASIST_F14C);
+					HSSFCell celdaCantIRAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_CANTIR_ASIST_F14C);
+					HSSFCell celdaCostIRAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_COSTIR_ASIST_F14C);
+								
+					//PROVINCIA				
+					HSSFCell celdaCantDPCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_CANTDP_COORD_F14C);					
+					HSSFCell celdaCostDPCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_COSTDP_COORD_F14C);
+					HSSFCell celdaCantIPCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_CANTIP_COORD_F14C);
+					HSSFCell celdaCostIPCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_COSTIP_COORD_F14C);
+					
+					HSSFCell celdaCantDPSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_CANTDP_SUPE_F14C);					
+					HSSFCell celdaCostDPSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_COSTDP_SUPE_F14C);
+					HSSFCell celdaCantIPSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_CANTIP_SUPE_F14C);
+					HSSFCell celdaCostIPSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_COSTIP_SUPE_F14C);
+					
+					HSSFCell celdaCantDPGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_CANTDP_GEST_F14C);					
+					HSSFCell celdaCostDPGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_COSTDP_GEST_F14C);
+					HSSFCell celdaCantIPGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_CANTIP_GEST_F14C);
+					HSSFCell celdaCostIPGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_COSTIP_GEST_F14C);
+					
+					HSSFCell celdaCantDPAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_CANTDP_ASIST_F14C);					
+					HSSFCell celdaCostDPAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_COSTDP_ASIST_F14C);
+					HSSFCell celdaCantIPAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_CANTIP_ASIST_F14C);
+					HSSFCell celdaCostIPAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_COSTIP_ASIST_F14C);
+					
+					//LIMA
+					HSSFCell celdaCantDLCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_CANTDL_COORD_F14C);					
+					HSSFCell celdaCostDLCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_COSTDL_COORD_F14C);
+					HSSFCell celdaCantILCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_CANTIL_COORD_F14C);
+					HSSFCell celdaCostILCoord = filaCostoCoord.getCell(FiseConstants.NRO_CELDA_COSTIL_COORD_F14C);
+					
+					HSSFCell celdaCantDLSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_CANTDL_SUPE_F14C);					
+					HSSFCell celdaCostDLSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_COSTDL_SUPE_F14C);
+					HSSFCell celdaCantILSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_CANTIL_SUPE_F14C);
+					HSSFCell celdaCostILSupe = filaCostoSupe.getCell(FiseConstants.NRO_CELDA_COSTIL_SUPE_F14C);
+					
+					HSSFCell celdaCantDLGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_CANTDL_GEST_F14C);					
+					HSSFCell celdaCostDLGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_COSTDL_GEST_F14C);
+					HSSFCell celdaCantILGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_CANTIL_GEST_F14C);
+					HSSFCell celdaCostILGest = filaCostoGest.getCell(FiseConstants.NRO_CELDA_COSTIL_GEST_F14C);
+					
+					HSSFCell celdaCantDLAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_CANTDL_ASIST_F14C);					
+					HSSFCell celdaCostDLAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_COSTDL_ASIST_F14C);
+					HSSFCell celdaCantILAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_CANTIL_ASIST_F14C);
+					HSSFCell celdaCostILAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_COSTIL_ASIST_F14C);
+					
+					/********INICIO VALIDACION DE CAMPOS*/	
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaCodEmpresa.getCellType()){
+						bean.setCodEmpresa(celdaCodEmpresa.toString()); 
+						logger.info("Entro en codigo empresa"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCodEmpresa.getCellType()){
+						bean.setCodEmpresa("");
+						cont++;						
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30);
+					}else{
+						bean.setCodEmpresa("");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_40);
+					}
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaAnio.getCellType()){
+						bean.setAnioPres(celdaAnio.toString()); 					
+						bean.setAnoIniVigencia(bean.getAnioPres());
+						bean.setAnoFinVigencia(bean.getAnioPres());
+						logger.info("Entro en anio presentacion"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnio.getCellType()){
+						bean.setAnioPres("0000"); 
+						bean.setAnoIniVigencia("0000");
+						bean.setAnoFinVigencia("0000"); 
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_50);
+					}else{
+						bean.setAnioPres("0000"); 
+						bean.setAnoIniVigencia("0000");
+						bean.setAnoFinVigencia("0000"); 
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_60);
+					}
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaMes.getCellType()  ){
+						bean.setMesPres(celdaMes.toString());
+						logger.info("Entro en mes presentacion"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaMes.getCellType()  ){
+						bean.setMesPres("00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70);
+					}else{
+						bean.setMesPres("00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_80);
+					}
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaSede.getCellType()){
+						bean.setNombreSede(celdaSede.toString()); 
+						logger.info("Entro en sede"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaSede.getCellType()){
+						bean.setNombreSede("");
+						cont++;						
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30);
+					}else{
+						bean.setNombreSede("");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_40);
+					}					
+				    logger.info("Tipo de dato:"+celdaNroBenefR.getCellType()); 
+					if( HSSFCell.CELL_TYPE_STRING == celdaNroBenefR.getCellType()  ){
+						bean.setNumRural(String.valueOf(celdaNroBenefR));
+						logger.info("Entro en num rural"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroBenefR.getCellType()  ){
+						bean.setNumRural("0");
+					}else{
+						bean.setNumRural("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaNroBenefP.getCellType()  ){
+						bean.setNumUrbProv(String.valueOf(celdaNroBenefP));
+						logger.info("Entro en num prov"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroBenefP.getCellType()  ){
+						bean.setNumUrbProv("0");
+					}else{
+						bean.setNumUrbProv("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaNroBenefL.getCellType()  ){
+						bean.setNumUrbLima(String.valueOf(celdaNroBenefL));
+						logger.info("Entro en num lima"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroBenefL.getCellType()  ){
+						bean.setNumUrbLima("0");
+					}else{
+						bean.setNumUrbLima("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaCostPromR.getCellType()  ){
+						bean.setCostoPromRural(String.valueOf(celdaCostPromR));
+						logger.info("Entro en costo prom rural"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostPromR.getCellType()  ){
+						bean.setCostoPromRural("0.00");
+					}else{
+						bean.setCostoPromRural("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaCostPromP.getCellType()  ){
+						bean.setCostoPromUrbProv(String.valueOf(celdaCostPromP));
+						logger.info("Entro en costo prom provi"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostPromP.getCellType()  ){
+						bean.setCostoPromUrbProv("0.00");
+					}else{
+						bean.setCostoPromUrbProv("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_STRING == celdaCostPromL.getCellType()  ){
+						bean.setCostoPromUrbLima(String.valueOf(celdaCostPromL));
+						logger.info("Entro en costo prom lima"); 
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostPromL.getCellType()  ){
+						bean.setCostoPromUrbLima("0.00");
+					}else{
+						bean.setCostoPromUrbLima("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					//RURAL		
+					/******COORDINADOR*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDRCoord.getCellType()  ){
+						bean.setCanDRCoord(String.valueOf(celdaCantDRCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDRCoord.getCellType()  ){
+						bean.setCanDRCoord("0");
+					}else{
+						bean.setCanDRCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRCoord.getCellType()  ){
+						bean.setCostDRCoord(String.valueOf(celdaCostDRCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDRCoord.getCellType()){
+						bean.setCostDRCoord("0.00");
+					}else{
+						bean.setCostDRCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIRCoord.getCellType()  ){
+						bean.setCanIRCoord(String.valueOf(celdaCantIRCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIRCoord.getCellType()  ){
+						bean.setCanIRCoord("0");
+					}else{
+						bean.setCanIRCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIRCoord.getCellType()  ){
+						bean.setCostIRCoord(String.valueOf(celdaCostIRCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIRCoord.getCellType()  ){
+						bean.setCostIRCoord("0.00");
+					}else{
+						bean.setCostIRCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}					
+					/*****SUPERVISOR*****/				
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDRSupe.getCellType()  ){
+						bean.setCanDRSupe(String.valueOf(celdaCantDRSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDRSupe.getCellType()  ){
+						bean.setCanDRSupe("0");
+					}else{
+						bean.setCanDRSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRSupe.getCellType()  ){
+						bean.setCostDRSupe(String.valueOf(celdaCostDRSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDRSupe.getCellType()  ){
+						bean.setCostDRSupe("0.00");
+					}else{
+						bean.setCostDRSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIRSupe.getCellType()  ){
+						bean.setCanIRSupe(String.valueOf(celdaCantIRSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIRSupe.getCellType()  ){
+						bean.setCanIRSupe("0");
+					}else{
+						bean.setCanIRSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIRSupe.getCellType()  ){
+						bean.setCostIRSupe(String.valueOf(celdaCostIRSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIRSupe.getCellType()  ){
+						bean.setCostIRSupe("0.00");
+					}else{
+						bean.setCostIRSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}					
+					
+					/*******GESTOR*******/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDRGest.getCellType()  ){
+						bean.setCanDRGest(String.valueOf(celdaCantDRGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDRGest.getCellType()  ){
+						bean.setCanDRGest("0");
+					}else{
+						bean.setCanDRGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRGest.getCellType()  ){
+						bean.setCostDRGest(String.valueOf(celdaCostDRGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDRGest.getCellType()  ){
+						bean.setCostDRGest("0.00");
+					}else{
+						bean.setCostDRGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIRGest.getCellType()  ){
+						bean.setCanIRGest(String.valueOf(celdaCantIRGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIRGest.getCellType()  ){
+						bean.setCanIRGest("0");
+					}else{
+						bean.setCanIRGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIRGest.getCellType()  ){
+						bean.setCostIRGest(String.valueOf(celdaCostIRGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIRGest.getCellType()  ){
+						bean.setCostIRGest("0.00");
+					}else{
+						bean.setCostIRGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}					
+					
+					/*******ASISTENTE*******/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDRAsist.getCellType()  ){
+						bean.setCanDRAsist(String.valueOf(celdaCantDRAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDRAsist.getCellType()  ){
+						bean.setCanDRAsist("0");
+					}else{
+						bean.setCanDRAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRAsist.getCellType()  ){
+						bean.setCostDRAsist(String.valueOf(celdaCostDRAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDRAsist.getCellType()  ){
+						bean.setCostDRAsist("0.00");
+					}else{
+						bean.setCostDRAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIRAsist.getCellType()  ){
+						bean.setCanIRAsist(String.valueOf(celdaCantIRAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIRAsist.getCellType()  ){
+						bean.setCanIRAsist("0");
+					}else{
+						bean.setCanIRAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIRAsist.getCellType()  ){
+						bean.setCostIRAsist(String.valueOf(celdaCostIRAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIRAsist.getCellType()  ){
+						bean.setCostIRAsist("0.00");
+					}else{
+						bean.setCostIRAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}		
+					
+					//PROVINCIA
+					/******COORDINADOR*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDPCoord.getCellType()  ){
+						bean.setCanDPCoord(String.valueOf(celdaCantDPCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDPCoord.getCellType()  ){
+						bean.setCanDPCoord("0");
+					}else{
+						bean.setCanDPCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDPCoord.getCellType()  ){
+						bean.setCostDPCoord(String.valueOf(celdaCostDPCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDPCoord.getCellType()  ){
+						bean.setCostDPCoord("0.00");
+					}else{
+						bean.setCostDPCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIPCoord.getCellType()  ){
+						bean.setCanIPCoord(String.valueOf(celdaCantIPCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIPCoord.getCellType()  ){
+						bean.setCanIPCoord("0");
+					}else{
+						bean.setCanIPCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPCoord.getCellType()  ){
+						bean.setCostIPCoord(String.valueOf(celdaCostIPCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIPCoord.getCellType()  ){
+						bean.setCostIPCoord("0.00");
+					}else{
+						bean.setCostIPCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}					
+					/******SUPERVISOR*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDPSupe.getCellType()  ){
+						bean.setCanDPSupe(String.valueOf(celdaCantDPSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDPSupe.getCellType()  ){
+						bean.setCanDPSupe("0");
+					}else{
+						bean.setCanDPSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDPSupe.getCellType()  ){
+						bean.setCostDPSupe(String.valueOf(celdaCostDPSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDPSupe.getCellType()  ){
+						bean.setCostDPSupe("0.00");
+					}else{
+						bean.setCostDPSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIPSupe.getCellType()  ){
+						bean.setCanIPSupe(String.valueOf(celdaCantIPSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIPSupe.getCellType()  ){
+						bean.setCanIPSupe("0");
+					}else{
+						bean.setCanIPSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPSupe.getCellType()  ){
+						bean.setCostIPSupe(String.valueOf(celdaCostIPSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIPSupe.getCellType()  ){
+						bean.setCostIPSupe("0.00");
+					}else{
+						bean.setCostIPSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}					
+					/******GESTOR*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDPGest.getCellType()  ){
+						bean.setCanDPGest(String.valueOf(celdaCantDPGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDPGest.getCellType()  ){
+						bean.setCanDPGest("0");
+					}else{
+						bean.setCanDPGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDPGest.getCellType()  ){
+						bean.setCostDPGest(String.valueOf(celdaCostDPGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDPGest.getCellType()  ){
+						bean.setCostDPGest("0.00");
+					}else{
+						bean.setCostDPGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIPGest.getCellType()  ){
+						bean.setCanIPGest(String.valueOf(celdaCantIPGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIPGest.getCellType()  ){
+						bean.setCanIPGest("0");
+					}else{
+						bean.setCanIPGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPGest.getCellType()  ){
+						bean.setCostIPGest(String.valueOf(celdaCostIPGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIPGest.getCellType()  ){
+						bean.setCostIPGest("0.00");
+					}else{
+						bean.setCostIPGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}					
+					/******ASISTENTE*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDPAsist.getCellType()  ){
+						bean.setCanDPAsist(String.valueOf(celdaCantDPAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDPAsist.getCellType()  ){
+						bean.setCanDPAsist("0");
+					}else{
+						bean.setCanDPAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDPAsist.getCellType()  ){
+						bean.setCostDPAsist(String.valueOf(celdaCostDPAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDPAsist.getCellType()  ){
+						bean.setCostDPAsist("0.00");
+					}else{
+						bean.setCostDPAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIPAsist.getCellType()  ){
+						bean.setCanIPAsist(String.valueOf(celdaCantIPAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIPAsist.getCellType()  ){
+						bean.setCanIPAsist("0");
+					}else{
+						bean.setCanIPAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPAsist.getCellType()  ){
+						bean.setCostIPAsist(String.valueOf(celdaCostIPAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIPAsist.getCellType()  ){
+						bean.setCostIPAsist("0.00");
+					}else{
+						bean.setCostIPAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					//LIMA
+					/******COORDINADOR*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDLCoord.getCellType()  ){
+						bean.setCanDLCoord(String.valueOf(celdaCantDLCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDLCoord.getCellType()  ){
+						bean.setCanDLCoord("0");
+					}else{
+						bean.setCanDLCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDLCoord.getCellType()  ){
+						bean.setCostDLCoord(String.valueOf(celdaCostDLCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDLCoord.getCellType()  ){
+						bean.setCostDLCoord("0.00");
+					}else{
+						bean.setCostDLCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantILCoord.getCellType()  ){
+						bean.setCanILCoord(String.valueOf(celdaCantILCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantILCoord.getCellType()  ){
+						bean.setCanILCoord("0");
+					}else{
+						bean.setCanILCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostILCoord.getCellType()  ){
+						bean.setCostILCoord(String.valueOf(celdaCostILCoord.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostILCoord.getCellType()  ){
+						bean.setCostILCoord("0.00");
+					}else{
+						bean.setCostILCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}				
+					/******SUPERVISOR*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDLSupe.getCellType()  ){
+						bean.setCanDLSupe(String.valueOf(celdaCantDLSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDLSupe.getCellType()  ){
+						bean.setCanDLSupe("0");
+					}else{
+						bean.setCanDLSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDLSupe.getCellType()  ){
+						bean.setCostDLSupe(String.valueOf(celdaCostDLSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDLSupe.getCellType()  ){
+						bean.setCostDLSupe("0.00");
+					}else{
+						bean.setCostDLSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantILSupe.getCellType()  ){
+						bean.setCanILSupe(String.valueOf(celdaCantILSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantILSupe.getCellType()  ){
+						bean.setCanILSupe("0");
+					}else{
+						bean.setCanILSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostILSupe.getCellType()  ){
+						bean.setCostILSupe(String.valueOf(celdaCostILSupe.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostILSupe.getCellType()  ){
+						bean.setCostILSupe("0.00");
+					}else{
+						bean.setCostILSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}				
+					/******GESTOR*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDLGest.getCellType()  ){
+						bean.setCanDLGest(String.valueOf(celdaCantDLGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDLGest.getCellType()  ){
+						bean.setCanDLGest("0");
+					}else{
+						bean.setCanDLGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDLGest.getCellType()  ){
+						bean.setCostDLGest(String.valueOf(celdaCostDLGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDLGest.getCellType()  ){
+						bean.setCostDLGest("0.00");
+					}else{
+						bean.setCostDLGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantILGest.getCellType()  ){
+						bean.setCanILGest(String.valueOf(celdaCantILGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantILGest.getCellType()  ){
+						bean.setCanILGest("0");
+					}else{
+						bean.setCanILGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostILGest.getCellType()  ){
+						bean.setCostILGest(String.valueOf(celdaCostILGest.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostILGest.getCellType()  ){
+						bean.setCostILGest("0.00");
+					}else{
+						bean.setCostILGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}				
+					/******ASISTENTE*****/
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDLAsist.getCellType()  ){
+						bean.setCanDLAsist(String.valueOf(celdaCantDLAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDLAsist.getCellType()  ){
+						bean.setCanDLAsist("0");
+					}else{
+						bean.setCanDLAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDLAsist.getCellType()  ){
+						bean.setCostDLAsist(String.valueOf(celdaCostDLAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDLAsist.getCellType()  ){
+						bean.setCostDLAsist("0.00");
+					}else{
+						bean.setCostDLAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantILAsist.getCellType()  ){
+						bean.setCanILAsist(String.valueOf(celdaCantILAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantILAsist.getCellType()  ){
+						bean.setCanILAsist("0");
+					}else{
+						bean.setCanILAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}
+					
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostILAsist.getCellType()  ){
+						bean.setCostILAsist(String.valueOf(celdaCostILAsist.getNumericCellValue()));
+					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostILAsist.getCellType()  ){
+						bean.setCostILAsist("0.00");
+					}else{
+						bean.setCostILAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+					}				
+					/***FIN DE VALIDACION****/				
+				    logger.info("Valor de del mesaje pasando la validacion:  "+sMsg); 
+					if("".equals(sMsg) ){	
+						logger.info("Entro a verificar cero errores de validacion"); 
+						bean.setUsuario(user.getLogin());
+						bean.setTerminal(user.getLoginIP());						
+						bean.setNombreExel(archivo.getTitle());	
+						logger.info("Cod empresa del for: "+codEmpresa);
+						logger.info("anio pres del for: "+anioPres);
+						int mesForm = Integer.valueOf(mesPres);
+						logger.info("mes pres del for: "+mesForm);
+						logger.info("anio inicio del for: "+anioIniVigencia);
+						logger.info("anio fin del for: "+anioFinVigencia);
+						
+						logger.info("Cod empresa del bean: "+bean.getCodEmpresa());
+						logger.info("anio pres del bean: "+bean.getAnioPres());
+						
+						logger.info("anio inicio del bean: "+bean.getAnioPres());
+						logger.info("anio fin del bean: "+bean.getAnioPres());
+						int mesBean = Integer.valueOf(bean.getMesPres());						
+						logger.info("mes pres del bean: "+mesBean);
+						
+						if(codEmpresa.equals(bean.getCodEmpresa()) && 
+								anioPres.equals(bean.getAnioPres()) &&	
+								mesForm==mesBean &&	 							
+								anioIniVigencia.equals(bean.getAnoIniVigencia()) && 
+								anioFinVigencia.equals(bean.getAnoFinVigencia()))
+						{
+							logger.info("Entro a verificar datos si coincide la Pk"); 
+							if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO.equals(flagCarga) ){
+								bean.setCodEmpresa(codEmpresa);
+								bean.setAnioPres(anioPres);
+								bean.setMesPres(mesPres);
+								bean.setAnoIniVigencia(anioIniVigencia);
+								bean.setAnoFinVigencia(anioFinVigencia); 
+								bean.setEtapa(etapa); 
+								logger.info("Entro agrabar nuevo registro"); 
+								valor=formato14CGartService.insertarDatosFormato14C(bean);		
+								logger.info("valor del  agrabar nuevo registro: "+valor); 
+							}else if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION.equals(flagCarga) ){
+								bean.setCodEmpresa(codEmpresa);
+								bean.setAnioPres(anioPres);
+								bean.setMesPres(mesPres);
+								bean.setAnoIniVigencia(anioIniVigencia);
+								bean.setAnoFinVigencia(anioFinVigencia); 
+								bean.setEtapa(etapa); 
+								logger.info("Entro actualizar nuevo registro"); 
+								valor =formato14CGartService.actualizarDatosFormato14C(bean);
+								logger.info("valor del  actualizar nuevo registro: "+valor); 
+							}
+						}else{
+							logger.info("Entro a verificar datos si coincide la Pk no coincide--"); 
+							cont++;
+							sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_210);
+						}
+					}
+				}//fin del if libro			
+			}
+			is.close();
+		} catch (Exception e) {
+			logger.error("Error al leer el archivo excel del F14C.",e);
+			String error = e.getMessage();
+			sMsg = sMsg +sMsg+error;	        	
+			cont++;
+			MensajeErrorBean errorBean = new MensajeErrorBean();
+			errorBean.setId(cont);
+			errorBean.setDescripcion(error);
+			listaError.add(errorBean);
+		}finally{
+			StreamUtil.cleanUp(is);
+		}
+		formatoMensaje.setMensajeError(sMsg);
+		formatoMensaje.setFormato14CBean(bean); 
+		formatoMensaje.setValor(valor); 
+		if(listaError.size()>0){
+			formatoMensaje.setListaMensajeError(listaError);
+		}
+		return formatoMensaje;
+	}  
+    
+    
+    private Formato14AMensajeBean readTxtFile(FileEntry archivo, 
+    		UploadPortletRequest uploadPortletRequest, User user, 
+    		String flagCarga, String codigoEmpresa, String anioPresentacion, 
+    		String mesPresentacion, String anioIniVigencia, String anioFinVigencia, 
+    		String etapa) {
+      	//FLAG CARGA:
+    	//	3: para registros nuevos
+    	//	4: para registros modificados
+    	//---------------------
+    	Formato14AMensajeBean formatoMensaje = new Formato14AMensajeBean();
+    	
+    	InputStream is=null;    
+    	List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();    	
+    	String sMsg = "";
+    	int cont = 0;    	
+    	List<CfgCampo> listaCampo = null;
+    	Formato14CBean bean = new Formato14CBean();	
+    	String valor = "";
+    	try{
+    		CfgTabla tabla = new CfgTabla();
+    		tabla.setIdTabla(FiseConstants.ID_TABLA_FORMATO14C);
+    		listaCampo = campoService.listarCamposByTabla(tabla);
+    		if( listaCampo != null ){
+    			int longitudMaxima = campoService.longitudMaximaRegistro(listaCampo);
+    			logger.info("Longitud maxima:  "+longitudMaxima); 
+    			int posicionCodEmpresa = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_COD_EMPRESA_F14C);
+    			logger.info("posicion final codempresa:  "+posicionCodEmpresa);
+    			int posicionAnioPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_ANO_PRESENTACION_F14C);
+    			logger.info("posicion final anio pres:  "+posicionAnioPresentacion);
+    			int posicionMesPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_MES_PRESENTACION_F14C);
+    			logger.info("posicion final posicionMesPresentacion:  "+posicionMesPresentacion);
+    			int posicionAnioInicioVigencia = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_ANIOINICIO_VIGE_F14C);
+    			logger.info("posicion final posicionAnioInicioVigencia:  "+posicionAnioInicioVigencia);
+    			int posicionAnioFinVigencia = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_ANIOFIN_VIGE_F14C);
+    			logger.info("posicion final posicionAnioFinVigencia:  "+posicionAnioFinVigencia);
+    			int posicionZonaBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_IDZONA_BENEF_F14C);
+    			logger.info("posicion final posicionZonaBenef:  "+posicionZonaBenef);
+    			int posicionPersonalBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_IDTIPO_PERSONAL_F14C);
+    			logger.info("posicion final posicionPersonalBenef:  "+posicionPersonalBenef);
+    			int posicionSede = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_NOMBRE_SEDE_F14C);
+    			logger.info("posicion final posicionSede:  "+posicionSede);
+    			int posicionNroTotalBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_NRO_TOTAL_BENEF_F14C);
+    			logger.info("posicion final posicionNroTotalBenef:  "+posicionNroTotalBenef);
+    			int posicionNroItemTipoGestCosto = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_NRO_ITEM_TIPO_GESTION_F14C);
+    			logger.info("posicion final posicionNroItemTipoGestCosto:  "+posicionNroItemTipoGestCosto);
+    			int posicionIdTipoCostoGest = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_ID_TIPO_COSTO_GESTION_F14C);
+    			logger.info("posicion final posicionIdTipoCostoGest:  "+posicionIdTipoCostoGest);
+    			int posicionCantidad = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_CANTIDAD_F14C);
+    			logger.info("posicion final posicionCantidad:  "+posicionCantidad);
+    			int posicionCostoUnitario = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_COSTO_UNITARIO_F14C);
+    			logger.info("posicion final posicionCostoUnitario:  "+posicionCostoUnitario);
+    			int posicionCostoTotalZona = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_COSTO_TOTAL_ZONA_F14C);
+    			logger.info("posicion final posicionCostoTotalZona:  "+posicionCostoTotalZona);
+    			int posicionCostoTotalTipPer = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOM_COSTO_TOTAL_TIPO_PERSONA_F14C);
+    			logger.info("posicion final posicionCostoTotalTipPer:  "+posicionCostoTotalTipPer);  			
+    			
+    			String sCurrentLine;
+    			is=uploadPortletRequest.getFileAsStream("archivoTxt");
+    			int BUFFER_SIZE = 8192;
+    			BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
+    			List<String> listaDetalleTxt= new ArrayList<String>();
+    			sCurrentLine = br.readLine();
+    			logger.info("sCurrentLine :  "+sCurrentLine.length());
+    			while(sCurrentLine!=null){
+    				logger.info("CONTADOR EN PANTALLA.");
+    				cont++;
+    				if( sCurrentLine.length()>0 ){
+    					if( sCurrentLine.length() == longitudMaxima){
+    						listaDetalleTxt.add(sCurrentLine);
+    					}else{
+    						cont++;
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_220);
+    					}
+    				}else{
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_230);
+    				}
+    				sCurrentLine = br.readLine();
+    				if( cont>24 ){
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_240);
+    					break;
+    				}
+    			}
+    			logger.info("TOTAL DE FILAS DEL TEXTO:  "+listaDetalleTxt.size()); 
+    			
+    			boolean process = false;
+    			String key1 ="";
+    			String key2="";
+    			String key3="";
+    			String key4="";
+    			String codEmpresaRural="";//cod_empresa+aniopresentacion+mespresentacion+zonarual+sede
+    			String codEmpresaProv="";//cod_empresa+aniopresentacion+mespresentacion+zonaProv+sede
+    			String codEmpresaLima="";//cod_empresa+aniopresentacion+mespresentacion+zonalima+sede
+    			
+    			if(listaDetalleTxt.size()==24){ 
+    				process = true;
+    				key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
+    				key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+    				key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
+    				key4 = listaDetalleTxt.get(0).substring(posicionZonaBenef, posicionSede).trim();
+    				logger.info("Codigo key1:   "+key1); //codigo empresa
+    				logger.info("Codigo key2:   "+key2); //anio presentacion 
+    				logger.info("Codigo key3:   "+key3); //mes presentacion
+    				logger.info("Codigo key4:   "+key4); //sede    			
+    				for (String s : listaDetalleTxt) {
+        				String codEmp = s.substring(0, posicionCodEmpresa).trim();
+    					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+    					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+    					String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
+    					String sede = s.substring(posicionZonaBenef, posicionSede).trim();
+    					logger.info("codigo empresa:   "+codEmp); 
+        				logger.info("anio pres:   "+anioPres); 
+        				logger.info("mes pres:   "+mesPres); 
+        				logger.info("sede:   "+sede);
+        				logger.info("zona:   "+zonaBenef);
+    					if(key1.equals(codEmp) && 
+    							key2.equals(anioPres) && 
+    							key3.equals(mesPres) &&
+    							key4.equals(sede) &&
+    							FiseConstants.ZONABENEF_RURAL_COD_STRING.equals(zonaBenef))
+    					{
+    						codEmpresaRural=key1+key2+key3+zonaBenef+key4;						
+    					}else if(key1.equals(codEmp) && 
+    							key2.equals(anioPres) && 
+    							key3.equals(mesPres) &&
+    							key4.equals(sede) &&							
+    							FiseConstants.ZONABENEF_PROVINCIA_COD_STRING.equals(zonaBenef))
+    					{
+    						codEmpresaProv=key1+key2+key3+zonaBenef+key4;						
+    					}else if(key1.equals(codEmp) && 
+    							key2.equals(anioPres) && 
+    							key3.equals(mesPres) &&
+    							key4.equals(sede) &&							
+    							FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(zonaBenef))
+    					{
+    						codEmpresaLima=key1+key2+key3+zonaBenef+key4;						
+    					}else{ 
+    						process = false;
+    						cont++;
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    						break;
+    					}
+        			}//fin del for  
+        			
+        			logger.info("Codigo muestra codEmpresaRural:   "+codEmpresaRural); 
+        			logger.info("Codigo muestra codEmpresaProv:   "+codEmpresaProv); 
+        			logger.info("Codigo muestra codEmpresaLima:   "+codEmpresaLima); 
+    			}    			
+    			//empesando asignar valores al bean
+    			if(process){
+    			  for (String s : listaDetalleTxt) {
+    				String codEmp = s.substring(0, posicionCodEmpresa).trim();
+  					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+  					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+  					String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
+  					String sede = s.substring(posicionZonaBenef, posicionSede).trim(); 
+  					
+    				String codigoMuestraZonal =codEmp+anioPres+mesPres+zonaBenef+sede; 
+    				logger.info("Codigo muestra zona para setear al bean: "+codigoMuestraZonal);
+    				
+    				String idTipoCostGestion =s.substring(posicionNroItemTipoGestCosto, posicionIdTipoCostoGest).trim();  
+    			    String idTipoPersonal = s.substring(posicionIdTipoCostoGest, posicionPersonalBenef).trim();
+    			   
+    			    String codigoMuestraTipPersona =idTipoCostGestion+idTipoPersonal; 
+    			    logger.info("Codigo muestra persona para setear al bean: "+codigoMuestraTipPersona);
+    			    
+    			    String nroTotalBenef = s.substring(posicionSede, posicionNroTotalBenef).trim();
+    			    logger.info("nroTotalBenef: "+nroTotalBenef);
+    			    String cantidad = s.substring(posicionPersonalBenef, posicionCantidad).trim();
+    			    logger.info("cantidad: "+cantidad);
+    			    String costo = s.substring(posicionCantidad, posicionCostoUnitario).trim();
+    			    logger.info("costo: "+costo);
+    			    String costoProemdio = s.substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
+    			    logger.info("costoProemdio: "+costoProemdio);
+    			    String costoPromedioRural = listaDetalleTxt.get(0).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
+    			    logger.info("costoPromedioRural: "+costoPromedioRural);
+    			    String costoPromedioProv = listaDetalleTxt.get(8).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
+    			    logger.info("costoPromedioProv: "+costoPromedioProv);
+    			    String costoPromedioLima = listaDetalleTxt.get(16).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
+    			    logger.info("costoPromedioLima: "+costoPromedioLima);
+    				
+    			    /**seteando valores al bean de la cabecera**/
+    				bean.setCodEmpresa(key1); 
+    				bean.setAnioPres(key2);
+    				bean.setMesPres(key3);
+    				bean.setAnoIniVigencia(key2);
+    				bean.setAnoFinVigencia(key2);
+    				bean.setEtapa(etapa); 
+    				bean.setNombreSede(key4); 
+    			    /**ZONA RURAL*/
+    			    if(codEmpresaRural.equals(codigoMuestraZonal)){ 
+    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
+    			    		bean.setNumRural(nroTotalBenef); //cabecera
+    			    		bean.setCanDRCoord(cantidad);
+    			    		bean.setCostDRCoord(costo);
+    			    		bean.setCostoPromRural(costoPromedioRural);//cabecera
+    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDRSupe(cantidad);
+    			    		bean.setCostDRSupe(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDRGest(cantidad);
+    			    		bean.setCostDRGest(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDRAsist(cantidad);
+    			    		bean.setCostDRAsist(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanIRCoord(cantidad);
+    			    		bean.setCostIRCoord(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanIRSupe(cantidad);
+    			    		bean.setCostIRSupe(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanIRGest(cantidad);
+    			    		bean.setCostIRGest(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanIRAsist(cantidad);
+    			    		bean.setCostIRAsist(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else{
+    			    	   //no coinciden ningun tipo de personal
+    			    		cont++;
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    						break;
+    			    	}   			    	
+    			    }
+    			    /**PROVINCIAS*/
+    			    else if(codEmpresaProv.equals(codigoMuestraZonal)){
+    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
+    			    		bean.setNumUrbProv(nroTotalBenef); //cabecera
+    			    		bean.setCanDPCoord(cantidad);
+    			    		bean.setCostDPCoord(costo);
+    			    		bean.setCostoPromUrbProv(costoPromedioProv);//cabecera
+    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDPSupe(cantidad);
+    			    		bean.setCostDPSupe(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDPGest(cantidad);
+    			    		bean.setCostDPGest(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDPAsist(cantidad);
+    			    		bean.setCostDPAsist(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanIPCoord(cantidad);
+    			    		bean.setCostIPCoord(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanIPSupe(cantidad);
+    			    		bean.setCostIPSupe(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanIPGest(cantidad);
+    			    		bean.setCostIPGest(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanIPAsist(cantidad);
+    			    		bean.setCostIPAsist(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else{
+    			    	   //no coinciden ningun tipo de personal
+    			    		cont++;
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    						break;
+    			    	}    				    	
+    			    }
+    			    /*****LIMA******/
+    			    else if(codEmpresaLima.equals(codigoMuestraZonal)){
+    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
+    			    		bean.setNumUrbLima(nroTotalBenef); //cabecera
+    			    		bean.setCanDLCoord(cantidad);
+    			    		bean.setCostDLCoord(costo);
+    			    		bean.setCostoPromUrbLima(costoPromedioLima);//cabecera
+    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDLSupe(cantidad);
+    			    		bean.setCostDLSupe(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDLGest(cantidad);
+    			    		bean.setCostDLGest(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanDLAsist(cantidad);
+    			    		bean.setCostDLAsist(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanILCoord(cantidad);
+    			    		bean.setCostILCoord(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanILSupe(cantidad);
+    			    		bean.setCostILSupe(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanILGest(cantidad);
+    			    		bean.setCostILGest(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+    			    		//bean.setNumRural(nroTotalBenef); 
+    			    		bean.setCanILAsist(cantidad);
+    			    		bean.setCostILAsist(costo);
+    			    		//bean.setCostoPromRural(costoPromedioRural);
+    			    	}else{
+    			    	   //no coinciden ningun tipo de personal
+    			    		cont++;
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    						break;
+    			    	}   			    	
+    			    }else{
+    			    	cont++;
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+						break;
+    			    }    			    
+    			  }//fin del for del recorrido de la lista seteando valores    			  
+    			}//fin del if process = true
+    			
+    		   /*****validaciones de consistencia***/
+    			if(process && FiseConstants.BLANCO.equals(sMsg)){
+    				/**CABECERA**/
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getAnioPres())){
+    					//el campo Zona AnioPres no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getMesPres())){
+    					//el campo Zona getMesPres no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumRural())){
+    					//el campo Zona getNumRural no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbProv())){
+    					//el campo Zona getNumUrbProv no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbLima())){
+    					//el campo Zona getNumUrbLima no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromRural()) ){
+    					//el campo getCostoPromRural no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbProv()) ){
+    					//el campo getCostoPromUrbProv no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbLima()) ){
+    					//el campo getCostoPromUrbLima no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				/*****RURAL*****/  
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRCoord())){
+    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRSupe())){
+    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRGest())){
+    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRAsist())){
+    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRCoord())){
+    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRSupe())){
+    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRGest())){
+    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRAsist())){
+    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+    				/*******PROVINCIAS******/
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPCoord())){
+    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPSupe())){
+    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPGest())){
+    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPAsist())){
+    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPCoord())){
+    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPSupe())){
+    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPGest())){
+    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPAsist())){
+    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				/**LIMA***/
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLCoord())){
+    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLSupe())){
+    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLGest())){
+    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLAsist())){
+    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILCoord())){
+    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILSupe())){
+    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILGest())){
+    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILAsist())){
+    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){
+    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    				}    				
+    			}  //fin de validacion 			
+				
+				logger.info("Valor de del mesaje pasando la validacion:  "+sMsg); 
+				if(FiseConstants.BLANCO.equals(sMsg) ){	
+					logger.info("Entro a verificar cero errores de validacion"); 
+					bean.setUsuario(user.getLogin());
+					bean.setTerminal(user.getLoginIP());						
+					bean.setNombreText(archivo.getTitle());	
+					logger.info("Cod empresa del for: "+codigoEmpresa);
+					logger.info("anio pres del for: "+anioPresentacion);
+					int mesForm = Integer.valueOf(mesPresentacion);
+					logger.info("mes pres del for: "+mesForm);
+					logger.info("anio inicio del for: "+anioIniVigencia);
+					logger.info("anio fin del for: "+anioFinVigencia);
+					
+					logger.info("Cod empresa del bean: "+bean.getCodEmpresa());
+					logger.info("anio pres del bean: "+bean.getAnioPres());					
+					logger.info("anio inicio del bean: "+bean.getAnioPres());
+					logger.info("anio fin del bean: "+bean.getAnioPres());
+					int mesBean = Integer.valueOf(bean.getMesPres());						
+					logger.info("mes pres del bean: "+mesBean);
+					
+					if(codigoEmpresa.equals(bean.getCodEmpresa()) && 
+							anioPresentacion.equals(bean.getAnioPres()) &&	
+							mesForm==mesBean &&	 							
+							anioIniVigencia.equals(bean.getAnoIniVigencia()) && 
+							anioFinVigencia.equals(bean.getAnoFinVigencia()))
+					{
+						logger.info("Entro a verificar datos si coincide la Pk"); 
+						if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
+							bean.setCodEmpresa(codigoEmpresa);
+							bean.setAnioPres(anioPresentacion);
+							bean.setMesPres(mesPresentacion);
+							bean.setAnoIniVigencia(anioIniVigencia);
+							bean.setAnoFinVigencia(anioFinVigencia); 
+							bean.setEtapa(etapa); 
+							logger.info("Entro agrabar nuevo registro"); 
+							valor=formato14CGartService.insertarDatosFormato14C(bean);		
+							logger.info("valor del  agrabar nuevo registro: "+valor); 
+						}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
+							bean.setCodEmpresa(codigoEmpresa);
+							bean.setAnioPres(anioPresentacion);
+							bean.setMesPres(mesPresentacion);
+							bean.setAnoIniVigencia(anioIniVigencia);
+							bean.setAnoFinVigencia(anioFinVigencia); 
+							bean.setEtapa(etapa); 
+							logger.info("Entro actualizar nuevo registro"); 
+							valor =formato14CGartService.actualizarDatosFormato14C(bean);
+							logger.info("valor del  actualizar nuevo registro: "+valor); 
+						}
+					}else{
+						logger.info("Entro a verificar datos la Pk no coincide--"); 
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_210);
+					}
+				}			
+    			is.close();
+    		}else{
+    			//no hay campos o error al consultar a la tabla de campos
+    			throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_290));
+    		}    		
+    	}catch (Exception e) {	  			  
+    		String error = e.getMessage();
+    		sMsg = sMsg+error;	        	
+    		logger.info(error);
+    		cont++;
+    		MensajeErrorBean errorBean = new MensajeErrorBean();
+    		errorBean.setId(cont);
+    		errorBean.setDescripcion(error);
+    		listaError.add(errorBean);  		  			   
+    	}    	
+    	formatoMensaje.setFormato14CBean(bean);
+    	formatoMensaje.setValor(valor); 
+    	formatoMensaje.setMensajeError(sMsg);
+    	if(listaError.size()>0){
+    		formatoMensaje.setListaMensajeError(listaError);	
+    	}   	
+    	return formatoMensaje;
+    }
+    
+    
+    
+    
+    
 	
 }

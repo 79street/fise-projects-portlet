@@ -11,6 +11,8 @@ var formato14C= {
 		//divs
 		divBuscar:null,	
 		divNuevo:null,	
+		divOverlay:null,
+		divPeriodoEjecucion:null,
 		
 		//dialogos	
 		dialogMessage:null,//para guardar y actualizar
@@ -22,8 +24,8 @@ var formato14C= {
 		dialogError:null,
 		dialogObservacion:null,	
 		dialogConfirmEnvioContent:null,
-		//dialogCargaExcel:null,
-		//dialogCargaTexto:null,
+		dialogCargaExcel:null,
+		dialogCargaTexto:null,
 		
 		//mensajes
 		mensajeCargando:null,
@@ -32,13 +34,25 @@ var formato14C= {
 		mensajeGuardando:null,	
 		mensajeActualizando:null,	
 		
+		mensajeError:null,
+		mensajeInfo:null,
+		flag:null,
+		
 		//valores hidden
 		//valores hidden
 	    estadoCrud:null,//flag que indica que proceso es nuevo o actualizar    
-		
+	    flagCarga:null,
+	    codEmpresaSes:null,
+		anioPresSes:null,
+		mesPresSes:null,
+		anioIniVigSes:null,
+		anioFinVigSes:null,
+		etapaSes:null,
+	    
 		//urls
 		urlBusqueda: null,
-		urlCargaPeriodo:null,		
+		urlCargaPeriodo:null,
+		urlCargaFlagPeriodo:null,
 		urlGrabar:null,
 		urlActualizar:null,
 		urlEditarView:null,		
@@ -59,6 +73,12 @@ var formato14C= {
 		botonValidacion:null,
 		botonEnvioDefinitivo:null,
 		
+		botonCargaExcel:null,
+		botonCargaTxt:null,
+		botonCargarFormatoExcel:null,
+		botonCargaTxt:null,	
+		botonCargarFormatoTexto:null,
+		
 		//panel de carga de exel y text
 		panelCargaArchivo:null,		
 		
@@ -72,7 +92,7 @@ var formato14C= {
 		
 		//varibales para nuevo y editar
 	    /*Cabecera*/
-		f_empresa:null,f_periodoEnvio:null,f_nombreSede:null,f_numRural:null,f_numUrbProv:null,f_numUrbLima:null,
+		f_empresa:null,f_periodoEnvio:null,f_flagPeriodo:null,f_nombreSede:null,f_numRural:null,f_numUrbProv:null,f_numUrbLima:null,
 		f_costoPromRural:null,f_costoPromUrbProv:null,f_costoPromUrbLima:null,f_numTotal:null,	
 		
 		/*Detalle*/		
@@ -119,6 +139,8 @@ var formato14C= {
 			//divs
 			this.divBuscar=$("#<portlet:namespace/>div_buscar");
 			this.divNuevo=$("#<portlet:namespace/>div_nuevo");
+			this.divOverlay=$("#<portlet:namespace/>divOverlay");
+			this.divPeriodoEjecucion=$("#<portlet:namespace/>divPeriodoEjecucion");
 			
 			//dialogos		
 			this.dialogMessage=$("#<portlet:namespace/>dialog-message-grabar");//para guardar y actualizar
@@ -130,8 +152,8 @@ var formato14C= {
 			this.dialogError=$("#<portlet:namespace/>dialog-form-error");
 			this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");		
 			this.dialogConfirmEnvioContent=$("#<portlet:namespace/>dialog-confirm-envio-content");
-			//this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
-			//this.dialogCargaTexto=$("#<portlet:namespace/>dialog-form-cargaTexto");
+			this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
+			this.dialogCargaTexto=$("#<portlet:namespace/>dialog-form-cargaTexto");
 		
 			//mensajes			
 			this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
@@ -140,12 +162,24 @@ var formato14C= {
 			this.mensajeGuardando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>';
 			this.mensajeActualizando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Actualizando Datos </h3>';
 			
+			this.mensajeError=$('#<portlet:namespace/>mensajeError');
+			this.mensajeInfo=$('#<portlet:namespace/>mensajeInfo');
+			this.flag=$('#<portlet:namespace/>flag');//solo para controlar los errores al subir archivos excel o de texto
+			
 			//valores hidden
 			this.estadoCrud=$('#estadoCrudF14C'); 
+			this.flagCarga=$('#<portlet:namespace/>flagCarga');
+			this.codEmpresaSes=$('#<portlet:namespace/>codEmpresaSes');
+			this.anioPresSes=$('#<portlet:namespace/>anioPresSes');
+			this.mesPresSes=$('#<portlet:namespace/>mesPresSes');
+			this.anioIniVigSes=$('#<portlet:namespace/>anioIniVigSes');
+			this.anioFinVigSes=$('#<portlet:namespace/>anioFinVigSes');
+			this.etapaSes=$('#<portlet:namespace/>etapaSes');
 			
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="busquedaF14C" />';
 			this.urlCargaPeriodo='<portlet:resourceURL id="cargaPeriodoF14C" />';
+			this.urlCargaFlagPeriodo='<portlet:resourceURL id="cargaFlagPeriodoF14C" />';
 			this.urlGrabar='<portlet:resourceURL id="grabarF14C" />';			
 			this.urlActualizar='<portlet:resourceURL id="actualizarF14C" />';
 			this.urlEditarView='<portlet:resourceURL id="editarViewF14C" />';			
@@ -166,6 +200,11 @@ var formato14C= {
 			this.botonValidacion=$("#<portlet:namespace/>validacionFormatoF14C");
 			this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivoF14C");
 			
+			this.botonCargaExcel=$("#<portlet:namespace/>cargaExcelF14C");
+			this.botonCargaTxt=$("#<portlet:namespace/>cargaTxtF14C");
+			this.botonCargarFormatoExcel=$("#<portlet:namespace/>cargarFormatoExcel");		
+			this.botonCargarFormatoTexto=$("#<portlet:namespace/>cargarFormatoTexto");
+			
 			//panel de carga de exel y text
 			this.panelCargaArchivo=$("#<portlet:namespace/>panelCargaArchivosF14C");
 			
@@ -181,6 +220,7 @@ var formato14C= {
 			 /*Cabecera*/
 			this.f_empresa=$('#codEmpresa');
 			this.f_periodoEnvio=$('#periodoEnvio');	
+			this.f_flagPeriodo=$("#flagPeriodoEjecucion");
 			this.f_nombreSede=$('#nombreSede');
 			this.f_numRural=$('#numRural');
 			this.f_numUrbProv=$('#numUrbProv');
@@ -331,6 +371,24 @@ var formato14C= {
 		    	formato14C.<portlet:namespace/>regresarF14C();
 		    });			
 		    
+		    //botones para carga de archivos
+		    formato14C.botonCargaExcel.click(function() {
+		    	formato14C.<portlet:namespace/>mostrarFormularioCargaExcel();
+		    });
+		    
+		    formato14C.botonCargaTxt.click(function() {
+		    	formato14C.<portlet:namespace/>mostrarFormularioCargaTexto();
+		    });
+		    
+		    formato14C.botonCargarFormatoExcel.click(function() {
+		    	formato14C.<portlet:namespace/>cargarFormatoExcel();
+		    });
+		    		  
+			formato14C.botonCargarFormatoTexto.click(function() {
+				formato14C.<portlet:namespace/>cargarFormatoTexto();
+			});
+		    
+		    
 		    
 			//eventos 		
 			formato14C.f_empresa.change(function(){
@@ -401,7 +459,7 @@ var formato14C= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			       <%--   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; --%> 
+			          location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
 			       } 
 			}); 
 		},
@@ -432,7 +490,7 @@ var formato14C= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			          <%--  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; --%>
+			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
 			       } 
 			}); 
 			formato14C.tablaObservacion.jqGrid('navButtonAdd',formato14C.paginadoObservacion,{
@@ -444,37 +502,41 @@ var formato14C= {
 			});
 		},		
 	   //function para la carga inicial del formulario
-		cargaInicial : function(){
-			 formato14C.inicializarFormulario();			
-			//SE CARGA VARIABLES EN SESION PARA MOSTRAR LOS PANELES DE NUEVO O EDICION MANEJADOS
-			 /*var codEmpSes = formato14C.codEmpresaSes.val();
+		cargaInicial : function(){				
+			//SE CARGA VARIABLES EN SESION PARA MOSTRAR LOS PANELES DE NUEVO O EDICION MANEJADOS CARAGA EXEL Y TEXT
+			 var codEmpSes = formato14C.codEmpresaSes.val();
 			 var anioPresSes = formato14C.anioPresSes.val();
 			 var mesPresSes = formato14C.mesPresSes.val();
 			 var anioIniVigSes = formato14C.anioIniVigSes.val();
 			 var anioFinVigSes = formato14C.anioFinVigSes.val();
-			 var etapaSes = formato14C.etapaSes.val();*/
-			 //
-			 //var flag = formato14C.flag.val();
-			/* if( flag=='N' ){//solo ocurre cuando hay un error en la carga de formularios, sino se muestra el proceso normal
-				 formato14C.inicializarFormulario();
-				 formato14C.mostrarUltimoFormato();
+			 var etapaSes = formato14C.etapaSes.val();
+			
+			 var flag = formato14C.flag.val();
+			 if( flag=='N' ){//solo ocurre cuando hay un error en la carga de formularios, sino se muestra el proceso normal
+				 formato14C.inicializarFormulario();				 
+				 //formato14C.etapaEdit.val("");	
+				// alert("ERROR");
+				 formato14C.divNuevo.show();
+			     formato14C.divBuscar.hide();	
+				 formato14C.flagCarga.val('0');
 				 formato14C.f_empresa.val(codEmpSes);
 				 if( formato14C.f_periodoEnvio.val()=='S' ){
-					 $("#anioInicioVigencia").val(anioIniVigSes);
-					 $("#anioFinVigencia").val(anioFinVigSes);
+					 $("#anioInicioVig").val(anioIniVigSes);
+					 $("#anioFinVig").val(anioFinVigSes);
 				}else{
-					$("#anioInicioVigencia").val(anioPresSes);
-					 $("#anioFinVigencia").val(anioPresSes);
+					$("#anioInicioVig").val(anioPresSes);
+					 $("#anioFinVig").val(anioPresSes);
 				}
 				formato14C.botonValidacion.css('display','none');
 				formato14C.<portlet:namespace/>loadPeriodo(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
-			}else{
+			}else{	
+				// alert("OK");
 				//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
 				 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioIniVigSes != '' && anioFinVigSes != '' && etapaSes != ''){
-				 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes);
+					 formato14C.editarFormato14C(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes);
 				 }
-			 }	*/		 
-			/* var mensajeInfo = formato14C.mensajeInfo.val();
+			 }	 
+			 var mensajeInfo = formato14C.mensajeInfo.val();
 			 var mensajeError = formato14C.mensajeError.val();
 			 //SE MUESTRAN LOS MENSAJES DE ERROR PARA LA CARGA DE LOS ARCHIVOS
 			 if(mensajeError!=''){
@@ -486,14 +548,14 @@ var formato14C= {
 					formato14C.dialogMessageContent.html(mensajeInfo);
 					formato14C.dialogMessage.dialog("open");			
 				 }
-			 }*/
+			 }
 			 //limpiar variables
-			/* formato14C.codEmpresaSes.val('');
+			 formato14C.codEmpresaSes.val('');
 			 formato14C.anioPresSes.val('');
 			 formato14C.mesPresSes.val('');
 			 formato14C.anioIniVigSes.val('');
 			 formato14C.anioFinVigSes.val('');
-			 formato14C.etapaSes.val('');*/
+			 formato14C.etapaSes.val('');
 		},
 		//funcion para buscar
 		buscarF14C : function () {
@@ -557,12 +619,12 @@ var formato14C= {
 			formato14C.inicializarFormulario();			
 			formato14C.divNuevo.show();
 			formato14C.divBuscar.hide();		
-			//$('#flagCarga').val('0');
-			//
-			//if( $('#flagPeriodoEjecucion').val()=='S' ){
-			//	 $("#i_anioejecuc").val($("#anioDesdeSes").val());
-			//	 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
-			//}
+			formato14C.flagCarga.val('0');		
+			if( formato14C.f_flagPeriodo.val()=='S' ){
+				//poner valores guardadose en sesion
+				$("#anioInicioVig").val(formato14C.i_anioDesde.val());
+				$("#anioFinVig").val(formato14C.i_anioDesde.val());
+			}
 			$('#<portlet:namespace/>guardarFormatoF14C').css('display','block');
 			$('#<portlet:namespace/>actualizarFormatoF14C').css('display','none');
 			formato14C.<portlet:namespace/>loadPeriodo('');
@@ -579,8 +641,8 @@ var formato14C= {
 					   <portlet:namespace />codEmpresa: codEmpresa,
 					   <portlet:namespace />anioPres: anoPresentacion,
 					   <portlet:namespace />mesPres: mesPresentacion,
-					   <portlet:namespace />anioInicioVig: anoIniVigencia,
-					   <portlet:namespace />anioFinVig: anoFinVigencia,
+					   <portlet:namespace />anoIniVigencia: anoIniVigencia,
+					   <portlet:namespace />anoFinVigencia: anoFinVigencia,
 					   <portlet:namespace />etapa: etapa
 						},
 					success: function(data) {
@@ -603,19 +665,19 @@ var formato14C= {
 		},
 		//Function para editar los datos del formulario
 		editarFormato14C : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
-			$.blockUI({ message: formato14C.mensajeObteniendoDatos });
+			$.blockUI({ message: formato14C.mensajeObteniendoDatos });			 
 			jQuery.ajax({
 					url: formato14C.urlEditarView+'&'+formato14C.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
-					data: {					  
+					data: {							
 					   <portlet:namespace />codEmpresa: codEmpresa,
 					   <portlet:namespace />anioPres: anoPresentacion,
 					   <portlet:namespace />mesPres: mesPresentacion,
-					   <portlet:namespace />anioInicioVig: anoIniVigencia,
-					   <portlet:namespace />anioFinVig: anoFinVigencia,
-					   <portlet:namespace />etapa: etapa
-						},
+					   <portlet:namespace />anoIniVigencia: anoIniVigencia,
+					   <portlet:namespace />anoFinVigencia: anoFinVigencia,
+					   <portlet:namespace />etapa: etapa					 
+					},
 					success: function(data) {				
 						if (data != null){															
 							formato14C.divNuevo.show();
@@ -651,13 +713,13 @@ var formato14C= {
 			dwr.util.removeAllOptions("periodoEnvio");
 			var dataPeriodo = [{codigoItem:bean.periodoEnvio, descripcionItem:bean.desperiodoEnvio}];			
 			dwr.util.addOptions("periodoEnvio", dataPeriodo,"codigoItem","descripcionItem");
-			//formato14C.f_flagPeriodo.val(row.flagPeriodoEjecucion);
-			/*if( formato14C.f_flagPeriodo.val()=='S' ){
-				$('#anioInicioVigencia').val(row.anoIniVigencia);
-				$('#anioFinVigencia').val(row.anoFinVigencia);
-				$('#anioInicioVigencia').attr("disabled",true);
-				$('#anioFinVigencia').attr("disabled",true);
-			}*/
+			formato14C.f_flagPeriodo.val(bean.flagPeriodoEjecucion);
+			if( formato14C.f_flagPeriodo.val()=='S' ){
+				$('#anioInicioVig').val(bean.anioInicioVig);
+				$('#anioFinVig').val(bean.anioFinVig);
+				$('#anioInicioVig').attr("disabled",true);
+				$('#anioFinVig').attr("disabled",true);
+			}
 			//formato14C.etapaEdit.val(row.etapa);
 			
 			/**RURAL***/	
@@ -729,17 +791,21 @@ var formato14C= {
 			formato14C.soloNumerosDecimales();
 			formato14C.formularioCompletarDecimales();
 			
-			//formato14C.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
+			formato14C.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 			
 			//formato14C.mostrarPeriodoEjecucion();
 		},
 		ocultarElementosEditar : function(){	
-			$('#codEmpresa').prop("disabled",true);
-			$('#periodoEnvio').prop("disabled",true);
+			$('#codEmpresa').attr("disabled",true);
+			$('#periodoEnvio').attr("disabled",true);
+			$('#anioInicioVig').attr("disabled",true);
+			$('#anioFinVig').attr("disabled",true);
 		},
         verElementosEditar : function(){	
         	$('#codEmpresa').attr("disabled",false);
         	$('#periodoEnvio').attr("disabled",false);
+        	$('#anioInicioVig').attr("disabled",false);
+			$('#anioFinVig').attr("disabled",false);
 		},		
 		//function para el evento onchange en empresa para cargar el periodo
 		<portlet:namespace/>loadPeriodo : function(valPeriodo){		
@@ -753,7 +819,7 @@ var formato14C= {
 						if( valPeriodo.length!='' ){
 							dwr.util.setValue("periodoEnvio", valPeriodo);
 						}
-						//formato14C.<portlet:namespace/>loadCargaFlagPeriodo();
+						formato14C.<portlet:namespace/>loadCargaFlagPeriodo();
 					},error : function(){
 						alert("Error de conexión.");
 						formato14C.initBlockUI();
@@ -783,8 +849,8 @@ var formato14C= {
 				   <portlet:namespace />codEmpresa: cod_Empresa,
 				   <portlet:namespace />anioPres: ano_Presentacion,
 				   <portlet:namespace />mesPres: mes_Presentacion,
-				   <portlet:namespace />anioInicioVig: ano_Inicio_Vigencia,
-				   <portlet:namespace />anioFinVig: ano_Fin_Vigencia,
+				   <portlet:namespace />anoIniVigencia: ano_Inicio_Vigencia,
+				   <portlet:namespace />anoFinVigencia: ano_Fin_Vigencia,
 				   <portlet:namespace />etapa: cod_Etapa
 					},
 				success: function(data) {
@@ -821,16 +887,36 @@ var formato14C= {
 					}
 			});
 		},
+		mostrarPeriodoEjecucion : function(){
+			if( formato14C.f_flagPeriodo.val()=='S' ){
+				formato14C.divPeriodoEjecucion.show();  
+			}else{
+				formato14C.divPeriodoEjecucion.hide();  
+			}
+		},
+		recargarPeriodoEjecucion : function(){
+			var anoInicio;
+			var anoFin;
+			if( formato14C.f_periodoEnvio.val() != null ){
+				anoInicio = formato14C.f_periodoEnvio.val().substring(0,4);
+				anoFin = formato14C.f_periodoEnvio.val().substring(0,4);
+				if( formato14C.f_flagPeriodo.val()=='S' ){
+					$('#anioInicioVig').val(anoInicio);
+					$('#anioFinVig').val(anoFin);
+				}
+			}
+		},
+		
 		//function para inicializar el formulario
 		inicializarFormulario : function(){
 			formato14C.f_empresa.val('');
 			formato14C.f_nombreSede.val('');
-			/*if( formato14C.f_flagPeriodo.val()=='S' ){
-				$('#anioInicioVigencia').val('');
-				$('#anioFinVigencia').val('');
-				$('#anioInicioVigencia').attr("disabled",false);
-				$('#anioFinVigencia').attr("disabled",false);
-			}*/
+			if( formato14C.f_flagPeriodo.val()=='S' ){
+				$('#anioInicioVig').val('');
+				$('#anioFinVig').val('');
+				$('#anioInicioVig').attr("disabled",false);
+				$('#anioFinVig').attr("disabled",false);
+			}
 			/**cabecera*/
 			formato14C.f_numRural.val('0');
 			formato14C.f_numUrbProv.val('0');
@@ -1905,9 +1991,9 @@ var formato14C= {
 					dataType: 'json',
 					data: {
 						//<portlet:namespace />tipo: formato14C.procesoEstado.val(),						
-						//<portlet:namespace />flagPeriodo: formato14C.f_flagPeriodo.val(),
-						//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
-						//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),						
+						<portlet:namespace />flagPeriodoEjecucion: formato14C.f_flagPeriodo.val(),
+						<portlet:namespace />anoIniVigencia: $('#anioInicioVig').val(),
+						<portlet:namespace />anoFinVigencia: $('#anioFinVig').val()						
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -1945,10 +2031,10 @@ var formato14C= {
 					dataType: 'json',
 					data: {
 						<portlet:namespace />codEmpresa: formato14C.f_empresa.val(),
-						<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val()						
-						//<portlet:namespace />flagPeriodo: formato14C.f_flagPeriodo.val()
-						//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
-						//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),						
+						<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),
+						<portlet:namespace />flagPeriodoEjecucion: formato14C.f_flagPeriodo.val(),
+						<portlet:namespace />anoIniVigencia: $('#anioInicioVig').val(),
+						<portlet:namespace />anoFinVigencia: $('#anioFinVig').val()											
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -1983,30 +2069,30 @@ var formato14C= {
 				formato14C.f_periodoEnvio.focus();
 				return false; 
 			}
-			/*else if( formato14C.f_flagPeriodo.val()=='S' ){
-				if($('#anioInicioVigencia').val().length == '' ) {		  
+			else if( formato14C.f_flagPeriodo.val()=='S' ){
+				if($('#anioInicioVig').val().length == '' ) {		  
 					alert('Debe ingresar el año de inicio de vigencia');
-					$('#anioInicioVigencia').focus();
+					$('#anioInicioVig').focus();
 					return false; 
 				}else{
-					var numstr = trim($('#anioInicioVigencia').val());
+					var numstr = trim($('#anioInicioVig').val());
 					if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 						alert('Ingrese un año de inicio de inicio de vigencia válido');
 						return false;
 				 	}
 			 	}
-				if($('#anioFinVigencia').val().length == '' ) {		  
+				if($('#anioFinVig').val().length == '' ) {		  
 					alert('Debe ingresar el año de fin de vigencia');
-					$('#anioFinVigencia').focus();
+					$('#anioFinVig').focus();
 					return false; 
 				}else{
-					var numstr = trim($('#anioFinVigencia').val());
+					var numstr = trim($('#anioFinVig').val());
 					if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 						alert('Ingrese un año de fin de vigencia válido');
 						return false;
 					}
 			 	}
-			} */
+			} 
 			else if(formato14C.f_nombreSede.val().length == '' ) {		  
 				alert('Debe ingresar nombre de la sede');
 				formato14C.f_nombreSede.focus();
@@ -2252,6 +2338,8 @@ var formato14C= {
 			//cabecera
 			$('#codEmpresa').attr("disabled",true);
 			$('#periodoEnvio').attr("disabled",true);
+			$('#anioInicioVig').attr("disabled",true);
+			$('#anioFinVig').attr("disabled",true);
 			formato14C.f_nombreSede.attr("disabled",true);
 			formato14C.f_numRural.attr("disabled",true);
 			formato14C.f_numUrbProv.attr("disabled",true);
@@ -2338,10 +2426,10 @@ var formato14C= {
 			//cabecera
 			$('#codEmpresa').removeAttr("disabled");
 			$('#periodoEnvio').removeAttr("disabled");			
-			/*if( formato14C.f_flagPeriodo.val()=='S' ){
-				$('#anioInicioVigencia').removeAttr("disabled");
-				$('#anioFinVigencia').removeAttr("disabled");
-			}*/
+			if( formato14C.f_flagPeriodo.val()=='S' ){
+				$('#anioInicioVig').removeAttr("disabled");
+				$('#anioFinVig').removeAttr("disabled");
+			}
 			formato14C.f_nombreSede.removeAttr("disabled");
 			formato14C.f_numRural.removeAttr("disabled");
 			formato14C.f_numUrbProv.removeAttr("disabled");
@@ -2431,9 +2519,9 @@ var formato14C= {
 				dataType : 'json',
 				data : {
 					<portlet:namespace />codEmpresa: formato14C.f_empresa.val(),
-					<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val()
-					/* <portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
-					<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val() */
+					<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),
+					<portlet:namespace />anoIniVigencia: $('#anioInicioVig').val(),
+					<portlet:namespace />anoFinVigencia: $('#anioFinVig').val() 
 				},
 				success : function(data) {
 					if( data!=null ){
@@ -2442,6 +2530,9 @@ var formato14C= {
 						formato14C.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
 						formato14C.tablaObservacion[0].refreshIndex();
 						formato14C.initBlockUI();
+					}else{
+						alert("Error al realizar la validacion");
+						formato14C.initBlockUI();	
 					}
 				},error : function(){
 					alert("Error de conexión.");
@@ -2465,7 +2556,13 @@ var formato14C= {
 					<portlet:namespace />tipoArchivo: '0'//PDF
 				},
 				success : function(gridData) {
-					formato14C.verReporteF14C();
+					if(gridData!=null){
+						formato14C.verReporteF14C();	
+					}else{
+						alert("Error al mostrar el reporte");
+						formato14C.initBlockUI();
+					}
+					
 				},error : function(){
 					alert("Error de conexión.");
 					formato14C.initBlockUI();
@@ -2491,17 +2588,22 @@ var formato14C= {
 				data : {
 					 <portlet:namespace />codEmpresa: formato14C.f_empresa.val(),
 					<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),
-					//<portlet:namespace />anoEjecucion: $('#anioInicioVigencia').val(),
-					//<portlet:namespace />mesEjecucion: $('#anioFinVigencia').val(), 
+					<portlet:namespace />anoIniVigencia: $('#anioInicioVig').val(),
+					<portlet:namespace />anoFinVigencia: $('#anioFinVig').val(), 
 					<portlet:namespace />nombreReporte: 'formato14C',
 					<portlet:namespace />nombreArchivo: 'formato14C',
 					<portlet:namespace />tipoArchivo: '0'//PDF
 				},
 				success : function(gridData) {
-					var addhtml='Se realizó el envío satisfactoriamente';					
-					formato14C.dialogMessageContent.html(addhtml);
-					formato14C.dialogMessage.dialog("open");
-					formato14C.initBlockUI();
+					if(gridData!=null){
+						var addhtml='Se realizó el envío satisfactoriamente';					
+						formato14C.dialogMessageContent.html(addhtml);
+						formato14C.dialogMessage.dialog("open");
+						formato14C.initBlockUI();	
+					}else{
+						alert("Error al realizar el envio definitivo");
+						formato14C.initBlockUI();
+					}					
 				},error : function(){
 					alert("Error de conexión.");
 					formato14C.initBlockUI();
@@ -2517,14 +2619,19 @@ var formato14C= {
 				data : {
 					<portlet:namespace />codEmpresa: formato14C.f_empresa.val(),
 					<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),
-					//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
-					//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
+					<portlet:namespace />anoIniVigencia: $('#anioInicioVig').val(),
+					<portlet:namespace />anoFinVigencia: $('#anioFinVig').val(),
 					<portlet:namespace />nombreReporte: 'formato14C',
 					<portlet:namespace />nombreArchivo: 'formato14C',
 					<portlet:namespace />tipoArchivo: '0'//PDF
 				},
 				success : function(gridData) {
-					formato14C.verReporteF14C();
+					if(gridData!=null){
+						formato14C.verReporteF14C();	
+					}else{
+						alert("Error al mostrar el reporte");
+						formato14C.initBlockUI();	
+					}					
 				},error : function(){
 					alert("Error de conexión.");
 					formato14C.initBlockUI();
@@ -2540,21 +2647,91 @@ var formato14C= {
 				data : {
 					<portlet:namespace />codEmpresa: formato14C.f_empresa.val(),
 					<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),
-					//<portlet:namespace />anoEjecucion: $('#anioInicioVigencia').val(),
-					//<portlet:namespace />mesEjecucion: $('#anioFinVigencia').val(),
+					<portlet:namespace />anoIniVigencia: $('#anioInicioVig').val(),
+					<portlet:namespace />anoFinVigencia: $('#anioFinVig').val(), 
 					<portlet:namespace />nombreReporte: 'formato14C',
 					<portlet:namespace />nombreArchivo: 'formato14C',
 					<portlet:namespace />tipoArchivo: '1'//XLS
 				},
 				success : function(gridData) {
-					//alert('entro');
-					formato14C.verReporteF14C();
+					if(gridData!=null){
+						formato14C.verReporteF14C();	
+					}else{
+						alert("Error al mostrar el reporte");
+						formato14C.initBlockUI();		
+					}					
 				},error : function(){
 					alert("Error de conexión.");
 					formato14C.initBlockUI();
 				}
 			});
 		},
+		<portlet:namespace/>mostrarFormularioCargaExcel : function(){
+			if (formato14C.validarArchivoCarga()){
+				if( formato14C.flagCarga.val()=='0' ){//proviene de archivos nuevos
+					formato14C.flagCarga.val('2');//para cargar archivos excel
+				}else if( formato14C.flagCarga.val()=='1' ){//proviene de archivos modificados
+					formato14C.flagCarga.val('3');//para cargar archivos excel
+				}
+				formato14C.divOverlay.show();
+			    formato14C.dialogCargaExcel.show();			   
+			    formato14C.dialogCargaExcel.css({ 
+			        'left': ($(window).width() / 2 - formato14C.dialogCargaExcel.width() / 2) + 'px', 
+			        'top': ($(window).height()  - formato14C.dialogCargaExcel.height() ) + 'px'
+			    });
+			}
+		},		
+		validarArchivoCarga : function() {		
+			if(formato14C.f_empresa.val().length == '' ) { 	
+				alert('Seleccione una empresa para proceder con la carga de archivo'); 
+				formato14C.f_empresa.focus();
+				return false; 
+			}
+			if(formato14C.f_periodoEnvio.val().length == '' ) {		  
+				alert('Debe ingresar el periodo de presentación');
+				formato14C.f_periodoEnvio.focus();
+				return false; 
+			}
+			return true; 
+		},
+		regresarFormularioCargaExcel : function(){
+			formato14C.flagCarga.val('');
+			formato14C.dialogCargaExcel.hide();
+			formato14C.divOverlay.hide();   
+		},
+		
+		<portlet:namespace/>cargarFormatoExcel : function(){
+			var frm = document.getElementById('formato14CBean');
+			frm.submit();
+		},
+		
+		<portlet:namespace/>mostrarFormularioCargaTexto : function(){
+			if (formato14C.validarArchivoCarga()){
+				if( formato14C.flagCarga.val()=='0' ){//proviene de un archivo nuevo
+					formato14C.flagCarga.val('4');//para cargar archivos texto
+				}else if( formato14C.flagCarga.val()=='1' ){//proviene de un archivo modificado
+					formato14C.flagCarga.val('5');//para archivos texto
+				}
+				formato14C.divOverlay.show();
+				formato14C.dialogCargaTexto.show();
+				formato14C.dialogCargaTexto.css({ 
+			        'left': ($(window).width() / 2 - formato14C.dialogCargaTexto.width() / 2) + 'px', 
+			        'top': ($(window).height() - formato14C.dialogCargaTexto.height() ) + 'px'
+			    });
+			}
+		},
+		regresarFormularioCargaTexto : function(){
+			formato14C.flagCarga.val('');
+			formato14C.dialogCargaTexto.hide();
+			formato14C.divOverlay.hide();   
+		},
+		
+		<portlet:namespace/>cargarFormatoTexto : function(){
+			var frm = document.getElementById('formato14CBean');
+			frm.submit();
+		},
+		
+		
 		
 		//funcion cargar la imagen al momento de buscar
 		blockUI : function(){
