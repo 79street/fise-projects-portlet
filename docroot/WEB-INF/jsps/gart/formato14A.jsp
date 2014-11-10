@@ -2,7 +2,9 @@
 
 <portlet:actionURL var="accionURL" name="actionNormal">
 	<portlet:param name="action" value="cargar" />
+
 </portlet:actionURL>
+
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/fise-projects-portlet/js/fise.js"></script>
@@ -16,8 +18,7 @@ $(document).ready(function () {
 <style>
 </style>
 
-<form:form method="POST" modelAttribute="formato14ACBean"  
-	style="padding: 17px; padding-top: 0px;" action="${accionURL}" enctype="multipart/form-data" >
+<form:form method="POST" modelAttribute="formato14ACBean"  style="padding: 17px; padding-top: 0px;" action="${accionURL}" enctype="multipart/form-data" >
 
 	<input type="hidden" id="<portlet:namespace/>codEmpresaSes" value="${model.codEmpresa}" />
 	<input type="hidden" id="<portlet:namespace/>anioPresSes" value="${model.anoPres}" />	

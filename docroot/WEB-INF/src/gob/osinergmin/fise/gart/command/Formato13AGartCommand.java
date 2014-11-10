@@ -1,5 +1,6 @@
 package gob.osinergmin.fise.gart.command;
 
+import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.AdmUbigeo;
 
@@ -25,6 +26,11 @@ public class Formato13AGartCommand {
 	private String mesPresentacion;
 	private String anioPresentacion;
 	
+
+	private String mensajeInformacion;
+	private String mensajeError;
+	private List<MensajeErrorBean> listaMensajeError;
+
 	private String mesAlta;
 	private String anioAlta;
 	private String codDepartamento;
@@ -42,6 +48,7 @@ public class Formato13AGartCommand {
 	private String total;
 	private String idZonaBenef;
 	private String nombreSede;
+
 	
 	
 	public List<AdmEmpresa> getListaEmpresas() {
@@ -115,6 +122,33 @@ public class Formato13AGartCommand {
 	public void setPeridoDeclaracion(String peridoDeclaracion) {
 		this.peridoDeclaracion = peridoDeclaracion;
 	}
+
+
+	public String getMensajeInformacion() {
+		return mensajeInformacion;
+	}
+
+	public void setMensajeInformacion(String mensajeInformacion) {
+		this.mensajeInformacion = mensajeInformacion;
+	}
+
+	public String getMensajeError() {
+		return mensajeError;
+	}
+
+	public void setMensajeError(String mensajeError) {
+		this.mensajeError = mensajeError;
+	}
+
+	public List<MensajeErrorBean> getListaMensajeError() {
+		return listaMensajeError;
+	}
+
+	public void setListaMensajeError(List<MensajeErrorBean> listaMensajeError) {
+		this.listaMensajeError = listaMensajeError;
+	}
+	
+
 
 	public String getDescEmpresa() {
 		return descEmpresa;
@@ -291,4 +325,5 @@ public class Formato13AGartCommand {
 	public void setListaDepartamentos(List<AdmUbigeo> listaDepartamentos) {
 		this.listaDepartamentos = listaDepartamentos;
 	}
+
 }

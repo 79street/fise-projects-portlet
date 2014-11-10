@@ -183,6 +183,7 @@ public class FiseUtil {
 		FileEntry fileEntry=null;
 		//--UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		System.out.println("subirDocumento::"+request+":::uploadPortletRequest::"+uploadPortletRequest);
 		try {
 			String[] mimeTypesXls = new String[]{"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
 			String[] mimeTypesTxt = new String[]{"text/plain"};
@@ -256,6 +257,8 @@ public class FiseUtil {
 		 return fileEntry;
 		
 	}
+	
+	
 	
 	public FileEntry subirDocumentoBytes(PortletRequest request, byte[] bytes, String mimeType, String sourceFileName) {
 		FileEntry fileEntry=null;

@@ -11,5 +11,6 @@
 		<portlet id="gartFormato14A"/>
 		<portlet id="gartFormato14B"/>
 		<portlet id="gartFormato14C"/>
+		<portlet id="gartPeriodoEnvio"/>
 	</category>
 </display>
