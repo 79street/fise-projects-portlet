@@ -1,5 +1,9 @@
 package gob.osinergmin.fise.gart.controller;
 
+
+
+import gob.osinergmin.fise.bean.Formato14ACBean;
+import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
@@ -7,18 +11,24 @@ import gob.osinergmin.fise.dao.FiseZonaBenefDao;
 import gob.osinergmin.fise.domain.AdmUbigeo;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13ACPK;
+import gob.osinergmin.fise.domain.FiseFormato13AD;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
 import gob.osinergmin.fise.gart.json.Formato13AGartJSON;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato13AGartService;
+import gob.osinergmin.fise.gart.xls.FormatoExcelImport;
 import gob.osinergmin.fise.util.FormatoUtil;
 import gob.osinergmin.fise.xls.XlsTableConfig;
 import gob.osinergmin.fise.xls.XlsWorkbookConfig;
 import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +42,9 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,6 +60,11 @@ import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 @SessionAttributes({"esAdministrador"})
@@ -68,6 +85,8 @@ public class Formato13AGartController {
 	@Autowired
 	@Qualifier("fisePeriodoEnvioGartServiceImpl")
 	FisePeriodoEnvioGartService periodoService;
+	
+	Map<String, String> mapaErrores;
 	
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
@@ -156,9 +175,11 @@ public class Formato13AGartController {
 	
 	@RequestMapping(params="action=nuevo")
 	public String nuevoFormato(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
-		
+		 System.out.println("aqui en nuevoFormato");
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		model.addAttribute("crud", "CREATE");
+		
+		mapaErrores = fiseUtil.getMapaErrores();
 		return "formato13ACRUD";
 	}
 	
@@ -444,5 +465,143 @@ public class Formato13AGartController {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+
+
+	
+	@RequestMapping(params="action=uploadFile")
+	public void cargarDocumento(ActionRequest request,ActionResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+	  System.out.println("aqui en upload controller");
+	  Formato13AGartCommand formatoMensaje = new Formato13AGartCommand();
+		
+	  ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
+	//	String codEmpresaNew = uploadPortletRequest.getParameter("codigoEmpresa");
+	  
+		FileEntry fileEntry=null;
+		System.out.println("request::"+request+"/"+uploadPortletRequest);
+		fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+		formatoMensaje = readExcelFile(fileEntry, themeDisplay);
+		
+		
+	
+		
+	
+		
+	}
+
+	public Formato13AGartCommand readExcelFile(FileEntry archivo, ThemeDisplay themeDisplay) {
+	
+		Formato13AGartCommand formatoMensaje = new Formato13AGartCommand();
+		InputStream is=null;
+		String sMsg = "";
+		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
+		int cont = 0;
+		try {
+		if (archivo != null) {
+			HSSFWorkbook libro = null;
+			try {
+				is=archivo.getContentStream();
+				libro = new HSSFWorkbook(is);//Se lee libro xls
+			} catch (Exception e1) {
+				logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+				cont++;
+				sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
+				throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+			}
+			
+			
+			if (libro != null) {
+				FiseFormato13AC cabecera=null;
+				try {
+					 cabecera=FormatoExcelImport.readSheetCabecera(libro);
+					 if(cabecera!=null ){
+						cabecera.getId().setEtapa("Solicitud");
+						cabecera.setNombreArchivoExcel(archivo.getTitle());
+						cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+						cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+						cabecera.setFechaCreacion(new Date());
+						cabecera=formatoService.savecabecera(cabecera);
+						
+					 }
+					 
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					//logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					//cont++;
+					//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
+					//throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					cabecera=null;
+					System.out.println("entro en !!!"+e1);
+				}
+				System.out.println("cabecera es :::=>"+cabecera);
+				if(cabecera!=null){
+					List<FiseFormato13AD> lstDetalle=null;
+					try {
+						lstDetalle=FormatoExcelImport.getListDetalleSheet(libro,cabecera);
+						System.out.println("******* INICIO DETALLE****");
+						
+						if(lstDetalle !=null && !lstDetalle.isEmpty()){
+							for(FiseFormato13AD detalle:lstDetalle){
+								detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+								detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+								detalle.setFechaCreacion(new Date());
+								System.out.println("******* INICIO FILA NRO ****");
+								System.out.println("SECTOR ==>"+detalle.getId().getCodSectorTipico());
+								System.out.println("ANIO/MES ==>"+detalle.getAnoAlta()+""+detalle.getMesAlta());
+								System.out.println("UBIGEO ==>"+detalle.getId().getCodUbigeo());
+								System.out.println("BENEFICIARIO ==>"+detalle.getId().getIdZonaBenef());
+								System.out.println("SEDE ==>"+detalle.getNombreSedeAtiende());
+								System.out.println("VALOR ==>"+detalle.getNumeroBenefiPoteSectTipico());
+								System.out.println("******* FIN FILA****");
+							    formatoService.savedetalle(detalle);	
+							  
+							}
+							
+						}
+						
+						System.out.println("******* FIN DETALLE****");
+						
+					} catch (Exception e1) {
+						logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+						cont++;
+						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
+						throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					}
+				}
+				
+				
+			}
+			
+		}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+		return formatoMensaje;
+	}
+	
+	@ResourceMapping("getData")
+	public void getData(ModelMap model, ResourceRequest request,ResourceResponse response, @ModelAttribute("formato13AGartCommand")Formato13AGartCommand command) {
+	  
+		
+		try {
+			JSONObject jsonObj = new JSONObject();
+			String tipo = request.getParameter("tipo"); 
+			System.out.println("getData tipo::>"+tipo);
+			jsonObj.put("resultado", "OK");
+			response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonObj.toString());
+		    pw.flush();
+		    pw.close();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 }

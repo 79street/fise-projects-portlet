@@ -19,7 +19,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="/WEB-INF/jsps/gart/ext/extFormato12A.jsp"%>
 <portlet:defineObjects />
-
 <portlet:actionURL var="accionURL" name="actionNormal">  
 	<portlet:param name="action" value="cargar" />
 </portlet:actionURL>
@@ -113,9 +112,8 @@
 												</td>
 												<td>
 													<select id="s_mes_d" name="s_mes_d"  class="select" style="width:104px;" >
-														<option value="">-Seleccione-</option>
-														<c:forEach items="${listaMes}" var="mes">																
-															<option value="${mes.key}">${mes.value}</option>
+														<c:forEach items="${listaEmpresa}" var="emp">																
+															<option value="${emp.codEmpresa}">${emp.dscEmpresa}</option>
 														</c:forEach>
 													</select>
 												</td>

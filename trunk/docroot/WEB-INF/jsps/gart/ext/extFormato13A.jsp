@@ -22,9 +22,26 @@ var formato13A= {
 	botonGuardarDetalle:null,
 	codEmpresa : null,
 	peridoDeclaracion : null,
+
+	mensajeObteniendoDatos:null,
+	urlACrud:null,
+	command:null,
+	
+	btnExcel:null,
+	dialogCargaExcel:null,
+	btnCargarFormatoExcel:null,
+	
+	btnTxt:null,
+	dialogCargaTexto:null,
+	btnCargarFormatoTexto:null,
+	
+	divOverlay:null,
+	
+
 	codDepa:null,
 	codProv:null,
 	codDist:null,
+
 	init : function(urlNuevo){
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
 		this.paginadoResultados='#<portlet:namespace/>pager_formato';
@@ -32,6 +49,10 @@ var formato13A= {
 		this.botonBuscar=$("#<portlet:namespace/>buscarFormato");
 		this.formBusqueda=$('#formato13AGartCommand');
 		this.botonCrearFormato=$('#<portlet:namespace/>crearFormato');
+		
+		this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
+		this.urlACrud='<portlet:resourceURL id="getData" />';
+		this.command=$('#formato13AGartCommand');
 		
 		formato13A.botonCrearFormato.click(function() {
 			formato13A.blockUI();
@@ -45,6 +66,8 @@ var formato13A= {
 		formato13A.buildGridsBusqueda();
 		formato13A.botonBuscar.trigger('click');
 		
+		
+		
 	},
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
@@ -56,6 +79,19 @@ var formato13A= {
 		this.paginadoDeclaracion='#<portlet:namespace/>pager_formato_declaracion';
 		var botonAnadirFormato=$('#<portlet:namespace/>anadirFormato');
 		var botonRegresarBusqueda=$('#<portlet:namespace/>regresarBusqueda');
+		
+		this.btnExcel=$('#<portlet:namespace/>showDialogUploadExcel');
+		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
+		this.btnCargarFormatoExcel=$('#<portlet:namespace/>cargarFormatoExcel');
+		this.divOverlay=$("#<portlet:namespace/>divOverlay");
+		
+		this.btnTxt=$('#<portlet:namespace/>showDialogUploadTxt');
+		this.dialogCargaTexto=$("#<portlet:namespace/>dialog-form-cargaTxt");
+		this.btnCargarFormatoTexto=$('#<portlet:namespace/>cargarFormatoTxt');
+		
+		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
+		formato13A.btnCargarFormatoExcel.click(function() {formato13A.<portlet:namespace/>cargarFormatoExcel();});
+		formato13A.btnTxt.click(function() {formato13A.<portlet:namespace/>showUploadTxt();});
 		
 		formato13A.buildGridsDeclaracion();
 		
@@ -69,6 +105,7 @@ var formato13A= {
 				formato13A.buscarDetalles();
 			});
 			formato13A.codEmpresa.trigger('change');
+
 			
 			botonAnadirFormato.click(function(){
 				formato13A.blockUI();
@@ -80,7 +117,10 @@ var formato13A= {
 				location.href=urlRegresarBusqueda;
 			});
 			
+
 		}
+		
+		
 	},
 	initCRUDDetalle : function(operacion,urlGuardarDetalle){
 		this.formDetalle=$("#formato13AGartCommand");
@@ -138,7 +178,7 @@ var formato13A= {
 	      		for(var i=0;i < ids.length;i++){
 	      			var cl = ids[i];
 	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl);           
-	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
+	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato13A.verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"');\" /></a> ";
 	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
 	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
@@ -292,7 +332,46 @@ var formato13A= {
 			});
 
 
+
 	},
+	<portlet:namespace/>showUploadExcel : function(){
+		formato13A.divOverlay.show();
+		formato13A.dialogCargaExcel.show();
+		formato13A.dialogCargaExcel.show();
+		formato13A.dialogCargaExcel.css({ 
+	        'left': ($(window).width() / 2 - formato13A.dialogCargaExcel.width() / 2) + 'px', 
+	        'top': ($(window).height()  - formato13A.dialogCargaExcel.height() ) + 'px'
+	    });
+	},
+	
+	closeDialogCargaExcel : function(){
+		formato13A.dialogCargaExcel.hide();
+		formato13A.divOverlay.hide();   
+	},
+	
+	<portlet:namespace/>cargarFormatoExcel : function(){
+		var frm = document.getElementById('formato13AGartCommand');
+		frm.submit();
+	
+
+	},
+	
+	<portlet:namespace/>showUploadTxt : function(){
+		formato13A.divOverlay.show();
+		formato13A.dialogCargaTexto.show();
+		formato13A.dialogCargaTexto.show();
+		formato13A.dialogCargaTexto.css({ 
+	        'left': ($(window).width() / 2 - formato13A.dialogCargaTexto.width() / 2) + 'px', 
+	        'top': ($(window).height()  - formato13A.dialogCargaTexto.height() ) + 'px'
+	    });
+	},
+	
+	closeDialogCargaTxt : function(){
+		formato13A.dialogCargaTexto.hide();
+		formato13A.divOverlay.hide();   
+	},
+
+	
 	listarProvincias : function (codDepartamento) {	
 		jQuery.ajax({			
 					url: formato13A.urlProvincias,
@@ -351,7 +430,40 @@ var formato13A= {
 	limpiarDistritos:function(){
 		dwr.util.removeAllOptions("codDistrito");
 		dwr.util.addOptions("codDistrito", formato13A.emptySelectObject(),"codigoItem","descripcionItem");
-	}
+	},
+	
+	//FORMULARIOS DE VIEW Y EDICION
+	verFormato : function(codEmpresa,anoPresentacion,mesPresentacion,etapa){	
+		$.blockUI({ message: formato13A.mensajeObteniendoDatos });
+		jQuery.ajax({
+				url: formato13A.urlACrud+'&'+formato13A.command.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data: {
+				   <portlet:namespace />tipo: "GET",
+				   <portlet:namespace />codEmpresa: codEmpresa,
+				   <portlet:namespace />anoPresentacion: anoPresentacion,
+				   <portlet:namespace />mesPresentacion: mesPresentacion,
+				   <portlet:namespace />etapa: etapa
+					},
+				success: function(data) {				
+					if (data.resultado == "OK"){
+						formato13A.blockUI();
+					}
+					else{
+						alert("Error al recuperar los datos del registro seleccionado");
+						formato13A.blockUI();
+					}
+				},error : function(){
+					alert("Error de conexión.");
+					formato13A.blockUI();
+				}
+		});	
+	},
+
 	
 };
+
+
+
 </script>
