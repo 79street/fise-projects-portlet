@@ -109,14 +109,7 @@ public class Formato14CGartController {
 	@Qualifier("cfgCampoGartServiceImpl")
 	CfgCampoGartService campoService;
 	
-	
-	
-	/*@Autowired
-	@Qualifier("leerArchivosF14C")
-	LeerArchivosF14C leerArchivosF14C;*/
-	
-	
-	
+		
 	private List<FisePeriodoEnvio> listaPeriodoEnvio;
 	
 	private Map<String, String> mapaEmpresa;	
@@ -988,10 +981,9 @@ public class Formato14CGartController {
 					is=archivo.getContentStream();
 					libro = new HSSFWorkbook(is);//Se lee libro xls
 				} catch (Exception e1) {
-					logger.info("Error al leer el archivo"); 
-					logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					logger.info("Error al leer el archivo"); 					
 					cont++;
-					sMsg = sMsg +sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
+					sMsg = sMsg +sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);//error al leer el archivo exel
 					throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
 				}
 				int nroHojaSelec=0;
@@ -1107,211 +1099,251 @@ public class Formato14CGartController {
 					HSSFCell celdaCostILAsist = filaCostoAsist.getCell(FiseConstants.NRO_CELDA_COSTIL_ASIST_F14C);
 					
 					/********INICIO VALIDACION DE CAMPOS*/	
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaCodEmpresa.getCellType()){
-						bean.setCodEmpresa(celdaCodEmpresa.toString()); 
-						logger.info("Entro en codigo empresa"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCodEmpresa.getCellType()){
+					/********************CABECERA********************/
+					if(HSSFCell.CELL_TYPE_STRING == celdaCodEmpresa.getCellType()){
+						bean.setCodEmpresa(celdaCodEmpresa.toString()); 					
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaCodEmpresa.getCellType()){
 						bean.setCodEmpresa("");
 						cont++;						
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F12_30);//30
 					}else{
 						bean.setCodEmpresa("");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_40);
-					}
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaAnio.getCellType()){
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F12_40);//40
+					}					
+					if(HSSFCell.CELL_TYPE_STRING == celdaAnio.getCellType()){
 						bean.setAnioPres(celdaAnio.toString()); 					
 						bean.setAnoIniVigencia(bean.getAnioPres());
-						bean.setAnoFinVigencia(bean.getAnioPres());
-						logger.info("Entro en anio presentacion"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnio.getCellType()){
+						bean.setAnoFinVigencia(bean.getAnioPres());					
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaAnio.getCellType()){
 						bean.setAnioPres("0000"); 
 						bean.setAnoIniVigencia("0000");
 						bean.setAnoFinVigencia("0000"); 
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_50);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F12_50);//50
 					}else{
 						bean.setAnioPres("0000"); 
 						bean.setAnoIniVigencia("0000");
 						bean.setAnoFinVigencia("0000"); 
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_60);
-					}
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaMes.getCellType()  ){
-						bean.setMesPres(celdaMes.toString());
-						logger.info("Entro en mes presentacion"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaMes.getCellType()  ){
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F12_60);//60
+					}					
+					if(HSSFCell.CELL_TYPE_STRING == celdaMes.getCellType()){
+						bean.setMesPres(celdaMes.toString());						
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaMes.getCellType()){
 						bean.setMesPres("00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F12_70);//70
 					}else{
 						bean.setMesPres("00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_80);
-					}
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaSede.getCellType()){
-						bean.setNombreSede(celdaSede.toString()); 
-						logger.info("Entro en sede"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaSede.getCellType()){
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F12_80);//80
+					}					
+					if(HSSFCell.CELL_TYPE_STRING == celdaSede.getCellType()){
+						bean.setNombreSede(celdaSede.toString()); 						
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaSede.getCellType()){
 						bean.setNombreSede("");
 						cont++;						
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_360);//360
 					}else{
 						bean.setNombreSede("");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_40);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_370);//370
+					}				   
+					if(HSSFCell.CELL_TYPE_STRING == celdaNroBenefR.getCellType()){
+						bean.setNumRural(String.valueOf(celdaNroBenefR));					
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaNroBenefR.getCellType()){
+						bean.setNumRural("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_380);//380
+					}else{
+						bean.setNumRural("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_390);// 390
 					}					
-				    logger.info("Tipo de dato:"+celdaNroBenefR.getCellType()); 
-					if( HSSFCell.CELL_TYPE_STRING == celdaNroBenefR.getCellType()  ){
-						bean.setNumRural(String.valueOf(celdaNroBenefR));
-						logger.info("Entro en num rural"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroBenefR.getCellType()  ){
-						bean.setNumRural("0");
-					}else{
-						bean.setNumRural("0");
-						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaNroBenefP.getCellType()  ){
-						bean.setNumUrbProv(String.valueOf(celdaNroBenefP));
-						logger.info("Entro en num prov"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroBenefP.getCellType()  ){
-						bean.setNumUrbProv("0");
-					}else{
+					if(HSSFCell.CELL_TYPE_STRING == celdaNroBenefP.getCellType()){
+						bean.setNumUrbProv(String.valueOf(celdaNroBenefP));					
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaNroBenefP.getCellType()){
 						bean.setNumUrbProv("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaNroBenefL.getCellType()  ){
-						bean.setNumUrbLima(String.valueOf(celdaNroBenefL));
-						logger.info("Entro en num lima"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroBenefL.getCellType()  ){
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_400);//400
+					}else{
+						bean.setNumUrbProv("0"); 
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_410);// 410
+					} 					
+					if(HSSFCell.CELL_TYPE_STRING == celdaNroBenefL.getCellType()){
+						bean.setNumUrbLima(String.valueOf(celdaNroBenefL));					
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaNroBenefL.getCellType()){
 						bean.setNumUrbLima("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_420);//420
 					}else{
 						bean.setNumUrbLima("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaCostPromR.getCellType()  ){
-						bean.setCostoPromRural(String.valueOf(celdaCostPromR));
-						logger.info("Entro en costo prom rural"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostPromR.getCellType()  ){
-						bean.setCostoPromRural("0.00");
-					}else{
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_430);//430
+					}					
+					if(HSSFCell.CELL_TYPE_STRING == celdaCostPromR.getCellType()){
+						bean.setCostoPromRural(String.valueOf(celdaCostPromR));					
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaCostPromR.getCellType()){
 						bean.setCostoPromRural("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaCostPromP.getCellType()  ){
-						bean.setCostoPromUrbProv(String.valueOf(celdaCostPromP));
-						logger.info("Entro en costo prom provi"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostPromP.getCellType()  ){
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_440);//440
+					}else{
+						bean.setCostoPromRural("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_450);//450
+					}					
+					if(HSSFCell.CELL_TYPE_STRING == celdaCostPromP.getCellType()){
+						bean.setCostoPromUrbProv(String.valueOf(celdaCostPromP));					
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaCostPromP.getCellType()){
 						bean.setCostoPromUrbProv("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_460);//460
 					}else{
 						bean.setCostoPromUrbProv("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
-					if( HSSFCell.CELL_TYPE_STRING == celdaCostPromL.getCellType()  ){
-						bean.setCostoPromUrbLima(String.valueOf(celdaCostPromL));
-						logger.info("Entro en costo prom lima"); 
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostPromL.getCellType()  ){
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_470);//470
+					}					
+					if(HSSFCell.CELL_TYPE_STRING == celdaCostPromL.getCellType()){
+						bean.setCostoPromUrbLima(String.valueOf(celdaCostPromL));					
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaCostPromL.getCellType()){
 						bean.setCostoPromUrbLima("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_480);//480
 					}else{
 						bean.setCostoPromUrbLima("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
-					//RURAL		
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_490);//490
+					}					
+					/*****DETALLE - RURAL****/		
 					/******COORDINADOR*****/
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDRCoord.getCellType()  ){
+					if(HSSFCell.CELL_TYPE_NUMERIC == celdaCantDRCoord.getCellType()){
 						bean.setCanDRCoord(String.valueOf(celdaCantDRCoord.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDRCoord.getCellType()  ){
+					}else if(HSSFCell.CELL_TYPE_BLANK == celdaCantDRCoord.getCellType()){
 						bean.setCanDRCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_500);//500
 					}else{
 						bean.setCanDRCoord("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRCoord.getCellType()  ){
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_510);//510
+					}					
+					if(HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRCoord.getCellType()){
 						bean.setCostDRCoord(String.valueOf(celdaCostDRCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDRCoord.getCellType()){
 						bean.setCostDRCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_520);//520
 					}else{
 						bean.setCostDRCoord("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_530);//530
+					}					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIRCoord.getCellType()  ){
 						bean.setCanIRCoord(String.valueOf(celdaCantIRCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIRCoord.getCellType()  ){
 						bean.setCanIRCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_540);//540
 					}else{
 						bean.setCanIRCoord("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_550);//550
+					}					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIRCoord.getCellType()  ){
 						bean.setCostIRCoord(String.valueOf(celdaCostIRCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIRCoord.getCellType()  ){
 						bean.setCostIRCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_560);//560
 					}else{
 						bean.setCostIRCoord("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_570);//570
 					}					
 					/*****SUPERVISOR*****/				
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDRSupe.getCellType()  ){
 						bean.setCanDRSupe(String.valueOf(celdaCantDRSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDRSupe.getCellType()  ){
 						bean.setCanDRSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_580);
 					}else{
 						bean.setCanDRSupe("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_590);
+					}					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRSupe.getCellType()  ){
 						bean.setCostDRSupe(String.valueOf(celdaCostDRSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDRSupe.getCellType()  ){
 						bean.setCostDRSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_600);
 					}else{
 						bean.setCostDRSupe("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_610);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIRSupe.getCellType()  ){
 						bean.setCanIRSupe(String.valueOf(celdaCantIRSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIRSupe.getCellType()  ){
 						bean.setCanIRSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_620);
 					}else{
 						bean.setCanIRSupe("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_630);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIRSupe.getCellType()  ){
 						bean.setCostIRSupe(String.valueOf(celdaCostIRSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIRSupe.getCellType()  ){
 						bean.setCostIRSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_640);
 					}else{
 						bean.setCostIRSupe("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_650);
 					}					
 					
 					/*******GESTOR*******/
@@ -1319,40 +1351,56 @@ public class Formato14CGartController {
 						bean.setCanDRGest(String.valueOf(celdaCantDRGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDRGest.getCellType()  ){
 						bean.setCanDRGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_660);
 					}else{
 						bean.setCanDRGest("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_670);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRGest.getCellType()  ){
 						bean.setCostDRGest(String.valueOf(celdaCostDRGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDRGest.getCellType()  ){
 						bean.setCostDRGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_680);
 					}else{
 						bean.setCostDRGest("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_690);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIRGest.getCellType()  ){
 						bean.setCanIRGest(String.valueOf(celdaCantIRGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIRGest.getCellType()  ){
 						bean.setCanIRGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_700);
 					}else{
 						bean.setCanIRGest("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_710);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIRGest.getCellType()  ){
 						bean.setCostIRGest(String.valueOf(celdaCostIRGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIRGest.getCellType()  ){
 						bean.setCostIRGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_720);
 					}else{
 						bean.setCostIRGest("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_730);
 					}					
 					
 					/*******ASISTENTE*******/
@@ -1360,40 +1408,56 @@ public class Formato14CGartController {
 						bean.setCanDRAsist(String.valueOf(celdaCantDRAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDRAsist.getCellType()  ){
 						bean.setCanDRAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_740);
 					}else{
 						bean.setCanDRAsist("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_750);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDRAsist.getCellType()  ){
 						bean.setCostDRAsist(String.valueOf(celdaCostDRAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDRAsist.getCellType()  ){
 						bean.setCostDRAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_760);
 					}else{
 						bean.setCostDRAsist("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_770);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIRAsist.getCellType()  ){
 						bean.setCanIRAsist(String.valueOf(celdaCantIRAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIRAsist.getCellType()  ){
 						bean.setCanIRAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_780);
 					}else{
 						bean.setCanIRAsist("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_790);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIRAsist.getCellType()  ){
 						bean.setCostIRAsist(String.valueOf(celdaCostIRAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIRAsist.getCellType()  ){
 						bean.setCostIRAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_800);
 					}else{
 						bean.setCostIRAsist("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_810);
 					}		
 					
 					//PROVINCIA
@@ -1402,160 +1466,224 @@ public class Formato14CGartController {
 						bean.setCanDPCoord(String.valueOf(celdaCantDPCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDPCoord.getCellType()  ){
 						bean.setCanDPCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_820);
 					}else{
 						bean.setCanDPCoord("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_830);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDPCoord.getCellType()  ){
 						bean.setCostDPCoord(String.valueOf(celdaCostDPCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDPCoord.getCellType()  ){
 						bean.setCostDPCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_840);
 					}else{
 						bean.setCostDPCoord("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_850);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIPCoord.getCellType()  ){
 						bean.setCanIPCoord(String.valueOf(celdaCantIPCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIPCoord.getCellType()  ){
 						bean.setCanIPCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_860);
 					}else{
 						bean.setCanIPCoord("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_870);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPCoord.getCellType()  ){
 						bean.setCostIPCoord(String.valueOf(celdaCostIPCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIPCoord.getCellType()  ){
 						bean.setCostIPCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_880);
 					}else{
 						bean.setCostIPCoord("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_890);
 					}					
 					/******SUPERVISOR*****/
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDPSupe.getCellType()  ){
 						bean.setCanDPSupe(String.valueOf(celdaCantDPSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDPSupe.getCellType()  ){
 						bean.setCanDPSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_900);
 					}else{
 						bean.setCanDPSupe("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_910);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDPSupe.getCellType()  ){
 						bean.setCostDPSupe(String.valueOf(celdaCostDPSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDPSupe.getCellType()  ){
 						bean.setCostDPSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_920);
 					}else{
 						bean.setCostDPSupe("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_930);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIPSupe.getCellType()  ){
 						bean.setCanIPSupe(String.valueOf(celdaCantIPSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIPSupe.getCellType()  ){
 						bean.setCanIPSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_940);
 					}else{
 						bean.setCanIPSupe("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_950);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPSupe.getCellType()  ){
 						bean.setCostIPSupe(String.valueOf(celdaCostIPSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIPSupe.getCellType()  ){
 						bean.setCostIPSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_960);
 					}else{
 						bean.setCostIPSupe("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_970);
 					}					
 					/******GESTOR*****/
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDPGest.getCellType()  ){
 						bean.setCanDPGest(String.valueOf(celdaCantDPGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDPGest.getCellType()  ){
 						bean.setCanDPGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_980);
 					}else{
 						bean.setCanDPGest("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_990);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDPGest.getCellType()  ){
 						bean.setCostDPGest(String.valueOf(celdaCostDPGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDPGest.getCellType()  ){
 						bean.setCostDPGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1000);
 					}else{
 						bean.setCostDPGest("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1010);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIPGest.getCellType()  ){
 						bean.setCanIPGest(String.valueOf(celdaCantIPGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIPGest.getCellType()  ){
 						bean.setCanIPGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1020);
 					}else{
 						bean.setCanIPGest("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1030);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPGest.getCellType()  ){
 						bean.setCostIPGest(String.valueOf(celdaCostIPGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIPGest.getCellType()  ){
 						bean.setCostIPGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1040);
 					}else{
 						bean.setCostIPGest("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1050);
 					}					
 					/******ASISTENTE*****/
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDPAsist.getCellType()  ){
 						bean.setCanDPAsist(String.valueOf(celdaCantDPAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDPAsist.getCellType()  ){
 						bean.setCanDPAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1060);
 					}else{
 						bean.setCanDPAsist("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1070);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDPAsist.getCellType()  ){
 						bean.setCostDPAsist(String.valueOf(celdaCostDPAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDPAsist.getCellType()  ){
 						bean.setCostDPAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1080);
 					}else{
 						bean.setCostDPAsist("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1090);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantIPAsist.getCellType()  ){
 						bean.setCanIPAsist(String.valueOf(celdaCantIPAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantIPAsist.getCellType()  ){
 						bean.setCanIPAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1100);
 					}else{
 						bean.setCanIPAsist("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1110);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPAsist.getCellType()  ){
 						bean.setCostIPAsist(String.valueOf(celdaCostIPAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostIPAsist.getCellType()  ){
 						bean.setCostIPAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1120);
 					}else{
 						bean.setCostIPAsist("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1130);
 					}
 					
 					//LIMA
@@ -1564,160 +1692,224 @@ public class Formato14CGartController {
 						bean.setCanDLCoord(String.valueOf(celdaCantDLCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDLCoord.getCellType()  ){
 						bean.setCanDLCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1140);
 					}else{
 						bean.setCanDLCoord("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1150);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDLCoord.getCellType()  ){
 						bean.setCostDLCoord(String.valueOf(celdaCostDLCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDLCoord.getCellType()  ){
 						bean.setCostDLCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1160);
 					}else{
 						bean.setCostDLCoord("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1170);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantILCoord.getCellType()  ){
 						bean.setCanILCoord(String.valueOf(celdaCantILCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantILCoord.getCellType()  ){
 						bean.setCanILCoord("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1180);
 					}else{
 						bean.setCanILCoord("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1190);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostILCoord.getCellType()  ){
 						bean.setCostILCoord(String.valueOf(celdaCostILCoord.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostILCoord.getCellType()  ){
 						bean.setCostILCoord("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1200);
 					}else{
 						bean.setCostILCoord("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1210);
 					}				
 					/******SUPERVISOR*****/
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDLSupe.getCellType()  ){
 						bean.setCanDLSupe(String.valueOf(celdaCantDLSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDLSupe.getCellType()  ){
 						bean.setCanDLSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1220);
 					}else{
 						bean.setCanDLSupe("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1230);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDLSupe.getCellType()  ){
 						bean.setCostDLSupe(String.valueOf(celdaCostDLSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDLSupe.getCellType()  ){
 						bean.setCostDLSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1240);
 					}else{
 						bean.setCostDLSupe("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1250);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantILSupe.getCellType()  ){
 						bean.setCanILSupe(String.valueOf(celdaCantILSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantILSupe.getCellType()  ){
 						bean.setCanILSupe("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1260);
 					}else{
 						bean.setCanILSupe("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1270);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostILSupe.getCellType()  ){
 						bean.setCostILSupe(String.valueOf(celdaCostILSupe.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostILSupe.getCellType()  ){
 						bean.setCostILSupe("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1280);
 					}else{
 						bean.setCostILSupe("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1290);
 					}				
 					/******GESTOR*****/
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDLGest.getCellType()  ){
 						bean.setCanDLGest(String.valueOf(celdaCantDLGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDLGest.getCellType()  ){
 						bean.setCanDLGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1300);
 					}else{
 						bean.setCanDLGest("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1310);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDLGest.getCellType()  ){
 						bean.setCostDLGest(String.valueOf(celdaCostDLGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDLGest.getCellType()  ){
 						bean.setCostDLGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1320);
 					}else{
 						bean.setCostDLGest("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1330);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantILGest.getCellType()  ){
 						bean.setCanILGest(String.valueOf(celdaCantILGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantILGest.getCellType()  ){
 						bean.setCanILGest("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1340);
 					}else{
 						bean.setCanILGest("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostILGest.getCellType()  ){
 						bean.setCostILGest(String.valueOf(celdaCostILGest.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostILGest.getCellType()  ){
 						bean.setCostILGest("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1360);
 					}else{
 						bean.setCostILGest("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1370);
 					}				
 					/******ASISTENTE*****/
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantDLAsist.getCellType()  ){
 						bean.setCanDLAsist(String.valueOf(celdaCantDLAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantDLAsist.getCellType()  ){
 						bean.setCanDLAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1380);
 					}else{
 						bean.setCanDLAsist("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1390);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostDLAsist.getCellType()  ){
 						bean.setCostDLAsist(String.valueOf(celdaCostDLAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostDLAsist.getCellType()  ){
 						bean.setCostDLAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1400);
 					}else{
 						bean.setCostDLAsist("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1410);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantILAsist.getCellType()  ){
 						bean.setCanILAsist(String.valueOf(celdaCantILAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantILAsist.getCellType()  ){
 						bean.setCanILAsist("0");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1420);
 					}else{
 						bean.setCanILAsist("0");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1430);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostILAsist.getCellType()  ){
 						bean.setCostILAsist(String.valueOf(celdaCostILAsist.getNumericCellValue()));
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostILAsist.getCellType()  ){
 						bean.setCostILAsist("0.00");
+						cont++;
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1440);
 					}else{
 						bean.setCostILAsist("0.00");
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1450);
 					}				
 					/***FIN DE VALIDACION****/				
 				    logger.info("Valor de del mesaje pasando la validacion:  "+sMsg); 
@@ -1772,7 +1964,8 @@ public class Formato14CGartController {
 						}else{
 							logger.info("Entro a verificar datos si coincide la Pk no coincide--"); 
 							cont++;
-							sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_210);
+							sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+									listaError, cont, FiseConstants.COD_ERROR_F12_210);//error codigo pk no coinciden
 						}
 					}
 				}//fin del if libro			
@@ -1871,16 +2064,19 @@ public class Formato14CGartController {
     						listaDetalleTxt.add(sCurrentLine);
     					}else{
     						cont++;
-    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_220);
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    								listaError, cont, FiseConstants.COD_ERROR_F12_220);//error datos incompletos
     					}
     				}else{
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_230);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F12_230);//error archivo sin datos
     				}
     				sCurrentLine = br.readLine();
     				if( cont>24 ){
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_240);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1460);//no debe pasar las 24 lineas 
     					break;
     				}
     			}
@@ -1940,7 +2136,8 @@ public class Formato14CGartController {
     					}else{ 
     						process = false;
     						cont++;
-    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    								listaError, cont, FiseConstants.COD_ERROR_F14C_1470);
     						break;
     					}
         			}//fin del for  
@@ -2035,7 +2232,8 @@ public class Formato14CGartController {
     			    	}else{
     			    	   //no coinciden ningun tipo de personal
     			    		cont++;
-    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    								listaError, cont, FiseConstants.COD_ERROR_F14C_1480);
     						break;
     			    	}   			    	
     			    }
@@ -2084,7 +2282,8 @@ public class Formato14CGartController {
     			    	}else{
     			    	   //no coinciden ningun tipo de personal
     			    		cont++;
-    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    								listaError, cont, FiseConstants.COD_ERROR_F14C_1490);
     						break;
     			    	}    				    	
     			    }
@@ -2133,12 +2332,14 @@ public class Formato14CGartController {
     			    	}else{
     			    	   //no coinciden ningun tipo de personal
     			    		cont++;
-    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    								listaError, cont, FiseConstants.COD_ERROR_F14C_1450);
     						break;
     			    	}   			    	
     			    }else{
     			    	cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1510);
 						break;
     			    }    			    
     			  }//fin del for del recorrido de la lista seteando valores    			  
@@ -2147,301 +2348,299 @@ public class Formato14CGartController {
     		   /*****validaciones de consistencia***/
     			if(process && FiseConstants.BLANCO.equals(sMsg)){
     				/**CABECERA**/
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getAnioPres())){
-    					//el campo Zona AnioPres no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getAnioPres())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F12_60);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getMesPres())){
-    					//el campo Zona getMesPres no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getMesPres())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F12_80);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumRural())){
-    					//el campo Zona getNumRural no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumRural())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_390);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbProv())){
-    					//el campo Zona getNumUrbProv no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbProv())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_410);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbLima())){
-    					//el campo Zona getNumUrbLima no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbLima())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_430);
     				}
-    				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromRural()) ){
-    					//el campo getCostoPromRural no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromRural()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_450);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbProv()) ){
-    					//el campo getCostoPromUrbProv no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbProv()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_470);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbLima()) ){
-    					//el campo getCostoPromUrbLima no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbLima()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_490);
     				}
     				/*****RURAL*****/  
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRCoord())){
-    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRCoord())){    					
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_510);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRSupe())){
-    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRSupe())){   				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_590);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRGest())){
-    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRGest())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_670);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRAsist())){
-    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDRAsist())){    					
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-    				}
-    				
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRCoord())){
-    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
-    					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRSupe())){
-    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
-    					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRGest())){
-    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
-    					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRAsist())){
-    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
-    					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_750);
     				}
     				
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRCoord())){    					
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_550);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRSupe())){    					
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_630);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRGest())){    					
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_710);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIRAsist())){    					
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_790);
+    				}    				
 
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_530);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_610);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){    					
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_690);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){    					
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_770);
     				}
     				
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_570);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){    					
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_650);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_730);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){    					
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_810);
     				}
     				
     				/*******PROVINCIAS******/
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPCoord())){
-    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPCoord())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_830);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPSupe())){
-    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPSupe())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_910);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPGest())){
-    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPGest())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_990);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPAsist())){
-    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDPAsist())){    					
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-    				}
-    				
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPCoord())){
-    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
-    					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPSupe())){
-    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
-    					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPGest())){
-    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
-    					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPAsist())){
-    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
-    					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1070);
     				}
     				
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPCoord())){    				
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_870);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPSupe())){    				
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_950);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPGest())){    			
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1030);
+    				}
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPAsist())){    			
+    					cont++;
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1110);
+    				}    				
 
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_850);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_930);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1010);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1090);
     				}
     				
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_890);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){    		
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_970);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1050);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1130);
     				}
     				/**LIMA***/
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLCoord())){
-    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLCoord())){    		
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1150);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLSupe())){
-    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLSupe())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1230);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLGest())){
-    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLGest())){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1310);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLAsist())){
-    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanDLAsist())){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1390);
     				}
     				
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILCoord())){
-    					//el campo Zona getCanDRCoord no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILCoord())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1190);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILSupe())){
-    					//el campo Zona getCanDRSupe no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILSupe())){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1270);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILGest())){
-    					//el campo Zona getCanDRGest no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILGest())){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
     				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILAsist())){
-    					//el campo Zona getCanDRAsist no corresponde al tipo de dato correcto
+    				if(!FormatoUtil.validarCampoLongTxt(bean.getCanILAsist())){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1430);
     				}
     				
 
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){    					
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1170);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1250);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1330);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores,
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1410);
     				}
     				
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1210);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){    			
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1290);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1370);
     				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){
-    					//el campo getCostDRCoord no corresponde al tipo de dato correcto
+    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){    				
     					cont++;
-    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+    					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1450);
     				}    				
     			}  //fin de validacion 			
 				
@@ -2496,13 +2695,14 @@ public class Formato14CGartController {
 					}else{
 						logger.info("Entro a verificar datos la Pk no coincide--"); 
 						cont++;
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_210);
+						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+								listaError, cont, FiseConstants.COD_ERROR_F12_210);
 					}
 				}			
     			is.close();
     		}else{
     			//no hay campos o error al consultar a la tabla de campos
-    			throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_290));
+    			throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F14C_1520));
     		}    		
     	}catch (Exception e) {	  			  
     		String error = e.getMessage();

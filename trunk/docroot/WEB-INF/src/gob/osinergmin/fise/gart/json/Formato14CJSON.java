@@ -49,9 +49,16 @@ public class Formato14CJSON {
 		
 		jsonObj.put("descEmpresa", f.getDescEmpresa());
 		jsonObj.put("descMesPresentacion", f.getDescMesPresentacion());
-		//jsonObj.put("grupoInfo", f.getDescGrupoInformacion());
-		jsonObj.put("grupoInfo", " HOLA");
-		jsonObj.put("estado", f.getDescEstado());			
+		if(f.getFiseGrupoInformacion()!=null && f.getFiseGrupoInformacion().getDescripcion()!=null){
+			jsonObj.put("grupoInfo", f.getFiseGrupoInformacion().getDescripcion());	
+		}else{
+			jsonObj.put("grupoInfo", "---");	
+		}
+		if(f.getFechaEnvioDefinitivo()!=null){
+			jsonObj.put("estado", "Enviado");	
+		}else{
+			jsonObj.put("estado", "Por Enviar");	
+		}		
 		return jsonObj;
 	}
 	
