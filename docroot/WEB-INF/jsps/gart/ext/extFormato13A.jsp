@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.util.PortalUtil"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -22,7 +23,7 @@ var formato13A= {
 	botonGuardarDetalle:null,
 	codEmpresa : null,
 	peridoDeclaracion : null,
-
+	portletID:null,
 	mensajeObteniendoDatos:null,
 	urlACrud:null,
 	command:null,
@@ -70,6 +71,7 @@ var formato13A= {
 		
 	},
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
+		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
 		this.urlBusquedaDetalle='<portlet:resourceURL id="busquedaDetalle" />';
 		this.formNuevo=$('#formato13AGartCommand');
@@ -109,7 +111,7 @@ var formato13A= {
 			
 			botonAnadirFormato.click(function(){
 				formato13A.blockUI();
-				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').submit();
+				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 			botonRegresarBusqueda.click(function(){
@@ -122,7 +124,7 @@ var formato13A= {
 		
 		
 	},
-	initCRUDDetalle : function(operacion,urlGuardarDetalle){
+	initCRUDDetalle : function(operacion,urlGuardarDetalle,urlRegresarDetalle){
 		this.formDetalle=$("#formato13AGartCommand");
 		this.codDepa=$("select[name='codDepartamento']");
 		this.codProv=$("select[name='codProvincia']");
@@ -130,8 +132,9 @@ var formato13A= {
 		this.urlProvincias='<portlet:resourceURL id="provincias" />';
 		this.urlDistritos='<portlet:resourceURL id="distritos" />';
 		this.botonGuardarDetalle=$('#<portlet:namespace/>guardarDetalle');
-		
-		if(operacion=='CREATE'){
+		var botonRegresarDetalle=$('#<portlet:namespace/>regresarFormato');
+
+		<c:if test="${crud =='CREATE'}">
 			formato13A.codDepa.change(function(){
 				formato13A.listarProvincias(formato13A.codDepa.val());
 			});
@@ -143,7 +146,12 @@ var formato13A= {
 			formato13A.botonGuardarDetalle.click(function(){
 				formato13A.formDetalle.attr('action',urlGuardarDetalle).submit();
 			});
-		}
+		</c:if>
+		
+		botonRegresarDetalle.click(function(){
+			formato13A.blockUI();
+			location.href=urlRegresarDetalle+'&crud='+operacion;
+		});
 		
 	},
 	buildGridsBusqueda : function () {	
@@ -287,12 +295,19 @@ var formato13A= {
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato13A.tablaDeclaracion.jqGrid('getDataIDs');
+	    		      
 		  	      		for(var i=0;i < ids.length;i++){
 		  	      			var cl = ids[i];
 		  	      			var ret = formato13A.tablaDeclaracion.jqGrid('getRowData',cl);   
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
-		  	      			urlView.setParameter("action", "nuevoDetalle");
-		  	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
+		  	      			urlView.setParameter("action", "detalle");
+		  	      			urlView.setParameter("crud", "READ");
+		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
+		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+ret.mesPresentacion+ret.etapa);
+		  	      			urlView.setPortletId(formato13A.portletID);
+		  	      			
+		  	      			
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
 		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
 		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{view:view});

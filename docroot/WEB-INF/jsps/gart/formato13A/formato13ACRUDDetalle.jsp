@@ -7,9 +7,13 @@
 	<portlet:param name="action" value="guardarDetalle"/>
 </portlet:actionURL>
 
+<portlet:renderURL var="urlRegresarDetalle">
+	<portlet:param name="action" value="nuevo"/>
+</portlet:renderURL>
+
 <script type="text/javascript">
 $(document).ready(function () {	
-	formato13A.initCRUDDetalle('${crud}','${urlGuardarDetalle}');
+	formato13A.initCRUDDetalle('${crud}','${urlGuardarDetalle}','${urlRegresarDetalle}');
 });
 </script>
 
@@ -77,12 +81,12 @@ $(document).ready(function () {
 																		<tr> 
 																			<td width="40px">Año:</td> 
 																			<td>
-																				<form:input path="anioAlta" cssStyle="width:50px" maxlength="4"/>																			
+																				<form:input path="anioAlta" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/>																			
 																			</td>
 									   										<td width="5px"></td>
 									   										<td width="40px">Mes:</td>
 									   										<td>
-									   											<form:select path="mesAlta" cssClass="select" cssStyle="width: 104px;">
+									   											<form:select path="mesAlta" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
 																					<form:option value="">-Seleccione-</form:option>
 																					<form:options items="${formato13AGartCommand.listaMes}"/>
 																				</form:select>
@@ -99,7 +103,7 @@ $(document).ready(function () {
 																		<tr> 
 																			<td width="40px">Departamento:</td> 
 																			<td>
-																				<form:select path="codDepartamento" cssClass="select" cssStyle="width: 104px;">
+																				<form:select path="codDepartamento" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
 																					<form:option value="">-Seleccione-</form:option>
 																					<form:options items="${formato13AGartCommand.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
 																				</form:select>																			
@@ -107,21 +111,21 @@ $(document).ready(function () {
 									   										<td width="5px"></td>
 									   										<td width="40px">Provincia:</td>
 									   										<td>
-									   											<form:select path="codProvincia" cssClass="select" cssStyle="width: 104px;">
+									   											<form:select path="codProvincia" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
 																					<form:option value="">-Seleccione-</form:option>																					
 																				</form:select>
 									   										</td>
 									   										<td width="5px"></td>
 									   										<td width="40px">Distrito:</td>
 									   										<td>
-									   											<form:select path="codDistrito" cssClass="select" cssStyle="width: 104px;">
+									   											<form:select path="codDistrito" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
 																					<form:option value="">-Seleccione-</form:option>																					
 																				</form:select>
 									   										</td>
 									   										<td width="5px"></td>
 									   										<td width="40px">Localidad:</td>
 									   										<td>
-									   											<form:input path="localidad"/>
+									   											<form:input path="localidad" readonly="${readonly}"/>
 									   										</td>
 									   									</tr>
 									   								</tbody></table>
@@ -149,17 +153,17 @@ $(document).ready(function () {
 																</thead>
 																<tbody>
 																	<tr>
-																		<td><form:input path="st1" cssStyle="width:50px" maxlength="4"/></td>
-																		<td><form:input path="st2" cssStyle="width:50px" maxlength="4"/></td>
-																		<td><form:input path="st3" cssStyle="width:50px" maxlength="4"/></td>
-																		<td><form:input path="st4" cssStyle="width:50px" maxlength="4"/></td>
-																		<td><form:input path="st5" cssStyle="width:50px" maxlength="4"/></td>
-																		<td><form:input path="st6" cssStyle="width:50px" maxlength="4"/></td>
-																		<td><form:input path="stser" cssStyle="width:50px" maxlength="4"/></td>
-																		<td><form:input path="stesp" cssStyle="width:50px" maxlength="4"/></td>
-																		<td><form:input path="total" cssStyle="width:50px" maxlength="4"/></td>
+																		<td><form:input path="st1" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st2" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st3" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st4" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st5" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st6" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="stser" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="stesp" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="total" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
 																		<td>
-																			<form:select path="idZonaBenef" cssClass="select" cssStyle="width: 104px;">
+																			<form:select path="idZonaBenef" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
 																					<form:option value="">-Seleccione-</form:option>
 																					<form:options items="${formato13AGartCommand.listaZonasBenef}"/>
 																			</form:select>
@@ -176,7 +180,7 @@ $(document).ready(function () {
 																<legend>Sede de atencion</legend> 
 																<table style="width: 100%;" border="0">
 																	<tr>
-																		<td><form:input path="nombreSede"/></td>
+																		<td><form:input path="nombreSede" readonly="${readonly}"/></td>
 																	</tr>
 																</table>
 															</fieldset>
@@ -194,40 +198,42 @@ $(document).ready(function () {
 																	<td>
 																		<table style="width: 100%">
 																			<tr>
-																				<td width="16%" align="center"><input
-																					type="button" class="boton"
-																					name="<portlet:namespace/>reportePdf"
-																					style="display: none;"
-																					id="<portlet:namespace/>reportePdf"
-																					class="button net-button-small" value="Imprimir PDF" />
-																				</td>
-																				<td width="16%" align="center"><input
-																					type="button" class="boton"
-																					name="<portlet:namespace/>reporteExcel"
-																					style="display: none;"
-																					id="<portlet:namespace/>reporteExcel"
-																					class="button net-button-small"
-																					value="Exportar excel" /></td>
+																				<c:if test="${readonly}">	
+																					<td width="16%" align="center"><input
+																						type="button" class="boton"
+																						name="<portlet:namespace/>reportePdf"																						
+																						id="<portlet:namespace/>reportePdf"
+																						class="button net-button-small" value="Imprimir PDF" />
+																					</td>
+																					<td width="16%" align="center"><input
+																						type="button" class="boton"
+																						name="<portlet:namespace/>reporteExcel"																						
+																						id="<portlet:namespace/>reporteExcel"
+																						class="button net-button-small"
+																						value="Exportar excel" /></td>
+																				</c:if>
+																				<c:if test="${not readonly}">	
+																					<td width="17%" align="center"><input
+																						type="button" class="net-button-small"
+																						id="<portlet:namespace/>guardarDetalle"
+																						name="<portlet:namespace/>guardarDetalle"
+																						value="Grabar" /></td>
+																					<td width="17%" align="center"><input
+																						type="button" class="net-button-small"
+																						id="<portlet:namespace/>validacionFormato"
+																						name="<portlet:namespace/>validacionFormato"
+																						value="Validación" /></td>
+																					<td width="17%" align="center"><input
+																						type="button" class="net-button-small"
+																						id="<portlet:namespace/>envioDefinitivo"
+																						name="<portlet:namespace/>envioDefinitivo"
+																						value="Envío Def." /></td>																					
+																				</c:if>
 																				<td width="17%" align="center"><input
-																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>guardarDetalle"
-																					name="<portlet:namespace/>guardarDetalle"
-																					value="Grabar" /></td>
-																				<td width="17%" align="center"><input
-																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>validacionFormato"
-																					name="<portlet:namespace/>validacionFormato"
-																					value="Validación" /></td>
-																				<td width="17%" align="center"><input
-																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>envioDefinitivo"
-																					name="<portlet:namespace/>envioDefinitivo"
-																					value="Envío Def." /></td>
-																				<td width="17%" align="center"><input
-																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>regresarFormato"
-																					name="<portlet:namespace/>regresarFormato"
-																					value="Regresar" /></td>
+																						type="button" class="net-button-small"
+																						id="<portlet:namespace/>regresarFormato"
+																						name="<portlet:namespace/>regresarFormato"
+																						value="Regresar" /></td>
 																			</tr>
 																		</table>
 	
