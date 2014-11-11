@@ -42,6 +42,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +74,10 @@ import com.liferay.portal.util.PortalUtil;
 public class Formato13AGartController {
 
 	private static final Log logger=LogFactoryUtil.getLog(Formato13AGartController.class);
+	private static final String CRUD_CREATE="CREATE";
+	private static final String CRUD_UPDATE="UPDATE";
+	private static final String CRUD_DELETE="DELETE";
+	private static final String CRUD_READ="READ";
 	
 	@Autowired
 	@Qualifier("fiseUtil")
@@ -174,12 +179,21 @@ public class Formato13AGartController {
 	}
 	
 	@RequestMapping(params="action=nuevo")
-	public String nuevoFormato(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+	public String nuevoFormato(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,
+			@RequestParam(value = "crud", required = false,defaultValue="CREATE")String crud,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
 		 System.out.println("aqui en nuevoFormato");
+		 System.out.println("CRUD:"+crud);
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
-		model.addAttribute("crud", "CREATE");
+		model.addAttribute("crud", crud);
+		model.addAttribute("readonly", "false");
+		
+		if(CRUD_READ.equals(crud)){
+			model.addAttribute("readonly", "true");
+		}
 		
 		mapaErrores = fiseUtil.getMapaErrores();
+		
+		
 		return "formato13ACRUD";
 	}
 	
@@ -235,7 +249,37 @@ public class Formato13AGartController {
 		logger.info("valores detalle "+ codEmpresa);
 		logger.info("valores detalle"+ periodoDeclaracion);
 		
-		response.setRenderParameter("crud", "CREATE");
+		if(periodoDeclaracion!=null && periodoDeclaracion.length()>6){
+			anioPresentacion=periodoDeclaracion.substring(0,4);
+			mesPresentacion=periodoDeclaracion.substring(4,6);
+			etapa=periodoDeclaracion.substring(6);
+		}
+		logger.info("Cabecera codEmpresa:"+codEmpresa);
+		logger.info("Cabecera anioPresentacion:"+anioPresentacion);
+		logger.info("Cabecera mesPresentacion:"+mesPresentacion);
+		logger.info("Cabecera etapa:"+etapa);
+		
+		//Registramos la cabecera 
+		FiseFormato13ACPK pkCabecera=new FiseFormato13ACPK();
+		pkCabecera.setCodEmpresa(codEmpresa!=""?FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4):"");
+		pkCabecera.setAnoPresentacion(Long.parseLong(anioPresentacion));
+		pkCabecera.setMesPresentacion(Long.parseLong(mesPresentacion));
+		pkCabecera.setEtapa(etapa);
+		
+		FiseFormato13AC cabecera=new FiseFormato13AC();
+		cabecera.setId(pkCabecera);
+		
+		//Primero buscamos si existe una cabecera
+		FiseFormato13AC cab=formatoService.obtenerFormato13ACByPK(pkCabecera);
+		
+		if(cab!=null){
+			//update
+			
+		}else{
+			//create
+		}
+		
+		response.setRenderParameter("crud", CRUD_CREATE);
 		response.setRenderParameter("action", "detalle");
 		response.setRenderParameter("codEmpresa",codEmpresa);
 		response.setRenderParameter("periodoDeclaracion",periodoDeclaracion);
@@ -249,7 +293,7 @@ public class Formato13AGartController {
 		logger.info("valores requestparameter"+ crud);
 		logger.info("valores periodoDeclaracion"+ periodoDeclaracion);
 		logger.info("valores codEmpresa"+ codEmpresa);
-	
+
 		String anioPresentacion="";
 		String mesPresentacion="";
 		String etapa="";
@@ -272,6 +316,51 @@ public class Formato13AGartController {
 		command.setListaMes(fiseUtil.getMapaMeses());
 		command.setListaZonasBenef(fiseUtil.getMapaZonaBenef());
 		command.setListaDepartamentos(fiseUtil.listaDepartamentos());
+		model.addAttribute("readonly", "false");
+		
+		if(CRUD_READ.equals(crud)){
+			//Es lectura
+			model.addAttribute("readonly", "true");
+			logger.info("LECTURA DETALLE");
+			FiseFormato13AC cabecera=new FiseFormato13AC();
+			cabecera.setId(new FiseFormato13ACPK());
+			cabecera.getId().setCodEmpresa(codEmpresa!=""?FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4):"");
+			cabecera.getId().setAnoPresentacion(anioPresentacion!=""?Long.parseLong(anioPresentacion):0);
+			cabecera.getId().setMesPresentacion(mesPresentacion!=""?Long.parseLong(mesPresentacion):0);
+			cabecera.getId().setEtapa(etapa);
+  			
+			List<Formato13ADReportBean>  detalle = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(cabecera);
+  			
+  			logger.info("arreglo lista:"+detalle.size());
+  			for(Formato13ADReportBean fiseFormato13AD : detalle){
+  				//seteamos la descripcion de la empresa
+  				command.setAnioAlta(String.valueOf(fiseFormato13AD.getAnioAlta()));
+  				command.setMesAlta(String.valueOf(fiseFormato13AD.getMesAlta()));
+  				String ubigeo=fiseFormato13AD.getCodUbigeo();
+  				if(StringUtils.isNotBlank(ubigeo)){
+  					command.setCodDepartamento(ubigeo.substring(0, 2).concat("0000")); 
+  					command.setCodProvincia(ubigeo.substring(0, 4).concat("00"));
+  					command.setCodDistrito(ubigeo);
+  				}
+  				
+  				command.setLocalidad(fiseFormato13AD.getDescLocalidad());
+  				command.setSt1(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico1()));
+  				command.setSt2(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico2()));
+  				command.setSt3(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico3()));
+  				command.setSt4(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico4()));
+  				command.setSt5(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico5()));
+  				command.setSt6(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico6()));
+  				command.setStser(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico7()));
+  				command.setStesp(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico8()));
+  				long total=fiseFormato13AD.getNroBenefPoteSecTipico1()+fiseFormato13AD.getNroBenefPoteSecTipico2()+
+  						fiseFormato13AD.getNroBenefPoteSecTipico3()+fiseFormato13AD.getNroBenefPoteSecTipico4()+
+  						fiseFormato13AD.getNroBenefPoteSecTipico5()+fiseFormato13AD.getNroBenefPoteSecTipico6()+
+  						fiseFormato13AD.getNroBenefPoteSecTipico7()+fiseFormato13AD.getNroBenefPoteSecTipico8();
+  				command.setTotal(String.valueOf(total));
+  				command.setIdZonaBenef(String.valueOf(fiseFormato13AD.getIdZonaBenef()));
+  				command.setNombreSede(fiseFormato13AD.getNombreSedeAtiende());
+  			}
+		}
 		
 		model.addAttribute("crud",crud);
 
