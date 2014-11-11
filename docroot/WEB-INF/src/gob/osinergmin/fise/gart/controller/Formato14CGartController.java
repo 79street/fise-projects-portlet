@@ -164,6 +164,7 @@ public class Formato14CGartController {
     	    pRequest.getPortletSession().setAttribute("mensajeError", "", PortletSession.APPLICATION_SCOPE);
     	    pRequest.getPortletSession().setAttribute("listaError", null, PortletSession.APPLICATION_SCOPE);
     	    pRequest.getPortletSession().setAttribute("mensajeInformacion", "", PortletSession.APPLICATION_SCOPE);
+    	    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);
         	
     	    if( listaError!=null && listaError.size()>0){
     			model.addAttribute("listaError", listaError);
@@ -593,6 +594,7 @@ public class Formato14CGartController {
 		    pRequest.getPortletSession().setAttribute("anoInicioVigencia", anoIniVigencia, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anoFinVigencia", anoFinVigencia, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("etapa", etapa, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);
 		}else{
 			if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) || flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
 				pRequest.getPortletSession().setAttribute("codEmpresa", codEmpresaNew, PortletSession.APPLICATION_SCOPE);
@@ -609,6 +611,7 @@ public class Formato14CGartController {
 			    pRequest.getPortletSession().setAttribute("anoInicioVigencia", anioIniVigEdit, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anoFinVigencia", anioFinVigEdit, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("etapa", etapaEdit, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);
 			}
 			
 		}
@@ -854,12 +857,22 @@ public class Formato14CGartController {
 	        	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
 	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 	        	mapa = formato14CGartService.mapearParametrosFormato14C(bean);
-	        	if(mapa!=null){
+	        	
+	        	CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14C);
+	        	String descripcionFormato = "";
+	        	if( tabla!=null ){
+	        		descripcionFormato = tabla.getDescripcionTabla();
+	        	}         	
+	        	if(mapa!=null){	        	
 	        		mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
 	        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
 	        		//verificar si ponerlo aca o no
 	        		mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-	        		mapa.put("NOMBRE_FORMATO", FiseConstants.NOMBRE_FORMATO_14C);
+	        		mapa.put("NOMBRE_FORMATO", descripcionFormato);
+	        		mapa.put("FECHA_ENVIO", FechaUtil.obtenerFechaActual());
+	        		mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
+	        		mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+	        		mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 	 			}
 	        	Formato14Generic formato14Generic = new Formato14Generic(formato);
 	        	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14C,
@@ -930,15 +943,8 @@ public class Formato14CGartController {
 		    		   fileEntryJsp.setFileEntry(archivo3);
 		    		   listaArchivo.add(fileEntryJsp);
 		    	   }
-		       }
-		       //
-		       if( listaArchivo!=null && listaArchivo.size()>0 ){
-		    	   //obtener e nombre del formato
-		    	   CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14C);
-		    	   String descripcionFormato = "";
-		    	   if( tabla!=null ){
-		    		   descripcionFormato = tabla.getDescripcionTabla();
-		    	   }
+		       }		   
+		       if( listaArchivo!=null && listaArchivo.size()>0 ){		    	  
 		    	   logger.info("Entrando a enviar email envio defi."); 
 		    	   fiseUtil.enviarMailAdjunto(request,listaArchivo,descripcionFormato);
 		    	   logger.info("El envio de email fue correctamente envio defi."); 
@@ -1664,12 +1670,12 @@ public class Formato14CGartController {
 						bean.setCanIPAsist("0");
 						cont++;
 						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-								listaError, cont, FiseConstants.COD_ERROR_F14C_1100);
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1110);
 					}else{
 						bean.setCanIPAsist("0");
 						cont++;
 						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-								listaError, cont, FiseConstants.COD_ERROR_F14C_1110);
+								listaError, cont, FiseConstants.COD_ERROR_F14C_1530);
 					}
 					
 					if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostIPAsist.getCellType()  ){
@@ -2096,7 +2102,7 @@ public class Formato14CGartController {
     				key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
     				key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
     				key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
-    				key4 = listaDetalleTxt.get(0).substring(posicionZonaBenef, posicionSede).trim();
+    				key4 = listaDetalleTxt.get(0).substring(posicionAnioFinVigencia, posicionSede).trim();
     				logger.info("Codigo key1:   "+key1); //codigo empresa
     				logger.info("Codigo key2:   "+key2); //anio presentacion 
     				logger.info("Codigo key3:   "+key3); //mes presentacion
@@ -2105,8 +2111,8 @@ public class Formato14CGartController {
         				String codEmp = s.substring(0, posicionCodEmpresa).trim();
     					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
     					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
-    					String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
-    					String sede = s.substring(posicionZonaBenef, posicionSede).trim();
+    					String zonaBenef = s.substring(posicionSede, posicionZonaBenef).trim();
+    					String sede = s.substring(posicionAnioFinVigencia, posicionSede).trim();
     					logger.info("codigo empresa:   "+codEmp); 
         				logger.info("anio pres:   "+anioPres); 
         				logger.info("mes pres:   "+mesPres); 
@@ -2152,8 +2158,8 @@ public class Formato14CGartController {
     				String codEmp = s.substring(0, posicionCodEmpresa).trim();
   					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
   					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
-  					String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
-  					String sede = s.substring(posicionZonaBenef, posicionSede).trim(); 
+  					String zonaBenef = s.substring(posicionSede, posicionZonaBenef).trim();
+  					String sede = s.substring(posicionAnioFinVigencia, posicionSede).trim(); 
   					
     				String codigoMuestraZonal =codEmp+anioPres+mesPres+zonaBenef+sede; 
     				logger.info("Codigo muestra zona para setear al bean: "+codigoMuestraZonal);
@@ -2164,7 +2170,7 @@ public class Formato14CGartController {
     			    String codigoMuestraTipPersona =idTipoCostGestion+idTipoPersonal; 
     			    logger.info("Codigo muestra persona para setear al bean: "+codigoMuestraTipPersona);
     			    
-    			    String nroTotalBenef = s.substring(posicionSede, posicionNroTotalBenef).trim();
+    			    String nroTotalBenef = s.substring(posicionZonaBenef, posicionNroTotalBenef).trim();
     			    logger.info("nroTotalBenef: "+nroTotalBenef);
     			    String cantidad = s.substring(posicionPersonalBenef, posicionCantidad).trim();
     			    logger.info("cantidad: "+cantidad);
@@ -2513,7 +2519,7 @@ public class Formato14CGartController {
     				if(!FormatoUtil.validarCampoLongTxt(bean.getCanIPAsist())){    			
     					cont++;
     					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F14C_1110);
+    							listaError, cont, FiseConstants.COD_ERROR_F14C_1530);
     				}    				
 
     				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){    			
