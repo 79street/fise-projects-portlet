@@ -169,12 +169,27 @@ $(document).ready(function () {
 																	<td width="65%">
 																		<table style="width: 100%">
 																			<tr>
-																				<td width="17%" align="center"><input
-																					type="button" class="net-button-small"
-																					id="<portlet:namespace/>anadirFormato"
-																					name="<portlet:namespace/>anadirFormato"
-																					value="Añadir" /></td>
-																				
+																				<c:if test="${readonly}">	
+																					<td width="16%" align="center"><input
+																						type="button" class="boton"
+																						name="<portlet:namespace/>reportePdf"																						
+																						id="<portlet:namespace/>reportePdf"
+																						class="button net-button-small" value="Imprimir PDF" />
+																					</td>
+																					<td width="16%" align="center"><input
+																						type="button" class="boton"
+																						name="<portlet:namespace/>reporteExcel"																						
+																						id="<portlet:namespace/>reporteExcel"
+																						class="button net-button-small"
+																						value="Exportar excel" /></td>
+																				</c:if>
+																				<c:if test="${not readonly}">
+																					<td width="17%" align="center"><input
+																						type="button" class="net-button-small"
+																						id="<portlet:namespace/>anadirFormato"
+																						name="<portlet:namespace/>anadirFormato"
+																						value="Añadir" /></td>
+																				</c:if>
 																				
 																				<td width="17%" align="center"><input
 																					type="button" class="net-button-small"
@@ -215,48 +230,48 @@ $(document).ready(function () {
 	
 				</div>
 				
-				
-				<div id="<portlet:namespace/>dialog-form-cargaExcel" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
-						style="display: none; z-index: 1002; position: absolute; width: 400px;">
-					<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
-						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo excel </span> 
-						<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="formato13A.closeDialogCargaExcel();"> 
-							<span class="ui-icon ui-icon-closethick">close</span>
-						</a>
-					</div>
-	
-					<div class="ui-dialog-content ui-widget-content">
-						<!--tabla-->
-	
-						<fieldset class="">
-							<table style="width: 100%;">
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Archivo:</td>
-									<td><input type="file" id="archivoExcel"
-										name="archivoExcel" /></td>
-								</tr>
-							</table>
-						</fieldset>
-	
-	
-					</div>
-	
-					<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-						<div class="ui-dialog-buttonset">
-							<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel"
-								id="<portlet:namespace/>cargarFormatoExcel" value="Cargar" /> 
-							<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoExcel"
-								id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar" onclick="formato13A.closeDialogCargaExcel();" />
+				<c:if test="${not readonly}">
+					<div id="<portlet:namespace/>dialog-form-cargaExcel" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
+							style="display: none; z-index: 1002; position: absolute; width: 400px;">
+						<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+							<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo excel </span> 
+							<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" onclick="formato13A.closeDialogCargaExcel();"> 
+								<span class="ui-icon ui-icon-closethick">close</span>
+							</a>
+						</div>
+		
+						<div class="ui-dialog-content ui-widget-content">
+							<!--tabla-->
+		
+							<fieldset class="">
+								<table style="width: 100%;">
+									<tr>
+										<td></td>
+									</tr>
+									<tr>
+										<td>Archivo:</td>
+										<td><input type="file" id="archivoExcel"
+											name="archivoExcel" /></td>
+									</tr>
+								</table>
+							</fieldset>
+		
+		
+						</div>
+		
+						<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+							<div class="ui-dialog-buttonset">
+								<input type="button" class="net-button-small" name="<portlet:namespace/>cargarFormatoExcel"
+									id="<portlet:namespace/>cargarFormatoExcel" value="Cargar" /> 
+								<input type="button" class="net-button-small" name="<portlet:namespace/>cerrarFormatoExcel"
+									id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar" onclick="formato13A.closeDialogCargaExcel();" />
+							</div>
 						</div>
 					</div>
-				</div>
-				
+				</c:if>
 				<!-- dialogo upload txt -->
 				
-				<div id="<portlet:namespace/>dialog-form-cargaTxt" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
+				<div id="<portlet:namespace/>Formato13AGartController" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
 						style="display: none; z-index: 1002; position: absolute; width: 400px;">
 					<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 						<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga"> Cargar archivo excel </span> 
