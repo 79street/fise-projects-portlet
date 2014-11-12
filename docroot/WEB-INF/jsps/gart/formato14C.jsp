@@ -183,6 +183,37 @@ $(document).ready(function () {
 											<td></td>
 										</tr>
 										<tr>
+										  <td>
+											<div id="<portlet:namespace/>divInformacion">
+												<fieldset class="net-frame-border">
+												  <table>
+													 <tr> 
+														<td>
+														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
+														</td>														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="grupoInformacion" ></output>
+													   </td>
+													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+													   <td>
+														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
+														</td>
+														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="estado"></output>														 
+													    </td>
+													 </tr>													
+												</table>
+											   </fieldset>
+										     </div>										
+										  </td>
+										</tr>										
+										<tr height="10px">
+											<td></td>
+										</tr>
+										<tr>
 									    <td>											
 										   <table style="width: 100%;" border="0">
 											 <tr>
@@ -197,7 +228,7 @@ $(document).ready(function () {
 													  </td>	  
 													  </tr>	
 													  <tr>
-													   <td> <label style="font-size: 12px; font-weight:bold">Año/Mes</label></td>
+													   <td> <label style="font-size: 12px; font-weight:bold">Mes,Año y Etapa de Presentación:</label></td>
 													   <td colspan="2">
 													     <form:select path="periodoEnvio" cssClass="select" cssStyle="width: 200px;">
 															<c:forEach items="${listaPeriodoEnvio}" var="periodo">
@@ -212,25 +243,25 @@ $(document).ready(function () {
 													  </tr>	
 													   <tr>
 													   <td> <label style="font-size: 12px; font-weight:bold">Frecuencia</label></td>
-													   <td colspan="2"><label>Bianual</label></td>	   
+													   <td colspan="2"><label>Bienal</label></td>	   
 													  </tr>	
 											         </table>									
 												</td>
 												<td width="40%">																							
-												 <div id="<portlet:namespace/>divPeriodoEjecucion" style="display: none;">
+												 <div id="<portlet:namespace/>divPeriodoEjecucion">
 																<fieldset class="net-frame-border">
 																	<table style="width:80%;">
-																		<tr>
+																		<tr style="text-align: center;"> 
 																			<td colspan="5"><label style="font-size: 12px; font-weight:bold">Periodo de Vigencia</label></td>
 																		</tr>
 																		<tr>
 																			<td width="110px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
-																			<td>
+																			<td style="text-align: center;">
 																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" />
 																			</td>
 																			<td width="20px"></td>
 																			<td width="110px"><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
-																			<td>
+																			<td style="text-align: center;">
 																				<form:input path="anoFinVigencia" style="width: 50px" maxlength="4" />	
 																			</td>
 																		</tr>
@@ -843,7 +874,14 @@ $(document).ready(function () {
     
     <form:input path="flagPeriodoEjecucion" cssStyle="display:none;" />
     
+    <form:input path="flagCosto" cssStyle="display:none;" /><!-- Flag para controlar costos directos e indirectos -->
+    
     <input type="hidden" id="<portlet:namespace/>flagCarga" name="flagCarga" value="" style="display: none;" />
+	
+	<!-- valores constantes para edelnor y luz del sur -->}
+	
+	 <form:input path="codEdelnor" cssStyle="display:none;" />	 
+	 <form:input path="codLuzSur" cssStyle="display:none;" />
 	
 	
 </form:form>

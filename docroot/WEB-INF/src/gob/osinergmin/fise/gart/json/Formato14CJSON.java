@@ -1,5 +1,6 @@
 package gob.osinergmin.fise.gart.json;
 
+import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
 
 import org.json.JSONException;
@@ -13,18 +14,19 @@ public class Formato14CJSON {
 	private long anoIniVigencia;
 	private long anoFinVigencia;	
 	private String etapa;
-	/////////////////
+	
 	private String descEmpresa;
 	private String descMesPresentacion;	
 	private String grupoInfo;
-	private String estado;
-	
+	private String estado;	
 	
 	private String mensajeInfo;
 	private String mensajeError;
 	private String flag;//flag para controlar mostrar el formulario de ingreso cuando hay un error en carga de formulario excel o texto
 
-	public JSONObject asJSONObject(FiseFormato14CC f, String flagPeriodoEjecucion) throws JSONException{
+	private String flagOperacion;//Cerrado, abierto, enviado
+	
+	public JSONObject asJSONObject(FiseFormato14CC f, String flag) throws JSONException{
 		
 		JSONObject jsonObj = new JSONObject();
 		
@@ -39,14 +41,15 @@ public class Formato14CJSON {
 		this.grupoInfo=f.getDescEmpresa();
 		this.estado=f.getDescEstado();
 		
+		this.flagOperacion = flag;
+		
 		//seteando valores al json para mostrar
 		jsonObj.put("codEmpresa", f.getId().getCodEmpresa());	
 		jsonObj.put("anoPresentacion", f.getId().getAnoPresentacion());
 		jsonObj.put("mesPresentacion", f.getId().getMesPresentacion());
 		jsonObj.put("anoIniVigencia", f.getId().getAnoInicioVigencia());
 		jsonObj.put("anoFinVigencia", f.getId().getAnoFinVigencia());
-		jsonObj.put("etapa", f.getId().getEtapa());
-		
+		jsonObj.put("etapa", f.getId().getEtapa());		
 		jsonObj.put("descEmpresa", f.getDescEmpresa());
 		jsonObj.put("descMesPresentacion", f.getDescMesPresentacion());
 		if(f.getFiseGrupoInformacion()!=null && f.getFiseGrupoInformacion().getDescripcion()!=null){
@@ -55,10 +58,13 @@ public class Formato14CJSON {
 			jsonObj.put("grupoInfo", "---");	
 		}
 		if(f.getFechaEnvioDefinitivo()!=null){
-			jsonObj.put("estado", "Enviado");	
+			jsonObj.put("estado", FiseConstants.ESTADO_ENVIADO_F14C);	
 		}else{
-			jsonObj.put("estado", "Por Enviar");	
-		}		
+			jsonObj.put("estado", FiseConstants.ESTADO_POR_ENVIAR_F14C);	
+		}
+		
+		jsonObj.put("flagOperacion", flag);	
+		
 		return jsonObj;
 	}
 	
@@ -168,6 +174,18 @@ public class Formato14CJSON {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+
+
+	public String getFlagOperacion() {
+		return flagOperacion;
+	}
+
+
+
+	public void setFlagOperacion(String flagOperacion) {
+		this.flagOperacion = flagOperacion;
 	}
 
 	
