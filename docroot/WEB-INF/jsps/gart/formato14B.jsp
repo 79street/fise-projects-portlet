@@ -303,25 +303,25 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 Impresión vales de descuento de clientes EDE</td>
 														<td align="center">
-															<form:input path="impValDesctoEdeR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impValDesctoEdeR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="impValDesctoEdeP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impValDesctoEdeP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="impValDesctoEdeL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impValDesctoEdeL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Impresión  vales de descuento de clientes no EDE</td>
 														<td align="center">
-															<form:input path="impValDesctoNoEdeR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impValDesctoNoEdeR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="impValDesctoNoEdeP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impValDesctoNoEdeP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="impValDesctoNoEdeL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impValDesctoNoEdeL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -339,13 +339,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4 Numero de  Vales Impresos</td>
 														<td align="center">
-															<form:input path="nroValesImpR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesImpR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroValesImpP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesImpP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroValesImpL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesImpL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -381,25 +381,25 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Costo Total Reparto de vales de descuento a clientes de las EDE</td>
 														<td align="center">
-															<form:input path="costoTotalValDesctoR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoTotalValDesctoR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoTotalValDesctoP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoTotalValDesctoP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoTotalValDesctoL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoTotalValDesctoL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Número de Vales Repartidos</td>
 														<td align="center">
-															<form:input path="nroValesReptR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesReptR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroValesReptP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesReptP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroValesReptL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesReptL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -436,25 +436,25 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1 Costo Total Reparto de vales en Oficinas de la EDE o Centros Autorizados</td>
 														<td align="center">
-															<form:input path="costoTotalValOficR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoTotalValOficR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoTotalValOficP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoTotalValOficP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoTotalValOficL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoTotalValOficL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2 Número de Vales Entregados</td>
 														<td align="center">
-															<form:input path="nroValesEntrR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesEntrR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroValesEntrP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesEntrP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroValesEntrL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesEntrL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -491,25 +491,25 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1 Costo por Enviar padrón de Vales para canje a los Centros Autorizados de Canje</td>
 														<td align="center">
-															<form:input path="costoEnvPadronR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoEnvPadronR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoEnvPadronP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoEnvPadronP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoEnvPadronL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoEnvPadronL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2 Número de Vales Físicos Emitidos</td>
 														<td align="center">
-															<form:input path="nroValesFisR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesFisR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroValesFisP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesFisP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroValesFisL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesFisL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -546,13 +546,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.1 Costo Unitario por Canje de Vales Digitales mediante Banca Celular</td>
 														<td align="center">
-															<form:input path="costoUnitValesDigitR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoUnitValesDigitR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoUnitValesDigitP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoUnitValesDigitP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoUnitValesDigitL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoUnitValesDigitL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 
@@ -577,25 +577,25 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.1 Costo por Atención de Solicitudes</td>
 														<td align="center">
-															<form:input path="costoAtenSolicR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoAtenSolicR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoAtenSolicP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoAtenSolicP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoAtenSolicL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoAtenSolicL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2 Costo por Atención de Consultas y/o Reclamos</td>
 														<td align="center">
-															<form:input path="costoAtenConsR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoAtenConsR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoAtenConsP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoAtenConsP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoAtenConsL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoAtenConsL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -613,13 +613,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.4 Número Total de Atenciones</td>
 														<td align="center">
-															<form:input path="nroTotalAtenR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroTotalAtenR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroTotalAtenP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroTotalAtenP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroTotalAtenL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroTotalAtenL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -656,37 +656,37 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1 Costo de Personal</td>
 														<td align="center">
-															<form:input path="costoPersonalR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoPersonalR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoPersonalP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoPersonalP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="costoPersonalL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="costoPersonalL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.2 Capacitación de los Agentes Autorizados de GLP</td>
 														<td align="center">
-															<form:input path="capacAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="capacAgentR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="capacAgentP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="capacAgentP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="capacAgentL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="capacAgentL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.3 Útiles y materiales de oficina</td>
 														<td align="center">
-															<form:input path="utilMatOficR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="utilMatOficR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="utilMatOficP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="utilMatOficP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="utilMatOficL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="utilMatOficL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>

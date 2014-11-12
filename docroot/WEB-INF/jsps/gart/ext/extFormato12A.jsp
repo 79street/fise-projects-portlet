@@ -1138,6 +1138,7 @@ function <portlet:namespace/>guardarFormato(){
 					$("#dialog-message-content").html(addhtml2);
 					$("#dialog-message").dialog( "open" );
 					//limpiar();		
+					$('#flagCarga').val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 					mostrarFormularioModificado();
 					initBlockUI();
 				}

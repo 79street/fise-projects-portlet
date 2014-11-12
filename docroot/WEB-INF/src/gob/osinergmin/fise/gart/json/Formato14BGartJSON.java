@@ -152,7 +152,7 @@ public class Formato14BGartJSON {
 					costoTotalImpR = detalle.getCostoTotalImpresion();
 					nroValesImpR = detalle.getNumeroValesImpreso();
 					costoUnitImpValesR = detalle.getCostoUnitarioImpresionVales();
-					costoTotalValR = detalle.getCostoTotReprtoValDisEl();
+					costoTotalValR = detalle.getCostoRepartoValesDescuento();
 					nroValesReptR = detalle.getNumeroValesRepartidos();
 					costoUnitReptValesR = detalle.getCostoUnitReprtoValeDomici();
 					costoTotalValOficR = detalle.getCostoTotReprtoValDisEl();
@@ -179,7 +179,7 @@ public class Formato14BGartJSON {
 					costoTotalImpP = detalle.getCostoTotalImpresion();
 					nroValesImpP = detalle.getNumeroValesImpreso();
 					costoUnitImpValesP = detalle.getCostoUnitarioImpresionVales();
-					costoTotalValP = detalle.getCostoTotReprtoValDisEl();
+					costoTotalValP = detalle.getCostoRepartoValesDescuento();
 					nroValesReptP = detalle.getNumeroValesRepartidos();
 					costoUnitReptValesP = detalle.getCostoUnitReprtoValeDomici();
 					costoTotalValOficP = detalle.getCostoTotReprtoValDisEl();
@@ -206,7 +206,7 @@ public class Formato14BGartJSON {
 					costoTotalImpL = detalle.getCostoTotalImpresion();
 					nroValesImpL = detalle.getNumeroValesImpreso();
 					costoUnitImpValesL = detalle.getCostoUnitarioImpresionVales();
-					costoTotalValL = detalle.getCostoTotReprtoValDisEl();
+					costoTotalValL = detalle.getCostoRepartoValesDescuento();
 					nroValesReptL = detalle.getNumeroValesRepartidos();
 					costoUnitReptValesL = detalle.getCostoUnitReprtoValeDomici();
 					costoTotalValOficL = detalle.getCostoTotReprtoValDisEl();

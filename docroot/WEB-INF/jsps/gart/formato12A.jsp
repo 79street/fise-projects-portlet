@@ -432,13 +432,13 @@
 									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 Número de Empadronados
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroEmpad_r" id="i_nroEmpad_r" style="width:100px;"  >
+									   							<input type="text" class="fise-editable" name="i_nroEmpad_r" id="i_nroEmpad_r" style="width:100px;"  >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroEmpad_p" id="i_nroEmpad_p" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_nroEmpad_p" id="i_nroEmpad_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroEmpad_l" id="i_nroEmpad_l" style="width:100px;"  >
+									   							<input type="text" class="fise-editable" name="i_nroEmpad_l" id="i_nroEmpad_l" style="width:100px;"  >
 									   						</td>
 									   					</tr>
 									   					<tr>
@@ -487,13 +487,13 @@
 									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Número de Agentes Autorizados GLP
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroAgentGlp_r" id="i_nroAgentGlp_r" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_nroAgentGlp_r" id="i_nroAgentGlp_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroAgentGlp_p" id="i_nroAgentGlp_p" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_nroAgentGlp_p" id="i_nroAgentGlp_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_nroAgentGlp_l" id="i_nroAgentGlp_l" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_nroAgentGlp_l" id="i_nroAgentGlp_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr>
@@ -533,13 +533,13 @@
 									   						3. Desplazamiento de Personal
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_despPersonal_r" id="i_despPersonal_r" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_despPersonal_r" id="i_despPersonal_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_despPersonal_p" id="i_despPersonal_p" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_despPersonal_p" id="i_despPersonal_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_despPersonal_l" id="i_despPersonal_l" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_despPersonal_l" id="i_despPersonal_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr>
@@ -547,13 +547,13 @@
 									   						4. Actividades Extraordinarias
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_activExtraord_r" id="i_activExtraord_r" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_activExtraord_r" id="i_activExtraord_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_activExtraord_p" id="i_activExtraord_p" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_activExtraord_p" id="i_activExtraord_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" name="i_activExtraord_l" id="i_activExtraord_l" style="width:100px;" >
+									   							<input type="text" class="fise-editable" name="i_activExtraord_l" id="i_activExtraord_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr height="10px">

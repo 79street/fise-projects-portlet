@@ -609,7 +609,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
   			String codEmpresa = command.getCodigoEmpresa();
   			//String periodoEnvio = command.getPeriodoEnvio();
   			//lo pongo en la lista porque no persiste las colecciones en el command
-  			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_12A);
+  			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_14A);
   			command.setListaPeriodoEnvio(listaPeriodoEnvio);
   			
   			JSONArray jsonArray = new JSONArray();
@@ -1512,31 +1512,31 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 			int posicionAnioFinVigencia = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_FIN_VIGENCIA);
 			int posicionZonaBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ZONA_BENEFICIARIO);
 			
-			int posicionImpEsqInvit = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_ESQUELA_INVITACION);
-			int posicionImpDeclaJurada = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_DECLARACION_JURADA);
-			int posicionImpFichaVerif = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_FICHAS_VERIFICACION);
-			int posicionRepEsqInvit= campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REPARTO_ESQUELA_INVITACION);
-			int posicionVerifInfo = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_VERIFICACION_INFORMACION);
-			int posicionElabArchivo = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ELABORACION_ARCHIVO_BENEF);
-			int posicionDigitFichas = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_DIGITACION_FICHA_BENEF);
-			int posicionTotalEmpad = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_EMPADRONAMIENTO);
+			int posicionImpEsqInvit = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_ESQUELA_INVITACION_F14A);
+			int posicionImpDeclaJurada = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_DECLARACION_JURADA_F14A);
+			int posicionImpFichaVerif = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_FICHAS_VERIFICACION_F14A);
+			int posicionRepEsqInvit= campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REPARTO_ESQUELA_INVITACION_F14A);
+			int posicionVerifInfo = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_VERIFICACION_INFORMACION_F14A);
+			int posicionElabArchivo = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ELABORACION_ARCHIVO_BENEF_F14A);
+			int posicionDigitFichas = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_DIGITACION_FICHA_BENEF_F14A);
+			int posicionTotalEmpad = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_EMPADRONAMIENTO_F14A);
 			
-			int posicionImpVolantes = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_VOLANTES);
-			int posicionImpAfiches = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_AFICHES);
-			int posicionRepFolletos = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REPARTO_FOLLETO_POTENCIA_BENEF);
-			int posicionSpotPublicTv = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_SPOT_PUBLICITARIO_TV);
-			int posicionSpotPublicRadio = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_SPOT_PUBLICITARIO_RADIO);
-			int posicionTotalDifusion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_DIFUSION_INICIO_PRG_FISE);
+			int posicionImpVolantes = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_VOLANTES_F14A);
+			int posicionImpAfiches = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_AFICHES_F14A);
+			int posicionRepFolletos = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REPARTO_FOLLETO_POTENCIA_BENEF_F14A);
+			int posicionSpotPublicTv = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_SPOT_PUBLICITARIO_TV_F14A);
+			int posicionSpotPublicRadio = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_SPOT_PUBLICITARIO_RADIO_F14A);
+			int posicionTotalDifusion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_DIFUSION_INICIO_PRG_FISE_F14A);
 			
-			int posicionNroBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NUMERO_BENEF_EMPADRO_MES_DIC);
-			int posicionCostoUnitBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_COSTO_UNITARIO_EMPADRONAMIENTO);
+			int posicionNroBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NUMERO_BENEF_EMPADRO_MES_DIC_F14A);
+			int posicionCostoUnitBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_COSTO_UNITARIO_EMPADRONAMIENTO_F14A);
 			
-			int posicionPromConvenios = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_PROMOCION_CONVENIO_AG_AUT_GLP);
-			int posicionRegFirmaConvenios = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REGISTRO_FIRMA_CONV_AG_AUT_GLP);
-			int posicionImpEntBanderla = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_ENTREGA_BANDEROLA);
+			int posicionPromConvenios = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_PROMOCION_CONVENIO_AG_AUT_GLP_F14A);
+			int posicionRegFirmaConvenios = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_REGISTRO_FIRMA_CONV_AG_AUT_GLP_F14A);
+			int posicionImpEntBanderla = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_IMPRESION_ENTREGA_BANDEROLA_F14A);
 			
-			int posicionTotalCostoGestion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_COSTO_GESTION_RED_AG_GLP);
-			int posicionNroAgentes = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NUMERO_AGENTES);
+			int posicionTotalCostoGestion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_COSTO_GESTION_RED_AG_GLP_F14A);
+			int posicionNroAgentes = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NUMERO_AGENTES_F14A);
 			
 			String sCurrentLine;
 			is=uploadPortletRequest.getFileAsStream("archivoTxt");
