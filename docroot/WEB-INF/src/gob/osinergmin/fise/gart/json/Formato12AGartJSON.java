@@ -1,5 +1,6 @@
 package gob.osinergmin.fise.gart.json;
 
+import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12AD;
 
@@ -49,8 +50,22 @@ public class Formato12AGartJSON {
 		this.etapa=fiseFormato12AC.getId().getEtapa();
 		this.descMesPresentacion=fiseFormato12AC.getDescMesPresentacion();
 		this.descMesEjecucion=fiseFormato12AC.getDescMesEjecucion();
-		this.grupoInfo=fiseFormato12AC.getFiseGrupoInformacion()!=null?fiseFormato12AC.getFiseGrupoInformacion().getDescripcion():null;
-		this.estado=fiseFormato12AC.getDescEstado();
+		//this.grupoInfo=fiseFormato12AC.getFiseGrupoInformacion()!=null?fiseFormato12AC.getFiseGrupoInformacion().getDescripcion():null;
+		//this.estado=fiseFormato12AC.getDescEstado();
+		
+		if(fiseFormato12AC.getFiseGrupoInformacion()!=null && fiseFormato12AC.getFiseGrupoInformacion().getDescripcion()!=null){
+			jsonObj.put("grupoInfo", fiseFormato12AC.getFiseGrupoInformacion().getDescripcion());	
+		}else{
+			jsonObj.put("grupoInfo", FiseConstants.BLANCO);	
+		}
+		
+		if(fiseFormato12AC.getFechaEnvioDefinitivo()!=null){
+			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+		}else{
+			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+		}
+		
+		
 		//verificar despues si el objeto grupoinfo siempre va a venir seteado
 		jsonObj.put("codEmpresa", fiseFormato12AC.getId().getCodEmpresa());
 		//formar flag de verificado

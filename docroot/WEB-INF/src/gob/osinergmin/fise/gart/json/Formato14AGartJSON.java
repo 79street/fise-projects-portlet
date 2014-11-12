@@ -61,8 +61,22 @@ public class Formato14AGartJSON {
 		jsonObj.put("anoFinVigencia", fiseFormato14AC.getId().getAnoFinVigencia());
 		jsonObj.put("etapa", fiseFormato14AC.getId().getEtapa());
 		jsonObj.put("descMesPresentacion", fiseFormato14AC.getDescMesPresentacion());
-		jsonObj.put("grupoInfo", fiseFormato14AC.getDescGrupoInformacion());
-		jsonObj.put("estado", fiseFormato14AC.getDescEstado());
+		//jsonObj.put("grupoInfo", fiseFormato14AC.getDescGrupoInformacion());
+		//jsonObj.put("estado", fiseFormato14AC.getDescEstado());
+		
+		if(fiseFormato14AC.getFiseGrupoInformacion()!=null && fiseFormato14AC.getFiseGrupoInformacion().getDescripcion()!=null){
+			jsonObj.put("grupoInfo", fiseFormato14AC.getFiseGrupoInformacion().getDescripcion());	
+		}else{
+			jsonObj.put("grupoInfo", FiseConstants.BLANCO);	
+		}
+		
+		if(fiseFormato14AC.getFechaEnvioDefinitivo()!=null){
+			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+		}else{
+			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+		}
+		
+		
 		//valores de cabecera y detalle
 		//averiguar si se tiene que hacer este calculo, al parecer es innecesario
 		
