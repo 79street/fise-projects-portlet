@@ -216,7 +216,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14BGartController.c
   				jsonArray.put(new Formato14BGartJSON().asJSONObject(fiseFormato14BC,""));
   			}
   			
-  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14A, FiseConstants.NOMBRE_EXCEL_FORMATO14B, FiseConstants.NOMBRE_HOJA_FORMATO14B, listaFormato);
+  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14B, FiseConstants.NOMBRE_EXCEL_FORMATO14B, FiseConstants.NOMBRE_HOJA_FORMATO14B, listaFormato);
   			
   			logger.info("arreglo json:"+jsonArray);
   			PrintWriter pw = response.getWriter();
@@ -1804,7 +1804,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	    
 	    String nombreReporte = request.getParameter("nombreReporte").trim();
 	    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-	    String tipoFormato = FiseConstants.TIPO_FORMATO_14A;
+	    String tipoFormato = FiseConstants.TIPO_FORMATO_14B;
 	    String tipoArchivo = request.getParameter("tipoArchivo").trim();
 	   
 	    session.setAttribute("nombreReporte",nombreReporte);
@@ -1900,7 +1900,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	    if( formato!=null ){
 	    	//int cont=0;
 	    	Formato14Generic formato14Generic = new Formato14Generic(formato);
-	    	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLogin());
+	    	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14B, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLogin());
 		    if(i==0){
 		    	cargarListaObservaciones(formato.getFiseFormato14BDs());
 		    	//model.addAttribute("listaObservaciones", listaObservaciones);
@@ -1915,7 +1915,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 				}
 		    			
 		    	//**exportar excel
-		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, FiseConstants.NOMBRE_EXCEL_VALIDACION_F14A, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, FiseConstants.NOMBRE_EXCEL_VALIDACION_F14B, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
 		    	
 		    	//jsonObj.put("resultado", "OK");
 		    }else{
@@ -2037,7 +2037,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
         	}
         	
         	Formato14Generic formato14Generic = new Formato14Generic(formato);
-        	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
+        	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14B, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 		    if(i==0){
 		    	cargarListaObservaciones(formato.getFiseFormato14BDs());
 		    } 
@@ -2061,7 +2061,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     	   }
     	   
     	   
-	        /**REPORTE FORMATO 14A*/
+	        /**REPORTE FORMATO 14B*/
 	       nombreReporte = "formato14B";
 	       nombreArchivo = nombreReporte;
 	       directorio =  "/reports/"+nombreReporte+".jasper";

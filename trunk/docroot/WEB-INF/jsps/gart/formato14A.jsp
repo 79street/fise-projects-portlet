@@ -225,7 +225,7 @@ $(document).ready(function () {
 															<fieldset class="net-frame-border">
 																<table style="width: 100%;" border="0">
 																	<tr>
-																		<td colspan="5"><output class="net-titulo">Periodo a declarar</output></td>
+																		<td colspan="5"><output class="net-titulo">Mes, Ano y Etapa de Presentación:</output></td>
 																	</tr>
 																	<tr>
 																		<td colspan="5">
