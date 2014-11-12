@@ -99,7 +99,7 @@ function completarDecimal(id,decimal){
 		var sub1 = /^\d{1,/;
 		var sub2 = /}$/;
 		var sub3 = /}[.]$/;
-		var sub4 = /}[.]\d{1,/
+		var sub4 = /}[.]\d{1,/;
 		var sub5 = /^[.]$/;
 		var sub6 = /^[.]\d{1,/;
 		if( charCode == '46' || numstr.match(new RegExp(sub1.source+(entero)+sub2.source)) ) {

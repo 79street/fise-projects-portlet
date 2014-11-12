@@ -191,7 +191,7 @@ var formato14B= {
 		this.f_costoEnvPadronR=$('#costoEnvPadronR');
 		this.f_nroValesFisR=$('#nroValesFisR');
 		this.f_costoUnitLiqR=$('#costoUnitLiqR');
-		this.f_costoUnitDigitR=$('#costoUnitDigitR');
+		this.f_costoUnitDigitR=$('#costoUnitValesDigitR');
 		this.f_costoAtenSolicR=$('#costoAtenSolicR');
 		this.f_costoAtenConsR=$('#costoAtenConsR');
 		this.f_costoTotalAtenR=$('#costoTotalAtenR');
@@ -216,7 +216,7 @@ var formato14B= {
 		this.f_costoEnvPadronP=$('#costoEnvPadronP');
 		this.f_nroValesFisP=$('#nroValesFisP');
 		this.f_costoUnitLiqP=$('#costoUnitLiqP');
-		this.f_costoUnitDigitP=$('#costoUnitDigitP');
+		this.f_costoUnitDigitP=$('#costoUnitValesDigitP');
 		this.f_costoAtenSolicP=$('#costoAtenSolicP');
 		this.f_costoAtenConsP=$('#costoAtenConsP');
 		this.f_costoTotalAtenP=$('#costoTotalAtenP');
@@ -241,7 +241,7 @@ var formato14B= {
 		this.f_costoEnvPadronL=$('#costoEnvPadronL');
 		this.f_nroValesFisL=$('#nroValesFisL');
 		this.f_costoUnitLiqL=$('#costoUnitLiqL');
-		this.f_costoUnitDigitL=$('#costoUnitDigitL');
+		this.f_costoUnitDigitL=$('#costoUnitValesDigitL');
 		this.f_costoAtenSolicL=$('#costoAtenSolicL');
 		this.f_costoAtenConsL=$('#costoAtenConsL');
 		this.f_costoTotalAtenL=$('#costoTotalAtenL');
@@ -1432,7 +1432,7 @@ var formato14B= {
 		formato14B.formularioCompletarDecimales();
 		
 		formato14B.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
-		
+		//alert(formato14B.flagCarga.val());
 		formato14B.mostrarPeriodoEjecucion();
 	},
 //////CRUD
@@ -1457,6 +1457,7 @@ var formato14B= {
 						var addhtml2='Datos guardados satisfactoriamente';
 						formato14B.dialogMessageContent.html(addhtml2);
 						formato14B.dialogMessage.dialog("open");
+						formato14B.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 						formato14B.mostrarFormularioModificado();
 						formato14B.initBlockUI();
 					}
@@ -1536,6 +1537,7 @@ var formato14B= {
 		 }
 		 //var etapaM = "SOLICITUD";
 		 var etapaM = formato14B.f_periodoEnvio.val().substring(6,formato14B.f_periodoEnvio.val().length);
+		 //alert(formato14B.flagCarga.val());
 		 if( formato14B.flagCarga.val()=='0' ){
 			 formato14B.mostrarUltimoFormato();
 		 }else{
@@ -1589,36 +1591,81 @@ var formato14B= {
 		 	}
 		}
 		//valores de formulario
-		if(formato14B.f_nroBenefR.val().length == '' ) {		  
-			alert('Debe ingresar el número de empadronados para Rural');
+		if(formato14B.f_nroValesImpR.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales impresos para Rural');
 			formato14B.f_nroBenefR.focus();
 			return false; 
 		}
-		if(formato14B.f_nroAgentR.val().length == '' ) {		  
-			alert('Debe ingresar el numero de agentes para Rural');
-			formato14B.f_nroAgentR.focus();
+		if(formato14B.f_nroValesReptR.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales repartidos para Rural');
+			formato14B.f_nroBenefR.focus();
+			return false; 
+		}
+		if(formato14B.f_nroValesEntrR.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales entregados para Rural');
+			formato14B.f_nroBenefR.focus();
+			return false; 
+		}
+		if(formato14B.f_nroValesFisR.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales físicos para Rural');
+			formato14B.f_nroBenefR.focus();
+			return false; 
+		}
+		if(formato14B.f_nroTotalAtenR.val().length == '' ) {		  
+			alert('Debe ingresar el número total de atenciones para Rural');
+			formato14B.f_nroBenefR.focus();
 			return false; 
 		}
 		////////////////////
-		if(formato14B.f_nroBenefP.val().length == '' ) {		  
-			alert('Debe ingresar el número de empadronados para Provincia');
+		if(formato14B.f_nroValesImpP.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales impresos para Provincia');
 			formato14B.f_nroBenefP.focus();
 			return false; 
 		}
-		if(formato14B.f_nroAgentP.val().length == '' ) {		  
-			alert('Debe ingresar el numero de agentes para Provincia');
-			formato14B.f_nroAgentP.focus();
+		if(formato14B.f_nroValesReptP.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales repartidos para Provincia');
+			formato14B.f_nroBenefP.focus();
+			return false; 
+		}
+		if(formato14B.f_nroValesEntrP.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales entregados para Provincia');
+			formato14B.f_nroBenefP.focus();
+			return false; 
+		}
+		if(formato14B.f_nroValesFisP.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales físicos para Provincia');
+			formato14B.f_nroBenefP.focus();
+			return false; 
+		}
+		if(formato14B.f_nroTotalAtenP.val().length == '' ) {		  
+			alert('Debe ingresar el número total de atenciones para Provincia');
+			formato14B.f_nroBenefP.focus();
 			return false; 
 		}
 		///////////////////
-		if(formato14B.f_nroBenefL.val().length == '' ) {		  
-			alert('Debe ingresar el número de empadronados para Lima');
+		if(formato14B.f_nroValesImpL.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales impresos para Lima');
 			formato14B.f_nroBenefL.focus();
 			return false; 
 		}
-		if(formato14B.f_nroAgentL.val().length == '' ) {		  
-			alert('Debe ingresar el numero de agentes para Lima');
-			formato14B.f_nroAgentL.focus();
+		if(formato14B.f_nroValesReptL.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales repartidos para Lima');
+			formato14B.f_nroBenefL.focus();
+			return false; 
+		}
+		if(formato14B.f_nroValesEntrL.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales entregados para Lima');
+			formato14B.f_nroBenefL.focus();
+			return false; 
+		}
+		if(formato14B.f_nroValesFisL.val().length == '' ) {		  
+			alert('Debe ingresar el número de vales físicos para Lima');
+			formato14B.f_nroBenefL.focus();
+			return false; 
+		}
+		if(formato14B.f_nroTotalAtenL.val().length == '' ) {		  
+			alert('Debe ingresar el número total de atenciones para Lima');
+			formato14B.f_nroBenefL.focus();
 			return false; 
 		}
 		return true; 

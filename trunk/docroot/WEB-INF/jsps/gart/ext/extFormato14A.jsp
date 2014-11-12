@@ -1400,6 +1400,7 @@ var formato14A= {
 						var addhtml2='Datos guardados satisfactoriamente';
 						formato14A.dialogMessageContent.html(addhtml2);
 						formato14A.dialogMessage.dialog("open");
+						formato14A.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 						formato14A.mostrarFormularioModificado();
 						formato14A.initBlockUI();
 					}
