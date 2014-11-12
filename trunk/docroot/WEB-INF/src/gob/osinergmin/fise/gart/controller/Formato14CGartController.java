@@ -155,6 +155,10 @@ public class Formato14CGartController {
     		f.setEtapa(etapa!=null?etapa:"");
     		f.setFlag(flag!=null?flag:"");
     		
+    		//valores constantes para las empresas edelnor y luz del sur
+    		f.setCodEdelnor(FiseConstants.COD_EMPRESA_EDELNOR);
+    		f.setCodLuzSur(FiseConstants.COD_EMPRESA_LUZ_SUR);
+    		
     		pRequest.getPortletSession().setAttribute("codEmpresa", "", PortletSession.APPLICATION_SCOPE);
     	    pRequest.getPortletSession().setAttribute("anoPresentacion", "", PortletSession.APPLICATION_SCOPE);
     	    pRequest.getPortletSession().setAttribute("mesPresentacion", "", PortletSession.APPLICATION_SCOPE);
@@ -248,10 +252,17 @@ public class Formato14CGartController {
   				formato14c.setDescEmpresa(mapaEmpresa.get(formato14c.getId().getCodEmpresa()));
   				formato14c.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato14c.getId().getMesPresentacion()));
   				logger.info("Seteando del array de json"); 
-  				jsonArray.put(new Formato14CJSON().asJSONObject(formato14c,""));
+  				/**Obteniendo el flag de la operacion*/
+  				String flagOper = commonService.obtenerEstadoProceso(formato14c.getId().getCodEmpresa(),
+  						FiseConstants.TIPO_FORMATO_14C,formato14c.getId().getAnoPresentacion(),
+  						formato14c.getId().getMesPresentacion(), formato14c.getId().getEtapa());
+  				logger.info("flag operacion:  "+flagOper); 
+  				jsonArray.put(new Formato14CJSON().asJSONObject(formato14c,flagOper));
   			}
   			
-  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14C, FiseConstants.NOMBRE_EXCEL_FORMATO14C, FiseConstants.NOMBRE_HOJA_FORMATO14C, listaFormato14C);
+  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14C, 
+  					FiseConstants.NOMBRE_EXCEL_FORMATO14C, 
+  					FiseConstants.NOMBRE_HOJA_FORMATO14C, listaFormato14C);
   			
   			logger.info("arreglo json:"+jsonArray);
   			PrintWriter pw = response.getWriter();
@@ -277,9 +288,7 @@ public class Formato14CGartController {
 			String anoFinVigencia = request.getParameter("anoFinVigencia");
 			logger.info("anoIniVigencia "+anoIniVigencia);
 			logger.info("anoFinVigencia "+anoFinVigencia);
-			logger.info("etapa "+f.getEtapa());
-			
-			//Formato14CBean formato = new Formato14CBean();
+			logger.info("etapa "+f.getEtapa());	
 			
 			f= formato14CGartService.buscarFormato14CEditar(f.getCodEmpresa(),
 					f.getAnioPres(), f.getMesPres(), f.getAnoIniVigencia(), f.getAnoFinVigencia(), f.getEtapa())	;	
@@ -463,8 +472,7 @@ public class Formato14CGartController {
   			//String periodoEnvio = f.getPeriodoEnvio();
   			//lo pongo en la lista porque no persiste las colecciones en el command
   			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, 
-  					FiseConstants.TIPO_FORMATO_12C);
-  			//f.setListaPeriodoEnvio(listaPeriodoEnvio); 
+  					FiseConstants.TIPO_FORMATO_14C);  		
   			logger.info("Tamaño de lista de periodo de envio:  "+listaPeriodoEnvio.size()); 
   			JSONArray jsonArray = new JSONArray();
   			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
@@ -472,7 +480,9 @@ public class Formato14CGartController {
 				jsonObj.put("codigoItem", periodo.getCodigoItem());				
 				jsonObj.put("descripcionItem", periodo.getDescripcionItem());			
 				jsonObj.put("flagPeriodoEjecucion", periodo.getFlagPeriodoEjecucion());	
-				//agregar los valores
+				jsonObj.put("flagCosto", periodo.getFlagHabilitaCostos());	
+				logger.info("Flag habilita costos al momento de cargar el periodo mes anio y etapa: "
+				+periodo.getFlagHabilitaCostos());
 				jsonArray.put(jsonObj);		
 			}
   			
@@ -497,6 +507,7 @@ public class Formato14CGartController {
   			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				if( periodoEnvio.equals(p.getCodigoItem()) ){
 					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
+					jsonObj.put("flagCosto", p.getFlagHabilitaCostos());	
 					break;
 				}
 			}
@@ -528,13 +539,16 @@ public class Formato14CGartController {
     	String codEmpresaNew = uploadPortletRequest.getParameter("codEmpresa");
     	String periodoEnvioPresNew = uploadPortletRequest.getParameter("periodoEnvio");
     	String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
+    	String flagCosto = uploadPortletRequest.getParameter("flagCosto");
+    	logger.info("Flag de carga:  "+flagCarga);
+    	logger.info("Flag costo:  "+flagCosto);
     	
     	String anioPresNew = "";
 		String mesPresNew = "";
 		String anioIniVigNew = "";
 		String anioFinVigNew = ""; 
 		String etapaNew = ""; 
-		logger.info("Flag de carga:  "+flagCarga);
+		
 		if(periodoEnvioPresNew!=null && periodoEnvioPresNew.length()>6){
     		anioPresNew = periodoEnvioPresNew.substring(0, 4);
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
