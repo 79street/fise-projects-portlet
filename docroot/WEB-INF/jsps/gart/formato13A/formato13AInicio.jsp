@@ -1,7 +1,15 @@
 <%@include file="/WEB-INF/jsps/gart/ext/extFormato13A.jsp"%>
 
 <portlet:renderURL var="urlNuevo">
-<portlet:param name="action" value="nuevo"/>
+    <portlet:param name="action" value="nuevo"/>
+</portlet:renderURL>
+
+<portlet:renderURL var="urlView">
+    <portlet:param name="action" value="view"/>
+</portlet:renderURL>
+
+<portlet:renderURL var="urlEdit">
+    <portlet:param name="action" value="edit"/>
 </portlet:renderURL>
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet"
@@ -9,7 +17,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {	
-	formato13A.init('${urlNuevo}');
+	formato13A.init('${urlNuevo}','${urlView}','${urlEdit}');
 });
 </script>
 
