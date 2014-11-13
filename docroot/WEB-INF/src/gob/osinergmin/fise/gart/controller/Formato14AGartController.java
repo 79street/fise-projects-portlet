@@ -159,6 +159,10 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 		command.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
 		command.setEtapaB(FiseConstants.ETAPA_SOLICITUD);
 		
+		//valores constantes para las empresas edelnor y luz del sur
+		command.setCodEdelnor(FiseConstants.COD_EMPRESA_EDELNOR);
+		command.setCodLuzSur(FiseConstants.COD_EMPRESA_LUZ_SUR);
+		
 		if(command.getListaEmpresas()==null){
 			command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		}
@@ -213,7 +217,13 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
   			for(FiseFormato14AC fiseFormato14AC : listaFormato){
   				fiseFormato14AC.setDescEmpresa(mapaEmpresa.get(fiseFormato14AC.getId().getCodEmpresa()));
   				fiseFormato14AC.setDescMesPresentacion(fiseUtil.getMapaMeses().get(fiseFormato14AC.getId().getMesPresentacion()));
-  				jsonArray.put(new Formato14AGartJSON().asJSONObject(fiseFormato14AC,""));
+  				
+  				/**Obteniendo el flag de la operacion*/
+  				String flagOper = commonService.obtenerEstadoProceso(fiseFormato14AC.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_14C,fiseFormato14AC.getId().getAnoPresentacion(),
+  						fiseFormato14AC.getId().getMesPresentacion(), fiseFormato14AC.getId().getEtapa());
+  				logger.info("flag operacion:  "+flagOper);
+  				
+  				jsonArray.put(new Formato14AGartJSON().asJSONObject(fiseFormato14AC,"",flagOper));
   			}
   			
   			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14A, FiseConstants.NOMBRE_EXCEL_FORMATO14A, FiseConstants.NOMBRE_HOJA_FORMATO14A, listaFormato);
@@ -287,7 +297,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 					model.addAttribute("model", obj);
 					
 				    //setear la lista de periodo correspondiente al registro
-				    listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.NOMBRE_FORMATO_12A);
+				    listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.NOMBRE_FORMATO_14A);
 				    JSONArray jsonArray = new JSONArray();
 		  			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
 		  				JSONObject jsonObj2 = new JSONObject();
@@ -308,13 +318,16 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 					}
 				}
 		        
-		        JSONObject jsonent = new Formato14AGartJSON().asJSONObject(formato,flagPeriodo);
+		        JSONObject jsonent = new Formato14AGartJSON().asJSONObject(formato,flagPeriodo,"");
 		        logger.info("jsonformato:"+jsonent);
 		        jsonObj.put("formato",jsonent);
 				jsonObj.put("resultado", "OK");
 				
 			}else if(tipo.equals(FiseConstants.COD_SAVE)){ 
 				try {
+					
+					String anoIniVigencia = request.getParameter("anoInicioVigencia");
+					String anoFinVigencia = request.getParameter("anoFinVigencia");
 					
 					Formato14ACBean formulario = new Formato14ACBean();
 					
@@ -324,15 +337,18 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 						formulario.setAnioPresent(Long.parseLong(command.getPeriodoEnvio().substring(0, 4)));
 						formulario.setMesPresent(Long.parseLong(command.getPeriodoEnvio().substring(4, 6)));
 						formulario.setEtapa(command.getPeriodoEnvio().substring(6, command.getPeriodoEnvio().length()));
-						if( "S".equals(command.getFlagPeriodoEjecucion()) ){
+						/*if( "S".equals(command.getFlagPeriodoEjecucion()) ){
 							formulario.setAnioInicioVigencia(command.getAnioInicioVigencia());
 							formulario.setAnioFinVigencia(command.getAnioFinVigencia());
 						}else{
 							formulario.setAnioInicioVigencia(formulario.getAnioPresent());
 							formulario.setAnioFinVigencia(formulario.getAnioPresent());
-						}
+						}*/
 					
 					}
+					formulario.setAnioInicioVigencia(Long.parseLong(anoIniVigencia));
+					formulario.setAnioFinVigencia(Long.parseLong(anoFinVigencia));
+					
 					//RURAL
 					//formulario.setTotalEmpadR(command.getTotalEmpadR());
 					formulario.setImprEsqInvitR(command.getImprEsqInvitR());
@@ -431,14 +447,17 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 					String periodoEnvio = request.getParameter("periodoEnvio");
 					//String anoPresentacion = request.getParameter("anoPresentacion");
 					//String mesPresentacion = request.getParameter("mesPresentacion");
-					String flagPeriodoEjecucion = request.getParameter("flagPeriodo");
+					/*String flagPeriodoEjecucion = request.getParameter("flagPeriodo");
 					String anoInicioVigencia="";
 					String anoFinVigencia="";
 					if( "S".equals(flagPeriodoEjecucion) ){
 						anoInicioVigencia = request.getParameter("anoInicioVigencia");
 						anoFinVigencia = request.getParameter("anoFinVigencia");
-					}
+					}*/
 					String etapa = request.getParameter("etapa");
+					
+					String anoInicioVigencia = request.getParameter("anoInicioVigencia");
+					String anoFinVigencia = request.getParameter("anoFinVigencia");
 					
 					logger.info("codempresa "+codEmpresa);
 			        //logger.info("anopresent "+anoPresentacion);
@@ -529,14 +548,17 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 						formulario.setAnioPresent(Long.parseLong(periodoEnvio.substring(0, 4)));
 						formulario.setMesPresent(Long.parseLong(periodoEnvio.substring(4, 6)));
 						formulario.setEtapa(periodoEnvio.substring(6, periodoEnvio.length()));
-						if( "S".equals(flagPeriodoEjecucion) ){
+						/*if( "S".equals(flagPeriodoEjecucion) ){
 							formulario.setAnioInicioVigencia(Long.parseLong(anoInicioVigencia));
 							formulario.setAnioFinVigencia(Long.parseLong(anoFinVigencia));
 						}else{
 							formulario.setAnioInicioVigencia(formulario.getAnioPresent());
 							formulario.setAnioFinVigencia(formulario.getAnioPresent());
-						}
+						}*/
 					}
+					
+					formulario.setAnioInicioVigencia(Long.parseLong(anoInicioVigencia));
+					formulario.setAnioFinVigencia(Long.parseLong(anoFinVigencia));
 					
 					pk.setCodEmpresa(formulario.getCodigoEmpresa());
 			        pk.setAnoPresentacion(formulario.getAnioPresent());
@@ -547,12 +569,18 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 			        
 			        formato = formato14Service.obtenerFormato14ACByPK(pk);
 					logger.info("objeto "+formato);
+					
+					ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+					
+					formulario.setUsuario(themeDisplay.getUser().getLogin());
+					formulario.setTerminal(themeDisplay.getUser().getLoginIP());
+					
 			        formato14Service.modificarFormato14AC(formulario, formato);
 					jsonObj.put("resultado", "OK"); 	
 				} catch (Exception e) {
 					jsonObj.put("resultado", "Error");
 					jsonObj.put("mensaje", e.getMessage());
-					System.out.println("Error al guardar la tabla fiseformato12A: "+e.getMessage());
+					System.out.println("Error al guardar la tabla fiseformato14A: "+e.getMessage());
 				}
 			}else if(tipo.equals(FiseConstants.COD_DELETE)){   				
 				try {
@@ -642,6 +670,9 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
   			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				if( periodoEnvio.equals(p.getCodigoItem()) ){
 					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
+					//agreamos los campos de ano inicio y fin de vigencia
+					jsonObj.put("anioInicioVigencia", p.getAnioInicioVig());
+					jsonObj.put("anioFinVigencia", p.getAnioFinVig());
 					break;
 				}
 			}
@@ -667,7 +698,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
 		String flagCarga = uploadPortletRequest.getParameter("flagCarga");
     	String codEmpresaNew = uploadPortletRequest.getParameter("codigoEmpresa");
     	String periodoEnvioPresNew = uploadPortletRequest.getParameter("periodoEnvio");
-    	String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
+    	//String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
     	
     	String anioPresNew = "";
 		String mesPresNew = "";
@@ -679,14 +710,17 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
     		anioPresNew = periodoEnvioPresNew.substring(0, 4);
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
     		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
-    		if( "S".equals(flagPeriodoEjecucion) ){
+    		/*if( "S".equals(flagPeriodoEjecucion) ){
     			anioIniVigNew = uploadPortletRequest.getParameter("i_anioejecuc");
     			anioFinVigNew = uploadPortletRequest.getParameter("s_mes_ejecuc");
 			}else{
 				anioIniVigNew = anioPresNew;
 				anioFinVigNew = anioPresNew;
-			}
+			}*/
     	}
+		
+		anioIniVigNew = uploadPortletRequest.getParameter("anioInicioVigencia");
+		anioFinVigNew = uploadPortletRequest.getParameter("anioFinVigencia");
     	
 		
 		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -1864,7 +1898,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	    
 	    String codEmpresa = request.getParameter("codEmpresa").trim();
 	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
-	    String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
+	    //String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
 	    String anoPresentacion = "";
 	    String mesPresentacion = "";
 	    String anoInicioVigencia = "";
@@ -1885,14 +1919,17 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	    	anoPresentacion = periodoEnvio.substring(0, 4);
 	    	mesPresentacion = periodoEnvio.substring(4, 6);
 	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
-	    	if( "S".equals(flagPeriodoEjecucion) ){
+	    	/*if( "S".equals(flagPeriodoEjecucion) ){
 	    		anoInicioVigencia = request.getParameter("anoInicioVigencia");
 				anoFinVigencia = request.getParameter("anoFinVigencia");
 			}else{
 				anoInicioVigencia = anoPresentacion;
 				anoFinVigencia = anoPresentacion;
-			}
+			}*/
 	    }
+	    
+	    anoInicioVigencia = request.getParameter("anoInicioVigencia");
+		anoFinVigencia = request.getParameter("anoFinVigencia");
 	    
 	    FiseFormato14ACPK pk = new FiseFormato14ACPK();
 	    pk.setCodEmpresa(codEmpresa);
@@ -1938,7 +1975,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 			
 		String codEmpresa = request.getParameter("codEmpresa").trim();
 	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
-	    String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
+	    //String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
 	    String anoPresentacion = "";
 	    String mesPresentacion = "";
 	    String anoInicioVigencia = "";
@@ -1949,14 +1986,17 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	    	anoPresentacion = periodoEnvio.substring(0, 4);
 	    	mesPresentacion = periodoEnvio.substring(4, 6);
 	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
-	    	if( "S".equals(flagPeriodoEjecucion) ){
+	    	/*if( "S".equals(flagPeriodoEjecucion) ){
 	    		anoInicioVigencia = request.getParameter("anoInicioVigencia");
 				anoFinVigencia = request.getParameter("anoFinVigencia");
 			}else{
 				anoInicioVigencia = anoPresentacion;
 				anoFinVigencia = anoPresentacion;
-			}
+			}*/
 	    }
+	    anoInicioVigencia = request.getParameter("anoInicioVigencia");
+		anoFinVigencia = request.getParameter("anoFinVigencia");
+	    
 	    FiseFormato14ACPK pk = new FiseFormato14ACPK();
 		pk.setCodEmpresa(codEmpresa);
 		pk.setAnoPresentacion(new Long(anoPresentacion));
@@ -2059,7 +2099,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    
 	    String codEmpresa = request.getParameter("codEmpresa").trim();
 	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
-	    String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
+	    //String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
 	    String anoPresentacion = "";
 	    String mesPresentacion = "";
 	    String anoInicioVigencia = "";
@@ -2075,14 +2115,17 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    	anoPresentacion = periodoEnvio.substring(0, 4);
 	    	mesPresentacion = periodoEnvio.substring(4, 6);
 	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
-	    	if( "S".equals(flagPeriodoEjecucion) ){
+	    	/*if( "S".equals(flagPeriodoEjecucion) ){
 	    		anoInicioVigencia = request.getParameter("anoInicioVigencia");
 				anoFinVigencia = request.getParameter("anoFinVigencia");
 			}else{
 				anoInicioVigencia = anoPresentacion;
 				anoFinVigencia = anoPresentacion;
-			}
+			}*/
 	    }
+	    
+	    anoInicioVigencia = request.getParameter("anoInicioVigencia");
+		anoFinVigencia = request.getParameter("anoFinVigencia");
 	    
 	    FiseFormato14ACPK pk = new FiseFormato14ACPK();
 	    pk.setCodEmpresa(codEmpresa);

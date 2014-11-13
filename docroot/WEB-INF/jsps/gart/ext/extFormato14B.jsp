@@ -45,6 +45,11 @@ var formato14B= {
 	mensajeError:null,
 	mensajeInfo:null,
 	flag:null,
+	
+	//valores constantes para edelnor y luz del sur
+	cod_empresa_edelnor:null,
+	cod_empresa_luz_sur:null,
+	
 	//
 	formCommand: null,
 	botonBuscar:null,
@@ -88,6 +93,7 @@ var formato14B= {
 	divFormato:null,
 	divPeriodoEjecucion:null,
 	divOverlay:null,
+	divInformacion:null,
 	//formulario
 	f_empresa:null,
 	f_periodoEnvio:null,
@@ -144,6 +150,10 @@ var formato14B= {
 		this.mensajeInfo=$('#<portlet:namespace/>mensajeInfo');
 		this.flag=$('#<portlet:namespace/>flag');//solo para controlar los errores al subir archivos excel o de texto
 		//
+		//valores constantes para edelnor y luz del sur
+		this.cod_empresa_edelnor=$("#codEdelnor");
+		this.cod_empresa_luz_sur=$("#codLuzSur");
+		
 		this.formCommand=$('#formato14BCBean');
 		//
 		this.i_codEmpresaB=$('#codEmpresaB');
@@ -172,6 +182,7 @@ var formato14B= {
 		this.divFormato=$("#<portlet:namespace/>div_formato");
 		this.divPeriodoEjecucion=$("#<portlet:namespace/>divPeriodoEjecucion");
 		this.divOverlay=$("#<portlet:namespace/>divOverlay");
+		this.divInformacion=$("#<portlet:namespace/>divInformacion");
 		//formulario
 		this.f_empresa=$('#codigoEmpresa');
 		this.f_periodoEnvio=$('#periodoEnvio');
@@ -305,6 +316,7 @@ var formato14B= {
 		 var anioIniVigSes = formato14B.anioIniVigSes.val();
 		 var anioFinVigSes = formato14B.anioFinVigSes.val();
 		 var etapaSes = formato14B.etapaSes.val();
+		 var flagOpera = 'ABIERTO';
 		 //
 		 
 		 var flag = formato14B.flag.val();
@@ -325,7 +337,7 @@ var formato14B= {
 		}else{
 			//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioIniVigSes+','+anioFinVigSes+','+etapaSes);
 			 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioIniVigSes != '' && anioFinVigSes != '' && etapaSes != ''){
-				 formato14B.editarFormato(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes);
+				 formato14B.editarFormato(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes,flagOpera);
 			 }
 		 }
 		 var mensajeInfo = formato14B.mensajeInfo.val();
@@ -352,7 +364,7 @@ var formato14B= {
 	buildGrids : function () {	
 		formato14B.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Visualizar','Editar','Anular','Estado','','',''],
+	       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Visualizar','Editar','Anular','Estado','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -366,7 +378,8 @@ var formato14B= {
 	               { name: 'estado', index: 'estado', width: 50,align:'center'},
 	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
-	               { name: 'etapa', index: 'etapa', hidden: true}
+	               { name: 'etapa', index: 'etapa', hidden: true},
+	               { name: 'flagOperacion', index: 'flagOperacion', hidden: true}
 		   	    ],
 		   	 multiselect: false,
 				rowNum:10,
@@ -385,8 +398,8 @@ var formato14B= {
 	      			var cl = ids[i];
 	      			var ret = formato14B.tablaResultados.jqGrid('getRowData',cl);           
 	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato14B.verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
-	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato14B.editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
-	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato14B.confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";              			
+	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato14B.editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
+	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato14B.confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";              			
 	      			formato14B.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 	      			formato14B.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 	      			formato14B.tablaResultados.jqGrid('setRowData',ids[i],{elim:elem});
@@ -459,13 +472,17 @@ var formato14B= {
 		formato14B.divHome.hide();
 		formato14B.flagCarga.val('0');
 		//
-		if( formato14B.f_flagPeriodo.val()=='S' ){
+		/*if( formato14B.f_flagPeriodo.val()=='S' ){
 			//poner valores guardadose en sesion
 			$("#anioInicioVigencia").val(formato14B.i_anioDesde.val());
 			$("#anioFinVigencia").val(formato14B.i_anioDesde.val());
-		}
+		}*/
 		formato14B.botonValidacion.css('display','none');
 		formato14B.<portlet:namespace/>loadPeriodo('');
+		
+		formato14B.estiloEdicionRural();
+		formato14B.estiloEdicionProvincia();
+		
 	},
 	<portlet:namespace/>regresar : function(){
 		formato14B.procesoEstado.val('');
@@ -483,16 +500,31 @@ var formato14B= {
 		
 		formato14B.panelCargaArchivo.css('display','');
 
+		//limpiamos los anios de vigencia
+		$('#anioInicioVigencia').val('0');
+		$('#anioFinVigencia').val('0');
+		
 		formato14B.botonBuscar.trigger('click');
 	},
 	inicializarFormulario : function(){
+		
+		formato14B.divInformacion.hide();
+		
 		formato14B.f_empresa.val('');
-		if( formato14B.f_flagPeriodo.val()=='S' ){
+		/*if( formato14B.f_flagPeriodo.val()=='S' ){
 			$('#anioInicioVigencia').val('');
 			$('#anioFinVigencia').val('');
 			$('#anioInicioVigencia').attr("disabled",false);
 			$('#anioFinVigencia').attr("disabled",false);
+		}*/
+		
+		//validar lima edelnor y luz del sur
+		if(formato14B.cod_empresa_edelnor.val()==formato14B.f_empresa.val() || formato14B.cod_empresa_luz_sur.val()==formato14B.f_empresa.val()){
+			formato14B.habilitarLima();										
+		}else{
+			formato14B.deshabilitarLima();
 		}
+		
 		//RURAL
 		formato14B.f_impValEdeR.val('0.00');
 		formato14B.f_impValNoEdeR.val('0.00');
@@ -581,10 +613,10 @@ var formato14B= {
 	removerDeshabilitados : function(){
 		formato14B.f_empresa.removeAttr("disabled");
 		formato14B.f_periodoEnvio.removeAttr("disabled");
-		if( formato14B.f_flagPeriodo.val()=='S' ){
-			$('#anioInicioVigencia').removeAttr("disabled");
-			$('#anioFinVigencia').removeAttr("disabled");
-		}
+		//if( formato14B.f_flagPeriodo.val()=='S' ){
+		$('#anioInicioVigencia').removeAttr("disabled");
+		$('#anioFinVigencia').removeAttr("disabled");
+		//}
 		//RURAL
 		formato14B.f_impValEdeR.removeAttr("disabled");
 		formato14B.f_impValNoEdeR.removeAttr("disabled");
@@ -638,6 +670,8 @@ var formato14B= {
 		formato14B.f_utilMatOficL.removeAttr("disabled");
 	},
 	deshabilitarCamposView : function(){
+		$('#anioInicioVigencia').attr("disabled",true);
+		$('#anioFinVigencia').attr("disabled",true);
 		//RURAL
 		formato14B.f_impValEdeR.attr("disabled",true);
 		formato14B.f_impValNoEdeR.attr("disabled",true);
@@ -697,6 +731,11 @@ var formato14B= {
 		formato14B.botonEnvioDefinitivo.css('display','none');
 		//
 		formato14B.panelCargaArchivo.css('display','none');
+		
+		formato14B.quitarEstiloEdicionCabecera();
+		formato14B.quitarEstiloEdicionRural();
+		formato14B.quitarEstiloEdicionProvincia();
+		formato14B.quitarEstiloEdicionLima();
 	},
 	//CALCULO RURAL
 	totalImpresionRural : function(){
@@ -1209,6 +1248,12 @@ var formato14B= {
 						dwr.util.setValue("periodoEnvio", valPeriodo);
 					}
 					formato14B.<portlet:namespace/>loadCargaFlagPeriodo();
+					//validar lima edelnor y luz del sur
+					if(formato14B.cod_empresa_edelnor.val()==formato14B.f_empresa.val() || formato14B.cod_empresa_luz_sur.val()==formato14B.f_empresa.val()){
+						formato14B.habilitarLima();										
+					}else{
+						formato14B.deshabilitarLima();
+					}
 				},error : function(){
 					alert("Error de conexión.");
 					formato14B.initBlockUI();
@@ -1222,7 +1267,11 @@ var formato14B= {
 				dataType: 'json',
 				success: function(data) {				
 					dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
-					formato14B.recargarPeriodoEjecucion();
+					//cargar los valores obtenidos de ano inicio y fin de vigencia
+					dwr.util.setValue("anioInicioVigencia", data.anioInicioVigencia);
+					dwr.util.setValue("anioFinVigencia", data.anioFinVigencia);
+					//
+					formato14B.recargarPeriodoEjecucion(data.anioInicioVigencia,data.anioFinVigencia);
 					formato14B.mostrarPeriodoEjecucion();
 				},error : function(){
 					alert("Error de conexión.");
@@ -1231,14 +1280,22 @@ var formato14B= {
 		});
 	},
 	mostrarPeriodoEjecucion : function(){
+		//ahora lo usamos para mostrar o no los componentes
+		//alert(formato14B.f_flagPeriodo.val());
 		if( formato14B.f_flagPeriodo.val()=='S' ){
-			formato14B.divPeriodoEjecucion.show();  
+			$('#anioInicioVigencia').removeAttr("disabled");
+			$('#anioFinVigencia').removeAttr("disabled");
+			//formato14B.divPeriodoEjecucion.show();  
+			formato14B.estiloEdicionCabecera();
 		}else{
-			formato14B.divPeriodoEjecucion.hide();  
+			$('#anioInicioVigencia').attr("disabled",true);
+			$('#anioFinVigencia').attr("disabled",true);
+			//formato14B.divPeriodoEjecucion.hide();
+			formato14B.quitarEstiloEdicionCabecera();
 		}
 	},
-	recargarPeriodoEjecucion : function(){
-		var anoInicio;
+	recargarPeriodoEjecucion : function(valAnioInicio,valAnioFin){
+		/*var anoInicio;
 		var anoFin;
 		if( formato14B.f_periodoEnvio.val() != null ){
 			anoInicio = formato14B.f_periodoEnvio.val().substring(0,4);
@@ -1247,7 +1304,9 @@ var formato14B= {
 				$('#anioInicioVigencia').val(anoInicio);
 				$('#anioFinVigencia').val(anoFin);
 			}
-		}
+		}*/
+		$('#anioInicioVigencia').val(valAnioInicio);
+		$('#anioFinVigencia').val(valAnioFin);
 	},
 	//FORMULARIOS DE VIEW Y EDICION
 	verFormato : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
@@ -1271,8 +1330,9 @@ var formato14B= {
 						formato14B.etapaEdit.val(etapa);
 						formato14B.divFormato.show();
 						formato14B.divHome.hide();
-						dwr.util.removeAllOptions("periodoEnvio");
-						dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
+						formato14B.divInformacion.show();
+						//dwr.util.removeAllOptions("periodoEnvio");
+						//dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
 						formato14B.FillEditformato(data.formato);
 						formato14B.deshabilitarCamposView();
 						formato14B.initBlockUI();
@@ -1287,47 +1347,68 @@ var formato14B= {
 				}
 		});	
 	},
-	editarFormato : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
-		$.blockUI({ message: formato14B.mensajeObteniendoDatos });
-		jQuery.ajax({
-				url: formato14B.urlCrud+'&'+formato14B.formCommand.serialize(),
-				type: 'post',
-				dataType: 'json',
-				data: {
-				   <portlet:namespace />tipo: "GET",
-				   <portlet:namespace />codEmpresa: codEmpresa,
-				   <portlet:namespace />anoPresentacion: anoPresentacion,
-				   <portlet:namespace />mesPresentacion: mesPresentacion,
-				   <portlet:namespace />anoIniVigencia: anoIniVigencia,
-				   <portlet:namespace />anoFinVigencia: anoFinVigencia,
-				   <portlet:namespace />etapa: etapa
-					},
-				success: function(data) {				
-					if (data.resultado == "OK"){
-						formato14B.procesoEstado.val("UPDATE");
-						formato14B.etapaEdit.val(etapa);
-						formato14B.divFormato.show();
-						formato14B.divHome.hide();
-						dwr.util.removeAllOptions("periodoEnvio");
-						dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
-						formato14B.FillEditformato(data.formato);
+	editarFormato : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa,flagOperacion){	
+		if(flagOperacion=='ABIERTO'){
+			$.blockUI({ message: formato14B.mensajeObteniendoDatos });
+			jQuery.ajax({
+					url: formato14B.urlCrud+'&'+formato14B.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data: {
+					   <portlet:namespace />tipo: "GET",
+					   <portlet:namespace />codEmpresa: codEmpresa,
+					   <portlet:namespace />anoPresentacion: anoPresentacion,
+					   <portlet:namespace />mesPresentacion: mesPresentacion,
+					   <portlet:namespace />anoIniVigencia: anoIniVigencia,
+					   <portlet:namespace />anoFinVigencia: anoFinVigencia,
+					   <portlet:namespace />etapa: etapa
+						},
+					success: function(data) {				
+						if (data.resultado == "OK"){
+							formato14B.procesoEstado.val("UPDATE");
+							formato14B.etapaEdit.val(etapa);
+							formato14B.divFormato.show();
+							formato14B.divHome.hide();
+							formato14B.divInformacion.show();
+							//dwr.util.removeAllOptions("periodoEnvio");
+							//dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
+							formato14B.FillEditformato(data.formato);
+							
+							formato14B.estiloEdicionRural();
+							formato14B.estiloEdicionProvincia();
+							
+							//validar lima edelnor y luz del sur
+							if(formato14B.cod_empresa_edelnor.val()==formato14B.f_empresa.val() || formato14B.cod_empresa_luz_sur.val()==formato14B.f_empresa.val()){
+								formato14B.habilitarLima();										
+							}else{
+								formato14B.deshabilitarLima();
+							}
+							formato14B.initBlockUI();
+						}
+						else{
+							alert("Error al recuperar los datos del registro seleccionado");
+							formato14B.initBlockUI();
+						}
+					},error : function(){
+						alert("Error de conexión.");
 						formato14B.initBlockUI();
 					}
-					else{
-						alert("Error al recuperar los datos del registro seleccionado");
-						formato14B.initBlockUI();
-					}
-				},error : function(){
-					alert("Error de conexión.");
-					formato14B.initBlockUI();
-				}
-		});	
+			});
+		}else if(flagOperacion=='CERRADO'){
+			alert(" No esta habilitado para realizar esta operacion");	
+		}else{
+			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+		}
 	},
 	FillEditformato : function(row){
 		
 		formato14B.f_empresa.val(row.codEmpresa);
 		//seteamos el concatenado
 		formato14B.f_periodoEnvio.val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
+		
+		//seteamos el grupo y estado
+		$('#descGrupoInformacion').val(row.grupoInfo);
+		$('#descEstado').val(row.estado);	
 		
 		//seteamos el periodo envio, cargado de base de datos
 		dwr.util.removeAllOptions("periodoEnvio");
@@ -1339,12 +1420,15 @@ var formato14B= {
    		dwr.util.addOptions("periodoEnvio", dataPeriodo,"codigoItem","descripcionItem");
 		//
 		formato14B.f_flagPeriodo.val(row.flagPeriodoEjecucion);
-		if( formato14B.f_flagPeriodo.val()=='S' ){
-			$('#anioInicioVigencia').val(row.anoIniVigencia);
-			$('#anioFinVigencia').val(row.anoFinVigencia);
+		$('#anioInicioVigencia').val(row.anoIniVigencia);
+		$('#anioFinVigencia').val(row.anoFinVigencia);
+		
+		formato14B.mostrarPeriodoEjecucion();
+		
+		/*if( formato14B.f_flagPeriodo.val()=='S' ){
 			$('#anioInicioVigencia').attr("disabled",true);
 			$('#anioFinVigencia').attr("disabled",true);
-		}
+		}*/
 		formato14B.etapaEdit.val(row.etapa);
 		//RURAL
 		formato14B.f_impValEdeR.val(row.impValEdeR);
@@ -1424,6 +1508,9 @@ var formato14B= {
 		
 		formato14B.f_empresa.attr("disabled",true);
 		formato14B.f_periodoEnvio.attr("disabled",true);
+		$('#anioInicioVigencia').attr("disabled",true);
+		$('#anioFinVigencia').attr("disabled",true);
+		formato14B.quitarEstiloEdicionCabecera();
 		//
 		formato14B.calculoTotal();
 		
@@ -1433,7 +1520,7 @@ var formato14B= {
 		
 		formato14B.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 		//alert(formato14B.flagCarga.val());
-		formato14B.mostrarPeriodoEjecucion();
+		//formato14B.mostrarPeriodoEjecucion();
 	},
 //////CRUD
 	<portlet:namespace/>guardarFormato : function(){
@@ -1478,16 +1565,22 @@ var formato14B= {
 			formato14B.divHome.show();
 		}
 	},
-	confirmarEliminar : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
-		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-		formato14B.dialogConfirmContent.html(addhtml);
-		formato14B.dialogConfirm.dialog("open");
-		cod_Empresa=codEmpresa;
-		ano_Presentacion=anoPresentacion;
-		mes_Presentacion=mesPresentacion;
-		ano_Inicio_Vigencia=anoIniVigencia;
-		ano_Fin_Vigencia=anoFinVigencia;
-		cod_Etapa=etapa;
+	confirmarEliminar : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa,flagOperacion){
+		if(flagOperacion=='ABIERTO'){
+			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+			formato14B.dialogConfirmContent.html(addhtml);
+			formato14B.dialogConfirm.dialog("open");
+			cod_Empresa=codEmpresa;
+			ano_Presentacion=anoPresentacion;
+			mes_Presentacion=mesPresentacion;
+			ano_Inicio_Vigencia=anoIniVigencia;
+			ano_Fin_Vigencia=anoFinVigencia;
+			cod_Etapa=etapa;
+		}else if(flagOperacion=='CERRADO'){
+			alert(" No esta habilitado para realizar esta operacion");		
+		}else{
+			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+		}
 	},
 	eliminarFormato : function(cod_Empresa,ano_Presentacion,mes_Presentacion,ano_Inicio_Vigencia,ano_Fin_Vigencia,cod_Etapa){			
 		$.blockUI({ message: formato14B.mensajeEliminando });
@@ -1526,7 +1619,7 @@ var formato14B= {
 		var codEmpM = formato14B.f_empresa.val();
 		var anioPresM = formato14B.f_periodoEnvio.val().substring(0,4);
 		var mesPresM = formato14B.f_periodoEnvio.val().substring(4,6);
-		var anioIniVigM;
+		/*var anioIniVigM;
 		var anioFinVigM;
 		 if( formato14B.f_flagPeriodo.val()=='S' ){
 			 anioIniVigM = $("#anioInicioVigencia").val();
@@ -1534,7 +1627,11 @@ var formato14B= {
 		 }else{
 			 anioIniVigM = anioPresM;
 			 anioFinVigM = anioPresM;
-		 }
+		 }*/
+		 var flagOpera = 'ABIERTO';
+		 
+		 var anioIniVigM = $("#anioInicioVigencia").val();
+		 var anioFinVigM = $("#anioFinVigencia").val();
 		 //var etapaM = "SOLICITUD";
 		 var etapaM = formato14B.f_periodoEnvio.val().substring(6,formato14B.f_periodoEnvio.val().length);
 		 //alert(formato14B.flagCarga.val());
@@ -1543,7 +1640,7 @@ var formato14B= {
 		 }else{
 			//alert(codEmpM+','+anioPresM+','+mesPresM+','+anioIniVigM+','+anioFinVigM+','+etapaM);
 			 if(codEmpM != '' && anioPresM != '' && mesPresM != '' && anioIniVigM != '' && anioFinVigM != '' && etapaM != ''){
-			 	 formato14B.editarFormato(codEmpM, anioPresM, mesPresM, anioIniVigM, anioFinVigM, etapaM);
+			 	 formato14B.editarFormato(codEmpM, anioPresM, mesPresM, anioIniVigM, anioFinVigM, etapaM,flagOpera);
 			 }
 		 }
 		 formato14B.botonValidacion.css('display','');
@@ -1916,6 +2013,167 @@ var formato14B= {
 				formato14B.initBlockUI();
 			}
 		});
+	},
+	//funcion para desabiliar campos lima
+	deshabilitarLima : function(){
+		//LIMA
+		formato14B.f_impValEdeL.attr("disabled",true);
+		formato14B.f_impValNoEdeL.attr("disabled",true);
+		formato14B.f_nroValesImpL.attr("disabled",true);
+		formato14B.f_costoTotalValL.attr("disabled",true);
+		formato14B.f_nroValesReptL.attr("disabled",true);
+		formato14B.f_costoTotalValOficL.attr("disabled",true);
+		formato14B.f_nroValesEntrL.attr("disabled",true);
+		formato14B.f_costoEnvPadronL.attr("disabled",true);
+		formato14B.f_nroValesFisL.attr("disabled",true);
+		formato14B.f_costoUnitDigitL.attr("disabled",true);
+		formato14B.f_costoAtenSolicL.attr("disabled",true);
+		formato14B.f_costoAtenConsL.attr("disabled",true);
+		formato14B.f_nroTotalAtenL.attr("disabled",true);
+		formato14B.f_costoPersonalL.attr("disabled",true);
+		formato14B.f_capacAgentL.attr("disabled",true);
+		formato14B.f_utilMatOficL.attr("disabled",true);
+		
+		formato14B.quitarEstiloEdicionLima();
+	},
+	//funcion para habilitar campos lima
+	habilitarLima : function(){
+		formato14B.f_impValEdeL.removeAttr("disabled");
+		formato14B.f_impValNoEdeL.removeAttr("disabled");
+		formato14B.f_nroValesImpL.removeAttr("disabled");
+		formato14B.f_costoTotalValL.removeAttr("disabled");
+		formato14B.f_nroValesReptL.removeAttr("disabled");
+		formato14B.f_costoTotalValOficL.removeAttr("disabled");
+		formato14B.f_nroValesEntrL.removeAttr("disabled");
+		formato14B.f_costoEnvPadronL.removeAttr("disabled");
+		formato14B.f_nroValesFisL.removeAttr("disabled");
+		formato14B.f_costoUnitDigitL.removeAttr("disabled");
+		formato14B.f_costoAtenSolicL.removeAttr("disabled");
+		formato14B.f_costoAtenConsL.removeAttr("disabled");
+		formato14B.f_nroTotalAtenL.removeAttr("disabled");
+		formato14B.f_costoPersonalL.removeAttr("disabled");
+		formato14B.f_capacAgentL.removeAttr("disabled");
+		formato14B.f_utilMatOficL.removeAttr("disabled");
+		
+		formato14B.estiloEdicionLima();
+	},
+	//poner estilos de edicion para cada columna
+	estiloEdicionCabecera : function(){
+		$('#anioInicioVigencia').addClass("fise-editable");
+		$('#anioFinVigencia').addClass("fise-editable");
+	},
+	estiloEdicionRural : function(){
+		formato14B.f_impValEdeR.addClass("fise-editable");
+		formato14B.f_impValNoEdeR.addClass("fise-editable");
+		formato14B.f_nroValesImpR.addClass("fise-editable");
+		formato14B.f_costoTotalValR.addClass("fise-editable");
+		formato14B.f_nroValesReptR.addClass("fise-editable");
+		formato14B.f_costoTotalValOficR.addClass("fise-editable");
+		formato14B.f_nroValesEntrR.addClass("fise-editable");
+		formato14B.f_costoEnvPadronR.addClass("fise-editable");
+		formato14B.f_nroValesFisR.addClass("fise-editable");
+		formato14B.f_costoUnitDigitR.addClass("fise-editable");
+		formato14B.f_costoAtenSolicR.addClass("fise-editable");
+		formato14B.f_costoAtenConsR.addClass("fise-editable");
+		formato14B.f_nroTotalAtenR.addClass("fise-editable");
+		formato14B.f_costoPersonalR.addClass("fise-editable");
+		formato14B.f_capacAgentR.addClass("fise-editable");
+		formato14B.f_utilMatOficR.addClass("fise-editable");
+	},
+	estiloEdicionProvincia : function(){
+		formato14B.f_impValEdeP.addClass("fise-editable");
+		formato14B.f_impValNoEdeP.addClass("fise-editable");
+		formato14B.f_nroValesImpP.addClass("fise-editable");
+		formato14B.f_costoTotalValP.addClass("fise-editable");
+		formato14B.f_nroValesReptP.addClass("fise-editable");
+		formato14B.f_costoTotalValOficP.addClass("fise-editable");
+		formato14B.f_nroValesEntrP.addClass("fise-editable");
+		formato14B.f_costoEnvPadronP.addClass("fise-editable");
+		formato14B.f_nroValesFisP.addClass("fise-editable");
+		formato14B.f_costoUnitDigitP.addClass("fise-editable");
+		formato14B.f_costoAtenSolicP.addClass("fise-editable");
+		formato14B.f_costoAtenConsP.addClass("fise-editable");
+		formato14B.f_nroTotalAtenP.addClass("fise-editable");
+		formato14B.f_costoPersonalP.addClass("fise-editable");
+		formato14B.f_capacAgentP.addClass("fise-editable");
+		formato14B.f_utilMatOficP.addClass("fise-editable");
+	},
+	estiloEdicionLima : function(){
+		formato14B.f_impValEdeL.addClass("fise-editable");
+		formato14B.f_impValNoEdeL.addClass("fise-editable");
+		formato14B.f_nroValesImpL.addClass("fise-editable");
+		formato14B.f_costoTotalValL.addClass("fise-editable");
+		formato14B.f_nroValesReptL.addClass("fise-editable");
+		formato14B.f_costoTotalValOficL.addClass("fise-editable");
+		formato14B.f_nroValesEntrL.addClass("fise-editable");
+		formato14B.f_costoEnvPadronL.addClass("fise-editable");
+		formato14B.f_nroValesFisL.addClass("fise-editable");
+		formato14B.f_costoUnitDigitL.addClass("fise-editable");
+		formato14B.f_costoAtenSolicL.addClass("fise-editable");
+		formato14B.f_costoAtenConsL.addClass("fise-editable");
+		formato14B.f_nroTotalAtenL.addClass("fise-editable");
+		formato14B.f_costoPersonalL.addClass("fise-editable");
+		formato14B.f_capacAgentL.addClass("fise-editable");
+		formato14B.f_utilMatOficL.addClass("fise-editable");
+	},
+	//quitar estilos
+	quitarEstiloEdicionCabecera : function(){
+		$('#anioInicioVigencia').removeClass("fise-editable");
+		$('#anioFinVigencia').removeClass("fise-editable");
+	},
+	quitarEstiloEdicionRural : function(){
+		formato14B.f_impValEdeR.removeClass("fise-editable");
+		formato14B.f_impValNoEdeR.removeClass("fise-editable");
+		formato14B.f_nroValesImpR.removeClass("fise-editable");
+		formato14B.f_costoTotalValR.removeClass("fise-editable");
+		formato14B.f_nroValesReptR.removeClass("fise-editable");
+		formato14B.f_costoTotalValOficR.removeClass("fise-editable");
+		formato14B.f_nroValesEntrR.removeClass("fise-editable");
+		formato14B.f_costoEnvPadronR.removeClass("fise-editable");
+		formato14B.f_nroValesFisR.removeClass("fise-editable");
+		formato14B.f_costoUnitDigitR.removeClass("fise-editable");
+		formato14B.f_costoAtenSolicR.removeClass("fise-editable");
+		formato14B.f_costoAtenConsR.removeClass("fise-editable");
+		formato14B.f_nroTotalAtenR.removeClass("fise-editable");
+		formato14B.f_costoPersonalR.removeClass("fise-editable");
+		formato14B.f_capacAgentR.removeClass("fise-editable");
+		formato14B.f_utilMatOficR.removeClass("fise-editable");
+	},
+	quitarEstiloEdicionProvincia : function(){
+		formato14B.f_impValEdeP.removeClass("fise-editable");
+		formato14B.f_impValNoEdeP.removeClass("fise-editable");
+		formato14B.f_nroValesImpP.removeClass("fise-editable");
+		formato14B.f_costoTotalValP.removeClass("fise-editable");
+		formato14B.f_nroValesReptP.removeClass("fise-editable");
+		formato14B.f_costoTotalValOficP.removeClass("fise-editable");
+		formato14B.f_nroValesEntrP.removeClass("fise-editable");
+		formato14B.f_costoEnvPadronP.removeClass("fise-editable");
+		formato14B.f_nroValesFisP.removeClass("fise-editable");
+		formato14B.f_costoUnitDigitP.removeClass("fise-editable");
+		formato14B.f_costoAtenSolicP.removeClass("fise-editable");
+		formato14B.f_costoAtenConsP.removeClass("fise-editable");
+		formato14B.f_nroTotalAtenP.removeClass("fise-editable");
+		formato14B.f_costoPersonalP.removeClass("fise-editable");
+		formato14B.f_capacAgentP.removeClass("fise-editable");
+		formato14B.f_utilMatOficP.removeClass("fise-editable");
+	},
+	quitarEstiloEdicionLima : function(){
+		formato14B.f_impValEdeL.removeClass("fise-editable");
+		formato14B.f_impValNoEdeL.removeClass("fise-editable");
+		formato14B.f_nroValesImpL.removeClass("fise-editable");
+		formato14B.f_costoTotalValL.removeClass("fise-editable");
+		formato14B.f_nroValesReptL.removeClass("fise-editable");
+		formato14B.f_costoTotalValOficL.removeClass("fise-editable");
+		formato14B.f_nroValesEntrL.removeClass("fise-editable");
+		formato14B.f_costoEnvPadronL.removeClass("fise-editable");
+		formato14B.f_nroValesFisL.removeClass("fise-editable");
+		formato14B.f_costoUnitDigitL.removeClass("fise-editable");
+		formato14B.f_costoAtenSolicL.removeClass("fise-editable");
+		formato14B.f_costoAtenConsL.removeClass("fise-editable");
+		formato14B.f_nroTotalAtenL.removeClass("fise-editable");
+		formato14B.f_costoPersonalL.removeClass("fise-editable");
+		formato14B.f_capacAgentL.removeClass("fise-editable");
+		formato14B.f_utilMatOficL.removeClass("fise-editable");
 	},
 	//
 	blockUI : function(){
