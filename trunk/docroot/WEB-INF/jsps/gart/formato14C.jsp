@@ -878,7 +878,7 @@ $(document).ready(function () {
     
     <input type="hidden" id="<portlet:namespace/>flagCarga" name="flagCarga" value="" style="display: none;" />
 	
-	<!-- valores constantes para edelnor y luz del sur -->}
+	<!-- valores constantes para edelnor y luz del sur -->
 	
 	 <form:input path="codEdelnor" cssStyle="display:none;" />	 
 	 <form:input path="codLuzSur" cssStyle="display:none;" />
