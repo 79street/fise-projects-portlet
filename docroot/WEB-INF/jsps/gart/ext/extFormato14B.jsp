@@ -1910,6 +1910,7 @@ var formato14B= {
 			type : 'post',
 			dataType : 'json',
 			data : {
+				<portlet:namespace />periodoEnvio: formato14B.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion',
 				<portlet:namespace />nombreArchivo: 'validacion',
 				<portlet:namespace />tipoArchivo: '0'//PDF
