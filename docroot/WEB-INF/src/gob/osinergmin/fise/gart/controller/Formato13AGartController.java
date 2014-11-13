@@ -2,29 +2,27 @@ package gob.osinergmin.fise.gart.controller;
 
 
 
-import gob.osinergmin.fise.bean.Formato14ACBean;
-import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
+import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
-import gob.osinergmin.fise.dao.FiseZonaBenefDao;
 import gob.osinergmin.fise.domain.AdmUbigeo;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13ACPK;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
+import gob.osinergmin.fise.domain.FiseFormato13ADPK;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
 import gob.osinergmin.fise.gart.json.Formato13AGartJSON;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
-import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato13AGartService;
 import gob.osinergmin.fise.gart.xls.FormatoExcelImport;
+import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
 import gob.osinergmin.fise.xls.XlsTableConfig;
 import gob.osinergmin.fise.xls.XlsWorkbookConfig;
 import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -45,7 +43,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,7 +54,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
-import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.log.Log;
@@ -65,7 +61,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -186,7 +181,7 @@ public class Formato13AGartController {
 		 System.out.println("aqui en nuevoFormato");
 		// System.out.println("CRUD:"+crud);
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
-		command.setReadOnly(true);
+		command.setReadOnly(false);
 		model.addAttribute("crud", CRUD_CREATE);
 		model.addAttribute("readonly", "false");
 		
@@ -199,6 +194,9 @@ public class Formato13AGartController {
 	
 	@ActionMapping(params="action=guardarDetalle")
 	public void guardarDetalleFormato(ModelMap model,ActionRequest request,ActionResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+			
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		
 		String codEmpresa = command.getCodEmpresa();
 		String periodoDeclaracion=command.getPeridoDeclaracion();
 		String anioAlta=command.getAnioAlta();
@@ -215,6 +213,15 @@ public class Formato13AGartController {
 		String stesp=command.getStesp();
 		String idZonaBenef=command.getIdZonaBenef();
 		String sedeAtencion=command.getNombreSede();
+		
+		String anioPresentacion="";
+		String mesPresentacion="";
+		String etapa="";
+		if(periodoDeclaracion!=null && periodoDeclaracion.length()>6){
+			anioPresentacion=periodoDeclaracion.substring(0,4);
+			mesPresentacion=periodoDeclaracion.substring(4,6);
+			etapa=periodoDeclaracion.substring(6);
+		}
 		
 		logger.info("valores detalle "+ codEmpresa);
 		logger.info("valores detalle"+ periodoDeclaracion);
@@ -233,11 +240,57 @@ public class Formato13AGartController {
 		logger.info("valores idZonaBenef"+ idZonaBenef);
 		logger.info("valores sedeAtencion"+ sedeAtencion);
 		
+		//seteamos los valores obtenidos
+		command.setAnioPresentacion(anioPresentacion);
+		command.setMesPresentacion(mesPresentacion);
+		command.setEtapa(etapa);
+		//
+		
+		FiseFormato13ACPK pkCabecera=new FiseFormato13ACPK();
+		pkCabecera.setCodEmpresa(codEmpresa!=""?FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4):"");
+		pkCabecera.setAnoPresentacion(Long.parseLong(anioPresentacion));
+		pkCabecera.setMesPresentacion(Long.parseLong(mesPresentacion));
+		pkCabecera.setEtapa(etapa);
+		
+		FiseFormato13AC cabecera=new FiseFormato13AC();
+		cabecera.setId(pkCabecera);
+		
+		//Primero buscamos si existe una cabecera
+		FiseFormato13AC cab=formatoService.obtenerFormato13ACByPK(pkCabecera);
+		
+		if(cab!=null){
+			//update
+			
+		}else{
+			//create
+			FiseFormato13AC formato13 = new FiseFormato13AC();
+			formato13.setId(pkCabecera);
+			List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
+			//se agregará varaiables de sector tipico para cada tipo de grupo beneficiario
+			
+			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
+			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
+			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
+			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, listaDetalle);
+			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, listaDetalle);
+			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
+			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
+			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
+			
+			agregarFormato13(themeDisplay, formato13, listaDetalle);
+
+		}
+		
 		response.setRenderParameter("crud", "VIEW");
 		response.setRenderParameter("action", "detalle");
 		response.setRenderParameter("codEmpresa",codEmpresa);
 		response.setRenderParameter("periodoDeclaracion",periodoDeclaracion);
+			
+		
+		
 	}
+	
+	
 	
 	@ActionMapping(params="action=nuevoDetalle")
 	public void nuevoDetalleFormato(ModelMap model,ActionRequest request,ActionResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
@@ -494,6 +547,7 @@ public class Formato13AGartController {
 		    System.out.println("tipooo::>"+request.getParameter("tipo"));
 		    String codEmpresa = "";
 			String periodoDeclaracion="";
+			
 		    if(tipo!=null && (tipo.equalsIgnoreCase("0") || tipo.equalsIgnoreCase("1"))){
 		    	
 		    	System.out.println("codEmpresa::>"+request.getParameter("codEmpresa"));
@@ -508,32 +562,15 @@ public class Formato13AGartController {
 				command.setEtapa(request.getParameter("etapa"));
 				command.setPeridoDeclaracion(periodoDeclaracion);
 				
-				
-		    
-		    }else{
-		    	 codEmpresa = command.getCodEmpresa();
-				 periodoDeclaracion=command.getPeridoDeclaracion();
-		    }
-				
 				String anioPresentacion="";
 				String mesPresentacion="";
 				String etapa="";
 				logger.info("valores "+ codEmpresa);
 	  			logger.info("valores "+ periodoDeclaracion);
-
 	  			
 	  			if(periodoDeclaracion!=null && periodoDeclaracion.length()>6){
-	  				int maximo=periodoDeclaracion.length();
-	  				//"hamburger".substring(4, 8) returns "urge"
-	  				 //"smiles".substring(1, 5) returns "mile"
-
 	  				anioPresentacion=periodoDeclaracion.substring(0,4);
 	  				mesPresentacion=periodoDeclaracion.substring(4,6);
-	  				
-	  				 //"unhappy".substring(2) returns "happy"
-	  				 //"Harbison".substring(3) returns "bison"
-	  				 //"emptiness".substring(9) returns "" (an empty string)
-
 	  				etapa=periodoDeclaracion.substring(6);
 	  			}
 	  			FiseFormato13AC formato13AC=new FiseFormato13AC();
@@ -554,29 +591,23 @@ public class Formato13AGartController {
 	  				//seteamos la descripcion de la empresa
 	  				logger.info("empresa "+mapaEmpresa.get(formato13AC.getId().getCodEmpresa()));
 					jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AD,formato13AC));
-					
-	  			}
-	  			
-	  		//************************************************************************
-				//Generamos la configuración de la exportación a Excel
-				//************************************************************************
-	  			XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
-				xlsWorkbookConfig.setName(FiseConstants.NOMBRE_EXCEL_FORMATO13A);
-				List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
-				tables.add(new XlsTableConfig(listaFormato,FiseConstants.TIPO_FORMATO_13A));
-				List<XlsWorksheetConfig> sheets = new LinkedList<XlsWorksheetConfig>();
-				sheets.add(new XlsWorksheetConfig(FiseConstants.NOMBRE_HOJA_FORMATO13A,tables));
-				xlsWorkbookConfig.setSheets(sheets);
-				session.setAttribute(FiseConstants.KEY_CFG_EXCEL_EXPORT,xlsWorkbookConfig);	
-			    
-	  			logger.info("arreglo json:"+jsonArray);
-	  			PrintWriter pw = response.getWriter();
-	  			pw.write(jsonArray.toString());
-	  			pw.flush();
-	  			pw.close();
-	  			
-	  			
-	  			model.addAttribute("formato13AGartCommand", command);
+				}
+	  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_13A, FiseConstants.NOMBRE_EXCEL_FORMATO13A, FiseConstants.NOMBRE_HOJA_FORMATO13A, listaFormato);
+		    
+		    }else{
+		    	 codEmpresa = command.getCodEmpresa();
+				 periodoDeclaracion=command.getPeridoDeclaracion();
+		    }
+
+		    
+  			logger.info("arreglo json:"+jsonArray);
+  			PrintWriter pw = response.getWriter();
+  			pw.write(jsonArray.toString());
+  			pw.flush();
+  			pw.close();
+  			
+  			
+  			model.addAttribute("formato13AGartCommand", command);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -738,5 +769,97 @@ public class Formato13AGartController {
 		return "formato13ACRUD";
 	}
 	
+	/**metodos utiles*/
+public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato, List<FiseFormato13AD> listaDetalle){
+		
+		Date hoy = FechaUtil.obtenerFechaActual();
+		try{
+			formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+			formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+			formato.setFechaActualizacion(hoy);
+			formato.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+			formato.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+			formato.setFechaCreacion(hoy);
+			//verificar si es necesario realizar esta validacion
+			//boolean existe = false;
+			//existe = formatoService.existeFormato14AC(formato);
+			//if(existe){
+			//	throw new Exception("Ya existe un registro con la misma clave.");
+			//}else{
+				formatoService.savecabecera(formato);
+			//}
+			//add
+			for (FiseFormato13AD detalle : listaDetalle) {
+				formatoService.savedetalle(detalle);
+			}
+			if( listaDetalle != null && listaDetalle.size()>0 ){
+				formato.setFiseFormato13ADs(listaDetalle);
+			}
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	public void agregarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, List<FiseFormato13AD> listaDetalle ){
+		
+		Date hoy = FechaUtil.obtenerFechaActual();
+		
+		try{
+		
+			FiseFormato13AD detalle = new FiseFormato13AD();
+			FiseFormato13ADPK pk = new FiseFormato13ADPK();
+			pk.setCodEmpresa(command.getCodEmpresa());
+			pk.setAnoPresentacion(Long.parseLong(command.getAnioPresentacion()));
+			pk.setMesPresentacion(Long.parseLong(command.getMesPresentacion()));
+			pk.setEtapa(command.getEtapa());
+			pk.setCodUbigeo(command.getCodDistrito());
+			pk.setCodSectorTipico(sectorTipico);
+			pk.setIdZonaBenef(Long.parseLong(command.getIdZonaBenef()));
+			detalle.setId(pk);
+			detalle.setAnoAlta(Long.parseLong(command.getAnioAlta()));
+			detalle.setMesAlta(Long.parseLong(command.getMesAlta()));
+			//luego verificar de donde se obtendra los valores de ano e inicio de vigencia
+			detalle.setAnoInicioVigencia(Long.parseLong(command.getAnioAlta()));
+			detalle.setAnoFinVigencia(Long.parseLong(command.getAnioAlta()));
+			//
+			detalle.setDescripcionLocalidad(command.getLocalidad());
+			detalle.setNombreSedeAtiende(command.getNombreSede());
+			if( FiseConstants.SECTOR_TIPICO_1_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt1()));
+			}else if( FiseConstants.SECTOR_TIPICO_2_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt2()));
+			}else if( FiseConstants.SECTOR_TIPICO_3_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt3()));
+			}else if( FiseConstants.SECTOR_TIPICO_4_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt4()));
+			}else if( FiseConstants.SECTOR_TIPICO_5_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt5()));
+			}else if( FiseConstants.SECTOR_TIPICO_6_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt6()));
+			}else if( FiseConstants.SECTOR_TIPICO_SER_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStser()));
+			}else if( FiseConstants.SECTOR_TIPICO_ESP_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStesp()));
+			}
+			detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+			detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+			detalle.setFechaCreacion(hoy);
+			detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+			detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+			detalle.setFechaActualizacion(hoy);
+			listaDetalle.add(detalle);
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void modificarSectorTipico(){
+		
+	}
 	
 }
