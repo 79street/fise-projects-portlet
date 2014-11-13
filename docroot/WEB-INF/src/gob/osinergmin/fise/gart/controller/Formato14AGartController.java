@@ -219,7 +219,7 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14AGartController.c
   				fiseFormato14AC.setDescMesPresentacion(fiseUtil.getMapaMeses().get(fiseFormato14AC.getId().getMesPresentacion()));
   				
   				/**Obteniendo el flag de la operacion*/
-  				String flagOper = commonService.obtenerEstadoProceso(fiseFormato14AC.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_14C,fiseFormato14AC.getId().getAnoPresentacion(),
+  				String flagOper = commonService.obtenerEstadoProceso(fiseFormato14AC.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_14A,fiseFormato14AC.getId().getAnoPresentacion(),
   						fiseFormato14AC.getId().getMesPresentacion(), fiseFormato14AC.getId().getEtapa());
   				logger.info("flag operacion:  "+flagOper);
   				
