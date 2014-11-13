@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1981,6 +1982,7 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	try {
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
         HttpSession session = httpRequest.getSession();
+        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
         
 	    JSONArray jsonArray = new JSONArray();	
 	    
@@ -1993,11 +1995,35 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	    session.setAttribute("nombreArchivo",nombreArchivo);
 	    session.setAttribute("tipoFormato",tipoFormato);
 	    session.setAttribute("tipoArchivo",tipoArchivo);
-
+	    
 	    if( listaObservaciones!=null ){
 	    	session.setAttribute("lista", listaObservaciones);
 	    }
         
+	    //add
+	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
+	    String anoPresentacion = "";
+	    String mesPresentacion = "";
+	    if( periodoEnvio.length()>6 ){
+	    	anoPresentacion = periodoEnvio.substring(0, 4);
+	    	mesPresentacion = periodoEnvio.substring(4, 6);
+	    }
+	    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14B);
+    	String descripcionFormato = "";
+    	if( tabla!=null ){
+    		descripcionFormato = tabla.getDescripcionTabla();
+    	}
+	    Map<String, Object> mapa = new HashMap<String, Object>();
+    	mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+	   	mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+	   	mapa.put(FiseConstants.PARAM_ANO_PRES_F14B, Long.parseLong(anoPresentacion));
+	   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14B, fiseUtil.getMapaMeses().get(Long.parseLong(mesPresentacion)));
+	   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+	   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
+	   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+	   	session.setAttribute("mapa", mapa);
+	    //
+	    
 	    response.setContentType("application/json");
 	    PrintWriter pw = response.getWriter();
 	    pw.write(jsonArray.toString());

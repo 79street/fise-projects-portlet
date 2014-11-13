@@ -1804,6 +1804,7 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
+				<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion',
 				<portlet:namespace />nombreArchivo: 'validacion',
 				<portlet:namespace />tipoArchivo: '0'//PDF
