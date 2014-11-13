@@ -533,6 +533,7 @@ var formato14C= {
 			     formato14C.divBuscar.hide();	
 				 formato14C.flagCarga.val('0');
 				 formato14C.f_empresa.val(codEmpSes);
+				 console.debug("flag periodo ejecucion error al cargar archivo nuevo registro: "+formato14C.f_periodoEnvio.val());
 				 if( formato14C.f_periodoEnvio.val()=='S' ){
 					 $("#anoIniVigencia").val(anioIniVigSes);
 					 $("#anoFinVigencia").val(anioFinVigSes);
@@ -691,7 +692,7 @@ var formato14C= {
 						   <portlet:namespace />mesPres: mesPresentacion,
 						   <portlet:namespace />anoIniVigencia: anoIniVigencia,
 						   <portlet:namespace />anoFinVigencia: anoFinVigencia,
-						   <portlet:namespace />etapa: etapa					 
+						   <portlet:namespace />etapa: etapa						  
 						},
 						success: function(data) {				
 							if (data != null){															
@@ -702,16 +703,7 @@ var formato14C= {
 								formato14C.initBlockUI();
 								formato14C.ocultarElementosEditar();
 								$('#<portlet:namespace/>guardarFormatoF14C').css('display','none');
-								$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');
-								console.debug("codigo empresa edelnor constante: "+formato14C.cod_empresa_edelnor.val());
-								console.debug("codigo empresa luz sur constante: "+formato14C.cod_empresa_luz_sur.val());
-								console.debug("codigo empresa seleccionado: "+formato14C.f_empresa.val());
-								if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
-										formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
-									formato14C.habilitarLima();										
-								}else{
-									formato14C.deshabilitarLima();
-								}							
+								$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');												
 					         }
 							else{
 								alert("Error al recuperar los datos del registro seleccionado");
@@ -746,15 +738,7 @@ var formato14C= {
 			var dataPeriodo = [{codigoItem:bean.periodoEnvio, descripcionItem:bean.desperiodoEnvio}];			
 			dwr.util.addOptions("periodoEnvio", dataPeriodo,"codigoItem","descripcionItem");
 			formato14C.f_anoIniVigencia.val(bean.anoIniVigencia);
-			formato14C.f_anoFinVigencia.val(bean.anoFinVigencia);
-			/*formato14C.f_flagPeriodo.val(bean.flagPeriodoEjecucion);
-			if( formato14C.f_flagPeriodo.val()=='S' ){
-				$('#anoIniVigencia').val(bean.anioInicioVig);
-				$('#anoFinVigencia').val(bean.anioFinVig);
-				$('#anoIniVigencia').attr("disabled",true);
-				$('#anoFinVigencia').attr("disabled",true);
-			}*/
-			//formato14C.etapaEdit.val(row.etapa);
+			formato14C.f_anoFinVigencia.val(bean.anoFinVigencia);	
 			
 			/**RURAL***/	
 			formato14C.f_canDRCoord.val(bean.canDRCoord);
@@ -826,8 +810,29 @@ var formato14C= {
 			formato14C.formularioCompletarDecimales();
 			
 			formato14C.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
-			
-			//formato14C.mostrarPeriodoEjecucion();
+			/**para controlar los costos directos e indirectos*/
+			console.debug("flag costo al momento de editar: "+bean.flagCosto);
+			if(bean.flagCosto=='D'){
+				formato14C.habilitarCostosDirectos();
+				formato14C.deshabilitarCostosIndirectos();				
+			}else if(bean.flagCosto=='I'){
+				formato14C.habilitarCostosIndirectos();
+				formato14C.deshabilitarCostosDirectos();	
+			}else{
+				console.debug("Ambos costos D e I activos");
+				formato14C.habilitarCostosIndirectos();
+				formato14C.habilitarCostosDirectos();	
+			}	
+			/***verificar si la empresa es edelnor o luz del sur*/
+			console.debug("codigo empresa edelnor constante: "+formato14C.cod_empresa_edelnor.val());
+			console.debug("codigo empresa luz sur constante: "+formato14C.cod_empresa_luz_sur.val());
+			console.debug("codigo empresa seleccionado: "+formato14C.f_empresa.val());
+			if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
+					formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
+				formato14C.habilitarLima();										
+			}else{
+				formato14C.deshabilitarLima();
+			}			
 		},
 		ocultarElementosEditar : function(){	
 			$('#codEmpresa').attr("disabled",true);
@@ -853,17 +858,7 @@ var formato14C= {
 						if( valPeriodo.length!='' ){
 							dwr.util.setValue("periodoEnvio", valPeriodo);
 						}
-						formato14C.<portlet:namespace/>loadCargaFlagPeriodo();
-						//verifico si es edelnor o luz del sur
-						console.debug("codigo empresa edelnor constante: "+formato14C.cod_empresa_edelnor.val());
-						console.debug("codigo empresa luz sur constante: "+formato14C.cod_empresa_luz_sur.val());
-						console.debug("codigo empresa seleccionado: "+formato14C.f_empresa.val());
-						if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
-								formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
-							formato14C.habilitarLima();										
-						}else{
-							formato14C.deshabilitarLima();
-						}						
+						formato14C.<portlet:namespace/>loadCargaFlagPeriodo();										
 					},error : function(){
 						alert("Error de conexión.");
 						formato14C.initBlockUI();
@@ -929,10 +924,36 @@ var formato14C= {
 					dataType: 'json',
 					success: function(data) {				
 						dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
+						dwr.util.setValue("flagCosto", data.flagCosto);
 						console.debug("flag periodo ejecucion al cargar desde el controller: "+data.flagPeriodoEjecucion);
 						console.debug("flag costos al cargar desde el controller: "+data.flagCosto);
+						
 						formato14C.recargarPeriodoEjecucion();
+						
 						formato14C.mostrarPeriodoEjecucion();
+					
+						/**para controlar los costos directos e indirectos*/
+						if(formato14C.flagCosto.val()=='D'){
+							formato14C.habilitarCostosDirectos();
+							formato14C.deshabilitarCostosIndirectos();				
+						}else if(formato14C.flagCosto.val()=='I'){
+							formato14C.habilitarCostosIndirectos();
+							formato14C.deshabilitarCostosDirectos();	
+						}else{
+							console.debug("Ambos costos D e I activos");
+							formato14C.habilitarCostosIndirectos();
+							formato14C.habilitarCostosDirectos();	
+						}
+						//verifico si es edelnor o luz del sur
+						console.debug("codigo empresa edelnor constante: "+formato14C.cod_empresa_edelnor.val());
+						console.debug("codigo empresa luz sur constante: "+formato14C.cod_empresa_luz_sur.val());
+						console.debug("codigo empresa seleccionado: "+formato14C.f_empresa.val());
+						if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
+								formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
+							formato14C.habilitarLima();										
+						}else{
+							formato14C.deshabilitarLima();
+						}						
 					},error : function(){
 						alert("Error de conexión.");
 						formato14C.initBlockUI();
@@ -941,6 +962,7 @@ var formato14C= {
 		},
 		mostrarPeriodoEjecucion : function(){
 			console.debug("flag periodo ejecucion al mostrar:  "+formato14C.f_flagPeriodo.val());
+			console.debug("flag costo al mostrar:  "+formato14C.flagCosto.val());
 			if(formato14C.f_flagPeriodo.val()=='S' ){			
 				$('#anoIniVigencia').removeAttr("disabled");
 				$('#anoFinVigencia').removeAttr("disabled");
@@ -948,22 +970,23 @@ var formato14C= {
 			}else{			
 				$('#anoIniVigencia').attr("disabled",true);
 				$('#anoFinVigencia').attr("disabled",true);				
-			}
+			}			
 		},
 		recargarPeriodoEjecucion : function(){
 			var anoInicio;
 			var anoFin;
-			if( formato14C.f_periodoEnvio.val() != null ){
+			if(formato14C.f_periodoEnvio.val() != null){
 				anoInicio = formato14C.f_periodoEnvio.val().substring(0,4);
 				anoFin = formato14C.f_periodoEnvio.val().substring(0,4);
 				console.debug("flag periodo ejecucion al recargar:  "+formato14C.f_flagPeriodo.val());
-				if( formato14C.f_flagPeriodo.val()=='S' ){
+				console.debug("flag costo al recargar:  "+formato14C.flagCosto.val());
+				if(formato14C.f_flagPeriodo.val()=='S' ){
 					$('#anoIniVigencia').val(anoInicio);
 					$('#anoFinVigencia').val(anoFin);
 				}else{				
 					$('#anoIniVigencia').attr("disabled",true);
 					$('#anoFinVigencia').attr("disabled",true);					
-				}				
+				}		
 			}
 		},
 		
@@ -973,8 +996,23 @@ var formato14C= {
 			formato14C.f_nombreSede.val('');
 			formato14C.divInformacion.hide();			
 			console.debug("flag periodo ejecucion al inicializar formulario:  "+formato14C.f_flagPeriodo.val());
+			console.debug("flag costo al iniciar formulario:  "+formato14C.flagCosto.val());
 			$('#anoIniVigencia').val('');
 			$('#anoFinVigencia').val('');			
+				
+			/**para controlar los costos directos e indirectos*/
+			if(formato14C.flagCosto.val()=='D'){
+				formato14C.habilitarCostosDirectos();
+				formato14C.deshabilitarCostosIndirectos();				
+			}else if(formato14C.flagCosto.val()=='I'){
+				formato14C.habilitarCostosIndirectos();
+				formato14C.deshabilitarCostosDirectos();	
+			}else{
+				console.debug("Ambos costos D e I activos");
+				formato14C.habilitarCostosIndirectos();
+				formato14C.habilitarCostosDirectos();	
+			}	
+			/**para verificar si es edelnor o luz del sur*/
 			console.debug("codigo empresa edelnor constante: "+formato14C.cod_empresa_edelnor.val());
 			console.debug("codigo empresa luz sur constante: "+formato14C.cod_empresa_luz_sur.val());
 			console.debug("codigo empresa seleccionado: "+formato14C.f_empresa.val());
@@ -983,7 +1021,8 @@ var formato14C= {
 				formato14C.habilitarLima();										
 			}else{
 				formato14C.deshabilitarLima();
-			}				
+			}		
+			
 			
 			formato14C.f_numRural.val('0');
 			formato14C.f_numUrbProv.val('0');
@@ -2060,7 +2099,8 @@ var formato14C= {
 						//<portlet:namespace />tipo: formato14C.procesoEstado.val(),						
 						<portlet:namespace />flagPeriodoEjecucion: formato14C.f_flagPeriodo.val(),
 						<portlet:namespace />anoIniVigencia: $('#anoIniVigencia').val(),
-						<portlet:namespace />anoFinVigencia: $('#anoFinVigencia').val()						
+						<portlet:namespace />anoFinVigencia: $('#anoFinVigencia').val(),
+						<portlet:namespace />flagCosto: formato14C.flagCosto.val()						
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -2101,7 +2141,8 @@ var formato14C= {
 						<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),
 						<portlet:namespace />flagPeriodoEjecucion: formato14C.f_flagPeriodo.val(),
 						<portlet:namespace />anoIniVigencia: $('#anoIniVigencia').val(),
-						<portlet:namespace />anoFinVigencia: $('#anoFinVigencia').val()											
+						<portlet:namespace />anoFinVigencia: $('#anoFinVigencia').val(),
+						<portlet:namespace />flagCosto: formato14C.flagCosto.val()	
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -2110,8 +2151,8 @@ var formato14C= {
 							formato14C.dialogMessage.dialog("open");						
 							formato14C.initBlockUI();
 							//regreso a la busqueda
-							formato14C.divNuevo.hide();
-							formato14C.divBuscar.show();		
+							//formato14C.divNuevo.hide();
+							//formato14C.divBuscar.show();		
 						}else if(data.resultado == "Error"){				
 							var addhtml2='Se produjo un error al actualizar los datos.';
 							formato14C.dialogMessageContent.html(addhtml2);
