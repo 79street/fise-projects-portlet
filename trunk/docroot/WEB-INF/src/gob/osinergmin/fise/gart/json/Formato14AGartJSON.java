@@ -37,7 +37,9 @@ public class Formato14AGartJSON {
 	//
 	private String flag;//flag para controlar mostrar el formulario de ingreso cuando hay un error en carga de formulario excel o texto
 
-	public JSONObject asJSONObject(FiseFormato14AC fiseFormato14AC, String flagPeriodoEjecucion) throws JSONException{
+	private String flagOperacion;//Cerrado, abierto, enviado
+	
+	public JSONObject asJSONObject(FiseFormato14AC fiseFormato14AC, String flagPeriodoEjecucion, String flagOperacion) throws JSONException{
 		
 		JSONObject jsonObj = new JSONObject();
 		
@@ -76,6 +78,7 @@ public class Formato14AGartJSON {
 			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
 		}
 		
+		jsonObj.put("flagOperacion", flagOperacion);
 		
 		//valores de cabecera y detalle
 		//averiguar si se tiene que hacer este calculo, al parecer es innecesario
@@ -497,6 +500,14 @@ public class Formato14AGartJSON {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public String getFlagOperacion() {
+		return flagOperacion;
+	}
+
+	public void setFlagOperacion(String flagOperacion) {
+		this.flagOperacion = flagOperacion;
 	}
 
 	

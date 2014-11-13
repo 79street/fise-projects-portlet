@@ -242,7 +242,7 @@ $(document).ready(function () {
 															<form:input path="flagPeriodoEjecucion" cssStyle="display:none;" />
 														</td>
 														<td width="45%">
-															<div id="<portlet:namespace/>divPeriodoEjecucion" style="display: none;">
+															<div id="<portlet:namespace/>divPeriodoEjecucion" >
 																<fieldset class="net-frame-border">
 																	<table>
 																		<tr>
@@ -268,6 +268,41 @@ $(document).ready(function () {
 												</table>
 											</td>
 										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>
+										<tr>
+										  <td>
+											<div id="<portlet:namespace/>divInformacion">
+												<fieldset class="net-frame-border">
+												  <table>
+													 <tr> 
+														<td>
+														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
+														</td>														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="descGrupoInformacion" ></output>
+													   </td>
+													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+													   <td>
+														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
+														</td>
+														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="descEstado"></output>														 
+													    </td>
+													 </tr>													
+												</table>
+											   </fieldset>
+										     </div>										
+										  </td>
+										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>
+										
 										<tr height="10px" class="filete-bottom">
 											<td></td>
 										</tr>
@@ -337,13 +372,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.1.1 Impresión de Esquela de Invitación</td>
 														<td align="center">
-															<form:input path="imprEsqInvitR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprEsqInvitR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprEsqInvitP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprEsqInvitP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprEsqInvitL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprEsqInvitL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -351,13 +386,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.1.2 Impresión de Declaraciones Juradas	</td>
 														<td align="center">
-															<form:input path="imprDeclaJuradaR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprDeclaJuradaR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprDeclaJuradaP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprDeclaJuradaP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-														<form:input path="imprDeclaJuradaL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+														<form:input path="imprDeclaJuradaL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -365,13 +400,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.1.3 Impresión de Fichas de Verificación</td>
 														<td align="center">
-															<form:input path="imprFichaVerifR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprFichaVerifR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprFichaVerifP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprFichaVerifP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprFichaVerifL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprFichaVerifL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -379,13 +414,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.1.4 Reparto de esquela de invitación</td>
 														<td align="center">
-															<form:input path="repartoEsqInvitR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="repartoEsqInvitR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="repartoEsqInvitP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="repartoEsqInvitP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="repartoEsqInvitL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="repartoEsqInvitL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -393,13 +428,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.1.5 Verificación de Información</td>
 														<td align="center">
-															<form:input path="verifInfoR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="verifInfoR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="verifInfoP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="verifInfoP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="verifInfoL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="verifInfoL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -407,13 +442,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.1.6 Elaboración del archivo del beneficiario</td>
 														<td align="center">
-															<form:input path="elabArchivoBenefR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="elabArchivoBenefR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="elabArchivoBenefP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="elabArchivoBenefP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="elabArchivoBenefL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="elabArchivoBenefL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -421,13 +456,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.1.7 Digitación de Fichas de Beneficiario</td>
 														<td align="center">
-															<form:input path="digitFichaBenefR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="digitFichaBenefR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="digitFichaBenefP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="digitFichaBenefP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="digitFichaBenefL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="digitFichaBenefL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -448,13 +483,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.2.1 Impresión de Volantes</td>
 														<td align="center">
-															<form:input path="imprVolantesR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprVolantesR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprVolantesP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprVolantesP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprVolantesL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprVolantesL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -462,13 +497,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.2.2 Impresión de Afiches</td>
 														<td align="center">
-															<form:input path="imprAfichesR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprAfichesR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprAfichesP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprAfichesP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="imprAfichesL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="imprAfichesL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -476,13 +511,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.2.3 Reparto de folletos</td>
 														<td align="center">
-															<form:input path="repFolletosR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="repFolletosR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="repFolletosP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="repFolletosP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="repFolletosL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="repFolletosL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -490,13 +525,13 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.2.4 Spot Publicitario en TV</td>
 														<td align="center">
-															<form:input path="spotPublTvR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="spotPublTvR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="spotPublTvP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="spotPublTvP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="spotPublTvL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="spotPublTvL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -504,25 +539,25 @@ $(document).ready(function () {
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															1.1.2.5 Spot Publicitario en Radio</td>
 														<td align="center">
-															<form:input path="spotPublRadioR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="spotPublRadioR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="spotPublRadioP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="spotPublRadioP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="spotPublRadioL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="spotPublRadioL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Número de Beneficiarios empadronados en diciembre</td>
 														<td align="center">
-															<form:input path="nroBenefEmpadR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroBenefEmpadR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroBenefEmpadP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroBenefEmpadP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroBenefEmpadL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroBenefEmpadL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -571,51 +606,51 @@ $(document).ready(function () {
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															2.1.1 Promoción de convenios con Agentes</td>
 														<td align="center">
-															<form:input path="promConvAgentR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="promConvAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="promConvAgentP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="promConvAgentP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="promConvAgentL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="promConvAgentL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															2.1.2 Registro y Firma de convenios</td>
 														<td align="center">
-															<form:input path="regConvAgentR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="regConvAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="regConvAgentP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="regConvAgentP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="regConvAgentL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="regConvAgentL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															2.1.3 Impresión y entrega de banderola y/o banner</td>
 														<td align="center">
-															<form:input path="impEntrBandR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impEntrBandR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="impEntrBandP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impEntrBandP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="impEntrBandL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="impEntrBandL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Número de Agentes</td>
 														<td align="center">
-															<form:input path="nroAgentR" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroAgentP" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 														<td align="center">
-															<form:input path="nroAgentL" cssClass="target fise-editable" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
 													</tr>
 													<tr>
@@ -872,5 +907,8 @@ $(document).ready(function () {
 
 	<div id="<portlet:namespace/>divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
 	</div>
+	
+	<form:input path="codEdelnor" cssStyle="display:none;" />	 
+	<form:input path="codLuzSur" cssStyle="display:none;" />
 	
 </form:form>
