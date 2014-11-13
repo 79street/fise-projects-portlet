@@ -1860,8 +1860,8 @@ var formato14B= {
 			data : {
 				<portlet:namespace />codEmpresa: formato14B.f_empresa.val(),
 				<portlet:namespace />periodoEnvio: formato14B.f_periodoEnvio.val(),
-				<portlet:namespace />anoEjecucion: $('#anioInicioVigencia').val(),
-				<portlet:namespace />mesEjecucion: $('#anioFinVigencia').val(),
+				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato14B',
 				<portlet:namespace />nombreArchivo: 'formato14B',
 				<portlet:namespace />tipoArchivo: '1'//XLS
@@ -1935,8 +1935,8 @@ var formato14B= {
 			data : {
 				<portlet:namespace />codEmpresa: formato14B.f_empresa.val(),
 				<portlet:namespace />periodoEnvio: formato14B.f_periodoEnvio.val(),
-				<portlet:namespace />anoEjecucion: $('#anioInicioVigencia').val(),
-				<portlet:namespace />mesEjecucion: $('#anioFinVigencia').val(),
+				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato14B',
 				<portlet:namespace />nombreArchivo: 'formato14B',
 				<portlet:namespace />tipoArchivo: '0'//PDF
