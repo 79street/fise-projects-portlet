@@ -50,9 +50,9 @@ $(document).ready(function () {
 											<td>
 												<table class="" style="width: 100%;" border="0">
 													<tr>
-														<td>Distribuidora Eléctrica:</td>
+														<td>Distribuidora Eléctrica: </td>
 														<td>
-														<form:select path="codEmpresa" cssClass="select" cssStyle="width: 375px;">
+														<form:select path="codEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="${formato13AGartCommand.readOnly}">
 															<form:options items="${formato13AGartCommand.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 														</form:select>
 														</td>
@@ -76,8 +76,8 @@ $(document).ready(function () {
 																	</tr>
 																	<tr>
 																		<td colspan="5">
-																		<form:select path="peridoDeclaracion" cssClass="select" cssStyle="width: 300px;">
-																			
+																		<form:select path="peridoDeclaracion" cssClass="select" cssStyle="width: 300px;" disabled="${formato13AGartCommand.readOnly}">
+																			<form:options items="${formato13AGartCommand.listaPeriodo}"  itemLabel="descripcionItem" itemValue="codigoItem"/>
 																		</form:select>
 																		</td>
 																	</tr>
@@ -146,7 +146,8 @@ $(document).ready(function () {
 															<table style="width: 100%">
 																<tr>
 																	<td width="25%">
-																		<fieldset id="panelCargaArchivos"
+																	<c:if test="${not readonly}">	
+																	   <fieldset id="panelCargaArchivos"
 																			class="net-frame-border">
 																			<legend>Subir de: </legend>
 																			<table style="width: 100%">
@@ -164,6 +165,8 @@ $(document).ready(function () {
 																				</tr>
 																			</table>
 																		</fieldset>
+																	</c:if>
+																		
 																	</td>
 																	<td width="10%"></td>
 																	<td width="65%">

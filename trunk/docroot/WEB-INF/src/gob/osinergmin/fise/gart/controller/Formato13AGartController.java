@@ -57,6 +57,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.log.Log;
@@ -180,16 +181,15 @@ public class Formato13AGartController {
 	
 	@RequestMapping(params="action=nuevo")
 	public String nuevoFormato(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,
-			@RequestParam(value = "crud", required = false,defaultValue="CREATE")String crud,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+			//@RequestParam(value = "crud", required = false,defaultValue="CREATE")String crud,
+			@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
 		 System.out.println("aqui en nuevoFormato");
-		 System.out.println("CRUD:"+crud);
+		// System.out.println("CRUD:"+crud);
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
-		model.addAttribute("crud", crud);
+		command.setReadOnly(true);
+		model.addAttribute("crud", CRUD_CREATE);
 		model.addAttribute("readonly", "false");
 		
-		if(CRUD_READ.equals(crud)){
-			model.addAttribute("readonly", "true");
-		}
 		
 		mapaErrores = fiseUtil.getMapaErrores();
 		
@@ -481,6 +481,7 @@ public class Formato13AGartController {
   	public void gridDetalle(ModelMap model,ResourceRequest request,ResourceResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
 		
 		try {
+			System.out.println("busquedaDetalle");
 			response.setContentType("application/json");	
 			logger.info("admin2.1:"+model.get("esAdministrador"));
 			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
@@ -489,8 +490,31 @@ public class Formato13AGartController {
 		    JSONArray jsonArray = new JSONArray();
 		    Map<String, String> mapaEmpresa = fiseUtil.getMapaEmpresa();
 		    
-				String codEmpresa = command.getCodEmpresa();
-				String periodoDeclaracion=command.getPeridoDeclaracion();
+		    String tipo=request.getParameter("tipo");
+		    System.out.println("tipooo::>"+request.getParameter("tipo"));
+		    String codEmpresa = "";
+			String periodoDeclaracion="";
+		    if(tipo!=null && (tipo.equalsIgnoreCase("0") || tipo.equalsIgnoreCase("1"))){
+		    	
+		    	System.out.println("codEmpresa::>"+request.getParameter("codEmpresa"));
+				System.out.println("anoPresentacion::>"+request.getParameter("anoPresentacion"));
+				
+		    	codEmpresa =request.getParameter("codEmpresa");
+		    	periodoDeclaracion=request.getParameter("anoPresentacion")+request.getParameter("mesPresentacion")+request.getParameter("etapa");
+		    
+		    	command.setCodEmpresa(codEmpresa);
+				command.setAnioPresentacion(request.getParameter("anoPresentacion"));
+				command.setMesPresentacion(request.getParameter("mesPresentacion"));
+				command.setEtapa(request.getParameter("etapa"));
+				command.setPeridoDeclaracion(periodoDeclaracion);
+				
+				
+		    
+		    }else{
+		    	 codEmpresa = command.getCodEmpresa();
+				 periodoDeclaracion=command.getPeridoDeclaracion();
+		    }
+				
 				String anioPresentacion="";
 				String mesPresentacion="";
 				String etapa="";
@@ -550,6 +574,9 @@ public class Formato13AGartController {
 	  			pw.write(jsonArray.toString());
 	  			pw.flush();
 	  			pw.close();
+	  			
+	  			
+	  			model.addAttribute("formato13AGartCommand", command);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -568,7 +595,8 @@ public class Formato13AGartController {
 	//	String codEmpresaNew = uploadPortletRequest.getParameter("codigoEmpresa");
 	  
 		FileEntry fileEntry=null;
-		System.out.println("request::"+request+"/"+uploadPortletRequest);
+		System.out.println("command UPLOAD::"+command.getCodEmpresa());
+		System.out.println("command UPLOAD::"+command.getPeridoDeclaracion());
 		fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 		formatoMensaje = readExcelFile(fileEntry, themeDisplay);
 		
@@ -605,7 +633,7 @@ public class Formato13AGartController {
 				try {
 					 cabecera=FormatoExcelImport.readSheetCabecera(libro);
 					 if(cabecera!=null ){
-						cabecera.getId().setEtapa("Solicitud");
+						cabecera.getId().setEtapa("SOLICITUD");
 						cabecera.setNombreArchivoExcel(archivo.getTitle());
 						cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
 						cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
@@ -670,27 +698,45 @@ public class Formato13AGartController {
 		return formatoMensaje;
 	}
 	
-	@ResourceMapping("getData")
-	public void getData(ModelMap model, ResourceRequest request,ResourceResponse response, @ModelAttribute("formato13AGartCommand")Formato13AGartCommand command) {
+	@RequestMapping(params="action=view")
+	public String viewFormato(ModelMap model, RenderRequest request,RenderResponse response, @ModelAttribute("formato13AGartCommand")Formato13AGartCommand command) {
 	  
-		
 		try {
-			JSONObject jsonObj = new JSONObject();
+		
 			String tipo = request.getParameter("tipo"); 
-			System.out.println("getData tipo::>"+tipo);
-			jsonObj.put("resultado", "OK");
-			response.setContentType("application/json");
-		    PrintWriter pw = response.getWriter();
-		    pw.write(jsonObj.toString());
-		    pw.flush();
-		    pw.close();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			String codEmp = request.getParameter("codEmpresa"); 
+			String anio = request.getParameter("anoPresentacion"); 
+			String mes = request.getParameter("mesPresentacion"); 
+			String etapa = request.getParameter("etapa"); 
+			System.out.println("etapa::>"+etapa);
+			command.setReadOnly(true);
+			command.setCodEmpresa(codEmp);
+			command.setAnioPresentacion(anio);
+			command.setMesPresentacion(mes);
+			command.setEtapa(etapa);
+			command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(request));
+			command.setListaPeriodo(periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmp, FiseConstants.NOMBRE_FORMATO_13A));
+			command.setPeridoDeclaracion(""+anio+""+mes+""+etapa);
+			System.out.println("setPeridoDeclaracion::>"+command.getPeridoDeclaracion());
+			if(tipo !=null && tipo.equalsIgnoreCase("0")){
+				model.addAttribute("crud", CRUD_READ);
+				model.addAttribute("readonly", "true");
+			}if(tipo !=null && tipo.equalsIgnoreCase("1")){
+				model.addAttribute("crud", CRUD_UPDATE);
+				model.addAttribute("readonly", "false");
+			}
+			
+			model.addAttribute("formato13AGartCommand", command);
+			
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println("entro error view");
 			e.printStackTrace();
 		}
-	
+		return "formato13ACRUD";
 	}
+	
+	
 }

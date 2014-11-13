@@ -3,6 +3,7 @@ package gob.osinergmin.fise.gart.command;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.AdmUbigeo;
+import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,8 @@ public class Formato13AGartCommand {
 	private String idZonaBenef;
 	private String nombreSede;
 
-	
+	private List<FisePeriodoEnvio> listaPeriodo;
+	private boolean readOnly;
 	
 	public List<AdmEmpresa> getListaEmpresas() {
 		return listaEmpresas;
@@ -325,5 +327,23 @@ public class Formato13AGartCommand {
 	public void setListaDepartamentos(List<AdmUbigeo> listaDepartamentos) {
 		this.listaDepartamentos = listaDepartamentos;
 	}
+
+	public List<FisePeriodoEnvio> getListaPeriodo() {
+		return listaPeriodo;
+	}
+
+	public void setListaPeriodo(List<FisePeriodoEnvio> listaPeriodo) {
+		this.listaPeriodo = listaPeriodo;
+	}
+
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+	
+	
 
 }

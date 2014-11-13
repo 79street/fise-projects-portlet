@@ -43,7 +43,8 @@ var formato13A= {
 	codProv:null,
 	codDist:null,
 
-	init : function(urlNuevo){
+	init : function(urlNuevo,urlView,urlEdit){
+		
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
 		this.paginadoResultados='#<portlet:namespace/>pager_formato';
 		this.urlBusqueda='<portlet:resourceURL id="busqueda" />';
@@ -52,8 +53,9 @@ var formato13A= {
 		this.botonCrearFormato=$('#<portlet:namespace/>crearFormato');
 		
 		this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
-		this.urlACrud='<portlet:resourceURL id="getData" />';
+		//this.urlACrud='<portlet:resourceURL id="getData" />';
 		this.command=$('#formato13AGartCommand');
+		this.urlACrud=urlView;
 		
 		formato13A.botonCrearFormato.click(function() {
 			formato13A.blockUI();
@@ -100,7 +102,7 @@ var formato13A= {
 		if(operacion=='CREATE'){
 			
 			formato13A.codEmpresa.change(function(){
-				$.when( formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
+				$.when(formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
 			});
 			
 			formato13A.peridoDeclaracion.change(function(){
@@ -120,6 +122,36 @@ var formato13A= {
 			});
 			
 
+		}if(operacion=='READ'){
+			formato13A.buscarDetalles();
+			
+			botonRegresarBusqueda.click(function(){
+				formato13A.blockUI();
+				location.href=urlRegresarBusqueda;
+			});
+			
+		}if(operacion=='UPDATE'){
+			formato13A.buscarDetalles();
+			/*formato13A.codEmpresa.change(function(){
+				$.when( formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
+			});*/
+			
+			/*formato13A.peridoDeclaracion.change(function(){
+				formato13A.buscarDetalles();
+		});
+			formato13A.codEmpresa.trigger('change');
+*/
+			
+			botonAnadirFormato.click(function(){
+				formato13A.blockUI();
+				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').submit();
+			});
+			
+			botonRegresarBusqueda.click(function(){
+				formato13A.blockUI();
+				location.href=urlRegresarBusqueda;
+			});
+			
 		}
 		
 		
@@ -185,9 +217,10 @@ var formato13A= {
 	      		var ids = formato13A.tablaResultados.jqGrid('getDataIDs');
 	      		for(var i=0;i < ids.length;i++){
 	      			var cl = ids[i];
-	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl);           
-	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato13A.verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"');\" /></a> ";
-	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
+	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl); 
+	      			
+	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anoPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anoPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
@@ -300,6 +333,7 @@ var formato13A= {
 		  	      			var cl = ids[i];
 		  	      			var ret = formato13A.tablaDeclaracion.jqGrid('getRowData',cl);   
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
+		  	      		
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READ");
 		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
@@ -327,7 +361,7 @@ var formato13A= {
 		}); 
 	},
 	buscarDetalles : function () {	
-
+           
 		return jQuery.ajax({			
 					url: formato13A.urlBusquedaDetalle+'&'+formato13A.formNuevo.serialize(),
 					type: 'post',
@@ -448,32 +482,10 @@ var formato13A= {
 	},
 	
 	//FORMULARIOS DE VIEW Y EDICION
-	verFormato : function(codEmpresa,anoPresentacion,mesPresentacion,etapa){	
+	verFormato : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,tipo){	
 		$.blockUI({ message: formato13A.mensajeObteniendoDatos });
-		jQuery.ajax({
-				url: formato13A.urlACrud+'&'+formato13A.command.serialize(),
-				type: 'post',
-				dataType: 'json',
-				data: {
-				   <portlet:namespace />tipo: "GET",
-				   <portlet:namespace />codEmpresa: codEmpresa,
-				   <portlet:namespace />anoPresentacion: anoPresentacion,
-				   <portlet:namespace />mesPresentacion: mesPresentacion,
-				   <portlet:namespace />etapa: etapa
-					},
-				success: function(data) {				
-					if (data.resultado == "OK"){
-						formato13A.blockUI();
-					}
-					else{
-						alert("Error al recuperar los datos del registro seleccionado");
-						formato13A.blockUI();
-					}
-				},error : function(){
-					alert("Error de conexión.");
-					formato13A.blockUI();
-				}
-		});	
+		location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anoPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&tipo='+tipo;
+		
 	},
 
 	
