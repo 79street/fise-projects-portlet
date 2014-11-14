@@ -8,7 +8,8 @@
 </portlet:actionURL>
 
 <portlet:renderURL var="urlRegresarDetalle">
-	<portlet:param name="action" value="nuevo"/>
+<%-- 	<portlet:param name="action" value="nuevo"/> --%>
+	  <portlet:param name="action" value="view"/>
 </portlet:renderURL>
 
 <script type="text/javascript">
@@ -54,6 +55,9 @@ $(document).ready(function () {
 															<td>
 																<input type="text" value="${formato13AGartCommand.mesPresentacion}/${formato13AGartCommand.anioPresentacion } - ${formato13AGartCommand.etapa}"/>
 																<form:hidden path="peridoDeclaracion" />
+																<form:hidden path="anioPresentacion" />
+																<form:hidden path="mesPresentacion" />
+																<form:hidden path="etapa" />
 															</td>
 														</tr>
 													</table>
@@ -153,15 +157,16 @@ $(document).ready(function () {
 																</thead>
 																<tbody>
 																	<tr>
-																		<td><form:input path="st1" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st2" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st3" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st4" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st5" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st6" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="stser" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="stesp" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="total" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st1" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st2" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st3" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st4" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st5" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st6" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="stser" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="stesp" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<%-- <td><form:input path="total" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td> --%>
+																		<td><form:input path="total" cssStyle="width:50px" maxlength="4" readonly="true"/></td>
 																		<td>
 																			<form:select path="idZonaBenef" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
 																					<form:option value="">-Seleccione-</form:option>
@@ -234,9 +239,10 @@ $(document).ready(function () {
 																						id="<portlet:namespace/>regresarFormato"
 																						name="<portlet:namespace/>regresarFormato"
 																						value="Regresar" /></td>
+																					
 																			</tr>
 																		</table>
-	
+																		<input id="accionRegresar" style="display:none;" />
 																	</td>
 																</tr>
 															</table> <input type="hidden" id="flagCarga" name="flagCarga"

@@ -42,7 +42,23 @@ var formato13A= {
 	codDepa:null,
 	codProv:null,
 	codDist:null,
-
+	
+	//detalleCRUD
+	codEmpresaDetalle:null,
+	anoPresentacionDetalle:null,
+	mesPresentacionDetalle:null,
+	etapaDetalle:null,
+	//valores sector tipico
+	st1Detalle:null,
+	st2Detalle:null,
+	st3Detalle:null,
+	st4Detalle:null,
+	st5Detalle:null,
+	st6Detalle:null,
+	stserDetalle:null,
+	stespDetalle:null,
+	sttotalDetalle:null,
+	
 	init : function(urlNuevo,urlView,urlEdit){
 		
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
@@ -165,7 +181,26 @@ var formato13A= {
 		this.urlDistritos='<portlet:resourceURL id="distritos" />';
 		this.botonGuardarDetalle=$('#<portlet:namespace/>guardarDetalle');
 		var botonRegresarDetalle=$('#<portlet:namespace/>regresarFormato');
-
+		//valores de cabecera
+		this.codEmpresaDetalle=$('#codEmpresa');
+		this.anoPresentacionDetalle=$('#anioPresentacion');
+		this.mesPresentacionDetalle=$('#mesPresentacion');
+		this.etapaDetalle=$('#etapa');
+		//valores de sector tipico
+		this.st1Detalle=$('#st1');
+		this.st2Detalle=$('#st2');
+		this.st3Detalle=$('#st3');
+		this.st4Detalle=$('#st4');
+		this.st5Detalle=$('#st5');
+		this.st6Detalle=$('#st6');
+		this.stserDetalle=$('#stser');
+		this.stespDetalle=$('#stesp');
+		this.sttotalDetalle=$('#total');
+		
+		$('input.target[type=text]').on('change', function(){
+			formato13A.calculoTotal();
+		});
+		
 		<c:if test="${crud =='CREATE'}">
 			formato13A.codDepa.change(function(){
 				formato13A.listarProvincias(formato13A.codDepa.val());
@@ -178,12 +213,33 @@ var formato13A= {
 			formato13A.botonGuardarDetalle.click(function(){
 				formato13A.formDetalle.attr('action',urlGuardarDetalle).submit();
 			});
+			
+			botonRegresarDetalle.click(function(){
+				formato13A.blockUI();
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anoPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+			});
+		
 		</c:if>
 		
-		botonRegresarDetalle.click(function(){
+		<c:if test="${crud =='READ'}">
+			botonRegresarDetalle.click(function(){
+				formato13A.blockUI();
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anoPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=0';
+				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=0';
+			});
+		</c:if>
+		<c:if test="${crud =='UPDATE'}">
+			botonRegresarDetalle.click(function(){
+				formato13A.blockUI();
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anoPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=1';
+			});
+		</c:if>
+		
+		/* botonRegresarDetalle.click(function(){
 			formato13A.blockUI();
-			location.href=urlRegresarDetalle+'&crud='+operacion;
-		});
+			location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize();
+		}); */
 		
 	},
 	buildGridsBusqueda : function () {	
@@ -487,7 +543,29 @@ var formato13A= {
 		location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anoPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&tipo='+tipo;
 		
 	},
-
+	//calculo total
+	calculoTotal : function(){
+		var st1;
+		var st2;
+		var st3;
+		var st4;
+		var st5;
+		var st6;
+		var stser;
+		var stesp;
+		var total;
+		st1=formato13A.st1Detalle.val();
+		st2=formato13A.st2Detalle.val();
+		st3=formato13A.st3Detalle.val();
+		st4=formato13A.st4Detalle.val();
+		st5=formato13A.st5Detalle.val();
+		st6=formato13A.st6Detalle.val();
+		stser=formato13A.stserDetalle.val();
+		stesp=formato13A.stespDetalle.val();
+		console.debug(''+st1+','+st2+','+st3+','+st4+','+st5+','+st6+','+stser+','+stesp);
+		total=parseFloat(st1)+parseFloat(st2)+parseFloat(st3)+parseFloat(st4)+parseFloat(st5)+parseFloat(st6)+parseFloat(stser)+parseFloat(stesp);
+		formato13A.sttotalDetalle.val(parseFloat(total));
+	}
 	
 };
 
