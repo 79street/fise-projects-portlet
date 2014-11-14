@@ -691,17 +691,17 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14BGartController.c
     		anioPresNew = periodoEnvioPresNew.substring(0, 4);
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
     		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
-    		/*if( "S".equals(flagPeriodoEjecucion) ){
-    			anioIniVigNew = uploadPortletRequest.getParameter("i_anioejecuc");
-    			anioFinVigNew = uploadPortletRequest.getParameter("s_mes_ejecuc");
-			}else{
-				anioIniVigNew = anioPresNew;
-				anioFinVigNew = anioPresNew;
-			}*/
-    	}
     	
-		anioIniVigNew = uploadPortletRequest.getParameter("anioInicioVigencia");
-		anioFinVigNew = uploadPortletRequest.getParameter("anioFinVigencia");
+    		for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+    			if( periodoEnvioPresNew.equals(p.getCodigoItem()) ){
+    				anioIniVigNew = p.getAnioInicioVig();
+    				anioFinVigNew = p.getAnioFinVig();
+    				break;
+    			}
+    		}
+    		
+		}
+    	
 		
 		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
@@ -910,25 +910,19 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						cont++;
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_40);
 					}
-					if( HSSFCell.CELL_TYPE_STRING == celdaAnio.getCellType()  ){
-						formulario.setAnioPresent(Long.parseLong(celdaAnio.toString()));
-						formulario.setAnioInicioVigencia(Long.parseLong(celdaAnio.toString()));
-						formulario.setAnioFinVigencia(Long.parseLong(celdaAnio.toString()));
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnio.getCellType()  ){
+						formulario.setAnioPresent(new Double(celdaAnio.getNumericCellValue()).longValue());
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnio.getCellType()  ){
 						formulario.setAnioPresent(0L);
-						formulario.setAnioInicioVigencia(0L);
-						formulario.setAnioFinVigencia(0L);
 						cont++;
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_50);
 					}else{
 						formulario.setAnioPresent(0L);
-						formulario.setAnioInicioVigencia(0L);
-						formulario.setAnioFinVigencia(0L);
 						cont++;
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_60);
 					}
-					if( HSSFCell.CELL_TYPE_STRING == celdaMes.getCellType()  ){
-						formulario.setMesPresent(Long.parseLong(celdaMes.toString()));
+					if( HSSFCell.CELL_TYPE_NUMERIC == celdaMes.getCellType()  ){
+						formulario.setMesPresent(new Double(celdaMes.getNumericCellValue()).longValue());
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaMes.getCellType()  ){
 						formulario.setMesPresent(0L);
 						cont++;
@@ -1405,6 +1399,11 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 //					}
 					///
 					
+					/**verificar*/
+					formulario.setAnioInicioVigencia(Long.parseLong(anioIniVigencia));
+					formulario.setAnioFinVigencia(Long.parseLong(anioFinVigencia));
+					/***/
+					
 					if( FiseConstants.BLANCO.equals(sMsg) ){
 						
 						//
@@ -1416,8 +1415,8 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
 								anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
 								Long.parseLong(mesPres) == formulario.getMesPresent() &&
-								anioIniVigencia.equals(String.valueOf(formulario.getAnioPresent())) &&
-								anioFinVigencia.equals(String.valueOf(formulario.getAnioPresent()))
+								anioIniVigencia.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&
+								anioFinVigencia.equals(String.valueOf(formulario.getAnioFinVigencia()))
 								){
 							if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO.equals(flagCarga) ){
 								objeto = formato14Service.registrarFormato14BC(formulario);
@@ -1427,8 +1426,8 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								id.setCodEmpresa(formulario.getCodigoEmpresa());
 								id.setAnoPresentacion(formulario.getAnioPresent());
 								id.setMesPresentacion(formulario.getMesPresent());
-								id.setAnoInicioVigencia(formulario.getAnioPresent());
-								id.setAnoFinVigencia(formulario.getAnioPresent());
+								id.setAnoInicioVigencia(formulario.getAnioInicioVigencia());
+								id.setAnoFinVigencia(formulario.getAnioFinVigencia());
 								id.setEtapa(FiseConstants.ETAPA_SOLICITUD);
 								formatoModif = formato14Service.obtenerFormato14BCByPK(id);
 								objeto = formato14Service.modificarFormato14BC(formulario, formatoModif);
