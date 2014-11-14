@@ -797,7 +797,7 @@ public class Formato14CGartController {
 			if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
 				logger.info("Tamanio de la lista periodo al validar: "+listaPeriodoEnvio.size()); 
 				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
-					if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
+					if(f.getPeriodoEnvio().equals(p.getCodigoItem())){					
 						f.setAnoIniVigencia(p.getAnioInicioVig());
 						f.setAnoIniVigencia(p.getAnioFinVig());
 						break;
