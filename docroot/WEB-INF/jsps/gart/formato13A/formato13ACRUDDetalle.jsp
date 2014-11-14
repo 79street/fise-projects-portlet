@@ -242,7 +242,6 @@ $(document).ready(function () {
 																					
 																			</tr>
 																		</table>
-																		<input id="accionRegresar" style="display:none;" />
 																	</td>
 																</tr>
 															</table> <input type="hidden" id="flagCarga" name="flagCarga"

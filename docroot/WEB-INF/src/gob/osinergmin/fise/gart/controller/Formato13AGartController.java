@@ -193,7 +193,8 @@ public class Formato13AGartController {
 	}
 	
 	@ActionMapping(params="action=guardarDetalle")
-	public void guardarDetalleFormato(ModelMap model,ActionRequest request,ActionResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
+	public void guardarDetalleFormato(ModelMap model,ActionRequest request,ActionResponse response,
+			@RequestParam("crud")String crud,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command){
 			
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		
@@ -259,26 +260,58 @@ public class Formato13AGartController {
 		FiseFormato13AC cab=formatoService.obtenerFormato13ACByPK(pkCabecera);
 		
 		if(cab!=null){
-			//update
+			//validar si es nuevo o modificacion
+			if(CRUD_CREATE.equals(crud)){
+				//create
+				FiseFormato13AC formato13 = new FiseFormato13AC();
+				formato13.setId(pkCabecera);
+				List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
+				//se agregará varaiables de sector tipico para cada tipo de grupo beneficiario
+				
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
+				
+				agregarFormato13Detalle(listaDetalle);
+			}else if (CRUD_UPDATE.equals(crud)) {
+				//update
+				
+				if( cab.getFiseFormato13ADs()!=null && !cab.getFiseFormato13ADs().isEmpty() ){
+					for (FiseFormato13AD d : cab.getFiseFormato13ADs()) {
+						
+						if( Long.parseLong(command.getIdZonaBenef())==d.getId().getIdZonaBenef() ){
+							if( FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico()) ){
+								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, d);
+							}else if( FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico()) ){
+								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, d);
+							}else if( FiseConstants.SECTOR_TIPICO_3_COD.equals(d.getId().getCodSectorTipico()) ){
+								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, d);
+							}else if( FiseConstants.SECTOR_TIPICO_4_COD.equals(d.getId().getCodSectorTipico()) ){
+								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, d);
+							}else if( FiseConstants.SECTOR_TIPICO_5_COD.equals(d.getId().getCodSectorTipico()) ){
+								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, d);
+							}else if( FiseConstants.SECTOR_TIPICO_6_COD.equals(d.getId().getCodSectorTipico()) ){
+								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, d);
+							}else if( FiseConstants.SECTOR_TIPICO_SER_COD.equals(d.getId().getCodSectorTipico()) ){
+								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, d);
+							}else if( FiseConstants.SECTOR_TIPICO_ESP_COD.equals(d.getId().getCodSectorTipico()) ){
+								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, d);
+							}
+						}
+					
+					}
+					modificarFormato13Detalle(cab.getFiseFormato13ADs());
+				}
+
+			}
 			
 		}else{
-			//create
-			FiseFormato13AC formato13 = new FiseFormato13AC();
-			formato13.setId(pkCabecera);
-			List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
-			//se agregará varaiables de sector tipico para cada tipo de grupo beneficiario
-			
-			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
-			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
-			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
-			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, listaDetalle);
-			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, listaDetalle);
-			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
-			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
-			agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
-			
-			agregarFormato13(themeDisplay, formato13, listaDetalle);
-
+			//no se valida si es nulo la cabecera
 		}
 		
 		response.setRenderParameter("crud", "VIEW");
@@ -770,7 +803,24 @@ public class Formato13AGartController {
 	}
 	
 	/**metodos utiles*/
-public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato, List<FiseFormato13AD> listaDetalle){
+	
+	public void agregarFormato13Detalle(List<FiseFormato13AD> listaDetalle){
+		if( listaDetalle != null && listaDetalle.size()>0 ){
+			for (FiseFormato13AD detalle : listaDetalle) {
+				formatoService.savedetalle(detalle);
+			}
+		}
+	}
+	
+	public void modificarFormato13Detalle(List<FiseFormato13AD> listaDetalle){
+		if( listaDetalle != null && listaDetalle.size()>0 ){
+			for (FiseFormato13AD detalle : listaDetalle) {
+				formatoService.updatedetalle(detalle);
+			}
+		}
+	}
+	
+	/*public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato, List<FiseFormato13AD> listaDetalle){
 		
 		Date hoy = FechaUtil.obtenerFechaActual();
 		try{
@@ -801,6 +851,28 @@ public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato,
 			e.printStackTrace();
 		}
 	}
+	
+	public void modificarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato){
+		
+		Date hoy = FechaUtil.obtenerFechaActual();
+		try{
+			formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+			formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+			formato.setFechaActualizacion(hoy);
+			
+			formatoService.updatecabecera(formato);
+			
+			if( formato.getFiseFormato13ADs() != null && formato.getFiseFormato13ADs().size()>0 ){
+				for (FiseFormato13AD detalle : formato.getFiseFormato13ADs()) {
+					formatoService.updatedetalle(detalle);
+				}
+			}
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}*/
 	
 	public void agregarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, List<FiseFormato13AD> listaDetalle ){
 		
@@ -858,8 +930,44 @@ public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato,
 		
 	}
 	
-	public void modificarSectorTipico(){
+	public void modificarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, FiseFormato13AD detalle){
+	
+		Date hoy = FechaUtil.obtenerFechaActual();
 		
+		try{
+			//verificar que campos son editables en la vista de modificacion
+			detalle.setAnoAlta(Long.parseLong(command.getAnioAlta()));
+			detalle.setMesAlta(Long.parseLong(command.getMesAlta()));
+			//luego verificar de donde se obtendra los valores de ano e inicio de vigencia
+			detalle.setAnoInicioVigencia(Long.parseLong(command.getAnioAlta()));
+			detalle.setAnoFinVigencia(Long.parseLong(command.getAnioAlta()));
+			//
+			detalle.setDescripcionLocalidad(command.getLocalidad());
+			detalle.setNombreSedeAtiende(command.getNombreSede());
+			if( FiseConstants.SECTOR_TIPICO_1_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt1()));
+			}else if( FiseConstants.SECTOR_TIPICO_2_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt2()));
+			}else if( FiseConstants.SECTOR_TIPICO_3_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt3()));
+			}else if( FiseConstants.SECTOR_TIPICO_4_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt4()));
+			}else if( FiseConstants.SECTOR_TIPICO_5_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt5()));
+			}else if( FiseConstants.SECTOR_TIPICO_6_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt6()));
+			}else if( FiseConstants.SECTOR_TIPICO_SER_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStser()));
+			}else if( FiseConstants.SECTOR_TIPICO_ESP_COD.equals(sectorTipico) ){
+				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStesp()));
+			}
+			detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+			detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+			detalle.setFechaActualizacion(hoy);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 	
 }
