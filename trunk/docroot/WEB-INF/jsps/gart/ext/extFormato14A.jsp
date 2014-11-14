@@ -1460,7 +1460,7 @@ var formato14A= {
 		
 		formato14A.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 		
-		formato14A.mostrarPeriodoEjecucion();
+		//formato14A.mostrarPeriodoEjecucion();
 	},
 //////CRUD
 	<portlet:namespace/>guardarFormato : function(){
@@ -1590,6 +1590,9 @@ var formato14A= {
 		formato14A.divFormato.show();
 		formato14A.divHome.hide();
 		formato14A.flagCarga.val('0');
+		//
+		formato14A.estiloEdicionRural();
+		formato14A.estiloEdicionProvincia();
 	},
 	validarFormulario : function() {		
 		if(formato14A.f_empresa.val().length == '' ) { 	

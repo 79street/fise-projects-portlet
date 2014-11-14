@@ -1423,7 +1423,7 @@ var formato14B= {
 		$('#anioInicioVigencia').val(row.anoIniVigencia);
 		$('#anioFinVigencia').val(row.anoFinVigencia);
 		
-		formato14B.mostrarPeriodoEjecucion();
+		//formato14B.mostrarPeriodoEjecucion();
 		
 		/*if( formato14B.f_flagPeriodo.val()=='S' ){
 			$('#anioInicioVigencia').attr("disabled",true);
@@ -1651,6 +1651,9 @@ var formato14B= {
 		formato14B.divFormato.show();
 		formato14B.divHome.hide();
 		formato14B.flagCarga.val('0');
+		//
+		formato14B.estiloEdicionRural();
+		formato14B.estiloEdicionProvincia();
 	},
 	validarFormulario : function() {		
 		if(formato14B.f_empresa.val().length == '' ) { 	
