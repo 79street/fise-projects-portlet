@@ -925,10 +925,12 @@ var formato14C= {
 					success: function(data) {				
 						dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
 						dwr.util.setValue("flagCosto", data.flagCosto);
+						dwr.util.setValue("anoIniVigencia", data.anoIniVigencia);
+						dwr.util.setValue("anoFinVigencia", data.anoFinVigencia);
 						console.debug("flag periodo ejecucion al cargar desde el controller: "+data.flagPeriodoEjecucion);
 						console.debug("flag costos al cargar desde el controller: "+data.flagCosto);
 						
-						formato14C.recargarPeriodoEjecucion();
+						//formato14C.recargarPeriodoEjecucion();
 						
 						formato14C.mostrarPeriodoEjecucion();
 					
