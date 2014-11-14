@@ -311,17 +311,18 @@ public class Formato14CGartController {
 			
 			f.setDesperiodoEnvio(desPeriodoEnvio);
 			/**Para verificar el flag costo del registro seleccionado*/
-			List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+			/*List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
   					FiseConstants.TIPO_FORMATO_14C);
 			logger.info("tamaño de la lista periodo:  "+listaPeriodo.size()); 
-			logger.info("Periodo envio al editar un registro:  "+codigoPeriodoEnvio); 
-			for (FisePeriodoEnvio p : listaPeriodo) {
+			logger.info("Periodo envio al editar un registro:  "+codigoPeriodoEnvio); */
+			logger.info("tamaño de la lista periodo al editar o visualizar :  "+listaPeriodoEnvio.size()); 				
+			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				logger.info("periodo codigo:  "+p.getCodigoItem()); 
-				if(codigoPeriodoEnvio.equals(p.getCodigoItem()) ){
+				if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){
 				    f.setFlagCosto(p.getFlagHabilitaCostos());				
 					break;
 				}
-			}
+			}			
 			logger.info("Flag costo al editar un registro:  "+f.getFlagCosto()); 
 			/********Guardando en sesion la clave primaria del formato para la carga de exel******/
 			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -369,19 +370,21 @@ public class Formato14CGartController {
 				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
-
-				if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-					f.setAnoIniVigencia(f.getAnoIniVigencia());
-					f.setAnoFinVigencia(f.getAnoFinVigencia());
-				}else{
-					f.setAnoIniVigencia(f.getAnioPres());
-					f.setAnoFinVigencia(f.getAnioPres());
-				}				
-				List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
-	  					FiseConstants.TIPO_FORMATO_14C);
-				logger.info("tamaño de la lista periodo:  "+listaPeriodo.size()); 
-				logger.info("Periodo de envio al momento de grabar un registro:  "+f.getPeriodoEnvio()); 
-				for (FisePeriodoEnvio p : listaPeriodo) {
+				
+				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+					logger.info("Tamanio de la lista periodo al grabar nuevo: "+listaPeriodoEnvio.size()); 
+					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
+							f.setAnoIniVigencia(p.getAnioInicioVig());
+							f.setAnoIniVigencia(p.getAnioFinVig());
+							break;
+						}
+					}
+				}			
+				/*List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+	  					FiseConstants.TIPO_FORMATO_14C);*/
+				logger.info("tamaño de la lista periodo al grabar nuevo:  "+listaPeriodoEnvio.size()); 				
+				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 					logger.info("periodo codigo:  "+p.getCodigoItem()); 
 					if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){
 					    f.setFlagCosto(p.getFlagHabilitaCostos());				
@@ -432,19 +435,24 @@ public class Formato14CGartController {
 			if( f.getPeriodoEnvio().length()>6 ){
 				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
-				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
-				if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-					f.setAnoIniVigencia(f.getAnoIniVigencia());
-					f.setAnoFinVigencia(f.getAnoFinVigencia());
-				}else{
-					f.setAnoIniVigencia(f.getAnioPres());
-					f.setAnoFinVigencia(f.getAnioPres());
-				}
-				List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));				
+				
+				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+					logger.info("Tamanio de la lista periodo al actualizar : "+listaPeriodoEnvio.size()); 
+					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
+							f.setAnoIniVigencia(p.getAnioInicioVig());
+							f.setAnoIniVigencia(p.getAnioFinVig());
+							break;
+						}
+					}
+				}			
+				/*List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
 	  					FiseConstants.TIPO_FORMATO_14C);
-				logger.info("tamaño de la lista periodo:  "+listaPeriodo.size()); 
+				logger.info("tamaño de la lista periodo:  "+listaPeriodo.size()); */
 				logger.info("Periodo al momento de actualizar un registro:  "+f.getPeriodoEnvio()); 
-				for (FisePeriodoEnvio p : listaPeriodo) {
+				logger.info("tamaño de la lista periodo al actualizar :  "+listaPeriodoEnvio.size()); 				
+				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 					logger.info("periodo codigo:  "+p.getCodigoItem()); 
 					if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){
 					    f.setFlagCosto(p.getFlagHabilitaCostos());				
@@ -730,17 +738,20 @@ public class Formato14CGartController {
 		    session.setAttribute("tipoFormato",tipoFormato);
 		    session.setAttribute("tipoArchivo",tipoArchivo);
 		    
-			if( f.getPeriodoEnvio().length()>6 ){
+			if(f.getPeriodoEnvio().length()>6){
 				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
-
-				if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-					f.setAnoIniVigencia(f.getAnoIniVigencia());
-					f.setAnoFinVigencia(f.getAnoFinVigencia());
-				}else{
-					f.setAnoIniVigencia(f.getAnioPres());
-					f.setAnoFinVigencia(f.getAnioPres());
+               
+				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+					logger.info("Tamanio de la lista periodo al reporte: "+listaPeriodoEnvio.size()); 
+					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
+							f.setAnoIniVigencia(p.getAnioInicioVig());
+							f.setAnoIniVigencia(p.getAnioFinVig());
+							break;
+						}
+					}
 				}		
 			}	 
 			
@@ -783,12 +794,15 @@ public class Formato14CGartController {
 			f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 			f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 
-			if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-				f.setAnoIniVigencia(f.getAnoIniVigencia());
-				f.setAnoFinVigencia(f.getAnoFinVigencia());
-			}else{
-				f.setAnoIniVigencia(f.getAnioPres());
-				f.setAnoFinVigencia(f.getAnioPres());
+			if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+				logger.info("Tamanio de la lista periodo al validar: "+listaPeriodoEnvio.size()); 
+				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+					if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
+						f.setAnoIniVigencia(p.getAnioInicioVig());
+						f.setAnoIniVigencia(p.getAnioFinVig());
+						break;
+					}
+				}
 			}		
 		}	
 		
@@ -910,12 +924,15 @@ public class Formato14CGartController {
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 				
-				if( "S".equals(f.getFlagPeriodoEjecucion()) ){
-					f.setAnoIniVigencia(f.getAnoIniVigencia());
-					f.setAnoFinVigencia(f.getAnoFinVigencia());
-				}else{
-					f.setAnoIniVigencia(f.getAnioPres());
-					f.setAnoFinVigencia(f.getAnioPres());
+				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+					logger.info("Tamanio de la lista periodo al envio definitivo: "+listaPeriodoEnvio.size()); 
+					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
+							f.setAnoIniVigencia(p.getAnioInicioVig());
+							f.setAnoIniVigencia(p.getAnioFinVig());
+							break;
+						}
+					}
 				}	
 			}	
 		    f.setUsuario(themeDisplay.getUser().getLogin());
