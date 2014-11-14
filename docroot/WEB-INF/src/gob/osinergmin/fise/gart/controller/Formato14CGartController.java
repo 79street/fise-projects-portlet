@@ -805,6 +805,8 @@ public class Formato14CGartController {
 				}
 			}		
 		}	
+		logger.info("Anio inicio figencia al validar: "+f.getAnoIniVigencia());
+		logger.info("Anio fin figencia al validar: "+f.getAnoFinVigencia()); 
 		
 		FiseFormato14CC formato = formato14CGartService.obtenerFiseFormato14CC(f);
 	    logger.info("Objeto formato 14C: "+formato); 
