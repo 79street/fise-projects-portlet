@@ -967,11 +967,14 @@ var formato14C= {
 			console.debug("flag costo al mostrar:  "+formato14C.flagCosto.val());
 			if(formato14C.f_flagPeriodo.val()=='S' ){			
 				$('#anoIniVigencia').removeAttr("disabled");
-				$('#anoFinVigencia').removeAttr("disabled");
-				
+				$('#anoIniVigencia').addClass("fise-editable");
+				$('#anoFinVigencia').removeAttr("disabled");			
+				$('#anoFinVigencia').addClass("fise-editable");			
 			}else{			
 				$('#anoIniVigencia').attr("disabled",true);
-				$('#anoFinVigencia').attr("disabled",true);				
+				$('#anoIniVigencia').removeClass("fise-editable");
+				$('#anoFinVigencia').attr("disabled",true);	
+				$('#anoFinVigencia').removeClass("fise-editable");
 			}			
 		},
 		recargarPeriodoEjecucion : function(){
@@ -984,10 +987,14 @@ var formato14C= {
 				console.debug("flag costo al recargar:  "+formato14C.flagCosto.val());
 				if(formato14C.f_flagPeriodo.val()=='S' ){
 					$('#anoIniVigencia').val(anoInicio);
+					$('#anoIniVigencia').addClass("fise-editable");
 					$('#anoFinVigencia').val(anoFin);
+					$('#anoFinVigencia').addClass("fise-editable");	
 				}else{				
 					$('#anoIniVigencia').attr("disabled",true);
-					$('#anoFinVigencia').attr("disabled",true);					
+					$('#anoIniVigencia').removeClass("fise-editable");
+					$('#anoFinVigencia').attr("disabled",true);
+					$('#anoFinVigencia').removeClass("fise-editable");
 				}		
 			}
 		},
@@ -2448,8 +2455,12 @@ var formato14C= {
 			//cabecera
 			$('#codEmpresa').attr("disabled",true);
 			$('#periodoEnvio').attr("disabled",true);
-			$('#anoIniVigencia').attr("disabled",true);
+			$('#anoIniVigencia').attr("disabled",true);			
 			$('#anoFinVigencia').attr("disabled",true);
+			///ESTILOS
+			$('#anoIniVigencia').removeClass("fise-editable");
+			$('#anoFinVigencia').removeClass("fise-editable");
+			
 			formato14C.f_nombreSede.attr("disabled",true);
 			formato14C.f_numRural.attr("disabled",true);
 			formato14C.f_numUrbProv.attr("disabled",true);
@@ -2457,6 +2468,15 @@ var formato14C= {
 			formato14C.f_costoPromRural.attr("disabled",true);			
 			formato14C.f_costoPromUrbProv.attr("disabled",true);
 			formato14C.f_costoPromUrbLima.attr("disabled",true);
+			//ESTILOS
+			formato14C.f_nombreSede.removeClass("fise-editable");
+			formato14C.f_numRural.removeClass("fise-editable");
+			formato14C.f_numUrbProv.removeClass("fise-editable");
+			formato14C.f_numUrbLima.removeClass("fise-editable");
+			formato14C.f_costoPromRural.removeClass("fise-editable");			
+			formato14C.f_costoPromUrbProv.removeClass("fise-editable");
+			formato14C.f_costoPromUrbLima.removeClass("fise-editable");
+			
 			
 			//RURAL
 			formato14C.f_canDRCoord.attr("disabled",true);
@@ -2521,6 +2541,70 @@ var formato14C= {
 			formato14C.f_canILAsist.attr("disabled",true);
 			formato14C.f_costILAsist.attr("disabled",true);	
 			
+			//ESTILOS
+			formato14C.f_canDRCoord.removeClass("fise-editable");
+			formato14C.f_costDRCoord.removeClass("fise-editable");
+			formato14C.f_canIRCoord.removeClass("fise-editable");
+			formato14C.f_costIRCoord.removeClass("fise-editable");
+			
+			formato14C.f_canDRSupe.removeClass("fise-editable");
+			formato14C.f_costDRSupe.removeClass("fise-editable");
+			formato14C.f_canIRSupe.removeClass("fise-editable");
+			formato14C.f_costIRSupe.removeClass("fise-editable");
+			
+			formato14C.f_canDRGest.removeClass("fise-editable");
+			formato14C.f_costDRGest.removeClass("fise-editable");
+			formato14C.f_canIRGest.removeClass("fise-editable");
+			formato14C.f_costIRGest.removeClass("fise-editable");
+			
+			formato14C.f_canDRAsist.removeClass("fise-editable");
+			formato14C.f_costDRAsist.removeClass("fise-editable");
+			formato14C.f_canIRAsist.removeClass("fise-editable");
+			formato14C.f_costIRAsist.removeClass("fise-editable");		
+			
+			//PROVINCIA
+			formato14C.f_canDPCoord.removeClass("fise-editable");
+			formato14C.f_costDPCoord.removeClass("fise-editable");
+			formato14C.f_canIPCoord.removeClass("fise-editable");
+			formato14C.f_costIPCoord.removeClass("fise-editable");
+			
+			formato14C.f_canDPSupe.removeClass("fise-editable");
+			formato14C.f_costDPSupe.removeClass("fise-editable");
+			formato14C.f_canIPSupe.removeClass("fise-editable");
+			formato14C.f_costIPSupe.removeClass("fise-editable");
+			
+			formato14C.f_canDPGest.removeClass("fise-editable");
+			formato14C.f_costDPGest.removeClass("fise-editable");
+			formato14C.f_canIPGest.removeClass("fise-editable");
+			formato14C.f_costIPGest.removeClass("fise-editable");
+			
+			formato14C.f_canDPAsist.removeClass("fise-editable");
+			formato14C.f_costDPAsist.removeClass("fise-editable");
+			formato14C.f_canIPAsist.removeClass("fise-editable");
+			formato14C.f_costIPAsist.removeClass("fise-editable");	
+			
+			//LIMA
+			formato14C.f_canDLCoord.removeClass("fise-editable");
+			formato14C.f_costDLCoord.removeClass("fise-editable");
+			formato14C.f_canILCoord.removeClass("fise-editable");
+			formato14C.f_costILCoord.removeClass("fise-editable");
+			
+			formato14C.f_canDLSupe.removeClass("fise-editable");
+			formato14C.f_costDLSupe.removeClass("fise-editable");
+			formato14C.f_canILSupe.removeClass("fise-editable");
+			formato14C.f_costILSupe.removeClass("fise-editable");
+			
+			formato14C.f_canDLGest.removeClass("fise-editable");
+			formato14C.f_costDLGest.removeClass("fise-editable");
+			formato14C.f_canILGest.removeClass("fise-editable");
+			formato14C.f_costILGest.removeClass("fise-editable");
+			
+			formato14C.f_canDLAsist.removeClass("fise-editable");
+			formato14C.f_costDLAsist.removeClass("fise-editable");
+			formato14C.f_canILAsist.removeClass("fise-editable");
+			formato14C.f_costILAsist.removeClass("fise-editable");	
+			
+			
 			//botones
 			formato14C.botonReportePdf.css('display','');
 			formato14C.botonReporteExcel.css('display','');
@@ -2538,6 +2622,10 @@ var formato14C= {
 			$('#periodoEnvio').removeAttr("disabled");
 			$('#anoIniVigencia').removeAttr("disabled");
 			$('#anoFinVigencia').removeAttr("disabled");
+			//ESTILOS
+			$('#anoIniVigencia').addClass("fise-editable");
+			$('#anoFinVigencia').addClass("fise-editable");
+			
 			/*if( formato14C.f_flagPeriodo.val()=='S' ){
 				$('#anoIniVigencia').removeAttr("disabled");
 				$('#anoFinVigencia').removeAttr("disabled");
@@ -2549,6 +2637,15 @@ var formato14C= {
 			formato14C.f_costoPromRural.removeAttr("disabled");		
 			formato14C.f_costoPromUrbProv.removeAttr("disabled");
 			formato14C.f_costoPromUrbLima.removeAttr("disabled");
+			
+			//ESTILOS
+			formato14C.f_nombreSede.addClass("fise-editable");
+			formato14C.f_numRural.addClass("fise-editable");
+			formato14C.f_numUrbProv.addClass("fise-editable");
+			formato14C.f_numUrbLima.addClass("fise-editable");
+			formato14C.f_costoPromRural.addClass("fise-editable");		
+			formato14C.f_costoPromUrbProv.addClass("fise-editable");
+			formato14C.f_costoPromUrbLima.addClass("fise-editable");
 			
 			//RURAL
 			formato14C.f_canDRCoord.removeAttr("disabled");
@@ -2611,7 +2708,70 @@ var formato14C= {
 			formato14C.f_canDLAsist.removeAttr("disabled");
 			formato14C.f_costDLAsist.removeAttr("disabled");
 			formato14C.f_canILAsist.removeAttr("disabled");
-			formato14C.f_costILAsist.removeAttr("disabled");	
+			formato14C.f_costILAsist.removeAttr("disabled");
+			
+			//ESTILOS
+			formato14C.f_canDRCoord.addClass("fise-editable");
+			formato14C.f_costDRCoord.addClass("fise-editable");
+			formato14C.f_canIRCoord.addClass("fise-editable");
+			formato14C.f_costIRCoord.addClass("fise-editable");
+			
+			formato14C.f_canDRSupe.addClass("fise-editable");
+			formato14C.f_costDRSupe.addClass("fise-editable");
+			formato14C.f_canIRSupe.addClass("fise-editable");
+			formato14C.f_costIRSupe.addClass("fise-editable");
+			
+			formato14C.f_canDRGest.addClass("fise-editable");
+			formato14C.f_costDRGest.addClass("fise-editable");
+			formato14C.f_canIRGest.addClass("fise-editable");
+			formato14C.f_costIRGest.addClass("fise-editable");
+			
+			formato14C.f_canDRAsist.addClass("fise-editable");
+			formato14C.f_costDRAsist.addClass("fise-editable");
+			formato14C.f_canIRAsist.addClass("fise-editable");
+			formato14C.f_costIRAsist.addClass("fise-editable");	
+			
+			//PROVINCIA
+			formato14C.f_canDPCoord.addClass("fise-editable");
+			formato14C.f_costDPCoord.addClass("fise-editable");
+			formato14C.f_canIPCoord.addClass("fise-editable");
+			formato14C.f_costIPCoord.addClass("fise-editable");
+			
+			formato14C.f_canDPSupe.addClass("fise-editable");
+			formato14C.f_costDPSupe.addClass("fise-editable");
+			formato14C.f_canIPSupe.addClass("fise-editable");
+			formato14C.f_costIPSupe.addClass("fise-editable");
+			
+			formato14C.f_canDPGest.addClass("fise-editable");
+			formato14C.f_costDPGest.addClass("fise-editable");
+			formato14C.f_canIPGest.addClass("fise-editable");
+			formato14C.f_costIPGest.addClass("fise-editable");
+			
+			formato14C.f_canDPAsist.addClass("fise-editable");
+			formato14C.f_costDPAsist.addClass("fise-editable");
+			formato14C.f_canIPAsist.addClass("fise-editable");
+			formato14C.f_costIPAsist.addClass("fise-editable");	
+			
+			//LIMA
+			formato14C.f_canDLCoord.addClass("fise-editable");
+			formato14C.f_costDLCoord.addClass("fise-editable");
+			formato14C.f_canILCoord.addClass("fise-editable");
+			formato14C.f_costILCoord.addClass("fise-editable");
+			
+			formato14C.f_canDLSupe.addClass("fise-editable");
+			formato14C.f_costDLSupe.addClass("fise-editable");
+			formato14C.f_canILSupe.addClass("fise-editable");
+			formato14C.f_costILSupe.addClass("fise-editable");
+			
+			formato14C.f_canDLGest.addClass("fise-editable");
+			formato14C.f_costDLGest.addClass("fise-editable");
+			formato14C.f_canILGest.addClass("fise-editable");
+			formato14C.f_costILGest.addClass("fise-editable");
+			
+			formato14C.f_canDLAsist.addClass("fise-editable");
+			formato14C.f_costDLAsist.addClass("fise-editable");
+			formato14C.f_canILAsist.addClass("fise-editable");
+			formato14C.f_costILAsist.addClass("fise-editable");	
 			
 			//botones
 			formato14C.botonReportePdf.css('display','none');
@@ -2691,8 +2851,8 @@ var formato14C= {
 			formato14C.dialogConfirmEnvioContent.html(addhtml);
 			formato14C.dialogConfirmEnvio.dialog("open");
 		},
-		//funcion para envio definitivo
-		<portlet:namespace/>envioDefinitivoF14C : function(){
+		//funcion para envio definitivo		
+		<portlet:namespace/>envioDefinitivoF14C : function(){			
 			jQuery.ajax({
 				url: formato14C.urlEnvioDefinitivo+'&'+formato14C.formCommand.serialize(),
 				type : 'post',
@@ -2866,7 +3026,34 @@ var formato14C= {
 			formato14C.f_canDLAsist.attr("disabled",true);
 			formato14C.f_costDLAsist.attr("disabled",true);
 			formato14C.f_canILAsist.attr("disabled",true);
-			formato14C.f_costILAsist.attr("disabled",true);			
+			formato14C.f_costILAsist.attr("disabled",true);	
+			
+			//ESTILOS
+			//cabecera		
+			formato14C.f_numUrbLima.removeClass("fise-editable");	
+			formato14C.f_costoPromUrbLima.removeClass("fise-editable");		
+			//LIMA
+			formato14C.f_canDLCoord.removeClass("fise-editable");
+			formato14C.f_costDLCoord.removeClass("fise-editable");
+			formato14C.f_canILCoord.removeClass("fise-editable");
+			formato14C.f_costILCoord.removeClass("fise-editable");
+			
+			formato14C.f_canDLSupe.removeClass("fise-editable");
+			formato14C.f_costDLSupe.removeClass("fise-editable");
+			formato14C.f_canILSupe.removeClass("fise-editable");
+			formato14C.f_costILSupe.removeClass("fise-editable");
+			
+			formato14C.f_canDLGest.removeClass("fise-editable");
+			formato14C.f_costDLGest.removeClass("fise-editable");
+			formato14C.f_canILGest.removeClass("fise-editable");
+			formato14C.f_costILGest.removeClass("fise-editable");
+			
+			formato14C.f_canDLAsist.removeClass("fise-editable");
+			formato14C.f_costDLAsist.removeClass("fise-editable");
+			formato14C.f_canILAsist.removeClass("fise-editable");
+			formato14C.f_costILAsist.removeClass("fise-editable");	
+			
+			
 		},
 		//funcion para habilitar campos lima
 		habilitarLima : function(){
@@ -2893,6 +3080,32 @@ var formato14C= {
 			formato14C.f_costDLAsist.removeAttr("disabled");
 			formato14C.f_canILAsist.removeAttr("disabled");
 			formato14C.f_costILAsist.removeAttr("disabled");	
+			
+			//ESTILOS
+			//cabecera		
+			formato14C.f_numUrbLima.addClass("fise-editable");			
+			formato14C.f_costoPromUrbLima.addClass("fise-editable");			
+			//LIMA
+			formato14C.f_canDLCoord.addClass("fise-editable");
+			formato14C.f_costDLCoord.addClass("fise-editable");
+			formato14C.f_canILCoord.addClass("fise-editable");
+			formato14C.f_costILCoord.addClass("fise-editable");
+			
+			formato14C.f_canDLSupe.addClass("fise-editable");
+			formato14C.f_costDLSupe.addClass("fise-editable");
+			formato14C.f_canILSupe.addClass("fise-editable");
+			formato14C.f_costILSupe.addClass("fise-editable");
+			
+			formato14C.f_canDLGest.addClass("fise-editable");
+			formato14C.f_costDLGest.addClass("fise-editable");
+			formato14C.f_canILGest.addClass("fise-editable");
+			formato14C.f_costILGest.addClass("fise-editable");
+			
+			formato14C.f_canDLAsist.addClass("fise-editable");
+			formato14C.f_costDLAsist.addClass("fise-editable");
+			formato14C.f_canILAsist.addClass("fise-editable");
+			formato14C.f_costILAsist.addClass("fise-editable");
+			
 		},
 		
 		//Funcion para deshabilitar costos directos
@@ -2934,7 +3147,49 @@ var formato14C= {
 			formato14C.f_costDLGest.attr("disabled",true);			
 			
 			formato14C.f_canDLAsist.attr("disabled",true);
-			formato14C.f_costDLAsist.attr("disabled",true);			
+			formato14C.f_costDLAsist.attr("disabled",true);	
+			
+			//ESTILOS
+			//RURAL
+			formato14C.f_canDRCoord.removeClass("fise-editable");
+			formato14C.f_costDRCoord.removeClass("fise-editable");		
+			
+			formato14C.f_canDRSupe.removeClass("fise-editable");
+			formato14C.f_costDRSupe.removeClass("fise-editable");			
+			
+			formato14C.f_canDRGest.removeClass("fise-editable");
+			formato14C.f_costDRGest.removeClass("fise-editable");
+			
+			formato14C.f_canDRAsist.removeClass("fise-editable");
+			formato14C.f_costDRAsist.removeClass("fise-editable");			
+			
+			//PROVINCIA
+			formato14C.f_canDPCoord.removeClass("fise-editable");
+			formato14C.f_costDPCoord.removeClass("fise-editable");			
+			
+			formato14C.f_canDPSupe.removeClass("fise-editable");
+			formato14C.f_costDPSupe.removeClass("fise-editable");			
+			
+			formato14C.f_canDPGest.removeClass("fise-editable");
+			formato14C.f_costDPGest.removeClass("fise-editable");			
+			
+			formato14C.f_canDPAsist.removeClass("fise-editable");
+			formato14C.f_costDPAsist.removeClass("fise-editable");			
+			
+			//LIMA
+			formato14C.f_canDLCoord.removeClass("fise-editable");
+			formato14C.f_costDLCoord.removeClass("fise-editable");
+			
+			formato14C.f_canDLSupe.removeClass("fise-editable");
+			formato14C.f_costDLSupe.removeClass("fise-editable");			
+			
+			formato14C.f_canDLGest.removeClass("fise-editable");
+			formato14C.f_costDLGest.removeClass("fise-editable");			
+			
+			formato14C.f_canDLAsist.removeClass("fise-editable");
+			formato14C.f_costDLAsist.removeClass("fise-editable");
+			
+			
 		},
 		//Funcion costos directos 
 		habilitarCostosDirectos : function(){			
@@ -2976,6 +3231,47 @@ var formato14C= {
 			
 			formato14C.f_canDLAsist.removeAttr("disabled");
 			formato14C.f_costDLAsist.removeAttr("disabled");
+			
+			//ESTILOS
+			//RURAL
+			formato14C.f_canDRCoord.addClass("fise-editable");
+			formato14C.f_costDRCoord.addClass("fise-editable");			
+			
+			formato14C.f_canDRSupe.addClass("fise-editable");
+			formato14C.f_costDRSupe.addClass("fise-editable");			
+			
+			formato14C.f_canDRGest.addClass("fise-editable");
+			formato14C.f_costDRGest.addClass("fise-editable");			
+			
+			formato14C.f_canDRAsist.addClass("fise-editable");
+			formato14C.f_costDRAsist.addClass("fise-editable");			
+			
+			//PROVINCIA
+			formato14C.f_canDPCoord.addClass("fise-editable");
+			formato14C.f_costDPCoord.addClass("fise-editable");			
+			
+			formato14C.f_canDPSupe.addClass("fise-editable");
+			formato14C.f_costDPSupe.addClass("fise-editable");			
+			
+			formato14C.f_canDPGest.addClass("fise-editable");
+			formato14C.f_costDPGest.addClass("fise-editable");			
+			
+			formato14C.f_canDPAsist.addClass("fise-editable");
+			formato14C.f_costDPAsist.addClass("fise-editable");		
+			
+			//LIMA
+			formato14C.f_canDLCoord.addClass("fise-editable");
+			formato14C.f_costDLCoord.addClass("fise-editable");			
+			
+			formato14C.f_canDLSupe.addClass("fise-editable");
+			formato14C.f_costDLSupe.addClass("fise-editable");			
+			
+			formato14C.f_canDLGest.addClass("fise-editable");
+			formato14C.f_costDLGest.addClass("fise-editable");			
+			
+			formato14C.f_canDLAsist.addClass("fise-editable");
+			formato14C.f_costDLAsist.addClass("fise-editable");
+			
 		},
 		
 		//Funcion para deshabilitar costo indirectos
@@ -3017,7 +3313,48 @@ var formato14C= {
 			formato14C.f_costILGest.attr("disabled",true);
 						
 			formato14C.f_canILAsist.attr("disabled",true);
-			formato14C.f_costILAsist.attr("disabled",true);			
+			formato14C.f_costILAsist.attr("disabled",true);	
+			
+			//ESTILOS
+			//RURAL			
+			formato14C.f_canIRCoord.removeClass("fise-editable");
+			formato14C.f_costIRCoord.removeClass("fise-editable");		
+			
+			formato14C.f_canIRSupe.removeClass("fise-editable");
+			formato14C.f_costIRSupe.removeClass("fise-editable");		
+			
+			formato14C.f_canIRGest.removeClass("fise-editable");
+			formato14C.f_costIRGest.removeClass("fise-editable");			
+			
+			formato14C.f_canIRAsist.removeClass("fise-editable");
+			formato14C.f_costIRAsist.removeClass("fise-editable");		
+			
+			//PROVINCIA			
+			formato14C.f_canIPCoord.removeClass("fise-editable");
+			formato14C.f_costIPCoord.removeClass("fise-editable");	
+			
+			formato14C.f_canIPSupe.removeClass("fise-editable");
+			formato14C.f_costIPSupe.removeClass("fise-editable");		
+			
+			formato14C.f_canIPGest.removeClass("fise-editable");
+			formato14C.f_costIPGest.removeClass("fise-editable");		
+			
+			formato14C.f_canIPAsist.removeClass("fise-editable");
+			formato14C.f_costIPAsist.removeClass("fise-editable");	
+			
+			//LIMA			
+			formato14C.f_canILCoord.removeClass("fise-editable");
+			formato14C.f_costILCoord.removeClass("fise-editable");
+						
+			formato14C.f_canILSupe.removeClass("fise-editable");
+			formato14C.f_costILSupe.removeClass("fise-editable");
+						
+			formato14C.f_canILGest.removeClass("fise-editable");
+			formato14C.f_costILGest.removeClass("fise-editable");
+						
+			formato14C.f_canILAsist.removeClass("fise-editable");
+			formato14C.f_costILAsist.removeClass("fise-editable");	
+			
 		},
 		//Funcion para habilitar los campos que se desabilitan en la visualizacion opcion ver
 		habilitarCostosIndirectos : function(){
@@ -3059,6 +3396,47 @@ var formato14C= {
 			
 			formato14C.f_canILAsist.removeAttr("disabled");
 			formato14C.f_costILAsist.removeAttr("disabled");	
+			
+			//ESTILOS
+			//RURAL			
+			formato14C.f_canIRCoord.addClass("fise-editable");
+			formato14C.f_costIRCoord.addClass("fise-editable");			
+			
+			formato14C.f_canIRSupe.addClass("fise-editable");
+			formato14C.f_costIRSupe.addClass("fise-editable");			
+			
+			formato14C.f_canIRGest.addClass("fise-editable");
+			formato14C.f_costIRGest.addClass("fise-editable");			
+			
+			formato14C.f_canIRAsist.addClass("fise-editable");
+			formato14C.f_costIRAsist.addClass("fise-editable");	
+			
+			//PROVINCIA			
+			formato14C.f_canIPCoord.addClass("fise-editable");
+			formato14C.f_costIPCoord.addClass("fise-editable");			
+			
+			formato14C.f_canIPSupe.addClass("fise-editable");
+			formato14C.f_costIPSupe.addClass("fise-editable");			
+			
+			formato14C.f_canIPGest.addClass("fise-editable");
+			formato14C.f_costIPGest.addClass("fise-editable");		
+			
+			formato14C.f_canIPAsist.addClass("fise-editable");
+			formato14C.f_costIPAsist.addClass("fise-editable");	
+			
+			//LIMA			
+			formato14C.f_canILCoord.addClass("fise-editable");
+			formato14C.f_costILCoord.addClass("fise-editable");
+			
+			formato14C.f_canILSupe.addClass("fise-editable");
+			formato14C.f_costILSupe.addClass("fise-editable");			
+			
+			formato14C.f_canILGest.addClass("fise-editable");
+			formato14C.f_costILGest.addClass("fise-editable");			
+			
+			formato14C.f_canILAsist.addClass("fise-editable");
+			formato14C.f_costILAsist.addClass("fise-editable");
+			
 		},
 		
 		
