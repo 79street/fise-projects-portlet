@@ -211,7 +211,7 @@ var formato13A= {
 			});
 			
 			formato13A.botonGuardarDetalle.click(function(){
-				formato13A.formDetalle.attr('action',urlGuardarDetalle).submit();
+				formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion).submit();
 			});
 			
 			botonRegresarDetalle.click(function(){
@@ -229,11 +229,17 @@ var formato13A= {
 			});
 		</c:if>
 		<c:if test="${crud =='UPDATE'}">
+		
+			formato13A.botonGuardarDetalle.click(function(){
+				formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion).submit();
+			});
+		
 			botonRegresarDetalle.click(function(){
 				formato13A.blockUI();
 				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anoPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=1';
 			});
+			
 		</c:if>
 		
 		/* botonRegresarDetalle.click(function(){
