@@ -260,7 +260,7 @@ public class Formato13AGartController {
 			msg="-3";
 			e.printStackTrace();
 		} catch (Exception e) {
-			 msg="4";
+			 msg="-4";
 			e.printStackTrace();
 		}finally{
 			try {
