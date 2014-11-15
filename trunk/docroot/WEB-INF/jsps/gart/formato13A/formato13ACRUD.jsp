@@ -55,7 +55,6 @@ $(document).ready(function () {
 														<form:select  path="codEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="${formato13AGartCommand.readOnly}" >
 															<form:options items="${formato13AGartCommand.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 														</form:select>
-														<form:hidden path="codEmpresa" />
 														</td>
 													</tr>
 												</table>
