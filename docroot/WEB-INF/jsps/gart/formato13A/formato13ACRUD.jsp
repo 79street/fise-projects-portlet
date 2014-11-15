@@ -25,6 +25,7 @@ $(document).ready(function () {
 
 <form:form id="form_13ACRUD" method="POST" modelAttribute="formato13AGartCommand" action="${accionURL}" enctype="multipart/form-data" >
   <form:hidden path="tipoAccion" />
+  
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
@@ -55,6 +56,7 @@ $(document).ready(function () {
 														<form:select  path="codEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="${formato13AGartCommand.readOnly}" >
 															<form:options items="${formato13AGartCommand.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 														</form:select>
+
 														</td>
 													</tr>
 												</table>
@@ -186,12 +188,15 @@ $(document).ready(function () {
 																						class="button net-button-small"
 																						value="Exportar excel" /></td>
 																				</c:if>
-																				<c:if test="${not readonly}">
+																				<c:if test="${showanadir}">
 																					<td width="17%" align="center"><input
 																						type="button" class="net-button-small"
 																						id="<portlet:namespace/>anadirFormato"
 																						name="<portlet:namespace/>anadirFormato"
 																						value="Añadir" /></td>
+																				</c:if>
+																				<c:if test="${not readonly}">
+																					
 																					<td width="17%" align="center"><input
 																						type="button" class="net-button-small"
 																						id="<portlet:namespace/>validacionFormato"

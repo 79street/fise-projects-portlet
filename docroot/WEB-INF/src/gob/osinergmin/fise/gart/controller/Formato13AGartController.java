@@ -183,6 +183,7 @@ public class Formato13AGartController {
 		String periodo=renderRequest.getParameter("periodoDeclaracion");
 		String tipo=renderRequest.getParameter("tipoAccion");
 		String read=renderRequest.getParameter("readonly");
+		String showanadir=renderRequest.getParameter("showanadir");
 		
 		System.out.println("codEmpresa::>"+codEmpresa);
 		System.out.println("periodo::>"+periodo);
@@ -198,8 +199,9 @@ public class Formato13AGartController {
 		command.setTipoAccion(tipo!=null ?Integer.valueOf(tipo):0);
 		
 		model.addAttribute("crud", command.getTipoAccion()==0?CRUD_CREATE:CRUD_UPDATE);
+		model.addAttribute("showanadir", showanadir!=null?showanadir:"false");
 		model.addAttribute("readonly","false");
-
+		
 		
 		return "formato13ACRUD";
 	}
@@ -760,16 +762,19 @@ public class Formato13AGartController {
 			response.setRenderParameter("tipoAccion", "0");
 			response.setRenderParameter("crud", "CREATE");
 			response.setRenderParameter("readonly", "false");
+			response.setRenderParameter("showanadir","false");
 		}else{
 			command.setTipoAccion(1);
 			response.setRenderParameter("tipoAccion", "1");
 			response.setRenderParameter("crud", "UPDATE");
 			response.setRenderParameter("readonly", "true");
+			response.setRenderParameter("showanadir","true");
 		}
 		
 		response.setRenderParameter("action", "nuevo");
 		response.setRenderParameter("codEmpresa", command.getCodEmpresa());
 		response.setRenderParameter("periodoDeclaracion", command.getPeridoDeclaracion());
+		
 		//
 	}
 
@@ -916,10 +921,13 @@ public class Formato13AGartController {
 			if (tipo != null && tipo.equalsIgnoreCase("0")) {
 				model.addAttribute("crud", CRUD_READ);
 				model.addAttribute("readonly", "true");
+				model.addAttribute("showanadir", "false");
+				
 			}
 			if (tipo != null && tipo.equalsIgnoreCase("1")) {
 				model.addAttribute("crud", CRUD_UPDATE);
 				model.addAttribute("readonly", "false");
+				model.addAttribute("showanadir", "true");
 			}
 
 			model.addAttribute("formato13AGartCommand", command);
@@ -1025,7 +1033,7 @@ public class Formato13AGartController {
 	
 	/*public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato, List<FiseFormato13AD> listaDetalle){
 		
->>>>>>> .r116
+
 		Date hoy = FechaUtil.obtenerFechaActual();
 		try {
 			formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
@@ -1055,11 +1063,7 @@ public class Formato13AGartController {
 			e.printStackTrace();
 		}
 	}
-<<<<<<< .mine
 
-	public void agregarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, List<FiseFormato13AD> listaDetalle) {
-
-=======
 	
 	public void modificarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato){
 		

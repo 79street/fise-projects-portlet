@@ -371,6 +371,7 @@ var formato13A= {
 			success: function(data) {		
 				dwr.util.removeAllOptions("peridoDeclaracion");
 				dwr.util.addOptions("peridoDeclaracion", data,"codigoItem","descripcionItem");
+				
 				formato13A.unblockUI();
 			},error : function(){
 				alert("Error de conexión.");
