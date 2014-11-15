@@ -87,7 +87,7 @@
 			<staticText>
 				<reportElement x="0" y="54" width="555" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FORMATO FISE - 14A: Costos Estándares de Implementación]]></text>
 			</staticText>
