@@ -34,6 +34,10 @@ var formato13A= {
 	urlACrud:null,
 	command:null,
 	
+	btnGuardarCabecera:null,
+	urlGuardarCabecera:null,
+	dlgConfirmacion:null,
+	
 	btnExcel:null,
 	dialogCargaExcel:null,
 	btnCargarFormatoExcel:null,
@@ -73,7 +77,8 @@ var formato13A= {
 		this.botonBuscar=$("#<portlet:namespace/>buscarFormato");
 		this.formBusqueda=$('#formato13AGartCommand');
 		this.botonCrearFormato=$('#<portlet:namespace/>crearFormato');
-		
+		this.dlgConfirmacion=$("#<portlet:namespace/>divDlgDelete");
+		this.divOverlay=$("#<portlet:namespace/>divOverlay");
 		this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
 		//this.urlACrud='<portlet:resourceURL id="getData" />';
 		this.command=$('#formato13AGartCommand');
@@ -106,6 +111,11 @@ var formato13A= {
 		var botonAnadirFormato=$('#<portlet:namespace/>anadirFormato');
 		var botonRegresarBusqueda=$('#<portlet:namespace/>regresarBusqueda');
 		
+		this.btnGuardarCabecera=$('#<portlet:namespace/>guardarFormato');
+		//this.urlGuardarCabecera='<portlet:actionURL name="saveNuevoFormato"/>';
+		this.urlGuardarCabecera='<portlet:resourceURL id="saveNuevoFormato"/>';
+		
+		
 		this.btnExcel=$('#<portlet:namespace/>showDialogUploadExcel');
 		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
 		this.btnCargarFormatoExcel=$('#<portlet:namespace/>cargarFormatoExcel');
@@ -122,6 +132,8 @@ var formato13A= {
 		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
 		formato13A.btnCargarFormatoExcel.click(function() {formato13A.<portlet:namespace/>cargarFormatoExcel();});
 		formato13A.btnTxt.click(function() {formato13A.<portlet:namespace/>showUploadTxt();});
+		
+		formato13A.btnGuardarCabecera.click(function(){formato13A.savecabecera();});
 		
 		formato13A.buildGridsDeclaracion();
 		
@@ -160,6 +172,8 @@ var formato13A= {
 			});
 			
 		}if(operacion=='UPDATE'){
+			
+			formato13A.cargarPeriodoDeclaracion();
 			formato13A.buscarDetalles();
 			/*formato13A.codEmpresa.change(function(){
 				$.when( formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
@@ -294,9 +308,11 @@ var formato13A= {
 	      			var cl = ids[i];
 	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl); 
 	      			
+
 	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
-	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
-	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
+	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' /></a> ";
+	      			elem = "<a href='#' onclick=\"formato13A.showconfirmacion('ss','ss')\"><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center'  /></a> ";              			
+
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{elim:elem});
@@ -474,7 +490,7 @@ var formato13A= {
 	},
 	
 	<portlet:namespace/>cargarFormatoExcel : function(){
-		var frm = document.getElementById('formato13AGartCommand');
+		var frm = document.getElementById('form_13ACRUD');
 		frm.submit();
 	
 
@@ -482,7 +498,6 @@ var formato13A= {
 	
 	<portlet:namespace/>showUploadTxt : function(){
 		formato13A.divOverlay.show();
-		formato13A.dialogCargaTexto.show();
 		formato13A.dialogCargaTexto.show();
 		formato13A.dialogCargaTexto.css({ 
 	        'left': ($(window).width() / 2 - formato13A.dialogCargaTexto.width() / 2) + 'px', 
@@ -562,6 +577,66 @@ var formato13A= {
 		location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anoPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&tipo='+tipo;
 		
 	},
+
+	savecabecera : function(){	
+		var form = $('#form_13ACRUD').serialize();
+		jQuery.ajax({	
+			url: formato13A.urlGuardarCabecera,
+			cache : false,
+			async : false,
+			type: 'post',
+			data : form,
+			dataType : "text",
+			beforeSend:function(){
+				formato13A.blockUI();
+			},				
+			success: function(data) {					
+				if(data == '1'){
+					formato13A.codEmpresa.attr("disabled", true);
+					formato13A.peridoDeclaracion.attr("disabled", true);
+				}else if(data == '-1'){
+					alert('El formato ya existe para esa empresa para ese periodo');
+				}else if(data == '-2'){
+					alert('Error al obtener usuario');
+				}else if(data == '-3'){
+					alert('Error al obtener terminal');
+				}else if(data == '-4'){
+					alert('Error al registrar');
+				}
+				
+				
+				formato13A.unblockUI();
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+	});
+		
+	},
+	
+	showconfirmacion:function(msj,valor){
+	
+	$("#estado_proceso").html("Esta seguro de eliminar formato");
+		formato13A.dlgConfirmacion.dialog({ 
+	     	title:"Confirmacion",
+	     	height: 200,
+			width: 200,	
+	         modal: true,
+	         buttons:{
+	        	 "Si":function(){
+	        		 $( this ).dialog( "close" );
+	        		
+	        	 },
+	        	 "No":function(){
+	        		 $( this ).dialog( "close" );
+	        		
+	        	 }
+	         },
+	         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
+	     }).load();
+	},
+
+
 	//calculo total
 	calculoTotal : function(){
 		var st1;
@@ -637,6 +712,7 @@ var formato13A= {
 	verReporte : function(){
 		window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
 	}
+
 	
 };
 

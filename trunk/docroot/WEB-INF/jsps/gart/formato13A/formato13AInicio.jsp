@@ -172,4 +172,7 @@ $(document).ready(function () {
 			</div>
 		</div>
 	</div>
+	<div id="<portlet:namespace/>divDlgDelete" >
+	<span  id="estado_proceso"></span>
+	</div>
 </form:form>

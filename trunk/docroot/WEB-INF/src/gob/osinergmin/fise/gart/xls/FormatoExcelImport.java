@@ -70,10 +70,13 @@ public class FormatoExcelImport {
 				}else{
 					throw new Exception("Distribuidora Eléctrica no valida ");
 				}
+				System.out.println("NOMEMPRESA :::=> "+cellE);
 				if(cellE.getCellType() == HSSFCell.CELL_TYPE_STRING && cellE.getCellType() != HSSFCell.CELL_TYPE_BLANK){
-					fise13C.setDescEmpresa(cellE.toString());
 					
+					fise13C.setDescEmpresa(cellE.toString());
+					 
 				}
+				System.out.println("NOMEMPRESA SALIO :::=> "+cellE);
 				
 			}else if(i==FiseConstants.ROW_INFO_FECHA){
 					try{

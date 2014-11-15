@@ -49,6 +49,8 @@ public class Formato13AGartCommand {
 	private String total;
 	private String idZonaBenef;
 	private String nombreSede;
+	
+	private int tipoAccion;
 
 	private List<FisePeriodoEnvio> listaPeriodo;
 	private boolean readOnly;
@@ -342,6 +344,14 @@ public class Formato13AGartCommand {
 
 	public void setReadOnly(boolean readOnly) {
 		this.readOnly = readOnly;
+	}
+
+	public int getTipoAccion() {
+		return tipoAccion;
+	}
+
+	public void setTipoAccion(int tipoAccion) {
+		this.tipoAccion = tipoAccion;
 	}
 	
 	
