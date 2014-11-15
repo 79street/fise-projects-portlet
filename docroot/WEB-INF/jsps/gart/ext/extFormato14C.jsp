@@ -26,6 +26,7 @@ var formato14C= {
 		dialogConfirmEnvioContent:null,
 		dialogCargaExcel:null,
 		dialogCargaTexto:null,
+		dialogMessageReport:null,
 		
 		//mensajes
 		mensajeCargando:null,
@@ -63,8 +64,9 @@ var formato14C= {
 		urlEliminar:null,
 		urlValidacion:null,		
 		urlReporteValidacion:null,
-		urlEnvioDefinitivo:null,
 		urlReporte:null,//url para reporte cuando visualizo el formato		
+		urlEnvioDefinitivo:null,		
+		urlReporteEnvioDefinitivo:null,
 		
 		//botones		
 		botonBuscar:null,
@@ -158,6 +160,8 @@ var formato14C= {
 			this.dialogConfirmEnvioContent=$("#<portlet:namespace/>dialog-confirm-envio-content");
 			this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
 			this.dialogCargaTexto=$("#<portlet:namespace/>dialog-form-cargaTexto");
+			this.dialogMessageReport=$("#<portlet:namespace/>dialog-message-report");
+			
 		
 			//mensajes			
 			this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
@@ -196,8 +200,9 @@ var formato14C= {
 			this.urlEliminar='<portlet:resourceURL id="eliminarF14C" />';
 			this.urlValidacion='<portlet:resourceURL id="validacionF14C" />';
 			this.urlReporteValidacion='<portlet:resourceURL id="reporteValidacionF14C" />';
-			this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivoF14C" />';
-			this.urlReporte='<portlet:resourceURL id="reporteF14C" />';			
+			this.urlReporte='<portlet:resourceURL id="reporteF14C" />';	
+			this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivoF14C" />';			
+			this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivoF14C" />';
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarF14C");
@@ -643,6 +648,13 @@ var formato14C= {
 			$('#<portlet:namespace/>actualizarFormatoF14C').css('display','none');
 			formato14C.<portlet:namespace/>loadPeriodo('');
 			formato14C.verElementosEditar();//activar los elementos que se desabilitados al momento de editar
+			//ESTILOS
+			//CABECERA			
+			formato14C.f_nombreSede.addClass("fise-editable");
+			formato14C.f_numRural.addClass("fise-editable");
+			formato14C.f_numUrbProv.addClass("fise-editable");			
+			formato14C.f_costoPromRural.addClass("fise-editable");		
+			formato14C.f_costoPromUrbProv.addClass("fise-editable");
 		},
 		//Function para Visualizar los datos del formulario		
 		verFormato14C : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
@@ -704,7 +716,14 @@ var formato14C= {
 								formato14C.initBlockUI();
 								formato14C.ocultarElementosEditar();
 								$('#<portlet:namespace/>guardarFormatoF14C').css('display','none');
-								$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');												
+								$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');	
+								//ESTILOS
+								//CABECERA			
+								formato14C.f_nombreSede.addClass("fise-editable");
+								formato14C.f_numRural.addClass("fise-editable");
+								formato14C.f_numUrbProv.addClass("fise-editable");			
+								formato14C.f_costoPromRural.addClass("fise-editable");		
+								formato14C.f_costoPromUrbProv.addClass("fise-editable");
 					         }
 							else{
 								alert("Error al recuperar los datos del registro seleccionado");
@@ -2842,6 +2861,23 @@ var formato14C= {
 				}
 			});
 		},
+		//funcion para ver el reporte de envio definitivo
+		<portlet:namespace/>mostrarReporteEnvioDefinitivoF14C : function(){
+			jQuery.ajax({
+				url: formato14C.urlReporteEnvioDefinitivo+'&'+formato14C.formCommand.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {
+					<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+				},
+				success : function(gridData) {
+					formato14C.verReporteF14C();
+				},error : function(){
+					alert("Error de conexión.");
+					formato14C.initBlockUI();
+				}
+			});
+		},		
 		//funcion para ver reposrte en una nueva pestaña
 		verReporteF14C : function(){
 			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
@@ -2871,8 +2907,11 @@ var formato14C= {
 					if(gridData!=null){
 						var addhtml='Se realizó el envío satisfactoriamente';					
 						formato14C.dialogMessageContent.html(addhtml);
-						formato14C.dialogMessage.dialog("open");
+						formato14C.dialogMessageReport.dialog("open");
 						formato14C.initBlockUI();	
+						//formato14C.divNuevo.hide();
+					   // formato14C.divBuscar.show();
+					   // formato14C.botonBuscar.trigger('click');
 					}else{
 						alert("Error al realizar el envio definitivo");
 						formato14C.initBlockUI();
@@ -3316,7 +3355,8 @@ var formato14C= {
 			formato14C.f_canILAsist.attr("disabled",true);
 			formato14C.f_costILAsist.attr("disabled",true);	
 			
-			//ESTILOS
+			//ESTILOS		
+			
 			//RURAL			
 			formato14C.f_canIRCoord.removeClass("fise-editable");
 			formato14C.f_costIRCoord.removeClass("fise-editable");		
@@ -3358,7 +3398,7 @@ var formato14C= {
 			
 		},
 		//Funcion para habilitar los campos que se desabilitan en la visualizacion opcion ver
-		habilitarCostosIndirectos : function(){
+		habilitarCostosIndirectos : function(){			
 		    //RURAL			
 			formato14C.f_canIRCoord.removeAttr("disabled");
 			formato14C.f_costIRCoord.removeAttr("disabled");			
@@ -3398,7 +3438,8 @@ var formato14C= {
 			formato14C.f_canILAsist.removeAttr("disabled");
 			formato14C.f_costILAsist.removeAttr("disabled");	
 			
-			//ESTILOS
+			//ESTILOS			
+			
 			//RURAL			
 			formato14C.f_canIRCoord.addClass("fise-editable");
 			formato14C.f_costIRCoord.addClass("fise-editable");			
@@ -3530,6 +3571,31 @@ var formato14C= {
 				},
 				close: function() {
 				}
+			});
+			//dialogo para en envio del reporte definitivo
+			formato14C.dialogMessageReport.dialog({
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					'Imprimir Pdf': function() {
+						formato14C.<portlet:namespace/>mostrarReporteEnvioDefinitivoF14C();
+						$( this ).dialog("close");
+						formato14C.divNuevo.hide();
+					    formato14C.divBuscar.show();
+					    formato14C.botonBuscar.trigger('click');
+					},
+					Ok: function() {
+						$( this ).dialog("close");
+						formato14C.divNuevo.hide();
+					    formato14C.divBuscar.show();
+					    formato14C.botonBuscar.trigger('click');
+					}
+				},
+			    close: function(event,ui){
+			    	formato14C.divNuevo.hide();
+				    formato14C.divBuscar.show();
+				    formato14C.botonBuscar.trigger('click');
+		       }
 			});
 			
 		} /***fin de inicializar los dialogos**/	
