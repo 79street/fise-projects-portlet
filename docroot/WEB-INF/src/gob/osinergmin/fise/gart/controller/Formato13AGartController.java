@@ -399,7 +399,7 @@ public class Formato13AGartController {
 
 		}
 
-		response.setRenderParameter("crud", "VIEW");
+		response.setRenderParameter("crud", CRUD_READ);
 		response.setRenderParameter("action", "detalle");
 		response.setRenderParameter("codEmpresa", codEmpresa);
 		response.setRenderParameter("periodoDeclaracion", periodoDeclaracion);
