@@ -23,8 +23,8 @@ $(document).ready(function () {
 });
 </script>
 
-<form:form method="POST" modelAttribute="formato13AGartCommand" action="${accionURL}" enctype="multipart/form-data" >
-
+<form:form id="form_13ACRUD" method="POST" modelAttribute="formato13AGartCommand" action="${accionURL}" enctype="multipart/form-data" >
+  <form:hidden path="tipoAccion" />
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
@@ -52,9 +52,10 @@ $(document).ready(function () {
 													<tr>
 														<td>Distribuidora Eléctrica: </td>
 														<td>
-														<form:select path="codEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="${formato13AGartCommand.readOnly}">
+														<form:select  path="codEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="${formato13AGartCommand.readOnly}" >
 															<form:options items="${formato13AGartCommand.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 														</form:select>
+														<form:hidden path="codEmpresa" />
 														</td>
 													</tr>
 												</table>
@@ -76,7 +77,7 @@ $(document).ready(function () {
 																	</tr>
 																	<tr>
 																		<td colspan="5">
-																		<form:select path="peridoDeclaracion" cssClass="select" cssStyle="width: 300px;" disabled="${formato13AGartCommand.readOnly}">
+																		<form:select  path="peridoDeclaracion" cssClass="select" cssStyle="width: 300px;" disabled="${formato13AGartCommand.readOnly}" >
 																			<form:options items="${formato13AGartCommand.listaPeriodo}"  itemLabel="descripcionItem" itemValue="codigoItem"/>
 																		</form:select>
 																		</td>
@@ -204,6 +205,13 @@ $(document).ready(function () {
 																						value="Envío Def." /></td>	
 																						
 																				</c:if>
+																				<c:if test="${not readonly}">
+																					<td width="17%" align="center"><input
+																						type="button" class="net-button-small"
+																						id="<portlet:namespace/>guardarFormato"
+																						name="<portlet:namespace/>guardarFormato"
+																						value="Guardar" /></td>
+																				</c:if>
 																				
 																				<td width="17%" align="center"><input
 																					type="button" class="net-button-small"
@@ -326,7 +334,12 @@ $(document).ready(function () {
 		</div>
 	</div>
 	
+	
+	
 	<div id="<portlet:namespace/>divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
+	
 	</div>
+	
+	
 	
 </form:form>
