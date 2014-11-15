@@ -223,16 +223,6 @@ $(document).ready(function () {
 																						id="<portlet:namespace/>guardarDetalle"
 																						name="<portlet:namespace/>guardarDetalle"
 																						value="Grabar" /></td>
-																					<td width="17%" align="center"><input
-																						type="button" class="net-button-small"
-																						id="<portlet:namespace/>validacionFormato"
-																						name="<portlet:namespace/>validacionFormato"
-																						value="Validación" /></td>
-																					<td width="17%" align="center"><input
-																						type="button" class="net-button-small"
-																						id="<portlet:namespace/>envioDefinitivo"
-																						name="<portlet:namespace/>envioDefinitivo"
-																						value="Envío Def." /></td>																					
 																				</c:if>
 																				<td width="17%" align="center"><input
 																						type="button" class="net-button-small"

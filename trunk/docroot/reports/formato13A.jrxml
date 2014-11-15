@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato13A" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="207"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
+	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
+	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
+	<parameter name="TOTAL" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="anioAlta" class="java.lang.Long">
+		<fieldDescription><![CDATA[anioAlta]]></fieldDescription>
+	</field>
+	<field name="codUbigeo" class="java.lang.String">
+		<fieldDescription><![CDATA[codUbigeo]]></fieldDescription>
+	</field>
+	<field name="codSectorTipico" class="java.lang.String">
+		<fieldDescription><![CDATA[codSectorTipico]]></fieldDescription>
+	</field>
+	<field name="descLocalidad" class="java.lang.String">
+		<fieldDescription><![CDATA[descLocalidad]]></fieldDescription>
+	</field>
+	<field name="idZonaBenef" class="java.lang.Long">
+		<fieldDescription><![CDATA[idZonaBenef]]></fieldDescription>
+	</field>
+	<field name="mesAlta" class="java.lang.Long">
+		<fieldDescription><![CDATA[mesAlta]]></fieldDescription>
+	</field>
+	<field name="nombreSedeAtiende" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreSedeAtiende]]></fieldDescription>
+	</field>
+	<field name="nroBenefPoteSecTipico1" class="java.lang.Long">
+		<fieldDescription><![CDATA[nroBenefPoteSecTipico1]]></fieldDescription>
+	</field>
+	<field name="nroBenefPoteSecTipico2" class="java.lang.Long">
+		<fieldDescription><![CDATA[nroBenefPoteSecTipico2]]></fieldDescription>
+	</field>
+	<field name="nroBenefPoteSecTipico3" class="java.lang.Long">
+		<fieldDescription><![CDATA[nroBenefPoteSecTipico3]]></fieldDescription>
+	</field>
+	<field name="nroBenefPoteSecTipico4" class="java.lang.Long">
+		<fieldDescription><![CDATA[nroBenefPoteSecTipico4]]></fieldDescription>
+	</field>
+	<field name="nroBenefPoteSecTipico5" class="java.lang.Long">
+		<fieldDescription><![CDATA[nroBenefPoteSecTipico5]]></fieldDescription>
+	</field>
+	<field name="nroBenefPoteSecTipico6" class="java.lang.Long">
+		<fieldDescription><![CDATA[nroBenefPoteSecTipico6]]></fieldDescription>
+	</field>
+	<field name="nroBenefPoteSecTipico7" class="java.lang.Long">
+		<fieldDescription><![CDATA[nroBenefPoteSecTipico7]]></fieldDescription>
+	</field>
+	<field name="nroBenefPoteSecTipico8" class="java.lang.Long">
+		<fieldDescription><![CDATA[nroBenefPoteSecTipico8]]></fieldDescription>
+	</field>
+	<variable name="nroBenefPoteSecTipico1_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico1}]]></variableExpression>
+	</variable>
+	<variable name="nroBenefPoteSecTipico2_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico2}]]></variableExpression>
+	</variable>
+	<variable name="nroBenefPoteSecTipico3_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico3}]]></variableExpression>
+	</variable>
+	<variable name="nroBenefPoteSecTipico4_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico4}]]></variableExpression>
+	</variable>
+	<variable name="nroBenefPoteSecTipico5_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico5}]]></variableExpression>
+	</variable>
+	<variable name="nroBenefPoteSecTipico6_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico6}]]></variableExpression>
+	</variable>
+	<variable name="nroBenefPoteSecTipico7_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico7}]]></variableExpression>
+	</variable>
+	<variable name="nroBenefPoteSecTipico8_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico8}]]></variableExpression>
+	</variable>
+	<variable name="nroBenefPoteSecTipico2_2" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico2}]]></variableExpression>
+	</variable>
+	<variable name="AnioMes" class="java.lang.String">
+		<variableExpression><![CDATA[$F{anioAlta}.toString()+' / '+$F{mesAlta}.toString()]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="54" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="96" height="24"/>
+				<imageExpression class="java.lang.String"><![CDATA["logoOSINERGMIN.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="24" width="802" height="30" forecolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMATO FISE-13A: DETALLE DE LOCALIDADES POR ZONAS DE BENEFICIARIOS FISE]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="702" y="0" width="100" height="24" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="12" width="95" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Año / Mes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="95" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Distribuidora Eléctrica:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="36" width="95" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Frecuencia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="24" width="95" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Rubro:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="95" y="0" width="460" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="95" y="12" width="30" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="12" width="425" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="125" y="12" width="5" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="24" width="460" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Costos Estándar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="36" width="460" height="12"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Bianual]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="23" width="50" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Año/Mes de Alta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="690" y="23" width="112" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SEDE QUE ATIENDE (**)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="51" y="23" width="30" height="29" forecolor="#FFFFFF" backcolor="#006699">
+					<property name="net.sf.jasperreports.export.pdf.tag.tr"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Código Ubigeo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="612" y="23" width="77" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ZONA DE BENEFICIARIOS (*)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="221" y="23" width="39" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ST - 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="82" y="23" width="138" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Localidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="261" y="23" width="39" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ST - 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="301" y="23" width="39" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ST -3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="341" y="23" width="39" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ST - 4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="381" y="23" width="39" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ST - 5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="421" y="23" width="39" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ST - 6]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="548" y="23" width="63" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="461" y="23" width="39" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ST - SER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="221" y="2" width="390" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[BENEFICIARIOS POTENCIALES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" forecolor="#006699"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="501" y="23" width="46" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ESPECIAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Immediate">
+			<textField isBlankWhenNull="true">
+				<reportElement x="51" y="0" width="30" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codUbigeo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="82" y="0" width="138" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descLocalidad}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="261" y="0" width="39" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="301" y="0" width="39" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="341" y="0" width="39" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="421" y="0" width="39" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="461" y="0" width="39" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="501" y="0" width="46" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico8}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="612" y="0" width="77" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{idZonaBenef}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="690" y="0" width="112" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreSedeAtiende}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="221" y="0" width="39" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="548" y="0" width="63" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico1}+$F{nroBenefPoteSecTipico2}+$F{nroBenefPoteSecTipico3}
++$F{nroBenefPoteSecTipico4}+$F{nroBenefPoteSecTipico5}
++$F{nroBenefPoteSecTipico6}+$F{nroBenefPoteSecTipico7}
++$F{nroBenefPoteSecTipico8}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="50" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{AnioMes}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="380" y="0" width="39" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico5}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="62">
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="0" y="23" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[(*)    1=Rural, 2=Urbano Provincias, 3=Urbano Lima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="0" y="33" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[(**)  Nombre de la sede]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="280" y="48" width="252" height="1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="281" y="49" width="252" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombre y Firma del Representante Legal de la Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="0" y="13" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Nota:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="17" splitType="Stretch">
+			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="501" y="3" width="46" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico8_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="181" y="3" width="39" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="461" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico7_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="421" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico6_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="381" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico5_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="341" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico4_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="301" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico3_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Column" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="261" y="3" width="40" height="13" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico2_2}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Column" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" x="221" y="3" width="39" height="13" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico1_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
