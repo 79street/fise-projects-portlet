@@ -175,37 +175,35 @@ public class Formato13AGartController {
 	}
 
 	@RequestMapping(params = "action=nuevo")
-	public String nuevoFormato(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse,
-	                               @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+	public String nuevoFormato(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 		System.out.println("aqui en nuevoFormato");
-		
-		String codEmpresa=renderRequest.getParameter("codEmpresa");
-		String periodo=renderRequest.getParameter("periodoDeclaracion");
-		String tipo=renderRequest.getParameter("tipoAccion");
-		String read=renderRequest.getParameter("readonly");
-		String showanadir=renderRequest.getParameter("showanadir");
-		
-		System.out.println("codEmpresa::>"+codEmpresa);
-		System.out.println("periodo::>"+periodo);
-		
-		if(codEmpresa!=null){
+
+		String codEmpresa = renderRequest.getParameter("codEmpresa");
+		String periodo = renderRequest.getParameter("periodoDeclaracion");
+		String tipo = renderRequest.getParameter("tipoAccion");
+		String read = renderRequest.getParameter("readonly");
+		String showanadir = renderRequest.getParameter("showanadir");
+
+		System.out.println("codEmpresa::>" + codEmpresa);
+		System.out.println("periodo::>" + periodo);
+
+		if (codEmpresa != null) {
 			command.setCodEmpresa(codEmpresa);
-		}if(periodo!=null){
+		}
+		if (periodo != null) {
 			command.setPeridoDeclaracion(periodo);
 		}
-		
+
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
-		command.setReadOnly(read!=null?Boolean.parseBoolean(read):false);
-		command.setTipoAccion(tipo!=null ?Integer.valueOf(tipo):0);
-		
-		model.addAttribute("crud", command.getTipoAccion()==0?CRUD_CREATE:CRUD_UPDATE);
-		model.addAttribute("showanadir", showanadir!=null?showanadir:"false");
-		model.addAttribute("readonly","false");
-		
-		
+		command.setReadOnly(read != null ? Boolean.parseBoolean(read) : false);
+		command.setTipoAccion(tipo != null ? Integer.valueOf(tipo) : 0);
+
+		model.addAttribute("crud", command.getTipoAccion() == 0 ? CRUD_CREATE : CRUD_UPDATE);
+		model.addAttribute("showanadir", showanadir != null ? showanadir : "false");
+		model.addAttribute("readonly", "false");
+
 		return "formato13ACRUD";
 	}
-
 
 	@ResourceMapping("saveNuevoFormato")
 	public void saveNuevoFormato(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
@@ -217,7 +215,7 @@ public class Formato13AGartController {
 
 			FiseFormato13ACPK pkCabecera = new FiseFormato13ACPK();
 			pkCabecera.setCodEmpresa(command.getCodEmpresa() != "" ? FormatoUtil.rellenaDerecha(command.getCodEmpresa(), ' ', 4) : "");
-			if (command.getPeridoDeclaracion().length() > 6) {
+			if (command!=null && command.getPeridoDeclaracion().length() > 6) {
 				command.setAnioAlta(command.getPeridoDeclaracion().substring(0, 4));
 				command.setMesAlta(command.getPeridoDeclaracion().substring(4, 6));
 				command.setEtapa(command.getPeridoDeclaracion().substring(6, command.getPeridoDeclaracion().length()));
@@ -232,7 +230,6 @@ public class Formato13AGartController {
 			FiseFormato13AC cab = formatoService.obtenerFormato13ACByPK(pkCabecera);
 			response.setContentType("text/plain");
 
-			
 			if (cab != null) {
 				msg = "-1";
 			} else {
@@ -246,23 +243,25 @@ public class Formato13AGartController {
 				cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
 				cabecera.setFechaCreacion(new Date());
 				cabecera = formatoService.savecabecera(cabecera);
-				
+
 				model.addAttribute("crud", CRUD_UPDATE);
 				model.addAttribute("readonly", "false");
+				model.addAttribute("showanadir", "true");
 
 			}
 
-			
 		} catch (PortalException e) {
-			msg="-2";
+			msg = "-2";
 			e.printStackTrace();
 		} catch (SystemException e) {
-			msg="-3";
+			msg = "-3";
 			e.printStackTrace();
 		} catch (Exception e) {
+
 			 msg="-4";
+
 			e.printStackTrace();
-		}finally{
+		} finally {
 			try {
 				PrintWriter pw = response.getWriter();
 				pw.write(msg);
@@ -272,15 +271,13 @@ public class Formato13AGartController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 
 	}
 
 	@ActionMapping(params = "action=guardarDetalle")
-	public void guardarDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response,
-			@RequestParam("crud") String crud,
-			@ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+	public void guardarDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @RequestParam("crud") String crud, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -342,21 +339,19 @@ public class Formato13AGartController {
 		FiseFormato13AC cabecera = new FiseFormato13AC();
 		cabecera.setId(pkCabecera);
 
+		// Primero buscamos si existe una cabecera
+		FiseFormato13AC cab = formatoService.obtenerFormato13ACByPK(pkCabecera);
 
-		
-		
-		//Primero buscamos si existe una cabecera
-		FiseFormato13AC cab=formatoService.obtenerFormato13ACByPK(pkCabecera);
-		
-		if(cab!=null){
-			//validar si es nuevo o modificacion
-			if(CRUD_CREATE.equals(crud)){
-				//create
+		if (cab != null) {
+			// validar si es nuevo o modificacion
+			if (CRUD_CREATE.equals(crud)) {
+				// create
 				FiseFormato13AC formato13 = new FiseFormato13AC();
 				formato13.setId(pkCabecera);
 				List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
-				//se agregará varaiables de sector tipico para cada tipo de grupo beneficiario
-				
+				// se agregará varaiables de sector tipico para cada tipo de
+				// grupo beneficiario
+
 				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
 				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
 				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
@@ -365,42 +360,42 @@ public class Formato13AGartController {
 				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
 				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
 				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
-				
+
 				agregarFormato13Detalle(listaDetalle);
-			}else if (CRUD_UPDATE.equals(crud)) {
-				//update
-				
-				if( cab.getFiseFormato13ADs()!=null && !cab.getFiseFormato13ADs().isEmpty() ){
+			} else if (CRUD_UPDATE.equals(crud)) {
+				// update
+
+				if (cab.getFiseFormato13ADs() != null && !cab.getFiseFormato13ADs().isEmpty()) {
 					for (FiseFormato13AD d : cab.getFiseFormato13ADs()) {
-						
-						if( Long.parseLong(command.getIdZonaBenef())==d.getId().getIdZonaBenef() ){
-							if( FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico()) ){
+
+						if (Long.parseLong(command.getIdZonaBenef()) == d.getId().getIdZonaBenef()) {
+							if (FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, d);
-							}else if( FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico()) ){
+							} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, d);
-							}else if( FiseConstants.SECTOR_TIPICO_3_COD.equals(d.getId().getCodSectorTipico()) ){
+							} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, d);
-							}else if( FiseConstants.SECTOR_TIPICO_4_COD.equals(d.getId().getCodSectorTipico()) ){
+							} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, d);
-							}else if( FiseConstants.SECTOR_TIPICO_5_COD.equals(d.getId().getCodSectorTipico()) ){
+							} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, d);
-							}else if( FiseConstants.SECTOR_TIPICO_6_COD.equals(d.getId().getCodSectorTipico()) ){
+							} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, d);
-							}else if( FiseConstants.SECTOR_TIPICO_SER_COD.equals(d.getId().getCodSectorTipico()) ){
+							} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, d);
-							}else if( FiseConstants.SECTOR_TIPICO_ESP_COD.equals(d.getId().getCodSectorTipico()) ){
+							} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, d);
 							}
 						}
-					
+
 					}
 					modificarFormato13Detalle(cab.getFiseFormato13ADs());
 				}
 
 			}
-			
-		}else{
-			//no se valida si es nulo la cabecera
+
+		} else {
+			// no se valida si es nulo la cabecera
 
 		}
 
@@ -541,11 +536,7 @@ public class Formato13AGartController {
 			logger.debug("-->cargaPeriodoDeclaracion");
 			response.setContentType("applicacion/json");
 
-			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, "F13A"/*
-																															 * FiseConstants
-																															 * .
-																															 * NOMBRE_FORMATO_13A
-																															 */);
+			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, "F13A");
 
 			JSONArray jsonArray = new JSONArray();
 			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
@@ -646,28 +637,28 @@ public class Formato13AGartController {
 		try {
 			System.out.println("busquedaDetalle");
 
-			response.setContentType("application/json");	
-			logger.info("admin2.1:"+model.get("esAdministrador"));
-			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
-	        HttpSession session = req.getSession();
-	        List<Formato13ADReportBean> listaFormato;	
-		    JSONArray jsonArray = new JSONArray();
-		    Map<String, String> mapaEmpresa = fiseUtil.getMapaEmpresa();
-		    
-		    String tipo=request.getParameter("tipo");
-		    System.out.println("tipooo::>"+request.getParameter("tipo"));
-		    String codEmpresa = "";
-			String periodoDeclaracion="";
-			
-		    if(tipo!=null && (tipo.equalsIgnoreCase("0") || tipo.equalsIgnoreCase("1"))){
-		    	
-		    	System.out.println("codEmpresa::>"+request.getParameter("codEmpresa"));
-				System.out.println("anoPresentacion::>"+request.getParameter("anioPresentacion"));
-				
-		    	codEmpresa =request.getParameter("codEmpresa");
-		    	periodoDeclaracion=request.getParameter("anioPresentacion")+request.getParameter("mesPresentacion")+request.getParameter("etapa");
-		    
-		    	command.setCodEmpresa(codEmpresa);
+			response.setContentType("application/json");
+			logger.info("admin2.1:" + model.get("esAdministrador"));
+			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);
+			HttpSession session = req.getSession();
+			List<Formato13ADReportBean> listaFormato;
+			JSONArray jsonArray = new JSONArray();
+			Map<String, String> mapaEmpresa = fiseUtil.getMapaEmpresa();
+
+			String tipo = request.getParameter("tipo");
+			System.out.println("tipooo::>" + request.getParameter("tipo"));
+			String codEmpresa = "";
+			String periodoDeclaracion = "";
+
+			if (tipo != null && (tipo.equalsIgnoreCase("0") || tipo.equalsIgnoreCase("1"))) {
+
+				System.out.println("codEmpresa::>" + request.getParameter("codEmpresa"));
+				System.out.println("anoPresentacion::>" + request.getParameter("anioPresentacion"));
+
+				codEmpresa = request.getParameter("codEmpresa");
+				periodoDeclaracion = request.getParameter("anioPresentacion") + request.getParameter("mesPresentacion") + request.getParameter("etapa");
+
+				command.setCodEmpresa(codEmpresa);
 
 				command.setAnioPresentacion(request.getParameter("anioPresentacion"));
 				command.setMesPresentacion(request.getParameter("mesPresentacion"));
@@ -727,60 +718,52 @@ public class Formato13AGartController {
 	@ActionMapping(params = "action=uploadFile")
 	public void cargarDocumento(ActionRequest request, ActionResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 		System.out.println("aqui en upload controller");
-		
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
-		
-		 String codEmpresaNew = uploadPortletRequest.getParameter("codEmpresa");
-		 String periodo = uploadPortletRequest.getParameter("peridoDeclaracion");
-		
-		 
-		 System.out.println("command UPLOAD::" + codEmpresaNew);
-		 System.out.println("command UPLOAD::" + periodo);
-		 
-		 FiseFormato13ACPK cabecerapk=new FiseFormato13ACPK();
-		 
-		 cabecerapk.setCodEmpresa(codEmpresaNew);
-		 command.setCodEmpresa(codEmpresaNew);
-		 if (periodo!=null &&  periodo.length() > 6) {
-			 cabecerapk.setAnoPresentacion(Long.parseLong(periodo.substring(0, 4)));  
-			 cabecerapk.setMesPresentacion(Long.parseLong(periodo.substring(4, 6)));
-			 cabecerapk.setEtapa(periodo.substring(6, periodo.length()));
-			 command.setPeridoDeclaracion(periodo);
-		 }
 
-		
-		
+		String codEmpresaNew = uploadPortletRequest.getParameter("codEmpresa");
+		String periodo = uploadPortletRequest.getParameter("peridoDeclaracion");
+
+		System.out.println("command UPLOAD::" + codEmpresaNew);
+		System.out.println("command UPLOAD::" + periodo);
+
+		FiseFormato13ACPK cabecerapk = new FiseFormato13ACPK();
+
+		cabecerapk.setCodEmpresa(codEmpresaNew);
+		command.setCodEmpresa(codEmpresaNew);
+		if (periodo != null && periodo.length() > 6) {
+			cabecerapk.setAnoPresentacion(Long.parseLong(periodo.substring(0, 4)));
+			cabecerapk.setMesPresentacion(Long.parseLong(periodo.substring(4, 6)));
+			cabecerapk.setEtapa(periodo.substring(6, periodo.length()));
+			command.setPeridoDeclaracion(periodo);
+		}
+
 		FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-		List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay,cabecerapk);
+		List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk);
 
-		
-		
-		
-		if(lstErrores !=null && !lstErrores.isEmpty()){
+		if (lstErrores != null && !lstErrores.isEmpty()) {
 			response.setRenderParameter("tipoAccion", "0");
 			response.setRenderParameter("crud", "CREATE");
 			response.setRenderParameter("readonly", "false");
-			response.setRenderParameter("showanadir","false");
-		}else{
+			response.setRenderParameter("showanadir", "false");
+		} else {
 			command.setTipoAccion(1);
 			response.setRenderParameter("tipoAccion", "1");
 			response.setRenderParameter("crud", "UPDATE");
 			response.setRenderParameter("readonly", "true");
-			response.setRenderParameter("showanadir","true");
+			response.setRenderParameter("showanadir", "true");
 		}
-		
+
 		response.setRenderParameter("action", "nuevo");
 		response.setRenderParameter("codEmpresa", command.getCodEmpresa());
 		response.setRenderParameter("periodoDeclaracion", command.getPeridoDeclaracion());
-		
+
 		//
 	}
 
-	public List<MensajeErrorBean> readExcelFile(FileEntry archivo, ThemeDisplay themeDisplay,FiseFormato13ACPK pk)  {
+	public List<MensajeErrorBean> readExcelFile(FileEntry archivo, ThemeDisplay themeDisplay, FiseFormato13ACPK pk) {
 
-	
 		InputStream is = null;
 		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
 		int cont = 0;
@@ -791,10 +774,11 @@ public class Formato13AGartController {
 					is = archivo.getContentStream();
 					libro = new HSSFWorkbook(is);// Se lee libro xls
 				} catch (Exception e1) {
-					//logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					// logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
 					cont++;
-					//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
-					MensajeErrorBean msg=new MensajeErrorBean();
+					// sMsg = sMsg +
+					// mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
+					MensajeErrorBean msg = new MensajeErrorBean();
 					msg.setId(cont);
 					msg.setDescripcion("Errror al leer libro");
 					listaError.add(msg);
@@ -806,28 +790,28 @@ public class Formato13AGartController {
 					try {
 						cabecera = FormatoExcelImport.readSheetCabecera(libro);
 						if (cabecera != null) {
-							if(pk.getCodEmpresa().equalsIgnoreCase(cabecera.getId().getCodEmpresa()) && pk.getAnoPresentacion()== cabecera.getId().getAnoPresentacion() && pk.getMesPresentacion()== cabecera.getId().getMesPresentacion()){
+							if (pk.getCodEmpresa().equalsIgnoreCase(cabecera.getId().getCodEmpresa()) && pk.getAnoPresentacion() == cabecera.getId().getAnoPresentacion() && pk.getMesPresentacion() == cabecera.getId().getMesPresentacion()) {
 								cabecera.getId().setEtapa("SOLICITUD");
 								cabecera.setNombreArchivoExcel(archivo.getTitle());
 								cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
 								cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
 								cabecera.setFechaCreacion(new Date());
 								cabecera = formatoService.savecabecera(cabecera);
-							}else{
+							} else {
 								throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
-								//SQLException root=new SQLException();
-								//throw new ConstraintViolationException("La empresa y/o el año de presentacion no coinciden con el seleccionado", root, "");
-								
+								// SQLException root=new SQLException();
+								// throw new
+								// ConstraintViolationException("La empresa y/o el año de presentacion no coinciden con el seleccionado",
+								// root, "");
+
 							}
-							
-							
 
 						}
-						
-					}catch(ConstraintViolationException ex){	
+
+					} catch (ConstraintViolationException ex) {
 						cabecera = null;
 						System.out.println("*******EL FORMATO YA EXISTE****");
-						MensajeErrorBean msg=new MensajeErrorBean();
+						MensajeErrorBean msg = new MensajeErrorBean();
 						msg.setId(cont);
 						msg.setDescripcion("El formato ya existe");
 						listaError.add(msg);
@@ -835,7 +819,7 @@ public class Formato13AGartController {
 						e1.printStackTrace();
 						cabecera = null;
 						System.out.println("entro en !!!" + e1);
-						MensajeErrorBean msg=new MensajeErrorBean();
+						MensajeErrorBean msg = new MensajeErrorBean();
 						msg.setId(cont);
 						msg.setDescripcion("Error");
 						listaError.add(msg);
@@ -869,15 +853,16 @@ public class Formato13AGartController {
 							System.out.println("******* FIN DETALLE****");
 
 						} catch (Exception e1) {
-							//logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+							// logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
 							cont++;
-							//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
-							MensajeErrorBean msg=new MensajeErrorBean();
+							// sMsg = sMsg +
+							// mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
+							MensajeErrorBean msg = new MensajeErrorBean();
 							msg.setId(cont);
 							msg.setDescripcion("Error al guardar detalle");
 							listaError.add(msg);
 							throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
-							
+
 						}
 					}
 
@@ -885,14 +870,13 @@ public class Formato13AGartController {
 
 			}
 		} catch (Exception ex) {
-			MensajeErrorBean msg=new MensajeErrorBean();
+			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
 			msg.setDescripcion("Error!!!!");
 			listaError.add(msg);
 			ex.printStackTrace();
 		}
 
-		
 		return listaError;
 	}
 
@@ -900,7 +884,6 @@ public class Formato13AGartController {
 	public String viewFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 
 		try {
-
 
 			String tipo = request.getParameter("tipo");
 			String codEmp = request.getParameter("codEmpresa");
@@ -922,7 +905,7 @@ public class Formato13AGartController {
 				model.addAttribute("crud", CRUD_READ);
 				model.addAttribute("readonly", "true");
 				model.addAttribute("showanadir", "false");
-				
+
 			}
 			if (tipo != null && tipo.equalsIgnoreCase("1")) {
 				model.addAttribute("crud", CRUD_UPDATE);
@@ -943,75 +926,72 @@ public class Formato13AGartController {
 		return "formato13ACRUD";
 	}
 
-	
-	
-	/**reportes*/
+	/** reportes */
 	@ResourceMapping("reporte")
-	public void reporte(ResourceRequest request,ResourceResponse response, @ModelAttribute("formato13AGartCommand")Formato13AGartCommand command) {
+	public void reporte(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
-	        HttpSession session = httpRequest.getSession();
-	        
-		    JSONArray jsonArray = new JSONArray();	
-		    FiseFormato13AC formato = new FiseFormato13AC();
-		    
-		    Formato13ACBean bean = new Formato13ACBean();
-		    
-		    String codEmpresa = command.getCodEmpresa();
-		    String anoPresentacion = command.getAnioPresentacion();
-		    String mesPresentacion = command.getMesPresentacion();
-		    //String anoInicioVigencia = "";
-		    //String anoFinVigencia = "";
-		    String etapa = command.getEtapa();
-		    
-		    String nombreReporte = request.getParameter("nombreReporte").trim();
-		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-		    String tipoFormato = FiseConstants.TIPO_FORMATO_13A;
-		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
-		   
-		    session.setAttribute("nombreReporte",nombreReporte);
-		    session.setAttribute("nombreArchivo",nombreArchivo);
-		    session.setAttribute("tipoFormato",tipoFormato);
-		    session.setAttribute("tipoArchivo",tipoArchivo);
- 
-		    //anoInicioVigencia = request.getParameter("anoInicioVigencia");
-			//anoFinVigencia = request.getParameter("anoFinVigencia");
-		    
-		    FiseFormato13ACPK pk = new FiseFormato13ACPK();
-		    pk.setCodEmpresa(codEmpresa);
-	        pk.setAnoPresentacion(new Long(anoPresentacion));
-	        pk.setMesPresentacion(new Long(mesPresentacion));
-	        pk.setEtapa(etapa);
+			HttpSession session = httpRequest.getSession();
 
-	        formato = formatoService.obtenerFormato13ACByPK(pk);
-	        if( formato!=null ){
-	        	//setamos los valores en el bean
-	        	bean = formatoService.estructurarFormato13ABeanByFiseFormato13AC(formato);
-	        	bean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
-	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
-	        	//
-	        	//cargamos la lista a enviar
-	        	List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
-	        	
-	        	session.setAttribute("lista", lista);
-	        	session.setAttribute("mapa", formatoService.mapearParametrosFormato13A(bean));
-	        }
-	        
-		    response.setContentType("application/json");
-		    PrintWriter pw = response.getWriter();
-		    pw.write(jsonArray.toString());
-		    pw.flush();
-		    pw.close();
-		}catch (Exception e) {
+			JSONArray jsonArray = new JSONArray();
+			FiseFormato13AC formato = new FiseFormato13AC();
+
+			Formato13ACBean bean = new Formato13ACBean();
+
+			String codEmpresa = command.getCodEmpresa();
+			String anoPresentacion = command.getAnioPresentacion();
+			String mesPresentacion = command.getMesPresentacion();
+			// String anoInicioVigencia = "";
+			// String anoFinVigencia = "";
+			String etapa = command.getEtapa();
+
+			String nombreReporte = request.getParameter("nombreReporte").trim();
+			String nombreArchivo = request.getParameter("nombreArchivo").trim();
+			String tipoFormato = FiseConstants.TIPO_FORMATO_13A;
+			String tipoArchivo = request.getParameter("tipoArchivo").trim();
+
+			session.setAttribute("nombreReporte", nombreReporte);
+			session.setAttribute("nombreArchivo", nombreArchivo);
+			session.setAttribute("tipoFormato", tipoFormato);
+			session.setAttribute("tipoArchivo", tipoArchivo);
+
+			// anoInicioVigencia = request.getParameter("anoInicioVigencia");
+			// anoFinVigencia = request.getParameter("anoFinVigencia");
+
+			FiseFormato13ACPK pk = new FiseFormato13ACPK();
+			pk.setCodEmpresa(codEmpresa);
+			pk.setAnoPresentacion(new Long(anoPresentacion));
+			pk.setMesPresentacion(new Long(mesPresentacion));
+			pk.setEtapa(etapa);
+
+			formato = formatoService.obtenerFormato13ACByPK(pk);
+			if (formato != null) {
+				// setamos los valores en el bean
+				bean = formatoService.estructurarFormato13ABeanByFiseFormato13AC(formato);
+				bean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
+				bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				//
+				// cargamos la lista a enviar
+				List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
+
+				session.setAttribute("lista", lista);
+				session.setAttribute("mapa", formatoService.mapearParametrosFormato13A(bean));
+			}
+
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonArray.toString());
+			pw.flush();
+			pw.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	/**metodos utiles*/
-	
-	public void agregarFormato13Detalle(List<FiseFormato13AD> listaDetalle){
-		if( listaDetalle != null && listaDetalle.size()>0 ){
+
+	/** metodos utiles */
+
+	public void agregarFormato13Detalle(List<FiseFormato13AD> listaDetalle) {
+		if (listaDetalle != null && listaDetalle.size() > 0) {
 			for (FiseFormato13AD detalle : listaDetalle) {
 				try {
 					formatoService.savedetalle(detalle);
@@ -1022,73 +1002,59 @@ public class Formato13AGartController {
 			}
 		}
 	}
-	
-	public void modificarFormato13Detalle(List<FiseFormato13AD> listaDetalle){
-		if( listaDetalle != null && listaDetalle.size()>0 ){
+
+	public void modificarFormato13Detalle(List<FiseFormato13AD> listaDetalle) {
+		if (listaDetalle != null && listaDetalle.size() > 0) {
 			for (FiseFormato13AD detalle : listaDetalle) {
 				formatoService.updatedetalle(detalle);
 			}
 		}
 	}
-	
-	/*public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato, List<FiseFormato13AD> listaDetalle){
-		
 
-		Date hoy = FechaUtil.obtenerFechaActual();
-		try {
-			formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-			formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-			formato.setFechaActualizacion(hoy);
-			formato.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-			formato.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-			formato.setFechaCreacion(hoy);
-			// verificar si es necesario realizar esta validacion
-			// boolean existe = false;
-			// existe = formatoService.existeFormato14AC(formato);
-			// if(existe){
-			// throw new Exception("Ya existe un registro con la misma clave.");
-			// }else{
-			formatoService.savecabecera(formato);
-			// }
-			// add
-			for (FiseFormato13AD detalle : listaDetalle) {
-				formatoService.savedetalle(detalle);
-			}
-			if (listaDetalle != null && listaDetalle.size() > 0) {
-				formato.setFiseFormato13ADs(listaDetalle);
-			}
+	/*
+	 * public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC
+	 * formato, List<FiseFormato13AD> listaDetalle){
+	 * 
+	 * 
+	 * Date hoy = FechaUtil.obtenerFechaActual(); try {
+	 * formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+	 * formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+	 * formato.setFechaActualizacion(hoy);
+	 * formato.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+	 * formato.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+	 * formato.setFechaCreacion(hoy); // verificar si es necesario realizar esta
+	 * validacion // boolean existe = false; // existe =
+	 * formatoService.existeFormato14AC(formato); // if(existe){ // throw new
+	 * Exception("Ya existe un registro con la misma clave."); // }else{
+	 * formatoService.savecabecera(formato); // } // add for (FiseFormato13AD
+	 * detalle : listaDetalle) { formatoService.savedetalle(detalle); } if
+	 * (listaDetalle != null && listaDetalle.size() > 0) {
+	 * formato.setFiseFormato13ADs(listaDetalle); }
+	 * 
+	 * } catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
+	 * }
+	 * 
+	 * 
+	 * public void modificarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC
+	 * formato){
+	 * 
+	 * Date hoy = FechaUtil.obtenerFechaActual(); try{
+	 * formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+	 * formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+	 * formato.setFechaActualizacion(hoy);
+	 * 
+	 * formatoService.updatecabecera(formato);
+	 * 
+	 * if( formato.getFiseFormato13ADs() != null &&
+	 * formato.getFiseFormato13ADs().size()>0 ){ for (FiseFormato13AD detalle :
+	 * formato.getFiseFormato13ADs()) { formatoService.updatedetalle(detalle); }
+	 * }
+	 * 
+	 * } catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
+	 * }
+	 */
 
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-	}
-
-	
-	public void modificarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato){
-		
-		Date hoy = FechaUtil.obtenerFechaActual();
-		try{
-			formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-			formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-			formato.setFechaActualizacion(hoy);
-			
-			formatoService.updatecabecera(formato);
-			
-			if( formato.getFiseFormato13ADs() != null && formato.getFiseFormato13ADs().size()>0 ){
-				for (FiseFormato13AD detalle : formato.getFiseFormato13ADs()) {
-					formatoService.updatedetalle(detalle);
-				}
-			}
-		
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-	}*/
-	
-	public void agregarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, List<FiseFormato13AD> listaDetalle ){
-		
+	public void agregarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, List<FiseFormato13AD> listaDetalle) {
 
 		Date hoy = FechaUtil.obtenerFechaActual();
 
@@ -1145,37 +1111,36 @@ public class Formato13AGartController {
 
 	}
 
-	
-	public void modificarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, FiseFormato13AD detalle){
-	
-		Date hoy = FechaUtil.obtenerFechaActual();
-		
+	public void modificarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, FiseFormato13AD detalle) {
 
-		try{
-			//verificar que campos son editables en la vista de modificacion
+		Date hoy = FechaUtil.obtenerFechaActual();
+
+		try {
+			// verificar que campos son editables en la vista de modificacion
 			detalle.setAnoAlta(Long.parseLong(command.getAnioAlta()));
 			detalle.setMesAlta(Long.parseLong(command.getMesAlta()));
-			//luego verificar de donde se obtendra los valores de ano e inicio de vigencia
+			// luego verificar de donde se obtendra los valores de ano e inicio
+			// de vigencia
 			detalle.setAnoInicioVigencia(Long.parseLong(command.getAnioAlta()));
 			detalle.setAnoFinVigencia(Long.parseLong(command.getAnioAlta()));
 			//
 			detalle.setDescripcionLocalidad(command.getLocalidad());
 			detalle.setNombreSedeAtiende(command.getNombreSede());
-			if( FiseConstants.SECTOR_TIPICO_1_COD.equals(sectorTipico) ){
+			if (FiseConstants.SECTOR_TIPICO_1_COD.equals(sectorTipico)) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt1()));
-			}else if( FiseConstants.SECTOR_TIPICO_2_COD.equals(sectorTipico) ){
+			} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(sectorTipico)) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt2()));
-			}else if( FiseConstants.SECTOR_TIPICO_3_COD.equals(sectorTipico) ){
+			} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(sectorTipico)) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt3()));
-			}else if( FiseConstants.SECTOR_TIPICO_4_COD.equals(sectorTipico) ){
+			} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(sectorTipico)) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt4()));
-			}else if( FiseConstants.SECTOR_TIPICO_5_COD.equals(sectorTipico) ){
+			} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(sectorTipico)) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt5()));
-			}else if( FiseConstants.SECTOR_TIPICO_6_COD.equals(sectorTipico) ){
+			} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(sectorTipico)) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt6()));
-			}else if( FiseConstants.SECTOR_TIPICO_SER_COD.equals(sectorTipico) ){
+			} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(sectorTipico)) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStser()));
-			}else if( FiseConstants.SECTOR_TIPICO_ESP_COD.equals(sectorTipico) ){
+			} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(sectorTipico)) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStesp()));
 			}
 			detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
