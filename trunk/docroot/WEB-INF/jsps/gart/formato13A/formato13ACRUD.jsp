@@ -23,7 +23,7 @@ $(document).ready(function () {
 });
 </script>
 
-<form:form id="form_13ACRUD" method="POST" modelAttribute="formato13AGartCommand" action="${accionURL}" enctype="multipart/form-data" >
+<form:form method="POST" modelAttribute="formato13AGartCommand" action="${accionURL}" enctype="multipart/form-data" >
   <form:hidden path="tipoAccion" />
   
 	<div id="d_listado" class="net-frame-listado">
