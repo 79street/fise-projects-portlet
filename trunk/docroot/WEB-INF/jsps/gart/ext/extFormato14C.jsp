@@ -412,8 +412,9 @@ var formato14C= {
 			
 			formato14C.initDialogs();
 			formato14C.cargaInicial();
+			
 			//eventos por defecto
-			//formato14C.botonBuscar.trigger('click');
+			formato14C.botonBuscar.trigger('click');
 			formato14C.initBlockUI();
 			
 			//calcular los totales
