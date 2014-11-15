@@ -853,8 +853,19 @@ $(document).ready(function () {
 		</p>
 	</div>
 	
+	
 	<div id="<portlet:namespace/>divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
 	</div>
+	
+	<!-- dialogo para el reporte de envio definitivo -->
+	<div id="<portlet:namespace/>dialog-message-report" title="Osinergmin">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="<portlet:namespace/>dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
 	
 	
 	 <!-- VALORES HIDDEN -->

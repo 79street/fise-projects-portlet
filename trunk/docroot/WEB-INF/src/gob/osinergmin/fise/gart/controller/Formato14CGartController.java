@@ -30,6 +30,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -311,10 +312,13 @@ public class Formato14CGartController {
 			
 			f.setDesperiodoEnvio(desPeriodoEnvio);
 			/**Para verificar el flag costo del registro seleccionado*/
-			/*List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
-  					FiseConstants.TIPO_FORMATO_14C);
-			logger.info("tamaño de la lista periodo:  "+listaPeriodo.size()); 
-			logger.info("Periodo envio al editar un registro:  "+codigoPeriodoEnvio); */
+			List<FisePeriodoEnvio> listaPeriodo =null;
+			if(listaPeriodoEnvio.size()==0){
+			    listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+					FiseConstants.TIPO_FORMATO_14C);
+			    listaPeriodoEnvio =listaPeriodo;
+			}		
+			logger.info("Periodo envio al editar un registro:  "+codigoPeriodoEnvio); 
 			logger.info("tamaño de la lista periodo al editar o visualizar :  "+listaPeriodoEnvio.size()); 				
 			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				logger.info("periodo codigo:  "+p.getCodigoItem()); 
@@ -781,7 +785,9 @@ public class Formato14CGartController {
 	
 	HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
     HttpSession session = req.getSession();
-	
+    
+    PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+    
 	ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 	try {	
 		JSONArray jsonArray = new JSONArray();			
@@ -789,7 +795,7 @@ public class Formato14CGartController {
 		logger.info("Codigo empresa:  "+ f.getCodEmpresa()); 
 		logger.info("perido de envio:  "+ f.getPeriodoEnvio());		
 
-		if( f.getPeriodoEnvio().length()>6 ){
+		if(f.getPeriodoEnvio().length()>6 ){
 			f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
 			f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 			f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
@@ -835,13 +841,14 @@ public class Formato14CGartController {
 		    }else{
 		    	//jsonObj.put("resultado", "Error");
 		    }
-	    }	    
-		    response.setContentType("application/json");
-		    PrintWriter pw = response.getWriter();		  
-		    logger.info(jsonArray.toString());
-		    pw.write(jsonArray.toString());
-		    pw.flush();
-		    pw.close();
+	    }
+	    pRequest.getPortletSession().setAttribute("periodoEnvioReporteValidacion", f.getPeriodoEnvio(), PortletSession.APPLICATION_SCOPE);
+	    response.setContentType("application/json");
+	    PrintWriter pw = response.getWriter();		  
+	    logger.info(jsonArray.toString());
+	    pw.write(jsonArray.toString());
+	    pw.flush();
+	    pw.close();
 	    
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -872,28 +879,58 @@ public class Formato14CGartController {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
+	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+	        
+	        PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 	        
 		    JSONArray jsonArray = new JSONArray();	
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
-		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
+		    String tipoArchivo = request.getParameter("tipoArchivo").trim();	    
 		   
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
 		    session.setAttribute("tipoFormato",tipoFormato);
-		    session.setAttribute("tipoArchivo",tipoArchivo);
+		    session.setAttribute("tipoArchivo",tipoArchivo);		    
 	
 		    if( listaObservaciones!=null ){
 		    	session.setAttribute("lista", listaObservaciones);
 		    }
 	        
+		    //add
+		    String periodoEnvio = (String)pRequest.getPortletSession().getAttribute("periodoEnvioReporteValidacion", 
+		    		PortletSession.APPLICATION_SCOPE);		 	   
+		    logger.info("Periodo envio en el reporte de validacion:  "+periodoEnvio); 
+		    String anoPresentacion = "";
+		    String mesPresentacion = "";
+		    if(periodoEnvio.length()>6 ){
+		    	anoPresentacion = periodoEnvio.substring(0, 4);
+		    	mesPresentacion = periodoEnvio.substring(4, 6);
+		    }
+		    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14C);
+	    	String descripcionFormato = "";
+	    	if( tabla!=null ){
+	    		descripcionFormato = tabla.getDescripcionTabla();
+	    	}
+		    Map<String, Object> mapa = new HashMap<String, Object>();
+	    	mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+		   	mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+		   	mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(anoPresentacion));
+		   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(mesPresentacion)));
+		   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+		   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
+		   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+		   	session.setAttribute("mapa", mapa);
+		    //
+		   	
 		    response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
 		    pw.write(jsonArray.toString());
 		    pw.flush();
 		    pw.close();
+		    pRequest.getPortletSession().setAttribute("periodoEnvioReporteValidacion","", PortletSession.APPLICATION_SCOPE);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1024,6 +1061,7 @@ public class Formato14CGartController {
 		       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
 		       logger.info("Tamaño del arreglo de bytes del acta de envio defi."+bytes3.length); 
 		       if (bytes3 != null) {
+		    	   session.setAttribute("bytesActaEnvio", bytes3);
 		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
 		    	   logger.info("subiendo archivo al repositorio del acta de envio defi.");
 		    	   FileEntry archivo3 = fiseUtil.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
@@ -1052,6 +1090,32 @@ public class Formato14CGartController {
 			e.printStackTrace();
 		}
 	 }
+	
+	@ResourceMapping("reporteEnvioDefinitivoF14C")
+	public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse response) {
+		try {
+			logger.info("Entrando al reporte de envio definitivo"); 
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();	
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
+		    String tipoArchivo = FiseConstants.FORMATO_EXPORT_ACTAENVIO;
+		   
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+	        
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
+	
 	
 	/****Metodo para leer archivo de exel*****/	
     private Formato14AMensajeBean readExcelFile(FileEntry archivo, User user,
@@ -2709,6 +2773,17 @@ public class Formato14CGartController {
 				}//fin del if libro			
 			}
 			is.close();
+			if("2".equals(valor)){ 
+				cont++;
+				sMsg="ERROR";
+				fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+						listaError, cont, FiseConstants.COD_ERROR_F14C_1540);//error codigo ya esta registrado 	
+			}else if("0".equals(valor)){
+				cont++;
+				sMsg="ERROR";
+				fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+						listaError, cont, FiseConstants.COD_ERROR_F14C_1550);//error al grabar		
+			}
 		} catch (Exception e) {
 			logger.error("Error al leer el archivo excel del F14C.",e);
 			String error = e.getMessage();
@@ -3815,15 +3890,31 @@ public class Formato14CGartController {
 					}else{
 						logger.info("Entro a verificar datos la Pk no coincide--"); 
 						cont++;
+						sMsg="ERROR";    
 						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 								listaError, cont, FiseConstants.COD_ERROR_F12_210);
 					}
 				}			
     			is.close();
+    			if("2".equals(valor)){ 
+    				cont++;
+    				sMsg="ERROR";
+    				fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    						listaError, cont, FiseConstants.COD_ERROR_F14C_1540);//error codigo ya esta registrado 	
+    			}else if("0".equals(valor)){
+    				cont++;
+    				sMsg="ERROR";
+    				fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    						listaError, cont, FiseConstants.COD_ERROR_F14C_1550);//error al grabar		
+    			}    			
     		}else{
     			//no hay campos o error al consultar a la tabla de campos
-    			throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F14C_1520));
-    		}    		
+    			logger.info("No hay los campos configurados en la tabla campos--"); 
+				cont++;
+				sMsg="ERROR";    
+				sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+						listaError, cont, FiseConstants.COD_ERROR_F14C_1520);
+		   }    		
     	}catch (Exception e) {	  			  
     		String error = e.getMessage();
     		sMsg = sMsg+error;	        	
