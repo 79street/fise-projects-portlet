@@ -76,7 +76,7 @@ var formato14B= {
 	i_etapaB:null,
 	//dialogs
 	dialogMessage:null,
-	dialogMessageReporte:null,
+	dialogMessageReport:null,
 	dialogConfirm:null,
 	dialogConfirmEnvio:null,
 	dialogCarga:null,
