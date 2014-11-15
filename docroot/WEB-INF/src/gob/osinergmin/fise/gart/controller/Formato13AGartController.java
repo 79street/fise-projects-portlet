@@ -2,6 +2,7 @@ package gob.osinergmin.fise.gart.controller;
 
 
 
+import gob.osinergmin.fise.bean.Formato13ACBean;
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
@@ -584,13 +585,13 @@ public class Formato13AGartController {
 		    if(tipo!=null && (tipo.equalsIgnoreCase("0") || tipo.equalsIgnoreCase("1"))){
 		    	
 		    	System.out.println("codEmpresa::>"+request.getParameter("codEmpresa"));
-				System.out.println("anoPresentacion::>"+request.getParameter("anoPresentacion"));
+				System.out.println("anoPresentacion::>"+request.getParameter("anioPresentacion"));
 				
 		    	codEmpresa =request.getParameter("codEmpresa");
-		    	periodoDeclaracion=request.getParameter("anoPresentacion")+request.getParameter("mesPresentacion")+request.getParameter("etapa");
+		    	periodoDeclaracion=request.getParameter("anioPresentacion")+request.getParameter("mesPresentacion")+request.getParameter("etapa");
 		    
 		    	command.setCodEmpresa(codEmpresa);
-				command.setAnioPresentacion(request.getParameter("anoPresentacion"));
+				command.setAnioPresentacion(request.getParameter("anioPresentacion"));
 				command.setMesPresentacion(request.getParameter("mesPresentacion"));
 				command.setEtapa(request.getParameter("etapa"));
 				command.setPeridoDeclaracion(periodoDeclaracion);
@@ -769,7 +770,7 @@ public class Formato13AGartController {
 		
 			String tipo = request.getParameter("tipo"); 
 			String codEmp = request.getParameter("codEmpresa"); 
-			String anio = request.getParameter("anoPresentacion"); 
+			String anio = request.getParameter("anioPresentacion"); 
 			String mes = request.getParameter("mesPresentacion"); 
 			String etapa = request.getParameter("etapa"); 
 			System.out.println("etapa::>"+etapa);
@@ -801,6 +802,70 @@ public class Formato13AGartController {
 		}
 		return "formato13ACRUD";
 	}
+	
+	
+	/**reportes*/
+	@ResourceMapping("reporte")
+	public void reporte(ResourceRequest request,ResourceResponse response, @ModelAttribute("formato13AGartCommand")Formato13AGartCommand command) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();	
+		    FiseFormato13AC formato = new FiseFormato13AC();
+		    
+		    Formato13ACBean bean = new Formato13ACBean();
+		    
+		    String codEmpresa = command.getCodEmpresa();
+		    String anoPresentacion = command.getAnioPresentacion();
+		    String mesPresentacion = command.getMesPresentacion();
+		    //String anoInicioVigencia = "";
+		    //String anoFinVigencia = "";
+		    String etapa = command.getEtapa();
+		    
+		    String nombreReporte = request.getParameter("nombreReporte").trim();
+		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_13A;
+		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
+		   
+		    session.setAttribute("nombreReporte",nombreReporte);
+		    session.setAttribute("nombreArchivo",nombreArchivo);
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+ 
+		    //anoInicioVigencia = request.getParameter("anoInicioVigencia");
+			//anoFinVigencia = request.getParameter("anoFinVigencia");
+		    
+		    FiseFormato13ACPK pk = new FiseFormato13ACPK();
+		    pk.setCodEmpresa(codEmpresa);
+	        pk.setAnoPresentacion(new Long(anoPresentacion));
+	        pk.setMesPresentacion(new Long(mesPresentacion));
+	        pk.setEtapa(etapa);
+
+	        formato = formatoService.obtenerFormato13ACByPK(pk);
+	        if( formato!=null ){
+	        	//setamos los valores en el bean
+	        	bean = formatoService.estructurarFormato13ABeanByFiseFormato13AC(formato);
+	        	bean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
+	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+	        	//
+	        	//cargamos la lista a enviar
+	        	List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
+	        	
+	        	session.setAttribute("lista", lista);
+	        	session.setAttribute("mapa", formatoService.mapearParametrosFormato13A(bean));
+	        }
+	        
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/**metodos utiles*/
 	

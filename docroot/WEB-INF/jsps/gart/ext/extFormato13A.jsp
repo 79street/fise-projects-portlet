@@ -10,11 +10,17 @@ var formato13A= {
 	paginadoResultados:null,
 	tablaDeclaracion:null,
 	paginadoDeclaracion:null,
+	//URL
 	urlBusqueda: null,
 	urlBusquedaDetalle: null,
 	urlCargaDeclaracion: null,
 	urlProvincias:null,
 	urlDistritos:null,
+	urlReporte:null,
+	
+	botonReportePdf:null,
+	botonReporteExcel:null,
+	
 	botonBuscar:null,
 	formBusqueda: null,
 	formNuevo : null,
@@ -109,6 +115,10 @@ var formato13A= {
 		this.dialogCargaTexto=$("#<portlet:namespace/>dialog-form-cargaTxt");
 		this.btnCargarFormatoTexto=$('#<portlet:namespace/>cargarFormatoTxt');
 		
+		this.urlReporte='<portlet:resourceURL id="reporte" />';
+		this.botonReportePdf=$("#<portlet:namespace/>reportePdf");
+		this.botonReporteExcel=$("#<portlet:namespace/>reporteExcel");
+		
 		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
 		formato13A.btnCargarFormatoExcel.click(function() {formato13A.<portlet:namespace/>cargarFormatoExcel();});
 		formato13A.btnTxt.click(function() {formato13A.<portlet:namespace/>showUploadTxt();});
@@ -140,6 +150,9 @@ var formato13A= {
 
 		}if(operacion=='READ'){
 			formato13A.buscarDetalles();
+			
+			formato13A.botonReportePdf.click(function() {formato13A.<portlet:namespace/>mostrarReportePdf();});
+			formato13A.botonReporteExcel.click(function() {formato13A.<portlet:namespace/>mostrarReporteExcel();});
 			
 			botonRegresarBusqueda.click(function(){
 				formato13A.blockUI();
@@ -281,8 +294,8 @@ var formato13A= {
 	      			var cl = ids[i];
 	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl); 
 	      			
-	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anoPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
-	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anoPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
+	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
@@ -571,6 +584,58 @@ var formato13A= {
 		console.debug(''+st1+','+st2+','+st3+','+st4+','+st5+','+st6+','+stser+','+stesp);
 		total=parseFloat(st1)+parseFloat(st2)+parseFloat(st3)+parseFloat(st4)+parseFloat(st5)+parseFloat(st6)+parseFloat(stser)+parseFloat(stesp);
 		formato13A.sttotalDetalle.val(parseFloat(total));
+	},
+	//MOSTRAR REPORTE
+	<portlet:namespace/>mostrarReportePdf : function(){
+		var form = formato13A.formNuevo;
+		form.removeAttr('enctype');
+		
+		jQuery.ajax({
+			url : formato13A.urlReporte+'&'+form.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				//<portlet:namespace />codEmpresa: formato13A.f_empresa.val(),
+				//<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
+				//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+				//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
+				<portlet:namespace />nombreReporte: 'formato13A',
+				<portlet:namespace />nombreArchivo: 'formato13A',
+				<portlet:namespace />tipoArchivo: '0'//PDF
+			},
+			success : function(gridData) {
+				formato13A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.initBlockUI();
+			}
+		});
+	},
+	<portlet:namespace/>mostrarReporteExcel : function(){
+		jQuery.ajax({
+			url : formato13A.urlReporte+'&'+formato13A.formNuevo.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				//<portlet:namespace />codEmpresa: formato13A.f_empresa.val(),
+				//<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
+				//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+				//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
+				<portlet:namespace />nombreReporte: 'formato13A',
+				<portlet:namespace />nombreArchivo: 'formato13A',
+				<portlet:namespace />tipoArchivo: '1'//XLS
+			},
+			success : function(gridData) {
+				//alert('entro');
+				formato13A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.initBlockUI();
+			}
+		});
+	},
+	verReporte : function(){
+		window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
 	}
 	
 };
