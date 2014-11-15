@@ -189,14 +189,16 @@ $(document).ready(function () {
 																						value="Exportar excel" /></td>
 																				</c:if>
 																				<c:if test="${showanadir}">
+																					
+																				</c:if>
+																				<c:if test="${not readonly}">
+																					
 																					<td width="17%" align="center"><input
 																						type="button" class="net-button-small"
 																						id="<portlet:namespace/>anadirFormato"
 																						name="<portlet:namespace/>anadirFormato"
 																						value="Añadir" /></td>
-																				</c:if>
-																				<c:if test="${not readonly}">
-																					
+																						
 																					<td width="17%" align="center"><input
 																						type="button" class="net-button-small"
 																						id="<portlet:namespace/>validacionFormato"
