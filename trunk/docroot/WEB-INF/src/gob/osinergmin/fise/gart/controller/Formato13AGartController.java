@@ -40,6 +40,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,6 +59,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.hibernate.exception.ConstraintViolationException;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,9 +208,10 @@ public class Formato13AGartController {
 
 		String codEmpresa = renderRequest.getParameter("codEmpresa");
 		String periodo = renderRequest.getParameter("periodoDeclaracion");
-		String tipo = renderRequest.getParameter("tipoAccion");
 		String read = renderRequest.getParameter("readonly");
-		String showanadir = renderRequest.getParameter("showanadir");
+		String tipo = renderRequest.getParameter("tipo");
+		String descPeriodo=renderRequest.getParameter("descripcionPeriodo");
+		//response.setRenderParameter("descripcionPeriodo", command.getDescripcionPeriodo());
 
 		System.out.println("codEmpresa::>" + codEmpresa);
 		System.out.println("periodo::>" + periodo);
@@ -218,15 +221,18 @@ public class Formato13AGartController {
 		}
 		if (periodo != null) {
 			command.setPeridoDeclaracion(periodo);
+		}if (descPeriodo != null) {
+			command.setDescripcionPeriodo(descPeriodo);
 		}
 
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		command.setReadOnly(read != null ? Boolean.parseBoolean(read) : false);
-		command.setTipoAccion(tipo != null ? Integer.valueOf(tipo) : 0);
+		
+		
 
-		model.addAttribute("crud", command.getTipoAccion() == 0 ? CRUD_CREATE : CRUD_UPDATE);
-		model.addAttribute("showanadir", showanadir != null ? showanadir : "false");
+		model.addAttribute("crud",(tipo!=null && tipo.equalsIgnoreCase("1")) ? CRUD_UPDATE:CRUD_CREATE );
 		model.addAttribute("readonly", "false");
+		
 
 		return "formato13ACRUD";
 	}
@@ -272,7 +278,7 @@ public class Formato13AGartController {
 
 				model.addAttribute("crud", CRUD_UPDATE);
 				model.addAttribute("readonly", "false");
-				model.addAttribute("showanadir", "true");
+				
 
 			}
 
@@ -719,6 +725,7 @@ public class Formato13AGartController {
 
 				System.out.println("codEmpresa::>" + request.getParameter("codEmpresa"));
 				System.out.println("anoPresentacion::>" + request.getParameter("anioPresentacion"));
+				
 
 				codEmpresa = request.getParameter("codEmpresa");
 				periodoDeclaracion = request.getParameter("anioPresentacion") + request.getParameter("mesPresentacion") + request.getParameter("etapa");
@@ -804,29 +811,58 @@ public class Formato13AGartController {
 			cabecerapk.setMesPresentacion(Long.parseLong(periodo.substring(4, 6)));
 			cabecerapk.setEtapa(periodo.substring(6, periodo.length()));
 			command.setPeridoDeclaracion(periodo);
+			
+			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresaNew, "F13A");
+           if(listaPeriodoEnvio!=null && !listaPeriodoEnvio.isEmpty()){
+        	   for(FisePeriodoEnvio p:listaPeriodoEnvio){
+               	 if(p.getCodigoItem().equals(command.getPeridoDeclaracion())){
+               		 command.setDescripcionPeriodo(p.getDescripcionItem());
+               	 }
+               		
+               }
+           }
+			
+			
 		}
 
 		FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 		List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk);
 
 		if (lstErrores != null && !lstErrores.isEmpty()) {
-			response.setRenderParameter("tipoAccion", "0");
+			
 			response.setRenderParameter("crud", "CREATE");
 			response.setRenderParameter("readonly", "false");
-			response.setRenderParameter("showanadir", "false");
+			
+			//Map<String, String> mapaEmpresa = new HashMap<String, String> ;
+			Map<String, String []> errores = new HashMap<String, String[]>();
+			String [] str= new String[lstErrores.size()];
+			for(int i=0;i<lstErrores.size();i++){
+				str[i]=lstErrores.get(i).getDescripcion();
+				
+			}
+			errores.put("lsterrores",str);
+			response.setRenderParameters(errores);
+			
+			
 		} else {
-			command.setTipoAccion(1);
-			response.setRenderParameter("tipoAccion", "1");
+			
+			
+			response.setRenderParameter("tipo", "1");
 			response.setRenderParameter("crud", "UPDATE");
 			response.setRenderParameter("readonly", "true");
-			response.setRenderParameter("showanadir", "true");
+			
 		}
 
 		response.setRenderParameter("action", "nuevo");
 		response.setRenderParameter("codEmpresa", command.getCodEmpresa());
+		response.setRenderParameter("anioPresentacion", cabecerapk.getAnoPresentacion()+"");
+		response.setRenderParameter("mesPresentacion", cabecerapk.getMesPresentacion()+"");
+		response.setRenderParameter("etapa", cabecerapk.getEtapa()+"");
 		response.setRenderParameter("periodoDeclaracion", command.getPeridoDeclaracion());
+		response.setRenderParameter("descripcionPeriodo", command.getDescripcionPeriodo());
+		
 
-		//
+		
 	}
 
 	public List<MensajeErrorBean> readExcelFile(FileEntry archivo, ThemeDisplay themeDisplay, FiseFormato13ACPK pk) {
@@ -865,6 +901,11 @@ public class Formato13AGartController {
 								cabecera.setFechaCreacion(new Date());
 								cabecera = formatoService.savecabecera(cabecera);
 							} else {
+								cont++;
+								MensajeErrorBean msg = new MensajeErrorBean();
+								msg.setId(cont);
+								msg.setDescripcion("La empresa y/o mes año no coinciden con el seleccionado");
+								listaError.add(msg);
 								throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
 								// SQLException root=new SQLException();
 								// throw new
