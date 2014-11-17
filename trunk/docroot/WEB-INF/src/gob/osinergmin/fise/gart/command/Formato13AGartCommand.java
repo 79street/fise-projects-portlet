@@ -49,11 +49,16 @@ public class Formato13AGartCommand {
 	private String total;
 	private String idZonaBenef;
 	private String nombreSede;
+	//
+	private String anioInicioVigencia;
+	private String anioFinVigencia;
 	
 	private int tipoAccion;
 
 	private List<FisePeriodoEnvio> listaPeriodo;
 	private boolean readOnly;
+	private boolean readonlyFlagPeriodo;
+	private boolean readonlyEdit;
 	
 	public List<AdmEmpresa> getListaEmpresas() {
 		return listaEmpresas;
@@ -352,6 +357,38 @@ public class Formato13AGartCommand {
 
 	public void setTipoAccion(int tipoAccion) {
 		this.tipoAccion = tipoAccion;
+	}
+
+	public String getAnioInicioVigencia() {
+		return anioInicioVigencia;
+	}
+
+	public void setAnioInicioVigencia(String anioInicioVigencia) {
+		this.anioInicioVigencia = anioInicioVigencia;
+	}
+
+	public String getAnioFinVigencia() {
+		return anioFinVigencia;
+	}
+
+	public void setAnioFinVigencia(String anioFinVigencia) {
+		this.anioFinVigencia = anioFinVigencia;
+	}
+
+	public boolean isReadonlyFlagPeriodo() {
+		return readonlyFlagPeriodo;
+	}
+
+	public void setReadonlyFlagPeriodo(boolean readonlyFlagPeriodo) {
+		this.readonlyFlagPeriodo = readonlyFlagPeriodo;
+	}
+
+	public boolean isReadonlyEdit() {
+		return readonlyEdit;
+	}
+
+	public void setReadonlyEdit(boolean readonlyEdit) {
+		this.readonlyEdit = readonlyEdit;
 	}
 	
 	

@@ -192,12 +192,18 @@ $(document).ready(function () {
 																					
 																				</c:if>
 																				<c:if test="${not readonly}">
-																					
 																					<td width="17%" align="center"><input
 																						type="button" class="net-button-small"
 																						id="<portlet:namespace/>anadirFormato"
 																						name="<portlet:namespace/>anadirFormato"
 																						value="Añadir" /></td>
+																				</c:if>
+																				<c:if test="${not readonly}">
+																					<td width="17%" align="center"><input
+																						type="button" class="net-button-small"
+																						id="<portlet:namespace/>guardarFormato"
+																						name="<portlet:namespace/>guardarFormato"
+																						value="Guardar" /></td>
 																						
 																					<td width="17%" align="center"><input
 																						type="button" class="net-button-small"
@@ -208,15 +214,7 @@ $(document).ready(function () {
 																						type="button" class="net-button-small"
 																						id="<portlet:namespace/>envioDefinitivo"
 																						name="<portlet:namespace/>envioDefinitivo"
-																						value="Envío Def." /></td>	
-																						
-																				</c:if>
-																				<c:if test="${not readonly}">
-																					<td width="17%" align="center"><input
-																						type="button" class="net-button-small"
-																						id="<portlet:namespace/>guardarFormato"
-																						name="<portlet:namespace/>guardarFormato"
-																						value="Guardar" /></td>
+																						value="Envío Def." /></td>
 																				</c:if>
 																				
 																				<td width="17%" align="center"><input

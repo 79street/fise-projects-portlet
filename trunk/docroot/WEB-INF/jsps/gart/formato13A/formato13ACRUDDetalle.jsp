@@ -53,11 +53,19 @@ $(document).ready(function () {
 															</td>
 															<td><output class="net-titulo">Periodo a declarar</output></td>
 															<td>
-																<input type="text" value="${formato13AGartCommand.mesPresentacion}/${formato13AGartCommand.anioPresentacion } - ${formato13AGartCommand.etapa}"/>
+																<input type="text" value="${formato13AGartCommand.mesPresentacion}/${formato13AGartCommand.anioPresentacion } - ${formato13AGartCommand.etapa}" readonly="true" />
 																<form:hidden path="peridoDeclaracion" />
 																<form:hidden path="anioPresentacion" />
 																<form:hidden path="mesPresentacion" />
 																<form:hidden path="etapa" />
+															</td>
+															<td><output class="net-titulo">Año Inicio Vigencia:</output></td>
+															<td>
+																<form:input path="anioInicioVigencia" readonly="${readonlyFlagPeriodo}" />
+															</td>
+															<td><output class="net-titulo">Año fin Vigencia:</output></td>
+															<td>
+																<form:input path="anioFinVigencia" readonly="${readonlyFlagPeriodo}" />
 															</td>
 														</tr>
 													</table>
@@ -85,12 +93,12 @@ $(document).ready(function () {
 																		<tr> 
 																			<td width="40px">Año:</td> 
 																			<td>
-																				<form:input path="anioAlta" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/>																			
+																				<form:input path="anioAlta" cssStyle="width:50px" maxlength="4" readonly="${readonlyEdit}"/>																			
 																			</td>
 									   										<td width="5px"></td>
 									   										<td width="40px">Mes:</td>
 									   										<td>
-									   											<form:select path="mesAlta" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
+									   											<form:select path="mesAlta" cssClass="select" cssStyle="width: 104px;" disabled="${readonlyEdit}">
 																					<form:option value="">-Seleccione-</form:option>
 																					<form:options items="${formato13AGartCommand.listaMes}"/>
 																				</form:select>
@@ -157,16 +165,16 @@ $(document).ready(function () {
 																</thead>
 																<tbody>
 																	<tr>
-																		<td><form:input path="st1" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st2" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st3" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st4" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st5" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="st6" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="stser" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
-																		<td><form:input path="stesp" cssClass="target" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td>
+																		<td><form:input path="st1" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="st2" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="st3" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="st4" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="st5" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="st6" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="stser" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="stesp" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
 																		<%-- <td><form:input path="total" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td> --%>
-																		<td><form:input path="total" cssStyle="width:50px" maxlength="4" readonly="true"/></td>
+																		<td><form:input path="total" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="true"/></td>
 																		<td>
 																			<form:select path="idZonaBenef" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
 																					<form:option value="">-Seleccione-</form:option>
@@ -203,20 +211,6 @@ $(document).ready(function () {
 																	<td>
 																		<table style="width: 100%">
 																			<tr>
-																				<c:if test="${readonly}">	
-																					<td width="16%" align="center"><input
-																						type="button" class="boton"
-																						name="<portlet:namespace/>reportePdf"																						
-																						id="<portlet:namespace/>reportePdf"
-																						class="button net-button-small" value="Imprimir PDF" />
-																					</td>
-																					<td width="16%" align="center"><input
-																						type="button" class="boton"
-																						name="<portlet:namespace/>reporteExcel"																						
-																						id="<portlet:namespace/>reporteExcel"
-																						class="button net-button-small"
-																						value="Exportar excel" /></td>
-																				</c:if>
 																				<c:if test="${not readonly}">	
 																					<td width="17%" align="center"><input
 																						type="button" class="net-button-small"
