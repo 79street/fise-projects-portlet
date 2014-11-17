@@ -827,7 +827,7 @@ public class Formato13AGartController {
 
 		FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 		List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk);
-
+        System.out.println("tipo de errores");
 		if (lstErrores != null && !lstErrores.isEmpty()) {
 			
 			response.setRenderParameter("crud", "CREATE");
@@ -840,8 +840,9 @@ public class Formato13AGartController {
 				str[i]=lstErrores.get(i).getDescripcion();
 				
 			}
-			errores.put("lsterrores",str);
-			response.setRenderParameters(errores);
+			//errores.put("lsterrores",str);
+			//response.setRenderParameters(errores);
+			response.setRenderParameter("lsterrores", str);
 			
 			
 		} else {

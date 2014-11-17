@@ -20,7 +20,9 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
+				alert("aqui en ready");
 				var errores = '${lsterrores}';
+				alert(errores);
 				if (errores.length > 0) {
 					var index;
 					for (index = 0; index < errores.length; index++) {
@@ -34,7 +36,7 @@
 </script>
 
 
-<form:form id="form_13ACRUD" method="POST"
+<form:form  method="POST"
 	modelAttribute="formato13AGartCommand" action="${accionURL}"
 	enctype="multipart/form-data">
 
