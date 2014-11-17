@@ -10,6 +10,10 @@ var formato13A= {
 	paginadoResultados:null,
 	tablaDeclaracion:null,
 	paginadoDeclaracion:null,
+	//add
+	tablaObservacion:null,
+	paginadoObservacion:null,
+	//
 	//URL
 	urlBusqueda: null,
 	urlBusquedaDetalle: null,
@@ -17,9 +21,19 @@ var formato13A= {
 	urlProvincias:null,
 	urlDistritos:null,
 	urlReporte:null,
+	//add
+	urlValidacion:null,
+	urlReporteValidacion:null,
+	urlEnvioDefinitivo:null,
+	urlReporteEnvioDefinitivo:null,
+	//
 	
 	botonReportePdf:null,
 	botonReporteExcel:null,
+	//add
+	botonValidacion:null,
+	botonEnvioDefinitivo:null,
+	//
 	
 	botonBuscar:null,
 	formBusqueda: null,
@@ -47,7 +61,13 @@ var formato13A= {
 	btnCargarFormatoTexto:null,
 	
 	divOverlay:null,
-	
+	//add
+	dialogObservacion:null,
+	dialogMessageReport:null,
+	dialogConfirmEnvio:null,
+	dialogMessageReportContent:null,
+	dialogConfirmEnvioContent:null,
+	//
 
 	codDepa:null,
 	codProv:null,
@@ -108,6 +128,10 @@ var formato13A= {
 		this.peridoDeclaracion=$('#peridoDeclaracion');
 		this.tablaDeclaracion=$("#<portlet:namespace/>grid_formato_declaracion");
 		this.paginadoDeclaracion='#<portlet:namespace/>pager_formato_declaracion';
+		//add
+		this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
+		this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
+		//
 		var botonAnadirFormato=$('#<portlet:namespace/>anadirFormato');
 		var botonRegresarBusqueda=$('#<portlet:namespace/>regresarBusqueda');
 		
@@ -120,6 +144,13 @@ var formato13A= {
 		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
 		this.btnCargarFormatoExcel=$('#<portlet:namespace/>cargarFormatoExcel');
 		this.divOverlay=$("#<portlet:namespace/>divOverlay");
+		//add
+		this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");
+		this.dialogMessageReport=$("#<portlet:namespace/>dialog-message-report");
+		this.dialogMessageReportContent=$("#<portlet:namespace/>dialog-message-report-content");
+		this.dialogConfirmEnvio=$("#<portlet:namespace/>dialog-confirm-envio");
+		this.dialogConfirmEnvioContent=$("#<portlet:namespace/>dialog-confirm-envio-content");
+		//
 		
 		this.btnTxt=$('#<portlet:namespace/>showDialogUploadTxt');
 		this.dialogCargaTexto=$("#<portlet:namespace/>dialog-form-cargaTxt");
@@ -128,6 +159,15 @@ var formato13A= {
 		this.urlReporte='<portlet:resourceURL id="reporte" />';
 		this.botonReportePdf=$("#<portlet:namespace/>reportePdf");
 		this.botonReporteExcel=$("#<portlet:namespace/>reporteExcel");
+		//add
+		this.urlValidacion='<portlet:resourceURL id="validacion" />';
+		this.urlReporteValidacion='<portlet:resourceURL id="reporteValidacion" />';
+		this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivo" />';
+		this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivo" />';
+		this.botonValidacion=$("#<portlet:namespace/>validacionFormato");
+		this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivo");
+		//
+		formato13A.initDialogs();
 		
 		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
 		formato13A.btnCargarFormatoExcel.click(function() {formato13A.<portlet:namespace/>cargarFormatoExcel();});
@@ -136,6 +176,7 @@ var formato13A= {
 		formato13A.btnGuardarCabecera.click(function(){formato13A.savecabecera();});
 		
 		formato13A.buildGridsDeclaracion();
+		this.buildGridsObservacion();
 		
 		if(operacion=='CREATE'){
 			
@@ -194,6 +235,10 @@ var formato13A= {
 				formato13A.blockUI();
 				location.href=urlRegresarBusqueda;
 			});
+			
+			//validacion y envio definitivo
+			formato13A.botonValidacion.click(function() {formato13A.<portlet:namespace/>validacionFormato();});
+			formato13A.botonEnvioDefinitivo.click(function() {formato13A.confirmarEnvioDefinitivo();});
 			
 		}
 		
@@ -671,10 +716,6 @@ var formato13A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
-				//<portlet:namespace />codEmpresa: formato13A.f_empresa.val(),
-				//<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
-				//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
-				//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato13A',
 				<portlet:namespace />nombreArchivo: 'formato13A',
 				<portlet:namespace />tipoArchivo: '0'//PDF
@@ -683,13 +724,93 @@ var formato13A= {
 				formato13A.verReporte();
 			},error : function(){
 				alert("Error de conexión.");
-				formato13A.initBlockUI();
+				formato13A.unblockUI();
 			}
 		});
 	},
 	<portlet:namespace/>mostrarReporteExcel : function(){
+		var form = formato13A.formNuevo;
+		form.removeAttr('enctype');
 		jQuery.ajax({
-			url : formato13A.urlReporte+'&'+formato13A.formNuevo.serialize(),
+			url : formato13A.urlReporte+'&'+form.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />nombreReporte: 'formato13A',
+				<portlet:namespace />nombreArchivo: 'formato13A',
+				<portlet:namespace />tipoArchivo: '1'//XLS
+			},
+			success : function(gridData) {
+				formato13A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+		});
+	},
+	verReporte : function(){
+		window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
+	},
+	//procesos de validacion y envio definitivo
+	<portlet:namespace/>validacionFormato : function(){
+		var form = formato13A.formNuevo;
+		form.removeAttr('enctype');
+		jQuery.ajax({
+			url: formato13A.urlValidacion+'&'+form.serialize(),
+			type : 'post',
+			dataType : 'json',
+			/*data : {
+				<portlet:namespace />codEmpresa: formato13A.f_empresa.val(),
+				<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
+				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val()
+			},*/
+			success : function(data) {
+				if( data!=null ){
+					formato13A.dialogObservacion.dialog("open");
+					formato13A.tablaObservacion.clearGridData(true);
+					formato13A.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+					formato13A.tablaObservacion[0].refreshIndex();
+					formato13A.unblockUI();
+				}
+
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+		});
+	},
+	<portlet:namespace/>mostrarReporteValidacion : function(){
+		var form = formato13A.formNuevo;
+		form.removeAttr('enctype');
+		jQuery.ajax({
+			url: formato13A.urlReporteValidacion+'&'+form.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				//<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
+				<portlet:namespace />nombreReporte: 'validacion',
+				<portlet:namespace />nombreArchivo: 'validacion',
+				<portlet:namespace />tipoArchivo: '0'//PDF
+			},
+			success : function(gridData) {
+				formato13A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+		});
+	},
+	confirmarEnvioDefinitivo : function(){	
+		var addhtml='¿Está seguro que desea realizar el envío definitivo?';
+		formato13A.dialogConfirmEnvioContent.html(addhtml);
+		formato13A.dialogConfirmEnvio.dialog("open");
+	},
+	<portlet:namespace/>envioDefinitivo : function(){
+		var form = formato13A.formNuevo;
+		form.removeAttr('enctype');
+		jQuery.ajax({
+			url: formato13A.urlEnvioDefinitivo+'&'+form.serialize(),
 			type : 'post',
 			dataType : 'json',
 			data : {
@@ -699,21 +820,112 @@ var formato13A= {
 				//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato13A',
 				<portlet:namespace />nombreArchivo: 'formato13A',
-				<portlet:namespace />tipoArchivo: '1'//XLS
+				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
-				//alert('entro');
-				formato13A.verReporte();
+				var addhtml='Se realizó el envío satisfactoriamente';					
+				formato13A.dialogMessageReportContent.html(addhtml);
+				formato13A.dialogMessageReport.dialog("open");
+				formato13A.unblockUI();
 			},error : function(){
 				alert("Error de conexión.");
-				formato13A.initBlockUI();
+				formato13A.unblockUI();
 			}
 		});
 	},
-	verReporte : function(){
-		window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
+	buildGridsObservacion : function () {	
+		formato13A.tablaObservacion.jqGrid({
+		   datatype: "local",
+	       colNames: ['Grupo Zona','Código','Descripción'],
+	       colModel: [
+						{ name: 'descSectorTipico', index: 'descSectorTipico', width: 150 ,align: 'left'},
+						{ name: 'descZonaBenef', index: 'descZonaBenef', width: 150 ,align: 'left'},
+						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
+		                { name: 'descripcion', index: 'descripcion', width: 420 ,align: 'left'}               
+			   	    ],
+		   	 multiselect: false,
+				rowNum:10,
+			   	rowList:[10,20,50],
+				height: 'auto',
+			   	autowidth: true,
+				rownumbers: true,
+				pager: formato13A.paginadoObservacion,
+			    viewrecords: true,
+			   	sortorder: "asc"
+	  	});
+		formato13A.tablaObservacion.jqGrid('navGrid',formato13A.paginadoObservacion,{add:false,edit:false,del:false,search: false,refresh: false});	
+		formato13A.tablaObservacion.jqGrid('navButtonAdd',formato13A.paginadoObservacion,{
+		       caption:"Exportar a Excel",
+		       buttonicon: "ui-icon-bookmark",
+		       onClickButton : function () {
+		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		       } 
+		}); 
+		formato13A.tablaObservacion.jqGrid('navButtonAdd',formato13A.paginadoObservacion,{
+		       caption:"Exportar a Pdf",
+		       buttonicon: "ui-icon-bookmark",
+		       onClickButton : function () {
+		    	   formato13A.<portlet:namespace/>mostrarReporteValidacion();
+		       } 
+		});
+	},
+	<portlet:namespace/>mostrarReporteEnvioDefinitivo : function(){
+		jQuery.ajax({
+			url: formato13A.urlReporteEnvioDefinitivo+'&'+formato13A.formCommand.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+			},
+			success : function(gridData) {
+				formato13A.verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+		});
+	},
+	//inicializar dialogs
+	initDialogs : function(){	
+		formato13A.dialogMessageReport.dialog({
+			modal: true,
+			autoOpen: false,
+			buttons: {
+				'Imprimir Pdf': function() {
+					formato13A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+					$(this).dialog("close");
+				},
+				Ok: function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+		formato13A.dialogConfirmEnvio.dialog({
+			modal: true,
+			height: 200,
+			width: 400,			
+			autoOpen: false,
+			buttons: {
+				"Si": function() {
+					formato13A.<portlet:namespace/>envioDefinitivo();
+					$(this).dialog("close");
+				},
+				"No": function() {				
+					$(this).dialog("close");
+				}
+			}
+		});
+		formato13A.dialogObservacion.dialog({
+			modal: true,
+			width: 700,
+			autoOpen: false,
+			buttons: {
+				Cerrar: function() {
+					$(this).dialog("close");
+				}
+			}
+		});
 	}
-
 	
 };
 

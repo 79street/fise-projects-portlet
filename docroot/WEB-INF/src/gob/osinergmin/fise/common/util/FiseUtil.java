@@ -380,4 +380,18 @@ public class FiseUtil {
 	public List<AdmUbigeo> listaDistritos(String codProvincia){
 		return admUbigeoService.listarDistritos(codProvincia);
 	}
+	
+	public Map<String, String> getMapaSectorTipico(){
+		Map<String, String> mapaSectorTipico = new HashMap<String, String>();
+		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_1_COD, FiseConstants.SECTOR_TIPICO_1_DESC);
+		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_2_COD, FiseConstants.SECTOR_TIPICO_2_DESC);
+		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_3_COD, FiseConstants.SECTOR_TIPICO_3_DESC);
+		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_4_COD, FiseConstants.SECTOR_TIPICO_4_DESC);
+		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_5_COD, FiseConstants.SECTOR_TIPICO_5_DESC);
+		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_6_COD, FiseConstants.SECTOR_TIPICO_6_DESC);
+		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_SER_COD, FiseConstants.SECTOR_TIPICO_SER_DESC);
+		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_ESP_COD, FiseConstants.SECTOR_TIPICO_ESP_DESC);
+		return mapaSectorTipico;
+	}
+	
 }
