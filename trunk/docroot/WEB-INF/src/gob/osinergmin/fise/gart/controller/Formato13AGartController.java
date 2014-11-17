@@ -1054,7 +1054,7 @@ public class Formato13AGartController {
 						jsonArray.put(jsonObj);		
 					}
 			    	//**exportar excel
-			    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, FiseConstants.NOMBRE_EXCEL_VALIDACION_F14A, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+			    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, FiseConstants.NOMBRE_EXCEL_VALIDACION_F13A, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
 			    }
 		    }
 		    
@@ -1071,7 +1071,7 @@ public class Formato13AGartController {
 	}
 
 @ResourceMapping("reporteValidacion")
-public void reporteValidacion(ResourceRequest request,ResourceResponse response) {
+public void reporteValidacion(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato13AGartCommand")Formato13AGartCommand command) {
 	try {
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
         HttpSession session = httpRequest.getSession();
@@ -1081,7 +1081,7 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	    
 	    String nombreReporte = request.getParameter("nombreReporte").trim();
 	    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-	    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
+	    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL_13A;
 	    String tipoArchivo = request.getParameter("tipoArchivo").trim();
 	   
 	    session.setAttribute("nombreReporte",nombreReporte);
@@ -1094,14 +1094,9 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	    }
         
 	    //add
-	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
-	    String anoPresentacion = "";
-	    String mesPresentacion = "";
-	    if( periodoEnvio.length()>6 ){
-	    	anoPresentacion = periodoEnvio.substring(0, 4);
-	    	mesPresentacion = periodoEnvio.substring(4, 6);
-	    }
-	    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
+	    String anoPresentacion = command.getAnioPresentacion();
+	    String mesPresentacion = command.getMesPresentacion();
+	    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO13A);
     	String descripcionFormato = "";
     	if( tabla!=null ){
     		descripcionFormato = tabla.getDescripcionTabla();
@@ -1189,6 +1184,11 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     		   mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
     		   mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
     		   mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
+    		   //add para acta envio
+    		   mapa.put("ANO_INICIO_VIGENCIA", formato.getAnoInicioVigenciaDetalle());
+    		   mapa.put("ANO_FIN_VIGENCIA", formato.getAnoFinVigenciaDetalle());
+    		   mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
+    		   mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
     	   }
     	   
     	   
@@ -1212,7 +1212,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	       }
 	       /**REPORTE OBSERVACIONES*/
 	       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
-	    	   nombreReporte = "validacion";
+	    	   nombreReporte = "validacion13";
 	    	   nombreArchivo = nombreReporte;
 		       directorio =  "/reports/"+nombreReporte+".jasper";
 		       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
@@ -1481,7 +1481,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 			fiseFormato13AC.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
 			fiseFormato13AC.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
 			fiseFormato13AC.setFechaActualizacion(hoy);
-			formatoService.savecabecera(fiseFormato13AC);
+			formatoService.updatecabecera(fiseFormato13AC);
 			dto= fiseFormato13AC;
 		} catch (Exception e) {
 			logger.error("--error"+e.getMessage());

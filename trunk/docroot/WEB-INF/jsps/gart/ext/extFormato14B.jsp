@@ -2206,11 +2206,22 @@ var formato14B= {
 				'Imprimir Pdf': function() {
 					formato14B.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 					$( this ).dialog("close");
+					formato14B.divFormato.hide();
+					formato14B.divHome.show();
+					formato14B.botonBuscar.trigger('click');
 				},
 				Ok: function() {
 					$( this ).dialog("close");
+					formato14B.divFormato.hide();
+					formato14B.divHome.show();
+					formato14B.botonBuscar.trigger('click');
 				}
-			}
+			},
+			close: function(event,ui){
+				formato14B.divFormato.hide();
+				formato14B.divHome.show();
+				formato14B.botonBuscar.trigger('click');
+	       	}
 		});
 		formato14B.dialogConfirm.dialog({
 			modal: true,

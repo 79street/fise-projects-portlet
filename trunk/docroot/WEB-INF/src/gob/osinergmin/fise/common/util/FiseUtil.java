@@ -15,6 +15,7 @@ import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.util.FechaUtil;
+import gob.osinergmin.fise.util.FormatoUtil;
 import gob.osinergmin.fise.xls.XlsTableConfig;
 import gob.osinergmin.fise.xls.XlsWorkbookConfig;
 import gob.osinergmin.fise.xls.XlsWorksheetConfig;
@@ -383,14 +384,14 @@ public class FiseUtil {
 	
 	public Map<String, String> getMapaSectorTipico(){
 		Map<String, String> mapaSectorTipico = new HashMap<String, String>();
-		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_1_COD, FiseConstants.SECTOR_TIPICO_1_DESC);
-		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_2_COD, FiseConstants.SECTOR_TIPICO_2_DESC);
-		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_3_COD, FiseConstants.SECTOR_TIPICO_3_DESC);
-		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_4_COD, FiseConstants.SECTOR_TIPICO_4_DESC);
-		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_5_COD, FiseConstants.SECTOR_TIPICO_5_DESC);
-		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_6_COD, FiseConstants.SECTOR_TIPICO_6_DESC);
-		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_SER_COD, FiseConstants.SECTOR_TIPICO_SER_DESC);
-		mapaSectorTipico.put(FiseConstants.SECTOR_TIPICO_ESP_COD, FiseConstants.SECTOR_TIPICO_ESP_DESC);
+		mapaSectorTipico.put(FormatoUtil.rellenaDerecha(FiseConstants.SECTOR_TIPICO_1_COD, ' ', 3), FiseConstants.SECTOR_TIPICO_1_DESC);
+		mapaSectorTipico.put(FormatoUtil.rellenaDerecha(FiseConstants.SECTOR_TIPICO_2_COD, ' ', 3), FiseConstants.SECTOR_TIPICO_2_DESC);
+		mapaSectorTipico.put(FormatoUtil.rellenaDerecha(FiseConstants.SECTOR_TIPICO_3_COD, ' ', 3), FiseConstants.SECTOR_TIPICO_3_DESC);
+		mapaSectorTipico.put(FormatoUtil.rellenaDerecha(FiseConstants.SECTOR_TIPICO_4_COD, ' ', 3), FiseConstants.SECTOR_TIPICO_4_DESC);
+		mapaSectorTipico.put(FormatoUtil.rellenaDerecha(FiseConstants.SECTOR_TIPICO_5_COD, ' ', 3), FiseConstants.SECTOR_TIPICO_5_DESC);
+		mapaSectorTipico.put(FormatoUtil.rellenaDerecha(FiseConstants.SECTOR_TIPICO_6_COD, ' ', 3), FiseConstants.SECTOR_TIPICO_6_DESC);
+		mapaSectorTipico.put(FormatoUtil.rellenaDerecha(FiseConstants.SECTOR_TIPICO_SER_COD, ' ', 3), FiseConstants.SECTOR_TIPICO_SER_DESC);
+		mapaSectorTipico.put(FormatoUtil.rellenaDerecha(FiseConstants.SECTOR_TIPICO_ESP_COD, ' ', 3), FiseConstants.SECTOR_TIPICO_ESP_DESC);
 		return mapaSectorTipico;
 	}
 	
