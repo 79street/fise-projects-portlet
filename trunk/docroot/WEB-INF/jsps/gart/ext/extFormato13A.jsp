@@ -540,7 +540,7 @@ var formato13A= {
 	},
 	
 	<portlet:namespace/>cargarFormatoExcel : function(){
-		var frm = document.getElementById('formato13AGartCommand');
+		var frm = document.getElementById('form_13ACRUD');
 		frm.submit();
 	
 
