@@ -789,8 +789,8 @@ var formato13A= {
 			dataType : 'json',
 			data : {
 				//<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
-				<portlet:namespace />nombreReporte: 'validacion',
-				<portlet:namespace />nombreArchivo: 'validacion',
+				<portlet:namespace />nombreReporte: 'validacion13',
+				<portlet:namespace />nombreArchivo: 'validacion13',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
@@ -836,10 +836,10 @@ var formato13A= {
 	buildGridsObservacion : function () {	
 		formato13A.tablaObservacion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Grupo Zona','Código','Descripción'],
+	       colNames: ['Sector Típico','Grupo Zona','Código','Descripción'],
 	       colModel: [
-						{ name: 'descSectorTipico', index: 'descSectorTipico', width: 150 ,align: 'left'},
-						{ name: 'descZonaBenef', index: 'descZonaBenef', width: 150 ,align: 'left'},
+						{ name: 'descSectorTipico', index: 'descSectorTipico', width: 80 ,align: 'left'},
+						{ name: 'descZonaBenef', index: 'descZonaBenef', width: 100 ,align: 'left'},
 						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
 		                { name: 'descripcion', index: 'descripcion', width: 420 ,align: 'left'}               
 			   	    ],
@@ -870,8 +870,10 @@ var formato13A= {
 		});
 	},
 	<portlet:namespace/>mostrarReporteEnvioDefinitivo : function(){
+		var form = formato13A.formNuevo;
+		form.removeAttr('enctype');
 		jQuery.ajax({
-			url: formato13A.urlReporteEnvioDefinitivo+'&'+formato13A.formCommand.serialize(),
+			url: formato13A.urlReporteEnvioDefinitivo+'&'+form.serialize(),
 			type : 'post',
 			dataType : 'json',
 			data : {
@@ -917,7 +919,7 @@ var formato13A= {
 		});
 		formato13A.dialogObservacion.dialog({
 			modal: true,
-			width: 700,
+			width: 750,
 			autoOpen: false,
 			buttons: {
 				Cerrar: function() {

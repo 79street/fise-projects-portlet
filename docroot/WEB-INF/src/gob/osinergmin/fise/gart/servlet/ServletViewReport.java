@@ -96,6 +96,10 @@ public class ServletViewReport extends HttpServlet {
 			else if( FiseConstants.TIPO_FORMATO_VAL.equals(tipoFormato) ){
 				coleccion = new JRBeanCollectionDataSource(lista);
 			}
+			//
+			else if( FiseConstants.TIPO_FORMATO_VAL_13A.equals(tipoFormato) ){
+				coleccion = new JRBeanCollectionDataSource(lista);
+			}
 			
 			if( FiseConstants.FORMATO_EXPORT_PDF.equals(tipoArchivo) ){
 				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parametros, coleccion);
