@@ -135,7 +135,7 @@ var formato13A= {
 		this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
 		this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
 		//
-		var botonAnadirFormato=$('#<portlet:namespace/>anadirFormato');
+		this.botonAnadirFormato=$('#<portlet:namespace/>anadirFormato');
 
 		var botonRegresarBusqueda=$('#<portlet:namespace/>regresarBusqueda');
 		
