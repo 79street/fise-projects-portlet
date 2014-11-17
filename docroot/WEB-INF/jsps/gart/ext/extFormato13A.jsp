@@ -540,8 +540,10 @@ var formato13A= {
 	},
 	
 	<portlet:namespace/>cargarFormatoExcel : function(){
-		var frm = document.getElementById('form_13ACRUD');
-		frm.submit();
+		
+		formato13A.formNuevo.submit();
+		//var frm = document.getElementById('form_13ACRUD');
+		//frm.submit();
 	
 
 	},
