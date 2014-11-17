@@ -28,8 +28,7 @@
 					}
 					alert(text);
 				}
-				formato13A.initCRUD('${crud}', '${urlAnadirFormato}',
-						'${urlRegresarBusqueda}');
+				formato13A.initCRUD('${crud}', '${urlAnadirFormato}','${urlRegresarBusqueda}');
 
 			});
 </script>
@@ -384,11 +383,7 @@
 		style="display: none; width: 100%; height: 100%; z-index: 1001;">
 
 	</div>
-<<<<<<< .mine
 
-
-
-=======
 	
 	<div id="<portlet:namespace/>dialog-form-observacion"
 		class="net-frame-border" style="display: none; background: #fff;"
@@ -411,7 +406,7 @@
 		</p>
 	</div>
 	
->>>>>>> .r130
+
 	<div id="<portlet:namespace/>dialog-message-report" title="Osinergmin">
 		<p>
 			<span class="ui-icon ui-icon-circle-check"
