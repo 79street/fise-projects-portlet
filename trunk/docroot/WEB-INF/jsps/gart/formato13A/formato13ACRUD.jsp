@@ -346,6 +346,30 @@ $(document).ready(function () {
 	
 	</div>
 	
+	<div id="<portlet:namespace/>dialog-form-observacion" class="net-frame-border"
+		style="display: none; background: #fff;"
+		title=" Resultados de validación ">
+		<fieldset class="net-frame-border">
+			<table id="<portlet:namespace/>grid_observacion" width="100%">
+			</table>
+			<div id="<portlet:namespace/>pager_observacion"></div>
+		</fieldset>
+		<br>
+	</div>
 	
+	<div id="<portlet:namespace/>dialog-confirm-envio" title="Confirmar acci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-envio-content">¿Está seguro?</label>
+		</p>
+	</div>
+	
+	<div id="<portlet:namespace/>dialog-message-report" title="Osinergmin">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="<portlet:namespace/>dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
 	
 </form:form>
