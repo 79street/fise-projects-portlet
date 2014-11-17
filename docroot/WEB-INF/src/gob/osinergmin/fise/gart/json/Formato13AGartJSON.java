@@ -77,6 +77,11 @@ public class Formato13AGartJSON {
 				fiseFormato13AD.getNroBenefPoteSecTipico7()+fiseFormato13AD.getNroBenefPoteSecTipico8());
 		jsonObj.put("idZonaBenef",fiseFormato13AD.getIdZonaBenef());
 		jsonObj.put("nombreSedeAtiende",fiseFormato13AD.getNombreSedeAtiende());
+		//add
+		jsonObj.put("descAnioMesAlta", fiseFormato13AD.getAnioAlta()+"-"+fiseFormato13AD.getDescMesAlta());
+		jsonObj.put("descZonaBenef", fiseFormato13AD.getDescZonaBenef());
+		//
+		
 		return jsonObj;
 	}
 

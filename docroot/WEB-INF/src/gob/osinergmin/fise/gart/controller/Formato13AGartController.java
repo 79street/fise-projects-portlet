@@ -92,6 +92,7 @@ public class Formato13AGartController {
 	private static final String CRUD_UPDATE = "UPDATE";
 	private static final String CRUD_DELETE = "DELETE";
 	private static final String CRUD_READ = "READ";
+	private static final String CRUD_READ_CREATEUPDATE = "READCREATEUPDATE";
 
 	@Autowired
 	@Qualifier("fiseUtil")
@@ -424,7 +425,7 @@ public class Formato13AGartController {
 
 		}
 
-		response.setRenderParameter("crud", CRUD_READ);
+		response.setRenderParameter("crud", CRUD_READ_CREATEUPDATE);
 		response.setRenderParameter("action", "detalle");
 		response.setRenderParameter("codEmpresa", codEmpresa);
 		response.setRenderParameter("periodoDeclaracion", periodoDeclaracion);
@@ -508,9 +509,29 @@ public class Formato13AGartController {
 		command.setListaDepartamentos(fiseUtil.listaDepartamentos());
 		model.addAttribute("readonly", "false");
 
-		if (CRUD_READ.equals(crud)) {
+		//cargamos el ano y fin de vigencia
+		List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_13A);
+		for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
+			if( periodoDeclaracion.equals(periodo.getCodigoItem()) ){
+				command.setAnioInicioVigencia(periodo.getAnioInicioVig());
+				command.setAnioFinVigencia(periodo.getAnioFinVig());
+				//verificamos el flag de periodo de ejecucion
+				if( "S".equals(periodo.getFlagPeriodoEjecucion()) ){
+					model.addAttribute("readonlyFlagPeriodo", "true");
+				}else{
+					model.addAttribute("readonlyFlagPeriodo", "false");
+				}
+				break;
+			}
+		}
+		
+		
+		if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud)  ) {
 			// Es lectura
 			model.addAttribute("readonly", "true");
+			model.addAttribute("readonlyFlagPeriodo", "true");
+			model.addAttribute("readonlyEdit", "true");
+			
 			logger.info("LECTURA DETALLE");
 			FiseFormato13AC cabecera = new FiseFormato13AC();
 			cabecera.setId(new FiseFormato13ACPK());
@@ -526,6 +547,10 @@ public class Formato13AGartController {
 				// seteamos la descripcion de la empresa
 				command.setAnioAlta(String.valueOf(fiseFormato13AD.getAnioAlta()));
 				command.setMesAlta(String.valueOf(fiseFormato13AD.getMesAlta()));
+				//
+				command.setAnioInicioVigencia(String.valueOf(fiseFormato13AD.getAnioInicioVigencia()));
+				command.setAnioFinVigencia(String.valueOf(fiseFormato13AD.getAnioFinVigencia()));
+				
 				String ubigeo = fiseFormato13AD.getCodUbigeo();
 				if (StringUtils.isNotBlank(ubigeo)) {
 					command.setCodDepartamento(ubigeo.substring(0, 2).concat("0000"));
@@ -547,6 +572,21 @@ public class Formato13AGartController {
 				command.setIdZonaBenef(String.valueOf(fiseFormato13AD.getIdZonaBenef()));
 				command.setNombreSede(fiseFormato13AD.getNombreSedeAtiende());
 			}
+		}else if(CRUD_UPDATE.equals(crud)){
+			model.addAttribute("readonlyEdit", "false");
+			//modo edicion
+		}else if(CRUD_CREATE.equals(crud)){
+			model.addAttribute("readonlyEdit", "false");
+			
+			command.setSt1(FiseConstants.CERO);
+			command.setSt2(FiseConstants.CERO);
+			command.setSt3(FiseConstants.CERO);
+			command.setSt4(FiseConstants.CERO);
+			command.setSt5(FiseConstants.CERO);
+			command.setSt6(FiseConstants.CERO);
+			command.setStser(FiseConstants.CERO);
+			command.setStesp(FiseConstants.CERO);
+			command.setTotal(FiseConstants.CERO);
 		}
 
 		model.addAttribute("crud", crud);
@@ -718,6 +758,8 @@ public class Formato13AGartController {
 				for (Formato13ADReportBean fiseFormato13AD : listaFormato) {
 					// seteamos la descripcion de la empresa
 					logger.info("empresa " + mapaEmpresa.get(formato13AC.getId().getCodEmpresa()));
+					fiseFormato13AD.setDescMesAlta(fiseUtil.getMapaMeses().get(fiseFormato13AD.getMesAlta()));
+					fiseFormato13AD.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(fiseFormato13AD.getIdZonaBenef()));
 					jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AD, formato13AC));
 				}
 				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_13A, FiseConstants.NOMBRE_EXCEL_FORMATO13A, FiseConstants.NOMBRE_HOJA_FORMATO13A, listaFormato);

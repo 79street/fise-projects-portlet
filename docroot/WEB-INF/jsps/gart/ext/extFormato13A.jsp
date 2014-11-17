@@ -196,7 +196,7 @@ var formato13A= {
 			});
 			
 			botonRegresarBusqueda.click(function(){
-				formato13A.bSlockUI();
+				formato13A.blockUI();
 				location.href=urlRegresarBusqueda;
 			});
 			
@@ -222,13 +222,12 @@ var formato13A= {
 			
 			/*formato13A.peridoDeclaracion.change(function(){
 				formato13A.buscarDetalles();
-		});
+			});
 			formato13A.codEmpresa.trigger('change');
-*/
-			
+			*/
 			botonAnadirFormato.click(function(){
 				formato13A.blockUI();
-				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').submit();
+				formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 			botonRegresarBusqueda.click(function(){
@@ -300,6 +299,15 @@ var formato13A= {
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=0';
 			});
 		</c:if>
+		
+		<c:if test="${crud =='READCREATEUPDATE'}">
+			botonRegresarDetalle.click(function(){
+				formato13A.blockUI();
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=0';
+			});
+		</c:if>
+		
 		<c:if test="${crud =='UPDATE'}">
 		
 			formato13A.botonGuardarDetalle.click(function(){
@@ -429,19 +437,19 @@ var formato13A= {
 		   datatype: "local",
 	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','Editar','Anular','','','',''],
 	       colModel: [
-					{ name: 'anioMesAlta', index: 'anioMesAlta', width: 70},
+					{ name: 'descAnioMesAlta', index: 'descAnioMesAlta', width: 70},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
 		            { name: 'descripcionLocalidad', index: 'descripcionLocalidad', width: 50},
-	                { name: 'st1', index: 'st1', width: 20},
-	                { name: 'st2', index: 'st2', width: 20},
-	                { name: 'st3', index: 'st3', width: 20},
-	                { name: 'st4', index: 'st4', width: 20},
-	                { name: 'st5', index: 'st5', width: 20},
-	                { name: 'st6', index: 'st6', width: 20},
-	                { name: 'stserv', index: 'stserv', width: 20},
-	                { name: 'stesp', index: 'stesp', width: 20},
-	                { name: 'total', index: 'total', width: 30},
-	                { name: 'idZonaBenef', index: 'idZonaBenef', width: 70},
+	                { name: 'st1', index: 'st1', width: 20, align:'right'},
+	                { name: 'st2', index: 'st2', width: 20, align:'right'},
+	                { name: 'st3', index: 'st3', width: 20, align:'right'},
+	                { name: 'st4', index: 'st4', width: 20, align:'right'},
+	                { name: 'st5', index: 'st5', width: 20, align:'right'},
+	                { name: 'st6', index: 'st6', width: 20, align:'right'},
+	                { name: 'stserv', index: 'stserv', width: 20, align:'right'},
+	                { name: 'stesp', index: 'stesp', width: 20, align:'right'},
+	                { name: 'total', index: 'total', width: 30, align:'right'},
+	                { name: 'descZonaBenef', index: 'descZonaBenef', width: 70},
 	                { name: 'nombreSedeAtiende', index: 'nombreSedeAtiende', width: 80},
 	               { name: 'view', index: 'view', width: 20,align:'center' },
 	               { name: 'edit', index: 'edit', width: 20,align:'center' },
