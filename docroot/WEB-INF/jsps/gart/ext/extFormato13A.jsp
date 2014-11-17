@@ -51,6 +51,7 @@ var formato13A= {
 	btnGuardarCabecera:null,
 	urlGuardarCabecera:null,
 	dlgConfirmacion:null,
+	txtPeriodo:null,
 	
 	btnExcel:null,
 	dialogCargaExcel:null,
@@ -89,6 +90,7 @@ var formato13A= {
 	stespDetalle:null,
 	sttotalDetalle:null,
 	
+	 botonAnadirFormato:null,
 	init : function(urlNuevo,urlView,urlEdit){
 		
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
@@ -128,17 +130,20 @@ var formato13A= {
 		this.peridoDeclaracion=$('#peridoDeclaracion');
 		this.tablaDeclaracion=$("#<portlet:namespace/>grid_formato_declaracion");
 		this.paginadoDeclaracion='#<portlet:namespace/>pager_formato_declaracion';
+
 		//add
 		this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
 		this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
 		//
 		var botonAnadirFormato=$('#<portlet:namespace/>anadirFormato');
+
 		var botonRegresarBusqueda=$('#<portlet:namespace/>regresarBusqueda');
 		
 		this.btnGuardarCabecera=$('#<portlet:namespace/>guardarFormato');
 		//this.urlGuardarCabecera='<portlet:actionURL name="saveNuevoFormato"/>';
 		this.urlGuardarCabecera='<portlet:resourceURL id="saveNuevoFormato"/>';
 		
+		this.txtPeriodo=$('#txtperiodo');
 		
 		this.btnExcel=$('#<portlet:namespace/>showDialogUploadExcel');
 		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
@@ -184,17 +189,9 @@ var formato13A= {
 				$.when(formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
 			});
 			
-			formato13A.peridoDeclaracion.change(function(){
-				formato13A.buscarDetalles();
-			});
 			formato13A.codEmpresa.trigger('change');
 
-			
-			botonAnadirFormato.click(function(){
-				formato13A.blockUI();
-				formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
-			});
-			
+
 			botonRegresarBusqueda.click(function(){
 				formato13A.blockUI();
 				location.href=urlRegresarBusqueda;
@@ -212,20 +209,19 @@ var formato13A= {
 				location.href=urlRegresarBusqueda;
 			});
 			
+			formato13A.botonAnadirFormato.css("display","block");
+			formato13A.btnGuardarCabecera.css("display","none");
+			
 		}if(operacion=='UPDATE'){
-			
-			formato13A.cargarPeriodoDeclaracion();
+			formato13A.peridoDeclaracion.remove();
+			formato13A.txtPeriodo.css("display","block");
 			formato13A.buscarDetalles();
-			/*formato13A.codEmpresa.change(function(){
-				$.when( formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
-			});*/
+			formato13A.botonAnadirFormato.css("display","block");
+			formato13A.btnGuardarCabecera.css("display","none");
 			
-			/*formato13A.peridoDeclaracion.change(function(){
-				formato13A.buscarDetalles();
-			});
-			formato13A.codEmpresa.trigger('change');
-			*/
-			botonAnadirFormato.click(function(){
+
+           formato13A.botonAnadirFormato.click(function(){
+
 				formato13A.blockUI();
 				formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
 			});
@@ -648,6 +644,10 @@ var formato13A= {
 				if(data == '1'){
 					formato13A.codEmpresa.attr("disabled", true);
 					formato13A.peridoDeclaracion.attr("disabled", true);
+					formato13A.botonAnadirFormato.css("display","block");
+					formato13A.btnGuardarCabecera.css("display","none");
+					alert("Se registro correctamente");
+					formato13A.buscarDetalles();
 				}else if(data == '-1'){
 					alert('El formato ya existe para esa empresa para ese periodo');
 				}else if(data == '-2'){

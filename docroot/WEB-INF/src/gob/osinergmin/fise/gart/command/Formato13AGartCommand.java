@@ -22,6 +22,7 @@ public class Formato13AGartCommand {
 	private String etapa;
 	//Nuevo
 	private String peridoDeclaracion; 
+	private String descripcionPeriodo; 
 	//Detalle
 	private String descEmpresa;
 	private String mesPresentacion;
@@ -53,7 +54,9 @@ public class Formato13AGartCommand {
 	private String anioInicioVigencia;
 	private String anioFinVigencia;
 	
-	private int tipoAccion;
+	
+	
+	
 
 	private List<FisePeriodoEnvio> listaPeriodo;
 	private boolean readOnly;
@@ -351,13 +354,14 @@ public class Formato13AGartCommand {
 		this.readOnly = readOnly;
 	}
 
-	public int getTipoAccion() {
-		return tipoAccion;
+	public String getDescripcionPeriodo() {
+		return descripcionPeriodo;
 	}
 
-	public void setTipoAccion(int tipoAccion) {
-		this.tipoAccion = tipoAccion;
+	public void setDescripcionPeriodo(String descripcionPeriodo) {
+		this.descripcionPeriodo = descripcionPeriodo;
 	}
+
 
 	public String getAnioInicioVigencia() {
 		return anioInicioVigencia;
@@ -390,6 +394,7 @@ public class Formato13AGartCommand {
 	public void setReadonlyEdit(boolean readonlyEdit) {
 		this.readonlyEdit = readonlyEdit;
 	}
+
 	
 	
 

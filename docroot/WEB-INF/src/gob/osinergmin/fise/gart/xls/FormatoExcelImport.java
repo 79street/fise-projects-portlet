@@ -62,18 +62,18 @@ public class FormatoExcelImport {
 			HSSFCell cellD = row.getCell(FiseConstants.COLUMN_D);
 			HSSFCell cellE = row.getCell(FiseConstants.COLUMN_E);
 			if(i==FiseConstants.ROW_INFO_EMPRESA){
+				HSSFCell cellE_emp = row.getCell(FiseConstants.COLUMN_E);
+				HSSFCell cellD_nom = row.getCell(FiseConstants.COLUMN_D);
 				
-				
-				if(cellD.getCellType() == HSSFCell.CELL_TYPE_STRING && cellD.getCellType() != HSSFCell.CELL_TYPE_BLANK ){
-					pk.setCodEmpresa(cellD.toString());
+				if(cellE_emp.getCellType() == HSSFCell.CELL_TYPE_STRING && cellE_emp.getCellType() != HSSFCell.CELL_TYPE_BLANK ){
+					pk.setCodEmpresa(cellE_emp.toString());
 					 System.out.println("CODEMPRESA :::=> "+pk.getCodEmpresa());
 				}else{
 					throw new Exception("Distribuidora Eléctrica no valida ");
 				}
 				System.out.println("NOMEMPRESA :::=> "+cellE);
-				if(cellE.getCellType() == HSSFCell.CELL_TYPE_STRING && cellE.getCellType() != HSSFCell.CELL_TYPE_BLANK){
-					
-					fise13C.setDescEmpresa(cellE.toString());
+				if(cellD_nom.getCellType() == HSSFCell.CELL_TYPE_STRING && cellD_nom.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+					fise13C.setDescEmpresa(cellD_nom.toString());
 					 
 				}
 				System.out.println("NOMEMPRESA SALIO :::=> "+cellE);
