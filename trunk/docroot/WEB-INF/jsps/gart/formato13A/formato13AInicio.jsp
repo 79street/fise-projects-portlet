@@ -175,4 +175,12 @@ $(document).ready(function () {
 	<div id="<portlet:namespace/>divDlgDelete" >
 	<span  id="estado_proceso"></span>
 	</div>
+	
+	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
+		</p>
+	</div>
+	
 </form:form>

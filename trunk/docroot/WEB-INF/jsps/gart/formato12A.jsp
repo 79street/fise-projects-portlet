@@ -877,7 +877,7 @@
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="dialog-confirm-content">¿Está seguro?</label>
 		</p>
-	</div>`
+	</div>
 	
 	<div id="dialog-confirm-envio" title="Confirmar acci&oacute;n">
 		<p>	

@@ -91,7 +91,7 @@ public class Formato13AGartController {
 	private static final Log logger = LogFactoryUtil.getLog(Formato13AGartController.class);
 	private static final String CRUD_CREATE = "CREATE";
 	private static final String CRUD_UPDATE = "UPDATE";
-	private static final String CRUD_DELETE = "DELETE";
+	//---private static final String CRUD_DELETE = "DELETE";
 	private static final String CRUD_READ = "READ";
 	private static final String CRUD_READ_CREATEUPDATE = "READCREATEUPDATE";
 
@@ -1464,6 +1464,44 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 				if (formato != null) {
 					
 					this.eliminarDetalleDeclarado(formato.getFiseFormato13ADs(), idZonaBenef, codUbigeo);
+					jsonObj.put("resultado", "OK");
+				}
+			} catch (Exception e) {
+				jsonObj.put("resultado", "Error");
+				jsonObj.put("mensaje", e.getMessage());
+				System.out.println("Error al eliminar datos "+e.getMessage());
+			}  
+			response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonObj.toString());
+		    pw.flush();
+		    pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@ResourceMapping("deleteCabecera")
+	public void deleteCabecera(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+		try {
+			JSONObject jsonObj = new JSONObject();
+			FiseFormato13AC formato = new FiseFormato13AC();
+
+			String codEmpresa = request.getParameter("codigoEmpresa").trim();
+			String anoPresentacion = request.getParameter("anoPresentacion").trim();
+			String mesPresentacion = request.getParameter("mesPresentacion").trim();
+			String etapa = request.getParameter("codEtapa").trim();
+
+			FiseFormato13ACPK pk = new FiseFormato13ACPK();
+			pk.setCodEmpresa(codEmpresa);
+			pk.setAnoPresentacion(new Long(anoPresentacion));
+			pk.setMesPresentacion(new Long(mesPresentacion));
+			pk.setEtapa(etapa);
+			
+			formato = formatoService.obtenerFormato13ACByPK(pk);
+			try{
+				if (formato != null) {
+					formatoService.eliminarCabecera(formato);
 					jsonObj.put("resultado", "OK");
 				}
 			} catch (Exception e) {
