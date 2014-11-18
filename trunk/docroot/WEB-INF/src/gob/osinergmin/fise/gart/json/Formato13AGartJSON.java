@@ -20,7 +20,9 @@ public class Formato13AGartJSON {
 	private String descMesPresentacion;
 	private String descGrupoInformacion;
 	
-	public JSONObject asJSONObject(FiseFormato13AC fiseFormato13AC) throws JSONException{
+	private String flagOperacion;//Cerrado, abierto, enviado
+	
+	public JSONObject asJSONObject(FiseFormato13AC fiseFormato13AC, String flagOperacion) throws JSONException{
 		
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("codEmpresa",fiseFormato13AC.getId().getCodEmpresa() );
@@ -43,6 +45,8 @@ public class Formato13AGartJSON {
 		}else{
 			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
 		}
+		
+		jsonObj.put("flagOperacion", flagOperacion);
 		
 		return jsonObj;
 	}
@@ -161,5 +165,13 @@ public class Formato13AGartJSON {
 
 	public void setDescGrupoInformacion(String descGrupoInformacion) {
 		this.descGrupoInformacion = descGrupoInformacion;
+	}
+
+	public String getFlagOperacion() {
+		return flagOperacion;
+	}
+
+	public void setFlagOperacion(String flagOperacion) {
+		this.flagOperacion = flagOperacion;
 	}
 }

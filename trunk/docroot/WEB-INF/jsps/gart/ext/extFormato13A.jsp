@@ -376,7 +376,8 @@ var formato13A= {
 	               { name: 'edit', index: 'edit', width: 20,align:'center' },
 	               { name: 'elim', index: 'elim', width: 20,align:'center' },
 	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
-	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true}
+	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
+	               { name: 'flagOperacion', index: 'flagOperacion', hidden: true}
 		   	    ],
 		   	 multiselect: false,
 				rowNum:10,
@@ -400,7 +401,7 @@ var formato13A= {
 	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' /></a> ";
 	      			//elem = "<a href='#' onclick=\"formato13A.showconfirmacion('ss','ss')\"><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center'  /></a> ";              			
 
-	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato13A.confirmarEliminarCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"');\" /></a> ";
+	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato13A.confirmarEliminarCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
 	      			
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
@@ -1094,14 +1095,20 @@ var formato13A= {
 		});
 	},
 	//otros
-	confirmarEliminarCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa){
-		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-		formato13A.dialogConfirmContent.html(addhtml);
-		formato13A.dialogConfirm.dialog("open");
-		cod_Empresa_cabecera=codEmpresa;
-		ano_Presentacion_cabecera=anoPresentacion;
-		mes_Presentacion_cabecera=mesPresentacion;
-		cod_Etapa_cabecera=etapa;
+	confirmarEliminarCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion){
+		if(flagOperacion=='ABIERTO'){
+			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+			formato13A.dialogConfirmContent.html(addhtml);
+			formato13A.dialogConfirm.dialog("open");
+			cod_Empresa_cabecera=codEmpresa;
+			ano_Presentacion_cabecera=anoPresentacion;
+			mes_Presentacion_cabecera=mesPresentacion;
+			cod_Etapa_cabecera=etapa;
+		}else if(flagOperacion=='CERRADO'){
+			alert(" No esta habilitado para realizar esta operacion");		
+		}else{
+			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+		}
 	},
 	confirmarEliminarDetalle : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,codUbigeo,idZonaBenef){
 		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
