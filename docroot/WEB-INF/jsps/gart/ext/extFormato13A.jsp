@@ -499,6 +499,7 @@ var formato13A= {
 		  	      			urlView.setParameter("crud", "READCREATEUPDATE");
 		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
 		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+		  	      			urlView.setParameter("idZonaBenef", ret.idZonaBenef);
 		  	      			urlView.setPortletId(formato13A.portletID);
 		  	      			//EDIT
 		  	      			var urlEdit=Liferay.PortletURL.createRenderURL();
@@ -533,7 +534,7 @@ var formato13A= {
 	buildGridsDeclaracionView : function () {	
 		formato13A.tablaDeclaracionView.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','','','',''],
+	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','','','','',''],
 	       colModel: [
 					{ name: 'descAnioMesAlta', index: 'descAnioMesAlta', width: 70},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
@@ -553,7 +554,8 @@ var formato13A= {
 	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', hidden: true },   
-	               { name: 'etapa', index: 'etapa',hidden: true}
+	               { name: 'etapa', index: 'etapa',hidden: true},
+	               { name: 'idZonaBenef', index: 'idZonaBenef', hidden: true}
 		   	    ],
 		   	 multiselect: false,
 				rowNum:10,
@@ -579,6 +581,7 @@ var formato13A= {
 		  	      			urlView.setParameter("crud", "READ");
 		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
 		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+		  	      			urlView.setParameter("idZonaBenef", ret.idZonaBenef);
 		  	      			urlView.setPortletId(formato13A.portletID);
 		  	      			
 		  	      			
@@ -613,7 +616,7 @@ var formato13A= {
 							formato13A.tablaDeclaracionView.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 							formato13A.tablaDeclaracionView[0].refreshIndex();
 						</c:if>
-						<c:if test="${crud =='UPDATE'}">
+						<c:if test="${crud =='UPDATE' || crud =='CREATE' }">
 							formato13A.tablaDeclaracion.clearGridData(true);
 							formato13A.tablaDeclaracion.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 							formato13A.tablaDeclaracion[0].refreshIndex();

@@ -159,7 +159,7 @@
 																</table>
 																<div id="<portlet:namespace/>pager_formato_declaracionView"></div>
 															</c:if>
-															<c:if test="${crud =='UPDATE'}">
+															<c:if test="${crud =='UPDATE' || crud =='CREATE'}">
 																<table id="<portlet:namespace/>grid_formato_declaracion">
 																</table>
 																<div id="<portlet:namespace/>pager_formato_declaracion"></div>

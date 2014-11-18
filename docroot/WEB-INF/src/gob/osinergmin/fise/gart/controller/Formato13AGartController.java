@@ -424,21 +424,21 @@ public class Formato13AGartController {
 					for (FiseFormato13AD d : cab.getFiseFormato13ADs()) {
 
 						if (Long.parseLong(idZonaBenef) == d.getId().getIdZonaBenef()) {
-							if (FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico())) {
+							if (FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico().trim())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico())) {
+							} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico().trim())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(d.getId().getCodSectorTipico())) {
+							} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(d.getId().getCodSectorTipico().trim())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(d.getId().getCodSectorTipico())) {
+							} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(d.getId().getCodSectorTipico().trim())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(d.getId().getCodSectorTipico())) {
+							} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(d.getId().getCodSectorTipico().trim())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(d.getId().getCodSectorTipico())) {
+							} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(d.getId().getCodSectorTipico().trim())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(d.getId().getCodSectorTipico())) {
+							} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(d.getId().getCodSectorTipico().trim())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(d.getId().getCodSectorTipico())) {
+							} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(d.getId().getCodSectorTipico().trim())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, d);
 							}
 						}
@@ -1454,49 +1454,6 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 		}
 	}
 
-	/*
-	 * public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC
-	 * formato, List<FiseFormato13AD> listaDetalle){
-	 * 
-	 * 
-	 * Date hoy = FechaUtil.obtenerFechaActual(); try {
-	 * formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-	 * formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-	 * formato.setFechaActualizacion(hoy);
-	 * formato.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-	 * formato.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-	 * formato.setFechaCreacion(hoy); // verificar si es necesario realizar esta
-	 * validacion // boolean existe = false; // existe =
-	 * formatoService.existeFormato14AC(formato); // if(existe){ // throw new
-	 * Exception("Ya existe un registro con la misma clave."); // }else{
-	 * formatoService.savecabecera(formato); // } // add for (FiseFormato13AD
-	 * detalle : listaDetalle) { formatoService.savedetalle(detalle); } if
-	 * (listaDetalle != null && listaDetalle.size() > 0) {
-	 * formato.setFiseFormato13ADs(listaDetalle); }
-	 * 
-	 * } catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
-	 * }
-	 * 
-	 * 
-	 * public void modificarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC
-	 * formato){
-	 * 
-	 * Date hoy = FechaUtil.obtenerFechaActual(); try{
-	 * formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-	 * formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-	 * formato.setFechaActualizacion(hoy);
-	 * 
-	 * formatoService.updatecabecera(formato);
-	 * 
-	 * if( formato.getFiseFormato13ADs() != null &&
-	 * formato.getFiseFormato13ADs().size()>0 ){ for (FiseFormato13AD detalle :
-	 * formato.getFiseFormato13ADs()) { formatoService.updatedetalle(detalle); }
-	 * }
-	 * 
-	 * } catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
-	 * }
-	 */
-
 	public void agregarSectorTipico(ThemeDisplay themeDisplay, String sectorTipico, Formato13AGartCommand command, List<FiseFormato13AD> listaDetalle) {
 
 		Date hoy = FechaUtil.obtenerFechaActual();
@@ -1522,21 +1479,21 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 			//
 			detalle.setDescripcionLocalidad(command.getLocalidad());
 			detalle.setNombreSedeAtiende(command.getNombreSede());
-			if (FiseConstants.SECTOR_TIPICO_1_COD.equals(sectorTipico)) {
+			if (FiseConstants.SECTOR_TIPICO_1_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt1()));
-			} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt2()));
-			} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt3()));
-			} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt4()));
-			} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt5()));
-			} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt6()));
-			} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStser()));
-			} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStesp()));
 			}
 			detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
@@ -1569,21 +1526,21 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 			//
 			detalle.setDescripcionLocalidad(command.getLocalidad());
 			detalle.setNombreSedeAtiende(command.getNombreSede());
-			if (FiseConstants.SECTOR_TIPICO_1_COD.equals(sectorTipico)) {
+			if (FiseConstants.SECTOR_TIPICO_1_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt1()));
-			} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt2()));
-			} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt3()));
-			} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt4()));
-			} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt5()));
-			} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getSt6()));
-			} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStser()));
-			} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(sectorTipico)) {
+			} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(sectorTipico.trim())) {
 				detalle.setNumeroBenefiPoteSectTipico(Long.parseLong(command.getStesp()));
 			}
 			detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
