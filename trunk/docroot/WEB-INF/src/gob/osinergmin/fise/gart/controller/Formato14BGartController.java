@@ -829,7 +829,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 					HSSFRow filaNroValesImp = hojaF14.getRow(FiseConstants.NRO_FILA_NROVALESIMP_FORMATO14B);				
 					HSSFRow filaTotalRepValesDescto = hojaF14.getRow(FiseConstants.NRO_FILA_TOTALVALESDSCTO_FORMATO14B);	
 					HSSFRow filaNroValesRep = hojaF14.getRow(FiseConstants.NRO_FILA_NROVALESREP_FORMATO14B);
-					HSSFRow filaTotalRepValesOfic = hojaF14.getRow(FiseConstants.NRO_FILA_TOTALVALESDSCTO_FORMATO14B);
+					HSSFRow filaTotalRepValesOfic = hojaF14.getRow(FiseConstants.NRO_FILA_TOTALVALESENTR_FORMATO14B);
 					HSSFRow filaNroValesEntr = hojaF14.getRow(FiseConstants.NRO_FILA_NROVALESENTR_FORMATO14B);
 					HSSFRow filaTotalEnvPadron = hojaF14.getRow(FiseConstants.NRO_FILA_COSTOENVPADRON_FORMATO14B);
 					HSSFRow filaNroValesFis = hojaF14.getRow(FiseConstants.NRO_FILA_NROVALESFIS_FORMATO14B);
