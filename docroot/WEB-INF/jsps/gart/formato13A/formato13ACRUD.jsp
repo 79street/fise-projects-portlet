@@ -157,9 +157,16 @@
 
 													<tr>
 														<td colspan="4">
-															<table id="<portlet:namespace/>grid_formato_declaracion">
-															</table>
-															<div id="<portlet:namespace/>pager_formato_declaracion"></div>
+															<c:if test="${crud =='READ'}">
+																<table id="<portlet:namespace/>grid_formato_declaracionView">
+																</table>
+																<div id="<portlet:namespace/>pager_formato_declaracionView"></div>
+															</c:if>
+															<c:if test="${crud =='UPDATE'}">
+																<table id="<portlet:namespace/>grid_formato_declaracion">
+																</table>
+																<div id="<portlet:namespace/>pager_formato_declaracion"></div>
+															</c:if>
 														</td>
 													</tr>
 													<tr height="10px">
