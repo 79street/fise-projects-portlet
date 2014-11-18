@@ -118,9 +118,12 @@ var formato13A= {
 		//this.urlACrud='<portlet:resourceURL id="getData" />';
 		this.command=$('#formato13AGartCommand');
 		this.urlACrud=urlView;
+		this.urlDelete='<portlet:resourceURL id="deleteCabecera" />';
 		
 		this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");
 		this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");
+		
+		formato13A.initDialogs();
 		
 		formato13A.botonCrearFormato.click(function() {
 			formato13A.blockUI();
@@ -193,10 +196,9 @@ var formato13A= {
 		this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivo");
 		//
 		this.mensajeEliminandoDetalle='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
-		this.urlDelete='<portlet:resourceURL id="deleteCabecera" />';
 		this.urlDeleteDetalle='<portlet:resourceURL id="deleteDetalle" />';
 		
-		formato13A.initDialogs();
+		formato13A.initDialogsCRUD();
 		
 		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
 		formato13A.btnCargarFormatoExcel.click(function() {formato13A.<portlet:namespace/>cargarFormatoExcel();});
@@ -396,8 +398,10 @@ var formato13A= {
 
 	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
 	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' /></a> ";
-	      			elem = "<a href='#' onclick=\"formato13A.showconfirmacion('ss','ss')\"><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center'  /></a> ";              			
+	      			//elem = "<a href='#' onclick=\"formato13A.showconfirmacion('ss','ss')\"><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center'  /></a> ";              			
 
+	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato13A.confirmarEliminarCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"');\" /></a> ";
+	      			
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{elim:elem});
@@ -1018,19 +1022,6 @@ var formato13A= {
 	},
 	//inicializar dialogs
 	initDialogs : function(){	
-		formato13A.dialogMessageReport.dialog({
-			modal: true,
-			autoOpen: false,
-			buttons: {
-				'Imprimir Pdf': function() {
-					formato13A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
-					$(this).dialog("close");
-				},
-				Ok: function() {
-					$(this).dialog("close");
-				}
-			}
-		});
 		formato13A.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
@@ -1042,6 +1033,21 @@ var formato13A= {
 					$(this).dialog("close");
 				},
 				"No": function() {				
+					$(this).dialog("close");
+				}
+			}
+		});
+	},
+	initDialogsCRUD : function(){	
+		formato13A.dialogMessageReport.dialog({
+			modal: true,
+			autoOpen: false,
+			buttons: {
+				'Imprimir Pdf': function() {
+					formato13A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+					$(this).dialog("close");
+				},
+				Ok: function() {
 					$(this).dialog("close");
 				}
 			}
@@ -1140,22 +1146,23 @@ var formato13A= {
 	},
 	eliminarFormatoCabecera : function(cod_Empresa_cabecera,ano_Presentacion_cabecera,mes_Presentacion_cabecera,cod_Etapa_cabecera){			
 		//$.blockUI({ message: formato13A.mensajeEliminando });
-		var form = formato13A.formNuevo;
-		form.removeAttr('enctype');
+		//alert(cod_Empresa_cabecera+','+ano_Presentacion_cabecera+','+mes_Presentacion_cabecera+','+cod_Etapa_cabecera);
 		jQuery.ajax({
-			url: formato13A.urlDelete+'&'+form.serialize(),
+			url: formato13A.urlDelete+'&'+formato13A.formBusqueda.serialize(),
 			type: 'post',
 			dataType: 'json',
-			/*data: {
-			   <portlet:namespace />codUbigeo: cod_Ubigeo,
-			   <portlet:namespace />idZonaBenef: id_ZonaBenef
-				},*/
+			data: {
+			   <portlet:namespace />codigoEmpresa: cod_Empresa_cabecera,
+			   <portlet:namespace />anoPresentacion: ano_Presentacion_cabecera,
+			   <portlet:namespace />mesPresentacion: mes_Presentacion_cabecera,
+			   <portlet:namespace />codEtapa: cod_Etapa_cabecera
+				},
 			success: function(data) {
 				if (data.resultado == "OK"){
 					//var addhtml2='Registro eliminado con éxito';					
 					//formato13A.dialogMessageContent.html(addhtml2);
 					//formato13A.dialogMessage.dialog("open");
-					formato13A.buscarDetalles();
+					formato13A.buscarFormatos();
 					formato13A.unblockUI();
 				}
 				else{
