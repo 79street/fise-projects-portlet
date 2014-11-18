@@ -209,8 +209,11 @@ var formato13A= {
 			
 
 		}if(operacion=='READ'){
+			alert(operacion);
+			formato13A.peridoDeclaracion.remove();
+			formato13A.txtPeriodo.css("display","block");
 			formato13A.buscarDetalles();
-			
+				
 			formato13A.botonReportePdf.click(function() {formato13A.<portlet:namespace/>mostrarReportePdf();});
 			formato13A.botonReporteExcel.click(function() {formato13A.<portlet:namespace/>mostrarReporteExcel();});
 			
@@ -219,8 +222,11 @@ var formato13A= {
 				location.href=urlRegresarBusqueda;
 			});
 			
-			formato13A.botonAnadirFormato.css("display","block");
+			
+			formato13A.botonAnadirFormato.css("display","none");
 			formato13A.btnGuardarCabecera.css("display","none");
+			
+		
 			
 		}if(operacion=='UPDATE'){
 			formato13A.peridoDeclaracion.remove();
@@ -228,9 +234,8 @@ var formato13A= {
 			formato13A.buscarDetalles();
 			formato13A.botonAnadirFormato.css("display","block");
 			formato13A.btnGuardarCabecera.css("display","none");
-			
 
-           formato13A.botonAnadirFormato.click(function(){
+            formato13A.botonAnadirFormato.click(function(){
 
 				formato13A.blockUI();
 				formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
@@ -368,8 +373,8 @@ var formato13A= {
 	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl); 
 	      			
 
-	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
-	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' /></a> ";
+	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' /></a> ";
 	      			elem = "<a href='#' onclick=\"formato13A.showconfirmacion('ss','ss')\"><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center'  /></a> ";              			
 
 	      			formato13A.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
@@ -633,12 +638,7 @@ var formato13A= {
 	},
 	
 	<portlet:namespace/>cargarFormatoExcel : function(){
-		
 		formato13A.formNuevo.submit();
-		//var frm = document.getElementById('form_13ACRUD');
-		//frm.submit();
-	
-
 	},
 	
 	<portlet:namespace/>showUploadTxt : function(){

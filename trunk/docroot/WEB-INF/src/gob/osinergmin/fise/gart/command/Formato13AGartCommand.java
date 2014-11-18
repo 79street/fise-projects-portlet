@@ -23,6 +23,8 @@ public class Formato13AGartCommand {
 	//Nuevo
 	private String peridoDeclaracion; 
 	private String descripcionPeriodo; 
+	
+	
 	//Detalle
 	private String descEmpresa;
 	private String mesPresentacion;
@@ -62,6 +64,9 @@ public class Formato13AGartCommand {
 	private boolean readOnly;
 	private boolean readonlyFlagPeriodo;
 	private boolean readonlyEdit;
+	
+	
+	private int tipoOperacion;
 	
 	public List<AdmEmpresa> getListaEmpresas() {
 		return listaEmpresas;
@@ -393,6 +398,14 @@ public class Formato13AGartCommand {
 
 	public void setReadonlyEdit(boolean readonlyEdit) {
 		this.readonlyEdit = readonlyEdit;
+	}
+
+	public int getTipoOperacion() {
+		return tipoOperacion;
+	}
+
+	public void setTipoOperacion(int tipoOperacion) {
+		this.tipoOperacion = tipoOperacion;
 	}
 
 	
