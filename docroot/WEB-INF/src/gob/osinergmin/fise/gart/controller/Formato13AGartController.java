@@ -174,7 +174,13 @@ public class Formato13AGartController {
 				logger.info("empresa " + mapaEmpresa.get(fiseFormato13AC.getId().getCodEmpresa()));
 				fiseFormato13AC.setDescEmpresa(mapaEmpresa.get(fiseFormato13AC.getId().getCodEmpresa()));
 				fiseFormato13AC.setDescMesPresentacion(listaMes.get(fiseFormato13AC.getId().getMesPresentacion()));
-				jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AC));
+				
+				
+				/**Obteniendo el flag de la operacion*/
+  				String flagOper = commonService.obtenerEstadoProceso(fiseFormato13AC.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_13A,fiseFormato13AC.getId().getAnoPresentacion(),
+  						fiseFormato13AC.getId().getMesPresentacion(), fiseFormato13AC.getId().getEtapa());
+  				
+				jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AC,flagOper));
 
 			}
 
