@@ -330,7 +330,8 @@ public class Formato13AGartController {
 	}
 
 	@ActionMapping(params = "action=guardarDetalle")
-	public void guardarDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @RequestParam("crud") String crud, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+	public void guardarDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @RequestParam("crud") String crud, 
+			@RequestParam("idZonaBenef")String idZona,@ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -348,7 +349,8 @@ public class Formato13AGartController {
 		String st6 = command.getSt6();
 		String stserv = command.getStser();
 		String stesp = command.getStesp();
-		String idZonaBenef = command.getIdZonaBenef();
+		//String idZonaBenef = command.getIdZonaBenef();
+		String idZonaBenef = idZona;
 		String sedeAtencion = command.getNombreSede();
 
 		String anioPresentacion = "";
@@ -421,7 +423,7 @@ public class Formato13AGartController {
 				if (cab.getFiseFormato13ADs() != null && !cab.getFiseFormato13ADs().isEmpty()) {
 					for (FiseFormato13AD d : cab.getFiseFormato13ADs()) {
 
-						if (Long.parseLong(command.getIdZonaBenef()) == d.getId().getIdZonaBenef()) {
+						if (Long.parseLong(idZonaBenef) == d.getId().getIdZonaBenef()) {
 							if (FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico())) {
 								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, d);
 							} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico())) {
@@ -576,34 +578,40 @@ public class Formato13AGartController {
 			List<Formato13ADReportBean> detalle = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(cabecera);
 
 			logger.info("arreglo lista:" + detalle.size());
-			for (Formato13ADReportBean fiseFormato13AD : detalle) {
-				// seteamos la descripcion de la empresa
-				command.setAnioAlta(String.valueOf(fiseFormato13AD.getAnioAlta()));
-				command.setMesAlta(String.valueOf(fiseFormato13AD.getMesAlta()));
-				//
-				command.setAnioInicioVigencia(String.valueOf(fiseFormato13AD.getAnioInicioVigencia()));
-				command.setAnioFinVigencia(String.valueOf(fiseFormato13AD.getAnioFinVigencia()));
+			for (Formato13ADReportBean f : detalle) {
 				
-				String ubigeo = fiseFormato13AD.getCodUbigeo();
-				if (StringUtils.isNotBlank(ubigeo)) {
-					command.setCodDepartamento(ubigeo.substring(0, 2).concat("0000"));
-					command.setCodProvincia(ubigeo.substring(0, 4).concat("00"));
-					command.setCodDistrito(ubigeo);
-				}
+				//comparamos la idZonaBenef que se esta seleccionando
+				if( command.getIdZonaBenef().equals(f.getIdZonaBenef().toString()) ){
+					// seteamos la descripcion de la empresa
+					command.setAnioAlta(String.valueOf(f.getAnioAlta()));
+					command.setMesAlta(String.valueOf(f.getMesAlta()));
+					//
+					command.setAnioInicioVigencia(String.valueOf(f.getAnioInicioVigencia()));
+					command.setAnioFinVigencia(String.valueOf(f.getAnioFinVigencia()));
+					
+					String ubigeo = f.getCodUbigeo();
+					if (StringUtils.isNotBlank(ubigeo)) {
+						command.setCodDepartamento(ubigeo.substring(0, 2).concat("0000"));
+						command.setCodProvincia(ubigeo.substring(0, 4).concat("00"));
+						command.setCodDistrito(ubigeo);
+					}
 
-				command.setLocalidad(fiseFormato13AD.getDescLocalidad());
-				command.setSt1(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico1()));
-				command.setSt2(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico2()));
-				command.setSt3(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico3()));
-				command.setSt4(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico4()));
-				command.setSt5(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico5()));
-				command.setSt6(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico6()));
-				command.setStser(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico7()));
-				command.setStesp(String.valueOf(fiseFormato13AD.getNroBenefPoteSecTipico8()));
-				long total = fiseFormato13AD.getNroBenefPoteSecTipico1() + fiseFormato13AD.getNroBenefPoteSecTipico2() + fiseFormato13AD.getNroBenefPoteSecTipico3() + fiseFormato13AD.getNroBenefPoteSecTipico4() + fiseFormato13AD.getNroBenefPoteSecTipico5() + fiseFormato13AD.getNroBenefPoteSecTipico6() + fiseFormato13AD.getNroBenefPoteSecTipico7() + fiseFormato13AD.getNroBenefPoteSecTipico8();
-				command.setTotal(String.valueOf(total));
-				command.setIdZonaBenef(String.valueOf(fiseFormato13AD.getIdZonaBenef()));
-				command.setNombreSede(fiseFormato13AD.getNombreSedeAtiende());
+					command.setLocalidad(f.getDescLocalidad());
+					command.setSt1(String.valueOf(f.getNroBenefPoteSecTipico1()));
+					command.setSt2(String.valueOf(f.getNroBenefPoteSecTipico2()));
+					command.setSt3(String.valueOf(f.getNroBenefPoteSecTipico3()));
+					command.setSt4(String.valueOf(f.getNroBenefPoteSecTipico4()));
+					command.setSt5(String.valueOf(f.getNroBenefPoteSecTipico5()));
+					command.setSt6(String.valueOf(f.getNroBenefPoteSecTipico6()));
+					command.setStser(String.valueOf(f.getNroBenefPoteSecTipico7()));
+					command.setStesp(String.valueOf(f.getNroBenefPoteSecTipico8()));
+					long total = f.getNroBenefPoteSecTipico1() + f.getNroBenefPoteSecTipico2() + f.getNroBenefPoteSecTipico3() + f.getNroBenefPoteSecTipico4() + f.getNroBenefPoteSecTipico5() + f.getNroBenefPoteSecTipico6() + f.getNroBenefPoteSecTipico7() + f.getNroBenefPoteSecTipico8();
+					command.setTotal(String.valueOf(total));
+					command.setIdZonaBenef(String.valueOf(f.getIdZonaBenef()));
+					command.setNombreSede(f.getNombreSedeAtiende());
+				}
+				
+				
 			}
 		}else if(CRUD_CREATE.equals(crud)){
 			model.addAttribute("readonlyEdit", "false");
