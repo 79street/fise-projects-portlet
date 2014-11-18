@@ -93,6 +93,8 @@ var formato13A= {
 	stserDetalle:null,
 	stespDetalle:null,
 	sttotalDetalle:null,
+	//
+	idZonaBenefDetalle:null,
 	
 	 botonAnadirFormato:null,
 	init : function(urlNuevo,urlView,urlEdit){
@@ -278,6 +280,8 @@ var formato13A= {
 		this.stserDetalle=$('#stser');
 		this.stespDetalle=$('#stesp');
 		this.sttotalDetalle=$('#total');
+		//
+		this.idZonaBenefDetalle=$('#idZonaBenef');
 		
 		$('input.target[type=text]').on('change', function(){
 			formato13A.calculoTotal();
@@ -321,9 +325,9 @@ var formato13A= {
 		
 		<c:if test="${crud =='UPDATE'}">
 		
-			formato13A.botonGuardarDetalle.click(function(){
-				formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion).submit();
-			});
+		formato13A.botonGuardarDetalle.click(function(){
+			formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&idZonaBenef='+formato13A.idZonaBenefDetalle.val()).submit();
+		});
 		
 			botonRegresarDetalle.click(function(){
 				formato13A.blockUI();
@@ -446,7 +450,7 @@ var formato13A= {
 	buildGridsDeclaracion : function () {	
 		formato13A.tablaDeclaracion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','Editar','Anular','','','',''],
+	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','Editar','Anular','','','','',''],
 	       colModel: [
 					{ name: 'descAnioMesAlta', index: 'descAnioMesAlta', width: 70},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
@@ -468,7 +472,8 @@ var formato13A= {
 	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', hidden: true },   
-	               { name: 'etapa', index: 'etapa',hidden: true}
+	               { name: 'etapa', index: 'etapa',hidden: true},
+	               { name: 'idZonaBenef', index: 'idZonaBenef', hidden: true}
 		   	    ],
 		   	 multiselect: false,
 				rowNum:10,
@@ -501,6 +506,7 @@ var formato13A= {
 					  	    urlEdit.setParameter("crud", "UPDATE");
 					  	    urlEdit.setParameter("codEmpresa", ret.codEmpresa);
 					  	    urlEdit.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+					  	  	urlEdit.setParameter("idZonaBenef", ret.idZonaBenef);
 					  	  	urlEdit.setPortletId(formato13A.portletID);
 		  	      			
 		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
@@ -572,7 +578,7 @@ var formato13A= {
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READ");
 		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
-		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+ret.mesPresentacion+ret.etapa);
+		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 		  	      			urlView.setPortletId(formato13A.portletID);
 		  	      			
 		  	      			
