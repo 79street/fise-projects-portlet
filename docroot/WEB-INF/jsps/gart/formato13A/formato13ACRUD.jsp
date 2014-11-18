@@ -20,16 +20,13 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				alert("aqui en ready");
-				var errores = '${lsterrores}';
-				alert(errores);
-				if (errores.length > 0) {
-					var index;
-					for (index = 0; index < errores.length; index++) {
-						text += errores[index];
-					}
-					alert(text);
+				//alert("aqui en ready");
+				var error = '${error}';
+				
+				if (error.length > 0) {
+				    alert(error);
 				}
+				
 				formato13A.initCRUD('${crud}', '${urlAnadirFormato}','${urlRegresarBusqueda}');
 
 			});
