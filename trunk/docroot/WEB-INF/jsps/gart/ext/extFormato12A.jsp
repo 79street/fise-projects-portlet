@@ -801,7 +801,7 @@ function <portlet:namespace/>buscar() {
 function buildGrids() {	
 	jQuery("#grid_formato").jqGrid({
 		datatype: "local",
-       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Grupo Inf','Visualizar','Editar','Anular','Estado','','','',''],
+       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Grupo Inf','Estado','Visualizar','Editar','Anular','','','',''],
        colModel: [
 				{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
                { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -809,10 +809,10 @@ function buildGrids() {
                { name: 'anoEjecucion', index: 'anoPresentacion', width: 30 },   
                { name: 'descMesEjecucion', index: 'descMesEjecucion', width: 30},
                { name: 'grupoInfo', index: 'anoEjecucion', width: 50},
+               { name: 'estado', index: 'estado', width: 50,align:'center'},
                { name: 'view', index: 'view', width: 20,align:'center' },
                { name: 'edit', index: 'edit', width: 20,align:'center' },
                { name: 'elim', index: 'elim', width: 20,align:'center' },
-               { name: 'estado', index: 'estado', width: 50,align:'center'},
                { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
                { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
                { name: 'mesEjecucion', index: 'mesEjecucion', hidden: true},

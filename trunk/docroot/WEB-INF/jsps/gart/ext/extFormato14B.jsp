@@ -364,7 +364,7 @@ var formato14B= {
 	buildGrids : function () {	
 		formato14B.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Visualizar','Editar','Anular','Estado','','','',''],
+	       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Estado','Visualizar','Editar','Anular','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -372,10 +372,10 @@ var formato14B= {
 	               { name: 'anoIniVigencia', index: 'anoIniVigencia', width: 30 },   
 	               { name: 'anoFinVigencia', index: 'anoFinVigencia', width: 30},
 	               { name: 'grupoInfo', index: 'grupoInfo', width: 50},
+	               { name: 'estado', index: 'estado', width: 50,align:'center'},
 	               { name: 'view', index: 'view', width: 20,align:'center' },
 	               { name: 'edit', index: 'edit', width: 20,align:'center' },
 	               { name: 'elim', index: 'elim', width: 20,align:'center' },
-	               { name: 'estado', index: 'estado', width: 50,align:'center'},
 	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
 	               { name: 'etapa', index: 'etapa', hidden: true},
