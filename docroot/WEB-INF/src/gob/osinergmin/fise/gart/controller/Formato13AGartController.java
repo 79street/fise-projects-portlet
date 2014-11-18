@@ -13,6 +13,7 @@ import gob.osinergmin.fise.domain.FiseFormato13ACPK;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
 import gob.osinergmin.fise.domain.FiseFormato13ADOb;
 import gob.osinergmin.fise.domain.FiseFormato13ADPK;
+import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
 import gob.osinergmin.fise.gart.json.Formato13AGartJSON;
@@ -40,7 +41,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.HashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -291,6 +291,14 @@ public class Formato13AGartController {
 				cabecera.setId(pkCabecera);
 				cabecera.getId().setEtapa("SOLICITUD");
 
+				//guardamos el grupo de informacion
+				FiseGrupoInformacion grupoInfo = null;
+				long idGrupoInf = commonService.obtenerIdGrupoInformacion(pkCabecera.getAnoPresentacion(), pkCabecera.getMesPresentacion()); 
+				if(idGrupoInf!=0){
+					grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);	
+				}	
+				cabecera.setFiseGrupoInformacion(grupoInfo);
+				
 				cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
 
 				cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
@@ -1431,6 +1439,48 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 		}
 	}
 	
+	@ResourceMapping("deleteDetalle")
+	public void deleteDetalle(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+		try {
+			JSONObject jsonObj = new JSONObject();
+			FiseFormato13AC formato = new FiseFormato13AC();
+
+			String codEmpresa = command.getCodEmpresa();
+			String anoPresentacion = command.getAnioPresentacion();
+			String mesPresentacion = command.getMesPresentacion();
+			String etapa = command.getEtapa();
+			
+			String codUbigeo = request.getParameter("codUbigeo").trim();
+			String idZonaBenef = request.getParameter("idZonaBenef").trim();
+
+			FiseFormato13ACPK pk = new FiseFormato13ACPK();
+			pk.setCodEmpresa(codEmpresa);
+			pk.setAnoPresentacion(new Long(anoPresentacion));
+			pk.setMesPresentacion(new Long(mesPresentacion));
+			pk.setEtapa(etapa);
+			
+			formato = formatoService.obtenerFormato13ACByPK(pk);
+			try{
+				if (formato != null) {
+					
+					this.eliminarDetalleDeclarado(formato.getFiseFormato13ADs(), idZonaBenef, codUbigeo);
+					jsonObj.put("resultado", "OK");
+				}
+			} catch (Exception e) {
+				jsonObj.put("resultado", "Error");
+				jsonObj.put("mensaje", e.getMessage());
+				System.out.println("Error al eliminar datos "+e.getMessage());
+			}  
+			response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonObj.toString());
+		    pw.flush();
+		    pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/** metodos utiles */
 
 	public void agregarFormato13Detalle(List<FiseFormato13AD> listaDetalle) {
@@ -1570,5 +1620,29 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 		}
 		return dto;
 	}
+	
+	public void eliminarDetalleDeclarado(List<FiseFormato13AD> listaDetalle, String idZonaBenef, String codUbigeo){
+		for (FiseFormato13AD detalle : listaDetalle) {
+			if (Long.parseLong(idZonaBenef) == detalle.getId().getIdZonaBenef() && codUbigeo.equals(detalle.getId().getCodUbigeo()) ) {
+				if (FiseConstants.SECTOR_TIPICO_1_COD.equals(detalle.getId().getCodSectorTipico().trim())) {
+					formatoService.eliminarDetalle(detalle);
+				} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(detalle.getId().getCodSectorTipico().trim())) {
+					formatoService.eliminarDetalle(detalle);
+				} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(detalle.getId().getCodSectorTipico().trim())) {
+					formatoService.eliminarDetalle(detalle);
+				} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(detalle.getId().getCodSectorTipico().trim())) {
+					formatoService.eliminarDetalle(detalle);
+				} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(detalle.getId().getCodSectorTipico().trim())) {
+					formatoService.eliminarDetalle(detalle);
+				} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(detalle.getId().getCodSectorTipico().trim())) {
+					formatoService.eliminarDetalle(detalle);
+				} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(detalle.getId().getCodSectorTipico().trim())) {
+					formatoService.eliminarDetalle(detalle);
+				} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(detalle.getId().getCodSectorTipico().trim())) {
+					formatoService.eliminarDetalle(detalle);
+				}
+			}
+		}
+	}	
 
 }

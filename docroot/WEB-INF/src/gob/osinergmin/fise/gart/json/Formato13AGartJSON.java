@@ -1,6 +1,7 @@
 package gob.osinergmin.fise.gart.json;
 
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
+import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
 
@@ -26,10 +27,23 @@ public class Formato13AGartJSON {
 		jsonObj.put("anoPresentacion",fiseFormato13AC.getId().getAnoPresentacion() );
 		jsonObj.put("mesPresentacion",fiseFormato13AC.getId().getMesPresentacion() );
 		jsonObj.put("etapa",fiseFormato13AC.getId().getEtapa());
-		jsonObj.put("idGrupoinformacion",fiseFormato13AC.getIdGrupoInformacion());
+		//jsonObj.put("idGrupoinformacion",fiseFormato13AC.getIdGrupoInformacion());
 		jsonObj.put("descEmpresa",fiseFormato13AC.getDescEmpresa());
 		jsonObj.put("descMesPresentacion",fiseFormato13AC.getDescMesPresentacion());
-		jsonObj.put("descGrupoInformacion",fiseFormato13AC.getDescGrupoInformacion());
+		//jsonObj.put("descGrupoInformacion",fiseFormato13AC.getDescGrupoInformacion());
+		
+		if(fiseFormato13AC.getFiseGrupoInformacion()!=null && fiseFormato13AC.getFiseGrupoInformacion().getDescripcion()!=null){
+			jsonObj.put("grupoInfo", fiseFormato13AC.getFiseGrupoInformacion().getDescripcion());	
+		}else{
+			jsonObj.put("grupoInfo", FiseConstants.BLANCO);	
+		}
+		
+		if(fiseFormato13AC.getFechaEnvioDefinitivo()!=null){
+			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+		}else{
+			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+		}
+		
 		return jsonObj;
 	}
 	

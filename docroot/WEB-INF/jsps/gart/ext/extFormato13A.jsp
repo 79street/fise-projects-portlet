@@ -30,6 +30,7 @@ var formato13A= {
 	urlReporteValidacion:null,
 	urlEnvioDefinitivo:null,
 	urlReporteEnvioDefinitivo:null,
+	urlDelete:null,
 	//
 	
 	botonReportePdf:null,
@@ -72,6 +73,8 @@ var formato13A= {
 	dialogConfirmEnvio:null,
 	dialogMessageReportContent:null,
 	dialogConfirmEnvioContent:null,
+	dialogConfirmDetalle:null,
+	dialogConfirmDetalleContent:null,
 	//
 
 	codDepa:null,
@@ -95,6 +98,7 @@ var formato13A= {
 	sttotalDetalle:null,
 	//
 	idZonaBenefDetalle:null,
+	mensajeEliminandoDetalle:null,
 	
 	 botonAnadirFormato:null,
 	init : function(urlNuevo,urlView,urlEdit){
@@ -163,6 +167,8 @@ var formato13A= {
 		this.dialogMessageReportContent=$("#<portlet:namespace/>dialog-message-report-content");
 		this.dialogConfirmEnvio=$("#<portlet:namespace/>dialog-confirm-envio");
 		this.dialogConfirmEnvioContent=$("#<portlet:namespace/>dialog-confirm-envio-content");
+		this.dialogConfirmDetalle=$("#<portlet:namespace/>dialog-confirm-detalle");
+		this.dialogConfirmDetalleContent=$("#<portlet:namespace/>dialog-confirm-detalle-content");
 		//
 		
 		this.btnTxt=$('#<portlet:namespace/>showDialogUploadTxt');
@@ -180,6 +186,9 @@ var formato13A= {
 		this.botonValidacion=$("#<portlet:namespace/>validacionFormato");
 		this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivo");
 		//
+		this.mensajeEliminandoDetalle='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
+		this.urlDelete='<portlet:resourceURL id="deleteDetalle" />';
+		
 		formato13A.initDialogs();
 		
 		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
@@ -346,13 +355,14 @@ var formato13A= {
 	buildGridsBusqueda : function () {	
 		formato13A.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo Inf','Visualizar','Editar','Anular','',''],
+	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo Inf','Estado','Visualizar','Editar','Anular','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
 	               { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
 	               { name: 'etapa', index: 'etapa',width: 50},
-	               { name: 'descGrupoInformacion', index: 'descGrupoInformacion', width: 50},
+	               { name: 'grupoInfo', index: 'grupoInfo', width: 50},
+	               { name: 'estado', index: 'estado', width: 50},
 	               { name: 'view', index: 'view', width: 20,align:'center' },
 	               { name: 'edit', index: 'edit', width: 20,align:'center' },
 	               { name: 'elim', index: 'elim', width: 20,align:'center' },
@@ -513,7 +523,7 @@ var formato13A= {
 		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 		  	      			
-		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
+		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato13A.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.codUbigeo+"','"+ret.idZonaBenef+"');\" /></a> ";              			
 		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{view:view});
 		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{edit:edit});
 		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{elim:elem});
@@ -1029,6 +1039,21 @@ var formato13A= {
 				}
 			}
 		});
+		formato13A.dialogConfirmDetalle.dialog({
+			modal: true,
+			height: 200,
+			width: 400,			
+			autoOpen: false,
+			buttons: {
+				"Si": function() {
+					formato13A.eliminarFormatoDetalle(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,cod_Ubigeo,id_ZonaBenef);
+					$(this).dialog("close");
+				},
+				"No": function() {				
+					$(this).dialog("close");
+				}
+			}
+		});
 		formato13A.dialogObservacion.dialog({
 			modal: true,
 			width: 750,
@@ -1039,8 +1064,53 @@ var formato13A= {
 				}
 			}
 		});
+	},
+	//otros
+	confirmarEliminarDetalle : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,codUbigeo,idZonaBenef){
+		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+		formato13A.dialogConfirmDetalleContent.html(addhtml);
+		formato13A.dialogConfirmDetalle.dialog("open");
+		cod_Empresa=codEmpresa;
+		ano_Presentacion=anoPresentacion;
+		mes_Presentacion=mesPresentacion;
+		cod_Etapa=etapa;
+		cod_Ubigeo=codUbigeo;
+		id_ZonaBenef=idZonaBenef;
+	},
+	eliminarFormatoDetalle : function(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,cod_Ubigeo,id_ZonaBenef){			
+		//$.blockUI({ message: formato13A.mensajeEliminando });
+		var form = formato13A.formNuevo;
+		form.removeAttr('enctype');
+		jQuery.ajax({
+			url: formato13A.urlDelete+'&'+form.serialize(),
+			type: 'post',
+			dataType: 'json',
+			data: {
+			   //<portlet:namespace />codEmpresa: cod_Empresa,
+			   //<portlet:namespace />anoPresentacion: ano_Presentacion,
+			   //<portlet:namespace />mesPresentacion: mes_Presentacion,
+			   //<portlet:namespace />etapa: cod_Etapa,
+			   <portlet:namespace />codUbigeo: cod_Ubigeo,
+			   <portlet:namespace />idZonaBenef: id_ZonaBenef
+				},
+			success: function(data) {
+				if (data.resultado == "OK"){
+					//var addhtml2='Registro eliminado con éxito';					
+					//formato13A.dialogMessageContent.html(addhtml2);
+					//formato13A.dialogMessage.dialog("open");
+					formato13A.buscarDetalles();
+					formato13A.unblockUI();
+				}
+				else{
+					alert("Error al eliminar el registro");
+					formato13A.unblockUI();
+				}
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+		});
 	}
-	
 };
 
 
