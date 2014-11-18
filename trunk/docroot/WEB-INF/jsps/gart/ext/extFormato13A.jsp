@@ -11,6 +11,8 @@ var formato13A= {
 	tablaDeclaracion:null,
 	paginadoDeclaracion:null,
 	//add
+	tablaDeclaracionView:null,
+	paginadoDeclaracionView:null,
 	tablaObservacion:null,
 	paginadoObservacion:null,
 	//
@@ -132,6 +134,8 @@ var formato13A= {
 		this.paginadoDeclaracion='#<portlet:namespace/>pager_formato_declaracion';
 
 		//add
+		this.tablaDeclaracionView=$("#<portlet:namespace/>grid_formato_declaracionView");
+		this.paginadoDeclaracionView='#<portlet:namespace/>pager_formato_declaracionView';
 		this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
 		this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
 		//
@@ -181,7 +185,11 @@ var formato13A= {
 		formato13A.btnGuardarCabecera.click(function(){formato13A.savecabecera();});
 		
 		formato13A.buildGridsDeclaracion();
+		//para modo view
+		formato13A.buildGridsDeclaracionView();
+		
 		this.buildGridsObservacion();
+		
 		
 		if(operacion=='CREATE'){
 			
@@ -476,7 +484,7 @@ var formato13A= {
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
 		  	      		
 		  	      			urlView.setParameter("action", "detalle");
-		  	      			urlView.setParameter("crud", "READ");
+		  	      			urlView.setParameter("crud", "READCREATEUPDATE");
 		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
 		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+ret.mesPresentacion+ret.etapa);
 		  	      			urlView.setPortletId(formato13A.portletID);
@@ -501,6 +509,75 @@ var formato13A= {
 		       } 
 		}); 
 	},
+	//VIEW
+	buildGridsDeclaracionView : function () {	
+		formato13A.tablaDeclaracionView.jqGrid({
+		   datatype: "local",
+	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','','','',''],
+	       colModel: [
+					{ name: 'descAnioMesAlta', index: 'descAnioMesAlta', width: 70},
+		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
+		            { name: 'descripcionLocalidad', index: 'descripcionLocalidad', width: 50},
+	                { name: 'st1', index: 'st1', width: 20, align:'right'},
+	                { name: 'st2', index: 'st2', width: 20, align:'right'},
+	                { name: 'st3', index: 'st3', width: 20, align:'right'},
+	                { name: 'st4', index: 'st4', width: 20, align:'right'},
+	                { name: 'st5', index: 'st5', width: 20, align:'right'},
+	                { name: 'st6', index: 'st6', width: 20, align:'right'},
+	                { name: 'stserv', index: 'stserv', width: 20, align:'right'},
+	                { name: 'stesp', index: 'stesp', width: 20, align:'right'},
+	                { name: 'total', index: 'total', width: 30, align:'right'},
+	                { name: 'descZonaBenef', index: 'descZonaBenef', width: 70},
+	                { name: 'nombreSedeAtiende', index: 'nombreSedeAtiende', width: 80},
+	               { name: 'view', index: 'view', width: 20,align:'center' },
+	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
+	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
+	               { name: 'anoPresentacion', index: 'anoPresentacion', hidden: true },   
+	               { name: 'etapa', index: 'etapa',hidden: true}
+		   	    ],
+		   	 multiselect: false,
+				rowNum:10,
+			   	rowList:[10,20,50],
+				height: 200,
+			   	autowidth: true,
+				rownumbers: true,
+				shrinkToFit:true,
+				pager: formato13A.paginadoDeclaracionView,
+			    viewrecords: true,
+			   	caption: "Formatos declarados",
+			    sortorder: "asc",	   	    	   	   
+	       gridComplete: function(){
+	    	   AUI().use('liferay-portlet-url', function(A) {
+	    		      var ids = formato13A.tablaDeclaracionView.jqGrid('getDataIDs');
+	    		      
+		  	      		for(var i=0;i < ids.length;i++){
+		  	      			var cl = ids[i];
+		  	      			var ret = formato13A.tablaDeclaracionView.jqGrid('getRowData',cl);   
+		  	      			var urlView=Liferay.PortletURL.createRenderURL();
+		  	      		
+		  	      			urlView.setParameter("action", "detalle");
+		  	      			urlView.setParameter("crud", "READ");
+		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
+		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+ret.mesPresentacion+ret.etapa);
+		  	      			urlView.setPortletId(formato13A.portletID);
+		  	      			
+		  	      			
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			formato13A.tablaDeclaracionView.jqGrid('setRowData',ids[i],{view:view});
+		  	      		}
+	    		   });	
+	      }
+	  	});
+		formato13A.tablaDeclaracionView.jqGrid('navGrid',formato13A.paginadoDeclaracionView,{add:false,edit:false,del:false,search: false,refresh: false});	
+		formato13A.tablaDeclaracionView.jqGrid('navButtonAdd',formato13A.paginadoDeclaracionView,{
+		       caption:"Exportar a Excel",
+		       buttonicon: "ui-icon-bookmark",
+		       onClickButton : function () {
+		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		       } 
+		}); 
+	},
+	
 	buscarDetalles : function () {	
            
 		return jQuery.ajax({			
@@ -511,9 +588,16 @@ var formato13A= {
 						formato13A.blockUI();
 					},				
 					success: function(gridData) {					
-						formato13A.tablaDeclaracion.clearGridData(true);
-						formato13A.tablaDeclaracion.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
-						formato13A.tablaDeclaracion[0].refreshIndex();
+						<c:if test="${crud =='READ'}">
+							formato13A.tablaDeclaracionView.clearGridData(true);
+							formato13A.tablaDeclaracionView.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+							formato13A.tablaDeclaracionView[0].refreshIndex();
+						</c:if>
+						<c:if test="${crud =='UPDATE'}">
+							formato13A.tablaDeclaracion.clearGridData(true);
+							formato13A.tablaDeclaracion.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+							formato13A.tablaDeclaracion[0].refreshIndex();
+						</c:if>
 						formato13A.unblockUI();
 					},error : function(){
 						alert("Error de conexión.");
