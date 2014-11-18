@@ -1517,8 +1517,8 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 			detalle.setMesAlta(Long.parseLong(command.getMesAlta()));
 			// luego verificar de donde se obtendra los valores de ano e inicio
 			// de vigencia
-			detalle.setAnoInicioVigencia(Long.parseLong(command.getAnioAlta()));
-			detalle.setAnoFinVigencia(Long.parseLong(command.getAnioAlta()));
+			detalle.setAnoInicioVigencia(Long.parseLong(command.getAnioInicioVigencia()));
+			detalle.setAnoFinVigencia(Long.parseLong(command.getAnioFinVigencia()));
 			//
 			detalle.setDescripcionLocalidad(command.getLocalidad());
 			detalle.setNombreSedeAtiende(command.getNombreSede());
@@ -1564,8 +1564,8 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 			detalle.setMesAlta(Long.parseLong(command.getMesAlta()));
 			// luego verificar de donde se obtendra los valores de ano e inicio
 			// de vigencia
-			detalle.setAnoInicioVigencia(Long.parseLong(command.getAnioAlta()));
-			detalle.setAnoFinVigencia(Long.parseLong(command.getAnioAlta()));
+			detalle.setAnoInicioVigencia(Long.parseLong(command.getAnioInicioVigencia()));
+			detalle.setAnoFinVigencia(Long.parseLong(command.getAnioFinVigencia()));
 			//
 			detalle.setDescripcionLocalidad(command.getLocalidad());
 			detalle.setNombreSedeAtiende(command.getNombreSede());
