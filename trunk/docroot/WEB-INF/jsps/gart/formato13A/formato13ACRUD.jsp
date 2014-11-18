@@ -412,6 +412,16 @@
 		</p>
 	</div>
 	
+	<div id="<portlet:namespace/>dialog-confirm-detalle"
+		title="Confirmar acci&oacute;n">
+		<p>
+			<span class="ui-icon ui-icon-alert"
+				style="float: left; margin: 0 7px 20px 0;"></span> <label
+				id="<portlet:namespace/>dialog-confirm-detalle-content">¿Está
+				seguro?</label>
+		</p>
+	</div>
+	
 
 	<div id="<portlet:namespace/>dialog-message-report" title="Osinergmin">
 		<p>
