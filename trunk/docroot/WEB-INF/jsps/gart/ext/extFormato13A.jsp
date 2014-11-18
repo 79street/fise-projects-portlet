@@ -31,6 +31,7 @@ var formato13A= {
 	urlEnvioDefinitivo:null,
 	urlReporteEnvioDefinitivo:null,
 	urlDelete:null,
+	urlDeleteDetalle:null,
 	//
 	
 	botonReportePdf:null,
@@ -75,6 +76,8 @@ var formato13A= {
 	dialogConfirmEnvioContent:null,
 	dialogConfirmDetalle:null,
 	dialogConfirmDetalleContent:null,
+	dialogConfirm:null,
+	dialogConfirmContent:null,
 	//
 
 	codDepa:null,
@@ -115,6 +118,9 @@ var formato13A= {
 		//this.urlACrud='<portlet:resourceURL id="getData" />';
 		this.command=$('#formato13AGartCommand');
 		this.urlACrud=urlView;
+		
+		this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");
+		this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");
 		
 		formato13A.botonCrearFormato.click(function() {
 			formato13A.blockUI();
@@ -187,7 +193,8 @@ var formato13A= {
 		this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivo");
 		//
 		this.mensajeEliminandoDetalle='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
-		this.urlDelete='<portlet:resourceURL id="deleteDetalle" />';
+		this.urlDelete='<portlet:resourceURL id="deleteCabecera" />';
+		this.urlDeleteDetalle='<portlet:resourceURL id="deleteDetalle" />';
 		
 		formato13A.initDialogs();
 		
@@ -1024,6 +1031,21 @@ var formato13A= {
 				}
 			}
 		});
+		formato13A.dialogConfirm.dialog({
+			modal: true,
+			height: 200,
+			width: 400,			
+			autoOpen: false,
+			buttons: {
+				"Si": function() {
+					formato13A.eliminarFormatoCabecera(cod_Empresa_cabecera,ano_Presentacion_cabecera,mes_Presentacion_cabecera,cod_Etapa_cabecera);
+					$(this).dialog("close");
+				},
+				"No": function() {				
+					$(this).dialog("close");
+				}
+			}
+		});
 		formato13A.dialogConfirmEnvio.dialog({
 			modal: true,
 			height: 200,
@@ -1066,6 +1088,15 @@ var formato13A= {
 		});
 	},
 	//otros
+	confirmarEliminarCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa){
+		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+		formato13A.dialogConfirmContent.html(addhtml);
+		formato13A.dialogConfirm.dialog("open");
+		cod_Empresa_cabecera=codEmpresa;
+		ano_Presentacion_cabecera=anoPresentacion;
+		mes_Presentacion_cabecera=mesPresentacion;
+		cod_Etapa_cabecera=etapa;
+	},
 	confirmarEliminarDetalle : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,codUbigeo,idZonaBenef){
 		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 		formato13A.dialogConfirmDetalleContent.html(addhtml);
@@ -1082,17 +1113,43 @@ var formato13A= {
 		var form = formato13A.formNuevo;
 		form.removeAttr('enctype');
 		jQuery.ajax({
-			url: formato13A.urlDelete+'&'+form.serialize(),
+			url: formato13A.urlDeleteDetalle+'&'+form.serialize(),
 			type: 'post',
 			dataType: 'json',
 			data: {
-			   //<portlet:namespace />codEmpresa: cod_Empresa,
-			   //<portlet:namespace />anoPresentacion: ano_Presentacion,
-			   //<portlet:namespace />mesPresentacion: mes_Presentacion,
-			   //<portlet:namespace />etapa: cod_Etapa,
 			   <portlet:namespace />codUbigeo: cod_Ubigeo,
 			   <portlet:namespace />idZonaBenef: id_ZonaBenef
 				},
+			success: function(data) {
+				if (data.resultado == "OK"){
+					//var addhtml2='Registro eliminado con éxito';					
+					//formato13A.dialogMessageContent.html(addhtml2);
+					//formato13A.dialogMessage.dialog("open");
+					formato13A.buscarDetalles();
+					formato13A.unblockUI();
+				}
+				else{
+					alert("Error al eliminar el registro");
+					formato13A.unblockUI();
+				}
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+		});
+	},
+	eliminarFormatoCabecera : function(cod_Empresa_cabecera,ano_Presentacion_cabecera,mes_Presentacion_cabecera,cod_Etapa_cabecera){			
+		//$.blockUI({ message: formato13A.mensajeEliminando });
+		var form = formato13A.formNuevo;
+		form.removeAttr('enctype');
+		jQuery.ajax({
+			url: formato13A.urlDelete+'&'+form.serialize(),
+			type: 'post',
+			dataType: 'json',
+			/*data: {
+			   <portlet:namespace />codUbigeo: cod_Ubigeo,
+			   <portlet:namespace />idZonaBenef: id_ZonaBenef
+				},*/
 			success: function(data) {
 				if (data.resultado == "OK"){
 					//var addhtml2='Registro eliminado con éxito';					
