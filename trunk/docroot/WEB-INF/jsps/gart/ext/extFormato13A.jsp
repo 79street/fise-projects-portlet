@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <portlet:defineObjects />
 
+<script type="text/javascript" src="/fise-projects-portlet/js/fise.js"></script>
+
 <script type="text/javascript">
 var formato13A= {
 	tablaResultados:null,
@@ -481,17 +483,24 @@ var formato13A= {
 		  	      		for(var i=0;i < ids.length;i++){
 		  	      			var cl = ids[i];
 		  	      			var ret = formato13A.tablaDeclaracion.jqGrid('getRowData',cl);   
+		  	      			//VIEW
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
-		  	      		
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READCREATEUPDATE");
 		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
-		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+ret.mesPresentacion+ret.etapa);
+		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 		  	      			urlView.setPortletId(formato13A.portletID);
-		  	      			
+		  	      			//EDIT
+		  	      			var urlEdit=Liferay.PortletURL.createRenderURL();
+					  	    urlEdit.setParameter("action", "detalle");
+					  	    urlEdit.setParameter("crud", "UPDATE");
+					  	    urlEdit.setParameter("codEmpresa", ret.codEmpresa);
+					  	    urlEdit.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+					  	  	urlEdit.setPortletId(formato13A.portletID);
 		  	      			
 		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
-		  	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
+		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
+		  	      			
 		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
 		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{view:view});
 		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{edit:edit});

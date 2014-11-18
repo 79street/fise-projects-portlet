@@ -523,20 +523,26 @@ public class Formato13AGartController {
 				command.setAnioFinVigencia(periodo.getAnioFinVig());
 				//verificamos el flag de periodo de ejecucion
 				if( "S".equals(periodo.getFlagPeriodoEjecucion()) ){
-					model.addAttribute("readonlyFlagPeriodo", "true");
-				}else{
 					model.addAttribute("readonlyFlagPeriodo", "false");
+				}else{
+					model.addAttribute("readonlyFlagPeriodo", "true");
 				}
 				break;
 			}
 		}
 		
 		
-		if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud)  ) {
-			// Es lectura
-			model.addAttribute("readonly", "true");
-			model.addAttribute("readonlyFlagPeriodo", "true");
-			model.addAttribute("readonlyEdit", "true");
+		if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud) || CRUD_UPDATE.equals(crud)  ) {
+			
+			if( CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud) ){
+				// Es lectura
+				model.addAttribute("readonly", "true");
+				model.addAttribute("readonlyFlagPeriodo", "true");
+				model.addAttribute("readonlyEdit", "true");
+			}else if(CRUD_UPDATE.equals(crud)){
+				model.addAttribute("readonly", "true");
+				model.addAttribute("readonlyEdit", "false");
+			}
 			
 			logger.info("LECTURA DETALLE");
 			FiseFormato13AC cabecera = new FiseFormato13AC();
@@ -578,9 +584,6 @@ public class Formato13AGartController {
 				command.setIdZonaBenef(String.valueOf(fiseFormato13AD.getIdZonaBenef()));
 				command.setNombreSede(fiseFormato13AD.getNombreSedeAtiende());
 			}
-		}else if(CRUD_UPDATE.equals(crud)){
-			model.addAttribute("readonlyEdit", "false");
-			//modo edicion
 		}else if(CRUD_CREATE.equals(crud)){
 			model.addAttribute("readonlyEdit", "false");
 			

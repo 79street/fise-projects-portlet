@@ -137,7 +137,7 @@ $(document).ready(function () {
 									   										<td width="5px"></td>
 									   										<td width="40px">Localidad:</td>
 									   										<td>
-									   											<form:input path="localidad" readonly="${readonly}"/>
+									   											<form:input path="localidad" readonly="${readonlyEdit}"/>
 									   										</td>
 									   									</tr>
 									   								</tbody></table>
@@ -193,7 +193,7 @@ $(document).ready(function () {
 																<legend>Sede de atencion</legend> 
 																<table style="width: 100%;" border="0">
 																	<tr>
-																		<td><form:input path="nombreSede" readonly="${readonly}"/></td>
+																		<td><form:input path="nombreSede" readonly="${readonlyEdit}"/></td>
 																	</tr>
 																</table>
 															</fieldset>
@@ -211,7 +211,7 @@ $(document).ready(function () {
 																	<td>
 																		<table style="width: 100%">
 																			<tr>
-																				<c:if test="${not readonly}">	
+																				<c:if test="${not readonlyEdit}">	
 																					<td width="17%" align="center"><input
 																						type="button" class="net-button-small"
 																						id="<portlet:namespace/>guardarDetalle"
