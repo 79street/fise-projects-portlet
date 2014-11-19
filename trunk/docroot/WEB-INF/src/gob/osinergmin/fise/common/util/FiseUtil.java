@@ -131,6 +131,8 @@ public class FiseUtil {
 			logger.error("Error al obtener empresas por Rol:",e);
 		}
 		
+		System.out.println("listaEmpresas::>"+listaEmpresas.size());
+		
 		return listaEmpresas;
 	}
 	
@@ -146,7 +148,7 @@ public class FiseUtil {
 		try{
 		      
 			  String [] monthNames = {"Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"};
-			   String descripcionPeriodo=""+monthNames[mes.intValue()-1]+"-"+anio+" / "+etapa;
+			   String descripcionPeriodo=""+monthNames[mes.intValue()-1]+"-"+anio+"/"+etapa;
 			  return descripcionPeriodo;
 		
 		}catch(Exception e){

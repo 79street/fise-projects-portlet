@@ -20,7 +20,7 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				//alert("aqui en ready");
+				
 				var error = '${error}';
 				
 				if (error.length > 0) {
@@ -37,8 +37,9 @@
 	modelAttribute="formato13AGartCommand" action="${accionURL}"
 	enctype="multipart/form-data">
 	<form:input path="tipoOperacion" type="hidden" />
-
-
+	<form:input path="codEmpresaHidden" type="hidden" />
+	<form:input path="descripcionPeriodoHidden" type="hidden" />
+   
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
@@ -66,8 +67,8 @@
 													<tr>
 														<td>Distribuidora Eléctrica:</td>
 														<td><form:select path="codEmpresa" cssClass="select"
-																cssStyle="width: 375px;"
-																disabled="${formato13AGartCommand.readOnly}">
+																cssStyle="width: 375px;" 
+																disabled="${formato13AGartCommand.readOnly}" >
 																<form:options
 																	items="${formato13AGartCommand.listaEmpresas}"
 																	itemLabel="dscEmpresa" itemValue="codEmpresa" />

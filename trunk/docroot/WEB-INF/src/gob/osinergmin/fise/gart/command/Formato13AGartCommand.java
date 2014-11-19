@@ -24,7 +24,8 @@ public class Formato13AGartCommand {
 	private String peridoDeclaracion; 
 	private String descripcionPeriodo; 
 	
-	
+	private String codEmpresaHidden;
+	private String descripcionPeriodoHidden;
 	//Detalle
 	private String descEmpresa;
 	private String mesPresentacion;
@@ -406,6 +407,22 @@ public class Formato13AGartCommand {
 
 	public void setTipoOperacion(int tipoOperacion) {
 		this.tipoOperacion = tipoOperacion;
+	}
+
+	public String getCodEmpresaHidden() {
+		return codEmpresaHidden;
+	}
+
+	public void setCodEmpresaHidden(String codEmpresaHidden) {
+		this.codEmpresaHidden = codEmpresaHidden;
+	}
+
+	public String getDescripcionPeriodoHidden() {
+		return descripcionPeriodoHidden;
+	}
+
+	public void setDescripcionPeriodoHidden(String descripcionPeriodoHidden) {
+		this.descripcionPeriodoHidden = descripcionPeriodoHidden;
 	}
 
 	
