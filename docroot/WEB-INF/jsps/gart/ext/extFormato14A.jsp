@@ -367,7 +367,7 @@ var formato14A= {
 	buildGrids : function () {	
 		formato14A.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Estado','Visualizar','Editar','Anular','','','',''],
+	       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo de Información','Estado','Visualizar','Editar','Anular','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   

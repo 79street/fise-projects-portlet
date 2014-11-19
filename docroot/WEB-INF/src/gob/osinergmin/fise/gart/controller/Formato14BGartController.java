@@ -219,6 +219,18 @@ private static final Log logger=LogFactoryUtil.getLog(Formato14BGartController.c
   				fiseFormato14BC.setDescEmpresa(mapaEmpresa.get(fiseFormato14BC.getId().getCodEmpresa()));
   				fiseFormato14BC.setDescMesPresentacion(fiseUtil.getMapaMeses().get(fiseFormato14BC.getId().getMesPresentacion()));
   				
+  				//grupo informacion y estado
+  				if(fiseFormato14BC.getFiseGrupoInformacion()!=null && fiseFormato14BC.getFiseGrupoInformacion().getDescripcion()!=null){
+  					fiseFormato14BC.setDescGrupoInformacion(fiseFormato14BC.getFiseGrupoInformacion().getDescripcion());
+  				}else{
+  					fiseFormato14BC.setDescGrupoInformacion(FiseConstants.BLANCO);
+  				}
+  				if(fiseFormato14BC.getFechaEnvioDefinitivo()!=null){
+  					fiseFormato14BC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+  				}else{
+  					fiseFormato14BC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+  				}
+  				
   				/**Obteniendo el flag de la operacion*/
   				String flagOper = commonService.obtenerEstadoProceso(fiseFormato14BC.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_14B,fiseFormato14BC.getId().getAnoPresentacion(),
   						fiseFormato14BC.getId().getMesPresentacion(), fiseFormato14BC.getId().getEtapa());

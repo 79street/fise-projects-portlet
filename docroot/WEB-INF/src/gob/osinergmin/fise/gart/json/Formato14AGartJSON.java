@@ -50,7 +50,7 @@ public class Formato14AGartJSON {
 		this.anoFinVigencia=fiseFormato14AC.getId().getAnoFinVigencia();
 		this.etapa=fiseFormato14AC.getId().getEtapa();
 		this.descMesPresentacion=fiseFormato14AC.getDescMesPresentacion();
-		this.grupoInfo=fiseFormato14AC.getDescEmpresa();
+		this.grupoInfo=fiseFormato14AC.getDescGrupoInformacion();
 		this.estado=fiseFormato14AC.getDescEstado();
 		
 		jsonObj.put("codEmpresa", fiseFormato14AC.getId().getCodEmpresa());
@@ -63,21 +63,9 @@ public class Formato14AGartJSON {
 		jsonObj.put("anoFinVigencia", fiseFormato14AC.getId().getAnoFinVigencia());
 		jsonObj.put("etapa", fiseFormato14AC.getId().getEtapa());
 		jsonObj.put("descMesPresentacion", fiseFormato14AC.getDescMesPresentacion());
-		//jsonObj.put("grupoInfo", fiseFormato14AC.getDescGrupoInformacion());
-		//jsonObj.put("estado", fiseFormato14AC.getDescEstado());
-		
-		if(fiseFormato14AC.getFiseGrupoInformacion()!=null && fiseFormato14AC.getFiseGrupoInformacion().getDescripcion()!=null){
-			jsonObj.put("grupoInfo", fiseFormato14AC.getFiseGrupoInformacion().getDescripcion());	
-		}else{
-			jsonObj.put("grupoInfo", FiseConstants.BLANCO);	
-		}
-		
-		if(fiseFormato14AC.getFechaEnvioDefinitivo()!=null){
-			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
-		}else{
-			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-		}
-		
+		jsonObj.put("grupoInfo", fiseFormato14AC.getDescGrupoInformacion());
+		jsonObj.put("estado", fiseFormato14AC.getDescEstado());
+
 		jsonObj.put("flagOperacion", flagOperacion);
 		
 		//valores de cabecera y detalle

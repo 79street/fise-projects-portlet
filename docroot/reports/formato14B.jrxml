@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14B" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="16"/>
+	<property name="ireport.y" value="79"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
@@ -99,13 +99,18 @@
 				<reportElement x="0" y="0" width="96" height="18"/>
 				<imageExpression class="java.lang.String"><![CDATA["logoOSINERGMIN.jpg"]]></imageExpression>
 			</image>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="415" y="0" width="140" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+			<textField pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="426" y="2" width="126" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="319" y="2" width="104" height="16"/>
+				<textElement/>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -146,7 +151,7 @@
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Bianual]]></text>
+				<text><![CDATA[Bienal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="95" y="29" width="460" height="12"/>
@@ -206,7 +211,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Grupo Beneficiario según sector de Distribución Típico]]></text>
+				<text><![CDATA[Grupo de Beneficiarios según Zona]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="415" y="23" width="73" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
@@ -252,14 +257,14 @@
 				<textElement textAlignment="Left" markup="none">
 					<font size="8" isBold="false" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[Impresión vales de descuento de clientes EDE]]></text>
+				<text><![CDATA[Impresión  vales de descuento de clientes de la Distribución Eléctrica]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="26" y="27" width="305" height="13"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Impresión vales de descuento de clientes  no EDE]]></text>
+				<text><![CDATA[Impresión  vales de descuento de clientes no pertenecen a la Distribución Eléctrica]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="348" y="14" width="66" height="13"/>
@@ -291,7 +296,7 @@
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="415" y="27" width="73" height="13"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_VAL_DSCTO_NOEDE_P}]]></textFieldExpression>
@@ -301,7 +306,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_VAL_DSCTO_EDE_L}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IMP_VAL_DSCTO_NOEDE_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="26" y="40" width="305" height="13"/>
@@ -399,7 +404,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Costo Total Reparto de vales de descuento a clientes de la EDE]]></text>
+				<text><![CDATA[Costo Total Reparto de vales de descuento a clientes de la Distribuidora Eléctrica]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="348" y="92" width="66" height="13"/>
@@ -483,14 +488,14 @@
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Entrega de Vales en la EDE]]></text>
+				<text><![CDATA[Entrega de Vales en la Distribuidora Eléctrica]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="26" y="144" width="305" height="13"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Costo Total Reparto de vales en Oficinas de la EDE o Centros Autorizados]]></text>
+				<text><![CDATA[Costo Total Reparto de vales en Oficinas de la Distribuidora Eléctrica o Centros Autorizados;]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="348" y="144" width="66" height="13"/>
@@ -546,7 +551,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Costo Unitario por Entrega de Vales en la EDE  (3.1)  /  (3.2)]]></text>
+				<text><![CDATA[Costo Unitario por Entrega de Vales en la Distribuidora Eléctrica  (3.1)  /  (3.2)]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="348" y="170" width="66" height="13"/>
@@ -625,12 +630,12 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VALES_EMIT_P}]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="489" y="209" width="66" height="13"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+			<textField>
+				<reportElement x="490" y="209" width="66" height="13"/>
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VALES_ENTREG_L}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VALES_EMIT_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="26" y="222" width="305" height="13"/>
@@ -654,7 +659,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTOS_UNIT_FIS_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="222" width="66" height="13"/>
+				<reportElement x="490" y="222" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -689,7 +694,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_UNIT_LIQ_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="248" width="66" height="13"/>
+				<reportElement x="490" y="248" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -724,7 +729,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_ATCION_SOLIC_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="275" width="66" height="13"/>
+				<reportElement x="490" y="275" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -735,7 +740,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Costo por Atención de Consultas y/o Reclamos]]></text>
+				<text><![CDATA[Costo por Atención de Consultas y Reclamos]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="348" y="288" width="66" height="13"/>
@@ -752,7 +757,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_ATCION_CONSUL_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="288" width="66" height="13"/>
+				<reportElement x="490" y="288" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -780,7 +785,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_TOTAL_ATCION_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="301" width="66" height="13"/>
+				<reportElement x="490" y="301" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -808,7 +813,7 @@
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_TOTAL_ATCION_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="489" y="314" width="66" height="13"/>
+				<reportElement x="490" y="314" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -836,7 +841,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_UNIT_ATEN_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="327" width="66" height="13"/>
+				<reportElement x="490" y="327" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -854,7 +859,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Costo de Personal (según formato FISE-14C)]]></text>
+				<text><![CDATA[Costo Total por Gestión de Personal (según formato FISE-14C)]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="348" y="353" width="66" height="13"/>
@@ -871,7 +876,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_PSNAL_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="353" width="66" height="13"/>
+				<reportElement x="490" y="353" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -882,7 +887,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Capacitación de los Agentes Autorizados de GLP ]]></text>
+				<text><![CDATA[Costo por capacitación de los Agentes Autorizados de GLP]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="348" y="366" width="66" height="13"/>
@@ -899,7 +904,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CPTCON_AGE_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="366" width="66" height="13"/>
+				<reportElement x="490" y="366" width="66" height="13"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -910,7 +915,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Útiles y materiales de oficinas ]]></text>
+				<text><![CDATA[Costo por útiles y materiales de oficina (según formato FISE-14C)]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="348" y="379" width="66" height="13"/>
@@ -927,11 +932,11 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{UTLES_OFIC_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="379" width="66" height="13"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<reportElement x="490" y="379" width="66" height="13"/>
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_TOTAL_ATCION_L}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{UTLES_OFIC_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="26" y="392" width="305" height="13"/>
@@ -953,13 +958,6 @@
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_TOTAL_GTION_P}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="489" y="392" width="66" height="13"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_TOTAL_ATCION_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="1" width="13" height="13"/>
@@ -1332,6 +1330,13 @@
 				</textElement>
 				<text><![CDATA[7.4]]></text>
 			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="490" y="392" width="66" height="13"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CSTO_TOTAL_GTION_L}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -1348,13 +1353,6 @@
 					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Los costos propuestos deben ser sutentado ampliamente en anexos adjuntos al informe..]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="13" y="15" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-				</textElement>
-				<text><![CDATA[EDE=  Empresa de Distribución Eléctrica.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="144" y="56" width="252" height="13"/>

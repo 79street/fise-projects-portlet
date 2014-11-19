@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14A" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="301"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="ANO_EJECUCION" class="java.lang.Long"/>
@@ -136,7 +136,7 @@ Provincias]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Grupo Beneficiario segun sector de Distribución Típico]]></text>
+				<text><![CDATA[Grupo Beneficiario según Zona]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="363" y="116" width="60" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
@@ -228,7 +228,7 @@ Lima]]></text>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[1.1 Empadronamiento Total]]></text>
+				<text><![CDATA[1.1 Empadronamiento  (1.1.1) + (1.1.2)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="5" y="154" width="544" height="15"/>
@@ -643,21 +643,21 @@ de luz del beneficiarios]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$P{CTO_UNT_EMPAD_P}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="363" y="466" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$P{CTO_UNT_EMPAD_R}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_EMPAD_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="489" y="466" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$P{CTO_UNT_EMPAD_L}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_EMPAD_L}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="466" width="331" height="15"/>
@@ -874,7 +874,7 @@ de luz del beneficiarios]]></text>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Bianual]]></text>
+				<text><![CDATA[Bienal]]></text>
 			</staticText>
 			<line>
 				<reportElement mode="Transparent" x="17" y="486" width="524" height="1" forecolor="#006699"/>
