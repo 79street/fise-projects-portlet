@@ -238,7 +238,13 @@ public class PeriodoEnvioController {
 			logger.info("flag costo:  "+ p.getFlagHabCostos());
 			logger.info("anio ini vige:  "+ p.getAnoIniVigencia());
 			logger.info("anio fin vige:  "+ p.getAnoFinVigencia());		
-				
+			
+			String fechaDesde = p.getDesde()+ " " +FechaUtil.getHoraActual();
+			String fechaHasta = p.getHasta()+ " " +FechaUtil.getHoraActual();
+			
+			p.setDesde(fechaDesde); 
+			p.setHasta(fechaHasta);
+			
 			p.setUsuario(themeDisplay.getUser().getLogin());
 			p.setTerminal(themeDisplay.getUser().getLoginIP());		
 			
