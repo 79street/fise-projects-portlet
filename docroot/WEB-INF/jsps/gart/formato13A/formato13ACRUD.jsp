@@ -36,7 +36,7 @@
 <form:form  method="POST"
 	modelAttribute="formato13AGartCommand" action="${accionURL}"
 	enctype="multipart/form-data">
-
+	<form:input path="tipoOperacion" type="hidden" />
 
 
 	<div id="d_listado" class="net-frame-listado">

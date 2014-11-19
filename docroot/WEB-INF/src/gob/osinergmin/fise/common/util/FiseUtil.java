@@ -142,6 +142,19 @@ public class FiseUtil {
 		return mapaEmpresa;
 	}
 	
+	public static String descripcionPeriodo(Long mes,Long anio,String etapa){
+		try{
+		      
+			  String [] monthNames = {"Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"};
+			   String descripcionPeriodo=""+monthNames[mes.intValue()-1]+"-"+anio+" / "+etapa;
+			  return descripcionPeriodo;
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
 	public Map<Long,String> getMapaMeses(){
 		return FechaUtil.cargarMapaMeses();
 	}
