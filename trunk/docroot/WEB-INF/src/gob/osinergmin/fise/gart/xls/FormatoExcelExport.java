@@ -252,13 +252,13 @@ public class FormatoExcelExport {
 				
 				HSSFRow fila = _xlsSheet.createRow(i+1);
 				HSSFCell ax1 = fila.createCell(1);
-				//ax1.setCellValue(new HSSFRichTextString(fiseFormato14C.getDescEmpresa()));
+				ax1.setCellValue(new HSSFRichTextString(fiseFormato14C.getDescEmpresa()));
 				ax1.setCellStyle(dateCellStyle);
 				HSSFCell ax2 = fila.createCell(2);
 				ax2.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato14C.getId().getAnoPresentacion())));
 				ax2.setCellStyle(dateCellStyle);
 				HSSFCell ax3 = fila.createCell(3);
-				//ax3.setCellValue(new HSSFRichTextString(fiseFormato14C.getDescMesPresentacion()));
+				ax3.setCellValue(new HSSFRichTextString(fiseFormato14C.getDescMesPresentacion()));
 				ax3.setCellStyle(dateCellStyle);
 				HSSFCell ax4 = fila.createCell(4);
 				ax4.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato14C.getId().getAnoInicioVigencia())));
@@ -267,10 +267,10 @@ public class FormatoExcelExport {
 				ax5.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato14C.getId().getAnoFinVigencia())));
 				ax5.setCellStyle(dateCellStyle);
 				HSSFCell ax6 = fila.createCell(6);
-				ax6.setCellValue(new HSSFRichTextString(""));
+				ax6.setCellValue(new HSSFRichTextString(fiseFormato14C.getFiseGrupoInformacion().getDescripcion()));
 				ax6.setCellStyle(dateCellStyle);
 				HSSFCell ax7 = fila.createCell(7);
-				//ax7.setCellValue(new HSSFRichTextString(fiseFormato14C.getDescEstado()));
+				ax7.setCellValue(new HSSFRichTextString(fiseFormato14C.getDescEstado()));
 				ax7.setCellStyle(dateCellStyle);
 			}
 		}

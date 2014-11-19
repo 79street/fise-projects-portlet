@@ -251,25 +251,32 @@ public class Formato14CGartController {
  		   
  			List<FiseFormato14CC> listaFormato14C = formato14CGartService.buscarFiseFormato14CC(codEmpresa, 
   					anioDesde, anioHasta, mesDesde, mesHasta, etapa);	
-  			
+ 			List<FiseFormato14CC> listaFormatoExporExcel= new ArrayList<FiseFormato14CC>();
   			logger.info("tamaño de la lista formato 14c   :"+listaFormato14C.size());
-  			for(FiseFormato14CC formato14c : listaFormato14C){
-  				logger.info("Anio Inicio Vigencia: "+formato14c.getId().getAnoInicioVigencia());
-  				logger.info("Anio Fin Vigencia: "+formato14c.getId().getAnoFinVigencia()); 
+  			for(FiseFormato14CC formato14c : listaFormato14C){ 				
   				formato14c.setDescEmpresa(mapaEmpresa.get(formato14c.getId().getCodEmpresa()));
-  				formato14c.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato14c.getId().getMesPresentacion()));
-  				logger.info("Seteando del array de json"); 
+  				formato14c.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato14c.getId().getMesPresentacion())); 			
+  				
   				/**Obteniendo el flag de la operacion*/
   				String flagOper = commonService.obtenerEstadoProceso(formato14c.getId().getCodEmpresa(),
   						FiseConstants.TIPO_FORMATO_14C,formato14c.getId().getAnoPresentacion(),
   						formato14c.getId().getMesPresentacion(), formato14c.getId().getEtapa());
-  				logger.info("flag operacion:  "+flagOper); 
+  				logger.info("flag operacion:  "+flagOper);
+  				
   				jsonArray.put(new Formato14CJSON().asJSONObject(formato14c,flagOper));
+  				
+  				if(formato14c.getFechaEnvioDefinitivo()!=null){
+  					formato14c.setDescEstado(FiseConstants.ESTADO_ENVIADO_F14C);  						
+  				}else{
+  					formato14c.setDescEstado(FiseConstants.ESTADO_POR_ENVIAR_F14C);  				
+  				} 				
+  				listaFormatoExporExcel.add(formato14c);
   			}
   			
   			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14C, 
-  					FiseConstants.NOMBRE_EXCEL_FORMATO14C, 
-  					FiseConstants.NOMBRE_HOJA_FORMATO14C, listaFormato14C);
+  					FiseConstants.NOMBRE_EXCEL_FORMATO14C,//title 
+  					FiseConstants.NOMBRE_HOJA_FORMATO14C, //nombre hoja
+  					listaFormatoExporExcel);
   			
   			logger.info("arreglo json:"+jsonArray);
   			PrintWriter pw = response.getWriter();
