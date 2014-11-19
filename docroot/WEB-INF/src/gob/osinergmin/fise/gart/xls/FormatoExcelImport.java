@@ -71,7 +71,7 @@ public class FormatoExcelImport {
 				}else{
 					throw new Exception("Distribuidora Eléctrica no valida ");
 				}
-				System.out.println("NOMEMPRESA :::=> "+cellE);
+				System.out.println("NOMEMPRESA :::=> "+cellD);
 				if(cellD_nom.getCellType() == HSSFCell.CELL_TYPE_STRING && cellD_nom.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 					fise13C.setDescEmpresa(cellD_nom.toString());
 					 

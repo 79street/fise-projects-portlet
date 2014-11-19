@@ -44,6 +44,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -58,7 +59,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.hibernate.exception.ConstraintViolationException;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -216,9 +218,12 @@ public class Formato13AGartController {
 		String codEmpresa = renderRequest.getParameter("codEmpresa");
 		String periodo = renderRequest.getParameter("periodoDeclaracion");
 		String read = renderRequest.getParameter("readonly");
-		String tipo = renderRequest.getParameter("tipo");
+		String tipoOperacion = renderRequest.getParameter("tipoOperacion");
 		String descPeriodo=renderRequest.getParameter("descripcionPeriodo");
 		String error=renderRequest.getParameter("error");
+		
+		String codEmpresaHidden = renderRequest.getParameter("codEmpresaHidden");
+		String descPeriodoHidden = renderRequest.getParameter("descripcionPeriodoHidden");
 		
 		//response.setRenderParameter("descripcionPeriodo", command.getDescripcionPeriodo());
 
@@ -229,8 +234,6 @@ public class Formato13AGartController {
 			model.addAttribute("error", error);
 		}
 		
-		
-
 		if (codEmpresa != null) {
 			command.setCodEmpresa(codEmpresa);
 		}
@@ -238,18 +241,24 @@ public class Formato13AGartController {
 			command.setPeridoDeclaracion(periodo);
 		}if (descPeriodo != null) {
 			command.setDescripcionPeriodo(descPeriodo);
+		}if (codEmpresaHidden != null) {
+			command.setCodEmpresaHidden(codEmpresaHidden);
+		}if (descPeriodoHidden != null) {
+			command.setDescripcionPeriodoHidden(descPeriodoHidden);
 		}
 
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
+		
+		
 		command.setReadOnly(read != null ? Boolean.parseBoolean(read) : false);
-		command.setTipoOperacion((tipo!=null && tipo.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE:FiseConstants.ADD);
+		command.setTipoOperacion((tipoOperacion!=null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE:FiseConstants.ADD);
 		
 		
 
-		model.addAttribute("crud",(tipo!=null && tipo.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? CRUD_UPDATE:CRUD_CREATE );
+		model.addAttribute("crud",(tipoOperacion!=null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? CRUD_UPDATE:CRUD_CREATE );
 		model.addAttribute("readonly", "false");
 		
-		
+		System.out.println("paso model");
 		
 
 		return "formato13ACRUD";
@@ -759,8 +768,8 @@ public class Formato13AGartController {
 			JSONArray jsonArray = new JSONArray();
 			Map<String, String> mapaEmpresa = fiseUtil.getMapaEmpresa();
 
-			String tipo = request.getParameter("tipo");
-			System.out.println("tipooo::>" + request.getParameter("tipo"));
+			String tipo = request.getParameter("tipoOperacion");
+			System.out.println("tipooo::>" + request.getParameter("tipoOperacion"));
 			String codEmpresa = "";
 			String periodoDeclaracion = "";
 
@@ -839,42 +848,59 @@ public class Formato13AGartController {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 
-		String codEmpresaNew = uploadPortletRequest.getParameter("codEmpresa");
-		String periodo = uploadPortletRequest.getParameter("peridoDeclaracion");
+		String codEmpresaNew = null;
+		String periodo = null;
 		String tipoaccion = uploadPortletRequest.getParameter("tipoOperacion");
+		System.out.println("command UPLOAD tipoaccion::" + tipoaccion);
+		if(tipoaccion!=null && tipoaccion.endsWith(String.valueOf(FiseConstants.UPDATE))){
+			 codEmpresaNew = uploadPortletRequest.getParameter("codEmpresaHidden");
+			 periodo = uploadPortletRequest.getParameter("descripcionPeriodoHidden");
+		}else{
+			 codEmpresaNew = uploadPortletRequest.getParameter("codEmpresa");
+			 periodo = uploadPortletRequest.getParameter("peridoDeclaracion");
+		
+		}
 		
 		System.out.println("command UPLOAD::" + codEmpresaNew);
 		System.out.println("command UPLOAD::" + periodo);
 		System.out.println("command UPLOAD::" + tipoaccion);
-
+		
+	
+		
+		
 		FiseFormato13ACPK cabecerapk = new FiseFormato13ACPK();
 
 		cabecerapk.setCodEmpresa(codEmpresaNew);
 		command.setCodEmpresa(codEmpresaNew);
+		command.setCodEmpresaHidden(codEmpresaNew);
 		if (periodo != null && periodo.length() > 6) {
 			cabecerapk.setAnoPresentacion(Long.parseLong(periodo.substring(0, 4)));
 			cabecerapk.setMesPresentacion(Long.parseLong(periodo.substring(4, 6)));
 			cabecerapk.setEtapa(periodo.substring(6, periodo.length()));
 			command.setPeridoDeclaracion(periodo);
-			
 			command.setDescripcionPeriodo(FiseUtil.descripcionPeriodo(cabecerapk.getMesPresentacion(),cabecerapk.getAnoPresentacion(),cabecerapk.getEtapa()));
-			
+			command.setDescripcionPeriodoHidden(periodo);
 		}
-
+		
 		FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 		List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk,tipoaccion);
         System.out.println("tipo de errores::"+lstErrores.size());
 		
+        
         if (lstErrores != null && !lstErrores.isEmpty()) {
-			
-			response.setRenderParameter("crud", "CREATE");
-			response.setRenderParameter("readonly", "false");
-			response.setRenderParameter("error", lstErrores.get(0).getDescripcion());
+        	if(tipoaccion!=null && tipoaccion!=null && tipoaccion.endsWith(String.valueOf(FiseConstants.UPDATE))){
+        		response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.UPDATE));
+    			response.setRenderParameter("crud", "UPDATE");
+    			response.setRenderParameter("readonly", "true");
+        	}else{
+        		response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.ADD));
+    			response.setRenderParameter("crud", "CREATE");
+    			response.setRenderParameter("readonly", "false");
+    		}
+        	response.setRenderParameter("error", lstErrores.get(0).getDescripcion());
 			
 		} else {
-			
-			
-			response.setRenderParameter("tipo", String.valueOf(FiseConstants.UPDATE));
+			response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.UPDATE));
 			response.setRenderParameter("crud", "UPDATE");
 			response.setRenderParameter("readonly", "true");
 			
@@ -887,6 +913,8 @@ public class Formato13AGartController {
 		response.setRenderParameter("etapa", cabecerapk.getEtapa()+"");
 		response.setRenderParameter("periodoDeclaracion", command.getPeridoDeclaracion());
 		response.setRenderParameter("descripcionPeriodo", command.getDescripcionPeriodo());
+		response.setRenderParameter("codEmpresaHidden", command.getCodEmpresaHidden());
+		response.setRenderParameter("descripcionPeriodoHidden", command.getDescripcionPeriodoHidden());
 		
 
 		
@@ -918,17 +946,24 @@ public class Formato13AGartController {
 					try {
 						cabecera = FormatoExcelImport.readSheetCabecera(libro);
 						if (cabecera != null) {
-							if (pk.getCodEmpresa().equalsIgnoreCase(cabecera.getId().getCodEmpresa()) && pk.getAnoPresentacion() == cabecera.getId().getAnoPresentacion() && pk.getMesPresentacion() == cabecera.getId().getMesPresentacion()) {
-								cabecera.getId().setEtapa("SOLICITUD");
+							System.out.println("pkempresa::>"+pk.getCodEmpresa()+" vs "+cabecera.getId().getCodEmpresa());
+							System.out.println("pkmes::>"+pk.getMesPresentacion()+" vs "+cabecera.getId().getMesPresentacion());
+							System.out.println("pkanio::>"+pk.getAnoPresentacion()+" vs "+cabecera.getId().getAnoPresentacion());
+							
+							if (pk.getCodEmpresa().trim().equalsIgnoreCase(cabecera.getId().getCodEmpresa().trim()) && pk.getAnoPresentacion() == cabecera.getId().getAnoPresentacion() && pk.getMesPresentacion() == cabecera.getId().getMesPresentacion()) {
+								System.out.println("entro la validacion");
+								
+								cabecera.getId().setEtapa(pk.getEtapa());
 								cabecera.setNombreArchivoExcel(archivo.getTitle());
 								 if(tipoOperacion!=null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))){
 									 cabecera=formatoService.getCabecera(cabecera.getId()) ;
+									 System.out.println("cabecera update::"+cabecera);
 									 cabecera.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
 										cabecera.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
 										cabecera.setFechaActualizacion(new Date());
 										cabecera = formatoService.updatecabecera(cabecera);
 										if(cabecera!=null){
-											
+											formatoService.deletedetalle(cabecera.getId().getCodEmpresa(),cabecera.getId().getAnoPresentacion(), cabecera.getId().getMesPresentacion(), cabecera.getId().getEtapa());
 										}
 									 
 								}else {
@@ -945,7 +980,7 @@ public class Formato13AGartController {
 									try{
 										
 									  cabecera = formatoService.savecabecera(cabecera);
-								  } catch (DataIntegrityViolationException ex) {
+								    } catch (DataIntegrityViolationException ex) {
 										cabecera = null;
 										System.out.println("*******EL FORMATO YA EXISTE****");
 										MensajeErrorBean msg = new MensajeErrorBean();
@@ -970,7 +1005,7 @@ public class Formato13AGartController {
 						System.out.println("entro en !!!" + e1);
 						MensajeErrorBean msg = new MensajeErrorBean();
 						msg.setId(cont);
-						msg.setDescripcion("Error general");
+						msg.setDescripcion(e1+"");
 						listaError.add(msg);
 					}
 					System.out.println("cabecera es :::=>" + cabecera);
@@ -1052,6 +1087,8 @@ public class Formato13AGartController {
 			command.setPeridoDeclaracion("" + anio + "" + mes + "" + etapa);
 			
 			command.setDescripcionPeriodo(FiseUtil.descripcionPeriodo(Long.parseLong(command.getMesPresentacion()),Long.parseLong(command.getAnioPresentacion()),command.getEtapa()));
+			command.setCodEmpresaHidden(command.getCodEmpresa());
+			command.setDescripcionPeriodoHidden(command.getPeridoDeclaracion());
 			
 			System.out.println("setPeridoDeclaracion::>" + command.getPeridoDeclaracion());
 			if (tipo != null && tipo.equalsIgnoreCase(String.valueOf(FiseConstants.VIEW))) {

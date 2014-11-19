@@ -105,6 +105,9 @@ var formato13A= {
 	
 	 botonAnadirFormato:null,
 	 botonRegresarBusqueda:null,
+	 
+	 
+	 
 	init : function(urlNuevo,urlView,urlEdit){
 		
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
@@ -165,7 +168,7 @@ var formato13A= {
 		//this.urlGuardarCabecera='<portlet:actionURL name="saveNuevoFormato"/>';
 		this.urlGuardarCabecera='<portlet:resourceURL id="saveNuevoFormato"/>';
 		
-		this.txtPeriodo=$('#txtperiodo');
+		this.txtPeriodo = $('#txtperiodo');
 		
 		this.btnExcel=$('#<portlet:namespace/>showDialogUploadExcel');
 		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
@@ -199,6 +202,7 @@ var formato13A= {
 		this.mensajeEliminandoDetalle='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
 		this.urlDeleteDetalle='<portlet:resourceURL id="deleteDetalle" />';
 		
+		
 		formato13A.initDialogsCRUD();
 		
 		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
@@ -213,9 +217,10 @@ var formato13A= {
 		
 		this.buildGridsObservacion();
 		
+	
 		
 		if(operacion=='CREATE'){
-			
+			formato13A.tipoOperacion=operacion;
 			formato13A.codEmpresa.change(function(){
 				$.when(formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
 			});
@@ -236,6 +241,7 @@ var formato13A= {
 
 		}if(operacion=='READ'){
 			//alert(operacion);
+			formato13A.tipoOperacion=operacion;
 			formato13A.peridoDeclaracion.remove();
 			formato13A.txtPeriodo.css("display","block");
 			formato13A.buscarDetalles();
@@ -255,6 +261,7 @@ var formato13A= {
 		
 			
 		}if(operacion=='UPDATE'){
+			
 			formato13A.peridoDeclaracion.remove();
 			formato13A.txtPeriodo.css("display","block");
 			formato13A.buscarDetalles();
