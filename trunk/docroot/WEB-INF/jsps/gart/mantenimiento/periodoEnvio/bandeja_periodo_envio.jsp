@@ -77,10 +77,14 @@ $(document).ready(function () {
 											<td><output>Formato:</output></td>
 											<td>
 												<form:select path="formatoBusq" cssClass="select" cssStyle="width: 100px;">
+													<form:option value="F12A">F12A</form:option>
+													<form:option value="F12B">F12B</form:option>
 													<form:option value="F12C">F12C</form:option>
-													<form:option value="F14C">F14C</form:option>
+													<form:option value="F12D">F12D</form:option>
 													<form:option value="F13A">F13A</form:option>
 													<form:option value="F14A">F14A</form:option>
+													<form:option value="F14B">F14B</form:option>
+													<form:option value="F14C">F14C</form:option>
 												</form:select>
 											</td>
 											<td><output>Estado:</output></td>
@@ -233,10 +237,14 @@ $(document).ready(function () {
 											   </td>
 											   <td>
 												 <form:select path="formato" cssClass="select" cssStyle="width: 100px;">
+													<form:option value="F12A">F12A</form:option>
+													<form:option value="F12B">F12B</form:option>
 													<form:option value="F12C">F12C</form:option>
-													<form:option value="F14C">F14C</form:option>
+													<form:option value="F12D">F12D</form:option>
 													<form:option value="F13A">F13A</form:option>
 													<form:option value="F14A">F14A</form:option>
+													<form:option value="F14B">F14B</form:option>
+													<form:option value="F14C">F14C</form:option>
 												</form:select>
 											   </td>
 											   
