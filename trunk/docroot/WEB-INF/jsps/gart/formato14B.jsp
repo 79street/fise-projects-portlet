@@ -194,6 +194,37 @@ $(document).ready(function () {
 											<td></td>
 										</tr>
 										<tr>
+										  <td>
+											<div id="<portlet:namespace/>divInformacion">
+												<fieldset class="net-frame-border">
+												  <table>
+													 <tr> 
+														<td>
+														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
+														</td>														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="descGrupoInformacion" ></output>
+													   </td>
+													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+													   <td>
+														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
+														</td>
+														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="descEstado"></output>														 
+													    </td>
+													 </tr>													
+												</table>
+											   </fieldset>
+										     </div>										
+										  </td>
+										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>
+										<tr>
 											<td>
 												<table class="" style="width: 100%;" border="0">
 													<tr>
@@ -264,37 +295,6 @@ $(document).ready(function () {
 										<tr height="10px">
 											<td></td>
 										</tr>
-										<tr>
-										  <td>
-											<div id="<portlet:namespace/>divInformacion">
-												<fieldset class="net-frame-border">
-												  <table>
-													 <tr> 
-														<td>
-														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
-														</td>														
-														<td style="text-align: center;">
-														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descGrupoInformacion" ></output>
-													   </td>
-													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-													   <td>
-														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
-														</td>
-														
-														<td style="text-align: center;">
-														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descEstado"></output>														 
-													    </td>
-													 </tr>													
-												</table>
-											   </fieldset>
-										     </div>										
-										  </td>
-										</tr>
-										<tr height="10px">
-											<td></td>
-										</tr>
 										<tr height="10px" class="filete-bottom">
 											<td></td>
 										</tr>
@@ -311,7 +311,7 @@ $(document).ready(function () {
 														<td colspan="3">
 															<table style="width: 100%;" border="0">
 																<tr>
-																	<td colspan="3" align="center"><output class="net-titulo">Grupo de Beneficiarios según Sector de distribución típico</output></td>
+																	<td colspan="3" align="center"><output class="net-titulo">Grupo de Beneficiarios según Zona</output></td>
 																</tr>
 																<tr>
 																	<td width="100px" align="center"><output class="net-titulo">Rural</output></td>
@@ -335,7 +335,7 @@ $(document).ready(function () {
 														<td colspan="4"></td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 Impresión vales de descuento de clientes EDE</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 Impresión  vales de descuento de clientes de la Distribuidora Eléctrica</td>
 														<td align="center">
 															<form:input path="impValDesctoEdeR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -347,7 +347,7 @@ $(document).ready(function () {
 														</td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Impresión  vales de descuento de clientes no EDE</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Impresión  vales de descuento de clientes no pertenecen a la Distribuidora Eléctrica</td>
 														<td align="center">
 															<form:input path="impValDesctoNoEdeR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -371,7 +371,7 @@ $(document).ready(function () {
 														</td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4 Numero de  Vales Impresos</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4 Número de  Vales Impresos</td>
 														<td align="center">
 															<form:input path="nroValesImpR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -413,7 +413,7 @@ $(document).ready(function () {
 														<td colspan="4"></td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Costo Total Reparto de vales de descuento a clientes de las EDE</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Costo Total Reparto de vales de descuento a clientes de la Distribuidora Eléctrica</td>
 														<td align="center">
 															<form:input path="costoTotalValDesctoR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -462,13 +462,13 @@ $(document).ready(function () {
 														<td colspan="4"></td>
 													</tr>
 													<tr>
-														<td colspan="4">3. Entrega de Vales en la EDE</td>
+														<td colspan="4">3. Entrega de Vales en la Distribuidora Eléctrica</td>
 													</tr>
 													<tr>
 														<td colspan="4"></td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1 Costo Total Reparto de vales en Oficinas de la EDE o Centros Autorizados</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1 Costo Total Reparto de vales en Oficinas de la Distribuidora Eléctrica o Centros Autorizados</td>
 														<td align="center">
 															<form:input path="costoTotalValOficR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -492,7 +492,7 @@ $(document).ready(function () {
 														</td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.3 Costo Unitario por Entrega de Vales en la EDE</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.3 Costo Unitario por Entrega de Vales en la Distribuidora Eléctrica</td>
 														<td align="center">
 															<form:input path="costoUnitEntrValesR" cssClass="" cssStyle="width: 100px; text-align: right;" disabled="true" />
 														</td>
@@ -603,7 +603,7 @@ $(document).ready(function () {
 														<td colspan="4"></td>
 													</tr>
 													<tr>
-														<td colspan="4">6. Atención de Solicitudes, Consultas y/o Reclamos</td>
+														<td colspan="4">6. Atención de Solicitudes, Consultas y Reclamos</td>
 													</tr>
 													<tr>
 														<td colspan="4"></td>
@@ -621,7 +621,7 @@ $(document).ready(function () {
 														</td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2 Costo por Atención de Consultas y/o Reclamos</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2 Costo por Atención de Consultas y Reclamos</td>
 														<td align="center">
 															<form:input path="costoAtenConsR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -688,7 +688,7 @@ $(document).ready(function () {
 														<td colspan="4"></td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1 Costo de Personal</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1 Costo Total por Gestión de Personal</td>
 														<td align="center">
 															<form:input path="costoPersonalR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -700,7 +700,7 @@ $(document).ready(function () {
 														</td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.2 Capacitación de los Agentes Autorizados de GLP</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.2 Costo por capacitación de los Agentes Autorizados de GLP</td>
 														<td align="center">
 															<form:input path="capacAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -712,7 +712,7 @@ $(document).ready(function () {
 														</td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.3 Útiles y materiales de oficina</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.3 Costo por útiles y materiales de oficina</td>
 														<td align="center">
 															<form:input path="utilMatOficR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>

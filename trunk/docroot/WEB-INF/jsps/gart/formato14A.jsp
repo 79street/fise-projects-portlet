@@ -201,6 +201,37 @@ $(document).ready(function () {
 											<td></td>
 										</tr>
 										<tr>
+										  <td>
+											<div id="<portlet:namespace/>divInformacion">
+												<fieldset class="net-frame-border">
+												  <table>
+													 <tr> 
+														<td>
+														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
+														</td>														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="descGrupoInformacion" ></output>
+													   </td>
+													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+													   <td>
+														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
+														</td>
+														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="descEstado"></output>														 
+													    </td>
+													 </tr>													
+												</table>
+											   </fieldset>
+										     </div>										
+										  </td>
+										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>
+										<tr>
 											<td>
 												<table class="" style="width: 100%;" border="0">
 													<tr>
@@ -271,37 +302,6 @@ $(document).ready(function () {
 										<tr height="10px">
 											<td></td>
 										</tr>
-										<tr>
-										  <td>
-											<div id="<portlet:namespace/>divInformacion">
-												<fieldset class="net-frame-border">
-												  <table>
-													 <tr> 
-														<td>
-														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
-														</td>														
-														<td style="text-align: center;">
-														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descGrupoInformacion" ></output>
-													   </td>
-													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-													   <td>
-														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
-														</td>
-														
-														<td style="text-align: center;">
-														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descEstado"></output>														 
-													    </td>
-													 </tr>													
-												</table>
-											   </fieldset>
-										     </div>										
-										  </td>
-										</tr>
-										<tr height="10px">
-											<td></td>
-										</tr>
 										
 										<tr height="10px" class="filete-bottom">
 											<td></td>
@@ -319,7 +319,7 @@ $(document).ready(function () {
 														<td colspan="3">
 															<table style="width: 100%;" border="0">
 																<tr>
-																	<td colspan="3" align="center"><output class="net-titulo">Grupo de Beneficiarios según Sector de distribución típico</output></td>
+																	<td colspan="3" align="center"><output class="net-titulo">Grupo de Beneficiarios según Zona</output></td>
 																</tr>
 																<tr>
 																	<td width="100px" align="center"><output class="net-titulo">Rural</output></td>
@@ -412,7 +412,7 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															1.1.1.4 Reparto de esquela de invitación</td>
+															1.1.1.4 Reparto de esquela de invitación, en forma conjunta con el recibo de luz del Potencial Beneficiario</td>
 														<td align="center">
 															<form:input path="repartoEsqInvitR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -426,7 +426,7 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															1.1.1.5 Verificación de Información</td>
+															1.1.1.5 Verificación de la Información</td>
 														<td align="center">
 															<form:input path="verifInfoR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -454,7 +454,7 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															1.1.1.7 Digitación de Fichas de Beneficiario</td>
+															1.1.1.7 Digitación de Fichas de Beneficiarios</td>
 														<td align="center">
 															<form:input path="digitFichaBenefR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -509,7 +509,7 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															1.1.2.3 Reparto de folletos</td>
+															1.1.2.3 Reparto de folletos a los Potenciales Beneficiarios, con el recibo de luz del beneficiario</td>
 														<td align="center">
 															<form:input path="repFolletosR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -549,7 +549,7 @@ $(document).ready(function () {
 														</td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Número de Beneficiarios empadronados en diciembre</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Número de Beneficiarios empadronados en el mes de diciembre</td>
 														<td align="center">
 															<form:input path="nroBenefEmpadR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -591,7 +591,7 @@ $(document).ready(function () {
 														<td colspan="4"></td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Costo de la Gestión de Agentes GLP</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Costo de Gestión de Red de Agentes GLP</td>
 														<td align="center">
 															<form:input path="totalCostoAgentR" cssClass="inputText-dashed" cssStyle="width: 100px; text-align: right;" disabled="true" />
 														</td>
@@ -604,7 +604,7 @@ $(document).ready(function () {
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															2.1.1 Promoción de convenios con Agentes</td>
+															2.1.1 Promoción de convenios con Agentes Autorizados de GLP</td>
 														<td align="center">
 															<form:input path="promConvAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -617,7 +617,7 @@ $(document).ready(function () {
 													</tr>
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															2.1.2 Registro y Firma de convenios</td>
+															2.1.2 Registro y Firma de convenios con Agentes Autorizados de GLP</td>
 														<td align="center">
 															<form:input path="regConvAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
