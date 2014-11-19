@@ -170,11 +170,11 @@ var periodoEnvio= {
 		       colNames: ['Secuencia','Empresa.','Formato.','Año Pres.','Mes Pres.','Estado','Visualizar','Editar','Anular'],
 		       colModel: [
                        { name: 'secuencia', index: 'secuencia', width: 20},
-					   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
+					   { name: 'descEmpresa', index: 'descEmpresa', width: 80},
 					   { name: 'formato', index: 'formato', width: 30},
 		               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
 		               { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},	              
-		               { name: 'estado', index: 'estado', width: 50,align:'center'},
+		               { name: 'estado', index: 'estado', width: 20,align:'center'},
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
 		               { name: 'elim', index: 'elim', width: 20,align:'center' }  
@@ -255,7 +255,7 @@ var periodoEnvio= {
 			var f = new Date();
 			periodoEnvio.f_anoPres.val(f.getFullYear());
 			periodoEnvio.f_mesPres.val(f.getMonth() +1);
-			periodoEnvio.f_formato.val('F14A');
+			periodoEnvio.f_formato.val('F12A');
 			periodoEnvio.f_etapa.val('SOLICITUD');
 			periodoEnvio.f_estado.val('V');
 			periodoEnvio.f_desde.val('');
