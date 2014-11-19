@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14B" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="16"/>
-	<property name="ireport.y" value="79"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
@@ -87,27 +87,27 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="46" splitType="Stretch">
+		<band height="76" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="21" width="555" height="20" forecolor="#006699"/>
+				<reportElement x="0" y="54" width="555" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FORMATO FISE - 14B: COSTOS ESTÁNDARES OPERATIVOS - MENSUAL]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="0" width="96" height="18"/>
+				<reportElement x="0" y="0" width="206" height="50"/>
 				<imageExpression class="java.lang.String"><![CDATA["logoOSINERGMIN.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="false">
-				<reportElement mode="Transparent" x="426" y="2" width="126" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="426" y="10" width="126" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="319" y="2" width="104" height="16"/>
+				<reportElement x="319" y="10" width="104" height="16"/>
 				<textElement/>
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
