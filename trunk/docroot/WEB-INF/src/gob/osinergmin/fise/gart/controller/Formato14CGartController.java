@@ -1008,6 +1008,11 @@ public class Formato14CGartController {
 	        		mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
 	        		mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 	        		mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
+	        		 //add para acta envio
+	     		    mapa.put("ANO_INICIO_VIGENCIA", formato.getId().getAnoInicioVigencia());
+	     		    mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
+	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
+	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
 	 			}
 	        	Formato14Generic formato14Generic = new Formato14Generic(formato);
 	        	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14C,

@@ -33,7 +33,11 @@ public class PeriodoEnvioJSON {
 		jsonObj.put("formato", p.getFormato());	
 		jsonObj.put("anoPresentacion",p.getAnoPresentacion());	
 		jsonObj.put("descMesPresentacion", p.getDescMesPresentacion());
-		jsonObj.put("estado", p.getEstado());		
+		if("V".equals(p.getEstado())){ 
+			jsonObj.put("estado", "Vigente");			
+		}else{
+			jsonObj.put("estado", "Anulado");			
+		}	
 		
 		return jsonObj;
 	}

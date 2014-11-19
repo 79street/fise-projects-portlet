@@ -11,6 +11,7 @@ import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.util.FechaUtil;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -134,20 +135,25 @@ public class PeriodoEnvioController {
   			logger.info("admin "+ p.isAdmin());
  		   
  			List<FisePeriodoEnvio> listaPeridoEnvio = fisePeriodoEnvioGartService.buscarFisePeriodoEnvio(codEmpresa, anioPres, 
- 					mesPres, formato, etapa, flagEnvio, estado, fechaActual); 					
-  			
+ 					mesPres, formato, etapa, flagEnvio, estado, fechaActual); 	 			
   			logger.info("tamaño de la lista formato periodo envio   :"+listaPeridoEnvio.size());
+  			
+  			List<FisePeriodoEnvio> listaPeridoEnvioExportExel = new ArrayList<FisePeriodoEnvio>();
+  			
   			for(FisePeriodoEnvio periodo : listaPeridoEnvio){  				
   				periodo.setDescEmpresa(mapaEmpresa.get(periodo.getCodEmpresa()));
   				periodo.setDescMesPresentacion(fiseUtil.getMapaMeses().get(Long.valueOf(periodo.getMesPresentacion()))); 
   				logger.info("Mes Presentacion:  "+periodo.getMesPresentacion());
   				logger.info("Seteando del array de json");   				
   				jsonArray.put(new PeriodoEnvioJSON().asJSONObject(periodo));
+  				
+  				listaPeridoEnvioExportExel.add(periodo);
   			}
   			
-  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14C, 
-  					FiseConstants.NOMBRE_EXCEL_FORMATO14C, 
-  					FiseConstants.NOMBRE_HOJA_FORMATO14C, listaPeridoEnvio);
+  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_PERIODO_ENVIO, 
+  					"PERIODOS DE ENVIO", //title
+  					"PERIODO", //nombre hoja
+  					listaPeridoEnvioExportExel);
   			
   			logger.info("arreglo json:"+jsonArray);
   			PrintWriter pw = response.getWriter();
