@@ -2,7 +2,6 @@ package gob.osinergmin.fise.gart.command;
 
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
-import gob.osinergmin.fise.domain.FisePeriodoEnvioPK;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,17 +60,17 @@ public class PeriodoEnvioCommand implements Serializable{
 	
 	public static FisePeriodoEnvio toBean(PeriodoEnvioCommand command){
 		FisePeriodoEnvio bean=new FisePeriodoEnvio();
-		FisePeriodoEnvioPK pk=new FisePeriodoEnvioPK();
-		pk.setSecuencia(command.getSecuencia());
+		//FisePeriodoEnvioPK pk=new FisePeriodoEnvioPK();
+		/*pk.setSecuencia(command.getSecuencia());
 		pk.setAnoPresentacion(command.getAnoPresentacion());
 		pk.setCodEmpresa(command.getCodEmpresa());
 		pk.setEtapa(command.getEtapa());
 		pk.setFormato(command.getFormato());
 		pk.setMesPresentacion(command.getMesPresentacion());
-		bean.setId(pk);
+		bean.setId(pk);*/
 		bean.setDesde(command.getDesde());
 		bean.setHasta(command.getHasta());
-		bean.setDiasNotificacionAntesCierre(command.getDiasNotificacionAntesCierre());
+		//bean.setDiasNotificacionAntesCierre(command.getDiasNotificacionAntesCierre());
 		bean.setFlagEnvioConObservaciones(command.getFlagEnvioConObservaciones());
 		bean.setCeginroexp(command.getCeginroexp());
 		bean.setCeginrotra(command.getCeginrotra());
@@ -109,7 +108,7 @@ public class PeriodoEnvioCommand implements Serializable{
 	
 	public static PeriodoEnvioCommand toCommand(FisePeriodoEnvio bean){
 		PeriodoEnvioCommand command=new PeriodoEnvioCommand();
-		command.setSecuencia(bean.getId().getSecuencia());
+		/*command.setSecuencia(bean.getId().getSecuencia());
 		command.setAnoPresentacion(bean.getId().getAnoPresentacion());
 		command.setCodEmpresa(bean.getId().getCodEmpresa());
 		command.setEtapa(bean.getId().getEtapa());
@@ -117,7 +116,7 @@ public class PeriodoEnvioCommand implements Serializable{
 		command.setMesPresentacion(bean.getId().getMesPresentacion());
 		command.setDesde(bean.getDesde());
 		command.setHasta(bean.getHasta());
-		command.setDiasNotificacionAntesCierre(bean.getDiasNotificacionAntesCierre());
+		command.setDiasNotificacionAntesCierre(bean.getDiasNotificacionAntesCierre());*/
 		command.setFlagEnvioConObservaciones(bean.getFlagEnvioConObservaciones());
 		command.setCeginroexp(bean.getCeginroexp());
 		command.setCeginrotra(bean.getCeginrotra());
