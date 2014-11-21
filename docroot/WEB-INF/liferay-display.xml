@@ -13,5 +13,6 @@
 		<portlet id="gartFormato14C"/>
 		<portlet id="gartPeriodoEnvio"/>
 		<portlet id="gartCumplimiento"/>
+		<portlet id="gartObservacion"/>
 	</category>
 </display>
