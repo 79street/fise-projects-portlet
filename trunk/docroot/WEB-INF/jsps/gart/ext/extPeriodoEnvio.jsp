@@ -55,7 +55,7 @@ var periodoEnvio= {
 		f_codEmpresa:null,f_anoPres:null,f_mesPres:null,f_formato:null,f_etapa:null,f_estado:null,f_desde:null,
 		f_hasta:null,f_dias:null,f_flagEnvioObs:null,f_flagAnoMes:null,	f_flagCosto:null,
 		f_anoIniVigencia:null,f_anoFinVigencia:null,
-		f_secuencia:null,
+		f_secuencia:null,f_fechaAmpl:null,
 		//grillas
 		tablaResultados:null,
 		paginadoResultados:null,	
@@ -120,6 +120,7 @@ var periodoEnvio= {
 			this.f_estado=$('#estado');
 			this.f_desde=$('#desde');
 			this.f_hasta=$('#hasta');
+			this.f_fechaAmpl=$('#fechaAmpl');
 			this.f_dias=$('#diasNotifCierre');
 			this.f_flagEnvioObs=$('#flagEnvioObs');	
 			this.f_flagAnoMes=$('#flagAnioMesEjec');	
@@ -261,6 +262,8 @@ var periodoEnvio= {
 			periodoEnvio.f_desde.val('');
 			periodoEnvio.f_hasta.val('');
 			periodoEnvio.f_dias.val('1');
+			periodoEnvio.f_fechaAmpl.val('');
+			
 			
 			/*$('#rbtEnvioSi').removeAttr("disabled");
         	$('#rbtEnvioNo').removeAttr("disabled");
@@ -367,6 +370,7 @@ var periodoEnvio= {
 			periodoEnvio.f_desde.val(bean.desde);
 			periodoEnvio.f_hasta.val(bean.hasta);
 			periodoEnvio.f_dias.val(bean.diasNotifCierre);
+			periodoEnvio.f_fechaAmpl.val(bean.fechaAmpl);
 			
 			console.debug("Valor del flag mostrar anio y mes pres..:  "+bean.flagAnioMesEjec);
 			 if(bean.flagAnioMesEjec=='S'){
@@ -462,6 +466,9 @@ var periodoEnvio= {
 							periodoEnvio.deshabilitarCamposEditar();							
 							$('#<portlet:namespace/>guardarPeriodoEnvio').css('display','none');
 							$('#<portlet:namespace/>actualizarPeriodoEnvio').css('display','block');
+						}else if(data.resultado == "Mayor"){				
+							alert('La fecha hasta no debe ser mayor a la fecha de ampliacion.'); 
+							periodoEnvio.f_fechaAmpl.focus();	
 						}else if(data.resultado == "Error"){				
 							var addhtml2='Se produjo un error al guardar los datos.';
 							periodoEnvio.dialogMessageContent.html(addhtml2);
@@ -495,6 +502,9 @@ var periodoEnvio= {
 							periodoEnvio.dialogMessageContent.html(addhtml2);
 							periodoEnvio.dialogMessage.dialog("open");						
 							periodoEnvio.initBlockUI();								
+						}else if(data.resultado == "Mayor"){				
+							alert('La fecha hasta no debe ser mayor a la fecha de ampliacion.'); 
+							periodoEnvio.f_fechaAmpl.focus();	
 						}else if(data.resultado == "Error"){				
 							var addhtml2='Se produjo un error al actualizar los datos.';
 							periodoEnvio.dialogMessageContent.html(addhtml2);
@@ -550,6 +560,11 @@ var periodoEnvio= {
 				alert('Debe ingresar una fecha hasta valida'); 
 				periodoEnvio.f_desde.focus();
 			  	return false; 
+			}else if(!periodoEnvio.f_fechaAmpl.val().length == '' && 
+					!validaFechaDDMMAAAA(periodoEnvio.f_fechaAmpl.val())){
+				alert('Debe ingresar fecha ampliacion valida'); 
+				periodoEnvio.f_fechaAmpl.focus();
+			  	return false; 			
 			}else if(periodoEnvio.f_dias.val().length == ''){
 				alert('Debe ingresar el numero de dias de notificacion antes del cierre'); 
 				periodoEnvio.f_dias.focus();
@@ -567,7 +582,6 @@ var periodoEnvio= {
 			}		
 		},
 		
-		//funcion para validar formulario de ingreso y actualizacion
         habilitarCamposEditar : function(){        
         	periodoEnvio.f_codEmpresa.removeAttr("disabled");
 			periodoEnvio.f_anoPres.removeAttr("disabled");
@@ -602,7 +616,9 @@ var periodoEnvio= {
         	$('#rbtIndirecto').removeAttr("disabled");      	
         	
         	periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
-        	periodoEnvio.f_anoFinVigencia.removeAttr("disabled"); 
+        	periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
+        	
+        	periodoEnvio.f_fechaAmpl.removeAttr("disabled"); 
 			
 		},		
 		deshabilitarCamposVisualizar : function(){		
@@ -622,7 +638,9 @@ var periodoEnvio= {
         	$('#rbtIndirecto').attr("disabled",true);    
         	
         	periodoEnvio.f_anoIniVigencia.attr("disabled",true);
-        	periodoEnvio.f_anoFinVigencia.attr("disabled",true);       	
+        	periodoEnvio.f_anoFinVigencia.attr("disabled",true); 
+        	
+        	periodoEnvio.f_fechaAmpl.attr("disabled",true); 
 		},		
 		
 		

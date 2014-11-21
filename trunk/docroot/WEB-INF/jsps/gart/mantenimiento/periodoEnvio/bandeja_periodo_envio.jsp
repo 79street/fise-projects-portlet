@@ -277,27 +277,22 @@ $(document).ready(function () {
 											<tr>
 											  <td><label style="font-size: 12px; font-weight: bold">Desde:(dd/mm/aaaa)</label>
 											  </td>
-											  <td>
-											    <!-- <input id="desde" type="date" name="desde" >  -->
-											   <!-- <input type="text" name="desde" id="desde" 
-											    		data-dojo-type="dijit/form/DateTextBox"
-														style="width: 150px" constraints="{datePattern:'dd/MM/yyyy'}"/>	 --> 
+											  <td>											   
 											    <form:input path="desde" /> 								
 											  </td>
 											
 											  <td><label style="font-size: 12px; font-weight: bold">Hasta: (dd/mm/aaaa)</label>
 											  </td>
-											  <td>
-											   <!--  <input id="hasta" type="date" name="hasta" > -->											 
+											  <td>											  										 
 											   <form:input path="hasta" />								    												
 											  </td>
 											  
-											  <td><label style="font-size: 12px; font-weight: bold">Días antes de Cierre:</label>
+											  <td><label style="font-size: 12px; font-weight: bold">Fecha Ampliada: (dd/mm/aaaa)</label>
 											  </td>
-											  <td>
-											     <!-- <input id="diasNotifCierre"  type="number" name="diasNotifCierre" min="0" max="31"> -->
-											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2"/>											
-											  </td>										
+											  <td>											  										 
+											   <form:input path="fechaAmpl" />								    												
+											  </td>
+											  								
 											</tr>
 											
 											 <tr height="10px">
@@ -361,10 +356,11 @@ $(document).ready(function () {
 											   <form:input path="anoFinVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>								
 											 </td>	
 											 
-											 <td>											  
-											 </td>
-											 <td>											   									
-											 </td>
+											 <td><label style="font-size: 12px; font-weight: bold">Días antes de Cierre:</label>
+											  </td>
+											  <td>											   
+											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2"/>											
+											  </td>	
 											 											 
 											</tr>
 											
