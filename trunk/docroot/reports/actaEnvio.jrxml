@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actaEnvio" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="83"/>
+	<property name="ireport.y" value="283"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_INICIO_VIGENCIA" class="java.lang.Long"/>
@@ -10,11 +10,6 @@
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="NOMBRE_FORMATO" class="java.lang.String"/>
-	<parameter name="FORMATO_FIRMADO" class="java.lang.String"/>
-	<parameter name="PRESENTA_SUSTENTO" class="java.lang.String"/>
-	<parameter name="CUMPLE_PLAZO" class="java.lang.String"/>
-	<parameter name="SIN_OBSERVACIONES" class="java.lang.String"/>
-	<parameter name="OTROS" class="java.lang.String"/>
 	<parameter name="FECHA_REGISTRO" class="java.util.Date"/>
 	<parameter name="FECHA_ENVIO" class="java.util.Date"/>
 	<parameter name="USUARIO_REGISTRO" class="java.lang.String"/>
