@@ -1013,6 +1013,30 @@ public class Formato14CGartController {
 	     		    mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
+	     		   //prueba de envio definitivo
+	     		   String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
+	     		   String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
+	     		   mapa.put("CHECKED", dirCheckedImage);
+	     		   mapa.put("UNCHECKED", dirUncheckedImage);
+	     		   boolean cumplePlazo = false;
+	     		   cumplePlazo = commonService.fechaEnvioCumplePlazo(
+	     				   FiseConstants.TIPO_FORMATO_14B, 
+	     				   formato.getId().getCodEmpresa(), 
+	     				   formato.getId().getAnoPresentacion(), 
+	     				   formato.getId().getMesPresentacion(), 
+	     				   formato.getId().getEtapa(), 
+	     				   FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
+	     		   if( cumplePlazo ){
+	     			   mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
+	     	   	   }else{
+	     			   mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
+	     	   	   }
+	     		   if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+	     			   mapa.put("CHECKED_OBSERVACION", dirUncheckedImage);
+	     		   }else{
+	     			   mapa.put("CHECKED_OBSERVACION", dirCheckedImage);
+	     		   }
+	     		   mapa.put("ETAPA", formato.getId().getEtapa());
 	 			}
 	        	Formato14Generic formato14Generic = new Formato14Generic(formato);
 	        	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14C,
