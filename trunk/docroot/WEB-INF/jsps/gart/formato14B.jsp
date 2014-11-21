@@ -775,27 +775,31 @@ $(document).ready(function () {
 																	<td width="65%">
 																		<table style="width: 100%">
 																			<tr>
-																				<td width="16%" align="center">
+																				<td width="13%" align="center">
 																					<input type="button" class="boton" name="<portlet:namespace/>reportePdf" style="display: none;"
 																						id="<portlet:namespace/>reportePdf" class="button net-button-small" value="Imprimir PDF" />
 																				</td>
-																				<td width="16%" align="center">
+																				<td width="13%" align="center">
 																					<input type="button" class="boton" name="<portlet:namespace/>reporteExcel" style="display: none;"
 																						id="<portlet:namespace/>reporteExcel" class="button net-button-small" value="Exportar excel" />
 																				</td>
-																				<td width="17%" align="center">
+																				<td width="13%" align="center">
+																					<input type="button" class="boton" name="<portlet:namespace/>reporteActaEnvio" style="display: none;"
+																						id="<portlet:namespace/>reporteActaEnvio" class="button net-button-small" value="Acta de envío" />
+																				</td>
+																				<td width="16%" align="center">
 																					<input type="button" class="net-button-small" id="<portlet:namespace/>guardarFormato"
 																						name="<portlet:namespace/>guardarFormato" value="Grabar" />
 																				</td>
-																				<td width="17%" align="center">
+																				<td width="15%" align="center">
 																					<input type="button" class="net-button-small" id="<portlet:namespace/>validacionFormato"
 																						name="<portlet:namespace/>validacionFormato" value="Validación" />
 																				</td>
-																				<td width="17%" align="center">
+																				<td width="15%" align="center">
 																					<input type="button" class="net-button-small" id="<portlet:namespace/>envioDefinitivo"
 																						name="<portlet:namespace/>envioDefinitivo" value="Envío Def." />
 																				</td>
-																				<td width="17%" align="center">
+																				<td width="15%" align="center">
 																					<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormato" 
 																						name="<portlet:namespace/>regresarFormato" value="Regresar" />
 																				</td>

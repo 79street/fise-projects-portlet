@@ -21,6 +21,7 @@ var formato14B= {
 	urlReporteValidacion:null,
 	urlEnvioDefinitivo:null,
 	urlReporteEnvioDefinitivo:null,
+	urlReporteActaEnvio:null,
 	//
 	mensajeCargando:null,
 	mensajeObteniendoDatos:null,
@@ -64,6 +65,8 @@ var formato14B= {
 	botonGrabar:null,
 	botonValidacion:null,
 	botonEnvioDefinitivo:null,
+	//
+	botonActaEnvio:null,
 	//cargarchivos
 	botonCargaExcel:null,
 	botonCargaTxt:null,
@@ -130,6 +133,7 @@ var formato14B= {
 		this.urlReporteValidacion='<portlet:resourceURL id="reporteValidacion" />';
 		this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivo" />';
 		this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivo" />';
+		this.urlReporteActaEnvio='<portlet:resourceURL id="reporteActaEnvioView" />';
 		//mensajes
 		this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
 		this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
@@ -279,6 +283,8 @@ var formato14B= {
 		this.botonGrabar=$("#<portlet:namespace/>guardarFormato");
 		this.botonValidacion=$("#<portlet:namespace/>validacionFormato");
 		this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivo");
+		//
+		this.botonActaEnvio=$("#<portlet:namespace/>reporteActaEnvio");
 		//cargaarchivos
 		this.botonCargaExcel=$("#<portlet:namespace/>cargaExcel");
 		this.botonCargaTxt=$("#<portlet:namespace/>cargaTxt");
@@ -303,6 +309,8 @@ var formato14B= {
 		formato14B.botonReporteExcel.click(function() {formato14B.<portlet:namespace/>mostrarReporteExcel();});
 		formato14B.botonValidacion.click(function() {formato14B.<portlet:namespace/>validacionFormato();});
 		formato14B.botonEnvioDefinitivo.click(function() {formato14B.confirmarEnvioDefinitivo();});
+		//
+		formato14B.botonActaEnvio.click(function() {formato14B.<portlet:namespace/>mostrarReporteActaEnvio();});
 		
 		formato14B.initDialogs();
 		formato14B.cargaInicial();
@@ -500,6 +508,9 @@ var formato14B= {
 		//se visualizan los componentes escondidos
 		formato14B.botonReportePdf.css('display','none');
 		formato14B.botonReporteExcel.css('display','none');
+		//
+		formato14B.botonActaEnvio.css('display','none');
+		//
 		formato14B.botonGrabar.css('display','');
 		formato14B.botonValidacion.css('display','');
 		formato14B.botonEnvioDefinitivo.css('display','');
@@ -732,6 +743,9 @@ var formato14B= {
 		//
 		formato14B.botonReportePdf.css('display','');
 		formato14B.botonReporteExcel.css('display','');
+		//
+		formato14B.botonActaEnvio.css('display','');
+		//
 		formato14B.botonGrabar.css('display','none');
 		formato14B.botonValidacion.css('display','none');
 		formato14B.botonEnvioDefinitivo.css('display','none');
@@ -2027,6 +2041,31 @@ var formato14B= {
 				formato14B.initBlockUI();
 			}
 		});
+	},
+	<portlet:namespace/>mostrarReporteActaEnvio : function(){
+		var estado = $('#descEstado').val();	
+		if(estado=='Enviado'){
+			jQuery.ajax({
+				url: formato14B.urlReporteActaEnvio+'&'+formato14B.formCommand.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {
+					<portlet:namespace />codEmpresa: formato14B.f_empresa.val(),
+					<portlet:namespace />periodoEnvio: formato14B.f_periodoEnvio.val(),
+					<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+					<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
+					<portlet:namespace />tipoArchivo: '0'//PDF
+				},
+				success : function(gridData) {
+					formato14B.verReporte();
+				},error : function(){
+					alert("Error de conexión.");
+					formato14B.initBlockUI();
+				}
+			});
+		}else{
+			alert("Primero debe realizar el envío definitivo");
+		}
 	},
 	//funcion para desabiliar campos lima
 	deshabilitarLima : function(){
