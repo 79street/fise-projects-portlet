@@ -824,10 +824,10 @@ var formato14C= {
 			formato14C.f_costILAsist.val(bean.costILAsist);
 			
 	        //llamando a las funciones para realizar los calculos
+	        formato14C.formularioCompletarDecimales();
 			formato14C.calculoTotal();			
 			formato14C.soloNumerosEnteros();
-			formato14C.soloNumerosDecimales();
-			formato14C.formularioCompletarDecimales();
+			formato14C.soloNumerosDecimales();			
 			
 			formato14C.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 			/**para controlar los costos directos e indirectos*/
@@ -1282,6 +1282,7 @@ var formato14C= {
 		},
 		//function para realizar los calculos totales
 		calculoTotal : function(){
+			formato14C.formularioCompletarDecimales();
 			//RURAL
 			formato14C.totalCantidadCostoDirectoRural();
 			formato14C.totalCostoDirectoRural();
@@ -1322,6 +1323,7 @@ var formato14C= {
 			formato14C.totalCostoLimaGeneral();
 			
 			//TOTALES
+			
 			formato14C.totalCantidadGeneralCoord();
 			formato14C.totalCantidadGeneralSupe();
 			formato14C.totalCantidadGeneralGest();
@@ -1336,11 +1338,7 @@ var formato14C= {
 			formato14C.totalCostoGeneralPersonal();	
 			
 			formato14C.totalCantidadGeneralBenefiarios();
-			formato14C.totalCostoPromedioGeneral();
-			
-			
-			//llamando a la funcion para completar decimales si en caso falta completar
-			formato14C.formularioCompletarDecimales();
+			formato14C.totalCostoPromedioGeneral();		
 		},
 		/*******CALCULOS DE TOTALES RURAL*******/
 		//total de la cantidad de gestion de personal para el costo directo zona rural
@@ -2020,73 +2018,99 @@ var formato14C= {
 			costoTotalG = parseFloat(costoTotalR)+ parseFloat(costoTotalP) + parseFloat(costoTotalL);				
 			costoTotalGRedondeo = redondeo(costoTotalG, 2);			
 			formato14C.f_costTotalPromedio.val(parseFloat(costoTotalGRedondeo));
-		},		
-		
+		},	
 		//function para completar decimales
 		formularioCompletarDecimales : function(){
 			/**cabecera*/
+			completarNumeroBlanco('numRural');
+			completarNumeroBlanco('numUrbProv');
+			completarNumeroBlanco('numUrbLima');
 			completarDecimal('costoPromRural',2);
 			completarDecimal('costoPromUrbProv',2);
 			completarDecimal('costoPromUrbLima',2);
 			/**detalle*/
 			//RURAL
+			completarNumeroBlanco('canDRCoord');
+			completarNumeroBlanco('canIRCoord');			
 			completarDecimal('costDRCoord',2);
 			completarDecimal('costIRCoord',2);
 			
 			completarDecimal('costTotalRCoord',2);
 			
+			completarNumeroBlanco('canDRSupe');
+			completarNumeroBlanco('canIRSupe');
 			completarDecimal('costDRSupe',2);
 			completarDecimal('costIRSupe',2);
 			
 			completarDecimal('costTotalRSupe',2);
 			
+			completarNumeroBlanco('canDRGest');
+			completarNumeroBlanco('canIRGest');
 			completarDecimal('costDRGest',2);
 			completarDecimal('costIRGest',2);
 			
 			completarDecimal('costTotalRGest',2);
 			
+			completarNumeroBlanco('canDRAsist');
+			completarNumeroBlanco('canIRAsist');
 			completarDecimal('costDRAsist',2);
 			completarDecimal('costIRAsist',2);	
 			
 			completarDecimal('costTotalRAsist',2);
 			
 			//PROVINCIA
+			completarNumeroBlanco('canDPCoord');
+			completarNumeroBlanco('canIPCoord');	
 			completarDecimal('costDPCoord',2);
 			completarDecimal('costIPCoord',2);
 			
 			completarDecimal('costTotalPCoord',2);
 			
+			completarNumeroBlanco('canDPSupe');
+			completarNumeroBlanco('canIPSupe');
 			completarDecimal('costDPSupe',2);
 			completarDecimal('costIPSupe',2);
 			
 			completarDecimal('costTotalPSupe',2);
 			
+			completarNumeroBlanco('canDPGest');
+			completarNumeroBlanco('canIPGest');
 			completarDecimal('costDPGest',2);
 			completarDecimal('costIPGest',2);
 			
 			completarDecimal('costTotalPGest',2);
 			
+			completarNumeroBlanco('canDPAsist');
+			completarNumeroBlanco('canIPAsist');
 			completarDecimal('costDPAsist',2);
 			completarDecimal('costIPAsist',2);
 			
 			completarDecimal('costTotalPAsist',2);
 			
 			//LIMA
+			completarNumeroBlanco('canDLCoord');
+			completarNumeroBlanco('canILCoord');	
 			completarDecimal('costDLCoord',2);
 			completarDecimal('costILCoord',2);
 			
 			completarDecimal('costTotalLCoord',2);
 			
+			completarNumeroBlanco('canDLSupe');
+			completarNumeroBlanco('canILSupe');
 			completarDecimal('costDLSupe',2);
 			completarDecimal('costILSupe',2);
 			
 			completarDecimal('costTotalLSupe',2);
 			
+			completarNumeroBlanco('canDLGest');
+			completarNumeroBlanco('canILGest');
 			completarDecimal('costDLGest',2);
 			completarDecimal('costILGest',2);
 			
 			completarDecimal('costTotalLGest',2);
 			
+			completarNumeroBlanco('canDLAsist');
+			completarNumeroBlanco('canILAsist');
 			completarDecimal('costDLAsist',2);
 			completarDecimal('costILAsist',2);
 			
