@@ -882,11 +882,14 @@ public class Formato14CGartController {
 	}	
 	
 	@ResourceMapping("reporteValidacionF14C")
-	public void reporteValidacion(ResourceRequest request,ResourceResponse response) {
+	public void reporteValidacion(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14CBean")Formato14CBean f) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
 	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+	        
+	        logger.info("Codigo empresa:  "+ f.getCodEmpresa());
+			logger.info("perido de envio:  "+ f.getPeriodoEnvio());
 	        
 	        PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 	        
@@ -897,6 +900,10 @@ public class Formato14CGartController {
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();	    
 		   
+		    if(f.getPeriodoEnvio().length()>6 ){
+				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
+			}
+		    
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
 		    session.setAttribute("tipoFormato",tipoFormato);
@@ -929,6 +936,10 @@ public class Formato14CGartController {
 		   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
 		   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
 		   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+			//add
+		   	mapa.put("DESC_EMPRESA", mapaEmpresa.get(f.getCodEmpresa()));
+		   	mapa.put("ETAPA", f.getEtapa());
+		   	
 		   	session.setAttribute("mapa", mapa);
 		    //
 		   	
