@@ -229,3 +229,14 @@ function validaFechaDDMMAAAA(fecha){
 	}
 }
 
+function completarNumeroBlanco(id){	
+	var elementa = document.getElementById(id);		
+	var conversion = Number(elementa.value);
+	if( isNaN(conversion)){
+			elementa.value = '0';
+	}else{
+		elementa.value = Number(elementa.value);
+	}	
+}
+
+
