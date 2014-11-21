@@ -162,7 +162,8 @@ public class FormatoExcelImport {
 								throw new Exception("El año debe de alta debe ser menor o igual al año de presentación error fila :"+(r+1));
 							}
 						}else{
-							throw new Exception("El año/mes de alta no cumplen con el formato establecido error fila :"+(r+1));
+							
+							throw new Exception("El año/mes de alta no cumplen con el formato establecido (yyyy-mm) error fila :"+(r+1));
 						}
 						
 						
@@ -171,6 +172,8 @@ public class FormatoExcelImport {
 					}
 					
 					
+				}else{
+					throw new Exception("El año/mes de alta no cumplen con el formato establecido (yyyy-mm) error fila :"+(r+1));
 				}
 				
 				if(isread){
@@ -206,6 +209,7 @@ public class FormatoExcelImport {
 						}else{
 							fise13.setNumeroBenefiPoteSectTipico(0L);
 						}
+						System.out.println("VALOR  ==>"+fise13.getNumeroBenefiPoteSectTipico());
 						
 					}catch(NumberFormatException n){
 						throw new Exception("NumeroBeneficiario no valido en fila nro :"+(r+1));

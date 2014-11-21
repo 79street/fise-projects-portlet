@@ -60,6 +60,13 @@ var formato13A= {
 	urlGuardarCabecera:null,
 	dlgConfirmacion:null,
 	txtPeriodo:null,
+	txtGrupo:null,
+	txtEstado:null,
+	lblGrupo:null,
+	lblEstado:null,
+	divPeriodoVigencia:null,
+	txtInicioVig:null,
+	txtFinVig:null,
 	
 	btnExcel:null,
 	dialogCargaExcel:null,
@@ -173,6 +180,15 @@ var formato13A= {
 		this.urlGuardarCabecera='<portlet:resourceURL id="saveNuevoFormato"/>';
 		
 		this.txtPeriodo = $('#txtperiodo');
+		this.txtGrupo = $('#txtgrupo');
+		this.txtEstado = $('#txtestado');
+		this.lblGrupo= $('#lblGrupo');
+		this.lblEstado= $('#lblEstado');
+		this.divPeriodoVigencia = $('#divVigencia');
+		
+		this.txtInicioVig = $('#txtinicioVig');
+		this.txtFinVig = $('#txtfinVig');
+		
 		
 		this.btnExcel=$('#<portlet:namespace/>showDialogUploadExcel');
 		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
@@ -244,12 +260,13 @@ var formato13A= {
 			
 
 		}if(operacion=='READ'){
-			//alert(operacion);
+			
 			formato13A.tipoOperacion=operacion;
-			formato13A.peridoDeclaracion.remove();
-			formato13A.txtPeriodo.css("display","block");
+			formato13A.showCamposOculto();
+			
+			
+			
 			formato13A.buscarDetalles();
-				
 			formato13A.botonReportePdf.click(function() {formato13A.<portlet:namespace/>mostrarReportePdf();});
 			formato13A.botonReporteExcel.click(function() {formato13A.<portlet:namespace/>mostrarReporteExcel();});
 			
@@ -266,11 +283,12 @@ var formato13A= {
 			
 		}if(operacion=='UPDATE'){
 			
-			formato13A.peridoDeclaracion.remove();
-			formato13A.txtPeriodo.css("display","block");
+			
+			formato13A.showCamposOculto();
 			formato13A.buscarDetalles();
 			formato13A.botonAnadirFormato.css("display","block");
 			formato13A.btnGuardarCabecera.css("display","none");
+			
 
             formato13A.botonAnadirFormato.click(function(){
 
@@ -381,7 +399,7 @@ var formato13A= {
 	buildGridsBusqueda : function () {	
 		formato13A.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Informaiòn','Estado','Visualizar','Editar','Anular','','',''],
+	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Informaiòn','Estado','Visualizar','Editar','Anular','','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -394,7 +412,9 @@ var formato13A= {
 	               { name: 'elim', index: 'elim', width: 20,align:'center' },
 	               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 	               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
-	               { name: 'flagOperacion', index: 'flagOperacion', hidden: true}
+	               { name: 'flagOperacion', index: 'flagOperacion', hidden: true},
+	               { name: 'anioInicioVigencia', index: 'anioInicioVigencia', hidden: true},
+	               { name: 'anioFinVigencia', index: 'anioFinVigencia', hidden: true}
 		   	    ],
 		   	 multiselect: false,
 				rowNum:10,
@@ -414,10 +434,10 @@ var formato13A= {
 	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl); 
 	      			
 
-	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&descGrupoInformacion="+ret.grupoInfo+"&descestado="+ret.estado+"&anioInicioVigencia="+ret.anioInicioVigencia+"&anioFinVigencia="+ret.anioFinVigencia+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
 	      			//edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' /></a> ";
 	      			
-	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato13A.confirmarEditCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.descripcionPeriodo+"','"+ret.flagOperacion+"');\" /></a> ";
+	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato13A.confirmarEditCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.descripcionPeriodo+"','"+ret.grupoInfo+"','"+ret.estado+"','"+ret.anioInicioVigencia+"','"+ret.anioFinVigencia+"','"+ret.flagOperacion+"');\" /></a> ";
 	      			
 	      			//elem = "<a href='#' onclick=\"formato13A.showconfirmacion('ss','ss')\"><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center'  /></a> ";              			
 
@@ -790,6 +810,7 @@ var formato13A= {
 				if(data == '1'){
 					formato13A.codEmpresa.attr("disabled", true);
 					formato13A.peridoDeclaracion.attr("disabled", true);
+					formato13A.showCamposOculto();
 					formato13A.botonAnadirFormato.css("display","block");
 					formato13A.btnGuardarCabecera.css("display","none");
 					alert("Se registro correctamente");
@@ -945,7 +966,9 @@ var formato13A= {
 				//<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion13',
 				<portlet:namespace />nombreArchivo: 'validacion13',
-				<portlet:namespace />tipoArchivo: '0'//PDF
+				<portlet:namespace />tipoArchivo: '0',
+				anioInicioVigencia:formato13A.txtInicioVig.val(),
+				anioFinVigencia:formato13A.txtFinVig.val() //PDF
 			},
 			success : function(gridData) {
 				formato13A.verReporte();
@@ -1207,15 +1230,26 @@ var formato13A= {
 			}
 		});
 	},
-	confirmarEditCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,descripcionPeriodo,flagOperacion){
+	confirmarEditCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,descripcionPeriodo,descGrupo,descEstado,anioInicioVigencia,anioFinVigencia,flagOperacion){
 		//alert(flagOperacion+'-'+(flagOperacion=='ABIERTO'));
-		if(flagOperacion=='ABIERTO'){
-			location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descripcionPeriodo='+descripcionPeriodo+'&tipo=1';
+		if(flagOperacion=='ABIERTO'){//"&anioInicioVigencia="+ret.anioInicioVigencia+"&anioFinVigencia="+ret.anioFinVigencia
+			location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descripcionPeriodo='+descripcionPeriodo+'&descGrupoInformacion='+descGrupo+'&descestado='+descEstado+'&anioInicioVigencia='+anioInicioVigencia+'&anioFinVigencia='+anioFinVigencia+'&tipo=1';
 		}else if(flagOperacion=='CERRADO'){
 			alert(" No esta habilitado para realizar esta operacion");		
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
+	},
+	showCamposOculto: function(){
+		formato13A.peridoDeclaracion.remove();
+		formato13A.txtPeriodo.css("display","block");
+		formato13A.txtGrupo.css("display","block");
+		formato13A.txtEstado.css("display","block");
+		
+		formato13A.lblGrupo.css("display","block");
+		formato13A.lblEstado.css("display","block");
+		formato13A.divPeriodoVigencia.css("display","block");
+		
 	}
 };
 

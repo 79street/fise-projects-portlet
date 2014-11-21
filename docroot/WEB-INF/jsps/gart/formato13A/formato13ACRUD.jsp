@@ -86,9 +86,9 @@
 															<fieldset class="net-frame-border">
 																<table>
 																	<tr>
-																		<td colspan="5"><output class="net-titulo">Periodo a declarar</output></td>
-																		<td colspan="5"><output class="net-titulo" style="display: none;">Grupo de Informacion</output></td>
-																		<td colspan="5"><output class="net-titulo" style="display: none;">Estado</output></td>
+																		<td colspan="5" ><output class="net-titulo">Periodo a declarar</output></td>
+																		<td colspan="5" style="padding-left: 20px;"><output class="net-titulo" style="display: none;" id="lblGrupo">Grupo de Informacion</output></td>
+																		<td colspan="5" style="padding-left: 20px;"><output class="net-titulo" style="display: none;" id="lblEstado">Estado</output></td>
 																	</tr>
 																	<tr>
 																		<td colspan="5">
@@ -101,18 +101,36 @@
 																				</c:forEach>
 
 																			</form:select> 
-																			<form:input path="descripcionPeriodo" id="txtperiodo" type="text" style="display: none;"  disabled="${formato13AGartCommand.readOnly}" />
+																			<form:input path="descripcionPeriodo" id="txtperiodo" type="text" style="display: none; border-radius: 7px;"  disabled="${formato13AGartCommand.readOnly}" />
 																		 </td>
-																		 <td colspan="5"><form:input path="descGrupoInformacion" id="txtgrupo" type="text" style="display: none;"  disabled="${formato13AGartCommand.readOnly}" /></td>
-																		 <td colspan="5"><form:input path="descestado" id="txtestado" type="text" style="display: none;"  disabled="${formato13AGartCommand.readOnly}" /></td>
+																		 <td colspan="5" style="padding-left: 15px;"><form:input path="descGrupoInformacion" id="txtgrupo" type="text" style="display: none;border-radius: 7px;"  disabled="${formato13AGartCommand.readOnly}" /></td>
+																		 <td colspan="5" style="padding-left: 15px;"><form:input path="descestado" id="txtestado" type="text" style="display: none;border-radius: 7px;"  disabled="${formato13AGartCommand.readOnly}" /></td>
 																	</tr>
 																</table>
 															</fieldset>
 														</td>
-														<td width="10%"><input type="hidden"
-															id="flagPeriodoEjecucion" value="" /></td>
-														<td width="45%">
-															
+														
+														<td width="45%" style="padding-left: 15px;">
+															<div id="divVigencia" style="display: none;"  >
+																<fieldset class="net-frame-border" style="padding-left: 15px;">
+																	<table>
+																		<tr>
+																			<td colspan="5"><output class="net-titulo">Año Inicio de Vigencia</output></td>
+																			<td colspan="5"><output class="net-titulo">Año Fin de Vigencia</output></td>
+																		</tr>
+																		<tr>
+																			
+																			<td colspan="5">
+																				<form:input path="anioInicioVigencia" style="border-radius: 7px;" maxlength="4" disabled="${formato13AGartCommand.readOnly}" id="txtinicioVig"/>
+																			</td>
+																			<td colspan="5">
+																				<form:input path="anioFinVigencia" style="border-radius: 7px;" maxlength="4" disabled="${formato13AGartCommand.readOnly}" id="txtfinVig"/>	
+																			</td>
+																		</tr>
+																	</table>
+																</fieldset>
+															</div> 
+	
 														</td>
 													</tr>
 												</table>
