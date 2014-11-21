@@ -9,6 +9,7 @@ import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.json.PeriodoEnvioJSON;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.util.FechaUtil;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -77,8 +78,8 @@ public class PeriodoEnvioController {
     		p.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
     		p.setMesDesde( String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));    		
     		p.setEtapaBusq(FiseConstants.ETAPA_SOLICITUD); 
-    		p.setFormatoBusq("F14C"); 
-    		p.setFlagEnvioBusq("Todos"); 
+    		p.setFormatoBusq("F12A"); 
+    		p.setFlagEnvioBusq("Si"); 
     		p.setEstadoBusq("V"); 
     		
     		
@@ -188,26 +189,42 @@ public class PeriodoEnvioController {
 			logger.info("flag mostrar anio mes:  "+ p.getFlagAnioMesEjec());
 			logger.info("flag costo:  "+ p.getFlagHabCostos());
 			logger.info("anio ini vige:  "+ p.getAnoIniVigencia());
-			logger.info("anio fin vige:  "+ p.getAnoFinVigencia());		
-				
+			logger.info("anio fin vige:  "+ p.getAnoFinVigencia());	
+			
+			logger.info("fecha ampli:  "+ p.getFechaAmpl());	
+			String fechaDesde = p.getDesde()+ " " +FechaUtil.getHoraActual();
+			String fechaHasta = p.getHasta()+ " " +FechaUtil.getHoraActual();	
+			
 			p.setUsuario(themeDisplay.getUser().getLogin());
 			p.setTerminal(themeDisplay.getUser().getLoginIP());		
-			
-			logger.info("Enviando el formulario al service"); 
-			 
-			String fechaDesde = p.getDesde()+ " " +FechaUtil.getHoraActual();
-			String fechaHasta = p.getHasta()+ " " +FechaUtil.getHoraActual();
-			
 			p.setDesde(fechaDesde); 
-			p.setHasta(fechaHasta);
+			p.setHasta(fechaHasta);		
 			
-			String valor = fisePeriodoEnvioGartService.insertarDatosFisePeriodoEnvio(p);
-			logger.info("valor de la transaccion al insertar:  "+valor); 
-			if(!valor.equals("0")){ 
-				jsonObj.put("resultado", "OK");	
-				jsonObj.put("secuencia", valor);	
-			}else{
-				jsonObj.put("resultado", "Error");	
+			if(FormatoUtil.isNotBlank(p.getHasta()) && FormatoUtil.isNotBlank(p.getFechaAmpl())){
+				if(FechaUtil.fechaMayor(p.getHasta(),p.getFechaAmpl())){
+					String fechaAmpl = p.getFechaAmpl() + " " +FechaUtil.getHoraActual();
+					p.setFechaAmpl(fechaAmpl); 	
+					
+					String valor = fisePeriodoEnvioGartService.insertarDatosFisePeriodoEnvio(p);
+					logger.info("valor de la transaccion al insertar:  "+valor); 
+					if(!valor.equals("0")){ 
+						jsonObj.put("resultado", "OK");	
+						jsonObj.put("secuencia", valor);	
+					}else{
+						jsonObj.put("resultado", "Error");	
+					}					
+				}else{
+					jsonObj.put("resultado", "Mayor");		
+				}		
+			}else{				
+				String valor = fisePeriodoEnvioGartService.insertarDatosFisePeriodoEnvio(p);
+				logger.info("valor de la transaccion al insertar:  "+valor); 
+				if(!valor.equals("0")){ 
+					jsonObj.put("resultado", "OK");	
+					jsonObj.put("secuencia", valor);	
+				}else{
+					jsonObj.put("resultado", "Error");	
+				}					
 			}
 			response.setContentType("application/json");
 			PrintWriter pw = response.getWriter();
@@ -245,25 +262,42 @@ public class PeriodoEnvioController {
 			logger.info("anio ini vige:  "+ p.getAnoIniVigencia());
 			logger.info("anio fin vige:  "+ p.getAnoFinVigencia());		
 			
+			logger.info("fecha ampli:  "+ p.getFechaAmpl());	
+			
 			String fechaDesde = p.getDesde()+ " " +FechaUtil.getHoraActual();
 			String fechaHasta = p.getHasta()+ " " +FechaUtil.getHoraActual();
 			
 			p.setDesde(fechaDesde); 
-			p.setHasta(fechaHasta);
+			p.setHasta(fechaHasta);	
 			
 			p.setUsuario(themeDisplay.getUser().getLogin());
-			p.setTerminal(themeDisplay.getUser().getLoginIP());		
+			p.setTerminal(themeDisplay.getUser().getLoginIP());	
 			
-			logger.info("Enviando el formulario al service"); 
-			
-			String valor = fisePeriodoEnvioGartService.actualizarDatosFisePeriodoEnvio(p);
-			logger.info("valor de la transaccion al actualizar:  "+valor); 
-			if(!valor.equals("0")){ 
-				jsonObj.put("resultado", "OK");	
-				jsonObj.put("secuencia", valor);	
-			}else{
-				jsonObj.put("resultado", "Error");	
-			}
+			if(FormatoUtil.isNotBlank(p.getHasta()) && FormatoUtil.isNotBlank(p.getFechaAmpl())){
+				if(FechaUtil.fechaMayor(p.getHasta(),p.getFechaAmpl())){
+					String fechaAmpl = p.getFechaAmpl() + " " +FechaUtil.getHoraActual();
+					p.setFechaAmpl(fechaAmpl);			
+					String valor = fisePeriodoEnvioGartService.actualizarDatosFisePeriodoEnvio(p);
+					logger.info("valor de la transaccion al actualizar:  "+valor); 
+					if(!valor.equals("0")){ 
+						jsonObj.put("resultado", "OK");	
+						jsonObj.put("secuencia", valor);	
+					}else{
+						jsonObj.put("resultado", "Error");	
+					}			
+				}else{
+					jsonObj.put("resultado", "Mayor");		
+				}		
+			}else{				
+				String valor = fisePeriodoEnvioGartService.actualizarDatosFisePeriodoEnvio(p);
+				logger.info("valor de la transaccion al actualizar:  "+valor); 
+				if(!valor.equals("0")){ 
+					jsonObj.put("resultado", "OK");	
+					jsonObj.put("secuencia", valor);	
+				}else{
+					jsonObj.put("resultado", "Error");	
+				}				
+			}			
 			response.setContentType("application/json");
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonObj.toString());
