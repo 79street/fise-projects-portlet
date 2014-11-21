@@ -20,6 +20,7 @@ import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.Formato14BGartService;
+import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.BufferedReader;
@@ -2155,7 +2156,13 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     		   mapa.put("CHECKED", dirCheckedImage);
     		   mapa.put("UNCHECKED", dirUncheckedImage);
     		   boolean cumplePlazo = false;
-    		   //esperar la funcion que devuelva si pertenece al rango de fechas
+    		   cumplePlazo = commonService.fechaEnvioCumplePlazo(
+    				   FiseConstants.TIPO_FORMATO_14B, 
+    				   formato.getId().getCodEmpresa(), 
+    				   formato.getId().getAnoPresentacion(), 
+    				   formato.getId().getMesPresentacion(), 
+    				   formato.getId().getEtapa(), 
+    				   FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
     		   if( cumplePlazo ){
     			   mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
     	   	   }else{
