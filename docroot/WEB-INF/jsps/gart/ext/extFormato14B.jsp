@@ -1,3 +1,5 @@
+<%@page import="com.liferay.portal.kernel.util.PrefsPropsUtil"%>
+<%@page import="com.liferay.portal.kernel.util.PropsKeys"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -45,6 +47,8 @@ var formato14B= {
 	mensajeError:null,
 	mensajeInfo:null,
 	flag:null,
+	
+	emailConfigured:null,
 	
 	//valores constantes para edelnor y luz del sur
 	cod_empresa_edelnor:null,
@@ -150,6 +154,8 @@ var formato14B= {
 		this.mensajeInfo=$('#<portlet:namespace/>mensajeInfo');
 		this.flag=$('#<portlet:namespace/>flag');//solo para controlar los errores al subir archivos excel o de texto
 		//
+		this.emailConfigured='<%=PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER)%>';
+		
 		//valores constantes para edelnor y luz del sur
 		this.cod_empresa_edelnor=$("#codEdelnor");
 		this.cod_empresa_luz_sur=$("#codLuzSur");
@@ -1283,10 +1289,13 @@ var formato14B= {
 		//ahora lo usamos para mostrar o no los componentes
 		//alert(formato14B.f_flagPeriodo.val());
 		if( formato14B.f_flagPeriodo.val()=='S' ){
-			$('#anioInicioVigencia').removeAttr("disabled");
+			/*$('#anioInicioVigencia').removeAttr("disabled");
 			$('#anioFinVigencia').removeAttr("disabled");
 			//formato14B.divPeriodoEjecucion.show();  
-			formato14B.estiloEdicionCabecera();
+			formato14B.estiloEdicionCabecera();*/
+			$('#anioInicioVigencia').attr("disabled",true);
+			$('#anioFinVigencia').attr("disabled",true);
+			formato14B.quitarEstiloEdicionCabecera();
 		}else{
 			$('#anioInicioVigencia').attr("disabled",true);
 			$('#anioFinVigencia').attr("disabled",true);
@@ -1913,6 +1922,7 @@ var formato14B= {
 			type : 'post',
 			dataType : 'json',
 			data : {
+				<portlet:namespace />codEmpresa: formato14B.f_empresa.val(),
 				<portlet:namespace />periodoEnvio: formato14B.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion',
 				<portlet:namespace />nombreArchivo: 'validacion',
@@ -1946,7 +1956,7 @@ var formato14B= {
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
-				var addhtml='Se realizó el envío satisfactoriamente';					
+				var addhtml='Se realizó el envío satisfactoriamente al correo '+formato14B.emailConfigured;
 				formato14B.dialogMessageReportContent.html(addhtml);
 				formato14B.dialogMessageReport.dialog("open");
 				formato14B.initBlockUI();

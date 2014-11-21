@@ -44,7 +44,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -59,7 +58,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +79,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -1257,8 +1254,10 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response,
 	    }
         
 	    //add
+	    String codEmpresa = command.getCodEmpresa();
 	    String anoPresentacion = command.getAnioPresentacion();
 	    String mesPresentacion = command.getMesPresentacion();
+	    String etapa = command.getEtapa();
 	    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO13A);
     	String descripcionFormato = "";
     	if( tabla!=null ){
@@ -1272,6 +1271,10 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response,
 	   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
 	   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
 	   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+	   	//add
+	   	mapa.put("DESC_EMPRESA", fiseUtil.getMapaEmpresa().get(codEmpresa) );
+	   	mapa.put("ETAPA", etapa);
+	   	
 	   	session.setAttribute("mapa", mapa);
 	    //
 	    
@@ -1352,6 +1355,24 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     		   mapa.put("ANO_FIN_VIGENCIA", formato.getAnoFinVigenciaDetalle());
     		   mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
     		   mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
+    		 //prueba de envio definitivo
+    		   String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
+    		   String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
+    		   mapa.put("CHECKED", dirCheckedImage);
+    		   mapa.put("UNCHECKED", dirUncheckedImage);
+    		   boolean cumplePlazo = false;
+    		   //esperar la funcion que devuelva si pertenece al rango de fechas
+    		   if( cumplePlazo ){
+    			   mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
+    	   	   }else{
+    			   mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
+    	   	   }
+    		   if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+    			   mapa.put("CHECKED_OBSERVACION", dirUncheckedImage);
+    		   }else{
+    			   mapa.put("CHECKED_OBSERVACION", dirCheckedImage);
+    		   }
+    		   mapa.put("ETAPA", formato.getId().getEtapa());
     	   }
     	   
     	   

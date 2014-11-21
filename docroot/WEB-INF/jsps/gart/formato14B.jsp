@@ -306,7 +306,7 @@ $(document).ready(function () {
 												<table class="" style="width: 100%;" border="0">
 	
 													<tr>
-														<td width="300px"><output class="net-titulo">Actividades</output>
+														<td width="450px"><output class="net-titulo">Actividades</output>
 														</td>
 														<td colspan="3">
 															<table style="width: 100%;" border="0">
@@ -468,7 +468,10 @@ $(document).ready(function () {
 														<td colspan="4"></td>
 													</tr>
 													<tr>
-														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1 Costo Total Reparto de vales en Oficinas de la Distribuidora Eléctrica o Centros Autorizados</td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1 Costo Total Reparto de vales en Oficinas de la Distribuidora Eléctrica
+															<br/>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o Centros Autorizados
+														</td>
 														<td align="center">
 															<form:input path="costoTotalValOficR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>

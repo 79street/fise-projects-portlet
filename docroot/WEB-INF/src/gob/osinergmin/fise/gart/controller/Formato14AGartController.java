@@ -2089,12 +2089,15 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	    }
         
 	    //add
+	    String codEmpresa = request.getParameter("codEmpresa").trim();
 	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
 	    String anoPresentacion = "";
 	    String mesPresentacion = "";
+	    String etapa = "";
 	    if( periodoEnvio.length()>6 ){
 	    	anoPresentacion = periodoEnvio.substring(0, 4);
 	    	mesPresentacion = periodoEnvio.substring(4, 6);
+	    	etapa = periodoEnvio.substring(6,periodoEnvio.length());
 	    }
 	    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
     	String descripcionFormato = "";
@@ -2109,6 +2112,10 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
 	   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
 	   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+	  //add
+	   	mapa.put("DESC_EMPRESA", mapaEmpresa.get(codEmpresa) );
+	   	mapa.put("ETAPA", etapa);
+	   	
 	   	session.setAttribute("mapa", mapa);
 	    //
 	    
@@ -2203,7 +2210,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     	   Formato14ACBean form = new Formato14ACBean();
     	   form.setUsuario(themeDisplay.getUser().getLogin());
     	   form.setTerminal(themeDisplay.getUser().getLoginIP());
-    	   formato = formato14Service.modificarEnvioDefinitivoFormato14AC(form, formato);
+    	   //formato = formato14Service.modificarEnvioDefinitivoFormato14AC(form, formato);
 		   
     	   if(mapa!=null){
     		   mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
@@ -2220,8 +2227,25 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     		   mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
     		   mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
     		   mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
+    		   //prueba de envio definitivo
+    		   String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
+    		   String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
+    		   mapa.put("CHECKED", dirCheckedImage);
+    		   mapa.put("UNCHECKED", dirUncheckedImage);
+    		   boolean cumplePlazo = false;
+    		   //esperar la funcion que devuelva si pertenece al rango de fechas
+    		   if( cumplePlazo ){
+    			   mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
+    	   	   }else{
+    			   mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
+    	   	   }
+    		   if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+    			   mapa.put("CHECKED_OBSERVACION", dirUncheckedImage);
+    		   }else{
+    			   mapa.put("CHECKED_OBSERVACION", dirCheckedImage);
+    		   }
+    		   mapa.put("ETAPA", formato.getId().getEtapa());
     	   }
-    	   
     	   
 	        /**REPORTE FORMATO 14A*/
 	       nombreReporte = "formato14A";

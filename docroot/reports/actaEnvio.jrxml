@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actaEnvio" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="43"/>
-	<property name="ireport.y" value="544"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="83"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_INICIO_VIGENCIA" class="java.lang.Long"/>
@@ -21,6 +21,12 @@
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="NRO_OBSERVACIONES" class="java.lang.Integer"/>
 	<parameter name="MSG_OBSERVACIONES" class="java.lang.String"/>
+	<parameter name="CHECKED" class="java.lang.String"/>
+	<parameter name="FLAG_CUMPLEPLAZO" class="java.lang.String"/>
+	<parameter name="FLAG_OBSERVACION" class="java.lang.String"/>
+	<parameter name="UNCHECKED" class="java.lang.String"/>
+	<parameter name="CHECKED_CUMPLEPLAZO" class="java.lang.String"/>
+	<parameter name="CHECKED_OBSERVACION" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -83,13 +89,13 @@
 				<reportElement x="26" y="368" width="505" height="20" backcolor="#1FDADA"/>
 			</rectangle>
 			<textField>
-				<reportElement x="47" y="395" width="484" height="16"/>
+				<reportElement x="45" y="395" width="484" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{MSG_OBSERVACIONES}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="28" y="395" width="11" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<reportElement x="33" y="395" width="11" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$P{NRO_OBSERVACIONES}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -98,7 +104,7 @@
 				<text><![CDATA[-]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="155" y="330" width="121" height="16"/>
+				<reportElement x="155" y="329" width="121" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{USUARIO_REGISTRO}]]></textFieldExpression>
 			</textField>
@@ -106,24 +112,24 @@
 				<reportElement x="278" y="198" width="127" height="148" backcolor="#FFFFFF"/>
 			</rectangle>
 			<textField pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="false">
-				<reportElement x="155" y="314" width="121" height="16"/>
+				<reportElement x="155" y="313" width="121" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$P{FECHA_REGISTRO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="296" y="314" width="97" height="16"/>
+				<reportElement x="288" y="313" width="105" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de Envío:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="405" y="314" width="126" height="16"/>
+				<reportElement x="407" y="313" width="122" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$P{FECHA_ENVIO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="405" y="330" width="126" height="16"/>
+				<reportElement x="407" y="329" width="122" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{USUARIO}]]></textFieldExpression>
 			</textField>
@@ -156,17 +162,12 @@
 				<reportElement x="26" y="178" width="505" height="20" backcolor="#1FDADA"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="53" y="281" width="98" height="16"/>
+				<reportElement x="50" y="290" width="99" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Otros: _____________]]></text>
 			</staticText>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="28" y="281" width="25" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{OTROS}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement mode="Transparent" x="28" y="131" width="503" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -182,55 +183,35 @@
 				<text><![CDATA[Hechos Relevantes:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="53" y="217" width="94" height="16"/>
+				<reportElement x="50" y="218" width="99" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Formato Firmado (1)]]></text>
 			</staticText>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="28" y="217" width="25" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{FORMATO_FIRMADO}]]></textFieldExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="28" y="233" width="25" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{PRESENTA_SUSTENTO}]]></textFieldExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="28" y="265" width="25" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{SIN_OBSERVACIONES}]]></textFieldExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="28" y="249" width="25" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{CUMPLE_PLAZO}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="53" y="249" width="99" height="16"/>
+				<reportElement x="50" y="254" width="99" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Cumple Plazos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="53" y="265" width="99" height="16"/>
+				<reportElement x="50" y="272" width="99" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Sin Observaciones]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="39" y="314" width="108" height="16"/>
+				<reportElement x="33" y="313" width="114" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de Registro:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="40" y="330" width="112" height="16"/>
+				<reportElement x="33" y="329" width="114" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -292,14 +273,14 @@
 				<text><![CDATA[ Frecuencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="298" y="330" width="95" height="16"/>
+				<reportElement x="288" y="329" width="105" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Usuario Envía:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="53" y="233" width="98" height="16"/>
+				<reportElement x="50" y="236" width="99" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -322,6 +303,26 @@
 				</textElement>
 				<text><![CDATA[Etapa:]]></text>
 			</staticText>
+			<image>
+				<reportElement x="33" y="221" width="10" height="10"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKED}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="33" y="239" width="10" height="10"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{UNCHECKED}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="33" y="275" width="10" height="10"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKED_OBSERVACION}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="33" y="257" width="10" height="10"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{CHECKED_CUMPLEPLAZO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="33" y="293" width="10" height="10"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{UNCHECKED}]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -336,21 +337,21 @@
 	<pageFooter>
 		<band height="69" splitType="Stretch">
 			<staticText>
-				<reportElement x="3" y="47" width="552" height="15"/>
+				<reportElement x="1" y="47" width="552" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[** La presente Acta no es válido para trámites judiciales.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="16" width="368" height="16"/>
+				<reportElement x="1" y="16" width="552" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[(1) Solo se mostrará marcado cuando la Distribuidora Eléctrica presente físicamente su formato.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="32" width="552" height="15"/>
+				<reportElement x="1" y="32" width="552" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>

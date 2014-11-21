@@ -314,7 +314,7 @@ $(document).ready(function () {
 												<table class="" style="width: 100%;" border="0">
 	
 													<tr>
-														<td width="300px"><output class="net-titulo">Actividades</output>
+														<td width="450px"><output class="net-titulo">Actividades</output>
 														</td>
 														<td colspan="3">
 															<table style="width: 100%;" border="0">
@@ -412,7 +412,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															1.1.1.4 Reparto de esquela de invitación, en forma conjunta con el recibo de luz del Potencial Beneficiario</td>
+															1.1.1.4 Reparto de esquela de invitación, en forma conjunta con el recibo
+															<br/>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															de luz del Potencial Beneficiario
+															</td>
 														<td align="center">
 															<form:input path="repartoEsqInvitR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
@@ -509,7 +515,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															1.1.2.3 Reparto de folletos a los Potenciales Beneficiarios, con el recibo de luz del beneficiario</td>
+															1.1.2.3 Reparto de folletos a los Potenciales Beneficiarios, con el recibo 
+															<br/>
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															de luz del beneficiario
+															</td>
 														<td align="center">
 															<form:input path="repFolletosR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
 														</td>
