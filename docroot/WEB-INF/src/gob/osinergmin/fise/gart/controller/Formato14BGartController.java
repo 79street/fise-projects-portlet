@@ -8,8 +8,6 @@ import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
-import gob.osinergmin.fise.domain.FiseFormato14AC;
-import gob.osinergmin.fise.domain.FiseFormato14ACPK;
 import gob.osinergmin.fise.domain.FiseFormato14BC;
 import gob.osinergmin.fise.domain.FiseFormato14BCPK;
 import gob.osinergmin.fise.domain.FiseFormato14BD;
