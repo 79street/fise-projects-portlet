@@ -333,6 +333,8 @@ public class FiseUtil {
 			String correoD = themeDisplay.getUser().getEmailAddress();
 			//String correoR = "informacion@sphere.com.pe";
 			//String correoD = "edwin.heredia@sphere.com.pe";
+			logger.info("correo remitente: "+correoR);
+			logger.info("correo destinatario: "+correoD);
 			
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
 			

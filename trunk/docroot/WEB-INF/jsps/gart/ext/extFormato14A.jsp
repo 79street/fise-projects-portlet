@@ -1,3 +1,5 @@
+<%@page import="com.liferay.portal.kernel.util.PrefsPropsUtil"%>
+<%@page import="com.liferay.portal.kernel.util.PropsKeys"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -45,6 +47,8 @@ var formato14A= {
 	mensajeError:null,
 	mensajeInfo:null,
 	flag:null,
+	
+	emailConfigured:null,
 	
 	//valores constantes para edelnor y luz del sur
 	cod_empresa_edelnor:null,
@@ -148,6 +152,8 @@ var formato14A= {
 		this.mensajeError=$('#<portlet:namespace/>mensajeError');
 		this.mensajeInfo=$('#<portlet:namespace/>mensajeInfo');
 		this.flag=$('#<portlet:namespace/>flag');//solo para controlar los errores al subir archivos excel o de texto
+		
+		this.emailConfigured='<%=PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER)%>';
 		
 		//valores constantes para edelnor y luz del sur
 		this.cod_empresa_edelnor=$("#codEdelnor");
@@ -1226,10 +1232,13 @@ var formato14A= {
 	},
 	mostrarPeriodoEjecucion : function(){
 		if( formato14A.f_flagPeriodo.val()=='S' ){
-			$('#anioInicioVigencia').removeAttr("disabled");
+			/*$('#anioInicioVigencia').removeAttr("disabled");
 			$('#anioFinVigencia').removeAttr("disabled");
 			//formato14A.divPeriodoEjecucion.show(); 
-			formato14A.estiloEdicionCabecera();
+			formato14A.estiloEdicionCabecera();*/
+			$('#anioInicioVigencia').attr("disabled",true);
+			$('#anioFinVigencia').attr("disabled",true);
+			formato14A.quitarEstiloEdicionCabecera();
 		}else{
 			$('#anioInicioVigencia').attr("disabled",true);
 			$('#anioFinVigencia').attr("disabled",true);
@@ -1807,6 +1816,7 @@ var formato14A= {
 			type : 'post',
 			dataType : 'json',
 			data : {
+				<portlet:namespace />codEmpresa: formato14A.f_empresa.val(),
 				<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion',
 				<portlet:namespace />nombreArchivo: 'validacion',
@@ -1840,7 +1850,7 @@ var formato14A= {
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
-				var addhtml='Se realizó el envío satisfactoriamente';					
+				var addhtml='Se realizó el envío satisfactoriamente al correo '+formato14A.emailConfigured;	
 				formato14A.dialogMessageReportContent.html(addhtml);
 				formato14A.dialogMessageReport.dialog("open");
 				formato14A.initBlockUI();

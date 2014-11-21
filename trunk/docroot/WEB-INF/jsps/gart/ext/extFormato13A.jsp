@@ -1,4 +1,6 @@
 <%@page import="com.liferay.portal.util.PortalUtil"%>
+<%@page import="com.liferay.portal.kernel.util.PrefsPropsUtil"%>
+<%@page import="com.liferay.portal.kernel.util.PropsKeys"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -106,7 +108,7 @@ var formato13A= {
 	 botonAnadirFormato:null,
 	 botonRegresarBusqueda:null,
 	 
-	 
+	 emailConfigured:null,
 	 
 	init : function(urlNuevo,urlView,urlEdit){
 		
@@ -154,6 +156,8 @@ var formato13A= {
 		this.tablaDeclaracion=$("#<portlet:namespace/>grid_formato_declaracion");
 		this.paginadoDeclaracion='#<portlet:namespace/>pager_formato_declaracion';
 
+		this.emailConfigured='<%=PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER)%>';
+		
 		//add
 		this.tablaDeclaracionView=$("#<portlet:namespace/>grid_formato_declaracionView");
 		this.paginadoDeclaracionView='#<portlet:namespace/>pager_formato_declaracionView';
@@ -973,7 +977,7 @@ var formato13A= {
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
-				var addhtml='Se realizó el envío satisfactoriamente';					
+				var addhtml='Se realizó el envío satisfactoriamente al correo '+formato13A.emailConfigured;
 				formato13A.dialogMessageReportContent.html(addhtml);
 				formato13A.dialogMessageReport.dialog("open");
 				formato13A.unblockUI();
