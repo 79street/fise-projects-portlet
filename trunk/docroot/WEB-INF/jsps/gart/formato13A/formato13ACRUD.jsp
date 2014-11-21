@@ -20,9 +20,7 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				
 				var error = '${error}';
-				
 				if (error.length > 0) {
 				    alert(error);
 				}
@@ -88,13 +86,13 @@
 															<fieldset class="net-frame-border">
 																<table>
 																	<tr>
-																		<td colspan="5"><output class="net-titulo">Periodo
-																				a declarar</output></td>
+																		<td colspan="5"><output class="net-titulo">Periodo a declarar</output></td>
+																		<td colspan="5"><output class="net-titulo" style="display: none;">Grupo de Informacion</output></td>
+																		<td colspan="5"><output class="net-titulo" style="display: none;">Estado</output></td>
 																	</tr>
 																	<tr>
-																		<td colspan="5"><form:select
-																				path="peridoDeclaracion" cssClass="select"
-																				cssStyle="width: 300px;">
+																		<td colspan="5">
+																		   <form:select path="peridoDeclaracion" cssClass="select" cssStyle="width: 300px;">
 
 																				<c:forEach
 																					items="${formato13AGartCommand.listaPeriodo}"
@@ -102,9 +100,11 @@
 																					<form:option value="${item.codigoItem}">${item.descripcionItem}</form:option>
 																				</c:forEach>
 
-																			</form:select> <form:input path="descripcionPeriodo"
-																				id="txtperiodo" type="text" style="display: none;"
-																				disabled="${formato13AGartCommand.readOnly}" /></td>
+																			</form:select> 
+																			<form:input path="descripcionPeriodo" id="txtperiodo" type="text" style="display: none;"  disabled="${formato13AGartCommand.readOnly}" />
+																		 </td>
+																		 <td colspan="5"><form:input path="descGrupoInformacion" id="txtgrupo" type="text" style="display: none;"  disabled="${formato13AGartCommand.readOnly}" /></td>
+																		 <td colspan="5"><form:input path="descestado" id="txtestado" type="text" style="display: none;"  disabled="${formato13AGartCommand.readOnly}" /></td>
 																	</tr>
 																</table>
 															</fieldset>
@@ -112,32 +112,7 @@
 														<td width="10%"><input type="hidden"
 															id="flagPeriodoEjecucion" value="" /></td>
 														<td width="45%">
-															<div id="divPeriodoEjecucion" style="display: none;">
-																<fieldset class="net-frame-border">
-																	<table>
-																		<tr>
-																			<td colspan="5"><output class="net-titulo">Periodo
-																					a ejecución</output></td>
-																		</tr>
-																		<tr>
-																			<td width="40px">Año:</td>
-																			<td><input type="text" name="i_anioejecuc"
-																				id="i_anioejecuc" style="width: 50px" maxlength="4">
-																			</td>
-																			<td width="10px"></td>
-																			<td width="40px">Mes:</td>
-																			<td><select id="s_mes_ejecuc"
-																				name="s_mes_ejecuc" class="select"
-																				style="width: 104px;">
-																					<option value="">-Seleccione-</option>
-																					<c:forEach items="${listaMes}" var="mes">
-																						<option value="${mes.key}">${mes.value}</option>
-																					</c:forEach>
-																			</select></td>
-																		</tr>
-																	</table>
-																</fieldset>
-															</div>
+															
 														</td>
 													</tr>
 												</table>

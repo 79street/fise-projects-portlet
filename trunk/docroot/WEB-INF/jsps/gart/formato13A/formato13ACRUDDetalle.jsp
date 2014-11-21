@@ -14,6 +14,10 @@
 
 <script type="text/javascript">
 $(document).ready(function () {	
+	var msj = '${msj}';
+	if (msj.length > 0) {
+	    alert(msj);
+	}
 	formato13A.initCRUDDetalle('${crud}','${urlGuardarDetalle}','${urlRegresarDetalle}');
 });
 </script>
