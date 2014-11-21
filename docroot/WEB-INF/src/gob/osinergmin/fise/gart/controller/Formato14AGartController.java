@@ -2108,16 +2108,16 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
     		descripcionFormato = tabla.getDescripcionTabla();
     	}
 	    Map<String, Object> mapa = new HashMap<String, Object>();
-    	mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
-	   	mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
-	   	mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(anoPresentacion));
+	    mapa.put(FiseConstants.PARAM_IMG_LOGOTIPO, session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+		mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(anoPresentacion));
 	   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(mesPresentacion)));
-	   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-	   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
-	   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+	   	mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
+		mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
+	   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 	  //add
-	   	mapa.put("DESC_EMPRESA", mapaEmpresa.get(codEmpresa) );
-	   	mapa.put("ETAPA", etapa);
+	   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(codEmpresa) );
+	   	mapa.put(FiseConstants.PARAM_ETAPA, etapa);
 	   	
 	   	session.setAttribute("mapa", mapa);
 	    //
@@ -2216,44 +2216,40 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     	   formato = formato14Service.modificarEnvioDefinitivoFormato14AC(form, formato);
 		   
     	   if(mapa!=null){
-    		   mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
-    		   mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
-    		   //verificar si ponerlo aca o no
-    		   mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-    		   mapa.put("NOMBRE_FORMATO", descripcionFormato);
-    		   mapa.put("FECHA_ENVIO", formato.getFechaEnvioDefinitivo());
-    		   mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
-    		   mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
-    		   mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
-    		   //add para acta envio
-    		   mapa.put("ANO_INICIO_VIGENCIA", formato.getId().getAnoInicioVigencia());
-    		   mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
-    		   mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
-    		   mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
-    		   //prueba de envio definitivo
-    		   String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
-    		   String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
-    		   mapa.put("CHECKED", dirCheckedImage);
-    		   mapa.put("UNCHECKED", dirUncheckedImage);
-    		   boolean cumplePlazo = false;
-    		   cumplePlazo = commonService.fechaEnvioCumplePlazo(
-    				   FiseConstants.TIPO_FORMATO_14A, 
-    				   formato.getId().getCodEmpresa(), 
-    				   formato.getId().getAnoPresentacion(), 
-    				   formato.getId().getMesPresentacion(), 
-    				   formato.getId().getEtapa(), 
-    				   FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
-    		   if( cumplePlazo ){
-    			   mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
-    	   	   }else{
-    			   mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
-    	   	   }
-    		   if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-    			   mapa.put("CHECKED_OBSERVACION", dirUncheckedImage);
-    		   }else{
-    			   mapa.put("CHECKED_OBSERVACION", dirCheckedImage);
-    		   }
-    		   mapa.put("ETAPA", formato.getId().getEtapa());
+    		   	mapa.put(FiseConstants.PARAM_IMG_LOGOTIPO, session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+				mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+				mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
+				mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
+				mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
+				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
+				mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getId().getAnoInicioVigencia());
+				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, formato.getId().getAnoFinVigencia());
+				mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
+				mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
+				String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
+				String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
+				mapa.put(FiseConstants.PARAM_IMG_CHECKED, dirCheckedImage);
+				mapa.put(FiseConstants.PARAM_IMG_UNCHECKED, dirUncheckedImage);
+				boolean cumplePlazo = false;
+				cumplePlazo = commonService.fechaEnvioCumplePlazo(
+						FiseConstants.TIPO_FORMATO_14A, 
+						formato.getId().getCodEmpresa(), 
+						formato.getId().getAnoPresentacion(), 
+						formato.getId().getMesPresentacion(), 
+						formato.getId().getEtapa(), 
+						FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
+				if( cumplePlazo ){
+					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
+				}
+				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}
+    		   mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
     	   }
     	   
 	        /**REPORTE FORMATO 14A*/
@@ -2350,28 +2346,132 @@ public void cargarListaObservaciones(List<FiseFormato14AD> listaDetalle){
 	}
 }
 
-@ResourceMapping("reporteEnvioDefinitivo")
-public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse response) {
-	try {
-		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
-        HttpSession session = httpRequest.getSession();
-        
-	    JSONArray jsonArray = new JSONArray();	
-	    
-	    String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
-	    String tipoArchivo = FiseConstants.FORMATO_EXPORT_ACTAENVIO;
-	   
-	    session.setAttribute("tipoFormato",tipoFormato);
-	    session.setAttribute("tipoArchivo",tipoArchivo);
-        
-	    response.setContentType("application/json");
-	    PrintWriter pw = response.getWriter();
-	    pw.write(jsonArray.toString());
-	    pw.flush();
-	    pw.close();
-	}catch (Exception e) {
-		e.printStackTrace();
+	@ResourceMapping("reporteEnvioDefinitivo")
+	public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse response) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();	
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
+		    String tipoArchivo = FiseConstants.FORMATO_EXPORT_ACTAENVIO;
+		   
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+	        
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-}
+	
+	@ResourceMapping("reporteActaEnvioView")
+	public void reporteActaEnvio(ResourceRequest request,ResourceResponse response) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+			HttpSession session = httpRequest.getSession();
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+			JSONArray jsonArray = new JSONArray();	
+			    
+			FiseFormato14AC formato = new FiseFormato14AC();
+			
+			String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
+			String tipoArchivo = FiseConstants.FORMATO_EXPORT_PDF;
+			
+			CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
+			String descripcionFormato = "";
+			if( tabla!=null ){
+				descripcionFormato = tabla.getDescripcionTabla();
+			}
+			String codEmpresa = request.getParameter("codEmpresa").trim();
+			String periodoEnvio = request.getParameter("periodoEnvio").trim();
+			String anoPresentacion = "";
+			String mesPresentacion = "";
+			String anoInicioVigencia = "";
+			String anoFinVigencia = "";
+			String etapa = "";
+			
+			if( periodoEnvio.length()>6 ){
+				anoPresentacion = periodoEnvio.substring(0, 4);
+				mesPresentacion = periodoEnvio.substring(4, 6);
+				etapa = periodoEnvio.substring(6, periodoEnvio.length());
+			}
+			
+			anoInicioVigencia = request.getParameter("anoInicioVigencia");
+			anoFinVigencia = request.getParameter("anoFinVigencia");
+			    
+			String nombreReporte = "actaEnvio";
+		    String nombreArchivo = nombreReporte;
+			
+			FiseFormato14ACPK pk = new FiseFormato14ACPK();
+			pk.setCodEmpresa(codEmpresa);
+			pk.setAnoPresentacion(new Long(anoPresentacion));
+			pk.setMesPresentacion(new Long(mesPresentacion));
+			pk.setAnoInicioVigencia(new Long(anoInicioVigencia));
+			pk.setAnoFinVigencia(new Long(anoFinVigencia));
+			pk.setEtapa(etapa);
+			
+			formato = formato14Service.obtenerFormato14ACByPK(pk);
+			if( formato!=null ){
+				Map<String, Object> mapa = new HashMap<String, Object>();
+				mapa.put(FiseConstants.PARAM_IMG_LOGOTIPO, session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+				mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+				mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
+				mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
+				mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
+				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
+				mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getId().getAnoInicioVigencia());
+				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, formato.getId().getAnoFinVigencia());
+				mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
+				mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
+				String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
+				String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
+				mapa.put(FiseConstants.PARAM_IMG_CHECKED, dirCheckedImage);
+				mapa.put(FiseConstants.PARAM_IMG_UNCHECKED, dirUncheckedImage);
+				boolean cumplePlazo = false;
+				cumplePlazo = commonService.fechaEnvioCumplePlazo(
+						FiseConstants.TIPO_FORMATO_14A, 
+						formato.getId().getCodEmpresa(), 
+						formato.getId().getAnoPresentacion(), 
+						formato.getId().getMesPresentacion(), 
+						formato.getId().getEtapa(), 
+						FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
+				if( cumplePlazo ){
+					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
+				}
+				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}
+				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(formato.getId().getCodEmpresa()));
+				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());
+				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
+				
+				session.setAttribute("mapa", mapa);
+			}
+			session.setAttribute("nombreReporte",nombreReporte);
+		    session.setAttribute("nombreArchivo",nombreArchivo);
+			session.setAttribute("tipoFormato",tipoFormato);
+			session.setAttribute("tipoArchivo",tipoArchivo);
+				
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonArray.toString());
+			pw.flush();
+			pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 		
 }
