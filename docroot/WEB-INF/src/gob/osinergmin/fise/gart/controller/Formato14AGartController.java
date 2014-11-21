@@ -938,8 +938,10 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 					
 					
 					//tipos
-					if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType()  ){
+					if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType() ){
 						formulario.setCodigoEmpresa(celdaEmpresa.toString());
+					}else if( HSSFCell.CELL_TYPE_FORMULA == celdaEmpresa.getCellType()  ){
+						formulario.setCodigoEmpresa(celdaEmpresa.getRichStringCellValue().toString());
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaEmpresa.getCellType()  ){
 						cont++;
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30);

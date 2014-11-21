@@ -1141,6 +1141,8 @@ public class Formato12AGartController {
 					//tipos
 					if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType()  ){
 						formulario.setCodigoEmpresa(celdaEmpresa.toString());
+					}else if( HSSFCell.CELL_TYPE_FORMULA == celdaEmpresa.getCellType()  ){
+						formulario.setCodigoEmpresa(celdaEmpresa.getRichStringCellValue().toString());
 					}else if( HSSFCell.CELL_TYPE_BLANK == celdaEmpresa.getCellType()  ){
 						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_30)+FiseConstants.SALTO_LINEA;
 						cont++;
