@@ -69,6 +69,9 @@ public class Formato13AGartCommand {
 	
 	private int tipoOperacion;
 	
+	private String descGrupoInformacion;
+	private String descestado;
+	
 	public List<AdmEmpresa> getListaEmpresas() {
 		return listaEmpresas;
 	}
@@ -423,6 +426,22 @@ public class Formato13AGartCommand {
 
 	public void setDescripcionPeriodoHidden(String descripcionPeriodoHidden) {
 		this.descripcionPeriodoHidden = descripcionPeriodoHidden;
+	}
+
+	public String getDescGrupoInformacion() {
+		return descGrupoInformacion;
+	}
+
+	public void setDescGrupoInformacion(String descGrupoInformacion) {
+		this.descGrupoInformacion = descGrupoInformacion;
+	}
+
+	public String getDescestado() {
+		return descestado;
+	}
+
+	public void setDescestado(String descestado) {
+		this.descestado = descestado;
 	}
 
 	

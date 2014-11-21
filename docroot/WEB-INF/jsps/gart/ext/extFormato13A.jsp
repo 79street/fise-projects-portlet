@@ -381,7 +381,7 @@ var formato13A= {
 	buildGridsBusqueda : function () {	
 		formato13A.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo Inf','Estado','Visualizar','Editar','Anular','','',''],
+	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Informaiòn','Estado','Visualizar','Editar','Anular','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   

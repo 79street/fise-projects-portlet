@@ -416,55 +416,66 @@ public class Formato13AGartController {
 
 		if (cab != null) {
 			// validar si es nuevo o modificacion
-			if (CRUD_CREATE.equals(crud)) {
-				// create
-				FiseFormato13AC formato13 = new FiseFormato13AC();
-				formato13.setId(pkCabecera);
-				List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
-				// se agregará varaiables de sector tipico para cada tipo de
-				// grupo beneficiario
+			try{
+				
+				if (CRUD_CREATE.equals(crud)) {
+					// create
+					FiseFormato13AC formato13 = new FiseFormato13AC();
+					formato13.setId(pkCabecera);
+					List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
+					// se agregará varaiables de sector tipico para cada tipo de
+					// grupo beneficiario
 
-				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
-				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
-				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
-				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, listaDetalle);
-				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, listaDetalle);
-				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
-				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
-				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
+					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
+					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
+					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
+					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, listaDetalle);
+					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, listaDetalle);
+					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
+					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
+					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
 
-				agregarFormato13Detalle(listaDetalle);
-			} else if (CRUD_UPDATE.equals(crud)) {
-				// update
+					agregarFormato13Detalle(listaDetalle);
+				} else if (CRUD_UPDATE.equals(crud)) {
+					// update
 
-				if (cab.getFiseFormato13ADs() != null && !cab.getFiseFormato13ADs().isEmpty()) {
-					for (FiseFormato13AD d : cab.getFiseFormato13ADs()) {
+					if (cab.getFiseFormato13ADs() != null && !cab.getFiseFormato13ADs().isEmpty()) {
+						for (FiseFormato13AD d : cab.getFiseFormato13ADs()) {
 
-						if (Long.parseLong(idZonaBenef) == d.getId().getIdZonaBenef()) {
-							if (FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico().trim())) {
-								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico().trim())) {
-								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(d.getId().getCodSectorTipico().trim())) {
-								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(d.getId().getCodSectorTipico().trim())) {
-								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(d.getId().getCodSectorTipico().trim())) {
-								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(d.getId().getCodSectorTipico().trim())) {
-								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(d.getId().getCodSectorTipico().trim())) {
-								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, d);
-							} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(d.getId().getCodSectorTipico().trim())) {
-								modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, d);
+							if (Long.parseLong(idZonaBenef) == d.getId().getIdZonaBenef()) {
+								if (FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico().trim())) {
+									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, d);
+								} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico().trim())) {
+									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, d);
+								} else if (FiseConstants.SECTOR_TIPICO_3_COD.equals(d.getId().getCodSectorTipico().trim())) {
+									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, d);
+								} else if (FiseConstants.SECTOR_TIPICO_4_COD.equals(d.getId().getCodSectorTipico().trim())) {
+									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, d);
+								} else if (FiseConstants.SECTOR_TIPICO_5_COD.equals(d.getId().getCodSectorTipico().trim())) {
+									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, d);
+								} else if (FiseConstants.SECTOR_TIPICO_6_COD.equals(d.getId().getCodSectorTipico().trim())) {
+									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, d);
+								} else if (FiseConstants.SECTOR_TIPICO_SER_COD.equals(d.getId().getCodSectorTipico().trim())) {
+									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, d);
+								} else if (FiseConstants.SECTOR_TIPICO_ESP_COD.equals(d.getId().getCodSectorTipico().trim())) {
+									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, d);
+								}
 							}
+
 						}
-
+						modificarFormato13Detalle(cab.getFiseFormato13ADs());
 					}
-					modificarFormato13Detalle(cab.getFiseFormato13ADs());
-				}
 
+				}
+				
+			}catch(DataIntegrityViolationException dt){
+				dt.printStackTrace();
+				response.setRenderParameter("msj", "Existe detalle ");
+			}catch (Exception e) {
+				e.printStackTrace();
+				response.setRenderParameter("msj", "Ocurrio al guardar cambios");
 			}
+			
 
 		} else {
 			// no se valida si es nulo la cabecera
@@ -1578,17 +1589,14 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 		}
 	}
 	
-	/** metodos utiles */
+	/** metodos utiles 
+	 * @throws Exception */
 
-	public void agregarFormato13Detalle(List<FiseFormato13AD> listaDetalle) {
+	public void agregarFormato13Detalle(List<FiseFormato13AD> listaDetalle) throws DataIntegrityViolationException,Exception  {
 		if (listaDetalle != null && listaDetalle.size() > 0) {
 			for (FiseFormato13AD detalle : listaDetalle) {
-				try {
-					formatoService.savedetalle(detalle);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				formatoService.savedetalle(detalle);
+				
 			}
 		}
 	}

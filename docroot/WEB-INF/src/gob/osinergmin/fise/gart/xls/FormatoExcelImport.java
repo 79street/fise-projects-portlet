@@ -33,19 +33,17 @@ public class FormatoExcelImport {
 	
 	private static HSSFSheet readExcel(HSSFWorkbook libro){
 		int nroHojaSelec=0;
-		System.out.println("nro de hojas:"+ libro.getNumberOfSheets());
+		
 		for (int sheetNro = 0; sheetNro < libro.getNumberOfSheets(); sheetNro++){
-			System.out.println("nombre de hoja "+sheetNro+":"+ libro.getSheetName(sheetNro));
+			
 			if(FiseConstants.NOMBRE_HOJA_FORMATO13A.equals(libro.getSheetName(sheetNro)) ){
 				nroHojaSelec = sheetNro;
 				break;
 			}
 		}
-		System.out.println("nro de hoja seleccionada "+nroHojaSelec);
-		HSSFSheet hojaF13A = libro.getSheetAt(nroHojaSelec);
-		System.out.println("hojaF13A "+hojaF13A);
 		
-		//readSheet(hojaF13A);
+		HSSFSheet hojaF13A = libro.getSheetAt(nroHojaSelec);
+		
 		return hojaF13A;
 		
 		
@@ -64,9 +62,14 @@ public class FormatoExcelImport {
 			if(i==FiseConstants.ROW_INFO_EMPRESA){
 				HSSFCell cellE_emp = row.getCell(FiseConstants.COLUMN_E);
 				HSSFCell cellD_nom = row.getCell(FiseConstants.COLUMN_D);
-				
-				if(cellE_emp.getCellType() == HSSFCell.CELL_TYPE_STRING && cellE_emp.getCellType() != HSSFCell.CELL_TYPE_BLANK ){
-					pk.setCodEmpresa(cellE_emp.toString());
+				System.out.println("codempres :::=> "+cellE_emp);
+				if(cellE_emp.getCellType() == HSSFCell.CELL_TYPE_FORMULA || (cellE_emp.getCellType() == HSSFCell.CELL_TYPE_STRING && cellE_emp.getCellType() != HSSFCell.CELL_TYPE_BLANK) ){
+					if(cellE_emp.getCellType() == HSSFCell.CELL_TYPE_FORMULA){
+						pk.setCodEmpresa(cellE_emp.getRichStringCellValue().getString());
+						
+					}else{
+						pk.setCodEmpresa(cellE_emp.toString());
+					}
 					 System.out.println("CODEMPRESA :::=> "+pk.getCodEmpresa());
 				}else{
 					throw new Exception("Distribuidora Eléctrica no valida ");
@@ -138,12 +141,33 @@ public class FormatoExcelImport {
 						isread=false;
 					}else{
 						String fecha=cellFecha.toString().trim();
-						long anio=Long.parseLong((fecha.substring(0,fecha.indexOf("-"))).trim());
-						long mes=Long.parseLong((fecha.substring((fecha.indexOf("-")+1),fecha.length())).trim());
+						System.out.println("fecha ==>"+fecha);	
+						if(fecha!=null && fecha.length()>5){
+							long anio=Long.parseLong((fecha.substring(0,fecha.indexOf("-"))).trim());
+							long mes=Long.parseLong((fecha.substring((fecha.indexOf("-")+1),fecha.length())).trim());
+							System.out.println("ANIO - MES ==>"+anio +"-"+mes);	
+							if(anio<=cabecera.getId().getAnoPresentacion() ){
+								if(anio < cabecera.getId().getAnoPresentacion()){
+									fise13.setAnoAlta(anio);
+									fise13.setMesAlta(mes);
+								}else{
+									if(mes <= cabecera.getId().getMesPresentacion()){
+										fise13.setMesAlta(mes);
+									}else{
+										throw new Exception("El mes debe de alta debe ser menor o igual al mes de presentación error fila :"+(r+1));
+									}
+									fise13.setAnoAlta(anio);
+								}
+							}else{
+								throw new Exception("El año debe de alta debe ser menor o igual al año de presentación error fila :"+(r+1));
+							}
+						}else{
+							throw new Exception("El año/mes de alta no cumplen con el formato establecido error fila :"+(r+1));
+						}
 						
-						fise13.setAnoAlta(anio);
-						fise13.setMesAlta(mes);
-						System.out.println("ANIO - MES ==>"+anio +"-"+mes);	
+						
+						
+						
 					}
 					
 					
@@ -176,10 +200,17 @@ public class FormatoExcelImport {
 					}
 					
 					try{
-						fise13.setNumeroBenefiPoteSectTipico((long)Double.parseDouble(cellValor.toString()));
+						
+						if(cellValor.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+							fise13.setNumeroBenefiPoteSectTipico((long)Double.parseDouble(cellValor.toString()));
+						}else{
+							fise13.setNumeroBenefiPoteSectTipico(0L);
+						}
 						
 					}catch(NumberFormatException n){
-						new Exception("NumeroBeneficiario no valido en fila nro :"+(r+1));
+						throw new Exception("NumeroBeneficiario no valido en fila nro :"+(r+1));
+					}catch(Exception n1){
+						throw new Exception("NumeroBeneficiario no valido en fila nro :"+(r+1));
 					}
 					
 					
