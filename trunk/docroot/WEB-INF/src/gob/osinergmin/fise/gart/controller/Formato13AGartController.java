@@ -179,6 +179,18 @@ public class Formato13AGartController {
 				logger.info("empresa " + mapaEmpresa.get(fiseFormato13AC.getId().getCodEmpresa()));
 				fiseFormato13AC.setDescEmpresa(mapaEmpresa.get(fiseFormato13AC.getId().getCodEmpresa()));
 				fiseFormato13AC.setDescMesPresentacion(listaMes.get(fiseFormato13AC.getId().getMesPresentacion()));
+				
+				if(fiseFormato13AC.getFiseGrupoInformacion()!=null && fiseFormato13AC.getFiseGrupoInformacion().getDescripcion()!=null){
+					fiseFormato13AC.setDescGrupoInformacion(fiseFormato13AC.getFiseGrupoInformacion().getDescripcion());
+					
+				}
+				
+				if(fiseFormato13AC.getFechaEnvioDefinitivo()!=null){
+					fiseFormato13AC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+				}else{
+					fiseFormato13AC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+					
+				}
 
 				/** Obteniendo el flag de la operacion */
 				String flagOper = commonService.obtenerEstadoProceso(fiseFormato13AC.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_13A, fiseFormato13AC.getId().getAnoPresentacion(), fiseFormato13AC.getId().getMesPresentacion(), fiseFormato13AC.getId().getEtapa());
@@ -876,7 +888,7 @@ public class Formato13AGartController {
 					fiseFormato13AD.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(fiseFormato13AD.getIdZonaBenef()));
 					jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AD, formato13AC));
 				}
-				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_13A, FiseConstants.NOMBRE_EXCEL_FORMATO13A, FiseConstants.NOMBRE_HOJA_FORMATO13A, listaFormato);
+				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_13AD, FiseConstants.NOMBRE_EXCEL_FORMATO13AD, FiseConstants.NOMBRE_HOJA_FORMATO13AD, listaFormato);
 
 			} else {
 				codEmpresa = command.getCodEmpresa();

@@ -20,8 +20,7 @@ public class Formato13AGartJSON {
 	private String descMesPresentacion;
 	private String descGrupoInformacion;
 	
-	private String anioInicioVigencia;
-	private String anioFinVigencia;
+	
 	
 	private String flagOperacion;//Cerrado, abierto, enviado
 	
