@@ -7,7 +7,6 @@ import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.FormatoCumplimientoService;
-import gob.osinergmin.fise.util.FechaUtil;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -78,6 +77,8 @@ public class CumplimientoGartController {
 
 		    String periodo = request.getParameter("periodo").trim();
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
+		    
+		    session.setAttribute("tipoFormato", FiseConstants.TIPO_FORMATO_CUMPLIMIENTO);
 		    session.setAttribute("tipoArchivo", tipoArchivo);
 		    //cambiar de acuerdo al reporte que estan probando
 		   String nombre = "cumplimiento";
