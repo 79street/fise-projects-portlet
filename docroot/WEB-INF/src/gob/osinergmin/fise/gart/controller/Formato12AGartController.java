@@ -2047,7 +2047,8 @@ public class Formato12AGartController {
 		       byte[] bytes = null;
 		       bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
 		       if (bytes != null) {
-		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+		    	   //String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+		    	   String nombre = FormatoUtil.nombreIndividualFormato(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12A);
 		    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
 		    	   if( archivo!=null ){
 		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -2066,7 +2067,8 @@ public class Formato12AGartController {
 			       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
 		    	   //bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), null, new JRBeanCollectionDataSource(listaObservaciones));
 			       if (bytes != null) {
-			    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+			    	   //String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12A);
 			    	   FileEntry archivo2 = this.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
 			    	   if( archivo2!=null ){
 			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -2085,7 +2087,8 @@ public class Formato12AGartController {
 		       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
 		       if (bytes3 != null) {
 		    	   session.setAttribute("bytesActaEnvio", bytes3);
-		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+		    	   //String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+		    	   String nombre = FormatoUtil.nombreIndividualActaRemision(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12A);
 		    	   FileEntry archivo = this.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
 		    	   if( archivo!=null ){
 		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -2096,7 +2099,14 @@ public class Formato12AGartController {
 		       }
 		       //
 		       if( listaArchivo!=null && listaArchivo.size()>0 ){
-		    	   fiseUtil.enviarMailAdjunto(request,listaArchivo,descripcionFormato);
+		    	   fiseUtil.enviarMailsAdjunto(
+		    			   request,
+		    			   listaArchivo, 
+		    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
+		    			   formato.getId().getAnoPresentacion(),
+		    			   formato.getId().getMesPresentacion(),
+		    			   FiseConstants.TIPO_FORMATO_12A,
+		    			   descripcionFormato);
 		    	   
 		    	   /*this.enviarMailAdjunto(listaArchivo);
 		    	   //guardamos la fecha de envio

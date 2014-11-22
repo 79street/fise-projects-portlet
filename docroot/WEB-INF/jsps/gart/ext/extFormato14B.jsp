@@ -1425,7 +1425,7 @@ var formato14B= {
 	},
 	FillEditformato : function(row){
 		
-		formato14B.f_empresa.val(row.codEmpresa);
+		formato14B.f_empresa.val(trim(row.codEmpresa));
 		//seteamos el concatenado
 		formato14B.f_periodoEnvio.val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
 		

@@ -322,7 +322,7 @@ public class FiseUtil {
 		return mapaZonaBenef;
 	}
 	
-	public void enviarMailAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo, String descripcionFormato) throws Exception {
+	/*public void enviarMailAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo, String descripcionFormato) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		try {
 			MailMessage mailMessage = new MailMessage();
@@ -349,6 +349,102 @@ public class FiseUtil {
 						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que OSINERGMIN-GART ha recepcionado el "
 						+ descripcionFormato + "<u></u><u></u></p><p><u></u><u></u></p><p>Se adjunta la constancia de envío, el formato y las observaciones<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Atentamente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+				for (FileEntryJSP fej : listaArchivo) {
+					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
+				}
+				MailServiceUtil.sendEmail(mailMessage);
+			}else{
+				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			//throw e;
+		}
+	}*/
+	
+	public void enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo, String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato, String descripcionFormato) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato);
+		enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato);
+		
+	}
+	
+	public void enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato, String descripcionFormato) throws Exception {
+		try {
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.setHTMLFormat(true);
+			
+			String nombreUsuario = themeDisplay.getUser().getFullName();
+			String periodoEnvio = ""+anoPresentacion+"-"+mesPresentacion;
+			
+			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
+			
+			String correoD = themeDisplay.getUser().getEmailAddress();
+			logger.info("correo remitente: "+correoR);
+			logger.info("correo a copiar: "+correoD);
+			//
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
+			//validamos que tanto el correo del from ni del to deben estar vacios
+			if( !FiseConstants.BLANCO.equals(correoR) && (listaCorreoDestino!=null && !listaCorreoDestino.isEmpty()) ){
+				mailMessage.setFrom(new InternetAddress(correoR));
+				mailMessage.setSubject("Notificación de envío de formato para el administrador del FISE (GART-DDE)");
+				mailMessage.setTo(getArrayCorreoDestinatarios(listaCorreoDestino));
+				if( !FiseConstants.BLANCO.equals(correoD) ){
+					mailMessage.setCC(new InternetAddress(correoD));
+				}
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
+						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
+						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n para el periodo "
+						+ periodoEnvio + " del "
+						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute; de Costos Est&aacute;ndares, Formato "
+						+ tipoFormato + ", y Anexo de Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+				for (FileEntryJSP fej : listaArchivo) {
+					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
+				}
+				MailServiceUtil.sendEmail(mailMessage);
+			}else{
+				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			//throw e;
+		}
+	}
+	
+	public void enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato, String descripcionFormato) throws Exception {
+		try {
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.setHTMLFormat(true);
+			
+			String nombreUsuario = themeDisplay.getUser().getFullName();
+			String periodoEnvio = ""+anoPresentacion+"-"+mesPresentacion;
+			
+			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
+			String correoD = themeDisplay.getUser().getEmailAddress();
+			logger.info("correo remitente: "+correoR);
+			logger.info("correo destinatario: "+correoD);
+			
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
+			
+			if( !FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) ){
+				mailMessage.setFrom(new InternetAddress(correoR));
+				mailMessage.setSubject("Notificación de envío de formato para el usuario de la Distribuidora Eléctrica");
+				mailMessage.setTo(new InternetAddress(correoD));
+				if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
+					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
+				}
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
+						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
+						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
+						+ periodoEnvio + " del "
+						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formato "
+						+ tipoFormato + ", y Anexo de Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
+						+ "<p>Recomendamos tener en cuenta aquellos formatos faltantes para que, de acuerdo a sus necesidades, lo registren y env&iacute;en a la brevedad. As&iacute; mismo una vez enviado todos los formatos, cerrar el proceso de env&iacute;o.<u></u><u></u></p>"
+						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
+						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
