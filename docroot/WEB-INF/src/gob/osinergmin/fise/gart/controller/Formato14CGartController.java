@@ -1066,7 +1066,7 @@ public class Formato14CGartController {
 		       bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
 		       logger.info("Tamaño del arreglo de bytes del formato 14C envio defi."+bytes.length); 
 		       if (bytes != null) {
-		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+		    	   String nombre = FormatoUtil.nombreIndividualFormato(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
 		    	   logger.info("subiendo archivo al repositorio del formato 14c"); 
 		    	   FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
 		    	   logger.info("Archivo subido correctamente  formato 14c envio."+archivo); 
@@ -1087,7 +1087,7 @@ public class Formato14CGartController {
 			       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
 			       logger.info("Tamaño del arreglo de bytes del observaciones envio defi."+bytes2.length); 
 			       if (bytes != null) {
-			    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
 			    	   logger.info("subiendo archivo al repositorio del observaciones envio defi.");
 			    	   FileEntry archivo2 = fiseUtil.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
 			    	   logger.info("Archivo subido correctamente  observaciones envio."+archivo2); 
@@ -1109,7 +1109,7 @@ public class Formato14CGartController {
 		       logger.info("Tamaño del arreglo de bytes del acta de envio defi."+bytes3.length); 
 		       if (bytes3 != null) {
 		    	   session.setAttribute("bytesActaEnvio", bytes3);
-		    	   String nombre= nombreArchivo+FiseConstants.EXTENSIONARCHIVO_PDF;
+		    	   String nombre = FormatoUtil.nombreIndividualActaRemision(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
 		    	   logger.info("subiendo archivo al repositorio del acta de envio defi.");
 		    	   FileEntry archivo3 = fiseUtil.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
 		    	   logger.info("Archivo subido correctamente  del acta de envio."+archivo3); 
@@ -1122,7 +1122,14 @@ public class Formato14CGartController {
 		       }		   
 		       if( listaArchivo!=null && listaArchivo.size()>0 ){		    	  
 		    	   logger.info("Entrando a enviar email envio defi."); 
-		    	   fiseUtil.enviarMailAdjunto(request,listaArchivo,descripcionFormato);
+		    	   fiseUtil.enviarMailsAdjunto(
+		    			   request,
+		    			   listaArchivo, 
+		    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
+		    			   formato.getId().getAnoPresentacion(),
+		    			   formato.getId().getMesPresentacion(),
+		    			   FiseConstants.TIPO_FORMATO_14C,
+		    			   descripcionFormato);
 		    	   logger.info("El envio de email fue correctamente envio defi."); 
 		    	   /**actualizamos  la fecha de envio*/
 		    	   formato14CGartService.actualizarDatosEnvioFormato14C(f);
