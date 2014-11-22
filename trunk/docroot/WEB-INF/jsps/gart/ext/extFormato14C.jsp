@@ -745,7 +745,7 @@ var formato14C= {
 			$('#grupoInformacion').val(bean.grupoInformacion);
 			$('#estado').val(bean.estado);			
 			/*cabecera*/
-			formato14C.f_empresa.val(bean.codEmpresa);
+			formato14C.f_empresa.val(bean.codEmpresa.trim());
 			formato14C.f_nombreSede.val(bean.nombreSede);
 			formato14C.f_numRural.val(bean.numRural);
 			formato14C.f_numUrbProv.val(bean.numUrbProv);
@@ -844,9 +844,9 @@ var formato14C= {
 				formato14C.habilitarCostosDirectos();	
 			}	
 			/***verificar si la empresa es edelnor o luz del sur*/
-			console.debug("codigo empresa edelnor constante: "+formato14C.cod_empresa_edelnor.val());
-			console.debug("codigo empresa luz sur constante: "+formato14C.cod_empresa_luz_sur.val());
-			console.debug("codigo empresa seleccionado: "+formato14C.f_empresa.val());
+			console.debug("codigo empresa edelnor constante al llenar datos editar o visualizar: "+formato14C.cod_empresa_edelnor.val());
+			console.debug("codigo empresa luz sur constante al llenar datos editar o visualizar: "+formato14C.cod_empresa_luz_sur.val());
+			console.debug("codigo empresa seleccionado al llenar datos editar o visualizar: "+formato14C.f_empresa.val());
 			if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
 					formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
 				formato14C.habilitarLima();										
@@ -967,9 +967,9 @@ var formato14C= {
 							formato14C.habilitarCostosDirectos();	
 						}
 						//verifico si es edelnor o luz del sur
-						console.debug("codigo empresa edelnor constante: "+formato14C.cod_empresa_edelnor.val());
-						console.debug("codigo empresa luz sur constante: "+formato14C.cod_empresa_luz_sur.val());
-						console.debug("codigo empresa seleccionado: "+formato14C.f_empresa.val());
+						console.debug("codigo empresa edelnor constante al cargar flag periodo: "+formato14C.cod_empresa_edelnor.val());
+						console.debug("codigo empresa luz sur constante al cargar flag periodo: "+formato14C.cod_empresa_luz_sur.val());
+						console.debug("codigo empresa seleccionado al cargar flag periodo: "+formato14C.f_empresa.val());
 						if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
 								formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
 							formato14C.habilitarLima();										
@@ -1042,9 +1042,9 @@ var formato14C= {
 				formato14C.habilitarCostosDirectos();	
 			}	
 			/**para verificar si es edelnor o luz del sur*/
-			console.debug("codigo empresa edelnor constante: "+formato14C.cod_empresa_edelnor.val());
-			console.debug("codigo empresa luz sur constante: "+formato14C.cod_empresa_luz_sur.val());
-			console.debug("codigo empresa seleccionado: "+formato14C.f_empresa.val());
+			console.debug("codigo empresa edelnor constante al iniciar formaulario: "+formato14C.cod_empresa_edelnor.val());
+			console.debug("codigo empresa luz sur constante al iniciar formaulario: "+formato14C.cod_empresa_luz_sur.val());
+			console.debug("codigo empresa seleccionado al iniciar formulario: "+formato14C.f_empresa.val());
 			if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
 					formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
 				formato14C.habilitarLima();										
@@ -2254,11 +2254,12 @@ var formato14C= {
 					}
 			 	}
 			} 
-			else if(formato14C.f_nombreSede.val().length == '' ) {		  
+			/* else if(formato14C.f_nombreSede.val().length == '' ) {		  
 				alert('Debe ingresar nombre de la sede');
 				formato14C.f_nombreSede.focus();
 				return false; 
-			}else if(formato14C.f_numRural.val().length == '' ) {		  
+			} */
+			else if(formato14C.f_numRural.val().length == '' ) {		  
 				alert('Debe ingresar el numero de beneficiarios de la zona rural');
 				formato14C.f_numRural.focus();
 				return false; 
