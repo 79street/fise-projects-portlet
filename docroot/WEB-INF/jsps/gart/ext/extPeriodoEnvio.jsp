@@ -156,7 +156,13 @@ var periodoEnvio= {
 			
 		    periodoEnvio.botonRegresar.click(function() {
 		    	periodoEnvio.<portlet:namespace/>regresarPeriodoEnvio();
-		    });			
+		    });	
+		    
+		    //eventos
+		    periodoEnvio.f_formato.change(function(){
+		    	periodoEnvio.<portlet:namespace/>mostrarAnioVigencia();
+			});
+		    
 		    
 		    periodoEnvio.initDialogs();
 		    
@@ -211,7 +217,7 @@ var periodoEnvio= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			       location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';  
+			      location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus ")%>';   
 			       } 
 			}); 
 		},
@@ -264,23 +270,24 @@ var periodoEnvio= {
 			periodoEnvio.f_dias.val('1');
 			periodoEnvio.f_fechaAmpl.val('');
 			
-			
-			/*$('#rbtEnvioSi').removeAttr("disabled");
-        	$('#rbtEnvioNo').removeAttr("disabled");
-        	
-        	$('#rbtMesSi').removeAttr("disabled");
-        	$('#rbtMesNo').removeAttr("disabled");
-        	
-        	$('#rbtAmbos').removeAttr("disabled");
-        	$('#rbtDirecto').removeAttr("disabled");
-        	$('#rbtIndirecto').removeAttr("disabled");*/
-			
-			periodoEnvio.f_anoIniVigencia.val(f.getFullYear());
-			periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+2);
-			
-			periodoEnvio.habilitarCamposEditar();
-			
+			periodoEnvio.habilitarCamposEditar();			
 			periodoEnvio.habilitarCamposVisualizar();
+			
+			console.debug("id formato al hacer nuevo:  "+periodoEnvio.f_formato.val());			 
+			var idFormato = periodoEnvio.f_formato.val();
+			if(periodoEnvio.verificarFormato(idFormato)==false){
+				 console.debug("formato es 12  ");	
+				 periodoEnvio.f_anoIniVigencia.val('');
+				 periodoEnvio.f_anoFinVigencia.val('');
+				 periodoEnvio.f_anoIniVigencia.attr("disabled",true);
+				 periodoEnvio.f_anoFinVigencia.attr("disabled",true);
+			 }else{
+				 console.debug("formato es diferente de 12  ");
+				 periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
+				 periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
+				 periodoEnvio.f_anoIniVigencia.val(f.getFullYear());
+				 periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+2);				
+			 }
 		},		
 		
 		//Function para Visualizar los datos del formulario		
@@ -296,15 +303,15 @@ var periodoEnvio= {
 					success: function(data) {
 					    if (data != null){															
 					    	periodoEnvio.divNuevo.show();
-					    	periodoEnvio.divBuscar.hide();	
-					    	
-					    	periodoEnvio.llenarDatosEditar(data);
+					    	periodoEnvio.divBuscar.hide();				    	
 					    	
 					    	periodoEnvio.initBlockUI();	
 					    	
 					    	periodoEnvio.deshabilitarCamposEditar();
 					    	
 					    	periodoEnvio.deshabilitarCamposVisualizar();
+					    	
+					    	periodoEnvio.llenarDatosEditar(data);
 					    	
 					    	$('#<portlet:namespace/>guardarPeriodoEnvio').css('display','none');
 					    	$('#<portlet:namespace/>actualizarPeriodoEnvio').css('display','none');
@@ -334,15 +341,15 @@ var periodoEnvio= {
 						success: function(data) {				
 							if (data != null){															
 								periodoEnvio.divNuevo.show();
-								periodoEnvio.divBuscar.hide();	
-								
-								periodoEnvio.llenarDatosEditar(data);
+								periodoEnvio.divBuscar.hide();								
 								
 								periodoEnvio.initBlockUI();
 								
 								periodoEnvio.deshabilitarCamposEditar();
 								
 								periodoEnvio.habilitarCamposVisualizar();
+								
+								periodoEnvio.llenarDatosEditar(data);
 								
 								$('#<portlet:namespace/>guardarPeriodoEnvio').css('display','none');
 								$('#<portlet:namespace/>actualizarPeriodoEnvio').css('display','block');	
@@ -400,9 +407,20 @@ var periodoEnvio= {
 			}else{
 				// $('#rbtNo').checked = true;
 				 document.getElementById('rbtAmbos').checked = true;
-			}			
-			periodoEnvio.f_anoIniVigencia.val(bean.anoIniVigencia);
-			periodoEnvio.f_anoFinVigencia.val(bean.anoFinVigencia);
+			}
+			
+			console.debug("id formato al hacer editar o visualizar:  "+bean.formato);			
+			if(periodoEnvio.verificarFormato(bean.formato)==false){
+				 periodoEnvio.f_anoIniVigencia.val('');
+				 periodoEnvio.f_anoFinVigencia.val('');
+				 periodoEnvio.f_anoIniVigencia.attr("disabled",true);
+				 periodoEnvio.f_anoFinVigencia.attr("disabled",true);
+			 }else{
+				 periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
+				 periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
+				 periodoEnvio.f_anoIniVigencia.val(bean.anoIniVigencia);
+				 periodoEnvio.f_anoFinVigencia.val(bean.anoFinVigencia);				
+			 }
 		},
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarPeriodoEnvio : function(secuencia){
@@ -519,7 +537,9 @@ var periodoEnvio= {
 			}
 		},
 		//funcion para validar ingreso de datos
-		validarFormulario : function() {			
+		validarFormulario : function() {
+			var form = periodoEnvio.f_formato.val();
+			console.debug("id formato al validar formulario: "+form);
 			if(periodoEnvio.f_codEmpresa.val().length == ''){
 				alert('Seleccione una empresa'); 
 				periodoEnvio.f_codEmpresa.focus();
@@ -569,17 +589,51 @@ var periodoEnvio= {
 				alert('Debe ingresar el numero de dias de notificacion antes del cierre'); 
 				periodoEnvio.f_dias.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_anoIniVigencia.val().length == ''){
-				alert('Debe ingresar el año de inicio de vigencia'); 
-				periodoEnvio.f_anoIniVigencia.focus();
-			  	return false; 
-			}else if(periodoEnvio.f_anoFinVigencia.val().length == ''){
-				alert('Debe ingresar el año fin de vigencia'); 
-				periodoEnvio.f_anoFinVigencia.focus();
-			  	return false; 
+			}else if(periodoEnvio.verificarFormato(form)==true){
+				if(periodoEnvio.f_anoIniVigencia.val().length == ''){
+					alert('Debe ingresar el año de inicio de vigencia'); 
+					periodoEnvio.f_anoIniVigencia.focus();
+				  	return false; 
+				}else if(periodoEnvio.f_anoFinVigencia.val().length == ''){
+					alert('Debe ingresar el año fin de vigencia'); 
+					periodoEnvio.f_anoFinVigencia.focus();
+				  	return false; 
+				}else{
+					return true;
+				}	
 			}else{
 				return true;
 			}		
+		},
+		verificarFormato: function(idFormato){			
+			if(idFormato=='F12A'){
+			  return false;	
+			}else if(idFormato=='F12B'){
+			  return false;	
+			}else if(idFormato=='F12C'){
+			  return false;	
+			}else if(idFormato=='F12D'){
+			  return false;	
+			}else{
+			  return true;	
+			}					
+		},
+		//funcion para mostrar anio vigencia
+		 <portlet:namespace/>mostrarAnioVigencia : function(){		
+			console.debug("id formato al hacer onchange:  "+periodoEnvio.f_formato.val());			 
+			var idFormato = periodoEnvio.f_formato.val();
+			var f = new Date();
+			if(idFormato=='F12A' || idFormato=='F12B' ||idFormato=='F12C' || idFormato=='F12D'){
+				periodoEnvio.f_anoIniVigencia.val('');
+			    periodoEnvio.f_anoFinVigencia.val('');
+				periodoEnvio.f_anoIniVigencia.attr("disabled",true);
+				periodoEnvio.f_anoFinVigencia.attr("disabled",true);
+			}else{
+				periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
+			    periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
+			    periodoEnvio.f_anoIniVigencia.val(f.getFullYear());
+				periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+2);					
+		   }
 		},
 		
         habilitarCamposEditar : function(){        

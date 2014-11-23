@@ -188,8 +188,7 @@ $(document).ready(function () {
 					<table border="0" width="100%">
 						<tr>
 							<td>
-								<fieldset class="">
-	
+								<fieldset class="">	                               
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
 											<td><output class="net-titulo">FISE PERIODO ENVIO</output>
@@ -343,26 +342,29 @@ $(document).ready(function () {
 										      <td colspan="6"></td> 
 										     </tr>
 											
-											<tr>
-											 <td><label style="font-size: 12px; font-weight: bold">Año Ini. Vig.:</label>
+											<tr> 											
+											 <td>
+											     <label style="font-size: 12px; font-weight: bold">Año Ini. Vig.:</label>
 											 </td>
 											 <td>
 											    <form:input path="anoIniVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>									
 											 </td>
 											 
-											 <td><label style="font-size: 12px; font-weight: bold">Año Fin Vig.:</label>
+											 <td>
+											     <label style="font-size: 12px; font-weight: bold">Año Fin Vig.:</label>
 											 </td>
 											 <td>
 											   <form:input path="anoFinVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>								
-											 </td>	
+											 </td>											 
 											 
-											 <td><label style="font-size: 12px; font-weight: bold">Días antes de Cierre:</label>
+											 <td>
+											     <label style="font-size: 12px; font-weight: bold">Días antes de Cierre:</label>
 											  </td>
 											  <td>											   
 											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2"/>											
 											  </td>	
-											 											 
-											</tr>
+											  										 											 
+											</tr>																									  					
 											
 										  </table>								 								
 										 </td>
