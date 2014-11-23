@@ -1031,7 +1031,7 @@ public class Formato14CGartController {
 	     		   mapa.put("UNCHECKED", dirUncheckedImage);
 	     		   boolean cumplePlazo = false;
 	     		   cumplePlazo = commonService.fechaEnvioCumplePlazo(
-	     				   FiseConstants.TIPO_FORMATO_14B, 
+	     				   FiseConstants.TIPO_FORMATO_14C, 
 	     				   formato.getId().getCodEmpresa(), 
 	     				   formato.getId().getAnoPresentacion(), 
 	     				   formato.getId().getMesPresentacion(), 

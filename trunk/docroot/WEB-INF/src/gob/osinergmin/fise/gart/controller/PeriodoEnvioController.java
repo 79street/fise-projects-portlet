@@ -6,7 +6,6 @@ import gob.osinergmin.fise.bean.PeriodoEnvioBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
-import gob.osinergmin.fise.gart.json.PeriodoEnvioJSON;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
@@ -28,7 +27,6 @@ import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
 
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -109,9 +107,7 @@ public class PeriodoEnvioController {
 			response.setContentType("application/json");	
 				
 			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
-	        HttpSession session = req.getSession();
-	        	
-		    JSONArray jsonArray = new JSONArray();
+	        HttpSession session = req.getSession();	   
 		    
 			String codEmpresa = p.getCodEmpresaBusq();	 
 			String etapa = p.getEtapaBusq();
@@ -122,6 +118,8 @@ public class PeriodoEnvioController {
 			
 			int anioPres = 0;			
 			int mesPres = 0;		
+			
+			String data="";
 			
 			if(StringUtils.isNotBlank(p.getAnioDesde())){
 				anioPres = Integer.valueOf(p.getAnioDesde());	
@@ -144,10 +142,12 @@ public class PeriodoEnvioController {
   			for(FisePeriodoEnvio periodo : listaPeridoEnvio){  				
   				periodo.setDescEmpresa(mapaEmpresa.get(periodo.getCodEmpresa()));
   				periodo.setDescMesPresentacion(fiseUtil.getMapaMeses().get(Long.valueOf(periodo.getMesPresentacion()))); 
-  				logger.info("Mes Presentacion:  "+periodo.getMesPresentacion());
-  				logger.info("Seteando del array de json");   				
-  				jsonArray.put(new PeriodoEnvioJSON().asJSONObject(periodo));
   				
+  				if("V".equals(p.getEstado())){ 
+  					periodo.setDescEstado("Vigente");			
+  				}else{
+  					periodo.setDescEstado("Anulado");			
+  				}		  								
   				listaPeridoEnvioExportExel.add(periodo);
   			}
   			
@@ -155,18 +155,24 @@ public class PeriodoEnvioController {
   					"PERIODOS DE ENVIO", //title
   					"PERIODO", //nombre hoja
   					listaPeridoEnvioExportExel);
-  			
-  			logger.info("arreglo json:"+jsonArray);
+  			data = toStringListJSON(listaPeridoEnvioExportExel);
+  			logger.info("arreglo json:"+data);
   			PrintWriter pw = response.getWriter();
-  			pw.write(jsonArray.toString());
+  			pw.write(data);
   			pw.flush();
-  			pw.close();
-  			
+  			pw.close();  			
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
-	}			
+	}	
+	
+	private String toStringListJSON(List<FisePeriodoEnvio> lista) {
+		Serializer serializer = new JsonSerializer();
+		Object result = serializer.serialize(lista);
+		String data = String.valueOf(result);
+		return data;
+	}
 
 	@ResourceMapping("grabarPeriodoEnvio")
 	public void grabarPeriodoEnvio(ModelMap model, ResourceRequest request,ResourceResponse response,

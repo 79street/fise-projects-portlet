@@ -61,7 +61,7 @@ public class FiseObservacionController {
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,
 			     @ModelAttribute("fiseObservacionBean")FiseObservacionBean p){
         try {        	   		
-    		p.setIdBusq("10"); 
+    		p.setIdBusq(""); 
     		p.setDescripcion("");   		
     		model.addAttribute("model", p);    		
 		} catch (Exception e) {
