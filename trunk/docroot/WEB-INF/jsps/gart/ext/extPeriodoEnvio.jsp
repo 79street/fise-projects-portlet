@@ -181,7 +181,7 @@ var periodoEnvio= {
 					   { name: 'formato', index: 'formato', width: 30},
 		               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
 		               { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},	              
-		               { name: 'estado', index: 'estado', width: 20,align:'center'},
+		               { name: 'descEstado', index: 'descEstado', width: 20,align:'center'},
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
 		               { name: 'elim', index: 'elim', width: 20,align:'center' }  
@@ -217,7 +217,7 @@ var periodoEnvio= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			      location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus ")%>';   
+			      location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
 			       } 
 			}); 
 		},
