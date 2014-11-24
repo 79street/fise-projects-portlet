@@ -1222,13 +1222,17 @@ public class Formato13AGartController {
 				// setamos los valores en el bean
 				bean = formatoService.estructurarFormato13ABeanByFiseFormato13AC(formato);
 				bean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
-				bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				
 				//
 				// cargamos la lista a enviar
 				List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
 
 				session.setAttribute("lista", lista);
-				session.setAttribute("mapa", formatoService.mapearParametrosFormato13A(bean));
+				
+				Map<String, Object> mapa = formatoService.mapearParametrosFormato13A(bean);
+				mapa.put("ANO_INICIO_VIGENCIA", formato.getAnoInicioVigenciaDetalle());
+				mapa.put("ANO_FIN_VIGENCIA", formato.getAnoFinVigenciaDetalle());
+				session.setAttribute("mapa", mapa );
 			}
 
 			response.setContentType("application/json");
@@ -1455,7 +1459,11 @@ public class Formato13AGartController {
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile = new File(session.getServletContext().getRealPath(directorio));
 				byte[] bytes = null;
-				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
+				//enviamos la lista de los sectores decalarados
+				List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
+				
+				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JRBeanCollectionDataSource(lista));
+				
 				if (bytes != null) {
 					// session.setAttribute("bytes1", bytes);
 					//String nombre = nombreArchivo + FiseConstants.EXTENSIONARCHIVO_PDF;
