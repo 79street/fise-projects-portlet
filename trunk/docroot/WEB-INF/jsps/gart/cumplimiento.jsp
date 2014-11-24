@@ -55,7 +55,7 @@ function <portlet:namespace/>mostrarReporteExcel(){
 		type : 'post',
 		dataType : 'json',
 		data : {
-			<portlet:namespace />periodo: $("<portlet:namespace/>s_periodo_cump").val(),
+			<portlet:namespace />periodo: $("#<portlet:namespace/>s_periodo_cump").val(),
 			<portlet:namespace />tipoArchivo: '1'//XLS
 		},
 		success : function(gridData) {
