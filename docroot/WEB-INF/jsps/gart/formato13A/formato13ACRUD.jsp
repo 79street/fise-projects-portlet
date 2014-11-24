@@ -67,9 +67,13 @@
 														<td><form:select path="codEmpresa" cssClass="select"
 																cssStyle="width: 375px;" 
 																disabled="${formato13AGartCommand.readOnly}" >
-																<form:options
-																	items="${formato13AGartCommand.listaEmpresas}"
-																	itemLabel="dscEmpresa" itemValue="codEmpresa" />
+																
+																<c:forEach items="${formato13AGartCommand.listaEmpresas}" var="emp">
+																	 <form:option value="${emp.codEmpresa}">${emp.dscEmpresa}</form:option>
+																</c:forEach>
+																
+																
+																<!--<form:options items="${formato13AGartCommand.listaEmpresas}" itemLabel="dscEmpresa" itemValue="codEmpresa" />-->
 															</form:select></td>
 													</tr>
 												</table>

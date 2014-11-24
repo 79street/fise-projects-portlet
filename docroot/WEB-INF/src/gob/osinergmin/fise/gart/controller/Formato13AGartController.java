@@ -317,7 +317,7 @@ public class Formato13AGartController {
 			// pkCabecera.setCodEmpresa(command.getCodEmpresa() != "" ?
 			// FormatoUtil.rellenaDerecha(command.getCodEmpresa(), ' ', 4) :
 			// "");
-			pkCabecera.setCodEmpresa(command.getCodEmpresa());
+			pkCabecera.setCodEmpresa(command.getCodEmpresa().trim());
 
 			if (command != null && command.getPeridoDeclaracion().length() > 6) {
 				command.setAnioAlta(command.getPeridoDeclaracion().substring(0, 4));
@@ -934,9 +934,9 @@ public class Formato13AGartController {
 
 		FiseFormato13ACPK cabecerapk = new FiseFormato13ACPK();
 
-		cabecerapk.setCodEmpresa(codEmpresaNew);
-		command.setCodEmpresa(codEmpresaNew);
-		command.setCodEmpresaHidden(codEmpresaNew);
+		cabecerapk.setCodEmpresa(codEmpresaNew!=null?codEmpresaNew.trim():"");
+		command.setCodEmpresa(codEmpresaNew!=null?codEmpresaNew.trim():"");
+		command.setCodEmpresaHidden(codEmpresaNew!=null?codEmpresaNew.trim():"");
 		if (periodo != null && periodo.length() > 6) {
 			cabecerapk.setAnoPresentacion(Long.parseLong(periodo.substring(0, 4)));
 			cabecerapk.setMesPresentacion(Long.parseLong(periodo.substring(4, 6)));
@@ -971,7 +971,7 @@ public class Formato13AGartController {
 		}
 
 		response.setRenderParameter("action", "nuevo");
-		response.setRenderParameter("codEmpresa", command.getCodEmpresa());
+		response.setRenderParameter("codEmpresa", command.getCodEmpresa().trim());
 		response.setRenderParameter("anioPresentacion", cabecerapk.getAnoPresentacion() + "");
 		response.setRenderParameter("mesPresentacion", cabecerapk.getMesPresentacion() + "");
 		response.setRenderParameter("etapa", cabecerapk.getEtapa() + "");
@@ -1138,9 +1138,11 @@ public class Formato13AGartController {
 			String destd = request.getParameter("descestado");
 
 			System.out.println("etapa::>" + etapa);
+			System.out.println("codEmp::>" + codEmp.trim().length());
+
 
 			command.setReadOnly(true);
-			command.setCodEmpresa(codEmp);
+			command.setCodEmpresa(codEmp.trim());
 			command.setAnioPresentacion(anio);
 			command.setMesPresentacion(mes);
 			command.setEtapa(etapa);
