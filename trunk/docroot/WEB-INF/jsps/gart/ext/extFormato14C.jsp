@@ -2833,7 +2833,7 @@ var formato14C= {
 			formato14C.botonReportePdf.css('display','none');
 			formato14C.botonReporteExcel.css('display','none');
 			
-			formato14B.botonActaEnvio.css('display','none');
+			formato14C.botonActaEnvio.css('display','none');
 			
 			formato14C.botonGrabar.css('display','');
 			formato14C.botonValidacion.css('display','');
