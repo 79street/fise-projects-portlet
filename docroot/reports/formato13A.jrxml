@@ -57,37 +57,37 @@
 	<field name="nroBenefPoteSecTipico8" class="java.lang.Long">
 		<fieldDescription><![CDATA[nroBenefPoteSecTipico8]]></fieldDescription>
 	</field>
-	<variable name="nroBenefPoteSecTipico1_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico1_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico1}]]></variableExpression>
 	</variable>
-	<variable name="nroBenefPoteSecTipico2_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico2_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico2}]]></variableExpression>
 	</variable>
-	<variable name="nroBenefPoteSecTipico3_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico3_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico3}]]></variableExpression>
 	</variable>
-	<variable name="nroBenefPoteSecTipico4_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico4_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico4}]]></variableExpression>
 	</variable>
-	<variable name="nroBenefPoteSecTipico5_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico5_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico5}]]></variableExpression>
 	</variable>
-	<variable name="nroBenefPoteSecTipico6_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico6_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico6}]]></variableExpression>
 	</variable>
-	<variable name="nroBenefPoteSecTipico7_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico7_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico7}]]></variableExpression>
 	</variable>
-	<variable name="nroBenefPoteSecTipico8_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico8_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico8}]]></variableExpression>
 	</variable>
-	<variable name="nroBenefPoteSecTipico2_2" class="java.lang.Long" resetType="Column" calculation="Sum">
+	<variable name="nroBenefPoteSecTipico2_2" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico2}]]></variableExpression>
 	</variable>
 	<variable name="AnioMes" class="java.lang.String">
 		<variableExpression><![CDATA[$F{anioAlta}.toString()+' / '+$F{mesAlta}.toString()]]></variableExpression>
 	</variable>
-	<variable name="prueba" class="java.lang.String" incrementType="Column" calculation="Sum">
+	<variable name="prueba" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico3}]]></variableExpression>
 	</variable>
 	<background>
@@ -440,7 +440,7 @@
 		<band height="20" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="62">
+		<band height="63">
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="0" y="23" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
@@ -490,64 +490,54 @@
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
-			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="461" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico7_1}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="421" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico6_1}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="381" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico5_1}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Column" pattern="" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="341" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico4_1}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="301" y="3" width="39" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico3_1}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Column" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToTallestObject" x="261" y="3" width="40" height="13" isPrintInFirstWholeBand="true"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico2_2}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="221" y="3" width="39" height="13" isPrintInFirstWholeBand="true"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nroBenefPoteSecTipico1_1}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="131" y="3" width="51" height="14"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{prueba}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="64" y="0" width="51" height="14"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{prueba}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
