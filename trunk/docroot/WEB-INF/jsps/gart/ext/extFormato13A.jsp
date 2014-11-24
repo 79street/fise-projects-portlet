@@ -263,9 +263,6 @@ var formato13A= {
 			
 			formato13A.tipoOperacion=operacion;
 			formato13A.showCamposOculto();
-			
-			
-			
 			formato13A.buscarDetalles();
 			formato13A.botonReportePdf.click(function() {formato13A.<portlet:namespace/>mostrarReportePdf();});
 			formato13A.botonReporteExcel.click(function() {formato13A.<portlet:namespace/>mostrarReporteExcel();});
@@ -282,7 +279,6 @@ var formato13A= {
 		
 			
 		}if(operacion=='UPDATE'){
-			
 			
 			formato13A.showCamposOculto();
 			formato13A.buscarDetalles();
