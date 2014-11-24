@@ -13,8 +13,6 @@ import gob.osinergmin.fise.domain.FiseFormato13ACPK;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
 import gob.osinergmin.fise.domain.FiseFormato13ADOb;
 import gob.osinergmin.fise.domain.FiseFormato13ADPK;
-import gob.osinergmin.fise.domain.FiseFormato14BC;
-import gob.osinergmin.fise.domain.FiseFormato14BCPK;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
