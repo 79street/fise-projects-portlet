@@ -2369,7 +2369,7 @@ public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse resp
 				mapa.put(FiseConstants.PARAM_IMG_UNCHECKED, dirUncheckedImage);
 				boolean cumplePlazo = false;
 				cumplePlazo = commonService.fechaEnvioCumplePlazo(
-						FiseConstants.TIPO_FORMATO_14A, 
+						FiseConstants.TIPO_FORMATO_14B, 
 						formato.getId().getCodEmpresa(), 
 						formato.getId().getAnoPresentacion(), 
 						formato.getId().getMesPresentacion(), 

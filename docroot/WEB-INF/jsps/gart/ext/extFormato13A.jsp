@@ -34,6 +34,8 @@ var formato13A= {
 	urlReporteEnvioDefinitivo:null,
 	urlDelete:null,
 	urlDeleteDetalle:null,
+	
+	urlReporteActaEnvio:null,
 	//
 	
 	botonReportePdf:null,
@@ -41,6 +43,7 @@ var formato13A= {
 	//add
 	botonValidacion:null,
 	botonEnvioDefinitivo:null,
+	botonActaEnvio:null,
 	//
 	
 	botonBuscar:null,
@@ -216,6 +219,10 @@ var formato13A= {
 		this.urlReporteValidacion='<portlet:resourceURL id="reporteValidacion" />';
 		this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivo" />';
 		this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivo" />';
+		this.urlReporteActaEnvio='<portlet:resourceURL id="reporteActaEnvioView" />';
+		
+		this.botonActaEnvio=$("#<portlet:namespace/>reporteActaEnvio");
+		
 		this.botonValidacion=$("#<portlet:namespace/>validacionFormato");
 		this.botonEnvioDefinitivo=$("#<portlet:namespace/>envioDefinitivo");
 		//
@@ -266,6 +273,8 @@ var formato13A= {
 			formato13A.buscarDetalles();
 			formato13A.botonReportePdf.click(function() {formato13A.<portlet:namespace/>mostrarReportePdf();});
 			formato13A.botonReporteExcel.click(function() {formato13A.<portlet:namespace/>mostrarReporteExcel();});
+			
+			formato13A.botonActaEnvio.click(function() {formato13A.<portlet:namespace/>mostrarReporteActaEnvio();});
 			
 			formato13A.botonRegresarBusqueda.click(function(){
 				formato13A.blockUI();
@@ -1059,6 +1068,32 @@ var formato13A= {
 				formato13A.unblockUI();
 			}
 		});
+	},
+	<portlet:namespace/>mostrarReporteActaEnvio : function(){
+		if(formato13A.txtEstado.val()=='Enviado'){
+			var form = formato13A.formNuevo;
+			form.removeAttr('enctype');
+			jQuery.ajax({
+				url: formato13A.urlReporteActaEnvio+'&'+form.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {
+					/*<portlet:namespace />codEmpresa: formato13A.f_empresa.val(),
+					<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
+					<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
+					<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),*/
+					<portlet:namespace />tipoArchivo: '0'//PDF
+				},
+				success : function(gridData) {
+					formato13A.verReporte();
+				},error : function(){
+					alert("Error de conexión.");
+					formato13A.unblockUI();
+				}
+			});
+		}else{
+			alert("Primero debe realizar el envío definitivo");
+		}
 	},
 	//inicializar dialogs
 	initDialogs : function(){	
