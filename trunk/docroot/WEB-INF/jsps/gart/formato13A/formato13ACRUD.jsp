@@ -210,6 +210,13 @@
 																						id="<portlet:namespace/>reporteExcel"
 																						class="button net-button-small"
 																						value="Exportar excel" /></td>
+																						
+																						<td width="16%" align="center"><input
+																						type="button" class="boton"
+																						name="<portlet:namespace/>reporteActaEnvio"
+																						id="<portlet:namespace/>reporteActaEnvio"
+																						class="button net-button-small"
+																						value="Acta de envío" /></td>
 																				</c:if>
 
 																				<td width="17%" align="center"><input
