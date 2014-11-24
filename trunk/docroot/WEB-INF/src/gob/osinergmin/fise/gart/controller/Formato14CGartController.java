@@ -10,6 +10,7 @@ import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
+import gob.osinergmin.fise.domain.FiseFormato14CCPK;
 import gob.osinergmin.fise.domain.FiseFormato14CD;
 import gob.osinergmin.fise.domain.FiseFormato14CDOb;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
@@ -4106,7 +4107,116 @@ public class Formato14CGartController {
     	return formatoMensaje;
     }
     
-    
+    @ResourceMapping("reporteActaEnvioView")
+	public void reporteActaEnvio(ResourceRequest request,ResourceResponse response, @ModelAttribute("formato14CBean")Formato14CBean f) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+			HttpSession session = httpRequest.getSession();
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+			JSONArray jsonArray = new JSONArray();	
+			
+			String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
+			String tipoArchivo = FiseConstants.FORMATO_EXPORT_PDF;
+			
+			CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14C);
+			String descripcionFormato = "";
+			if( tabla!=null ){
+				descripcionFormato = tabla.getDescripcionTabla();
+			}
+			/*String codEmpresa = request.getParameter("codEmpresa").trim();
+			String periodoEnvio = request.getParameter("periodoEnvio").trim();
+			String anoPresentacion = "";
+			String mesPresentacion = "";
+			String anoInicioVigencia = "";
+			String anoFinVigencia = "";
+			String etapa = "";
+			
+			if( periodoEnvio.length()>6 ){
+				anoPresentacion = periodoEnvio.substring(0, 4);
+				mesPresentacion = periodoEnvio.substring(4, 6);
+				etapa = periodoEnvio.substring(6, periodoEnvio.length());
+			}
+			
+			anoInicioVigencia = request.getParameter("anoInicioVigencia");
+			anoFinVigencia = request.getParameter("anoFinVigencia");*/
+			    
+			String nombreReporte = "actaEnvio";
+		    String nombreArchivo = nombreReporte;
+
+		    if( f.getPeriodoEnvio().length()>6 ){
+				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
+				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
+				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
+				
+				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+					logger.info("Tamanio de la lista periodo al envio definitivo: "+listaPeriodoEnvio.size()); 
+					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
+							f.setAnoIniVigencia(p.getAnioInicioVig());
+							f.setAnoIniVigencia(p.getAnioFinVig());
+							break;
+						}
+					}
+				}	
+			}	
+		    FiseFormato14CC formato = formato14CGartService.obtenerFiseFormato14CC(f);
+			
+			if( formato!=null ){
+				Map<String, Object> mapa = new HashMap<String, Object>();
+				mapa.put(FiseConstants.PARAM_IMG_LOGOTIPO, session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+				mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+				mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
+				mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
+				mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
+				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
+				mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getId().getAnoInicioVigencia());
+				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, formato.getId().getAnoFinVigencia());
+				mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
+				mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
+				String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
+				String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
+				mapa.put(FiseConstants.PARAM_IMG_CHECKED, dirCheckedImage);
+				mapa.put(FiseConstants.PARAM_IMG_UNCHECKED, dirUncheckedImage);
+				boolean cumplePlazo = false;
+				cumplePlazo = commonService.fechaEnvioCumplePlazo(
+						FiseConstants.TIPO_FORMATO_14C, 
+						formato.getId().getCodEmpresa(), 
+						formato.getId().getAnoPresentacion(), 
+						formato.getId().getMesPresentacion(), 
+						formato.getId().getEtapa(), 
+						FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
+				if( cumplePlazo ){
+					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
+				}
+				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}
+				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(formato.getId().getCodEmpresa()));
+				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());
+				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
+				
+				session.setAttribute("mapa", mapa);
+			}
+			session.setAttribute("nombreReporte",nombreReporte);
+		    session.setAttribute("nombreArchivo",nombreArchivo);
+			session.setAttribute("tipoFormato",tipoFormato);
+			session.setAttribute("tipoArchivo",tipoArchivo);
+				
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonArray.toString());
+			pw.flush();
+			pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
     
     
     

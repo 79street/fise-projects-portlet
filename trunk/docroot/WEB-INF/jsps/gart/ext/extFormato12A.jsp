@@ -1001,7 +1001,7 @@ function FillEditformato(row){
 	
 	dwr.util.removeAllOptions("s_periodoenvio_present");
 	var codigo=''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa;
-	var descripcion=formato14A.mostrarDescripcionPeriodo(row.anoPresentacion, row.mesPresentacion, row.etapa);
+	var descripcion=formato12A.mostrarDescripcionPeriodo(row.anoPresentacion, row.mesPresentacion, row.etapa);
 	var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
 	dwr.util.addOptions("s_periodoenvio_present", dataPeriodo,"codigoItem","descripcionItem");
 	

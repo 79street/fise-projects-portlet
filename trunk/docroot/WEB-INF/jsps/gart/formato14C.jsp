@@ -654,30 +654,34 @@ $(document).ready(function () {
 												 <td width="65%">
 												  <table style="width: 100%">
 												    <tr>
-													  <td width="16%" align="center">
+													  <td width="13%" align="center">
 														<input type="button" class="boton" name="<portlet:namespace/>reportePdfF14C" style="display: none;"
 																id="<portlet:namespace/>reportePdfF14C" class="button net-button-small" value="Imprimir PDF" />
 													  </td>
-													  <td width="16%" align="center">
+													  <td width="13%" align="center">
 														 <input type="button" class="boton" name="<portlet:namespace/>reporteExcelF14C" style="display: none;"
 																id="<portlet:namespace/>reporteExcelF14C" class="button net-button-small" value="Exportar excel" />
 													 </td>
-													<td width="17%" align="center">													  
+													 <td width="13%" align="center">
+														<input type="button" class="boton" name="<portlet:namespace/>reporteActaEnvio" style="display: none;"
+															id="<portlet:namespace/>reporteActaEnvio" class="button net-button-small" value="Acta de envío" />
+													</td>
+													<td width="16%" align="center">													  
 														  <input type="button" class="net-button-small" id="<portlet:namespace/>actualizarFormatoF14C"
 															   name="<portlet:namespace/>actualizarFormatoF14C" value="Actualizar" style="display: none;"/>
 																												
 														<input type="button" class="net-button-small" id="<portlet:namespace/>guardarFormatoF14C"
 															   name="<portlet:namespace/>guardarFormatoF14C" value="Grabar" />									   
 													</td>
-													<td width="17%" align="center">
+													<td width="15%" align="center">
 														<input type="button" class="net-button-small" id="<portlet:namespace/>validacionFormatoF14C"
 																name="<portlet:namespace/>validacionFormatoF14C" value="Validación" />
 													</td>
-													<td width="17%" align="center">
+													<td width="15%" align="center">
 														<input type="button" class="net-button-small" id="<portlet:namespace/>envioDefinitivoF14C"
 																name="<portlet:namespace/>envioDefinitivoF14C" value="Envío Def." />
 													</td>
-													<td width="17%" align="center">
+													<td width="15%" align="center">
 														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormatoF14C" 
 															  name="<portlet:namespace/>regresarFormatoF14C" value="Regresar" />
 													</td>
