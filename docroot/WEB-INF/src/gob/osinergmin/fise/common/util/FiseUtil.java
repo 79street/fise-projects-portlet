@@ -35,12 +35,11 @@ import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.liferay.mail.service.MailServiceUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -71,7 +70,7 @@ public class FiseUtil {
 
 	private static final String cod_proceso = "FISE";    		
 	private static final String cod_funcion = "REMISION";
-	private static final Log logger=LogFactoryUtil.getLog(FiseUtil.class);
+	private static final Logger logger = Logger.getLogger(FiseUtil.class);
 	
 	@Autowired
 	@Qualifier("admEmpresaGartServiceImpl")
@@ -398,7 +397,7 @@ public class FiseUtil {
 						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
 						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n para el periodo "
 						+ periodoEnvio + " del "
-						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute; de Costos Est&aacute;ndares, Formato "
+						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formato "
 						+ tipoFormato + ", y Anexo de Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());

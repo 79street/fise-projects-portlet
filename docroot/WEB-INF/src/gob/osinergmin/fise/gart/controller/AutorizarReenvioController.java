@@ -19,6 +19,7 @@ import javax.portlet.ResourceResponse;
 import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
 
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,8 +29,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -38,7 +37,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 @RequestMapping("VIEW")
 public class AutorizarReenvioController {
 	
-	Log logger=LogFactoryUtil.getLog(AutorizarReenvioController.class);
+	Logger logger = Logger.getLogger(AutorizarReenvioController.class);
 	
 	@Autowired
 	@Qualifier("commonGartServiceImpl")

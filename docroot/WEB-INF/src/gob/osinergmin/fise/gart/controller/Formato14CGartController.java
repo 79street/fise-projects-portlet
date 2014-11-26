@@ -54,6 +54,7 @@ import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -69,8 +70,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -84,7 +83,7 @@ import com.liferay.portal.util.PortalUtil;
 @RequestMapping("VIEW")
 public class Formato14CGartController {
 	
-	Log logger=LogFactoryUtil.getLog(Formato14CGartController.class);
+	private static final Logger logger = Logger.getLogger(Formato14CGartController.class);
 	
 	@Autowired
 	@Qualifier("formato14CGartServiceImpl")

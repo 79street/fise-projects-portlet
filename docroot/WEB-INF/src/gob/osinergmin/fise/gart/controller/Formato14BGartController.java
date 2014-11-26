@@ -52,6 +52,7 @@ import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -67,8 +68,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -82,7 +81,7 @@ import com.liferay.portal.util.PortalUtil;
 @RequestMapping("VIEW")
 public class Formato14BGartController {
 	
-private static final Log logger=LogFactoryUtil.getLog(Formato14BGartController.class);
+private static final Logger logger = Logger.getLogger(Formato14BGartController.class);
 	
 	@Autowired
 	@Qualifier("fiseUtil")

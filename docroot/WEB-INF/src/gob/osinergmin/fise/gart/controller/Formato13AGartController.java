@@ -57,6 +57,7 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -75,8 +76,6 @@ import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -88,7 +87,8 @@ import com.liferay.portal.util.PortalUtil;
 @RequestMapping("VIEW")
 public class Formato13AGartController {
 
-	private static final Log logger = LogFactoryUtil.getLog(Formato13AGartController.class);
+	Logger logger = Logger.getLogger(Formato13AGartController.class);
+	
 	private static final String CRUD_CREATE = "CREATE";
 	private static final String CRUD_UPDATE = "UPDATE";
 	// ---private static final String CRUD_DELETE = "DELETE";
