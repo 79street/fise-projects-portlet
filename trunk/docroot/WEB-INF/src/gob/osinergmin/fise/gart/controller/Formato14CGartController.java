@@ -10,7 +10,6 @@ import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
-import gob.osinergmin.fise.domain.FiseFormato14CCPK;
 import gob.osinergmin.fise.domain.FiseFormato14CD;
 import gob.osinergmin.fise.domain.FiseFormato14CDOb;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
@@ -93,24 +92,24 @@ public class Formato14CGartController {
 	
 	@Autowired
 	@Qualifier("fiseUtil")
-	FiseUtil fiseUtil;
+	private FiseUtil fiseUtil;
 	
 	@Autowired
 	@Qualifier("fisePeriodoEnvioGartServiceImpl")
-	FisePeriodoEnvioGartService periodoService;
+	private FisePeriodoEnvioGartService periodoService;
 	
 	@Autowired
 	@Qualifier("commonGartServiceImpl")
-	CommonGartService commonService;
+	private CommonGartService commonService;
 	
 	@Autowired
 	@Qualifier("cfgTablaGartServiceImpl")
-	CfgTablaGartService tablaService;
+	private CfgTablaGartService tablaService;
 	
 	
 	@Autowired
 	@Qualifier("cfgCampoGartServiceImpl")
-	CfgCampoGartService campoService;
+	private CfgCampoGartService campoService;
 	
 	
 	public static final int CELL_TYPE_BLANK = 3;

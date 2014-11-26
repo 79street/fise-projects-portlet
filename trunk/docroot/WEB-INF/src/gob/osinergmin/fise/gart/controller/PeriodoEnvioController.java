@@ -51,11 +51,11 @@ public class PeriodoEnvioController {
 	
 	@Autowired
 	@Qualifier("fisePeriodoEnvioGartServiceImpl")
-	FisePeriodoEnvioGartService fisePeriodoEnvioGartService;
+	private FisePeriodoEnvioGartService fisePeriodoEnvioGartService;
 
 	@Autowired
 	@Qualifier("fiseUtil")
-	FiseUtil fiseUtil;
+	private FiseUtil fiseUtil;
 	
 	private Map<String, String> mapaEmpresa;
 	
