@@ -20,6 +20,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,8 @@ import com.liferay.portal.util.PortalUtil;
 @Controller("cumplimientoGartController")
 @RequestMapping("VIEW")
 public class CumplimientoGartController {
+	
+	Logger logger = Logger.getLogger(CumplimientoGartController.class);
 	
 	@Autowired
 	AdmEmpresaGartService admEmpresaService;
