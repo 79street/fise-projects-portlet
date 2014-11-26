@@ -125,7 +125,7 @@ var autorizarReenvio= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = autorizarReenvio.tablaResultados.jqGrid('getRowData',cl);	      			
-		      			autorizar = "<a href='#'><img border='0' title='Aut. Reenvio' src='/net-theme/images/img-net/elim.png' align='center' onclick=\"autorizarReenvio.confirmarAutorizarReenvio('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
+		      			autorizar = "<a href='#'><img border='0' title='Aut. Reenvio' src='/net-theme/images/img-net/lock.png' align='center' onclick=\"autorizarReenvio.confirmarAutorizarReenvio('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			autorizarReenvio.tablaResultados.jqGrid('setRowData',ids[i],{autorizar:autorizar});	      			
 		      		}
 		      }
