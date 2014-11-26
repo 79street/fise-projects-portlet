@@ -554,7 +554,9 @@ public class Formato13AGartController {
 	@ActionMapping(params = "action=nuevoDetalle")
 	public void nuevoDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 		String codEmpresa = command.getCodEmpresa();
-		String periodoDeclaracion = command.getPeridoDeclaracion();
+		//String periodoDeclaracion = command.getPeridoDeclaracion();
+		String periodoDeclaracion = command.getDescripcionPeriodoHidden();//se obtiene el valor del periodo guardado de el campo descripcionPeriodoHidden(valorPeriodoHidden), probar los demas flujos
+		
 		String anioPresentacion = "";
 		String mesPresentacion = "";
 		String etapa = "";
@@ -617,7 +619,7 @@ public class Formato13AGartController {
 		Map<String, String> mapaEmpresa = fiseUtil.getMapaEmpresa();
 		command.setCodEmpresa(codEmpresa);
 		command.setPeridoDeclaracion(periodoDeclaracion);
-		command.setDescEmpresa(mapaEmpresa.get(codEmpresa));
+		command.setDescEmpresa(mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4)));
 		command.setAnioPresentacion(anioPresentacion);
 		command.setMesPresentacion(mesPresentacion);
 		command.setEtapa(etapa);
