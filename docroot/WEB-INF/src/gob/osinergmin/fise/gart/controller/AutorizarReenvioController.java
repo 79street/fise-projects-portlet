@@ -4,6 +4,7 @@ import gob.osinergmin.fise.bean.AutorizarReenvioBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.gart.service.CommonGartService;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -98,8 +99,10 @@ public class AutorizarReenvioController {
 			String etapa = r.getEtapaBusq();
 			String formato = r.getFormatoBusq();
 			String anioPres = r.getAnioPresBusq();
-			String mesPres = r.getMesPresBusq();
-			
+			String mesPres ="01";
+			if(FormatoUtil.isNotBlank(r.getMesPresBusq())){ 
+				 mesPres = r.getMesPresBusq();	
+			}			
 			String data ="";
 			
 			logger.info("codigo empresa "+ codEmpresa);
