@@ -85,8 +85,8 @@ var autorizarReenvio= {
 		    
 		    //eventos por defecto	
 		    
-			//autorizarReenvio.botonBuscar.trigger('click');
-			//autorizarReenvio.initBlockUI();
+			autorizarReenvio.botonBuscar.trigger('click');
+			autorizarReenvio.initBlockUI();
 		},
 		//funcion para armar el modelo de la grilla para el resultado
 		buildGrids : function () {	
