@@ -111,9 +111,11 @@ $(document).ready(function () {
 										</tr>
 										<tr>
 											<td></td>
-											<td><input name="<portlet:namespace/>btnBuscarFormatoReenvio"
+											<td></td>
+											<td></td>
+											<td style="aling:right"><input name="<portlet:namespace/>btnBuscarFormatoReenvio"
 												id="<portlet:namespace/>btnBuscarFormatoReenvio" type="button"
-												class="net-button-small" value="Buscar" style="aling: center" />
+												class="net-button-small" value="Buscar" style="aling:center" />
 											</td>
 										</tr>
 									</table>
