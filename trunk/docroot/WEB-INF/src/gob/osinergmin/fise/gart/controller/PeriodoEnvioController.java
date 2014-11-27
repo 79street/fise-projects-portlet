@@ -142,7 +142,7 @@ public class PeriodoEnvioController {
   				periodo.setDescEmpresa(mapaEmpresa.get(periodo.getCodEmpresa()));
   				periodo.setDescMesPresentacion(fiseUtil.getMapaMeses().get(Long.valueOf(periodo.getMesPresentacion()))); 
   				
-  				if("V".equals(p.getEstado())){ 
+  				if("V".equals(periodo.getEstado())){ 
   					periodo.setDescEstado("Vigente");			
   				}else{
   					periodo.setDescEstado("Anulado");			
