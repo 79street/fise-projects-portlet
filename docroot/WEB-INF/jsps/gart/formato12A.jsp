@@ -112,8 +112,9 @@
 												</td>
 												<td>
 													<select id="s_mes_d" name="s_mes_d"  class="select" style="width:104px;" >
-														<c:forEach items="${listaEmpresa}" var="emp">																
-															<option value="${emp.codEmpresa}">${emp.dscEmpresa}</option>
+														<option value="">-Seleccione-</option>
+														<c:forEach items="${listaMes}" var="mes">																
+															<option value="${mes.key}">${mes.value}</option>
 														</c:forEach>
 													</select>
 												</td>
@@ -236,6 +237,37 @@
 												<td></td>
 											</tr>
 											<tr>
+											  <td>
+												<div id="<portlet:namespace/>divInformacion">
+													<fieldset class="net-frame-border">
+													  <table>
+														 <tr> 
+															<td>
+															  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
+															</td>														
+															<td style="text-align: center;">
+															  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															  <output id="descGrupoInformacion" ></output>
+														   </td>
+														   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+														   <td>
+															  <label style="font-size: 12px; font-weight:bold">Estado:</label>
+															</td>
+															
+															<td style="text-align: center;">
+															  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															  <output id="descEstado"></output>														 
+														    </td>
+														 </tr>													
+													</table>
+												   </fieldset>
+											     </div>										
+											  </td>
+											</tr>
+											<tr height="10px">
+												<td></td>
+											</tr>
+											<tr>
 												<td>
 													<table class="" style="width: 100%;" border="0">
 									   					<tr>
@@ -276,33 +308,14 @@
 																				</select>
 									   										</td>
 									   									</tr>
-									   									<%-- <tr>
-									   										<td width="40px">Año:</td>
-									   										<td>
-									   											<input type="text" name="i_aniopresent" id="i_aniopresent" style="width:50px;" maxlength="4" >
-									   										</td>
-									   										<td width="10px" ></td>
-									   										<td width="40px">Mes:</td>
-									   										<td>
-									   											<select id="s_mes_present" name="s_mes_present" class="select" style="width:104px;" >
-																					<option value="">-Seleccione-</option>
-																					<c:forEach items="${listaMes}" var="mes">																
-																						<option value="${mes.key}">${mes.value}</option>
-																					</c:forEach>
-																				</select>
-									   										</td>
-									   									</tr> --%>
 									   								</table>
 									   							</fieldset>
 									   						</td>
 									   						<td width="10%">
 									   							<input type="hidden" id="flagPeriodoEjecucion" value="" />
-									   							<div id="divPrueba" style="display:none;">
-									   								hola mundo
-									   							</div>
 									   						</td>
 									   						<td width="45%">
-									   							<div id="divPeriodoEjecucion" style="display:none;" >
+									   							<div id="divPeriodoEjecucion" >
 									   								<fieldset class="net-frame-border" >
 										   								<table>
 										   									<tr>
@@ -329,35 +342,6 @@
 										   								</table>
 										   							</fieldset>
 									   							</div>
-									   							
-									   							
-									   							<c:if test="${flagMostrarPeriodoEjecucion=='S' }">
-									   								<fieldset class="net-frame-border" >
-										   								<table>
-										   									<tr>
-										   										<td colspan="5">
-										   											<output class="net-titulo">Periodo a ejecución</output>
-										   										</td>
-										   									</tr>
-										   									<tr>
-										   										<td width="40px">Año:</td>
-										   										<td>
-										   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" >
-										   										</td>
-										   										<td width="10px" ></td>
-										   										<td width="40px">Mes:</td>
-										   										<td>
-										   											<select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width:104px;" >
-																						<option value="">-Seleccione-</option>
-																						<c:forEach items="${listaMes}" var="mes">																
-																							<option value="${mes.key}">${mes.value}</option>
-																						</c:forEach>
-																					</select>
-										   										</td>
-										   									</tr>
-										   								</table>
-										   							</fieldset>
-									   							</c:if>
 									   							
 									   						</td>
 									   					</tr>
@@ -432,13 +416,13 @@
 									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 Número de Empadronados
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_nroEmpad_r" id="i_nroEmpad_r" style="width:100px;"  >
+									   							<input type="text" class="target" name="i_nroEmpad_r" id="i_nroEmpad_r" style="width:100px;"  >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_nroEmpad_p" id="i_nroEmpad_p" style="width:100px;" >
+									   							<input type="text" class="target" name="i_nroEmpad_p" id="i_nroEmpad_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_nroEmpad_l" id="i_nroEmpad_l" style="width:100px;"  >
+									   							<input type="text" class="target" name="i_nroEmpad_l" id="i_nroEmpad_l" style="width:100px;"  >
 									   						</td>
 									   					</tr>
 									   					<tr>
@@ -487,13 +471,13 @@
 									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Número de Agentes Autorizados GLP
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_nroAgentGlp_r" id="i_nroAgentGlp_r" style="width:100px;" >
+									   							<input type="text" class="target" name="i_nroAgentGlp_r" id="i_nroAgentGlp_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_nroAgentGlp_p" id="i_nroAgentGlp_p" style="width:100px;" >
+									   							<input type="text" class="target" name="i_nroAgentGlp_p" id="i_nroAgentGlp_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_nroAgentGlp_l" id="i_nroAgentGlp_l" style="width:100px;" >
+									   							<input type="text" class="target" name="i_nroAgentGlp_l" id="i_nroAgentGlp_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr>
@@ -533,13 +517,13 @@
 									   						3. Desplazamiento de Personal
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_despPersonal_r" id="i_despPersonal_r" style="width:100px;" >
+									   							<input type="text" class="target" name="i_despPersonal_r" id="i_despPersonal_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_despPersonal_p" id="i_despPersonal_p" style="width:100px;" >
+									   							<input type="text" class="target" name="i_despPersonal_p" id="i_despPersonal_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_despPersonal_l" id="i_despPersonal_l" style="width:100px;" >
+									   							<input type="text" class="target" name="i_despPersonal_l" id="i_despPersonal_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr>
@@ -547,13 +531,13 @@
 									   						4. Actividades Extraordinarias
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_activExtraord_r" id="i_activExtraord_r" style="width:100px;" >
+									   							<input type="text" class="target" name="i_activExtraord_r" id="i_activExtraord_r" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_activExtraord_p" id="i_activExtraord_p" style="width:100px;" >
+									   							<input type="text" class="target" name="i_activExtraord_p" id="i_activExtraord_p" style="width:100px;" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="fise-editable" name="i_activExtraord_l" id="i_activExtraord_l" style="width:100px;" >
+									   							<input type="text" class="target" name="i_activExtraord_l" id="i_activExtraord_l" style="width:100px;" >
 									   						</td>
 									   					</tr>
 									   					<tr height="10px">
@@ -664,24 +648,28 @@
 									   									<td width="65%">
 									   										<table style="width:100%">
 								   												<tr>
-								   													<td width="16%" align="center">
+								   													<td width="13%" align="center">
 								   														<input type="button" class="boton" name="<portlet:namespace/>reportePdf" style="display:none;" 
 								   															id="<portlet:namespace/>reportePdf" class="button net-button-small"  value="Imprimir PDF"/>
 								   													</td>
-								   													<td width="16%" align="center">
+								   													<td width="13%" align="center">
 								   														<input type="button" class="boton" name="<portlet:namespace/>reporteExcel" style="display:none;" 
 								   															id="<portlet:namespace/>reporteExcel" class="button net-button-small"  value="Exportar excel"/>
 								   													</td>
-								   													<td width="17%" align="center">
+								   													<td width="13%" align="center">
+																						<input type="button" class="boton" name="<portlet:namespace/>reporteActaEnvio" style="display: none;"
+																							id="<portlet:namespace/>reporteActaEnvio" class="button net-button-small" value="Acta de envío" />
+																					</td>
+								   													<td width="16%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>guardarFormato" name="<portlet:namespace/>guardarFormato" value="Grabar" />
 								   													</td>
-								   													<td width="17%" align="center">
+								   													<td width="15%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>validacionFormato" name="<portlet:namespace/>validacionFormato" value="Validación" />
 								   													</td>
-								   													<td width="17%" align="center">
+								   													<td width="15%" align="center">
 								   														<input type="button" class="net-button-small"   id="<portlet:namespace/>envioDefinitivo" name="<portlet:namespace/>envioDefinitivo" value="Envío Def." />
 								   													</td>
-								   													<td width="17%" align="center">
+								   													<td width="15%" align="center">
 								   														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarFormato" name="<portlet:namespace/>regresarFormato" value="Regresar" />
 								   													</td>
 								   												</tr>
@@ -820,34 +808,6 @@
 					
 					<div id="dialog-form-observacion" class="net-frame-border" style="display:none;background:#fff;" title=" Resultados de validación ">				
 						<fieldset class="net-frame-border">							
-							<%-- <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla">
-								<tr class="titulo_tabla">
-				            		<td width="40">Nro.</td>
-				            		<td width="80">Grupo Zona</td>
-				            		<td width="378" height="37">Descripción</td>
-				            	</tr>
-		                 		<c:forEach items="${listaObservaciones}" var="error" varStatus="status">															
-								<tr class="detalleTablaContenido">
-			                    	<td align="center">${status.count}</td> 
-			                    	<td align="left">${error.codigo}</td>
-			                    	<td align="left">${error.descripcion}</td>     
-			                 	 </tr>				
-								</c:forEach>            
-		                	</table> --%>
-		                	<!-- <table cellpadding="0" cellspacing="0" border="0" id="tblLista" width="100%">
-						       <thead>
-							    <tr>
-								   <td width="40">Nro.</td>
-				            		<td width="80">Grupo Zona</td>
-				            		<td width="378" height="37">Descripción</td>
-							   </tr>
-						      </thead>
-						      <tbody>
-							    <tr>
-								  
-							    </tr>
-						     </tbody>
-				        </table> -->
 				        <table id="grid_observacion" width="100%">
 							</table>
 				        <div id="pager_observacion">
@@ -896,5 +856,8 @@
 
 	<div id="divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
 	</div>
+
+	<input type="hidden" id="codEdelnor" value="${model.codEdelnor}" />
+	<input type="hidden" id="codLuzSur" value="${model.codLuzSur}" />
 
 </form> 

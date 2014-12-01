@@ -32,13 +32,16 @@ public class Formato12AGartJSON {
 	private String anioHasta;
 	private String mesHasta;
 	private String codEtapa;
+	
+	private String codEdelnor;
+	private String codLuzSur;
 	//
 	private String mensajeInfo;
 	private String mensajeError;
 	//
 	private String flag;//flag para controlar mostrar el formulario de ingreso cuando hay un error en carga de formulario excel o texto
 
-	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC, String flagPeriodoEjecucion) throws JSONException{
+	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC, String flagPeriodoEjecucion, String flagOperacion) throws JSONException{
 		
 		JSONObject jsonObj = new JSONObject();
 		
@@ -50,21 +53,6 @@ public class Formato12AGartJSON {
 		this.etapa=fiseFormato12AC.getId().getEtapa();
 		this.descMesPresentacion=fiseFormato12AC.getDescMesPresentacion();
 		this.descMesEjecucion=fiseFormato12AC.getDescMesEjecucion();
-		//this.grupoInfo=fiseFormato12AC.getFiseGrupoInformacion()!=null?fiseFormato12AC.getFiseGrupoInformacion().getDescripcion():null;
-		//this.estado=fiseFormato12AC.getDescEstado();
-		
-		if(fiseFormato12AC.getFiseGrupoInformacion()!=null && fiseFormato12AC.getFiseGrupoInformacion().getDescripcion()!=null){
-			jsonObj.put("grupoInfo", fiseFormato12AC.getFiseGrupoInformacion().getDescripcion());	
-		}else{
-			jsonObj.put("grupoInfo", FiseConstants.BLANCO);	
-		}
-		
-		if(fiseFormato12AC.getFechaEnvioDefinitivo()!=null){
-			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
-		}else{
-			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-		}
-		
 		
 		//verificar despues si el objeto grupoinfo siempre va a venir seteado
 		jsonObj.put("codEmpresa", fiseFormato12AC.getId().getCodEmpresa());
@@ -79,8 +67,26 @@ public class Formato12AGartJSON {
 		jsonObj.put("etapa", fiseFormato12AC.getId().getEtapa());
 		jsonObj.put("descMesPresentacion", fiseFormato12AC.getDescMesPresentacion());
 		jsonObj.put("descMesEjecucion", fiseFormato12AC.getDescMesEjecucion());
-		jsonObj.put("grupoInfo", fiseFormato12AC.getFiseGrupoInformacion()!=null?fiseFormato12AC.getFiseGrupoInformacion().getDescripcion():null);
-		jsonObj.put("estado", fiseFormato12AC.getDescEstado());
+
+		if( FiseConstants.BLANCO.equals(flagOperacion) ){
+			if(fiseFormato12AC.getFiseGrupoInformacion()!=null && fiseFormato12AC.getFiseGrupoInformacion().getDescripcion()!=null){
+				jsonObj.put("grupoInfo", fiseFormato12AC.getFiseGrupoInformacion().getDescripcion());	
+			}else{
+				jsonObj.put("grupoInfo", FiseConstants.BLANCO);	
+			}
+			if(fiseFormato12AC.getFechaEnvioDefinitivo()!=null){
+				jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+			}else{
+				jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+			}
+		}else{
+			jsonObj.put("grupoInfo", fiseFormato12AC.getDescGrupoInformacion());
+			jsonObj.put("estado", fiseFormato12AC.getDescEstado());
+		}
+		
+		jsonObj.put("flagOperacion", flagOperacion);
+		
+		
 		//valores de cabecera y detalle
 		long nroEmpadR = 0;
 		BigDecimal costoUnitEmpadR = new BigDecimal(0);
@@ -336,6 +342,22 @@ public class Formato12AGartJSON {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public String getCodEdelnor() {
+		return codEdelnor;
+	}
+
+	public void setCodEdelnor(String codEdelnor) {
+		this.codEdelnor = codEdelnor;
+	}
+
+	public String getCodLuzSur() {
+		return codLuzSur;
+	}
+
+	public void setCodLuzSur(String codLuzSur) {
+		this.codLuzSur = codLuzSur;
 	}
 
 }

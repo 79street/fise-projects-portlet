@@ -41,6 +41,10 @@ $(document).ready(function () {
 	 $("#<portlet:namespace/>validacionFormato").click(function() {<portlet:namespace/>validacionFormato();});
 	 //$("#<portlet:namespace/>reporteValidacion").click(function() {<portlet:namespace/>mostrarReporteValidacion();});
 	 $("#<portlet:namespace/>envioDefinitivo").click(function() {confirmarEnvioDefinitivo();});
+	 
+	 //
+	$("#<portlet:namespace/>reporteActaEnvio").click(function() {<portlet:namespace/>mostrarReporteActaEnvio();});
+	 
 	 initDialogs();
 	 //initBlockUI();		
 	 //SE CARGA VARIABLES EN SESION PARA MOSTRAR LOS PANELES DE NUEVO O EDICION MANEJADOS
@@ -81,6 +85,7 @@ $(document).ready(function () {
 	 $("#i_anio_h").val($("#anioHastaSes").val());
 	 $("#s_mes_h").val(parseInt($("#mesHastaSes").val()));
 	 $("#s_etapa").val($("#codEtapaSes").val());
+	 
 	 <portlet:namespace/>buscar();
 	 var mensajeInfo = $("#mensajeInfo").val();
 	 var mensajeError = $("#mensajeError").val();
@@ -115,6 +120,14 @@ $(document).ready(function () {
 ////////VALIDACIONES
 function inicializarFormulario(){
 	$('#s_empresa').val('');
+	
+	//validar lima edelnor y luz del sur
+	if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+		habilitarLima();										
+	}else{
+		deshabilitarLima();
+	}
+	
 	$('#s_periodoenvio_present').val('');
 	if( $('#flagPeriodoEjecucion').val()=='S' ){
 		$('#i_anioejecuc').val('').css('text-align','right');
@@ -218,6 +231,12 @@ function deshabilitarCampos(){
 	$('#i_importeActivExtraord').attr("disabled",true);
 	//
 	$('#i_totalGeneral').attr("disabled",true);
+	
+	quitarEstiloEdicionCabecera();
+	quitarEstiloEdicionRural();
+	quitarEstiloEdicionProvincia();
+	quitarEstiloEdicionLima();
+	
 	//
 }
 function removerDeshabilitados(){
@@ -494,6 +513,11 @@ function <portlet:namespace/>regresar(){
 	//se visualizan los componentes escondidos
 	$('#<portlet:namespace/>reportePdf').css('display','none');
 	$('#<portlet:namespace/>reporteExcel').css('display','none');
+	
+	//
+	$('#<portlet:namespace/>reporteActaEnvio').css('display','none');
+	//
+	
 	$('#<portlet:namespace/>guardarFormato').css('display','');
 	$('#panelCargaArchivos').css('display','');
 	$('#<portlet:namespace/>validacionFormato').css('display','');
@@ -693,11 +717,22 @@ function initDialogs(){
 			'Imprimir Pdf': function() {
 				<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 				$( this ).dialog("close");
+				$("#div_formato").hide();
+				$("#div_home").show();
+				<portlet:namespace/>buscar();
 			},
 			Ok: function() {
 				$( this ).dialog("close");
+				$("#div_formato").hide();
+				$("#div_home").show();
+				<portlet:namespace/>buscar();
 			}
-		}
+		},
+		close: function(event,ui){
+			$("#div_formato").hide();
+			$("#div_home").show();
+			<portlet:namespace/>buscar();
+       	}
 	});
 	$("#dialog-confirm").dialog({
 		modal: true,
@@ -774,6 +809,8 @@ function initDialogs(){
 function <portlet:namespace/>buscar() {	
 	if (validarBusqueda()) {	
 		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
+		console.debug($('#s_empresa_b'));
+		console.debug($('#s_mes_d'));
 		jQuery.ajax({			
 				url: '<portlet:resourceURL id="grid" />',
 				type: 'post',
@@ -801,14 +838,14 @@ function <portlet:namespace/>buscar() {
 function buildGrids() {	
 	jQuery("#grid_formato").jqGrid({
 		datatype: "local",
-       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Grupo Inf','Estado','Visualizar','Editar','Anular','','','',''],
+       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Grupo de Información','Estado','Visualizar','Editar','Anular','','','','',''],
        colModel: [
-				{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
-               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
+				{ name: 'descEmpresa', index: 'descEmpresa', width: 70},
+               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30,align:'right' },   
                { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
-               { name: 'anoEjecucion', index: 'anoPresentacion', width: 30 },   
+               { name: 'anoEjecucion', index: 'anoPresentacion', width: 30,align:'right' },   
                { name: 'descMesEjecucion', index: 'descMesEjecucion', width: 30},
-               { name: 'grupoInfo', index: 'anoEjecucion', width: 50},
+               { name: 'grupoInfo', index: 'grupoInfo', width: 80},
                { name: 'estado', index: 'estado', width: 50,align:'center'},
                { name: 'view', index: 'view', width: 20,align:'center' },
                { name: 'edit', index: 'edit', width: 20,align:'center' },
@@ -816,7 +853,8 @@ function buildGrids() {
                { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
                { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
                { name: 'mesEjecucion', index: 'mesEjecucion', hidden: true},
-               { name: 'etapa', index: 'etapa', hidden: true}
+               { name: 'etapa', index: 'etapa', hidden: true},
+               { name: 'flagOperacion', index: 'flagOperacion', hidden: true}
 	   	    ],
 	   	 multiselect: false,
 			rowNum:10,
@@ -835,8 +873,8 @@ function buildGrids() {
       			var cl = ids[i];
       			var ret = jQuery("#grid_formato").jqGrid('getRowData',cl);           
       			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
-      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
-      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";              			
+      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
+      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";              			
       			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{view:view});
       			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{edit:edit});
       			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{elim:elem});
@@ -852,16 +890,22 @@ function buildGrids() {
 	       } 
 	}); 
 }
-function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
-	var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-	$("#dialog-confirm-content").html(addhtml);		 
-	$("#dialog-confirm").dialog("open");
-	codEmpresa=cod_empresa;
-	ano_Presentacion=anoPresentacion;
-	mes_Presentacion=mesPresentacion;
-	ano_Ejecucion=anoEjecucion;
-	mes_Ejecucion=mesEjecucion;
-	codEtapa=etapa;
+function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa,flagOperacion){	
+	if(flagOperacion=='ABIERTO'){
+		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+		$("#dialog-confirm-content").html(addhtml);		 
+		$("#dialog-confirm").dialog("open");
+		codEmpresa=cod_empresa;
+		ano_Presentacion=anoPresentacion;
+		mes_Presentacion=mesPresentacion;
+		ano_Ejecucion=anoEjecucion;
+		mes_Ejecucion=mesEjecucion;
+		codEtapa=etapa;
+	}else if(flagOperacion=='CERRADO'){
+		alert(" No esta habilitado para realizar esta operacion");		
+	}else{
+		alert("El formato ya fue enviado a OSINERGMIN-GART");	
+	}
 }
 function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion,codEtapa){			
 	$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>' });
@@ -911,6 +955,10 @@ function <portlet:namespace/>crearFormato(){
 	}
 	$('#<portlet:namespace/>validacionFormato').css('display','none');
 	cargarPeriodoYCostos('','');
+	
+	estiloEdicionRural();
+	estiloEdicionProvincia();
+	
 }
 function mostrarUltimoFormato(){	
 	$('#Estado').val('SAVE');
@@ -918,6 +966,10 @@ function mostrarUltimoFormato(){
 	$("#div_formato").show();
 	$("#div_home").hide();
 	$('#flagCarga').val('0');
+	
+	estiloEdicionRural();
+	estiloEdicionProvincia();
+	
 }
 function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
 	$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
@@ -956,63 +1008,85 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 			}
 	});	
 }
-function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa){	
-	$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
-	jQuery.ajax({
-			url: '<portlet:resourceURL id="crud" />',
-			type: 'post',
-			dataType: 'json',
-			data: {
-			   <portlet:namespace />tipo: "GET",
-			   <portlet:namespace />codEmpresa: codEmpresa,
-			   <portlet:namespace />anoPresentacion: anoPresentacion,
-			   <portlet:namespace />mesPresentacion: mesPresentacion,
-			   <portlet:namespace />anoEjecucion: anoEjecucion,
-			   <portlet:namespace />mesEjecucion: mesEjecucion,
-			   <portlet:namespace />etapa: etapa
-				},
-			success: function(data) {				
-				if (data.resultado == "OK"){
-					$("#Estado").val("UPDATE");
-					$("#etapaEdit").val(etapa);
-					//se deja el formulario activo
-					$("#div_formato").show();
-					$("#div_home").hide();
-					dwr.util.removeAllOptions("s_periodoenvio_present");
-					dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
-					FillEditformato(data.formato);
+function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa,flagOperacion){	
+	if(flagOperacion=='ABIERTO'){
+		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
+		jQuery.ajax({
+				url: '<portlet:resourceURL id="crud" />',
+				type: 'post',
+				dataType: 'json',
+				data: {
+				   <portlet:namespace />tipo: "GET",
+				   <portlet:namespace />codEmpresa: codEmpresa,
+				   <portlet:namespace />anoPresentacion: anoPresentacion,
+				   <portlet:namespace />mesPresentacion: mesPresentacion,
+				   <portlet:namespace />anoEjecucion: anoEjecucion,
+				   <portlet:namespace />mesEjecucion: mesEjecucion,
+				   <portlet:namespace />etapa: etapa
+					},
+				success: function(data) {				
+					if (data.resultado == "OK"){
+						$("#Estado").val("UPDATE");
+						$("#etapaEdit").val(etapa);
+						//se deja el formulario activo
+						$("#div_formato").show();
+						$("#div_home").hide();
+						dwr.util.removeAllOptions("s_periodoenvio_present");
+						dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
+						FillEditformato(data.formato);
+						
+						estiloEdicionRural();
+						estiloEdicionProvincia();
+						
+						if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+							habilitarLima();										
+						}else{
+							deshabilitarLima();
+						}
+						
+						initBlockUI();
+					}
+					else{
+						alert("Error al recuperar los datos del registro seleccionado");
+						initBlockUI();
+					}
+				},error : function(){
+					alert("Error de conexión.");
 					initBlockUI();
 				}
-				else{
-					alert("Error al recuperar los datos del registro seleccionado");
-					initBlockUI();
-				}
-			},error : function(){
-				alert("Error de conexión.");
-				initBlockUI();
-			}
-	});	
+		});	
+	}else if(flagOperacion=='CERRADO'){
+		alert(" No esta habilitado para realizar esta operacion");	
+	}else{
+		alert("El formato ya fue enviado a OSINERGMIN-GART");	
+	}
 }
 function FillEditformato(row){
 	$('#s_empresa').val(row.codEmpresa);
 	//seteamos el concatenado
 	$('#s_periodoenvio_present').val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
 	
+	//seteamos el grupo y estado
+	$('#descGrupoInformacion').val(row.grupoInfo);
+	$('#descEstado').val(row.estado);
 	
 	dwr.util.removeAllOptions("s_periodoenvio_present");
 	var codigo=''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa;
-	var descripcion=formato12A.mostrarDescripcionPeriodo(row.anoPresentacion, row.mesPresentacion, row.etapa);
+	var descripcion=mostrarDescripcionPeriodo(row.anoPresentacion, row.mesPresentacion, row.etapa);
 	var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
 	dwr.util.addOptions("s_periodoenvio_present", dataPeriodo,"codigoItem","descripcionItem");
 	
 	$('#flagPeriodoEjecucion').val(row.flagPeriodoEjecucion);
 	
-	if( $('#flagPeriodoEjecucion').val()=='S' ){
+	$('#i_anioejecuc').val(row.anoEjecucion).css('text-align','right');
+	$('#s_mes_ejecuc').val(row.mesEjecucion);
+	
+	/*if( $('#flagPeriodoEjecucion').val()=='S' ){
 		$('#i_anioejecuc').val(row.anoEjecucion).css('text-align','right');
 		$('#s_mes_ejecuc').val(row.mesEjecucion);
 		$('#i_anioejecuc').attr("disabled",true);
 		$('#s_mes_ejecuc').attr("disabled",true);
-	}
+	}*/
 	$("#etapaEdit").val(row.etapa);
 	$('#i_nroEmpad_r').val(row.nroEmpadR).css('text-align','right');
 	$('#i_costoUnitEmpad_r').val(row.costoUnitEmpadR).css('text-align','right');
@@ -1051,6 +1125,10 @@ function FillEditformato(row){
 	$('#s_empresa').attr("disabled",true);
 	$('#s_periodoenvio_present').attr("disabled",true);
 	//
+	$('#i_anioejecuc').attr("disabled",true);
+	$('#s_mes_ejecuc').attr("disabled",true);
+	quitarEstiloEdicionCabecera();
+	
 	realizarCalculoCampos();
 	deshabilitarCampos();
 	//
@@ -1068,7 +1146,7 @@ function FillEditformato(row){
 	soloNumerosEnteros();
 	formularioCompletarDecimales();
 	$('#flagCarga').val('1');
-	mostrarPeriodoEjecucion();
+	//mostrarPeriodoEjecucion();
 }
 function deshabiliarControlerView(){
 	$('#i_nroEmpad_r').attr("disabled",true);
@@ -1089,6 +1167,10 @@ function deshabiliarControlerView(){
 	
 	$('#<portlet:namespace/>reportePdf').css('display','');
 	$('#<portlet:namespace/>reporteExcel').css('display','');
+	//
+	$('#<portlet:namespace/>reporteActaEnvio').css('display','');
+	//
+	
 	$('#<portlet:namespace/>guardarFormato').css('display','none');
 	$('#panelCargaArchivos').css('display','none');
 	$('#<portlet:namespace/>validacionFormato').css('display','none');
@@ -1208,6 +1290,13 @@ function <portlet:namespace/>loadPeriodo(valPeriodo) {
 					dwr.util.setValue("s_periodoenvio_present", valPeriodo);
 				}
 				<portlet:namespace/>loadCostosUnitarios();
+				
+				if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+					habilitarLima();										
+				}else{
+					deshabilitarLima();
+				}
+				
 			},error : function(){
 				alert("Error de conexión.");
 				initBlockUI();
@@ -1222,10 +1311,10 @@ function recargarPeriodoEjecucion(){
 	if( $('#s_periodoenvio_present').val() != null ){
 		ano = $('#s_periodoenvio_present').val().substring(0,4);
 		mes = $('#s_periodoenvio_present').val().substring(4,6);
-		if( $('#flagPeriodoEjecucion').val()=='S' ){
+		//if( $('#flagPeriodoEjecucion').val()=='S' ){
 			$('#i_anioejecuc').val(ano);
 			$('#s_mes_ejecuc').val(parseFloat(mes));
-		}
+		//}
 	}
 }
 function <portlet:namespace/>loadCostosUnitarios() {
@@ -1258,9 +1347,13 @@ function <portlet:namespace/>loadCostosUnitarios() {
 }
 function mostrarPeriodoEjecucion(){
 	if( $('#flagPeriodoEjecucion').val()=='S' ){
-		$('#divPeriodoEjecucion').show();  
+		$('#i_anioejecuc').removeAttr("disabled");
+		$('#s_mes_ejecuc').removeAttr("disabled");
+		estiloEdicionCabecera();
 	}else{
-		$('#divPeriodoEjecucion').hide();  
+		$('#i_anioejecuc').attr("disabled",true);
+		$('#s_mes_ejecuc').attr("disabled",true);
+		quitarEstiloEdicionCabecera();
 	}
 }
 
@@ -1441,6 +1534,8 @@ function <portlet:namespace/>mostrarReporteValidacion(){
 		type : 'post',
 		dataType : 'json',
 		data : {
+			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+			<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
 			<portlet:namespace />nombreReporte: 'validacion',
 			<portlet:namespace />nombreArchivo: 'validacion',
 			<portlet:namespace />tipoArchivo: '0'//PDF
@@ -1508,5 +1603,96 @@ function <portlet:namespace/>mostrarReporteEnvioDefinitivo(){
 		}
 	});
 }
+function <portlet:namespace/>mostrarReporteActaEnvio(){
+	var estado = $('#descEstado').val();	
+	if(estado=='Enviado'){
+		jQuery.ajax({
+			url : '<portlet:resourceURL id="reporteActaEnvioView" />',
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+				<portlet:namespace />tipoArchivo: '0'//PDF
+			},
+			success : function(gridData) {
+				verReporte();
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
+			}
+		});
+	}else{
+		alert("Primero debe realizar el envío definitivo");
+	}
+}
+//funcion para desabiliar campos lima
+function deshabilitarLima(){
+	//LIMA
+	$('#i_nroEmpad_l').attr("disabled",true);
+	$('#i_nroAgentGlp_l').attr("disabled",true);
+	$('#i_despPersonal_l').attr("disabled",true);
+	$('#i_activExtraord_l').attr("disabled",true);
+	quitarEstiloEdicionLima();
+}
+//funcion para habilitar campos lima
+function habilitarLima(){
+	$('#i_nroEmpad_l').removeAttr("disabled");
+	$('#i_nroAgentGlp_l').removeAttr("disabled");
+	$('#i_despPersonal_l').removeAttr("disabled");
+	$('#i_activExtraord_l').removeAttr("disabled");
+	estiloEdicionLima();
+}
+//poner estilos de edicion para cada columna
+function estiloEdicionCabecera(){
+	$('#i_anioejecuc').addClass("fise-editable");
+	//$('#s_mes_ejecuc').addClass("fise-editable");
+}
+function estiloEdicionRural(){
+	$('#i_nroEmpad_r').addClass("fise-editable");
+	$('#i_nroAgentGlp_r').addClass("fise-editable");
+	$('#i_despPersonal_r').addClass("fise-editable");
+	$('#i_activExtraord_r').addClass("fise-editable");
+}
+function estiloEdicionProvincia(){
+	$('#i_nroEmpad_p').addClass("fise-editable");
+	$('#i_nroAgentGlp_p').addClass("fise-editable");
+	$('#i_despPersonal_p').addClass("fise-editable");
+	$('#i_activExtraord_p').addClass("fise-editable");
+}
+function estiloEdicionLima(){
+	$('#i_nroEmpad_l').addClass("fise-editable");
+	$('#i_nroAgentGlp_l').addClass("fise-editable");
+	$('#i_despPersonal_l').addClass("fise-editable");
+	$('#i_activExtraord_l').addClass("fise-editable");
+}
+//quitar estilos
+function quitarEstiloEdicionCabecera(){
+	$('#i_anioejecuc').removeClass("fise-editable");
+	//$('#s_mes_ejecuc').removeClass("fise-editable");
+}
+function quitarEstiloEdicionRural(){
+	$('#i_nroEmpad_r').removeClass("fise-editable");
+	$('#i_nroAgentGlp_r').removeClass("fise-editable");
+	$('#i_despPersonal_r').removeClass("fise-editable");
+	$('#i_activExtraord_r').removeClass("fise-editable");
+}
+function quitarEstiloEdicionProvincia(){
+	$('#i_nroEmpad_p').removeClass("fise-editable");
+	$('#i_nroAgentGlp_p').removeClass("fise-editable");
+	$('#i_despPersonal_p').removeClass("fise-editable");
+	$('#i_activExtraord_p').removeClass("fise-editable");
+}
+function quitarEstiloEdicionLima(){
+	$('#i_nroEmpad_l').removeClass("fise-editable");
+	$('#i_nroAgentGlp_l').removeClass("fise-editable");
+	$('#i_despPersonal_l').removeClass("fise-editable");
+	$('#i_activExtraord_l').removeClass("fise-editable");
+}
+//
+
+
 </script>
 
