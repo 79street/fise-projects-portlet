@@ -358,7 +358,7 @@ public class Formato13AGartController {
 
 				// guardamos el grupo de informacion
 				FiseGrupoInformacion grupoInfo = null;
-				long idGrupoInf = commonService.obtenerIdGrupoInformacion(pkCabecera.getAnoPresentacion(), pkCabecera.getMesPresentacion());
+				long idGrupoInf = commonService.obtenerIdGrupoInformacion(pkCabecera.getAnoPresentacion(), pkCabecera.getMesPresentacion(), FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
 				if (idGrupoInf != 0) {
 					grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
 					command.setDescGrupoInformacion(grupoInfo.getDescripcion());
@@ -1044,7 +1044,7 @@ public class Formato13AGartController {
 									cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
 									cabecera.setFechaCreacion(new Date());
 									FiseGrupoInformacion grupoInfo = null;
-									long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion(), cabecera.getId().getMesPresentacion());
+									long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion(), cabecera.getId().getMesPresentacion(), FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
 									if (idGrupoInf != 0) {
 										grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
 										nameGrupo=grupoInfo.getDescripcion();
