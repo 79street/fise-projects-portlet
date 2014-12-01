@@ -507,4 +507,11 @@ public class FiseUtil {
 		return mapaSectorTipico;
 	}
 	
+	public Map<Long, String> getMapaEtapaEjecucion(){
+		Map<Long, String> mapaEtapaEjecucion = new HashMap<Long, String>();
+		mapaEtapaEjecucion.put(FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD, FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_DESC);
+		mapaEtapaEjecucion.put(FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD, FiseConstants.ETAPA_EJECUCION_OPERATIVA_DESC);
+		return mapaEtapaEjecucion;
+	}
+	
 }
