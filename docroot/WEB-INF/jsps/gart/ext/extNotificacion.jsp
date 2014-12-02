@@ -71,7 +71,7 @@ var notificarValidar= {
 			this.urlProcesar='<portlet:resourceURL id="procesarNotificacion" />';
 			this.urlCargaGrupoInf='<portlet:resourceURL id="cargarGrupoInformacion" />';
 			this.urlVerObservaciones='<portlet:resourceURL id="verObservacionesValidacion" />';
-			this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionF14C" />';
+			this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionNotificacion" />';
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarNotificacion");	
