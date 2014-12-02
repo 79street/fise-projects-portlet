@@ -15,5 +15,6 @@
 		<portlet id="gartCumplimiento"/>
 		<portlet id="gartObservacion"/>
 		<portlet id="gartAutorizarReenvio"/>
+		<portlet id="gartNotificacion"/>
 	</category>
 </display>
