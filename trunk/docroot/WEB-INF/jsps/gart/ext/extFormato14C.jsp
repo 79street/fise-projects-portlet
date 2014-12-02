@@ -2150,6 +2150,7 @@ var formato14C= {
 		},
 		//Funcion para Grabar nuevo registro
 		<portlet:namespace/>guardarFormato14C : function(){
+			console.debug("entranado a grabar formato 14C ");
 			if (formato14C.validarFormulario()){
 				$.blockUI({ message: formato14C.mensajeGuardando });
 				 jQuery.ajax({
@@ -2228,7 +2229,11 @@ var formato14C= {
 			}
 		},	
 		//function para validad ingreso de datos
-		validarFormulario : function() {		
+		validarFormulario : function() {	
+			var flagPeriodo = formato14C.f_flagPeriodo.val();
+			var anioInicio =$('#anoIniVigencia').val();
+			var anioFin = $('#anoFinVigencia').val();
+			console.debug("flag periodo al validar:  "+flagPeriodo);
 			if(formato14C.f_empresa.val().length == '' ) { 	
 				alert('Seleccione una empresa'); 
 				formato14C.f_empresa.focus();
@@ -2237,37 +2242,23 @@ var formato14C= {
 				alert('Debe ingresar periodo de presentacion');
 				formato14C.f_periodoEnvio.focus();
 				return false; 
-			}
-			else if( formato14C.f_flagPeriodo.val()=='S' ){
-				if($('#anoIniVigencia').val().length == '' ) {		  
-					alert('Debe ingresar el año de inicio de vigencia');
-					$('#anoIniVigencia').focus();
-					return false; 
-				}else{
-					var numstr = trim($('#anoIniVigencia').val());
-					if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-						alert('Ingrese un año de inicio de inicio de vigencia válido');
-						return false;
-				 	}
-			 	}
-				if($('#anoFinVigencia').val().length == '' ) {		  
-					alert('Debe ingresar el año de fin de vigencia');
-					$('#anoFinVigencia').focus();
-					return false; 
-				}else{
-					var numstr = trim($('#anoFinVigencia').val());
-					if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-						alert('Ingrese un año de fin de vigencia válido');
-						return false;
-					}
-			 	}
-			} 
-			/* else if(formato14C.f_nombreSede.val().length == '' ) {		  
-				alert('Debe ingresar nombre de la sede');
-				formato14C.f_nombreSede.focus();
-				return false; 
-			} */
-			else if(formato14C.f_numRural.val().length == '' ) {		  
+			}else if(flagPeriodo=='S' && anioInicio.length == ''){				 
+				alert('Debe ingresar el año de inicio de vigencia');
+				anioInicio.focus();
+				return false; 				
+			}else if(flagPeriodo=='S' && anioFin.length == ''){				 
+				alert('Debe ingresar el año de fin de vigencia');
+				anioFin.focus();
+				return false; 		
+		    }else if(flagPeriodo=='S' && !validarAnioInicioVig(anioInicio)){				 
+				alert('Debe ingresar el año de inicio de vigencia valido');
+				anioInicio.focus();
+				return false; 				
+			}else if(flagPeriodo=='S' && !validarAnioFinVig(anioFin)){				 
+				alert('Debe ingresar el año de fin de vigencia valido');
+				anioFin.focus();
+				return false; 		
+		    }else if(formato14C.f_numRural.val().length == '' ) {		  
 				alert('Debe ingresar el numero de beneficiarios de la zona rural');
 				formato14C.f_numRural.focus();
 				return false; 
