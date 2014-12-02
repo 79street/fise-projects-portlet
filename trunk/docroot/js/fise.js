@@ -239,4 +239,24 @@ function completarNumeroBlanco(id){
 	}	
 }
 
+function validarAnioInicioVig(anioInicio){
+  var numstr = trim($('#anoIniVigencia').val());
+   if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){			
+			return false;
+   }else{
+	   return true;
+   }	
+}
+
+function validarAnioFinVig(anioFin){	
+	var numstr = trim($('#anoFinVigencia').val());
+	if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+		alert('Ingrese un año de fin de vigencia válido');
+		return false;
+	}else{
+		return true;
+	}
+}
+
+
 
