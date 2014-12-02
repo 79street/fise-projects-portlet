@@ -7,6 +7,7 @@ import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.bean.NotificacionBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
+import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
 import gob.osinergmin.fise.domain.FiseFormato12AD;
@@ -27,6 +28,7 @@ import gob.osinergmin.fise.domain.FiseFormato14CC;
 import gob.osinergmin.fise.domain.FiseFormato14CD;
 import gob.osinergmin.fise.domain.FiseFormato14CDOb;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
+import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
@@ -37,9 +39,13 @@ import gob.osinergmin.fise.gart.service.Formato14CGartService;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -47,6 +53,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
 
@@ -61,6 +68,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -103,6 +111,11 @@ public class NotificacionController {
 	@Autowired
 	@Qualifier("formato14CGartServiceImpl")
 	private Formato14CGartService formatoService14C;
+	
+	
+	@Autowired
+	@Qualifier("cfgTablaGartServiceImpl")
+	private CfgTablaGartService tablaService;
 	
 	
 	
@@ -276,11 +289,11 @@ public class NotificacionController {
   	  		          break;
   	  		        } 	  		      
   				}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(not.getFormato())){ 
-  					
+  				//falta	
   				}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(not.getFormato())){ 
-  					
+  				//falta	
   				}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(not.getFormato())){ 
-  					
+  				//falta	
   				}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(not.getFormato())){ 
   					FiseFormato13ACPK pk = new FiseFormato13ACPK();
   					pk.setCodEmpresa(not.getCodEmpresa());
@@ -375,6 +388,8 @@ public class NotificacionController {
 		try{
 			response.setContentType("application/json");
 			
+			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+			
 			JSONArray jsonArray = null;
 			
 			logger.info("Entrando a ver observaciones notificacion"); 				
@@ -386,7 +401,7 @@ public class NotificacionController {
 			logger.info("anio ejec:  "+ n.getAnioEjec());
 			logger.info("mes ejec:  "+ n.getMesEjec());
 			logger.info("anio ini vige:  "+ n.getAnioIniVig());
-			logger.info("anio fin vige:  "+ n.getAnioFinVig());			
+			logger.info("anio fin vige:  "+ n.getAnioFinVig());	 
   			 							
 			if(FiseConstants.NOMBRE_FORMATO_12A.equals(n.getFormato())){
 				jsonArray= new JSONArray();
@@ -416,11 +431,14 @@ public class NotificacionController {
 						FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
 		    	/***/
 			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 
-
+				jsonArray= new JSONArray();
+				//falta
 			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 
-
+				jsonArray= new JSONArray();
+				//falta
 			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){ 
-
+				jsonArray= new JSONArray();
+				//falta
 			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){
 				jsonArray= new JSONArray();
 				FiseFormato13ACPK pk = new FiseFormato13ACPK();
@@ -515,8 +533,16 @@ public class NotificacionController {
 		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
 		    			FiseConstants.NOMBRE_EXCEL_VALIDACION_F14C,
 		    			FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);	
-			}	 			
-  			logger.info("arreglo json:"+jsonArray);
+			}
+			 pRequest.getPortletSession().setAttribute("codigoEmpresa", n.getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
+			 pRequest.getPortletSession().setAttribute("anioPresentacion", n.getAnioPres(), PortletSession.APPLICATION_SCOPE);
+			 pRequest.getPortletSession().setAttribute("mesPresentacion", n.getMesPres(), PortletSession.APPLICATION_SCOPE);
+			 pRequest.getPortletSession().setAttribute("formato", n.getFormato(), PortletSession.APPLICATION_SCOPE);
+			 pRequest.getPortletSession().setAttribute("etapa", n.getEtapa(), PortletSession.APPLICATION_SCOPE);
+			 pRequest.getPortletSession().setAttribute("anioIniVig", n.getAnioIniVig(), PortletSession.APPLICATION_SCOPE);
+			 pRequest.getPortletSession().setAttribute("anioFinVig", n.getAnioFinVig(), PortletSession.APPLICATION_SCOPE);			 
+			 
+			 logger.info("arreglo json:"+jsonArray);
   			PrintWriter pw = response.getWriter();
   			pw.write(jsonArray.toString());
   			pw.flush();
@@ -618,6 +644,167 @@ public class NotificacionController {
 			}
 		}
 	}	
+	
+	@ResourceMapping("reporteValidacionNotificacion")
+	public void reporteNotificacion(ResourceRequest request,ResourceResponse response,
+ 			 @ModelAttribute("notificacionBean")NotificacionBean n){
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+	        
+	        logger.info("Codigo empresa:  "+ n.getCodEmpresa());
+	        
+	        PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+	        
+		    JSONArray jsonArray = new JSONArray(); 
+		    
+		    String nombreReporte = "";
+		    String nombreArchivo = "";
+		    String tipoFormato = "";
+		    String tipoArchivo = "";	  
+	
+		    if( listaObservaciones!=null ){
+		    	session.setAttribute("lista", listaObservaciones);
+		    }	   
+		    String codEmpresa = (String)pRequest.getPortletSession().getAttribute("codigoEmpresa", 
+		    		PortletSession.APPLICATION_SCOPE);
+		    String anioPres = (String)pRequest.getPortletSession().getAttribute("anioPresentacion", 
+		    		PortletSession.APPLICATION_SCOPE);
+		    String mesPres = (String)pRequest.getPortletSession().getAttribute("mesPresentacion", 
+		    		PortletSession.APPLICATION_SCOPE);
+		    String formato = (String)pRequest.getPortletSession().getAttribute("formato", 
+		    		PortletSession.APPLICATION_SCOPE);
+		    String etapa = (String)pRequest.getPortletSession().getAttribute("etapa", 
+		    		PortletSession.APPLICATION_SCOPE); 		    
+		    String anioIniVig = (String)pRequest.getPortletSession().getAttribute("anioIniVig", 
+		    		PortletSession.APPLICATION_SCOPE);
+		    String anioFinVig = (String)pRequest.getPortletSession().getAttribute("anioFinVig", 
+		    		PortletSession.APPLICATION_SCOPE);
+		   
+		    
+		    CfgTabla tabla = null;
+	    	String descripcionFormato = "";   	
+	    	
+	    	Map<String, Object> mapa = new HashMap<String, Object>();
+	    	mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+	    	mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+	    	
+	    	if(FiseConstants.NOMBRE_FORMATO_12A.equals(formato)){
+	    		nombreReporte = request.getParameter("nombreReporte").trim();
+	    		nombreArchivo = request.getParameter("nombreArchivo").trim();
+	    		tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
+	    		tipoArchivo = request.getParameter("tipoArchivo").trim();	
+	    		session.setAttribute("nombreReporte",nombreReporte);
+	    		session.setAttribute("nombreArchivo",nombreArchivo);
+	    		session.setAttribute("tipoFormato",tipoFormato);
+	    		session.setAttribute("tipoArchivo",tipoArchivo);    
+	    		tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12A);
+	    		if( tabla!=null ){
+		    		descripcionFormato = tabla.getDescripcionTabla();
+		    	}
+			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(formato)){
+				//falta
+				tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12B);
+	    		if( tabla!=null ){
+		    		descripcionFormato = tabla.getDescripcionTabla();
+		    	}
+			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(formato)){ 
+				//falta
+				tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12C);
+	    		if( tabla!=null ){
+		    		descripcionFormato = tabla.getDescripcionTabla();
+		    	}
+			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(formato)){
+				//falta
+				tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12D);
+	    		if( tabla!=null ){
+		    		descripcionFormato = tabla.getDescripcionTabla();
+		    	}
+			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(formato)){
+				nombreReporte = request.getParameter("nombreReporte").trim();
+				nombreArchivo = request.getParameter("nombreArchivo").trim();
+				tipoFormato = FiseConstants.TIPO_FORMATO_VAL_13A;
+				tipoArchivo = request.getParameter("tipoArchivo").trim();
+
+				session.setAttribute("nombreReporte", nombreReporte);
+				session.setAttribute("nombreArchivo", nombreArchivo);
+				session.setAttribute("tipoFormato", tipoFormato);
+				session.setAttribute("tipoArchivo", tipoArchivo);
+				tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO13A);
+	    		if( tabla!=null ){
+		    		descripcionFormato = tabla.getDescripcionTabla();
+		    	}
+	    		mapa.put("INICIO_VIGENCIA", anioIniVig!=null?anioIniVig:"");
+				mapa.put("FIN_VIGENCIA", anioFinVig!=null?anioFinVig:"");
+	    		
+			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(formato)){ 
+				nombreReporte = request.getParameter("nombreReporte").trim();
+	    		nombreArchivo = request.getParameter("nombreArchivo").trim();
+	    		tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
+	    		tipoArchivo = request.getParameter("tipoArchivo").trim();	
+	    		session.setAttribute("nombreReporte",nombreReporte);
+	    		session.setAttribute("nombreArchivo",nombreArchivo);
+	    		session.setAttribute("tipoFormato",tipoFormato);
+	    		session.setAttribute("tipoArchivo",tipoArchivo); 
+				tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
+	    		if( tabla!=null ){
+		    		descripcionFormato = tabla.getDescripcionTabla();
+		    	}	
+			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(formato)){
+				nombreReporte = request.getParameter("nombreReporte").trim();
+	    		nombreArchivo = request.getParameter("nombreArchivo").trim();
+	    		tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
+	    		tipoArchivo = request.getParameter("tipoArchivo").trim();	
+	    		session.setAttribute("nombreReporte",nombreReporte);
+	    		session.setAttribute("nombreArchivo",nombreArchivo);
+	    		session.setAttribute("tipoFormato",tipoFormato);
+	    		session.setAttribute("tipoArchivo",tipoArchivo); 
+				tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14B);
+	    		if( tabla!=null ){
+		    		descripcionFormato = tabla.getDescripcionTabla();
+		    	}
+			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(formato)){ 
+				nombreReporte = request.getParameter("nombreReporte").trim();
+	    		nombreArchivo = request.getParameter("nombreArchivo").trim();
+	    		tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
+	    		tipoArchivo = request.getParameter("tipoArchivo").trim();	
+	    		session.setAttribute("nombreReporte",nombreReporte);
+	    		session.setAttribute("nombreArchivo",nombreArchivo);
+	    		session.setAttribute("tipoFormato",tipoFormato);
+	    		session.setAttribute("tipoArchivo",tipoArchivo); 
+				tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14C);
+	    		if( tabla!=null ){
+		    		descripcionFormato = tabla.getDescripcionTabla();
+		    	}		
+			} 	   
+		   	mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(anioPres));
+		   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(mesPres)));
+		   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+		   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
+		   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+			mapa.put("DESC_EMPRESA", mapaEmpresa.get(codEmpresa));
+		   	mapa.put("ETAPA", etapa);
+		   	
+		   	session.setAttribute("mapa", mapa);	   
+		   	
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		    /***Limpiando las variables en session*/
+		    pRequest.getPortletSession().setAttribute("codigoEmpresa", "", PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("anioPresentacion", "", PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("mesPresentacion", "", PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("formato", "", PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("anioIniVig", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioFinVig", "", PortletSession.APPLICATION_SCOPE);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 
