@@ -6,12 +6,14 @@ import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.AdmUbigeo;
 import gob.osinergmin.fise.domain.FiseObservacion;
+import gob.osinergmin.fise.domain.FiseTipDocRef;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
 import gob.osinergmin.fise.gart.service.AdmUbigeoGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
+import gob.osinergmin.fise.gart.service.FiseTipDocRefGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.util.FechaUtil;
@@ -90,6 +92,9 @@ public class FiseUtil {
 	@Autowired
 	@Qualifier("admUbigeoGartServiceImpl")
 	AdmUbigeoGartService admUbigeoService;
+	@Autowired
+	@Qualifier("fiseTipDocRefGartServiceImpl")
+	FiseTipDocRefGartService tipDocRefGartService;
 	
 	public List<AdmEmpresa> getEmpresaxUsuario(PortletRequest request){
 		 List<AdmEmpresa> listaEmpresas=new ArrayList<AdmEmpresa>();
@@ -319,6 +324,16 @@ public class FiseUtil {
 			mapaZonaBenef.put(zonaBenef.getIdZonaBenef(), zonaBenef.getDescripcion());
 		}
 		return mapaZonaBenef;
+	}
+	
+	public Map<String, String> getMapTipoDocumento(){
+		List<FiseTipDocRef> listaTipoDocumento = tipDocRefGartService.listarFiseTipDocRef();
+		Map<String, String> mapaTipoDoc = new HashMap<String, String>();
+		for (FiseTipDocRef tipoDoc : listaTipoDocumento) {
+			logger.info("idTipDocRef: "+tipoDoc.getIdTipDocRef()+" descripcion: "+tipoDoc.getDescripcion());
+			mapaTipoDoc.put(tipoDoc.getIdTipDocRef(), tipoDoc.getDescripcion());
+		}
+		return mapaTipoDoc;
 	}
 	
 	/*public void enviarMailAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo, String descripcionFormato) throws Exception {
