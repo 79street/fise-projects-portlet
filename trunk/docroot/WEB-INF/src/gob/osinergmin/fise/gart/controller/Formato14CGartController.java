@@ -110,11 +110,6 @@ public class Formato14CGartController {
 	@Qualifier("cfgCampoGartServiceImpl")
 	private CfgCampoGartService campoService;
 	
-	
-	public static final int CELL_TYPE_BLANK = 3;
-	public static final int CELL_TYPE_STRING = 1;
-	public static final int CELL_TYPE_NUMERIC = 0;
-	
 		
 	private List<FisePeriodoEnvio> listaPeriodoEnvio;
 	
