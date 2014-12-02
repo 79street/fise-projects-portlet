@@ -820,7 +820,7 @@ public class Formato14CGartController {
 	    if( formato!=null ){	    
 	    	Formato14Generic formato14Generic = new Formato14Generic(formato);
 	    	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14C,
-	    			themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLogin());
+	    			themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 		    if(i==0){
 		    	logger.info("Enviando la lista de detalle:  "+formato.getListaDetalle14cDs().size()); 
 		    	cargarListaObservaciones(formato.getListaDetalle14cDs());
