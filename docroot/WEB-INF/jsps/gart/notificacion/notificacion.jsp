@@ -117,6 +117,27 @@ $(document).ready(function () {
 						</tr>
 						<tr height="10px">
 							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<table style="width: 100%;" border="0">
+									<tr>
+										<td></td>										
+										<td align="right" width="90px">
+											<div id="d_opc_notificar">
+												<input type="button" class="net-button-small"
+													id="<portlet:namespace/>btnNotificarValidar"
+													name="<portlet:namespace/>btnNotificarValidar" value="Notificar" />
+											</div>
+										</td>
+										<td align="right" width="90px">											
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
 						</tr>					
 					</table>			
 				</div>								
