@@ -37,7 +37,9 @@ import gob.osinergmin.fise.gart.service.Formato13AGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
 import gob.osinergmin.fise.gart.service.Formato14BGartService;
 import gob.osinergmin.fise.gart.service.Formato14CGartService;
+import gob.osinergmin.fise.util.FormatoUtil;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +57,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
 
@@ -69,6 +73,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -189,7 +194,7 @@ public class NotificacionController {
   			
   			List<NotificacionBean> listaNotifi = new ArrayList<NotificacionBean>();
   			
-  			for(NotificacionBean not : lista){  				
+  			for(NotificacionBean not : lista){    				
   				not.setDesEmpresa(mapaEmpresa.get(not.getCodEmpresa()));
   				not.setDesMes(fiseUtil.getMapaMeses().get(Long.valueOf(not.getMesPres())));
   				if(!"00".equals(not.getMesEjec())){ 
@@ -827,7 +832,9 @@ public class NotificacionController {
 			
 			JSONObject jsonObj = new JSONObject(); 
 			List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>();		
-			
+			String directorio =  null;	
+			String nombreReporte = "";
+			boolean valor = false;
 			String codEmpresa = n.getCodEmpresaBusq();				
 			String optionFormato = n.getOptionFormato();
 			String idgrupoInf = n.getGrupoInfBusq();
@@ -839,47 +846,247 @@ public class NotificacionController {
   			
   			List<NotificacionBean> lista = (List<NotificacionBean>)pRequest.getPortletSession().getAttribute("listaNotificacion", 
 		    		PortletSession.APPLICATION_SCOPE);
-  			if(lista!=null){
-  				logger.info("tamaño de la lista para notificar   :"+lista.size());
-  					
+  			
+  			if(lista!=null){  				
   				String mensaje = commonService.notificarValidacionMensual(codEmpresa,
   						etapa, Long.valueOf(idgrupoInf), optionFormato, themeDisplay.getUser().getLogin(),
   						themeDisplay.getUser().getLoginIP());			
-  				logger.info("Valor del mensaje:  "+mensaje); 
-  				String directorio = null;	
+  				logger.info("Valor del mensaje:  "+mensaje);
   				
+  				mensaje = "OK";
   				
-  				
-  				 /**REPORTE OBSERVACIONES*/
- 		     /*  if( listaObservaciones!=null && listaObservaciones.size()>0 ){
- 		    	   nombreReporte = "validacion";
- 		    	   nombreArchivo = nombreReporte;
- 			       directorio =  "/reports/"+nombreReporte+".jasper";
- 			       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
- 		    	   byte[] bytes2 = null;
- 			       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
- 			       logger.info("Tamaño del arreglo de bytes del observaciones envio defi."+bytes2.length); 
- 			       if (bytes != null) {
- 			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
- 			    	   logger.info("subiendo archivo al repositorio del observaciones envio defi.");
- 			    	   FileEntry archivo2 = fiseUtil.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
- 			    	   logger.info("Archivo subido correctamente  observaciones envio."+archivo2); 
- 			    	   if( archivo2!=null ){
- 			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
- 			    		   fileEntryJsp.setNombreArchivo(nombre);
- 			    		   fileEntryJsp.setFileEntry(archivo2);
- 			    		   listaArchivo.add(fileEntryJsp);
- 			    	   }
- 			       }
- 		       }*/
-  				
-  				
-  				
-  				
-  	  			
-  	  			jsonObj.put("resultado", "OK");		
-  			}else{
+  				if("OK".equals(mensaje))
+  				{ 
+  					Map<String, Object> mapa = new HashMap<String, Object>();
+  	  		    	mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+  	  		    	mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+  	  		    	CfgTabla tabla = null;
+  	  		    	String descripcionFormato = ""; 
+  	  		    	
+  	  				for(NotificacionBean not :lista){
+  	  					if(FiseConstants.NOMBRE_FORMATO_12A.equals(not.getFormato())){  						
+  	  						FiseFormato12ACPK pk = new FiseFormato12ACPK();
+  	  						pk.setCodEmpresa(not.getCodEmpresa());
+  	  						pk.setAnoPresentacion(new Long(not.getAnioPres()));
+  	  						pk.setMesPresentacion(new Long(not.getMesPres()));
+  	  						pk.setAnoEjecucionGasto(new Long(not.getAnioEjec()));
+  	  						pk.setMesEjecucionGasto(new Long(not.getMesEjec()));
+  	  						pk.setEtapa(not.getEtapa());  	  			        
+  	  						FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);  						
+  	  						cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());
+  	  						nombreReporte ="formato12A";
+  	  						directorio =  "/reports/"+nombreReporte+".jasper";
+  	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12A);
+  	  			    		if( tabla!=null ){
+  	  				    		descripcionFormato = tabla.getDescripcionTabla();
+  	  				    	}
+  	  			    		mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(not.getAnioPres()));
+  	  					   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
+  	  					   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+  	  					   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
+  	  					   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+  	  						mapa.put("DESC_EMPRESA", mapaEmpresa.get(not.getCodEmpresa()));
+  	  					   	mapa.put("ETAPA", not.getEtapa()); 			    		
+  	  					    File reportFile12A = new File(session.getServletContext().getRealPath(directorio));
+  	  	 		    	    byte[] bytes12A = null;
+  	  	 		    	    bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa,
+  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  		  	 		    	if (bytes12A != null) {
+  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_12A);	   			    	 
+  		   			    	   FileEntry archivo12A = fiseUtil.subirDocumentoBytes(request, bytes12A, "application/pdf", nombre);	   			    	   
+  		   			    	   if( archivo12A!=null ){
+  		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  		   			    		   fileEntryJsp.setNombreArchivo(nombre);
+  		   			    		   fileEntryJsp.setFileEntry(archivo12A);
+  		   			    		   listaArchivo.add(fileEntryJsp);
+  		   			    	   }
+  		   			       }  				    	
+  	  					}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(not.getFormato())){   						
+  	  						//falta
+  	  					}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(not.getFormato())){  						
+  	  						//falta
+  	  					}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(not.getFormato())){   					
+  	  						//falta
+  	  					}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(not.getFormato())){  						
+  	  						FiseFormato13ACPK pk = new FiseFormato13ACPK();
+  	  						pk.setCodEmpresa(not.getCodEmpresa());
+  	  						pk.setAnoPresentacion(new Long(not.getAnioPres()));
+  	  						pk.setMesPresentacion(new Long(not.getMesPres()));
+  	  						pk.setEtapa(not.getEtapa());  						
+  	  						FiseFormato13AC formato13A = formatoService13A.obtenerFormato13ACByPK(pk);  						
+  	  						cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+  	  						nombreReporte ="formato13A";
+  	  						directorio =  "/reports/"+nombreReporte+".jasper";
+  	  						if( tabla!=null ){
+  	  				    		descripcionFormato = tabla.getDescripcionTabla();
+  	  				    	}
+  	  						mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(not.getAnioPres()));
+  	  					   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
+  	  					   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+  	  					   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
+  	  					   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+  	  						mapa.put("DESC_EMPRESA", mapaEmpresa.get(not.getCodEmpresa()));
+  	  					   	mapa.put("ETAPA", not.getEtapa()); 	
+  	  					    mapa.put("INICIO_VIGENCIA", not.getAnioIniVig()!=null?not.getAnioIniVig():"");
+  							mapa.put("FIN_VIGENCIA", not.getAnioFinVig()!=null?not.getAnioFinVig():"");
+  	  					    File reportFile13A = new File(session.getServletContext().getRealPath(directorio));
+  	  	 		    	    byte[] bytes13A = null;
+  	  	 		    	    bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa,
+  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  		  	 		    	if (bytes13A != null) {
+  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_13A);	   			    	 
+  		   			    	   FileEntry archivo13A = fiseUtil.subirDocumentoBytes(request, bytes13A, "application/pdf", nombre);	   			    	   
+  		   			    	   if( archivo13A!=null ){
+  		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  		   			    		   fileEntryJsp.setNombreArchivo(nombre);
+  		   			    		   fileEntryJsp.setFileEntry(archivo13A);
+  		   			    		   listaArchivo.add(fileEntryJsp);
+  		   			    	   }
+  		   			       }
+  	  					}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(not.getFormato())){   					
+  	  						FiseFormato14ACPK pk = new FiseFormato14ACPK();
+  	  						pk.setCodEmpresa(not.getCodEmpresa());
+  	  						pk.setAnoPresentacion(new Long(not.getAnioPres()));
+  	  						pk.setMesPresentacion(new Long(not.getMesPres()));
+  	  						pk.setAnoInicioVigencia(new Long(not.getAnioIniVig()));
+  	  						pk.setAnoFinVigencia(new Long(not.getAnioFinVig()));
+  	  						pk.setEtapa(not.getEtapa());  				        
+  	  						FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);	
+  	  						cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());
+  	  						nombreReporte ="formato14A";
+  	  						directorio =  "/reports/"+nombreReporte+".jasper";
+  	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
+  	  			    		if( tabla!=null ){
+  	  				    		descripcionFormato = tabla.getDescripcionTabla();
+  	  				    	}
+  	  			    		mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(not.getAnioPres()));
+  	  					   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
+  	  					   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+  	  					   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
+  	  					   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+  	  						mapa.put("DESC_EMPRESA", mapaEmpresa.get(not.getCodEmpresa()));
+  	  					   	mapa.put("ETAPA", not.getEtapa()); 					   
+  	  					    File reportFile14A = new File(session.getServletContext().getRealPath(directorio));
+  	  	 		    	    byte[] bytes14A = null;
+  	  	 		    	    bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa,
+  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  		  	 		    	if (bytes14A != null) {
+  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_14A);	   			    	 
+  		   			    	   FileEntry archivo14A = fiseUtil.subirDocumentoBytes(request, bytes14A, "application/pdf", nombre);	   			    	   
+  		   			    	   if( archivo14A!=null ){
+  		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  		   			    		   fileEntryJsp.setNombreArchivo(nombre);
+  		   			    		   fileEntryJsp.setFileEntry(archivo14A);
+  		   			    		   listaArchivo.add(fileEntryJsp);
+  		   			    	   }
+  		   			       }  				    	
+  	  					}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(not.getFormato())){  					
+  	  						FiseFormato14BCPK pk = new FiseFormato14BCPK();
+  	  						pk.setCodEmpresa(not.getCodEmpresa());
+  	  						pk.setAnoPresentacion(new Long(not.getAnioPres()));
+  	  						pk.setMesPresentacion(new Long(not.getMesPres()));
+  	  						pk.setAnoInicioVigencia(new Long(not.getAnioIniVig()));
+  	  						pk.setAnoFinVigencia(new Long(not.getAnioFinVig()));
+  	  						pk.setEtapa(not.getEtapa());  						        
+  	  						FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);	
+  	  						cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());
+  	  						nombreReporte ="formato14B";
+  	  						directorio =  "/reports/"+nombreReporte+".jasper";
+  	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14B);
+  	  			    		if( tabla!=null ){
+  	  				    		descripcionFormato = tabla.getDescripcionTabla();
+  	  				    	}
+  	  			    		mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(not.getAnioPres()));
+  	  					   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
+  	  					   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+  	  					   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
+  	  					   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+  	  						mapa.put("DESC_EMPRESA", mapaEmpresa.get(not.getCodEmpresa()));
+  	  					   	mapa.put("ETAPA", not.getEtapa()); 					   
+  	  					    File reportFile14B = new File(session.getServletContext().getRealPath(directorio));
+  	  	 		    	    byte[] bytes14B = null;
+  	  	 		    	    bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa,
+  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  		  	 		    	if (bytes14B != null) {
+  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_14B);	   			    	 
+  		   			    	   FileEntry archivo14B = fiseUtil.subirDocumentoBytes(request, bytes14B, "application/pdf", nombre);	   			    	   
+  		   			    	   if( archivo14B!=null ){
+  		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  		   			    		   fileEntryJsp.setNombreArchivo(nombre);
+  		   			    		   fileEntryJsp.setFileEntry(archivo14B);
+  		   			    		   listaArchivo.add(fileEntryJsp);
+  		   			    	   }
+  		   			       }  				    	
+  	  					}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(not.getFormato())){  					
+  	  						Formato14CBean f14C = new Formato14CBean();				
+  	  						f14C.setCodEmpresa(not.getCodEmpresa());
+  	  						f14C.setAnioPres(not.getAnioPres());
+  	  						f14C.setMesPres(not.getMesPres());
+  	  						f14C.setAnoIniVigencia(not.getAnioIniVig());
+  	  						f14C.setAnoFinVigencia(not.getAnioFinVig());
+  	  						f14C.setEtapa(not.getEtapa());
+  	  						FiseFormato14CC formato14C = formatoService14C.obtenerFiseFormato14CC(f14C);
+  	  						cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());
+  	  						nombreReporte ="formato14C";
+  	  						directorio =  "/reports/"+nombreReporte+".jasper";
+  	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14C);
+  	  			    		if( tabla!=null ){
+  	  				    		descripcionFormato = tabla.getDescripcionTabla();
+  	  				    	}
+  	  			    		mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(not.getAnioPres()));
+  	  					   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
+  	  					   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+  	  					   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
+  	  					   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+  	  						mapa.put("DESC_EMPRESA", mapaEmpresa.get(not.getCodEmpresa()));
+  	  					   	mapa.put("ETAPA", not.getEtapa()); 					   
+  	  					    File reportFile14C = new File(session.getServletContext().getRealPath(directorio));
+  	  	 		    	    byte[] bytes14C = null;
+  	  	 		    	    bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa,
+  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  		  	 		    	if (bytes14C != null) {
+  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_14C);	   			    	 
+  		   			    	   FileEntry archivo14C = fiseUtil.subirDocumentoBytes(request, bytes14C, "application/pdf", nombre);	   			    	   
+  		   			    	   if( archivo14C!=null ){
+  		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  		   			    		   fileEntryJsp.setNombreArchivo(nombre);
+  		   			    		   fileEntryJsp.setFileEntry(archivo14C);
+  		   			    		   listaArchivo.add(fileEntryJsp);
+  		   			    	   }
+  		   			       }				    	
+  	  					}	
+  	  				}//fin del for de la lista 
+  	  			    if(listaArchivo!=null && listaArchivo.size()>0 ){		    	  
+  		    	        logger.info("Entrando a enviar email envio notificacion."); 
+  		    	        fiseUtil.enviarMailsAdjunto(
+  		    			   request,
+  		    			   listaArchivo, 
+  		    			   mapaEmpresa.get(n.getCodEmpresa()),
+  		    			   new Long(2014),
+  		    			    new Long(11),
+  		    			   "FORMATO DE OBSERVACIONES",//FiseConstants.TIPO_FORMATO_14C
+  		    			   "REPORTE DE OBSERVACIONES");//descripcionFormato
+  		    	       logger.info("El envio de email fue correctamente al realizar notificacion."); 
+  		    	       valor = true;
+  		           }			
+  				}//fin del if mensaje 
+  				else{
+  					jsonObj.put("mensaje", "Mensaje");
+  					jsonObj.put("respuesta", mensaje);
+  				}   			
+  			}//fin del if lista diferente de null
+  			else{
   				jsonObj.put("resultado", "NO_DATOS");			
+  			}
+  			if(valor){
+  				jsonObj.put("resultado", "OK");		
+  			}else{
+  				jsonObj.put("resultado", "ERROR");			
   			}
   			logger.info("arreglo json:"+jsonObj);
   			PrintWriter pw = response.getWriter();
