@@ -436,7 +436,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>VALIDACION Y NOTIFICACION</title>
+			<title>GRUPO INFORMACION</title>
 			<short-title>GartGrupoInformacion</short-title>
 			<keywords>GartGrupoInformacion</keywords>
 		</portlet-info>
