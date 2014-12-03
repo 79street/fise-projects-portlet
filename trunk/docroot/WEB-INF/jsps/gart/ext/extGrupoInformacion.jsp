@@ -146,9 +146,9 @@ var fiseGrupoInformacion= {
 			   datatype: "local",
 		       colNames: ['Id Grupo Inf.','Descripcion','Estado','Tipo','Visualizar','Editar','Anular'],
 		       colModel: [
-                       { name: 'idGrupoInf', index: 'idGrupoInf', width: 20},
+                       { name: 'idGrupoInformacion', index: 'idGrupoInformacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},	
-					   { name: 'estado', index: 'estado', width: 20},
+					   { name: 'estado', index: 'estado', width: 20,align:'center'},
 					   { name: 'tipo', index: 'tipo', width: 20},
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
@@ -170,9 +170,9 @@ var fiseGrupoInformacion= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = fiseGrupoInformacion.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseGrupoInformacion.verGrupoInformacion('"+ret.idGrupoInf+"');\" /></a> ";
-		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseGrupoInformacion.editarGrupoInformacion('"+ret.idGrupoInf+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseGrupoInformacion.confirmarEliminarGrupoInformacion('"+ret.idGrupoInf+"');\" /></a> ";              			
+		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseGrupoInformacion.verGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseGrupoInformacion.editarGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
+		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseGrupoInformacion.confirmarEliminarGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";              			
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -316,16 +316,20 @@ var fiseGrupoInformacion= {
 			fiseGrupoInformacion.f_descripcion.val(bean.descripcion); 
 			
 			console.debug("Valor de tipo..:  "+bean.tipo);
-			if(bean.tipo=='MENSUAL'){			
+			if(bean.tipo=='MENSUAL'){	
+				 console.debug("ingresando a mensual");
 				 document.getElementById('rbtMensual').checked = true;
-			}else{				
+			}else{	
+				 console.debug("ingresando a mensual");
 				 document.getElementById('rbtBienal').checked = true;
 			}
 			
 			console.debug("Valor de estado..:  "+bean.estado);
-			if(bean.estado=='1'){				
+			if(bean.estado=='1'){	
+				 console.debug("ingresando a activo");
 				 document.getElementById('rbtActivo').checked = true;
-			}else{				
+			}else{		
+				 console.debug("ingresando a inactivo");
 				 document.getElementById('rbtInactivo').checked = true;
 			}	
 		},
@@ -458,9 +462,8 @@ var fiseGrupoInformacion= {
 		//funcion para regresar
 		<portlet:namespace/>regresarGrupoInformacion : function(){			
 			fiseGrupoInformacion.divNuevo.hide();
-			fiseGrupoInformacion.divBuscar.show();
-					
-			fiseGrupoInformacion.botonBuscar.trigger('click');
+			fiseGrupoInformacion.divBuscar.show();					
+			fiseGrupoInformacion.buscarGrupoInformacion();
 		},
 		
 		//DIALOGOS
