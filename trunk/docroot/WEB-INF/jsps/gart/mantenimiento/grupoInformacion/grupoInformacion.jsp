@@ -67,21 +67,21 @@ $(document).ready(function () {
 											<td><output>Periodicidad:</output></td>
 											<td>
 											   <input type="radio"	name="tipoBusq"
-												       id="rbtMensual" value="MENSUAL" checked="true"/>Mensual
+												       id="rbtMensualBusq" value="MENSUAL" checked="true"/>Mensual
 											    &nbsp;&nbsp;&nbsp;	
 												 
 												<input type="radio"	name="tipoBusq"
-												       id="rbtBienal" value="BIENAL"/>Bienal	 	
+												       id="rbtBienalBusq" value="BIENAL"/>Bienal	 	
 											</td>
 											
 											<td><output>Estado:</output></td>
 											<td>
 											    <input type="radio"	name="estadoBusq"
-												       id="rbtActivo" value="1" checked="true"/>Activo
+												       id="rbtActivoBusq" value="1" checked="true"/>Activo
 												 &nbsp;&nbsp;&nbsp;	
 												 
 												<input type="radio"	name="estadoBusq"
-												       id="rbtInactivo" value="0"/>Inactivo	 	
+												       id="rbtInactivoBusq" value="0"/>Inactivo	 	
 											</td>
 											
 										</tr>
