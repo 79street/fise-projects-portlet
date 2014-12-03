@@ -13,12 +13,14 @@ var notificarValidar= {
 		//dialogos	
 		dialogMessage:null,
 		dialogMessageContent:null,
-		dialogConfirm:null,//para autorizar reenvio registro
-		dialogConfirmContent:null,//para mostrar la confirmacion al reenviar el registro
+		dialogConfirm:null,//para realizar la notificacion
+		dialogConfirmContent:null,//para mostrar la confirmacion al notificar
+		dialogConfirmEliminar:null,//para mostrar al eliminar un registro
 		dialogObservacion:null,
 		//mensajes		
-		mensajeReenvio:null,
+		mensajeNotificar:null,
 		mensajeProcesando:null,
+		mensajeEliminando:null,
 		
 		//urls
 		urlBusqueda: null,			
@@ -26,11 +28,13 @@ var notificarValidar= {
 	    urlCargaGrupoInf:null,
 	    urlVerObservaciones:null,		
 		urlReporteObservaciones:null,
-	    
+		urlNotificar:null,
+		urlEliminar:null,
 		
 		//botones		
 		botonBuscar:null,
 		botonProcesar:null,
+		botonNotificar:null,
 		
 		//varibales de busqueda
 		i_codEmpresaBusq:null,
@@ -57,14 +61,17 @@ var notificarValidar= {
 			//dialogos
 			this.dialogMessage=$("#<portlet:namespace/>dialog-message-notificacion");
 			this.dialogMessageContent=$("#<portlet:namespace/>dialog-message-content-notificacion");
-			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");//para reenviar
-			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");//para reenviar
+			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");//para notificar
+			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");//para notificar
 			this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");	
+			this.dialogConfirmEliminar=$("#<portlet:namespace/>dialog-confirm");//para elimiar
+			
+			
 			
 			//mensajes						
-			this.mensajeReenvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Autorizando Reenvio </h3>';			
+			this.mensajeNotificar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Realizando Notificacion </h3>';			
 			this.mensajeProcesando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Datos </h3>';
-			
+			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
 			
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="busquedaNotificacion" />';					
@@ -72,10 +79,13 @@ var notificarValidar= {
 			this.urlCargaGrupoInf='<portlet:resourceURL id="cargarGrupoInformacion" />';
 			this.urlVerObservaciones='<portlet:resourceURL id="verObservacionesValidacion" />';
 			this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionNotificacion" />';
+			this.urlNotificar='<portlet:resourceURL id="notificarValidacion" />';
+			this.urlEliminar='<portlet:resourceURL id="eliminarNotificacion" />';
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarNotificacion");	
 			this.botonProcesar=$("#<portlet:namespace/>btnProcesarNotificacion");	
+			this.botonNotificar=$("#<portlet:namespace/>btnNotificarValidar");				
 			
 			//variables de busqueda
 			this.i_codEmpresaBusq=$('#codEmpresaBusq');
@@ -106,6 +116,11 @@ var notificarValidar= {
 				notificarValidar.procesarNotificacion();
 			});
 			
+			notificarValidar.botonNotificar.click(function() {			
+				notificarValidar.confirmarNotificacion();
+			});
+			
+			
 			notificarValidar.initDialogs();
 		    
 		    
@@ -126,7 +141,7 @@ var notificarValidar= {
 		buildGrids : function () {	
 			notificarValidar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa.','Formato.','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa','Notificar','Ver','','',''],
+		       colNames: ['Empresa.','Formato.','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa','Notificar','Ver','Anular','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
@@ -139,6 +154,7 @@ var notificarValidar= {
 		               { name: 'etapa', index: 'etapa', width: 30},	  	              
 		               { name: 'notificar', index: 'notificar', width: 20,align:'center' },
 		               { name: 'ver', index: 'ver', width: 20,align:'center' },
+		               { name: 'elim', index: 'elim', width: 20,align:'center' },		              
 		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 		               { name: 'mesPres', index: 'mesPres', hidden: true},             
 		               { name: 'mesEjec', index: 'mesEjec', hidden: true}
@@ -162,8 +178,10 @@ var notificarValidar= {
 		      			var ret = notificarValidar.tablaResultados.jqGrid('getRowData',cl);	      			
 		      			notificar = "<a href='#'><img border='0' title='Notificar' src='/net-theme/images/img-net/lock.png' align='center' onclick=\"notificar.confirmarnotificar('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"');\" /></a> ";
 		      			ver = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png' align='center' onclick=\"notificarValidar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
+		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"notificarValidar.confirmarEliminarNotificacion('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			notificarValidar.tablaResultados.jqGrid('setRowData',ids[i],{notificar:notificar});
 		      			notificarValidar.tablaResultados.jqGrid('setRowData',ids[i],{ver:ver});
+		      			notificarValidar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
 		      		}
 		      }
 		  	});
@@ -342,52 +360,36 @@ var notificarValidar= {
 		verReporteObservaciones : function(){
 			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
 		},
-				
-		/**Function para confirmar si quiere autorizar el reenvio*/
-		confirmarnotificar : function(codEmpresa,anioPres,mesPres,anioEjec,mesEjec,anioIniVig,anioFinVig,etapa,formato){
-			console.debug("entranado a confirmar reenvio:  "+codEmpresa);
-			var addhtml='¿Está seguro que desea autorizar reenvio del registro seleccionado?';
+					
+		/**Function para confirmar si quiere notificar la validacion de obs.*/
+		confirmarNotificacion : function(){
+			console.debug("entranado a confirmar notificacion");
+			var addhtml='¿Está seguro que desea realizar la notificacion?';
 			notificarValidar.dialogConfirmContent.html(addhtml);
-			notificarValidar.dialogConfirm.dialog("open");				
-			cod_Empresa=codEmpresa;
-			anio_Pres =anioPres;
-			mes_Pres=mesPres;
-			anio_Ejec =anioEjec;
-			mes_Ejec =mesEjec;
-			anio_IniVig=anioIniVig;
-			anio_FinVig =anioFinVig;
-			cod_etapa =etapa;
-			cod_formato =formato;
+			notificarValidar.dialogConfirm.dialog("open");
 		},
 		/**Function para  autorizar la autorizacion del reenvion una vez hecha la confirmacion*/
-		notificarDefinitivo : function(cod_Empresa,anio_Pres,mes_Pres,anio_Ejec,mes_Ejec,anio_IniVig,anio_FinVig,cod_etapa,cod_formato){
-			console.debug("entranado a reeenvio definitivo:  "+cod_Empresa);
-			$.blockUI({ message: notificarValidar.mensajeReenvio });
+		notificarValidacionDefinitivo : function(){
+			console.debug("entranado a notificar validacion ");
+			$.blockUI({ message: notificarValidar.mensajeNotificar});
 			jQuery.ajax({
-				url: notificarValidar.urlReenvio+'&'+notificarValidar.formCommand.serialize(),
+				url: notificarValidar.urlNotificar+'&'+notificarValidar.formCommand.serialize(),
 				type: 'post',
 				dataType: 'json',
 				data: {				
-				   <portlet:namespace />codEmpresa: cod_Empresa,
-				   <portlet:namespace />anioPres: anio_Pres,
-				   <portlet:namespace />mesPres: mes_Pres,
-				   <portlet:namespace />etapa: cod_etapa,
-				   <portlet:namespace />anioEjec: anio_Ejec,
-				   <portlet:namespace />mesEjec: mes_Ejec,
-				   <portlet:namespace />anioIniVig: anio_IniVig,
-				   <portlet:namespace />anioFinVig: anio_FinVig,
-				   <portlet:namespace />formato: cod_formato
+				     <portlet:namespace />codEmpresa: notificarValidar.i_codEmpresaBusq.val()				   
 					},
 				success: function(data) {
-					if (data.resultado == "OK"){
-						var addhtml2='Registro reenviado con exito';					
+					if(data.resultado == "OK"){
+						var addhtml2='Se realizo la notificacion a la empresa';					
 						notificarValidar.dialogMessageContent.html(addhtml2);
-						notificarValidar.dialogMessage.dialog("open");						
-						notificarValidar.buscarnotificar();
+						notificarValidar.dialogMessage.dialog("open");					
 						notificarValidar.initBlockUI();
-					}
-					else{
-						alert("Error al autorizar reenvio del registro");
+					}else if(data.resultado == "NO_DATOS"){
+						alert("No existe ninguna lista pra realizar la notificacion");
+						notificarValidar.initBlockUI();	
+					}else{
+						alert("Error al realizar la notificacion");
 						notificarValidar.initBlockUI();
 					}
 				},error : function(){
@@ -395,10 +397,63 @@ var notificarValidar= {
 					notificarValidar.initBlockUI();
 				}
 			});
-		},		
+		},
+		
+		/**Function para confirmar si quiere eliminar el registro o no*/
+		confirmarEliminarNotificacion : function(codEmpresa,anioPres,mesPres,anioEjec,mesEjec,anioIniVig,anioFinVig,codetapa,codformato){	
+				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				notificarValidar.dialogConfirmContent.html(addhtml);
+				notificarValidar.dialogConfirmEliminar.dialog("open");			
+				cod_Empresa=codEmpresa;
+				anio_Pres=anioPres;
+				mes_Pres=mesPres;
+				anio_Ejec=anioEjec;
+				mes_Ejec=mesEjec;
+				anio_IniVig=anioIniVig;
+				anio_FinVig=anioFinVig;
+				cod_etapa=codetapa;
+				cod_formato =codformato;
+		},
+		/**Function para  eliminar el registro una vez hecho la confirmacion*/
+		eliminarNotificacion : function(cod_Empresa,anio_Pres,mes_Pres,anio_Ejec,mes_Ejec,anio_IniVig,anio_FinVig,cod_etapa,cod_formato){			
+			$.blockUI({ message: notificarValidar.mensajeEliminando});
+			jQuery.ajax({
+				url: notificarValidar.urlEliminar+'&'+notificarValidar.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data: {				
+				   <portlet:namespace />codEmpresa: cod_Empresa,
+				   <portlet:namespace />anioPres: anio_Pres,
+				   <portlet:namespace />mesPres: mes_Pres,
+				   <portlet:namespace />anioEjec: anio_Ejec,
+				   <portlet:namespace />mesEjec: mes_Ejec,
+				   <portlet:namespace />anioIniVig: anio_IniVig,
+				   <portlet:namespace />anioFinVig: anio_FinVig,
+				   <portlet:namespace />etapa: cod_etapa,
+				   <portlet:namespace />formato: cod_formato				   
+					},
+				success: function(data) {
+					if (data.resultado == "OK"){
+						var addhtml2='Registro eliminado con éxito';					
+						notificarValidar.dialogMessageContent.html(addhtml2);
+						notificarValidar.dialogMessage.dialog("open");
+						notificarValidar.buscarNotificacion();
+						notificarValidar.initBlockUI();
+					}
+					else{
+						alert("Error al eliminar el registro");
+						notificarValidar.initBlockUI();
+					}
+				},error : function(){
+					alert("Error de conexión.");
+					notificarValidar.initBlockUI();
+				}
+			});
+		},	
+		
 		//DIALOGOS
 		initDialogs : function(){		
-			//dialogo para autorizar reenvio registro
+			//dialogo para realizar la notificacion de la validacion
 			notificarValidar.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
@@ -406,7 +461,24 @@ var notificarValidar= {
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
-						notificarValidar.notificarDefinitivo(cod_Empresa,anio_Pres,mes_Pres,anio_Ejec,mes_Ejec,anio_IniVig,anio_FinVig,cod_etapa,cod_formato);
+						notificarValidar.notificarValidacionDefinitivo();
+						$( this ).dialog("close");
+					},
+					"No": function() {				
+						$( this ).dialog("close");
+					}
+				}
+			});	
+			
+			//dialogo para eliminar registro
+			notificarValidar.dialogConfirmEliminar.dialog({
+				modal: true,
+				height: 200,
+				width: 400,			
+				autoOpen: false,
+				buttons: {
+					"Si": function() {
+						notificarValidar.eliminarNotificacion(cod_Empresa,anio_Pres,mes_Pres,anio_Ejec,mes_Ejec,anio_IniVig,anio_FinVig,cod_etapa,cod_formato);
 						$( this ).dialog("close");
 					},
 					"No": function() {				
