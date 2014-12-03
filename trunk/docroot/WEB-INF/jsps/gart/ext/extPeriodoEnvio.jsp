@@ -380,7 +380,7 @@ var periodoEnvio= {
 			periodoEnvio.f_fechaAmpl.val(bean.fechaAmpl);
 			
 			console.debug("Valor del flag mostrar anio y mes pres..:  "+bean.flagAnioMesEjec);
-			 if(bean.flagAnioMesEjec=='S'){
+			if(bean.flagAnioMesEjec=='S'){
 				// $('#rbtSi').checked = true;
 				 document.getElementById('rbtMesSi').checked = true;
 			}else{

@@ -2244,11 +2244,11 @@ var formato14C= {
 				return false; 
 			}else if(flagPeriodo=='S' && anioInicio.length == ''){				 
 				alert('Debe ingresar el año de inicio de vigencia');
-				anioInicio.focus();
+				$('#anoIniVigencia').focus();
 				return false; 				
 			}else if(flagPeriodo=='S' && anioFin.length == ''){				 
 				alert('Debe ingresar el año de fin de vigencia');
-				anioFin.focus();
+				$('#anoFinVigencia').focus();
 				return false; 		
 		    }else if(flagPeriodo=='S' && !validarAnioInicioVig(anioInicio)){				 
 				alert('Debe ingresar el año de inicio de vigencia valido');
