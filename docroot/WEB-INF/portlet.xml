@@ -421,4 +421,37 @@
 		</security-role-ref>
 	</portlet>
 	
+	<portlet>
+		<portlet-name>gartGrupoInformacion</portlet-name>
+		<display-name>GartGrupoInformacion</display-name>
+		<portlet-class>
+			org.springframework.web.portlet.DispatcherPortlet
+		</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>/WEB-INF/context/portlet/gart-grupoInformacion-portlet.xml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>VALIDACION Y NOTIFICACION</title>
+			<short-title>GartGrupoInformacion</short-title>
+			<keywords>GartGrupoInformacion</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
 </portlet-app>
