@@ -16,5 +16,6 @@
 		<portlet id="gartObservacion"/>
 		<portlet id="gartAutorizarReenvio"/>
 		<portlet id="gartNotificacion"/>
+		<portlet id="gartGrupoInformacion"/>
 	</category>
 </display>
