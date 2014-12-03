@@ -166,15 +166,24 @@ $(document).ready(function () {
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>
-			<label id="<portlet:namespace/>dialog-message-content-notificacion">Datos reenviados exit&oacute;samente.</label>
+			<label id="<portlet:namespace/>dialog-message-content-notificacion">Datos notificados exit&oacute;samente.</label>
 		</p>	
 	</div>
+	
+	<div id="<portlet:namespace/>dialog-confirm_notificacion" title="Confirmar acci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-content_notificacion">¿Está seguro?</label>
+		</p>
+	</div>`	
+	
 	
 	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
 		<p>	
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>
-	</div>`		
+	</div>`	
+		
 	
 </form:form>
