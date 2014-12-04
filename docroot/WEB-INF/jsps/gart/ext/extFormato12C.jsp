@@ -115,6 +115,20 @@ var formato12C= {
 	codProvDestino:null,
 	codDistDestino:null,
 	
+	codDepartamentoOrigenHidden:null,
+	codProvinciaOrigenHidden:null,
+	codDistritoOrigenHidden:null,
+	codDepartamentoDestinoHidden:null,
+	codProvinciaDestinoHidden:null,
+	codDistritoDestinoHidden:null,
+	
+	descDepaOrigen:null,
+	descProvOrigen:null,
+	descDistOrigen:null,
+	descDepaDestino:null,
+	descProvDestino:null,
+	descDistDestino:null,
+	
 	//detalleCRUD
 	codEmpresaDetalle:null,
 	anoPresentacionDetalle:null,
@@ -374,6 +388,23 @@ var formato12C= {
 		this.montoAlojamientoDetalle=$('#montoAlojamiento');
 		this.montoMovilidadDetalle=$('#montoMovilidad');
 		this.totalDetalle=$('#totalGeneral');
+		
+		//origen
+		this.codDepartamentoOrigenHidden=$('codDepartamentoOrigenHidden');
+		this.codProvinciaOrigenHidden=$('codProvinciaOrigenHidden');
+		this.codDistritoOrigenHidden=$('codDistritoOrigenHidden');
+		
+		this.descDepaOrigen=$('descDepartamentoOrigen');
+		this.descProvOrigen=$('descProvinciaOrigen');
+		this.descDistOrigen=$('descDistritoOrigen');
+		//destino
+		this.codDepartamentoDestinoHidden=$('codDepartamentoDestinoHidden');
+		this.codProvinciaDestinoHidden=$('codProvinciaDestinoHidden');
+		this.codDistritoDestinoHidden=$('codDistritoDestinoHidden');
+		
+		this.descDepaDestino=$('descDepartamentoDestino');
+		this.descProvDestino=$('descProvinciaDestino');
+		this.descDistDestino=$('descDistritoDestino');
 
 		this.anoEjecucionHiddenDetalle=$('#anoEjecucionHidden');
 		this.mesEjecucionHiddenDetalle=$('#mesEjecucionHidden');
@@ -435,6 +466,24 @@ var formato12C= {
 			formato12C.anoEjecucionDetalle.val(formato12C.anoEjecucionHiddenDetalle.val());
 			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
+			
+			/*console.debug(formato12C.codDepartamentoOrigenHidden.val());
+			console.debug(formato12C.codProvinciaOrigenHidden.val());
+			console.debug(formato12C.codDistritoOrigenHidden.val());
+			console.debug(formato12C.codDepartamentoDestinoHidden.val());
+			console.debug(formato12C.codProvinciaDestinoHidden.val());
+			console.debug(formato12C.codDistritoDestinoHidden.val());
+			
+			formato12C.codDepaOrigen.val(formato12C.codDepartamentoOrigenHidden.val());
+			//formato12C.construirDepartamentoOrigen(formato12C.codDepartamentoOrigenHidden.val(), formato12C.descDepaOrigen.val());
+			formato12C.construirProvinciaOrigen(formato12C.codProvinciaOrigenHidden.val(), formato12C.descProvOrigen.val());
+			formato12C.construirDistritoOrigen(formato12C.codDistritoOrigenHidden.val(), formato12C.descDistOrigen.val());
+			
+			formato12C.codDepaDestino.val(formato12C.codDepartamentoDestinoHidden.val());
+			//formato12C.construirDepartamentoDestino(formato12C.codDepartamentoDestinoHidden.val(), formato12C.descDepaDestino.val());
+			formato12C.construirProvinciaDestino(formato12C.codProvinciaDestinoHidden.val(), formato12C.descProvDestino.val());
+			formato12C.construirDistritoDestino(formato12C.codDistritoDestinoHidden.val(), formato12C.descDistDestino.val());*/
+			
 		</c:if>
 		
 		<c:if test="${crud =='READCREATEUPDATE'}">
@@ -447,6 +496,24 @@ var formato12C= {
 			formato12C.anoEjecucionDetalle.val(formato12C.anoEjecucionHiddenDetalle.val());
 			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
+			
+			/*console.debug(formato12C.codDepartamentoOrigenHidden.val());
+			console.debug(formato12C.codProvinciaOrigenHidden.val());
+			console.debug(formato12C.codDistritoOrigenHidden.val());
+			console.debug(formato12C.codDepartamentoDestinoHidden.val());
+			console.debug(formato12C.codProvinciaDestinoHidden.val());
+			console.debug(formato12C.codDistritoDestinoHidden.val());
+			
+			formato12C.codDepaOrigen.val(formato12C.codDepartamentoOrigenHidden.val());
+			//formato12C.construirDepartamentoOrigen(formato12C.codDepartamentoOrigenHidden.val(), formato12C.descDepaOrigen.val());
+			formato12C.construirProvinciaOrigen(formato12C.codProvinciaOrigenHidden.val(), formato12C.descProvOrigen.val());
+			formato12C.construirDistritoOrigen(formato12C.codDistritoOrigenHidden.val(), formato12C.descDistOrigen.val());
+			
+			formato12C.codDepaDestino.val(formato12C.codDepartamentoDestinoHidden.val());
+			//formato12C.construirDepartamentoDestino(formato12C.codDepartamentoDestinoHidden.val(), formato12C.descDepaDestino.val());
+			formato12C.construirProvinciaDestino(formato12C.codProvinciaDestinoHidden.val(), formato12C.descProvDestino.val());
+			formato12C.construirDistritoDestino(formato12C.codDistritoDestinoHidden.val(), formato12C.descDistDestino.val());*/
+			
 		</c:if>
 		
 		<c:if test="${crud =='UPDATE'}">
@@ -1085,6 +1152,51 @@ var formato12C= {
 		  //alert(descripcionPeriodo);
 		  return descripcionPeriodo;
 	},
+	//departamentos provincias distritos
+	construirDepartamentoOrigen : function(codDepartamento,descDepartamento){
+		dwr.util.removeAllOptions("codDepartamentoOrigen");
+		//var codigo=codDepartamento;
+		//var descripcion=descDepartamento;
+   		var dataPeriodo = [{codigoItem:codDepartamento, descripcionItem:descDepartamento}];   
+   		dwr.util.addOptions("codDepartamentoOrigen", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	construirProvinciaOrigen : function(codProvincia,descProvincia){
+		dwr.util.removeAllOptions("codProvinciaOrigen");
+		var codigo=''+codProvincia;
+		var descripcion=''+descProvincia;
+   		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+   		dwr.util.addOptions("codProvinciaOrigen", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	construirDistritoOrigen : function(codDistrito,descDistrito){
+		dwr.util.removeAllOptions("codDistritoOrigen");
+		var codigo=''+codDistrito;
+		var descripcion=''+descDistrito;
+   		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+   		dwr.util.addOptions("codDistritoOrigen", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	//
+	construirDepartamentoDestino : function(codDepartamento,descDepartamento){
+		dwr.util.removeAllOptions("codDepartamentoDestino");
+		//var codigo=codDepartamento;
+		//var descripcion=descDepartamento;
+   		var dataPeriodo = [{codigoItem:codDepartamento, descripcionItem:descDepartamento}];   
+   		dwr.util.addOptions("codDepartamentoDestino", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	construirProvinciaDestino : function(codProvincia,descProvincia){
+		dwr.util.removeAllOptions("codProvinciaDestino");
+		var codigo=''+codProvincia;
+		var descripcion=''+descProvincia;
+		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+   		dwr.util.addOptions("codProvinciaDestino", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	construirDistritoDestino : function(codDistrito,descDistrito){
+		dwr.util.removeAllOptions("codDistritoDestino");
+		var codigo=''+codDistrito;
+		var descripcion=''+descDistrito;
+		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+   		dwr.util.addOptions("codDistritoDestino", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	//
 	<portlet:namespace/>showUploadExcel : function(){
 		formato12C.divOverlay.show();
 		formato12C.dialogCargaExcel.show();
@@ -1424,7 +1536,7 @@ var formato12C= {
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
-					formato12C.eliminarFormatoDetalle(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,cod_Ubigeo,id_ZonaBenef);
+					formato12C.eliminarFormatoDetalle(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,ano_Ejecucion,mes_Ejecucion,etapa_Ejecucion,item_Etapa);
 					$(this).dialog("close");
 				},
 				"No": function() {				
@@ -1459,7 +1571,7 @@ var formato12C= {
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
 	},
-	confirmarEliminarDetalle : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,codUbigeo,idZonaBenef){
+	confirmarEliminarDetalle : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,anoEjecucion,mesEjecucion,etapaEjecucion,item){
 		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 		formato12C.dialogConfirmDetalleContent.html(addhtml);
 		formato12C.dialogConfirmDetalle.dialog("open");
@@ -1467,10 +1579,12 @@ var formato12C= {
 		ano_Presentacion=anoPresentacion;
 		mes_Presentacion=mesPresentacion;
 		cod_Etapa=etapa;
-		cod_Ubigeo=codUbigeo;
-		id_ZonaBenef=idZonaBenef;
+		ano_Ejecucion=anoEjecucion;
+		mes_Ejecucion=mesEjecucion;
+		etapa_Ejecucion=etapaEjecucion;
+		item_Etapa=item;
 	},
-	eliminarFormatoDetalle : function(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,cod_Ubigeo,id_ZonaBenef){			
+	eliminarFormatoDetalle : function(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,ano_Ejecucion,mes_Ejecucion,etapa_Ejecucion,item_Etapa){			
 		//$.blockUI({ message: formato12C.mensajeEliminando });
 		var form = formato12C.formNuevo;
 		form.removeAttr('enctype');
@@ -1479,8 +1593,10 @@ var formato12C= {
 			type: 'post',
 			dataType: 'json',
 			data: {
-			   <portlet:namespace />codUbigeo: cod_Ubigeo,
-			   <portlet:namespace />idZonaBenef: id_ZonaBenef
+			   <portlet:namespace />anoEjecucion: ano_Ejecucion,
+			   <portlet:namespace />mesEjecucion: mes_Ejecucion,
+			   <portlet:namespace />etapaEjecucion: etapa_Ejecucion,
+			   <portlet:namespace />item: item_Etapa
 				},
 			success: function(data) {
 				if (data.resultado == "OK"){

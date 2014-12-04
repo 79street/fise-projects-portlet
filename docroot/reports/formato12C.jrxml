@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Formato12CA3" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
+	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
+	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="anoEjecucionGastoReport" class="java.lang.Long">
+		<fieldDescription><![CDATA[anoEjecucionGastoReport]]></fieldDescription>
+	</field>
+	<field name="anoPresentacionReport" class="java.lang.Long">
+		<fieldDescription><![CDATA[anoPresentacionReport]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="codEmpresaReport" class="java.lang.String">
+		<fieldDescription><![CDATA[codEmpresaReport]]></fieldDescription>
+	</field>
+	<field name="codUbigeoDestino" class="java.lang.String">
+		<fieldDescription><![CDATA[codUbigeoDestino]]></fieldDescription>
+	</field>
+	<field name="codUbigeoOrigen" class="java.lang.String">
+		<fieldDescription><![CDATA[codUbigeoOrigen]]></fieldDescription>
+	</field>
+	<field name="codigoCuentaContaEde" class="java.lang.String">
+		<fieldDescription><![CDATA[codigoCuentaContaEde]]></fieldDescription>
+	</field>
+	<field name="descripcionActividad" class="java.lang.String">
+		<fieldDescription><![CDATA[descripcionActividad]]></fieldDescription>
+	</field>
+	<field name="descripcionLocalidadDestino" class="java.lang.String">
+		<fieldDescription><![CDATA[descripcionLocalidadDestino]]></fieldDescription>
+	</field>
+	<field name="descripcionLocalidadOrigen" class="java.lang.String">
+		<fieldDescription><![CDATA[descripcionLocalidadOrigen]]></fieldDescription>
+	</field>
+	<field name="etapaEjecucionReport" class="java.lang.Long">
+		<fieldDescription><![CDATA[etapaEjecucionReport]]></fieldDescription>
+	</field>
+	<field name="etapaReport" class="java.lang.String">
+		<fieldDescription><![CDATA[etapaReport]]></fieldDescription>
+	</field>
+	<field name="fechaActualizacion" class="java.util.Date">
+		<fieldDescription><![CDATA[fechaActualizacion]]></fieldDescription>
+	</field>
+	<field name="fechaCreacion" class="java.util.Date">
+		<fieldDescription><![CDATA[fechaCreacion]]></fieldDescription>
+	</field>
+	<field name="fiseFormato12CC" class="gob.osinergmin.fise.domain.FiseFormato12CC">
+		<fieldDescription><![CDATA[fiseFormato12CC]]></fieldDescription>
+	</field>
+	<field name="fiseFormato12CDObs" class="java.util.List">
+		<fieldDescription><![CDATA[fiseFormato12CDObs]]></fieldDescription>
+	</field>
+	<field name="id" class="gob.osinergmin.fise.domain.FiseFormato12CDPK">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="idTipDocRef" class="java.lang.String">
+		<fieldDescription><![CDATA[idTipDocRef]]></fieldDescription>
+	</field>
+	<field name="idZonaBenef" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[idZonaBenef]]></fieldDescription>
+	</field>
+	<field name="mesEjecucionGastoReport" class="java.lang.Long">
+		<fieldDescription><![CDATA[mesEjecucionGastoReport]]></fieldDescription>
+	</field>
+	<field name="mesPresentacionReport" class="java.lang.Long">
+		<fieldDescription><![CDATA[mesPresentacionReport]]></fieldDescription>
+	</field>
+	<field name="montoAlimentacion" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[montoAlimentacion]]></fieldDescription>
+	</field>
+	<field name="montoAlojamiento" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[montoAlojamiento]]></fieldDescription>
+	</field>
+	<field name="montoMovilidad" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[montoMovilidad]]></fieldDescription>
+	</field>
+	<field name="numeroDias" class="java.lang.Long">
+		<fieldDescription><![CDATA[numeroDias]]></fieldDescription>
+	</field>
+	<field name="numeroDocumentoReferencia" class="java.lang.String">
+		<fieldDescription><![CDATA[numeroDocumentoReferencia]]></fieldDescription>
+	</field>
+	<field name="numeroItemEtapaReport" class="java.lang.Long">
+		<fieldDescription><![CDATA[numeroItemEtapaReport]]></fieldDescription>
+	</field>
+	<field name="rucEmpresaEmiteDocRef" class="java.lang.String">
+		<fieldDescription><![CDATA[rucEmpresaEmiteDocRef]]></fieldDescription>
+	</field>
+	<field name="serieDocumentoReferencia" class="java.lang.String">
+		<fieldDescription><![CDATA[serieDocumentoReferencia]]></fieldDescription>
+	</field>
+	<field name="subTotalEtapa" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[subTotalEtapa]]></fieldDescription>
+	</field>
+	<field name="terminalActualizacion" class="java.lang.String">
+		<fieldDescription><![CDATA[terminalActualizacion]]></fieldDescription>
+	</field>
+	<field name="terminalCreacion" class="java.lang.String">
+		<fieldDescription><![CDATA[terminalCreacion]]></fieldDescription>
+	</field>
+	<field name="totalDesplazamientoRealizado" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[totalDesplazamientoRealizado]]></fieldDescription>
+	</field>
+	<field name="totalGeneral" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[totalGeneral]]></fieldDescription>
+	</field>
+	<field name="usuarioActualizacion" class="java.lang.String">
+		<fieldDescription><![CDATA[usuarioActualizacion]]></fieldDescription>
+	</field>
+	<field name="usuarioCreacion" class="java.lang.String">
+		<fieldDescription><![CDATA[usuarioCreacion]]></fieldDescription>
+	</field>
+	<variable name="vDescEtapaEjec" class="java.lang.String">
+		<variableExpression><![CDATA[($F{etapaEjecucionReport}!=null &&
+$F{etapaEjecucionReport}.intValue()==1)?
+"Desplazamiento de Personal Implementacion":
+"Desplazamiento de Personal Mensual"]]></variableExpression>
+	</variable>
+	<variable name="vSubTotalEtapaEjec" class="java.lang.String">
+		<variableExpression><![CDATA["Sub Total "+$V{vDescEtapaEjec}+ " : "]]></variableExpression>
+	</variable>
+	<variable name="totalGasto_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Etapa Ejecución" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoAlimentacion}]]></variableExpression>
+	</variable>
+	<variable name="totalGasto_2" class="java.math.BigDecimal" resetType="Group" resetGroup="Etapa Ejecución" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoAlojamiento}]]></variableExpression>
+	</variable>
+	<variable name="totalGasto_3" class="java.math.BigDecimal" resetType="Group" resetGroup="Etapa Ejecución" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoMovilidad}]]></variableExpression>
+	</variable>
+	<variable name="totalGasto_4" class="java.math.BigDecimal" resetType="Group" resetGroup="Etapa Ejecución" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoMovilidad}]]></variableExpression>
+	</variable>
+	<variable name="totalGasto_5" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoAlimentacion}]]></variableExpression>
+	</variable>
+	<variable name="totalGasto_6" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoAlojamiento}]]></variableExpression>
+	</variable>
+	<variable name="totalGasto_7" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoMovilidad}]]></variableExpression>
+	</variable>
+	<variable name="totalGasto_8" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoMovilidad}]]></variableExpression>
+	</variable>
+	<group name="Etapa Ejecución">
+		<groupExpression><![CDATA[$F{etapaEjecucionReport}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField>
+					<reportElement x="4" y="0" width="8" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Long"><![CDATA[$F{etapaEjecucionReport}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="Etapa Ejecución">
+					<reportElement x="12" y="0" width="405" height="20"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{vDescEtapaEjec}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="23">
+				<textField evaluationTime="Group" evaluationGroup="Etapa Ejecución">
+					<reportElement x="530" y="3" width="389" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{vSubTotalEtapaEjec}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="922" y="3" width="50" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="979" y="3" width="50" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1037" y="3" width="50" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1096" y="3" width="50" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_4}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="140" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="148" y="100" width="350" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="65" width="1139" height="20" forecolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMATO FISE-12C:  Detalle de Gastos de Desplazamiento de Personal]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="203" y="117" width="54" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="101" width="137" height="15"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Distribución Eléctrica:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="553" y="10" width="93" height="16"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="117" width="137" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Año / Mes:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="12" y="13" width="188" height="44"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\Users\\ACarhuancho\\Desktop\\logoOSINERGMIN.jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="148" y="117" width="54" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement x="650" y="10" width="162" height="16"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="26" width="36" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Año Ejecución Gasto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="140" y="26" width="53" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Localidad Origen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1035" y="26" width="56" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Movilidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="230" y="26" width="54" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Localidad Destino]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="397" y="26" width="200" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Descripción de la Actividad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="670" y="26" width="72" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[RUC empresa emite Documento de Referencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="599" y="26" width="69" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo de Documento de Referencia ***]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="42" y="26" width="36" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Mes Ejecución Gasto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="80" y="26" width="23" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ítem]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="744" y="26" width="60" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Serie de Documento de Referencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1093" y="26" width="56" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="105" y="26" width="33" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Código Ubigeo Origen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="286" y="26" width="54" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Código Zona Beneficiario FISE **]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="919" y="6" width="230" height="18" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Monto S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="977" y="26" width="56" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Alojamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="342" y="26" width="53" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cuenta contable de la empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="919" y="26" width="56" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Alimentación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="806" y="26" width="75" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nº Documento  de Referencia de sustento del gasto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="883" y="26" width="34" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Número de Días]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="195" y="26" width="33" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Código Ubigeo Destino]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="3" width="36" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{anoEjecucionGastoReport}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="3" width="23" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{numeroItemEtapaReport}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="42" y="3" width="36" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{mesEjecucionGastoReport}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="3" width="33" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codUbigeoOrigen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="3" width="53" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcionLocalidadOrigen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="3" width="33" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codUbigeoDestino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="3" width="54" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcionLocalidadDestino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="286" y="3" width="54" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{idZonaBenef}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="3" width="53" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoCuentaContaEde}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="3" width="200" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcionActividad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="599" y="3" width="69" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{idTipDocRef}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="670" y="3" width="72" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rucEmpresaEmiteDocRef}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="744" y="3" width="60" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{serieDocumentoReferencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="806" y="3" width="75" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroDocumentoReferencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="883" y="3" width="34" height="17"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{numeroDias}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="919" y="3" width="56" height="17"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoAlimentacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="977" y="3" width="56" height="17"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoAlojamiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1035" y="3" width="56" height="17"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoMovilidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1093" y="3" width="56" height="17"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalDesplazamientoRealizado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="30" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="458" y="1" width="284" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombre y Firma del Representante Legal de la Empresa Distribuidora]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="458" y="0" width="272" height="1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="4" y="52" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Año/Mes* = Año y Mes de la Presentación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="4" y="42" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Nota:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="4" y="62" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Código Zona Beneficiario FISE **: 1= Rural, 2= Urbano Provincias, 3=Urbano Lima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="4" y="82" width="465" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Los Gastos de Desplazamiento deber{ian corresponder a gastos de personal acreditado por el programa FISE.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="4" y="72" width="464" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Tipo de Documento de Referencia "*"; F=Factura, BV=Boleta Venta, RH=Recibo por Honorario, RHE=Recibo por Honorario Electrónico, BP=Boleta de Pago]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="921" y="0" width="50" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1039" y="0" width="50" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="981" y="0" width="50" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1098" y="0" width="50" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_8}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="783" y="1" width="100" height="17"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL FISE-12C :]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

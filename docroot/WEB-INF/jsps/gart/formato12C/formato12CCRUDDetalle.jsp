@@ -83,6 +83,21 @@ $(document).ready(function () {
 																			<form:hidden path="mesPresentacion" />
 																			<form:hidden path="etapa" />
 																			<form:hidden path="nroItemEtapa" />
+																			
+																			<form:hidden path="codDepartamentoOrigenHidden"  />	
+																			<form:hidden path="descDepartamentoOrigen"  />	
+																			<form:hidden path="codProvinciaOrigenHidden"  />
+																			<form:hidden path="descProvinciaOrigen"  />
+																			<form:hidden path="codDistritoOrigenHidden"  />	
+																			<form:hidden path="descDistritoOrigen"  />
+																			
+																			<form:hidden path="codDepartamentoDestinoHidden"  />	
+																			<form:hidden path="descDepartamentoDestino"  />	
+																			<form:hidden path="codProvinciaDestinoHidden"  />	
+																			<form:hidden path="descProvinciaDestino"  />	
+																			<form:hidden path="codDistritoDestinoHidden"  />	
+																			<form:hidden path="descDistritoDestino"  />
+															
 								   										</td>
 								   									</tr>
 								   								</table>
@@ -162,7 +177,9 @@ $(document).ready(function () {
 															<form:select path="codDepartamentoOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>
 																<form:options items="${formato12CCBean.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
-															</form:select>																			
+															</form:select>			
+															
+																														
 														</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Provincia origen:</td>
@@ -170,6 +187,8 @@ $(document).ready(function () {
 				   											<form:select path="codProvinciaOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>																					
 															</form:select>
+															
+															
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Distrito origen:</td>
@@ -177,6 +196,8 @@ $(document).ready(function () {
 				   											<form:select path="codDistritoOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>																					
 															</form:select>
+															
+															
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Localidad origen:</td>
@@ -190,7 +211,9 @@ $(document).ready(function () {
 															<form:select path="codDepartamentoDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>
 																<form:options items="${formato12CCBean.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
-															</form:select>																			
+															</form:select>								
+															
+																								
 														</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Provincia destino:</td>
@@ -198,6 +221,8 @@ $(document).ready(function () {
 				   											<form:select path="codProvinciaDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>																					
 															</form:select>
+															
+															
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Distrito destino:</td>
@@ -205,6 +230,8 @@ $(document).ready(function () {
 				   											<form:select path="codDistritoDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>																					
 															</form:select>
+															
+															
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Localidad destino:</td>
