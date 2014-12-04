@@ -303,11 +303,11 @@ $(document).ready(function () {
 											 </td>
 											 <td>											 
 											     <input type="radio"	name="flagEnvioObs"
-												       id="rbtEnvioSi" value="S"/>SI
+												       id="rbtEnvioSi" value="S" checked="true"/>SI
 												 &nbsp;&nbsp;&nbsp;	
 												 
 												<input type="radio"	name="flagEnvioObs"
-												       id="rbtEnvioNo" value="N" checked="true"/>NO	
+												       id="rbtEnvioNo" value="N" />NO	
 											     										
 											 </td>
 											 
@@ -315,11 +315,11 @@ $(document).ready(function () {
 											 </td>
 											 <td>											
 												<input type="radio"	name="flagAnioMesEjec"
-												       id="rbtMesSi" value="S"/>SI
+												       id="rbtMesSi" value="S" checked="true"/>SI
 												 &nbsp;&nbsp;&nbsp;	
 												 
 												<input type="radio"	name="flagAnioMesEjec"
-												       id="rbtMesNo" value="N" checked="true"/>NO						 
+												       id="rbtMesNo" value="N" />NO						 
 											  							
 											 </td>	
 											 
