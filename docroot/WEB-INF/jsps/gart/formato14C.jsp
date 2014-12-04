@@ -64,7 +64,7 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Desde año:</output></td>
 											<td>
-												<form:input path="anioDesde" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
+												<form:input path="anioDesde" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this);"/>
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
@@ -76,7 +76,7 @@ $(document).ready(function () {
 											</td>
 											<td><output>Hasta año:</output></td>
 											<td>
-												<form:input path="anioHasta" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
+												<form:input path="anioHasta" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this);"/>
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
@@ -257,12 +257,12 @@ $(document).ready(function () {
 																		<tr>
 																			<td width="110px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
 																			<td style="text-align: center;">
-																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" />
+																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" onblur="isNumeric(this);" />
 																			</td>
 																			<td width="20px"></td>
 																			<td width="110px"><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
 																			<td style="text-align: center;">
-																				<form:input path="anoFinVigencia" style="width: 50px" maxlength="4" />	
+																				<form:input path="anoFinVigencia" style="width: 50px" maxlength="4" onblur="isNumeric(this);"/>	
 																			</td>
 																		</tr>
 																	</table>
@@ -414,7 +414,7 @@ $(document).ready(function () {
 													 <label style="margin-left:0.5cm;">1.1 Nombre de la Sede: </label>
 													</td>	
 													<td style="text-align:left">
-													    <form:input path="nombreSede" maxlength="60"/>
+													    <form:input path="nombreSede" maxlength="60" onblur="letras(this);"/>
 													</td> 
 													<!-- RURAL --> 
 													<td style="text-align:center;display:none" colspan="5"></td>
