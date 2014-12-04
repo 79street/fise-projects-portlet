@@ -882,7 +882,7 @@ public class Formato14CGartController {
 	        HttpSession session = httpRequest.getSession();
 	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 	        
-	        logger.info("Codigo empresa:  "+ f.getCodEmpresa());
+	        logger.info("Codigo empresa:  "+ f.getCodEmpresa());	        
 			logger.info("perido de envio:  "+ f.getPeriodoEnvio());
 	        
 	        PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -894,10 +894,6 @@ public class Formato14CGartController {
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();	    
 		   
-		    if(f.getPeriodoEnvio().length()>6 ){
-				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
-			}
-		    
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
 		    session.setAttribute("tipoFormato",tipoFormato);
@@ -916,6 +912,7 @@ public class Formato14CGartController {
 		    if(periodoEnvio.length()>6 ){
 		    	anoPresentacion = periodoEnvio.substring(0, 4);
 		    	mesPresentacion = periodoEnvio.substring(4, 6);
+		    	f.setEtapa(periodoEnvio.substring(6, periodoEnvio.length()));
 		    }
 		    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14C);
 	    	String descripcionFormato = "";
@@ -931,9 +928,8 @@ public class Formato14CGartController {
 		   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
 		   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 			//add
-		   	mapa.put("DESC_EMPRESA", mapaEmpresa.get(f.getCodEmpresa()));
-		   	mapa.put("ETAPA", f.getEtapa());
-		   	
+		   	mapa.put("DESC_EMPRESA", mapaEmpresa.get(f.getCodEmpresa().length()==3?f.getCodEmpresa()+" ": f.getCodEmpresa()));
+		   	mapa.put("ETAPA", f.getEtapa());		   	
 		   	session.setAttribute("mapa", mapa);
 		    //
 		   	
