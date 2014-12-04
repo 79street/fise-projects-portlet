@@ -854,7 +854,7 @@ public class NotificacionController {
   						etapa, Long.valueOf(idgrupoInf), optionFormato, themeDisplay.getUser().getLogin(),
   						themeDisplay.getUser().getLoginIP());			
   				logger.info("Valor del mensaje:  "+mensaje); 				
-  				
+  				mensaje = "1";
   				if("1".equals(mensaje))
   				{ 
   					Map<String, Object> mapa = new HashMap<String, Object>();
@@ -1071,11 +1071,10 @@ public class NotificacionController {
   		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--");
   		    	       logger.info("El envio de email fue correctamente al realizar notificacion."); 
   		    	       valor = true;
-  		           }			
+  		           }  	  		     	 	   
   				}//fin del if mensaje 
   				else{
-  					jsonObj.put("mensaje", "Mensaje");
-  					jsonObj.put("respuesta", mensaje);
+  					jsonObj.put("resultado", "Mensaje");  					
   				}   			
   			}//fin del if lista diferente de null
   			else{
@@ -1083,8 +1082,6 @@ public class NotificacionController {
   			}
   			if(valor){
   				jsonObj.put("resultado", "OK");		
-  			}else{
-  				jsonObj.put("resultado", "ERROR");			
   			}
   			logger.info("arreglo json:"+jsonObj);
   			PrintWriter pw = response.getWriter();

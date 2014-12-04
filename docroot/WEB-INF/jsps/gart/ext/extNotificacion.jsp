@@ -396,8 +396,8 @@ var notificarValidar= {
 					}else if(data.resultado == "NO_DATOS"){
 						alert("No existe ninguna lista pra realizar la notificación");
 						notificarValidar.initBlockUI();	
-					}else if(data.mensaje == "Mensaje"){
-						alert(data.respuesta);
+					}else if(data.resultado == "Mensaje"){
+						alert("Error al realizar el cambio de etapa");
 						notificarValidar.initBlockUI();	
 					}else if(data.resultado == "ERROR"){
 						alert("Error al realizar la notificación");
