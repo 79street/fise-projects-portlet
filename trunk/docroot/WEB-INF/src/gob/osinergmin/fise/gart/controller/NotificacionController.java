@@ -188,7 +188,7 @@ public class NotificacionController {
   			
   			
   			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpresa, 
-  					optionFormato, etapa,new Long(idgrupoInf));
+  					optionFormato, etapa,new Long(idgrupoInf),"B");
   			
   			logger.info("tamaño de la lista notificacion   :"+lista.size());
   			
@@ -277,7 +277,7 @@ public class NotificacionController {
   			
   			
   			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpresa, 
-  					optionFormato, etapa, new Long(idgrupoInf));
+  					optionFormato, etapa, new Long(idgrupoInf),"P");
   			
   			logger.info("tamaño de la lista notificacion   :"+lista.size());
   			for(NotificacionBean not:lista){
