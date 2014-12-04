@@ -474,7 +474,6 @@ var formato12C= {
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 			
 			formato12C.soloNumerosDecimales();
-			
 		</c:if>
 		
 	},
@@ -929,17 +928,9 @@ var formato12C= {
 				success: function(data) {		
 					dwr.util.removeAllOptions("periodoEnvio");
 					dwr.util.addOptions("periodoEnvio", data,"codigoItem","descripcionItem");
-					
-					if( trim(valPeriodo)!='' ){
+					if( valPeriodo.length!='' ){
 						dwr.util.setValue("periodoEnvio", valPeriodo);
-					}/*else{
-						dwr.util.setValue("periodoEnvio", data[0]);
-					}*/
-					
-					/*if( valPeriodo.length!='' ){
-						dwr.util.setValue("periodoEnvio", valPeriodo);
-					}*/
-					
+					}
 					/*formato12C.<portlet:namespace/>loadCargaFlagPeriodo();
 					
 					//validar lima edelnor y luz del sur
