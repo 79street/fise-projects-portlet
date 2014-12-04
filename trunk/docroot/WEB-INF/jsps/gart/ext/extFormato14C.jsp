@@ -654,6 +654,10 @@ var formato14C= {
 			}
 			$('#<portlet:namespace/>guardarFormatoF14C').css('display','block');
 			$('#<portlet:namespace/>actualizarFormatoF14C').css('display','none');
+			
+			$('#<portlet:namespace/>validacionFormatoF14C').css('display','none');		
+			$('#<portlet:namespace/>envioDefinitivoF14C').css('display','none');
+			
 			formato14C.<portlet:namespace/>loadPeriodo('');
 			formato14C.verElementosEditar();//activar los elementos que se desabilitados al momento de editar
 			//ESTILOS
@@ -725,6 +729,9 @@ var formato14C= {
 								formato14C.ocultarElementosEditar();
 								$('#<portlet:namespace/>guardarFormatoF14C').css('display','none');
 								$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');	
+								
+								$('#<portlet:namespace/>validacionFormatoF14C').css('display','block');		
+								$('#<portlet:namespace/>envioDefinitivoF14C').css('display','block');
 								//ESTILOS
 								//CABECERA			
 								formato14C.f_nombreSede.addClass("fise-editable");
@@ -2172,6 +2179,10 @@ var formato14C= {
 							formato14C.initBlockUI();							
 							$('#<portlet:namespace/>guardarFormatoF14C').css('display','none');
 							$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');
+							
+							$('#<portlet:namespace/>validacionFormatoF14C').css('display','block');		
+							$('#<portlet:namespace/>envioDefinitivoF14C').css('display','block');
+							
 						}else if(data.resultado == "Duplicado"){				
 							var addhtml2='El periodo de ejecucion ya esta regsitrado.';
 							formato14C.dialogMessageContent.html(addhtml2);
@@ -2869,10 +2880,8 @@ var formato14C= {
 				type : 'post',
 				dataType : 'json',
 				data : {
-					/* <portlet:namespace />codEmpresa: formato14A.f_empresa.val(),
-					<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
-					<portlet:namespace />anoEjecucion: $('#anioInicioVigencia').val(),
-					<portlet:namespace />mesEjecucion: $('#anioFinVigencia').val(), */
+					<portlet:namespace />codEmpresa: formato14C.f_empresa.val(),
+					<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),					
 					<portlet:namespace />nombreReporte: 'validacion',
 					<portlet:namespace />nombreArchivo: 'validacion',
 					<portlet:namespace />tipoArchivo: '0'//PDF
