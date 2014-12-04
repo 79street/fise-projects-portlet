@@ -503,7 +503,7 @@ public class FiseUtil {
 			
 			if( !FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) ){
 				mailMessage.setFrom(new InternetAddress(correoR));
-				mailMessage.setSubject("Notificaci&oacute;n de envío de observaciones para el usuario de la Distribuidora El&eacute;ctrica");
+				mailMessage.setSubject("Notificación de envío de observaciones para el usuario de la Distribuidora Eléctrica");
 				mailMessage.setTo(new InternetAddress(correoD));
 				if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
 					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
@@ -512,7 +512,7 @@ public class FiseUtil {
 						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
 						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente a "
 						+ descGrupoInf + ". "
-						+ "" + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
+						+ "" + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
 						+ "<p>Para subsanarlos debe ingresar al sistema y corregir los datos para la etapa LEV.OBS.<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");

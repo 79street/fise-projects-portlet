@@ -853,9 +853,8 @@ public class NotificacionController {
   				String mensaje = commonService.notificarValidacionMensual(codEmpresa,
   						etapa, Long.valueOf(idgrupoInf), optionFormato, themeDisplay.getUser().getLogin(),
   						themeDisplay.getUser().getLoginIP());			
-  				logger.info("Valor del mensaje:  "+mensaje); 				
-  				mensaje = "1";
-  				if("1".equals(mensaje))
+  				logger.info("Valor del mensaje:  "+mensaje);  				
+  				if(FiseConstants.ENVIO_EMAIL_OK_VALIDACION.equals(mensaje))
   				{ 
   					Map<String, Object> mapa = new HashMap<String, Object>();
   	  		    	mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
