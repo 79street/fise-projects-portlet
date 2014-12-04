@@ -258,4 +258,25 @@ function validarAnioFinVig(anioFin){
 }
 
 
+function isNumeric(input) {
+	$(input).blur(function() {
+		var number = $(this).val();
+		if ($.isNumeric(number)) {
+			$(this).val(number);
+		} else {
+			$(this).val("");
+		}
+	});
+
+}
+
+function letras(input){
+	$(input).blur(function(ev) {
+		var number = $(this).val();
+			number = number.replace(/[0-9]/g, '');
+			$(this).val(number);
+		
+	});
+}
+
 
