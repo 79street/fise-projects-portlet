@@ -389,12 +389,15 @@ var notificarValidar= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Se realizo la notificación a la empresa';					
+						var addhtml2='Se realizó la notificación a los correos sgtes:'+data.Correo; 					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessage.dialog("open");					
 						notificarValidar.initBlockUI();
 					}else if(data.resultado == "NO_DATOS"){
 						alert("No existe ninguna lista pra realizar la notificación");
+						notificarValidar.initBlockUI();	
+					}else if(data.resultado == "EMAIL"){
+						alert(data.Correo);
 						notificarValidar.initBlockUI();	
 					}else if(data.resultado == "Mensaje"){
 						alert("Error al realizar el cambio de etapa");

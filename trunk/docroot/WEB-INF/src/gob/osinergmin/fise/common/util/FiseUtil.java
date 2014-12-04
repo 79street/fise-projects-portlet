@@ -479,18 +479,19 @@ public class FiseUtil {
 		}
 	}
 	
-	public void enviarMailsAdjuntoValidacion(PortletRequest request,List<FileEntryJSP> listaArchivo,
+	public String enviarMailsAdjuntoValidacion(PortletRequest request,List<FileEntryJSP> listaArchivo,
 			String descEmpresa,String descGrupoInf) throws Exception {		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
 		
-		enviarMailAdjuntoUsuarioValidacion(themeDisplay, listaArchivo, descEmpresa,descGrupoInf);		
+		return enviarMailAdjuntoUsuarioValidacion(themeDisplay, listaArchivo, descEmpresa,descGrupoInf);		
 	}
 	
-	private void enviarMailAdjuntoUsuarioValidacion(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+	private String enviarMailAdjuntoUsuarioValidacion(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa,String descGrupoInf) throws Exception {
+		String valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"";
 		try {
 			MailMessage mailMessage = new MailMessage();
-			mailMessage.setHTMLFormat(true);
+			mailMessage.setHTMLFormat(true);	
 			
 			String nombreUsuario = themeDisplay.getUser().getFullName();		
 			
@@ -500,6 +501,10 @@ public class FiseUtil {
 			logger.info("correo destinatario: "+correoD);
 			
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
+									
+			for(CorreoBean c:listaCorreoDestino){
+				correoD = correoD +","+ c.getDireccionCorreo();	
+			}
 			
 			if( !FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) ){
 				mailMessage.setFrom(new InternetAddress(correoR));
@@ -520,14 +525,16 @@ public class FiseUtil {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
 				MailServiceUtil.sendEmail(mailMessage);
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correoD;
 			}else{
-				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
-			}
-
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"No esta configurado el correo de Remitente o Destinatario";
+				//throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
+			}          
 		} catch (Exception e) {
-			e.printStackTrace();
-			//throw e;
+			valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+e.toString();
+			e.printStackTrace();		
 		}
+		return valor;
 	}
 	
 	

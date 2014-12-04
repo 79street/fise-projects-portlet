@@ -833,7 +833,8 @@ public class NotificacionController {
 			JSONObject jsonObj = new JSONObject(); 
 			List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>();		
 			String directorio =  null;	
-			String nombreReporte = "";
+			String nombreReporte = "";	
+			String respuestaEmail ="";			
 			boolean valor = false;
 			String codEmpresa = n.getCodEmpresaBusq();				
 			String optionFormato = n.getOptionFormato();
@@ -853,7 +854,8 @@ public class NotificacionController {
   				String mensaje = commonService.notificarValidacionMensual(codEmpresa,
   						etapa, Long.valueOf(idgrupoInf), optionFormato, themeDisplay.getUser().getLogin(),
   						themeDisplay.getUser().getLoginIP());			
-  				logger.info("Valor del mensaje:  "+mensaje);  				
+  				logger.info("Valor del mensaje:  "+mensaje); 
+  				
   				if(FiseConstants.ENVIO_EMAIL_OK_VALIDACION.equals(mensaje))
   				{ 
   					Map<String, Object> mapa = new HashMap<String, Object>();
@@ -1062,13 +1064,14 @@ public class NotificacionController {
   	  					}	
   	  				}//fin del for de la lista 
   	  			    if(listaArchivo!=null && listaArchivo.size()>0 ){		    	  
-  		    	        logger.info("Entrando a enviar email envio notificacion.");   		    	       
-  		    	      fiseUtil.enviarMailsAdjuntoValidacion(
+  		    	      logger.info("Entrando a enviar email envio notificacion a:  "+
+  	  			           themeDisplay.getUser().getEmailAddress());   		    	       
+  		    	       respuestaEmail=fiseUtil.enviarMailsAdjuntoValidacion(
   		    	    		  request, 
   		    	    		  listaArchivo, 
   		    	    		  mapaEmpresa.get(codEmpresaLista), 
   		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--");
-  		    	       logger.info("El envio de email fue correctamente al realizar notificacion."); 
+  		    	       logger.info("El envio de email fue correctamente al realizar notificacion."); 		    	       
   		    	       valor = true;
   		           }  	  		     	 	   
   				}//fin del if mensaje 
@@ -1079,8 +1082,15 @@ public class NotificacionController {
   			else{
   				jsonObj.put("resultado", "NO_DATOS");			
   			}
-  			if(valor){
-  				jsonObj.put("resultado", "OK");		
+  			if(valor){ 
+  				String[] msnId = respuestaEmail.split("/");
+  				if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
+  					jsonObj.put("resultado", "OK");	
+  	  				jsonObj.put("Correo",msnId[1]);		
+  				}else{
+  					jsonObj.put("resultado", "EMAIL");	
+  	  				jsonObj.put("Correo",msnId[1]);		
+  				}	
   			}
   			logger.info("arreglo json:"+jsonObj);
   			PrintWriter pw = response.getWriter();
