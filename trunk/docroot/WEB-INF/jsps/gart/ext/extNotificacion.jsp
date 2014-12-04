@@ -286,7 +286,7 @@ var notificarValidar= {
 							notificarValidar.botonBuscar.trigger('click');
 							notificarValidar.initBlockUI();					
 					    }else if(data.resultado == 'NINGUNO'){
-					    	alert("No existe ningun registro para procesar los datos");
+					    	alert("No existe ningún registro para procesar los datos");
 					    	notificarValidar.botonBuscar.trigger('click');
 							notificarValidar.initBlockUI();	
 					    }else{
@@ -325,7 +325,7 @@ var notificarValidar= {
 						notificarValidar.tablaObservacion[0].refreshIndex();
 						notificarValidar.initBlockUI();
 					}else{
-						alert("Error al realizar la validacion");
+						alert("Error al realizar la validación");
 						notificarValidar.initBlockUI();	
 					}
 				},error : function(){
@@ -368,36 +368,39 @@ var notificarValidar= {
 					
 		/**Function para confirmar si quiere notificar la validacion de obs.*/
 		confirmarNotificacion : function(){
-			console.debug("entranado a confirmar notificacion");
-			var addhtml='¿Está seguro que desea realizar la notificacion?';
+			console.debug("entranado a confirmar notificación");
+			var addhtml='¿Está seguro que desea realizar la notificación?';
 			notificarValidar.dialogConfirmContent.html(addhtml);
 			notificarValidar.dialogConfirm.dialog("open");
 		},
 		/**Function para  autorizar la autorizacion del reenvion una vez hecha la confirmacion*/
 		notificarValidacionDefinitivo : function(){
-			console.debug("entranado a notificar validacion ");
+			console.debug("entranado a notificar validacion ");			
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
+			console.debug("desc grupo inf. seleccionado:  "+desGrupo);
 			$.blockUI({ message: notificarValidar.mensajeNotificar});
 			jQuery.ajax({
 				url: notificarValidar.urlNotificar+'&'+notificarValidar.formCommand.serialize(),
 				type: 'post',
 				dataType: 'json',
 				data: {				
-				     <portlet:namespace />codEmpresa: notificarValidar.i_codEmpresaBusq.val()				   
+				     <portlet:namespace />codEmpresa: notificarValidar.i_codEmpresaBusq.val(),
+				     <portlet:namespace />descGrupoInf: desGrupo	
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Se realizo la notificacion a la empresa';					
+						var addhtml2='Se realizo la notificación a la empresa';					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessage.dialog("open");					
 						notificarValidar.initBlockUI();
 					}else if(data.resultado == "NO_DATOS"){
-						alert("No existe ninguna lista pra realizar la notificacion");
+						alert("No existe ninguna lista pra realizar la notificación");
 						notificarValidar.initBlockUI();	
 					}else if(data.mensaje == "Mensaje"){
 						alert(data.respuesta);
 						notificarValidar.initBlockUI();	
 					}else if(data.resultado == "ERROR"){
-						alert("Error al realizar la notificacion");
+						alert("Error al realizar la notificación");
 						notificarValidar.initBlockUI();
 					}
 				},error : function(){

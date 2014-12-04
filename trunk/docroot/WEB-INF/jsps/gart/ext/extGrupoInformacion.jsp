@@ -137,18 +137,18 @@ var fiseGrupoInformacion= {
 		    fiseGrupoInformacion.initDialogs();
 		    
 		    //eventos por defecto		   
-			//fiseGrupoInformacion.botonBuscar.trigger('click');
-			//fiseGrupoInformacion.initBlockUI();
+			fiseGrupoInformacion.botonBuscar.trigger('click');
+			fiseGrupoInformacion.initBlockUI();
 		},
 		//funcion para armar el modelo de la grilla para el resultado
 		buildGrids : function () {	
 			fiseGrupoInformacion.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Grupo Inf.','Descripcion','Estado','Tipo','Visualizar','Editar','Anular'],
+		       colNames: ['Id Grupo Inf.','Descripción','Estado','Periodicidad','Visualizar','Editar','Anular'],
 		       colModel: [
                        { name: 'idGrupoInformacion', index: 'idGrupoInformacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},	
-					   { name: 'estado', index: 'estado', width: 20,align:'center'},
+					   { name: 'descEstado', index: 'descEstado', width: 20,align:'center'},
 					   { name: 'tipo', index: 'tipo', width: 20},
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
@@ -172,7 +172,7 @@ var fiseGrupoInformacion= {
 		      			var ret = fiseGrupoInformacion.tablaResultados.jqGrid('getRowData',cl);           
 		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseGrupoInformacion.verGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
 		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseGrupoInformacion.editarGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseGrupoInformacion.confirmarEliminarGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";              			
+		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseGrupoInformacion.confirmarEliminarGrupoInformacion('"+ret.idGrupoInformacion+"','"+ret.descEstado+"');\" /></a> ";              			
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -335,12 +335,16 @@ var fiseGrupoInformacion= {
 		},
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
-		confirmarEliminarGrupoInformacion : function(idGrupoInf){
-			console.debug("entranado a eliminar confirmar:  "+idGrupoInf);
-			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-			fiseGrupoInformacion.dialogConfirmContent.html(addhtml);
-			fiseGrupoInformacion.dialogConfirm.dialog("open");	
-			id_GrupoInf=idGrupoInf;
+		confirmarEliminarGrupoInformacion : function(idGrupoInf,desEstado){
+			if(desEstado=='Inactivo'){
+				alert("Su estado es Inactivo no se puede Eliminar"); 	
+			}else{
+				console.debug("entranado a eliminar confirmar:  "+idGrupoInf);
+				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				fiseGrupoInformacion.dialogConfirmContent.html(addhtml);
+				fiseGrupoInformacion.dialogConfirm.dialog("open");	
+				id_GrupoInf=idGrupoInf;
+			}	
 		},
 		
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
@@ -447,11 +451,11 @@ var fiseGrupoInformacion= {
 		validarFormulario : function() {
 			console.debug("tamaño de descripcion:  "+fiseGrupoInformacion.f_descripcion.val().length);
 			if(fiseGrupoInformacion.f_descripcion.val().length == ''){
-				alert('Debe ingresar descripcion.'); 
+				alert('Debe ingresar descripción.'); 
 				fiseGrupoInformacion.f_descripcion.focus();
 			  	return false; 
 			}else if(fiseGrupoInformacion.f_descripcion.val().length > 100){
-				alert('La  descripcion acepta como maximo 100 caracteres.'); 
+				alert('La  descripción acepta como máximo 100 caracteres.'); 
 				fiseGrupoInformacion.f_descripcion.focus();
 			  	return false; 
 			}else{

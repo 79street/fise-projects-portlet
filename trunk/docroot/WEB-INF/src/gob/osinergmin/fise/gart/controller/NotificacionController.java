@@ -843,6 +843,8 @@ public class NotificacionController {
   			logger.info("id Grupo inf "+ idgrupoInf);  	 			
   			logger.info("Option formato "+ optionFormato);
   			logger.info("etapa "+ etapa);	
+  			logger.info("Desc Grupo inf.  "+n.getDescGrupoInf()); 
+  			
   			
   			List<NotificacionBean> lista = (List<NotificacionBean>)pRequest.getPortletSession().getAttribute("listaNotificacion", 
 		    		PortletSession.APPLICATION_SCOPE);
@@ -851,19 +853,18 @@ public class NotificacionController {
   				String mensaje = commonService.notificarValidacionMensual(codEmpresa,
   						etapa, Long.valueOf(idgrupoInf), optionFormato, themeDisplay.getUser().getLogin(),
   						themeDisplay.getUser().getLoginIP());			
-  				logger.info("Valor del mensaje:  "+mensaje);
+  				logger.info("Valor del mensaje:  "+mensaje); 				
   				
-  				mensaje = "OK";
-  				
-  				if("OK".equals(mensaje))
+  				if("1".equals(mensaje))
   				{ 
   					Map<String, Object> mapa = new HashMap<String, Object>();
   	  		    	mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
   	  		    	mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
   	  		    	CfgTabla tabla = null;
   	  		    	String descripcionFormato = ""; 
-  	  		    	
+  	  		    	String codEmpresaLista = "";
   	  				for(NotificacionBean not :lista){
+  	  				    codEmpresaLista = not.getCodEmpresa();
   	  					if(FiseConstants.NOMBRE_FORMATO_12A.equals(not.getFormato())){  						
   	  						FiseFormato12ACPK pk = new FiseFormato12ACPK();
   	  						pk.setCodEmpresa(not.getCodEmpresa());
@@ -874,7 +875,7 @@ public class NotificacionController {
   	  						pk.setEtapa(not.getEtapa());  	  			        
   	  						FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);  						
   	  						cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());
-  	  						nombreReporte ="formato12A";
+  	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
   	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12A);
   	  			    		if( tabla!=null ){
@@ -893,7 +894,7 @@ public class NotificacionController {
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes12A != null) {
   		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_12A);	   			    	 
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
   		   			    	   FileEntry archivo12A = fiseUtil.subirDocumentoBytes(request, bytes12A, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo12A!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -916,7 +917,7 @@ public class NotificacionController {
   	  						pk.setEtapa(not.getEtapa());  						
   	  						FiseFormato13AC formato13A = formatoService13A.obtenerFormato13ACByPK(pk);  						
   	  						cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
-  	  						nombreReporte ="formato13A";
+  	  						nombreReporte ="validacion13";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
   	  						if( tabla!=null ){
   	  				    		descripcionFormato = tabla.getDescripcionTabla();
@@ -936,7 +937,7 @@ public class NotificacionController {
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes13A != null) {
   		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_13A);	   			    	 
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
   		   			    	   FileEntry archivo13A = fiseUtil.subirDocumentoBytes(request, bytes13A, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo13A!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -955,7 +956,7 @@ public class NotificacionController {
   	  						pk.setEtapa(not.getEtapa());  				        
   	  						FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);	
   	  						cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());
-  	  						nombreReporte ="formato14A";
+  	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
   	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
   	  			    		if( tabla!=null ){
@@ -974,7 +975,7 @@ public class NotificacionController {
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes14A != null) {
   		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_14A);	   			    	 
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
   		   			    	   FileEntry archivo14A = fiseUtil.subirDocumentoBytes(request, bytes14A, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo14A!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -993,7 +994,7 @@ public class NotificacionController {
   	  						pk.setEtapa(not.getEtapa());  						        
   	  						FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);	
   	  						cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());
-  	  						nombreReporte ="formato14B";
+  	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
   	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14B);
   	  			    		if( tabla!=null ){
@@ -1012,7 +1013,7 @@ public class NotificacionController {
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes14B != null) {
   		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_14B);	   			    	 
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
   		   			    	   FileEntry archivo14B = fiseUtil.subirDocumentoBytes(request, bytes14B, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo14B!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1031,7 +1032,7 @@ public class NotificacionController {
   	  						f14C.setEtapa(not.getEtapa());
   	  						FiseFormato14CC formato14C = formatoService14C.obtenerFiseFormato14CC(f14C);
   	  						cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());
-  	  						nombreReporte ="formato14C";
+  	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
   	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14C);
   	  			    		if( tabla!=null ){
@@ -1050,7 +1051,7 @@ public class NotificacionController {
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes14C != null) {
   		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.TIPO_FORMATO_14C);	   			    	 
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
   		   			    	   FileEntry archivo14C = fiseUtil.subirDocumentoBytes(request, bytes14C, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo14C!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1062,15 +1063,12 @@ public class NotificacionController {
   	  					}	
   	  				}//fin del for de la lista 
   	  			    if(listaArchivo!=null && listaArchivo.size()>0 ){		    	  
-  		    	        logger.info("Entrando a enviar email envio notificacion."); 
-  		    	        fiseUtil.enviarMailsAdjunto(
-  		    			   request,
-  		    			   listaArchivo, 
-  		    			   mapaEmpresa.get(n.getCodEmpresa()),
-  		    			   new Long(2014),
-  		    			    new Long(11),
-  		    			   "FORMATO DE OBSERVACIONES",//FiseConstants.TIPO_FORMATO_14C
-  		    			   "REPORTE DE OBSERVACIONES");//descripcionFormato
+  		    	        logger.info("Entrando a enviar email envio notificacion.");   		    	       
+  		    	      fiseUtil.enviarMailsAdjuntoValidacion(
+  		    	    		  request, 
+  		    	    		  listaArchivo, 
+  		    	    		  mapaEmpresa.get(codEmpresaLista), 
+  		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--");
   		    	       logger.info("El envio de email fue correctamente al realizar notificacion."); 
   		    	       valor = true;
   		           }			

@@ -78,7 +78,7 @@ $(document).ready(function () {
 												       id="rbtBienal" value="BIENAL"/>Bienal	
 											</td>		
 										
-											<td><output>Grupo Informacion:</output></td>
+											<td><output>Grupo Información:</output></td>
 											<td>												
 												 <form:select path="grupoInfBusq" cssClass="select" cssStyle="width: 200px;">															
 												    <form:options items="${notificacionBean.listaGrupoInf}"  itemLabel="descripcion" itemValue="idGrupoInformacion"/>

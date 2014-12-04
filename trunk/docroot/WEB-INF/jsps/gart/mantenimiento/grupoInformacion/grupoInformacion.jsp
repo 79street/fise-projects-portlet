@@ -50,7 +50,7 @@ $(document).ready(function () {
 										</tr>
 										
 										<tr>		
-											<td><output>Descripcion:</output></td>
+											<td><output>Descripción:</output></td>
 											<td>
 											 <form:input path="descripcionBusq" size="30" maxlength="50"/>	 	
 											</td>
@@ -154,7 +154,7 @@ $(document).ready(function () {
 	
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
-											<td><output class="net-titulo">GRUPO INFORMACION</output>
+											<td><output class="net-titulo">GRUPO INFORMACIÓN</output>
 											</td>
 										</tr>
 										<tr height="10px">
@@ -165,7 +165,7 @@ $(document).ready(function () {
 										   <table style="width: 100%;" border="0">
 										   
 											 <tr>									   
-											   <td><label style="font-size: 12px; font-weight: bold">Descripcion:</label>
+											   <td><label style="font-size: 12px; font-weight: bold">Descripción:</label>
 											   </td>
 											   <td>
 												 <form:textarea path="descripcion" cols="30" rows="4"/>  

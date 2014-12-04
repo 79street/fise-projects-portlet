@@ -214,11 +214,13 @@ public class GrupoInformacionController {
 			@ModelAttribute("grupoInformacionBean")GrupoInformacionBean g) { 	
 		
 		JSONObject jsonObj = new JSONObject();
-		try {			
+		try {
+            ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);				
 			logger.info("Entrando a eliminar un registro grupo inf."); 			
 			logger.info("id:  "+ g.getIdGrupoInf());      			
 			logger.info("Enviando el formulario al service"); 
-			String valor = grupoInformacionService.eliminarDatosGrupoInf(Long.valueOf(g.getIdGrupoInf())); 
+			String valor = grupoInformacionService.eliminarDatosGrupoInf(Long.valueOf(g.getIdGrupoInf()),
+					themeDisplay.getUser().getLogin(),themeDisplay.getUser().getLoginIP()); 
 			if(valor.equals("1")){ 
 				jsonObj.put("resultado", "OK");	   	
 			}else{

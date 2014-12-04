@@ -377,15 +377,19 @@ public class FiseUtil {
 		}
 	}*/
 	
-	public void enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo, String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato, String descripcionFormato) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		
-		enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato);
-		enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato);
-		
+	public void enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo,
+			String descEmpresa,	Long anoPresentacion, Long mesPresentacion, 
+			String tipoFormato, String descripcionFormato) throws Exception {		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
+		enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, 
+				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato);
+		enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, 
+				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato);		
 	}
 	
-	public void enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato, String descripcionFormato) throws Exception {
+	private void enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+			String descEmpresa, Long anoPresentacion, Long mesPresentacion, 
+			String tipoFormato, String descripcionFormato) throws Exception {
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -428,7 +432,9 @@ public class FiseUtil {
 		}
 	}
 	
-	public void enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato, String descripcionFormato) throws Exception {
+	private void enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+			String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato,
+			String descripcionFormato) throws Exception {
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -473,6 +479,58 @@ public class FiseUtil {
 		}
 	}
 	
+	public void enviarMailsAdjuntoValidacion(PortletRequest request,List<FileEntryJSP> listaArchivo,
+			String descEmpresa,String descGrupoInf) throws Exception {		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
+		
+		enviarMailAdjuntoUsuarioValidacion(themeDisplay, listaArchivo, descEmpresa,descGrupoInf);		
+	}
+	
+	private void enviarMailAdjuntoUsuarioValidacion(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+			String descEmpresa,String descGrupoInf) throws Exception {
+		try {
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.setHTMLFormat(true);
+			
+			String nombreUsuario = themeDisplay.getUser().getFullName();		
+			
+			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
+			String correoD = themeDisplay.getUser().getEmailAddress();
+			logger.info("correo remitente: "+correoR);
+			logger.info("correo destinatario: "+correoD);
+			
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
+			
+			if( !FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) ){
+				mailMessage.setFrom(new InternetAddress(correoR));
+				mailMessage.setSubject("Notificaci&oacute;n de envío de observaciones para el usuario de la Distribuidora El&eacute;ctrica");
+				mailMessage.setTo(new InternetAddress(correoD));
+				if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
+					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
+				}
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
+						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
+						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente a "
+						+ descGrupoInf + ". "
+						+ "" + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
+						+ "<p>Para subsanarlos debe ingresar al sistema y corregir los datos para la etapa LEV.OBS.<u></u><u></u></p>"
+						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
+						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+				for (FileEntryJSP fej : listaArchivo) {
+					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
+				}
+				MailServiceUtil.sendEmail(mailMessage);
+			}else{
+				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			//throw e;
+		}
+	}
+	
+	
 	public InternetAddress[] getArrayCorreoDestinatarios(List<CorreoBean> listaCorreo) throws Exception{
 		InternetAddress[] arrayCorreo = new InternetAddress[listaCorreo.size()];
         for (int i = 0; i < listaCorreo.size(); i++){
@@ -481,7 +539,8 @@ public class FiseUtil {
         return arrayCorreo;
 	}
 	
-	public String agregarErrorBeanConMensaje(String mensaje,Map<String,String> mapaError, List<MensajeErrorBean> listaError, int idError, String codigoError){
+	public String agregarErrorBeanConMensaje(String mensaje,Map<String,String> mapaError, 
+			List<MensajeErrorBean> listaError, int idError, String codigoError){
 		mensaje = mensaje + mapaError.get(codigoError)+FiseConstants.SALTO_LINEA;
 		MensajeErrorBean error = new MensajeErrorBean();
 		error.setId(idError);
@@ -490,7 +549,8 @@ public class FiseUtil {
 		return mensaje;
 	}
 	
-	public void agregarErrorBean(Map<String,String> mapaError, List<MensajeErrorBean> listaError, int idError, String codigoError){
+	public void agregarErrorBean(Map<String,String> mapaError, List<MensajeErrorBean> listaError,
+			int idError, String codigoError){
 		MensajeErrorBean error = new MensajeErrorBean();
 		error.setId(idError);
 		error.setDescripcion(mapaError.get(codigoError));
