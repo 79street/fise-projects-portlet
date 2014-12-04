@@ -25,9 +25,11 @@ $(document).ready(function () {
 
 <form:form  method="POST" modelAttribute="formato12CCBean" action="${accionURL}" enctype="multipart/form-data">
 
+	<form:hidden path="codigoEmpresaHidden" />
 	<form:hidden path="anioPresentacion" />
 	<form:hidden path="mesPresentacion" />
 	<form:hidden path="etapa" />
+	<form:hidden path="periodoEnvioHidden" />
    
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">

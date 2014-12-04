@@ -46,6 +46,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 @SessionAttributes({ "esAdministrador" })
@@ -240,6 +242,7 @@ public class Formato12CGartController {
 
 			String tipo = request.getParameter("tipo");
 			String codEmpresa = request.getParameter("codEmpresa");
+			String periodoEnvio = request.getParameter("periodoEnvio");
 			String anio = request.getParameter("anioPresentacion");
 			String mes = request.getParameter("mesPresentacion");
 			String etapa = request.getParameter("etapa");
@@ -249,6 +252,11 @@ public class Formato12CGartController {
 
 			bean.setReadOnly(true);
 			bean.setCodigoEmpresa(codEmpresa.trim());
+			
+			//guardamos el codigo de empresa
+			bean.setCodigoEmpresaHidden(codEmpresa.trim());
+			bean.setPeriodoEnvioHidden(periodoEnvio);
+			
 			bean.setAnioPresentacion(Long.parseLong(anio));
 			bean.setMesPresentacion(Long.parseLong(mes));
 			bean.setEtapa(etapa);
@@ -478,7 +486,7 @@ public class Formato12CGartController {
 		//String periodoDeclaracion = command.getPeridoDeclaracion();
 		String periodoDeclaracion = bean.getPeriodoEnvio();//se obtiene el valor del periodo guardado de el campo descripcionPeriodoHidden(valorPeriodoHidden), probar los demas flujos
 		
-		String anioPresentacion = "";
+		/*String anioPresentacion = "";
 		String mesPresentacion = "";
 		String etapa = "";
 		logger.info("valores detalle " + codEmpresa);
@@ -513,16 +521,42 @@ public class Formato12CGartController {
 		} else {
 			// create
 		}
-
+*/
+		if( codEmpresa==null ){
+			codEmpresa = bean.getCodigoEmpresaHidden();
+		}
+		if( periodoDeclaracion==null ){
+			periodoDeclaracion = bean.getPeriodoEnvioHidden();
+		}
+		
 		response.setRenderParameter("crud", CRUD_CREATE);
 		response.setRenderParameter("action", "detalle");
 		response.setRenderParameter("codigoEmpresaDetalle", codEmpresa);
 		response.setRenderParameter("periodoEnvioDetalle", periodoDeclaracion);
+		
+		response.setRenderParameter("anoPresentacionDetalle", FiseConstants.CERO);
+		response.setRenderParameter("mesPresentacionDetalle", FiseConstants.CERO);
+		response.setRenderParameter("etapaDetalle", FiseConstants.CERO);
+		response.setRenderParameter("anoEjecucionDetalle", FiseConstants.CERO);
+		response.setRenderParameter("mesEjecucionDetalle", FiseConstants.CERO);
+		response.setRenderParameter("etapaEjecucionDetalle", FiseConstants.CERO);
+		response.setRenderParameter("itemDetalle", FiseConstants.CERO);
+		
+		//--response.setRenderParameter("periodoEnvioDetalle", periodoDeclaracion);
+		//--response.setRenderParameter("nroItemEtapa", FiseConstants.CERO);
 	}
 
 	@RequestMapping(params = "action=detalle")
 	public String detalle(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @RequestParam("crud") String crud, 
-			@RequestParam("codigoEmpresaDetalle") String codEmpresa, @RequestParam("periodoEnvioDetalle") String periodoDeclaracion, 
+			@RequestParam("codigoEmpresaDetalle") String codEmpresa, 
+			@RequestParam("periodoEnvioDetalle") String periodoDeclaracion,
+			@RequestParam("anoPresentacionDetalle") String anoPresentacion,
+			@RequestParam("mesPresentacionDetalle") String mesPresentacion,
+			@RequestParam("etapaDetalle") String etapa,
+			@RequestParam("anoEjecucionDetalle") String anoEjecucion,
+			@RequestParam("mesEjecucionDetalle") String mesEjecucion,
+			@RequestParam("etapaEjecucionDetalle") String etapaEjecucion,
+			@RequestParam("itemDetalle") String nroItemEtapa,
 			@ModelAttribute("formato12CCBean") Formato12CCBean bean) {
 
 		//String codEmpresa = bean.getCodigoEmpresa();
@@ -533,23 +567,23 @@ public class Formato12CGartController {
 		logger.info("valores periodoDeclaracion" + periodoDeclaracion);
 		logger.info("valores codEmpresa" + codEmpresa);
 
-		String anioPresentacion = "";
-		String mesPresentacion = "";
-		String etapa = "";
+		String anioPres = "";
+		String mesPres = "";
+		String etapaPres = "";
 
 		if (periodoDeclaracion != null && periodoDeclaracion.length() > 6) {
-			anioPresentacion = periodoDeclaracion.substring(0, 4);
-			mesPresentacion = periodoDeclaracion.substring(4, 6);
-			etapa = periodoDeclaracion.substring(6);
+			anioPres = periodoDeclaracion.substring(0, 4);
+			mesPres = periodoDeclaracion.substring(4, 6);
+			etapaPres = periodoDeclaracion.substring(6);
 		}
 		// Cabecera
 		
 		bean.setCodigoEmpresa(codEmpresa);
 		bean.setPeriodoEnvio(periodoDeclaracion);
 		bean.setDescEmpresa(mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4)));
-		bean.setAnioEjecucion(Long.parseLong(anioPresentacion));
-		bean.setMesEjecucion(Long.parseLong(mesPresentacion));
-		bean.setEtapa(etapa);
+		bean.setAnioPresentacion(Long.parseLong(anioPres));
+		bean.setMesPresentacion(Long.parseLong(mesPres));
+		bean.setEtapa(etapaPres);
 
 		//
 		bean.setListaMes(fiseUtil.getMapaMeses());
@@ -561,6 +595,8 @@ public class Formato12CGartController {
 		bean.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		bean.setListaPeriodoEnvio(listaPeriodoEnvio);
 		
+		//add item
+		bean.setNroItemEtapa(Long.parseLong(nroItemEtapa));
 		
 		model.addAttribute("readonly", "false");
 
@@ -587,16 +623,25 @@ public class Formato12CGartController {
 				model.addAttribute("readonlyEdit", "true");
 			} else if (CRUD_UPDATE.equals(crud)) {
 				model.addAttribute("readonly", "true");
+				model.addAttribute("readonlyFlagPeriodo", "true");
 				model.addAttribute("readonlyEdit", "false");
 			}
+			
+			bean.setAnioEjecucion(Long.parseLong(anoEjecucion));
+			bean.setMesEjecucion(Long.parseLong(mesEjecucion));
+			bean.setEtapaEjecucion(Long.parseLong(etapaEjecucion));
+			//add hidden
+			bean.setAnoEjecucionHidden(Long.parseLong(anoEjecucion));
+			bean.setMesEjecucionHidden(Long.parseLong(mesEjecucion));
+			bean.setEtapaEjecucionHidden(Long.parseLong(etapaEjecucion));
 
 			logger.info("LECTURA DETALLE");
 			FiseFormato12CC formato = new FiseFormato12CC();
 			
 			FiseFormato12CCPK pk = new FiseFormato12CCPK();
 			pk.setCodEmpresa(codEmpresa);
-			pk.setAnoPresentacion(Long.parseLong(anioPresentacion));
-			pk.setMesPresentacion(Long.parseLong(mesPresentacion));
+			pk.setAnoPresentacion(Long.parseLong(anioPres));
+			pk.setMesPresentacion(Long.parseLong(mesPres));
 			pk.setEtapa(etapa);
 			
 			formato = formatoService.obtenerFormato12CCByPK(pk);
@@ -606,7 +651,36 @@ public class Formato12CGartController {
 				List<FiseFormato12CD> listaDetalle = formatoService.listarFormato12CDByFormato12CC(formato);
 				
 				for (FiseFormato12CD detalle : listaDetalle) {
-					//verificamos el codigo  de etapa ejecucion
+					
+					if( bean.getCodigoEmpresa().equals(detalle.getId().getCodEmpresa()) &&
+							bean.getAnioPresentacion() == detalle.getId().getAnoPresentacion() &&
+							bean.getMesPresentacion() == detalle.getId().getMesPresentacion() &&
+							bean.getEtapa().equals(detalle.getId().getEtapa()) &&
+							bean.getAnioEjecucion() == detalle.getId().getAnoEjecucionGasto() &&
+							bean.getMesEjecucion() == detalle.getId().getMesEjecucionGasto() &&
+							bean.getEtapaEjecucion() == detalle.getId().getEtapaEjecucion() &&
+							bean.getNroItemEtapa() == detalle.getId().getNumeroItemEtapa()
+							){
+						bean.setCodUbigeoOrigen(detalle.getCodUbigeoOrigen());
+						bean.setLocalidadOrigen(detalle.getDescripcionLocalidadOrigen());
+						bean.setCodUbigeoDestino(detalle.getCodUbigeoDestino());
+						bean.setLocalidadDestino(detalle.getDescripcionLocalidadDestino());
+						bean.setZonaBenef(detalle.getIdZonaBenef());
+						bean.setCodCuentaContable(detalle.getCodigoCuentaContaEde());
+						bean.setActividad(detalle.getDescripcionActividad());
+						bean.setTipoDocumento(detalle.getIdTipDocRef());
+						bean.setRucEmpresa(detalle.getRucEmpresaEmiteDocRef());
+						bean.setSerieDocumento(detalle.getSerieDocumentoReferencia());
+						bean.setNroDocumento(detalle.getNumeroDocumentoReferencia());
+						bean.setNroDias(detalle.getNumeroDias());
+						bean.setMontoAlimentacion(detalle.getMontoAlimentacion());
+						bean.setMontoAlojamiento(detalle.getMontoAlojamiento());
+						bean.setMontoMovilidad(detalle.getMontoMovilidad());
+						bean.setTotalGeneral(detalle.getTotalGeneral());
+					}
+					
+					
+					/*//verificamos el codigo  de etapa ejecucion
 					if( bean.getEtapaEjecucion() == detalle.getId().getEtapaEjecucion() ){
 						bean.setAnioEjecucion(detalle.getId().getAnoEjecucionGasto());
 						bean.setMesEjecucion(detalle.getId().getMesEjecucionGasto());
@@ -628,7 +702,7 @@ public class Formato12CGartController {
 						bean.setMontoMovilidad(detalle.getMontoMovilidad());
 						bean.setTotalGeneral(detalle.getTotalGeneral());
 						
-					}
+					}*/
 					
 					break;
 				}
@@ -638,6 +712,9 @@ public class Formato12CGartController {
 		} else if (CRUD_CREATE.equals(crud)) {
 			model.addAttribute("readonlyEdit", "false");
 
+			bean.setAnioEjecucion(Long.parseLong(anioPres));
+			bean.setMesEjecucion(Long.parseLong(mesPres));
+			
 			/*bean.setSt1(FiseConstants.CERO);
 			bean.setSt2(FiseConstants.CERO);
 			bean.setSt3(FiseConstants.CERO);
@@ -725,6 +802,140 @@ public class Formato12CGartController {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	
+	@ActionMapping(params = "action=guardarDetalle")
+	public void guardarDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @RequestParam("crud") String crud, 
+			//--@RequestParam("idZonaBenef") String idZona, 
+			@RequestParam("codEmpresa") String codEmpresa, 
+			//--@RequestParam("periodoEnvio") String periodoEnvio, 
+			//--@RequestParam("anoEjecucionHidden") String anoEjecucionHidden, @RequestParam("mesEjecucionHidden") String mesEjecucionHidden, 
+			//--@RequestParam("etapaEjecucionHidden") String etapaEjecucionHidden,
+			@ModelAttribute("formato12CCBean") Formato12CCBean bean) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+
+		FiseFormato12CC f = null;
+		
+		//String codEmpresa = bean.getCodigoEmpresa();
+		Long anoPresentacion = bean.getAnioPresentacion();
+		Long mesPresentacion = bean.getMesPresentacion();
+		String etapa = bean.getEtapa();
+		String periodoEnvio = bean.getPeriodoEnvio();
+		//Long anoEjecucion = bean.getAnioEjecucion();
+		//Long mesEjecucion = bean.getMesEjecucion();
+		/*Long etapaEjecucion = bean.getEtapaEjecucion();
+		String codUbigeoOrigen = bean.getCodDistritoOrigen();
+		String localidadOrigen = bean.getLocalidadOrigen();
+		String codUbigeoDestino = bean.getCodDistritoDestino();
+		String localidadDestino = bean.getLocalidadDestino();
+		Long zonaBenef = bean.getZonaBenef();
+		String cuentaContable = bean.getCodCuentaContable();
+		String actividad = bean.getActividad();
+		String tipoDocumento = bean.getTipoDocumento();
+		String rucEmpresa = bean.getRucEmpresa();
+		String serieDocumento = bean.getSerieDocumento();
+		String nroDocumento = bean.getNroDocumento();
+		Long nroDias = bean.getNroDias();
+		BigDecimal montoAlimentacion = bean.getMontoAlimentacion();
+		BigDecimal montoAlojamiento = bean.getMontoAlojamiento();
+		BigDecimal montoMovilidad = bean.getMontoMovilidad();*/
+		
+
+		/*String anioPresentacion = "";
+		String mesPresentacion = "";
+		String etapa = "";
+		if (periodoEnvio != null && periodoEnvio.length() > 6) {
+			anioPresentacion = periodoEnvio.substring(0, 4);
+			mesPresentacion = periodoEnvio.substring(4, 6);
+			etapa = periodoEnvio.substring(6);
+		}*/
+
+		/*logger.info("valores detalle " + codEmpresa);
+		logger.info("valores detalle" + periodoDeclaracion);
+		logger.info("valores anioAlta" + anioAlta);
+		logger.info("valores mesAlta" + mesAlta);
+		logger.info("valores codUbigeo" + codUbigeo);
+		logger.info("valores localidad" + localidad);
+		logger.info("valores st1" + st1);
+		logger.info("valores st2" + st2);
+		logger.info("valores st3" + st3);
+		logger.info("valores st4" + st4);
+		logger.info("valores st5" + st5);
+		logger.info("valores st6" + st6);
+		logger.info("valores stserv" + stserv);
+		logger.info("valores stesp" + stesp);
+		logger.info("valores idZonaBenef" + idZonaBenef);
+		logger.info("valores sedeAtencion" + sedeAtencion);*/
+
+		// seteamos los valores obtenidos
+		/*bean.setAnioPresentacion(Long.parseLong(anioPresentacion));
+		bean.setMesPresentacion(Long.parseLong(mesPresentacion));
+		bean.setEtapa(etapa);*/
+		//
+		bean.setCodigoEmpresa(codEmpresa);
+		
+		if( bean.getAnioEjecucion()==null || bean.getAnioEjecucion().equals(new Long(0)) ){
+			bean.setAnioEjecucion(bean.getAnoEjecucionHidden());
+		}
+		if( bean.getMesEjecucion()==null || bean.getMesEjecucion().equals(new Long(0)) ){
+			bean.setMesEjecucion(bean.getMesEjecucionHidden());
+		}
+		if( bean.getEtapaEjecucion()==null || bean.getEtapaEjecucion().equals(new Long(0)) ){
+			bean.setEtapaEjecucion(bean.getEtapaEjecucionHidden());
+		}
+		
+		try{
+			
+			bean.setUsuario(themeDisplay.getUser().getLogin());
+			bean.setTerminal(themeDisplay.getUser().getLoginIP());
+
+			FiseFormato12CCPK pk = new FiseFormato12CCPK();
+			pk.setCodEmpresa(codEmpresa);
+			/*pk.setAnoPresentacion(Long.parseLong(anioPresentacion));
+			pk.setMesPresentacion(Long.parseLong(mesPresentacion));
+			pk.setEtapa(etapa);*/
+			pk.setAnoPresentacion(anoPresentacion);
+			pk.setMesPresentacion(mesPresentacion);
+			pk.setEtapa(etapa);
+
+			// Primero buscamos si existe una cabecera
+			FiseFormato12CC formato = formatoService.obtenerFormato12CCByPK(pk);
+
+			if (formato != null) {
+				//para modificar registros
+				f = formatoService.modificarFormato12CC(bean, formato);
+			} else {
+				//para nuevos registros
+				f = formatoService.registrarFormato12CC(bean);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(periodoEnvio==null){
+			periodoEnvio = ""+anoPresentacion+FormatoUtil.rellenaIzquierda(""+mesPresentacion, '0', 2)+etapa;
+		}
+		
+
+		response.setRenderParameter("crud", CRUD_READ_CREATEUPDATE);
+		response.setRenderParameter("action", "detalle");
+		response.setRenderParameter("codigoEmpresaDetalle", codEmpresa);
+		response.setRenderParameter("periodoEnvioDetalle", periodoEnvio);
+		
+		response.setRenderParameter("anoPresentacionDetalle", anoPresentacion.toString());
+		response.setRenderParameter("mesPresentacionDetalle", mesPresentacion.toString());
+		response.setRenderParameter("etapaDetalle", etapa);
+		response.setRenderParameter("anoEjecucionDetalle", f.getAnoEjecucionDetalle().toString());
+		response.setRenderParameter("mesEjecucionDetalle", f.getMesEjecucionDetalle().toString());
+		response.setRenderParameter("etapaEjecucionDetalle", f.getEtapaEjecucionDetalle().toString());
+		response.setRenderParameter("itemDetalle", f.getNumeroItemEtapaDetalle().toString());
+		
+		
+		//--response.setRenderParameter("periodoEnvioDetalle", periodoEnvio);
+		//---response.setRenderParameter("nroItemEtapa", f.getNumeroItemEtapaDetalle().toString());
+
 	}
 
 }

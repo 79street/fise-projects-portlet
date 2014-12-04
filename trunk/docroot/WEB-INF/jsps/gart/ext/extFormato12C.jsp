@@ -140,7 +140,9 @@ var formato12C= {
 	montoMovilidadDetalle:null,
 	totalDetalle:null,
 	//
-	
+	anoEjecucionHiddenDetalle:null,
+	mesEjecucionHiddenDetalle:null,
+	etapaEjecucionHiddenDetalle:null,
 	
 	botonAnadirFormato:null,
 	botonRegresarBusqueda:null,
@@ -287,6 +289,7 @@ var formato12C= {
 				formato12C.blockUI();
 				location.href=urlRegresarBusqueda;
 			});
+
 			
 		}if(operacion=='READ'){
 			
@@ -308,7 +311,7 @@ var formato12C= {
 		}if(operacion=='UPDATE'){
 			
 			formato12C.buscarDetalles();
-			formato12C.botonAnadirFormato.css("display","block");
+			//formato12C.botonAnadirFormato.css("display","block");
 
             formato12C.botonAnadirFormato.click(function(){
 				formato12C.blockUI();
@@ -326,6 +329,7 @@ var formato12C= {
 			//validacion y envio definitivo
 			formato12C.botonValidacion.click(function() {formato12C.<portlet:namespace/>validacionFormato();});
 			formato12C.botonEnvioDefinitivo.click(function() {formato12C.confirmarEnvioDefinitivo();});
+
 			
 		}
 		
@@ -371,7 +375,9 @@ var formato12C= {
 		this.montoMovilidadDetalle=$('#montoMovilidad');
 		this.totalDetalle=$('#totalGeneral');
 
-
+		this.anoEjecucionHiddenDetalle=$('#anoEjecucionHidden');
+		this.mesEjecucionHiddenDetalle=$('#mesEjecucionHidden');
+		this.etapaEjecucionHiddenDetalle=$('#etapaEjecucionHidden');
 		
 		$('input.target[type=text]').on('change', function(){
 			formato12C.calculoTotal();
@@ -396,56 +402,83 @@ var formato12C= {
 			
 			formato12C.botonGuardarDetalle.click(function(){
 				if( formato12C.validarFormatoDetalle() ){
-					alert(123);
-					formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion).submit();
-				}else{
-					alert(456);
+					//--formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&anoEjecucionHidden='+formato12C.anoEjecucionDetalle.val()+'&mesEjecucionHidden='+formato12C.mesEjecucionDetalle.val()+'&etapaEjecucionHidden='+formato12C.etapaEjecucionDetalle.val()).submit();
+					//guardamos los valores
+					formato12C.anoEjecucionHiddenDetalle.val(formato12C.anoEjecucionDetalle.val());
+					formato12C.mesEjecucionHiddenDetalle.val(formato12C.mesEjecucionDetalle.val());
+					formato12C.etapaEjecucionHiddenDetalle.val(formato12C.etapaEjecucionDetalle.val());
+					formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()).submit();
 				}
-				
 			});
 			
 			botonRegresarDetalle.click(function(){
 				formato12C.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&periodoEnvio='+formato12C.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
 			});
+			
+			formato12C.construirPeriodoEnvio(formato12C.anoPresentacionDetalle.val(), formato12C.mesPresentacionDetalle.val(), formato12C.etapaDetalle.val());
+			formato12C.anoEjecucionDetalle.val(formato12C.anoPresentacionDetalle.val());
+			formato12C.mesEjecucionDetalle.val(formato12C.mesPresentacionDetalle.val());
 		
+			formato12C.soloNumerosDecimales();
+			
 		</c:if>
 		
 		<c:if test="${crud =='READ'}">
 			botonRegresarDetalle.click(function(){
 				formato12C.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=0';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&periodoEnvio='+formato12C.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=0';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato12C.formDetalle.serialize()+'&tipo=0';
 			});
+			
+			formato12C.construirPeriodoEnvio(formato12C.anoPresentacionDetalle.val(), formato12C.mesPresentacionDetalle.val(), formato12C.etapaDetalle.val());
+			formato12C.anoEjecucionDetalle.val(formato12C.anoEjecucionHiddenDetalle.val());
+			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
+			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 		</c:if>
 		
 		<c:if test="${crud =='READCREATEUPDATE'}">
 			botonRegresarDetalle.click(function(){
 				formato12C.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&periodoEnvio='+formato12C.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato12C.formDetalle.serialize()+'&tipo=0';
 			});
+			formato12C.construirPeriodoEnvio(formato12C.anoPresentacionDetalle.val(), formato12C.mesPresentacionDetalle.val(), formato12C.etapaDetalle.val());
+			formato12C.anoEjecucionDetalle.val(formato12C.anoEjecucionHiddenDetalle.val());
+			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
+			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 		</c:if>
 		
 		<c:if test="${crud =='UPDATE'}">
 		
 			formato12C.botonGuardarDetalle.click(function(){
 				if( formato12C.validarFormatoDetalle() ){
-					alert(123);
-					formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&idZonaBenef='+formato12C.idZonaBenefDetalle.val()).submit();
-				}else{
-					alert(456);
+					//---formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&anoEjecucionHidden='+formato12C.anoEjecucionDetalle.val()+'&mesEjecucionHidden='+formato12C.mesEjecucionDetalle.val()+'&etapaEjecucionHidden='+formato12C.etapaEjecucionDetalle.val()).submit();
+					//guardamos los valores
+					formato12C.anoEjecucionHiddenDetalle.val(formato12C.anoEjecucionDetalle.val());
+					formato12C.mesEjecucionHiddenDetalle.val(formato12C.mesEjecucionDetalle.val());
+					formato12C.etapaEjecucionHiddenDetalle.val(formato12C.etapaEjecucionDetalle.val());
+					formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()).submit();
+					//---formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion).submit();
 				}
 			});
 		
 			botonRegresarDetalle.click(function(){
 				formato12C.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&periodoEnvio='+formato12C.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
 			});
+			
+			formato12C.construirPeriodoEnvio(formato12C.anoPresentacionDetalle.val(), formato12C.mesPresentacionDetalle.val(), formato12C.etapaDetalle.val());
+			formato12C.anoEjecucionDetalle.val(formato12C.anoEjecucionHiddenDetalle.val());
+			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
+			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
+			
+			formato12C.soloNumerosDecimales();
 			
 		</c:if>
 		
 	},
+	/**ESTRUCTURA DE TABLAS DE BUSQUEDA**/
 	buildGridsBusqueda : function () {	
 		formato12C.tablaResultados.jqGrid({
 		   datatype: "local",
@@ -500,132 +533,10 @@ var formato12C= {
 		       } 
 		}); 
 	},
-	buscarFormatos : function () {	
-
-		jQuery.ajax({			
-					url: formato12C.urlBusqueda+'&'+formato12C.formBusqueda.serialize(),
-					type: 'post',
-					dataType: 'json',
-					beforeSend:function(){
-						formato12C.blockUI();
-					},				
-					success: function(gridData) {					
-						formato12C.tablaResultados.clearGridData(true);
-						formato12C.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
-						formato12C.tablaResultados[0].refreshIndex();
-						formato12C.unblockUI();
-					},error : function(){
-						alert("Error de conexión.");
-						formato12C.unblockUI();
-					}
-			});
-
-
-	},
-	blockUI : function(){
-		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
-	},
-	unblockUI : function(){
-		$.unblockUI();
-	},
-	<portlet:namespace/>loadPeriodo : function(valPeriodo){
-		jQuery.ajax({
-				url: formato12C.urlCargaPeriodo+'&'+formato12C.formNuevo.serialize(),
-				type: 'post',
-				dataType: 'json',
-				success: function(data) {		
-					dwr.util.removeAllOptions("periodoEnvio");
-					dwr.util.addOptions("periodoEnvio", data,"codigoItem","descripcionItem");
-					if( valPeriodo.length!='' ){
-						dwr.util.setValue("periodoEnvio", valPeriodo);
-					}
-					/*formato12C.<portlet:namespace/>loadCargaFlagPeriodo();
-					
-					//validar lima edelnor y luz del sur
-					if(formato12C.cod_empresa_edelnor.val()==formato12C.f_empresa.val() || formato12C.cod_empresa_luz_sur.val()==formato12C.f_empresa.val()){
-						formato12C.habilitarLima();										
-					}else{
-						formato12C.deshabilitarLima();
-					}
-					*/
-					formato12C.unblockUI();
-				},error : function(){
-					alert("Error de conexión.");
-					formato12C.unblockUI();
-				}
-		});
-	},
-	/*<portlet:namespace/>loadCargaFlagPeriodo : function() {
-		jQuery.ajax({
-			url: formato12C.urlCargaFlagPeriodo+'&'+formato12C.formNuevo.serialize(),
-				type: 'post',
-				dataType: 'json',
-				success: function(data) {				
-					//dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
-					//cargar los valores obtenidos de ano inicio y fin de vigencia
-					dwr.util.setValue("anioInicioVigencia", data.anioInicioVigencia);
-					dwr.util.setValue("anioFinVigencia", data.anioFinVigencia);
-					//
-					formato12C.recargarPeriodoEjecucion(data.anioInicioVigencia,data.anioFinVigencia);
-					//--formato12C.mostrarPeriodoEjecucion();
-				},error : function(){
-					alert("Error de conexión.");
-					formato12C.unblockUI();
-				}
-		});
-	},*/
-	recargarPeriodoEjecucion : function(valAnioInicio,valAnioFin){
-		$('#anioInicioVigencia').val(valAnioInicio);
-		$('#anioFinVigencia').val(valAnioFin);
-	},
-	mostrarPeriodoEjecucion : function(){
-		$('#anioInicioVigencia').attr("disabled",true);
-		$('#anioFinVigencia').attr("disabled",true);
-		//formato14A.quitarEstiloEdicionCabecera();
-	},
-	construirPeriodoEnvio : function(anoPresentacion,mesPresentacion,etapa){
-		dwr.util.removeAllOptions("periodoEnvio");
-		var codigo=''+anoPresentacion+completarCerosIzq(mesPresentacion,2)+etapa;
-		var descripcion=formato12C.mostrarDescripcionPeriodo(anoPresentacion,mesPresentacion,etapa);
-   		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
-   		dwr.util.addOptions("periodoEnvio", dataPeriodo,"codigoItem","descripcionItem");
-	},
-	mostrarDescripcionPeriodo : function(anio,mes,etapa){
-		  var monthNames = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-		  var descripcionPeriodo;
-		  //alert(monthNames[mes-1]);
-		  descripcionPeriodo=''+monthNames[mes-1]+'-'+anio+' / '+etapa;
-		  //alert(descripcionPeriodo);
-		  return descripcionPeriodo;
-	},
-	
-	/*cargarPeriodoDeclaracion : function(){
-		return jQuery.ajax({
-			url: formato12C.urlCargaDeclaracion,
-			type: 'post',
-			dataType: 'json',
-			beforeSend:function(){
-				formato12C.blockUI();
-			},
-			data: {
-				codEmpresa: formato12C.codEmpresa.val(),
-				anoPresentacion: formato12C.peridoDeclaracion.val()
-				},
-			success: function(data) {		
-				dwr.util.removeAllOptions("peridoDeclaracion");
-				dwr.util.addOptions("peridoDeclaracion", data,"codigoItem","descripcionItem");
-				
-				formato12C.unblockUI();
-			},error : function(){
-				alert("Error de conexión.");
-				formato12C.unblockUI();
-			}
-		});
-	},*/
 	buildGridsImplementacion : function () {	
 		formato12C.tablaImplementacion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Desino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -678,23 +589,35 @@ var formato12C= {
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READCREATEUPDATE");
-		  	      			//urlView.setParameter("codEmpresa", ret.codEmpresa);
-		  	      			//urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
-		  	      			//urlView.setParameter("idZonaBenef", ret.idZonaBenef);
-		  	      			urlView.setPortletId(formato12C.portletID);
+		  	      			urlView.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
+		  	      			urlView.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+		  	      			urlView.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
+		  	      			urlView.setParameter("mesPresentacionDetalle", ret.mesPresentacion);
+		  	      			urlView.setParameter("etapaDetalle", ret.etapa);
+		  	    			urlView.setParameter("anoEjecucionDetalle", ret.anoEjecucion);
+		  	    			urlView.setParameter("mesEjecucionDetalle", ret.mesEjecucion);
+		  	    			urlView.setParameter("etapaEjecucionDetalle", ret.etapaEjecucion);
+		  	    			urlView.setParameter("itemDetalle", ret.item);
+		  	    			urlView.setPortletId(formato12C.portletID);
 		  	      			//EDIT
 		  	      			var urlEdit=Liferay.PortletURL.createRenderURL();
 					  	    urlEdit.setParameter("action", "detalle");
 					  	    urlEdit.setParameter("crud", "UPDATE");
-					  	    //urlEdit.setParameter("codEmpresa", ret.codEmpresa);
-					  	    //urlEdit.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
-					  	  	//urlEdit.setParameter("idZonaBenef", ret.idZonaBenef);
+					  	  	urlEdit.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
+					  	  	urlEdit.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+					  		urlEdit.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
+					  		urlEdit.setParameter("mesPresentacionDetalle", ret.mesPresentacion);
+					  		urlEdit.setParameter("etapaDetalle", ret.etapa);
+					  		urlEdit.setParameter("anoEjecucionDetalle", ret.anoEjecucion);
+					  		urlEdit.setParameter("mesEjecucionDetalle", ret.mesEjecucion);
+					  		urlEdit.setParameter("etapaEjecucionDetalle", ret.etapaEjecucion);
+					  		urlEdit.setParameter("itemDetalle", ret.item);
 					  	  	urlEdit.setPortletId(formato12C.portletID);
 		  	      			
 		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 		  	      			
-		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12C.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.codUbigeo+"','"+ret.idZonaBenef+"');\" /></a> ";              			
+		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12C.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapaEjecucion+"','"+ret.item+"');\" /></a> ";              			
 		  	      			formato12C.tablaImplementacion.jqGrid('setRowData',ids[i],{view:view});
 		  	      			formato12C.tablaImplementacion.jqGrid('setRowData',ids[i],{edit:edit});
 		  	      			formato12C.tablaImplementacion.jqGrid('setRowData',ids[i],{elim:elem});
@@ -714,7 +637,7 @@ var formato12C= {
 	buildGridsMensual : function () {	
 		formato12C.tablaMensual.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Desino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -767,23 +690,35 @@ var formato12C= {
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READCREATEUPDATE");
-		  	      			//urlView.setParameter("codEmpresa", ret.codEmpresa);
-		  	      			//urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
-		  	      			//urlView.setParameter("idZonaBenef", ret.idZonaBenef);
+			  	      		urlView.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
+			  	      		urlView.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+		  	      			urlView.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
+		  	      			urlView.setParameter("mesPresentacionDetalle", ret.mesPresentacion);
+		  	      			urlView.setParameter("etapaDetalle", ret.etapa);
+		  	    			urlView.setParameter("anoEjecucionDetalle", ret.anoEjecucion);
+		  	    			urlView.setParameter("mesEjecucionDetalle", ret.mesEjecucion);
+		  	    			urlView.setParameter("etapaEjecucionDetalle", ret.etapaEjecucion);
+		  	    			urlView.setParameter("itemDetalle", ret.item);
 		  	      			urlView.setPortletId(formato12C.portletID);
 		  	      			//EDIT
 		  	      			var urlEdit=Liferay.PortletURL.createRenderURL();
 					  	    urlEdit.setParameter("action", "detalle");
 					  	    urlEdit.setParameter("crud", "UPDATE");
-					  	    //urlEdit.setParameter("codEmpresa", ret.codEmpresa);
-					  	    //urlEdit.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
-					  	  	//urlEdit.setParameter("idZonaBenef", ret.idZonaBenef);
+					  	  	urlEdit.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
+					  	 	urlEdit.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+					  		urlEdit.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
+					  		urlEdit.setParameter("mesPresentacionDetalle", ret.mesPresentacion);
+					  		urlEdit.setParameter("etapaDetalle", ret.etapa);
+					  		urlEdit.setParameter("anoEjecucionDetalle", ret.anoEjecucion);
+					  		urlEdit.setParameter("mesEjecucionDetalle", ret.mesEjecucion);
+					  		urlEdit.setParameter("etapaEjecucionDetalle", ret.etapaEjecucion);
+					  		urlEdit.setParameter("itemDetalle", ret.item);
 					  	  	urlEdit.setPortletId(formato12C.portletID);
 		  	      			
 		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 		  	      			
-		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12C.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.codUbigeo+"','"+ret.idZonaBenef+"');\" /></a> ";              			
+		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12C.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapaEjecucion+"','"+ret.item+"');\" /></a> ";              			
 		  	      			formato12C.tablaMensual.jqGrid('setRowData',ids[i],{view:view});
 		  	      			formato12C.tablaMensual.jqGrid('setRowData',ids[i],{edit:edit});
 		  	      			formato12C.tablaMensual.jqGrid('setRowData',ids[i],{elim:elem});
@@ -804,7 +739,7 @@ var formato12C= {
 	buildGridsImplementacionView : function () {	
 		formato12C.tablaImplementacionView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Desino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -855,9 +790,15 @@ var formato12C= {
 		  	      		
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READ");
-		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
-		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
-		  	      			urlView.setParameter("idZonaBenef", ret.idZonaBenef);
+			  	      		urlView.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
+			  	      		urlView.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+		  	      			urlView.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
+		  	      			urlView.setParameter("mesPresentacionDetalle", ret.mesPresentacion);
+		  	      			urlView.setParameter("etapaDetalle", ret.etapa);
+		  	    			urlView.setParameter("anoEjecucionDetalle", ret.anoEjecucion);
+		  	    			urlView.setParameter("mesEjecucionDetalle", ret.mesEjecucion);
+		  	    			urlView.setParameter("etapaEjecucionDetalle", ret.etapaEjecucion);
+		  	    			urlView.setParameter("itemDetalle", ret.item);
 		  	      			urlView.setPortletId(formato12C.portletID);
 		  	      			
 		  	      			
@@ -879,7 +820,7 @@ var formato12C= {
 	buildGridsMensualView : function () {	
 		formato12C.tablaMensualView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Desino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -930,9 +871,15 @@ var formato12C= {
 		  	      		
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READ");
-		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
-		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
-		  	      			urlView.setParameter("idZonaBenef", ret.idZonaBenef);
+			  	      		urlView.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
+			  	      		urlView.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
+		  	      			urlView.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
+		  	      			urlView.setParameter("mesPresentacionDetalle", ret.mesPresentacion);
+		  	      			urlView.setParameter("etapaDetalle", ret.etapa);
+		  	    			urlView.setParameter("anoEjecucionDetalle", ret.anoEjecucion);
+		  	    			urlView.setParameter("mesEjecucionDetalle", ret.mesEjecucion);
+		  	    			urlView.setParameter("etapaEjecucionDetalle", ret.etapaEjecucion);
+		  	    			urlView.setParameter("itemDetalle", ret.item);
 		  	      			urlView.setPortletId(formato12C.portletID);
 		  	      			
 		  	      			
@@ -951,10 +898,66 @@ var formato12C= {
 		       } 
 		}); 
 	},
-	
+	/***BUSQUEDA Y CRUD***/
+	buscarFormatos : function () {	
+
+		jQuery.ajax({			
+					url: formato12C.urlBusqueda+'&'+formato12C.formBusqueda.serialize(),
+					type: 'post',
+					dataType: 'json',
+					beforeSend:function(){
+						formato12C.blockUI();
+					},				
+					success: function(gridData) {					
+						formato12C.tablaResultados.clearGridData(true);
+						formato12C.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+						formato12C.tablaResultados[0].refreshIndex();
+						formato12C.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato12C.unblockUI();
+					}
+			});
+
+
+	},
+	<portlet:namespace/>loadPeriodo : function(valPeriodo){
+		jQuery.ajax({
+				url: formato12C.urlCargaPeriodo+'&'+formato12C.formNuevo.serialize(),
+				type: 'post',
+				dataType: 'json',
+				success: function(data) {		
+					dwr.util.removeAllOptions("periodoEnvio");
+					dwr.util.addOptions("periodoEnvio", data,"codigoItem","descripcionItem");
+					
+					if( trim(valPeriodo)!='' ){
+						dwr.util.setValue("periodoEnvio", valPeriodo);
+					}/*else{
+						dwr.util.setValue("periodoEnvio", data[0]);
+					}*/
+					
+					/*if( valPeriodo.length!='' ){
+						dwr.util.setValue("periodoEnvio", valPeriodo);
+					}*/
+					
+					/*formato12C.<portlet:namespace/>loadCargaFlagPeriodo();
+					
+					//validar lima edelnor y luz del sur
+					if(formato12C.cod_empresa_edelnor.val()==formato12C.f_empresa.val() || formato12C.cod_empresa_luz_sur.val()==formato12C.f_empresa.val()){
+						formato12C.habilitarLima();										
+					}else{
+						formato12C.deshabilitarLima();
+					}
+					*/
+					formato12C.unblockUI();
+				},error : function(){
+					alert("Error de conexión.");
+					formato12C.unblockUI();
+				}
+		});
+	},
 	buscarDetalles : function () {	
-           
-		return jQuery.ajax({			
+        return jQuery.ajax({			
 					url: formato12C.urlBusquedaDetalle+'&'+formato12C.formNuevo.serialize(),
 					type: 'post',
 					dataType: 'json',
@@ -991,44 +994,7 @@ var formato12C= {
 						formato12C.unblockUI();
 					}
 			});
-
-
-
 	},
-	<portlet:namespace/>showUploadExcel : function(){
-		formato12C.divOverlay.show();
-		formato12C.dialogCargaExcel.show();
-		formato12C.dialogCargaExcel.show();
-		formato12C.dialogCargaExcel.css({ 
-	        'left': ($(window).width() / 2 - formato12C.dialogCargaExcel.width() / 2) + 'px', 
-	        'top': ($(window).height()  - formato12C.dialogCargaExcel.height() ) + 'px'
-	    });
-	},
-	
-	closeDialogCargaExcel : function(){
-		formato12C.dialogCargaExcel.hide();
-		formato12C.divOverlay.hide();   
-	},
-	
-	<portlet:namespace/>cargarFormatoExcel : function(){
-		formato12C.formNuevo.submit();
-	},
-	
-	<portlet:namespace/>showUploadTxt : function(){
-		formato12C.divOverlay.show();
-		formato12C.dialogCargaTexto.show();
-		formato12C.dialogCargaTexto.css({ 
-	        'left': ($(window).width() / 2 - formato12C.dialogCargaTexto.width() / 2) + 'px', 
-	        'top': ($(window).height()  - formato12C.dialogCargaTexto.height() ) + 'px'
-	    });
-	},
-	
-	closeDialogCargaTxt : function(){
-		formato12C.dialogCargaTexto.hide();
-		formato12C.divOverlay.hide();   
-	},
-
-	
 	listarProvincias : function (codDepartamento,fuente) {	
 		// fuente: '0' : ORIGEN
 		// fuente: '1' : DESTINO
@@ -1096,6 +1062,73 @@ var formato12C= {
 
 
 	},
+	/***BLOQUEOS Y DESBLOQUEOS***/
+	blockUI : function(){
+		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
+	},
+	unblockUI : function(){
+		$.unblockUI();
+	},
+	/***OTROS***/
+	recargarPeriodoEjecucion : function(valAnioInicio,valAnioFin){
+		$('#anioInicioVigencia').val(valAnioInicio);
+		$('#anioFinVigencia').val(valAnioFin);
+	},
+	mostrarPeriodoEjecucion : function(){
+		$('#anioInicioVigencia').attr("disabled",true);
+		$('#anioFinVigencia').attr("disabled",true);
+		//formato14A.quitarEstiloEdicionCabecera();
+	},
+	construirPeriodoEnvio : function(anoPresentacion,mesPresentacion,etapa){
+		dwr.util.removeAllOptions("periodoEnvio");
+		var codigo=''+anoPresentacion+completarCerosIzq(mesPresentacion,2)+etapa;
+		var descripcion=formato12C.mostrarDescripcionPeriodo(anoPresentacion,mesPresentacion,etapa);
+   		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+   		dwr.util.addOptions("periodoEnvio", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	mostrarDescripcionPeriodo : function(anio,mes,etapa){
+		  var monthNames = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+		  var descripcionPeriodo;
+		  //alert(monthNames[mes-1]);
+		  descripcionPeriodo=''+monthNames[mes-1]+'-'+anio+' / '+etapa;
+		  //alert(descripcionPeriodo);
+		  return descripcionPeriodo;
+	},
+	<portlet:namespace/>showUploadExcel : function(){
+		formato12C.divOverlay.show();
+		formato12C.dialogCargaExcel.show();
+		formato12C.dialogCargaExcel.show();
+		formato12C.dialogCargaExcel.css({ 
+	        'left': ($(window).width() / 2 - formato12C.dialogCargaExcel.width() / 2) + 'px', 
+	        'top': ($(window).height()  - formato12C.dialogCargaExcel.height() ) + 'px'
+	    });
+	},
+	
+	closeDialogCargaExcel : function(){
+		formato12C.dialogCargaExcel.hide();
+		formato12C.divOverlay.hide();   
+	},
+	
+	<portlet:namespace/>cargarFormatoExcel : function(){
+		formato12C.formNuevo.submit();
+	},
+	
+	<portlet:namespace/>showUploadTxt : function(){
+		formato12C.divOverlay.show();
+		formato12C.dialogCargaTexto.show();
+		formato12C.dialogCargaTexto.css({ 
+	        'left': ($(window).width() / 2 - formato12C.dialogCargaTexto.width() / 2) + 'px', 
+	        'top': ($(window).height()  - formato12C.dialogCargaTexto.height() ) + 'px'
+	    });
+	},
+	
+	closeDialogCargaTxt : function(){
+		formato12C.dialogCargaTexto.hide();
+		formato12C.divOverlay.hide();   
+	},
+
+	
+	
 	emptySelectObject: function(){
 		var jsonVacio='[{"descripcionItem":"--Seleccione--","codigoItem":""}]';
 		return eval("(" + jsonVacio + ")");
@@ -1509,14 +1542,14 @@ var formato12C= {
 	},
 	confirmarEditCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion){
 		if(flagOperacion=='ABIERTO'){
-			location.href=formato12C.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+'&tipo=1';
+			location.href=formato12C.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&tipo=1';
 		}else if(flagOperacion=='CERRADO'){
 			alert(" No esta habilitado para realizar esta operacion");		
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
 	},
-	//validaciones
+	/***VALIDACIONES**/
 	validarFormatoDetalle : function(){
 		if( formato12C.codEmpresaDetalle.val().length=='' ){
 			alert('Seleccione una empresa'); 
@@ -1540,7 +1573,7 @@ var formato12C= {
 		  	}
 	 	 }
 		if(formato12C.mesEjecucionDetalle.val().length == '' ) {		  
-		   alert('Debe ingresar el mes de ejecucion');
+		   alert('Debe seleccionar el mes de ejecucion');
 		   formato12C.mesEjecucionDetalle.focus();
 		   return false; 
 		}
@@ -1552,12 +1585,12 @@ var formato12C= {
 		//validamos ubigeo origen
 		if(formato12C.codDepaOrigen.val().length != '' ) {
 			if(formato12C.codProvOrigen.val().length == '' ) {		  
-			   alert('Debe ingresar la provincia de origen');
+			   alert('Debe seleccionar la provincia de origen');
 			   formato12C.codProvOrigen.focus();
 			   return false; 
 			}else{
 				if(formato12C.codDistOrigen.val().length == '' ) {		  
-				   alert('Debe ingresar el distrito de origen');
+				   alert('Debe seleccionar el distrito de origen');
 				   formato12C.codDistOrigen.focus();
 				   return false; 
 				}
@@ -1566,16 +1599,21 @@ var formato12C= {
 		//validamos ubigeo destino
 		if(formato12C.codDepaDestino.val().length != '' ) {
 			if(formato12C.codProvDestino.val().length == '' ) {		  
-			   alert('Debe ingresar la provincia de destino');
+			   alert('Debe seleccionar la provincia de destino');
 			   formato12C.codProvDestino.focus();
 			   return false; 
 			}else{
 				if(formato12C.codDistDestino.val().length == '' ) {		  
-				   alert('Debe ingresar el distrito de destino');
+				   alert('Debe seleccionar el distrito de destino');
 				   formato12C.codDistDestino.focus();
 				   return false; 
 				}
 			}
+		}
+		if(formato12C.idZonaBenefDetalle.val().length == '' ) {		  
+		   alert('Debe seleccionar la Zona Beneficiario');
+		   formato12C.etapaEjecucionDetalle.focus();
+		   return false; 
 		}
 		//validamos si escogemos un tipo de documento
 		if(formato12C.tipoDocDetalle.val().length != '' ) {
@@ -1597,6 +1635,11 @@ var formato12C= {
 		}
 		//
 		return true; 
+	},
+	soloNumerosDecimales : function(){
+		formato12C.montoAlimentacionDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlimentacion',7,2)");
+		formato12C.montoAlojamientoDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlojamiento',7,2)");
+		formato12C.montoMovilidadDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMovilidad',7,2)");
 	}
 };
 

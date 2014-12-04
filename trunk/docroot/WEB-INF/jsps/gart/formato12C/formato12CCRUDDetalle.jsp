@@ -9,7 +9,7 @@
 
 <portlet:renderURL var="urlRegresarDetalle">
 <%-- 	<portlet:param name="action" value="nuevo"/> --%>
-	  <portlet:param name="action" value="view"/>
+	  <portlet:param name="action" value="viewedit"/>
 </portlet:renderURL>
 
 <script type="text/javascript">
@@ -48,7 +48,7 @@ $(document).ready(function () {
 								   					<tr>
 								   						<td>Distribuidora Eléctrica:</td>
 								   						<td>
-								   							<form:select path="codigoEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="${formato12CCBean.readOnly}" >
+								   							<form:select path="codigoEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="true" >
 																<form:options items="${formato12CCBean.listaEmpresas}" itemLabel="dscEmpresa" itemValue="codEmpresa" />
 															</form:select>
 								   						</td>
@@ -74,7 +74,7 @@ $(document).ready(function () {
 								   									</tr>
 								   									<tr>
 								   										<td colspan="5">
-								   											<form:select path="periodoEnvio" cssClass="select" cssStyle="width: 300px;" disabled="${formato12CCBean.readOnly}" >
+								   											<form:select path="periodoEnvio" cssClass="select" cssStyle="width: 300px;" disabled="true" >
 																				<c:forEach items="${formato12CCBean.listaPeriodoEnvio}" var="item">
 																					<form:option value="${item.codigoItem}">${item.descripcionItem}</form:option>
 																				</c:forEach>
@@ -82,6 +82,7 @@ $(document).ready(function () {
 																			<form:hidden path="anioPresentacion" />
 																			<form:hidden path="mesPresentacion" />
 																			<form:hidden path="etapa" />
+																			<form:hidden path="nroItemEtapa" />
 								   										</td>
 								   									</tr>
 								   								</table>
@@ -141,10 +142,16 @@ $(document).ready(function () {
 													<tr>
 														<td width="120px">Etapa ejecución:</td>
 														<td>
-															<form:select path="etapaEjecucion" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
+															<form:select path="etapaEjecucion" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
 																<form:option value="">-Seleccione-</form:option>
 																<form:options items="${formato12CCBean.listaEtapaEjecucion}"/>
 															</form:select>
+															
+															<form:hidden path="anoEjecucionHidden"  />
+															<form:hidden path="mesEjecucionHidden"   />
+															<form:hidden path="etapaEjecucionHidden"   />
+															
+															
 														</td>
 														<td colspan="9"></td>
 													
@@ -152,7 +159,7 @@ $(document).ready(function () {
 													<tr>
 														<td width="120px">Departamento origen:</td> 
 														<td>
-															<form:select path="codDepartamentoOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
+															<form:select path="codDepartamentoOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>
 																<form:options items="${formato12CCBean.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
 															</form:select>																			
@@ -160,14 +167,14 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">Provincia origen:</td>
 				   										<td>
-				   											<form:select path="codProvinciaOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
+				   											<form:select path="codProvinciaOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>																					
 															</form:select>
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Distrito origen:</td>
 				   										<td>
-				   											<form:select path="codDistritoOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
+				   											<form:select path="codDistritoOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>																					
 															</form:select>
 				   										</td>
@@ -180,7 +187,7 @@ $(document).ready(function () {
 													<tr>
 														<td width="120px">Departamento destino:</td> 
 														<td>
-															<form:select path="codDepartamentoDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
+															<form:select path="codDepartamentoDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>
 																<form:options items="${formato12CCBean.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
 															</form:select>																			
@@ -188,14 +195,14 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">Provincia destino:</td>
 				   										<td>
-				   											<form:select path="codProvinciaDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
+				   											<form:select path="codProvinciaDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>																					
 															</form:select>
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Distrito destino:</td>
 				   										<td>
-				   											<form:select path="codDistritoDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
+				   											<form:select path="codDistritoDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>																					
 															</form:select>
 				   										</td>
@@ -209,7 +216,7 @@ $(document).ready(function () {
 													<tr>
 														<td width="120px">Zona Beneficiario:</td> 
 														<td>
-															<form:select path="zonaBenef" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
+															<form:select path="zonaBenef" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>
 																<form:options items="${formato12CCBean.listaZonaBenef}"/>
 																<%-- <form:options items="${formato12CCBean.listaZonaBenef}" itemLabel="descripcion" itemValue="idZonaBenef"/> --%>
@@ -231,7 +238,7 @@ $(document).ready(function () {
 													<tr>
 														<td width="120px">Tipo doc. Referencia:</td> 
 														<td>
-															<form:select path="tipoDocumento" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
+															<form:select path="tipoDocumento" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
 																<form:option value="">-Seleccione-</form:option>
 																<form:options items="${formato12CCBean.listaTipoDocumento}" />
 																<%-- <form:options items="${formato12CCBean.listaTipoDocumento}" itemLabel="descripcion" itemValue="idTipDocRef"/> --%>
@@ -277,7 +284,7 @@ $(document).ready(function () {
 													<tr>
 														<td width="120px">Total:</td> 
 														<td>
-															<form:input path="totalGeneral" disabled="${readonlyEdit}"/>																			
+															<form:input path="totalGeneral" disabled="true"/>																			
 														</td>
 													</tr>
 													
