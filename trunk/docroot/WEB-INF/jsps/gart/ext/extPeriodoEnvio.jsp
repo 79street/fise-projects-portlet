@@ -368,7 +368,7 @@ var periodoEnvio= {
 		//funcion  para llenar los campos para editar
 		llenarDatosEditar : function(bean){			
             periodoEnvio.f_secuencia.val(bean.secuencial);			
-			periodoEnvio.f_codEmpresa.val(bean.codEmpresa);			
+			periodoEnvio.f_codEmpresa.val(bean.codEmpresa.trim());			
 			periodoEnvio.f_anoPres.val(bean.anioPres);
 			periodoEnvio.f_mesPres.val(bean.mesPres);
 			periodoEnvio.f_formato.val(bean.formato);
