@@ -267,7 +267,7 @@ var periodoEnvio= {
 			periodoEnvio.f_estado.val('V');
 			periodoEnvio.f_desde.val('');
 			periodoEnvio.f_hasta.val('');
-			periodoEnvio.f_dias.val('1');
+			periodoEnvio.f_dias.val('3');
 			periodoEnvio.f_fechaAmpl.val('');
 			
 			periodoEnvio.habilitarCamposEditar();			
