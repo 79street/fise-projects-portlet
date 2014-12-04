@@ -6,6 +6,7 @@
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
+	<parameter name="IMG" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -257,9 +258,9 @@ $F{etapaEjecucionReport}.intValue()==1)?
 				</textElement>
 				<text><![CDATA[Año / Mes:]]></text>
 			</staticText>
-			<image>
+			<image hAlign="Center">
 				<reportElement x="12" y="13" width="188" height="44"/>
-				<imageExpression class="java.lang.String"><![CDATA["C:\\Users\\ACarhuancho\\Desktop\\logoOSINERGMIN.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="148" y="117" width="54" height="15"/>
