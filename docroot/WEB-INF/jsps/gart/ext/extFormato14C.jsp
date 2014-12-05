@@ -548,15 +548,17 @@ var formato14C= {
 				 formato14C.flagCarga.val('0');
 				 formato14C.f_empresa.val(codEmpSes);
 				 console.debug("flag periodo ejecucion error al cargar archivo nuevo registro: "+formato14C.f_periodoEnvio.val());
-				 if( formato14C.f_periodoEnvio.val()=='S' ){
+				/*if( formato14C.f_periodoEnvio.val()=='S' ){
 					 $("#anoIniVigencia").val(anioIniVigSes);
 					 $("#anoFinVigencia").val(anioFinVigSes);
 				}else{
 					$("#anoIniVigencia").val(anioPresSes); 
 					$("#anoFinVigencia").val(anioPresSes);
-				}
+				}*/
 				formato14C.botonValidacion.css('display','none');
 				formato14C.<portlet:namespace/>loadPeriodo(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
+				formato14C.f_anoIniVigencia.removeClass("fise-editable");
+				formato14C.f_anoFinVigencia.removeClass("fise-editable");
 			}else{			
 				 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioIniVigSes != '' && anioFinVigSes != '' && etapaSes != ''){
 					 formato14C.editarFormato14C(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes,flagOpera);
@@ -647,11 +649,11 @@ var formato14C= {
 			formato14C.divBuscar.hide();		
 			formato14C.flagCarga.val('0');				
 			console.debug("flag periodo ejecucion boton nuevo formato:  "+formato14C.f_flagPeriodo.val());
-			if(formato14C.f_flagPeriodo.val()=='S' ){
+			/*if(formato14C.f_flagPeriodo.val()=='S' ){
 				//poner valores guardadose en sesion
 				$("#anoIniVigencia").val(formato14C.i_anioDesde.val());
 				$("#anoFinVigencia").val(formato14C.i_anioDesde.val());
-			}
+			}*/
 			$('#<portlet:namespace/>guardarFormatoF14C').css('display','block');
 			$('#<portlet:namespace/>actualizarFormatoF14C').css('display','none');
 			
@@ -659,7 +661,7 @@ var formato14C= {
 			$('#<portlet:namespace/>envioDefinitivoF14C').css('display','none');
 			
 			formato14C.<portlet:namespace/>loadPeriodo('');
-			formato14C.verElementosEditar();//activar los elementos que se desabilitados al momento de editar
+			formato14C.verElementosEditar();//activar los elementos que se desabilitados al momento de editar			
 			//ESTILOS
 			//CABECERA			
 			formato14C.f_nombreSede.addClass("fise-editable");
@@ -667,6 +669,8 @@ var formato14C= {
 			formato14C.f_numUrbProv.addClass("fise-editable");			
 			formato14C.f_costoPromRural.addClass("fise-editable");		
 			formato14C.f_costoPromUrbProv.addClass("fise-editable");
+			formato14C.f_anoIniVigencia.removeClass("fise-editable");
+			formato14C.f_anoFinVigencia.removeClass("fise-editable");
 		},
 		//Function para Visualizar los datos del formulario		
 		verFormato14C : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa){	
@@ -739,6 +743,9 @@ var formato14C= {
 								formato14C.f_numUrbProv.addClass("fise-editable");			
 								formato14C.f_costoPromRural.addClass("fise-editable");		
 								formato14C.f_costoPromUrbProv.addClass("fise-editable");
+								
+								formato14C.f_anoIniVigencia.removeClass("fise-editable");
+								formato14C.f_anoFinVigencia.removeClass("fise-editable");
 					         }
 							else{
 								alert("Error al recuperar los datos del registro seleccionado");
@@ -878,8 +885,8 @@ var formato14C= {
         verElementosEditar : function(){	
         	$('#codEmpresa').attr("disabled",false);
         	$('#periodoEnvio').attr("disabled",false);
-        	$('#anoIniVigencia').attr("disabled",false);
-			$('#anoFinVigencia').attr("disabled",false);
+        	$('#anoIniVigencia').attr("disabled",true);
+			$('#anoFinVigencia').attr("disabled",true);
 		},		
 		//function para el evento onchange en empresa para cargar el periodo
 		<portlet:namespace/>loadPeriodo : function(valPeriodo){		
@@ -967,7 +974,7 @@ var formato14C= {
 						
 						//formato14C.recargarPeriodoEjecucion();
 						
-						formato14C.mostrarPeriodoEjecucion();
+						//formato14C.mostrarPeriodoEjecucion();
 					
 						/**para controlar los costos directos e indirectos*/
 						if(formato14C.flagCosto.val()=='D'){

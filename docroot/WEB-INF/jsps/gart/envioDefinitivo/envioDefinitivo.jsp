@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/jsps/gart/ext/extNotificacion.jsp"%>
+<%@include file="/WEB-INF/jsps/gart/ext/extEnvioDefinitivo.jsp"%>
 
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
@@ -8,13 +8,13 @@
 
 <script type="text/javascript">
 $(document).ready(function () {	
-	notificarValidar.init();
+	envioDefinitivoGlobal.init();
 });
 </script>
            
            
 <form:form method="POST" style="padding:17px;padding-top:0px;" 
-            modelAttribute="notificacionBean">
+            modelAttribute="envioDefinitivoBean">
             
             
             	
@@ -50,7 +50,7 @@ $(document).ready(function () {
 											<td><output>Empresa:</output></td>
 											<td>
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">												
-													<form:options items="${notificacionBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
+													<form:options items="${envioDefinitivoBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 												</form:select>
 											</td>
 											
@@ -58,8 +58,8 @@ $(document).ready(function () {
 											<td>
 												<form:select path="etapaBusq" cssClass="select" cssStyle="width: 140px;">
 													<form:option value="SOLICITUD">SOLICITUD</form:option>
-													<%-- <form:option value="LEV.OBS">LEV.OBS</form:option>
-													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
+													<form:option value="LEV.OBS">LEV.OBS</form:option>
+													<%-- <form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
 													<form:option value="RECONOCIDO">RECONOCIDO</form:option> --%>
 												</form:select>
 											</td>							
@@ -81,7 +81,7 @@ $(document).ready(function () {
 											<td><output>Grupo Información:</output></td>
 											<td>												
 												 <form:select path="grupoInfBusq" cssClass="select" cssStyle="width: 200px;">															
-												    <form:options items="${notificacionBean.listaGrupoInf}"  itemLabel="descripcion" itemValue="idGrupoInformacion"/>
+												    <form:options items="${envioDefinitivoBean.listaGrupoInf}"  itemLabel="descripcion" itemValue="idGrupoInformacion"/>
 												</form:select>													
 											</td>		
 																													
@@ -91,16 +91,13 @@ $(document).ready(function () {
 										</tr>
 										
 										<tr>
+											<td></td>	
 											<td></td>
-											<td></td>												
-											<td style="aling:right"><input name="<portlet:namespace/>btnBuscarNotificacion"
-												id="<portlet:namespace/>btnBuscarNotificacion" type="button"
+											<td></td>											
+											<td style="aling:right"><input name="<portlet:namespace/>btnBuscarEnvioDefinitivo"
+												id="<portlet:namespace/>btnBuscarEnvioDefinitivo" type="button"
 												class="net-button-small" value="Buscar" style="aling:center" />
-											</td>
-											<td style="aling:right"><input name="<portlet:namespace/>btnProcesarNotificacion"
-												id="<portlet:namespace/>btnProcesarNotificacion" type="button"
-												class="net-button-small" value="Procesar" style="aling:center" />
-											</td>
+											</td>											
 										</tr>
 									</table>
 								</fieldset>
@@ -127,8 +124,8 @@ $(document).ready(function () {
 										<td align="right" width="90px">
 											<div id="d_opc_notificar">
 												<input type="button" class="net-button-small"
-													id="<portlet:namespace/>btnNotificarValidar"
-													name="<portlet:namespace/>btnNotificarValidar" value="Notificar" />
+													id="<portlet:namespace/>btnEnvioDefinitivo"
+													name="<portlet:namespace/>btnEnvioDefinitivo" value="Envio General" />
 											</div>
 										</td>
 										<td align="right" width="90px">											
@@ -163,28 +160,21 @@ $(document).ready(function () {
 
    <!-- DIVS PARA MENSAJES -->
    
-   	<div id="<portlet:namespace/>dialog-message-notificacion" title="Osinergmin">
+   	<div id="<portlet:namespace/>dialog-message-envio" title="Osinergmin">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>
-			<label id="<portlet:namespace/>dialog-message-content-notificacion">Datos notificados exit&oacute;samente.</label>
+			<label id="<portlet:namespace/>dialog-message-content-envio">Datos enviados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-confirm_notificacion" title="Confirmar acci&oacute;n">
+	<div id="<portlet:namespace/>dialog-confirm_envio" title="Confirmar acci&oacute;n">
 		<p>	
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-			<label id="<portlet:namespace/>dialog-confirm-content_notificacion">¿Está seguro?</label>
+			<label id="<portlet:namespace/>dialog-confirm-content_envio">¿Está seguro?</label>
 		</p>
-	</div>`	
+	</div>`
 	
-	
-	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
-		<p>	
-			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
-		</p>
-	</div>`	
 		
 	
 </form:form>
