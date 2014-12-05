@@ -964,7 +964,7 @@ public class Formato14CGartController {
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-		  
+		    logger.info("Nombre del archivo: "+nombreArchivo); 
 
 		    if( f.getPeriodoEnvio().length()>6 ){
 				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
