@@ -17,5 +17,6 @@
 		<portlet id="gartAutorizarReenvio"/>
 		<portlet id="gartNotificacion"/>
 		<portlet id="gartGrupoInformacion"/>
+		<portlet id="gartEnvioDefinitivo"/>
 	</category>
 </display>
