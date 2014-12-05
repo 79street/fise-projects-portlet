@@ -105,6 +105,8 @@ var formato12C= {
 	mensajeCargandoDetalle:null,
 	mensajeEliminandoDetalle:null,
 	
+	tipoOperacion:null,
+	
 	/**********DETALLE CRUD**********/
 	botonGuardarDetalle:null,
 	
@@ -202,6 +204,8 @@ var formato12C= {
 		this.urlBusquedaDetalle='<portlet:resourceURL id="busquedaDetalle" />';
 		this.formNuevo=$('#formato12CCBean');
 		
+		this.tipoOperacion=$('#tipoOperacion');
+		
 		this.codEmpresa=$('#codigoEmpresa');
 		this.periodoEnvio=$('#periodoEnvio');
 		//
@@ -282,7 +286,7 @@ var formato12C= {
 		
 		if(operacion=='CREATE'){
 			
-			formato12C.tipoOperacion=operacion;
+			formato12C.tipoOperacion.val(operacion);
 			/*formato12C.codEmpresa.change(function(){
 				$.when(formato12C.cargarPeriodoDeclaracion()).then(formato12C.buscarDetalles);
 			});
@@ -323,6 +327,8 @@ var formato12C= {
 			formato12C.construirPeriodoEnvio(formato12C.anoPresentacion.val(), formato12C.mesPresentacion.val(), formato12C.etapa.val());
 	
 		}if(operacion=='UPDATE'){
+			
+			formato12C.tipoOperacion.val(operacion);
 			
 			formato12C.buscarDetalles();
 			//formato12C.botonAnadirFormato.css("display","block");

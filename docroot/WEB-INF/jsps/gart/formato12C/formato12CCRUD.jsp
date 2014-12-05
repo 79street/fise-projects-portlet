@@ -30,6 +30,7 @@ $(document).ready(function () {
 	<form:hidden path="mesPresentacion" />
 	<form:hidden path="etapa" />
 	<form:hidden path="periodoEnvioHidden" />
+	<form:hidden path="tipoOperacion" />
    
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
