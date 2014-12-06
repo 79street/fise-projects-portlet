@@ -31,6 +31,8 @@ var formato12C= {
 	portletID:null,
 	
 	/**********CRUD**********/
+	flagCarga:null,
+	
 	//implementacion
 	tablaImplementacion:null,
 	paginadoImplementacion:null,
@@ -196,6 +198,9 @@ var formato12C= {
 	
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
+		
+		this.flagCarga=$('#<portlet:namespace/>flagCarga');
+		
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
 		
 		this.urlCargaPeriodo='<portlet:resourceURL id="cargaPeriodo" />';
@@ -292,6 +297,7 @@ var formato12C= {
 			});
 			formato12C.codEmpresa.trigger('change');*/
 			
+			formato12C.flagCarga.val('0');//iniciamos la carga de excel o txt
 			
 			formato12C.codEmpresa.change(function(){formato12C.<portlet:namespace/>loadPeriodo('');});
 			formato12C.periodoEnvio.change(function(){formato12C.<portlet:namespace/>loadPeriodo(this.value);});
@@ -332,6 +338,8 @@ var formato12C= {
 			
 			formato12C.buscarDetalles();
 			//formato12C.botonAnadirFormato.css("display","block");
+			
+			formato12C.flagCarga.val('1');//iniciamos la carga de excel o txt
 
             formato12C.botonAnadirFormato.click(function(){
 				formato12C.blockUI();
@@ -1204,6 +1212,13 @@ var formato12C= {
 	},
 	//
 	<portlet:namespace/>showUploadExcel : function(){
+		
+		if( formato12C.flagCarga.val()=='0' ){//proviene de archivos nuevos
+			formato12C.flagCarga.val('2');//para cargar archivos excel
+		}else if( formato12C.flagCarga.val()=='1' ){//proviene de archivos modificados
+			formato12C.flagCarga.val('3');//para cargar archivos excel
+		}
+		
 		formato12C.divOverlay.show();
 		formato12C.dialogCargaExcel.show();
 		formato12C.dialogCargaExcel.show();
@@ -1220,9 +1235,17 @@ var formato12C= {
 	
 	<portlet:namespace/>cargarFormatoExcel : function(){
 		formato12C.formNuevo.submit();
+		//formato12C.formNuevo.attr().submit();
 	},
 	
 	<portlet:namespace/>showUploadTxt : function(){
+		
+		if( formato12C.flagCarga.val()=='0' ){//proviene de un archivo nuevo
+			formato12C.flagCarga.val('4');//para cargar archivos texto
+		}else if( formato12C.flagCarga.val()=='1' ){//proviene de un archivo modificado
+			formato12C.flagCarga.val('5');//para archivos texto
+		}
+		
 		formato12C.divOverlay.show();
 		formato12C.dialogCargaTexto.show();
 		formato12C.dialogCargaTexto.css({ 
