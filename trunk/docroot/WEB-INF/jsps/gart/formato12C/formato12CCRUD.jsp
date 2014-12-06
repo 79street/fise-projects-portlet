@@ -31,6 +31,8 @@ $(document).ready(function () {
 	<form:hidden path="etapa" />
 	<form:hidden path="periodoEnvioHidden" />
 	<form:hidden path="tipoOperacion" />
+	
+	<input type="hidden" id="<portlet:namespace/>flagCarga" name="<portlet:namespace/>flagCarga" value="" style="display: none;" />
    
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">

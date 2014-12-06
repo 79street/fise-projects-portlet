@@ -1613,6 +1613,10 @@ public class Formato12CGartController {
     	String periodoEnvioPresNew = uploadPortletRequest.getParameter("periodoEnvio");
     	//String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
     	
+    	String codEmpresaEdit = uploadPortletRequest.getParameter("codigoEmpresaHidden");
+    	String anioPresEdit = uploadPortletRequest.getParameter("anioPresentacion");
+    	String mesPresEdit = uploadPortletRequest.getParameter("mesPresentacion");
+    	
     	String anioPresNew = "";
 		String mesPresNew = "";
 		
@@ -1620,30 +1624,15 @@ public class Formato12CGartController {
     		anioPresNew = periodoEnvioPresNew.substring(0, 4);
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
     		//----etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
-		
 		}
-		
-		
-		
-		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-		
-		/*String codEmpresaEdit = (String)pRequest.getPortletSession().getAttribute("codEmpresaEdit", PortletSession.APPLICATION_SCOPE);
-		String anioPresEdit = (String)pRequest.getPortletSession().getAttribute("anoPresentacionEdit", PortletSession.APPLICATION_SCOPE);
-		String mesPresEdit = (String)pRequest.getPortletSession().getAttribute("mesPresentacionEdit", PortletSession.APPLICATION_SCOPE);
-		String anioIniVigEdit = (String)pRequest.getPortletSession().getAttribute("anoIniVigenciaEdit", PortletSession.APPLICATION_SCOPE);
-		String anioFinVigEdit = (String)pRequest.getPortletSession().getAttribute("anoFinVigenciaEdit", PortletSession.APPLICATION_SCOPE);
-		String etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapaEdit", PortletSession.APPLICATION_SCOPE);*/
-		
-		flagCarga="2";
-		
 		
 		FileEntry fileEntry=null;
 		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew);
+			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			//!!!!formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit);
+			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
 			fileEntry =fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			//!!!!formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew);
@@ -1703,7 +1692,7 @@ public class Formato12CGartController {
 		
 	}
 	
-	public Formato12CMensajeBean readExcelFile(FileEntry archivo, User user, String flagCarga, String tipoOperacion, String codEmpresa, 	String anioPres, String mesPres) {
+	public Formato12CMensajeBean readExcelFile(FileEntry archivo, User user, String tipoOperacion, String codEmpresa, 	String anioPres, String mesPres) {
 		
 		//---------------------
 		//FLAG CARGA:
@@ -1858,6 +1847,11 @@ public class Formato12CGartController {
 							detalleBean.setMesPresentacion(formulario.getMesPresentacion());
 							
 							detalleBean.setEtapaEjecucion(FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD);
+							
+							detalleBean.setUsuario(user.getLogin());
+							detalleBean.setTerminal(user.getLoginIP());
+							detalleBean.setTipoArchivo(FiseConstants.TIPOARCHIVO_XLS);
+							detalleBean.setNombreArchivo(archivo.getTitle());
 							
 							//ANO EJECUCION
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnoEjecucion.getCellType()  ){
@@ -2115,7 +2109,12 @@ public class Formato12CGartController {
 							detalleBean.setAnioPresentacion(formulario.getAnioPresentacion());
 							detalleBean.setMesPresentacion(formulario.getMesPresentacion());
 							
-							detalleBean.setEtapaEjecucion(FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD);
+							detalleBean.setEtapaEjecucion(FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD);
+							
+							detalleBean.setUsuario(user.getLogin());
+							detalleBean.setTerminal(user.getLoginIP());
+							detalleBean.setTipoArchivo(FiseConstants.TIPOARCHIVO_XLS);
+							detalleBean.setNombreArchivo(archivo.getTitle());
 							
 							//ANO EJECUCION
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnoEjecucion.getCellType()  ){
@@ -2367,10 +2366,12 @@ public class Formato12CGartController {
 									for( int i=0; i<listaDetalle.size(); i++ ){
 										if( i==0 ){
 											formatoNuevo = formatoService.registrarFormato12CCregistrarFormato12CD(listaDetalle.get(i));
+										}else{
+											if( formatoNuevo!=null ){
+												formatoService.modificarFormato12CCregistrarFormato12CD(listaDetalle.get(i), formatoNuevo);
+											}
 										}
-										if( formatoNuevo!=null ){
-											formatoService.modificarFormato12CCregistrarFormato12CD(listaDetalle.get(i), formatoNuevo);
-										}
+										
 									}
 								}
 								
