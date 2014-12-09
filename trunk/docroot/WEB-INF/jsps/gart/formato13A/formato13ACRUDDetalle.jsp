@@ -1,7 +1,6 @@
 <%@include file="/WEB-INF/jsps/gart/ext/extFormato13A.jsp"%>
 
-<link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet"
-	type="text/css">
+<link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
 
 <portlet:actionURL var="urlGuardarDetalle">
 	<portlet:param name="action" value="guardarDetalle"/>

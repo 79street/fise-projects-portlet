@@ -3,8 +3,10 @@ package gob.osinergmin.fise.common.util;
 import gob.osinergmin.fise.bean.CorreoBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.constant.FiseConstants;
+
 import gob.osinergmin.fise.domain.AdmEmpresa;
 import gob.osinergmin.fise.domain.AdmUbigeo;
+import gob.osinergmin.fise.domain.FiseFormato14BD;
 import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.domain.FiseTipDocRef;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
@@ -16,6 +18,8 @@ import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
 import gob.osinergmin.fise.gart.service.FiseTipDocRefGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
+
+import gob.osinergmin.fise.gart.service.Formato14BGartService;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
 import gob.osinergmin.fise.xls.XlsTableConfig;
@@ -74,6 +78,8 @@ public class FiseUtil {
 	private static final String cod_funcion = "REMISION";
 	private static final Logger logger = Logger.getLogger(FiseUtil.class);
 	
+	public static final String FORMATO_DDMMYYYY ="dd/MM/yyyy";
+	
 	@Autowired
 	@Qualifier("admEmpresaGartServiceImpl")
 	AdmEmpresaGartService admEmpresaService;
@@ -95,6 +101,10 @@ public class FiseUtil {
 	@Autowired
 	@Qualifier("fiseTipDocRefGartServiceImpl")
 	FiseTipDocRefGartService tipDocRefGartService;
+	
+	@Autowired
+	@Qualifier("formato14BGartServiceImpl")
+    Formato14BGartService formatoService14B;
 	
 	public List<AdmEmpresa> getEmpresaxUsuario(PortletRequest request){
 		 List<AdmEmpresa> listaEmpresas=new ArrayList<AdmEmpresa>();
@@ -154,6 +164,19 @@ public class FiseUtil {
 			  String [] monthNames = {"Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"};
 			   String descripcionPeriodo=""+monthNames[mes.intValue()-1]+"-"+anio+"/"+etapa;
 			  return descripcionPeriodo;
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
+	public static String descripcionMes(Integer mes){
+		try{
+		      
+			  String [] monthNames = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+			   String descripcionMes=""+monthNames[mes.intValue()-1];
+			  return descripcionMes;
 		
 		}catch(Exception e){
 			e.printStackTrace();
@@ -699,6 +722,50 @@ public class FiseUtil {
 		return mapaSectorTipico;
 	}
 	
+
+	public static Date toDateFormat(String stringFecha, String formato) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(formato);
+			Date fecha = sdf.parse(stringFecha);
+			return fecha;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static String toStringFormat(Date dateFecha, String formato) {
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(formato);
+			String fecha = sdf.format(dateFecha);
+			return fecha;
+		} catch (Exception e) {
+			return "";
+		}
+	}
+	
+	public  FiseFormato14BD getDetalle14BDbyEmpAnioEtapa(String codempresa,Integer anio,Integer mes,Integer zona,String etp){
+		try {
+			System.out.println("service 14B::"+formatoService14B);
+			FiseFormato14BD fise14D=formatoService14B.getCostoUnitarioByEmpAnioZona(codempresa, anio,mes, zona, etp);
+			return fise14D;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public  List<FiseFormato14BD> getLstCostoUnitario(String codempresa,Integer anio,Integer mes,Integer zona,String etp){
+		try {
+			System.out.println("service 14B::"+formatoService14B);
+			List<FiseFormato14BD> lstResult=formatoService14B.getLstCostoUnitarioByEmpAnio(codempresa, anio,mes, zona, etp);
+			return lstResult;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+
 	public Map<Long, String> getMapaEtapaEjecucion(){
 		Map<Long, String> mapaEtapaEjecucion = new HashMap<Long, String>();
 		mapaEtapaEjecucion.put(FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD, FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_DESC);
@@ -706,4 +773,5 @@ public class FiseUtil {
 		return mapaEtapaEjecucion;
 	}
 	
+
 }

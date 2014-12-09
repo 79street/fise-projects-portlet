@@ -856,8 +856,7 @@ $(document).ready(function () {
 								</tr>
 								<tr>
 									<td>Archivo:</td>
-									<td><input type="file" id="archivoExcel"
-										name="archivoExcel" /></td>
+									<td><input type="file" id="archivoExcel" name="archivoExcel" /></td>
 								</tr>
 							</table>
 						</fieldset>
@@ -983,8 +982,7 @@ $(document).ready(function () {
 		</p>	
 	</div>
 
-	<div id="<portlet:namespace/>divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;">
-	</div>
+	<div id="<portlet:namespace/>divOverlay" class="ui-widget-overlay" style="display:none;width: 100%; height: 100%; z-index: 1001;"></div>
 	
 	<form:input path="codEdelnor" cssStyle="display:none;" />	 
 	<form:input path="codLuzSur" cssStyle="display:none;" />

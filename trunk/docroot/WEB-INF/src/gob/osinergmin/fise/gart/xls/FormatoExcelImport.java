@@ -1,35 +1,36 @@
 package gob.osinergmin.fise.gart.xls;
 
-import gob.osinergmin.fise.bean.MensajeErrorBean;
+import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
+import gob.osinergmin.fise.domain.FiseFormato12BCPK;
+import gob.osinergmin.fise.domain.FiseFormato12BD;
+import gob.osinergmin.fise.domain.FiseFormato12BDPK;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13ACPK;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
 import gob.osinergmin.fise.domain.FiseFormato13ADPK;
 
 
+import gob.osinergmin.fise.domain.FiseFormato14BD;
 
-
-
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
-
-
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 
 
 public class FormatoExcelImport {
 	
-
+	@Autowired
+	@Qualifier("fiseUtil")
+	private static FiseUtil fiseUtil;
 	
 	private static HSSFSheet readExcel(HSSFWorkbook libro){
 		int nroHojaSelec=0;
@@ -39,12 +40,15 @@ public class FormatoExcelImport {
 			if(FiseConstants.NOMBRE_HOJA_FORMATO13A.equals(libro.getSheetName(sheetNro)) ){
 				nroHojaSelec = sheetNro;
 				break;
+			}else if(FiseConstants.NOMBRE_HOJA_FORMATO12B.equals(libro.getSheetName(sheetNro))){
+				nroHojaSelec = sheetNro;
+				break;
 			}
 		}
 		
-		HSSFSheet hojaF13A = libro.getSheetAt(nroHojaSelec);
+		HSSFSheet hoja = libro.getSheetAt(nroHojaSelec);
 		
-		return hojaF13A;
+		return hoja;
 		
 		
 	}
@@ -154,16 +158,16 @@ public class FormatoExcelImport {
 									if(mes <= cabecera.getId().getMesPresentacion()){
 										fise13.setMesAlta(mes);
 									}else{
-										throw new Exception("El mes debe de alta debe ser menor o igual al mes de presentación error fila :"+(r+1));
+										throw new Exception("El mes debe de alta debe ser menor o igual al mes de presentación error fila : B"+(r+1));
 									}
 									fise13.setAnoAlta(anio);
 								}
 							}else{
-								throw new Exception("El año debe de alta debe ser menor o igual al año de presentación error fila :"+(r+1));
+								throw new Exception("El año debe de alta debe ser menor o igual al año de presentación error fila : B"+(r+1));
 							}
 						}else{
 							
-							throw new Exception("El año/mes de alta no cumplen con el formato establecido (yyyy-mm) error fila :"+(r+1));
+							throw new Exception("El año/mes de alta no cumplen con el formato establecido (yyyy-mm) error fila : B"+(r+1));
 						}
 						
 						
@@ -173,7 +177,7 @@ public class FormatoExcelImport {
 					
 					
 				}else{
-					throw new Exception("El año/mes de alta no cumplen con el formato establecido (yyyy-mm) error fila :"+(r+1));
+					throw new Exception("El año/mes de alta no cumplen con el formato establecido (yyyy-mm) error fila : B"+(r+1));
 				}
 				
 				if(isread){
@@ -181,7 +185,7 @@ public class FormatoExcelImport {
 						pk.setCodUbigeo(cellUbigeo.toString());
 						System.out.println("ubgeo  ==>"+pk.getCodUbigeo());
 					}else{
-						throw new Exception("ubigeo no valido en fila nro :"+(r+1));
+						throw new Exception("ubigeo no valido en fila nro : C"+(r+1));
 					}
 					
 					
@@ -242,12 +246,185 @@ public class FormatoExcelImport {
 	}
 	
 	
-	@SuppressWarnings("unused")
-	private MensajeErrorBean getMensajeErrorBean(Integer cont){
-		MensajeErrorBean error = new MensajeErrorBean();
-		error.setId(cont);
-		//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_30));
-		return new MensajeErrorBean();
+	public static FiseFormato12BCPK readSheetCabecera12B(HSSFWorkbook libro) throws Exception{
+		HSSFSheet hojaF12B=readExcel(libro);
+		FiseFormato12BCPK pk=new FiseFormato12BCPK();
+		
+		for(int i=FiseConstants.ROW_INFO_EMPRESA_12B;i<=FiseConstants.ROW_INFO_FECHA_12B ;i++){
+			HSSFRow row= hojaF12B.getRow(i);
+			
+			
+			HSSFCell cellE = row.getCell(FiseConstants.COLUMN_E);
+			HSSFCell cellF = row.getCell(FiseConstants.COLUMN_F);
+			
+			if(i==FiseConstants.ROW_INFO_EMPRESA_12B){
+				HSSFCell cellF_emp = row.getCell(FiseConstants.COLUMN_F);
+				
+				System.out.println("codempres :::=> "+cellF_emp);
+				if(cellF_emp.getCellType() == HSSFCell.CELL_TYPE_FORMULA || (cellF_emp.getCellType() == HSSFCell.CELL_TYPE_STRING && cellF_emp.getCellType() != HSSFCell.CELL_TYPE_BLANK) ){
+					if(cellF_emp.getCellType() == HSSFCell.CELL_TYPE_FORMULA){
+						pk.setCodEmpresa(cellF_emp.getRichStringCellValue().getString());
+						
+					}else{
+						pk.setCodEmpresa(cellF_emp.toString());
+					}
+					 System.out.println("CODEMPRESA :::=> "+pk.getCodEmpresa());
+				}else{
+					throw new Exception("Distribuidora Eléctrica no valida ");
+				}
+				
+				
+			}else if(i==FiseConstants.ROW_INFO_FECHA_12B){
+					try{
+						System.out.println("año :::=> "+cellE);
+						System.out.println("MES :::=> "+cellF);
+                        pk.setAnoPresentacion((int)Double.parseDouble(cellE.toString()));
+						pk.setMesPresentacion((int)Double.parseDouble(cellF.toString()));
+						
+					}catch(NumberFormatException n){
+						throw new Exception("Año / mes no valido");
+					}
+					
+			}
+			
+		}
+		
+			
+			
+			return pk;
+		
 	}
 
+	
+	public static List<FiseFormato12BD> getListDetalleSheet12B(HSSFWorkbook libro,FiseFormato12BCPK pk,FiseUtil util)throws Exception{
+		HSSFSheet hojaF12B=readExcel(libro);
+		System.out.println("leuyendo deatlle");
+		//fiseUtil=new FiseUtil();
+		List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
+		
+		for(int clnm=FiseConstants.COLUMN_G;clnm<=FiseConstants.COLUMN_I;clnm++){
+			System.out.println("**********************COLUMNA NRO"+clnm+"*****************************");
+			Integer idzona=FiseConstants.ZONA_RURAL;
+			if(clnm==FiseConstants.COLUMN_H){
+				idzona=FiseConstants.ZONA_PROVINCIA;
+			}else if(clnm==FiseConstants.COLUMN_I){
+				idzona=FiseConstants.ZONA_LIMA;
+			}
+			System.out.println("**********************COLUMNA NRO"+clnm+" / ZONA NRO "+idzona+"*****************************");
+			FiseFormato12BD formato=new FiseFormato12BD();
+			FiseFormato12BDPK dtlPk=new FiseFormato12BDPK();
+			dtlPk.setAnoPresentacion(pk.getAnoPresentacion());
+			dtlPk.setMesPresentacion(pk.getMesPresentacion());
+			dtlPk.setAnoEjecucionGasto(pk.getAnoPresentacion());
+			dtlPk.setMesEjecucionGasto(pk.getMesPresentacion());
+			dtlPk.setCodEmpresa(pk.getCodEmpresa());
+			dtlPk.setIdZonaBenef(idzona);
+			formato.setId(dtlPk);
+			
+			FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(dtlPk.getCodEmpresa(), dtlPk.getAnoPresentacion(),dtlPk.getMesPresentacion(), dtlPk.getIdZonaBenef(), FiseConstants.ETAPA_RECONOCIDO);
+			int numfilallenas=0;
+			System.out.println("FISE 14D :::"+fise14D);
+			
+			for(int row=FiseConstants.ROW_INIT_DETALLE_12B;row<=FiseConstants.ROW_FIN_DETALLE_12B;row++){
+				System.out.println("******************fila nro :"+row+ "********************************");
+				 HSSFRow fila= hojaF12B.getRow(row);
+				 HSSFCell cell = fila.getCell(clnm);
+				 try{	
+				 if(row==FiseConstants.ROW_INIT_DETALLE_12B){
+					 System.out.println("iniio1"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK ){
+						  formato.setNumeroValesImpreso((int)Double.parseDouble(cell.toString()));
+						  formato.setCostoEstandarUnitValeImpre(fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
+						  formato.setCostoTotalImpresionVale(formato.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(formato.getNumeroValesImpreso())));
+						  numfilallenas++;
+					 }
+					
+				 } if(row==FiseConstants.ROW_INIT_VALES_DOM_12B){
+					 System.out.println("iniio2"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+						  formato.setNumeroValesRepartidosDomi((int)Double.parseDouble(cell.toString()));
+						  formato.setCostoEstandarUnitValeRepar(fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
+						  formato.setCostoTotalRepartoValesDomi(formato.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(formato.getNumeroValesRepartidosDomi())));
+						  numfilallenas++;
+					 }
+					
+				 } if(row==FiseConstants.ROW_INIT_VALES_ELECT_12B){
+					 System.out.println("iniio3"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+						  formato.setNumeroValesEntregadoDisEl((int)Double.parseDouble(cell.toString()));
+						  formato.setCostoEstandarUnitValDisEl(fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
+						  formato.setCostoTotalEntregaValDisEl(formato.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(formato.getNumeroValesEntregadoDisEl())));
+						  numfilallenas++;
+					 }
+					
+				 } if(row==FiseConstants.ROW_INIT_VALES_FISICO_12B){
+					 System.out.println("iniio4"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+						  formato.setNumeroValesFisicosCanjeados((int)Double.parseDouble(cell.toString()));
+						  formato.setCostoEstandarUnitValFiCan(fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
+						  formato.setCostoTotalCanjeLiqValeFis(formato.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(formato.getNumeroValesFisicosCanjeados())));
+						  numfilallenas++;
+					 }
+					 
+				 } if(row==FiseConstants.ROW_INIT_VALES_DIGITAL_12B){
+					 System.out.println("iniio5"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+						  formato.setNumeroValesDigitalCanjeados((int)Double.parseDouble(cell.toString()));
+						  formato.setCostoEstandarUnitValDgCan(fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
+						  formato.setCostoTotalCanjeLiqValeDig(formato.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(formato.getNumeroValesDigitalCanjeados())));
+						  numfilallenas++;
+					 }
+					
+				 } if(row==FiseConstants.ROW_INIT_ATENCION_12B){
+					 System.out.println("iniio6"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+						  formato.setNumeroAtenciones((int)Double.parseDouble(cell.toString()));
+						  formato.setCostoEstandarUnitAtencion(fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0));
+						  formato.setCostoTotalAtencionConsRecl(formato.getCostoEstandarUnitAtencion().multiply(new BigDecimal(formato.getNumeroAtenciones())));
+						  numfilallenas++;
+					 }
+					
+				 } if(row==FiseConstants.ROW_INIT_GESTION_12B){
+					 System.out.println("iniio7"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+						  formato.setTotalGestionAdministrativa(new BigDecimal(cell.toString()));
+						  numfilallenas++;
+					 }
+					 
+				 } if(row==FiseConstants.ROW_INIT_DESPLAZAMIENTO_12B){
+					 System.out.println("iniio8"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+						  formato.setTotalDesplazamientoPersonal(new BigDecimal(cell.toString()));
+						  numfilallenas++;
+					 }
+					 
+				 } if(row==FiseConstants.ROW_FIN_DETALLE_12B){
+					 System.out.println("iniio9"+cell);
+					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
+						  formato.setTotalActividadesExtraord(new BigDecimal(cell.toString()));
+						  numfilallenas++;
+					 }
+					
+				 }
+				 
+			}catch(NumberFormatException n){
+				numfilallenas=0;
+						throw new Exception("Formato no valido en fila nro :"+(row+1));
+			}catch(Exception n1){
+						throw new Exception("Formato no valido en fila nro :"+(row+1));
+			}
+			
+			}
+			
+			if(numfilallenas>1){
+				System.out.println("agrega a lista");
+				lstDetalle.add(formato);
+				
+			}
+			
+		
+		}
+		return lstDetalle;
+		
+	}
 }
