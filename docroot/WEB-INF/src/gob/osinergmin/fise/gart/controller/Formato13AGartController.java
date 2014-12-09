@@ -358,7 +358,9 @@ public class Formato13AGartController {
 
 				// guardamos el grupo de informacion
 				FiseGrupoInformacion grupoInfo = null;
+
 				long idGrupoInf = commonService.obtenerIdGrupoInformacion(pkCabecera.getAnoPresentacion(), pkCabecera.getMesPresentacion(), FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
+
 				if (idGrupoInf != 0) {
 					grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
 					command.setDescGrupoInformacion(grupoInfo.getDescripcion());
@@ -723,7 +725,7 @@ public class Formato13AGartController {
 	}
 
 	@ResourceMapping("cargaPeriodoDeclaracion")
-	public void cargaPeriodoDeclaracion(ModelMap model, SessionStatus status, ResourceRequest request, ResourceResponse response, @RequestParam("codEmpresa") String codEmpresa) {
+	public void cargaPeriodoDeclaracion(ModelMap model,SessionStatus status, ResourceRequest request, ResourceResponse response, @RequestParam("codEmpresa") String codEmpresa) {
 		try {
 			logger.info("cargaPeriodoDeclaracion");
 			logger.debug("-->cargaPeriodoDeclaracion");
@@ -989,6 +991,7 @@ public class Formato13AGartController {
 		response.setRenderParameter("anioFinVigencia", finVigencia);
 		
 		
+		
 
 	}
 
@@ -1044,7 +1047,9 @@ public class Formato13AGartController {
 									cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
 									cabecera.setFechaCreacion(new Date());
 									FiseGrupoInformacion grupoInfo = null;
+
 									long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion(), cabecera.getId().getMesPresentacion(), FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
+
 									if (idGrupoInf != 0) {
 										grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
 										nameGrupo=grupoInfo.getDescripcion();
@@ -1460,12 +1465,14 @@ public class Formato13AGartController {
 				nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile = new File(session.getServletContext().getRealPath(directorio));
+				//List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
 				byte[] bytes = null;
+
 				//enviamos la lista de los sectores decalarados
 				List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
 				
 				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JRBeanCollectionDataSource(lista));
-				
+
 				if (bytes != null) {
 					// session.setAttribute("bytes1", bytes);
 					//String nombre = nombreArchivo + FiseConstants.EXTENSIONARCHIVO_PDF;

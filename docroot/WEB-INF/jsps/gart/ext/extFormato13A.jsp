@@ -143,6 +143,7 @@ var formato13A= {
 		
 		formato13A.botonCrearFormato.click(function() {
 			formato13A.blockUI();
+			alert(urlNuevo);
 			location.href=urlNuevo;
 		});
 		
