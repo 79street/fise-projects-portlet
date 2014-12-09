@@ -27,7 +27,8 @@ var envioDefinitivoGlobal= {
 	    urlCargaGrupoInf:null,
 	    //urlVerObservaciones:null,		
 		//urlReporteObservaciones:null,
-		urlEnvioDefinitivo:null,		
+		urlEnvioDefinitivo:null,
+		urlReporteEnvioDefinitivo:null,
 		
 		//botones		
 		botonBuscar:null,		
@@ -73,7 +74,7 @@ var envioDefinitivoGlobal= {
 			this.urlCargaGrupoInf='<portlet:resourceURL id="cargarGrupoInformacion" />';
 			//this.urlVerObservaciones='<portlet:resourceURL id="verObservacionesValidacion" />';
 			//this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionNotificacion" />';
-			
+			this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivo" />';
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarEnvioDefinitivo");		
@@ -307,12 +308,7 @@ var envioDefinitivoGlobal= {
 					envioDefinitivoGlobal.initBlockUI();
 				}
 			});
-		}, */
-		
-		//funcion para ver reposrte en una nueva pestaña
-		<%-- verReporteObservaciones : function(){
-			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
-		}, --%>
+		}, */	
 					
 		/**Function para confirmar si quiere realizar el envio definitivo.*/
 		confirmarEnvioDefinitivo : function(){
@@ -359,7 +355,28 @@ var envioDefinitivoGlobal= {
 					envioDefinitivoGlobal.initBlockUI();
 				}
 			});
-		},	
+		},		
+		//funcion para ver el reporte de envio definitivo
+		<portlet:namespace/>mostrarReporteEnvioDefinitivo : function(){
+			jQuery.ajax({
+				url: envioDefinitivoGlobal.urlReporteEnvioDefinitivo+'&'+envioDefinitivoGlobal.formCommand.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {
+					<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+				},
+				success : function(gridData) {
+					envioDefinitivoGlobal.verReporteEnvio();
+				},error : function(){
+					alert("Error de conexión.");
+					envioDefinitivoGlobal.initBlockUI();
+				}
+			});
+		},		
+		//funcion para ver reposrte en una nueva pestaña
+		verReporteEnvio : function(){
+			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
+		}, 
 		
 		//DIALOGOS
 		initDialogs : function(){		
@@ -384,6 +401,10 @@ var envioDefinitivoGlobal= {
 				modal: true,
 				autoOpen: false,
 				buttons: {
+					'Imprimir Pdf': function() {
+						envioDefinitivoGlobal.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+						$( this ).dialog("close");							   
+					},
 					Ok: function() {
 						$( this ).dialog("close");
 					}

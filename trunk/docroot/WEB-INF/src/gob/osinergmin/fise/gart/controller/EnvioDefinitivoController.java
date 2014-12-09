@@ -1705,5 +1705,30 @@ public class EnvioDefinitivoController {
 			}			
 		}
 	}
+	
+	@ResourceMapping("reporteEnvioDefinitivo")
+	public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse response) {
+		try {
+			logger.info("Entrando al reporte de envio definitivo"); 
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();	
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
+		    String tipoArchivo = FiseConstants.FORMATO_EXPORT_ACTAENVIO;
+		   
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+	        
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
 
 }
