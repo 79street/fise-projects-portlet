@@ -32,6 +32,7 @@ var formato12C= {
 	
 	/**********CRUD**********/
 	flagCarga:null,
+	divInformacion:null,
 	
 	//implementacion
 	tablaImplementacion:null,
@@ -79,6 +80,11 @@ var formato12C= {
 	anoPresentacion : null,
 	mesPresentacion : null,
 	etapa : null,
+	
+	labelEstado:null,
+	labelGrupoInfo:null,
+	estado:null,
+	grupoInfo:null,
 	
 	urlACrud:null,
 	
@@ -200,6 +206,7 @@ var formato12C= {
 		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
 		
 		this.flagCarga=$('#<portlet:namespace/>flagCarga');
+		this.divInformacion=$("#<portlet:namespace/>divInformacion");
 		
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
 		
@@ -217,6 +224,11 @@ var formato12C= {
 		this.anoPresentacion=$('#anioPresentacion');
 		this.mesPresentacion=$('#mesPresentacion');
 		this.etapa=$('#etapa');
+		
+		this.estado=$('#descEstado');
+		this.grupoInfo=$('#descGrupoInformacion');
+		this.labelEstado=$('#o_descEstado');
+		this.labelGrupoInfo=$('#o_descGrupoInformacion');
 		
 		this.tablaImplementacion=$("#<portlet:namespace/>grid_formato_implementacion");
 		this.paginadoImplementacion='#<portlet:namespace/>pager_formato_implementacion';
@@ -298,6 +310,7 @@ var formato12C= {
 			formato12C.codEmpresa.trigger('change');*/
 			
 			formato12C.flagCarga.val('0');//iniciamos la carga de excel o txt
+			formato12C.divInformacion.hide();
 			
 			formato12C.codEmpresa.change(function(){formato12C.<portlet:namespace/>loadPeriodo('');});
 			formato12C.periodoEnvio.change(function(){formato12C.<portlet:namespace/>loadPeriodo(this.value);});
@@ -319,6 +332,11 @@ var formato12C= {
 			
 			formato12C.tipoOperacion=operacion;
 			formato12C.buscarDetalles();
+			
+			formato12C.divInformacion.show();
+			formato12C.labelEstado.val(formato12C.estado.val());
+			formato12C.labelGrupoInfo.val(formato12C.grupoInfo.val());
+			
 			formato12C.botonReportePdf.click(function() {formato12C.<portlet:namespace/>mostrarReportePdf();});
 			formato12C.botonReporteExcel.click(function() {formato12C.<portlet:namespace/>mostrarReporteExcel();});
 			
@@ -340,6 +358,9 @@ var formato12C= {
 			//formato12C.botonAnadirFormato.css("display","block");
 			
 			formato12C.flagCarga.val('1');//iniciamos la carga de excel o txt
+			formato12C.divInformacion.show();
+			formato12C.labelEstado.val(formato12C.estado.val());
+			formato12C.labelGrupoInfo.val(formato12C.grupoInfo.val());
 
             formato12C.botonAnadirFormato.click(function(){
 				formato12C.blockUI();
@@ -404,21 +425,21 @@ var formato12C= {
 		this.totalDetalle=$('#totalGeneral');
 		
 		//origen
-		this.codDepartamentoOrigenHidden=$('codDepartamentoOrigenHidden');
-		this.codProvinciaOrigenHidden=$('codProvinciaOrigenHidden');
-		this.codDistritoOrigenHidden=$('codDistritoOrigenHidden');
+		this.codDepartamentoOrigenHidden=$('#codDepartamentoOrigenHidden');
+		this.codProvinciaOrigenHidden=$('#codProvinciaOrigenHidden');
+		this.codDistritoOrigenHidden=$('#codDistritoOrigenHidden');
 		
-		this.descDepaOrigen=$('descDepartamentoOrigen');
-		this.descProvOrigen=$('descProvinciaOrigen');
-		this.descDistOrigen=$('descDistritoOrigen');
+		this.descDepaOrigen=$('#descDepartamentoOrigen');
+		this.descProvOrigen=$('#descProvinciaOrigen');
+		this.descDistOrigen=$('#descDistritoOrigen');
 		//destino
-		this.codDepartamentoDestinoHidden=$('codDepartamentoDestinoHidden');
-		this.codProvinciaDestinoHidden=$('codProvinciaDestinoHidden');
-		this.codDistritoDestinoHidden=$('codDistritoDestinoHidden');
+		this.codDepartamentoDestinoHidden=$('#codDepartamentoDestinoHidden');
+		this.codProvinciaDestinoHidden=$('#codProvinciaDestinoHidden');
+		this.codDistritoDestinoHidden=$('#codDistritoDestinoHidden');
 		
-		this.descDepaDestino=$('descDepartamentoDestino');
-		this.descProvDestino=$('descProvinciaDestino');
-		this.descDistDestino=$('descDistritoDestino');
+		this.descDepaDestino=$('#descDepartamentoDestino');
+		this.descProvDestino=$('#descProvinciaDestino');
+		this.descDistDestino=$('#descDistritoDestino');
 
 		this.anoEjecucionHiddenDetalle=$('#anoEjecucionHidden');
 		this.mesEjecucionHiddenDetalle=$('#mesEjecucionHidden');
@@ -465,6 +486,7 @@ var formato12C= {
 			formato12C.anoEjecucionDetalle.val(formato12C.anoPresentacionDetalle.val());
 			formato12C.mesEjecucionDetalle.val(formato12C.mesPresentacionDetalle.val());
 		
+			formato12C.soloNumerosEnteros();
 			formato12C.soloNumerosDecimales();
 			
 		</c:if>
@@ -481,7 +503,7 @@ var formato12C= {
 			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 			
-			/*console.debug(formato12C.codDepartamentoOrigenHidden.val());
+			console.debug(formato12C.codDepartamentoOrigenHidden.val());
 			console.debug(formato12C.codProvinciaOrigenHidden.val());
 			console.debug(formato12C.codDistritoOrigenHidden.val());
 			console.debug(formato12C.codDepartamentoDestinoHidden.val());
@@ -496,7 +518,9 @@ var formato12C= {
 			formato12C.codDepaDestino.val(formato12C.codDepartamentoDestinoHidden.val());
 			//formato12C.construirDepartamentoDestino(formato12C.codDepartamentoDestinoHidden.val(), formato12C.descDepaDestino.val());
 			formato12C.construirProvinciaDestino(formato12C.codProvinciaDestinoHidden.val(), formato12C.descProvDestino.val());
-			formato12C.construirDistritoDestino(formato12C.codDistritoDestinoHidden.val(), formato12C.descDistDestino.val());*/
+			formato12C.construirDistritoDestino(formato12C.codDistritoDestinoHidden.val(), formato12C.descDistDestino.val());
+			
+			formato12C.formularioCompletarDecimales();
 			
 		</c:if>
 		
@@ -511,7 +535,7 @@ var formato12C= {
 			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 			
-			/*console.debug(formato12C.codDepartamentoOrigenHidden.val());
+			console.debug(formato12C.codDepartamentoOrigenHidden.val());
 			console.debug(formato12C.codProvinciaOrigenHidden.val());
 			console.debug(formato12C.codDistritoOrigenHidden.val());
 			console.debug(formato12C.codDepartamentoDestinoHidden.val());
@@ -526,11 +550,29 @@ var formato12C= {
 			formato12C.codDepaDestino.val(formato12C.codDepartamentoDestinoHidden.val());
 			//formato12C.construirDepartamentoDestino(formato12C.codDepartamentoDestinoHidden.val(), formato12C.descDepaDestino.val());
 			formato12C.construirProvinciaDestino(formato12C.codProvinciaDestinoHidden.val(), formato12C.descProvDestino.val());
-			formato12C.construirDistritoDestino(formato12C.codDistritoDestinoHidden.val(), formato12C.descDistDestino.val());*/
+			formato12C.construirDistritoDestino(formato12C.codDistritoDestinoHidden.val(), formato12C.descDistDestino.val());
+			
+			formato12C.formularioCompletarDecimales();
 			
 		</c:if>
 		
 		<c:if test="${crud =='UPDATE'}">
+		
+			//origen	
+			formato12C.codDepaOrigen.change(function(){
+				formato12C.listarProvincias(formato12C.codDepaOrigen.val(),'0');
+			});
+			formato12C.codProvOrigen.change(function(){
+				formato12C.listarDistritos(formato12C.codProvOrigen.val(),'0');
+			});
+			//destino
+			formato12C.codDepaDestino.change(function(){
+				formato12C.listarProvincias(formato12C.codDepaDestino.val(),'1');
+			});
+			formato12C.codProvDestino.change(function(){
+				formato12C.listarDistritos(formato12C.codProvDestino.val(),'1');
+			});
+			//
 		
 			formato12C.botonGuardarDetalle.click(function(){
 				if( formato12C.validarFormatoDetalle() ){
@@ -554,7 +596,25 @@ var formato12C= {
 			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 			
+			//cargamos los ubigeos
+			formato12C.listarProvincias(formato12C.codDepartamentoOrigenHidden.val(), '0');
+			formato12C.listarDistritos(formato12C.codProvinciaOrigenHidden.val(), '0');
+			
+			formato12C.codDepaOrigen.val(formato12C.codDepartamentoOrigenHidden.val());
+			formato12C.codProvOrigen.val(formato12C.codProvinciaOrigenHidden.val());
+			formato12C.codDistOrigen.val(formato12C.codDistritoOrigenHidden.val());
+			
+			formato12C.listarProvincias(formato12C.codDepartamentoDestinoHidden.val(), '1');
+			formato12C.listarDistritos(formato12C.codProvinciaDestinoHidden.val(), '1');
+			
+			formato12C.codDepaDestino.val(formato12C.codDepartamentoDestinoHidden.val());
+			formato12C.codProvDestino.val(formato12C.codProvinciaDestinoHidden.val());
+			formato12C.codDistDestino.val(formato12C.codDistritoDestinoHidden.val());
+			
+			formato12C.soloNumerosEnteros();
 			formato12C.soloNumerosDecimales();
+			
+			formato12C.formularioCompletarDecimales();
 		</c:if>
 		
 	},
@@ -594,8 +654,8 @@ var formato12C= {
 	      			var cl = ids[i];
 	      			var ret = formato12C.tablaResultados.jqGrid('getRowData',cl); 
 					
-	      			view = "<a href='"+formato12C.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
-	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato12C.confirmarEditCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
+	      			view = "<a href='"+formato12C.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descGrupoInformacion="+ret.grupoInfo+"&descEstado="+ret.estado+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato12C.confirmarEditCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.flagOperacion+"','"+ret.grupoInfo+"','"+ret.estado+"');\" /></a> ";
 					elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12C.confirmarEliminarCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
 	      			
 	      			formato12C.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
@@ -1295,7 +1355,10 @@ var formato12C= {
 		movilidad=formato12C.montoMovilidadDetalle.val();
 		console.debug(''+alimentacion+','+alojamiento+','+movilidad);
 		total=parseFloat(alimentacion)+parseFloat(alojamiento)+parseFloat(movilidad);
+		total=redondeo(total,2);
 		formato12C.totalDetalle.val(parseFloat(total));
+		
+		formato12C.formularioCompletarDecimales();
 	},
 	//MOSTRAR REPORTE
 	<portlet:namespace/>mostrarReportePdf : function(){
@@ -1481,7 +1544,7 @@ var formato12C= {
 		});
 	},
 	<portlet:namespace/>mostrarReporteActaEnvio : function(){
-		if(formato12C.txtEstado.val()=='Enviado'){
+		if(formato12C.labelEstado.val()=='Enviado'){
 			var form = formato12C.formNuevo;
 			form.removeAttr('enctype');
 			jQuery.ajax({
@@ -1676,9 +1739,9 @@ var formato12C= {
 			}
 		});
 	},
-	confirmarEditCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion){
+	confirmarEditCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion,grupoInfo,estado){
 		if(flagOperacion=='ABIERTO'){
-			location.href=formato12C.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&tipo=1';
+			location.href=formato12C.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descGrupoInformacion='+grupoInfo+'&descEstado='+estado+'&tipo=1';
 		}else if(flagOperacion=='CERRADO'){
 			alert(" No esta habilitado para realizar esta operacion");		
 		}else{
@@ -1772,10 +1835,24 @@ var formato12C= {
 		//
 		return true; 
 	},
+	soloNumerosEnteros : function(){
+		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nrodias',7,0)");
+	},
 	soloNumerosDecimales : function(){
 		formato12C.montoAlimentacionDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlimentacion',7,2)");
 		formato12C.montoAlojamientoDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlojamiento',7,2)");
 		formato12C.montoMovilidadDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMovilidad',7,2)");
+	},
+	//
+	iniciamosValores : function(){
+		formato12C.montoAlimentacionDetalle.val('0.00');
+		formato12C.montoAlojamientoDetalle.val('0.00');
+		formato12C.montoMovilidadDetalle.val('0.00');
+	},
+	formularioCompletarDecimales : function(){
+		completarDecimal('montoAlimentacion',2);
+		completarDecimal('montoAlojamiento',2);
+		completarDecimal('montoMovilidad',2);
 	}
 };
 

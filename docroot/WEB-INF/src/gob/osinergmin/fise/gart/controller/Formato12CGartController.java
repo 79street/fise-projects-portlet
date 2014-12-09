@@ -35,7 +35,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -69,7 +68,6 @@ import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
@@ -296,9 +294,37 @@ public class Formato12CGartController {
 			//bean.setCodEmpresaHidden(bean.getCodEmpresa());
 			//bean.setDescripcionPeriodoHidden(bean.getPeridoDeclaracion());
 			
-			bean.setDescGrupoInformacion(desGrupoInformacion!=null?desGrupoInformacion:"");
-			bean.setDescEstado(descEstado!=null?descEstado:"");
-
+			//obtenemos el formato solo para mostrar el grupo de informacion y el estado
+			FiseFormato12CCPK pk = new FiseFormato12CCPK();
+			pk.setCodEmpresa(codEmpresa);
+			pk.setAnoPresentacion((anio!=null&&!anio.equals(FiseConstants.BLANCO))?Long.parseLong(anio):0);
+			pk.setMesPresentacion((mes!=null&&!mes.equals(FiseConstants.BLANCO))?Long.parseLong(mes):0);
+			pk.setEtapa(etapa);
+			FiseFormato12CC f = formatoService.obtenerFormato12CCByPK(pk);
+			if(f != null){
+				if(f.getFiseGrupoInformacion()!=null && f.getFiseGrupoInformacion().getDescripcion()!=null){
+					f.setDescGrupoInformacion(f.getFiseGrupoInformacion().getDescripcion());
+				}else{
+					f.setDescGrupoInformacion(FiseConstants.BLANCO);
+				}
+				if(f.getFechaEnvioDefinitivo()!=null){
+					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+				}else{
+					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+				}
+				//ponemos los valores de decripciones
+				if(desGrupoInformacion == null ){
+					bean.setDescGrupoInformacion(f.getDescGrupoInformacion());
+				}else{
+					bean.setDescGrupoInformacion(desGrupoInformacion!=null?desGrupoInformacion:"");
+				}
+				if(descEstado == null){
+					bean.setDescEstado(f.getDescEstado());
+				}else{
+					bean.setDescEstado(descEstado!=null?descEstado:"");
+				}
+			}
+			
 			if (tipo != null && tipo.equalsIgnoreCase(String.valueOf(FiseConstants.VIEW))) {
 				model.addAttribute("crud", CRUD_READ);
 				model.addAttribute("readonly", "true");
@@ -707,80 +733,84 @@ public class Formato12CGartController {
 						bean.setTotalGeneral(detalle.getTotalGeneral());
 						
 						//cargamos el departamento provincia y distrito
-						
 						List<AdmUbigeo> listaDepartamentos = fiseUtil.listaDepartamentos();
 						
-						String codDepartamentoOrigen = bean.getCodUbigeoOrigen().substring(0, 2);
-						String codProvinciaOrigen = bean.getCodUbigeoOrigen().substring(0, 4);
-						String codDistritoOrigen = bean.getCodUbigeoOrigen().substring(0, 6);
-						List<AdmUbigeo> provinciasOrigen = fiseUtil.listaProvincias(codDepartamentoOrigen);
-						List<AdmUbigeo> distritosOrigen = fiseUtil.listaDistritos(codProvinciaOrigen);
-						
-						String codDepartamentoDestino = bean.getCodUbigeoDestino().substring(0, 2);
-						String codProvinciaDestino = bean.getCodUbigeoDestino().substring(0, 4);
-						String codDistritoDestino = bean.getCodUbigeoDestino().substring(0, 6);
-						List<AdmUbigeo> provinciasDestino = fiseUtil.listaProvincias(codDepartamentoDestino);
-						List<AdmUbigeo> distritosDestino = fiseUtil.listaDistritos(codProvinciaDestino);
-						
-						String descDepartamentoOrigen = "";
-						String descProvinciaOrigen = "";
-						String descDistritoOrigen = "";
-						String descDepartamentoDestino = "";
-						String descProvinciaDestino = "";
-						String descDistritoDestino = "";
-						
-						for (AdmUbigeo depto : listaDepartamentos) {
-							if( codDepartamentoOrigen.concat("0000").equals(depto.getCodUbigeo().trim()) ){
-								descDepartamentoOrigen = depto.getNomUbigeo();
-								break;
+						if( null!=bean.getCodUbigeoOrigen() ){
+							String codDepartamentoOrigen = bean.getCodUbigeoOrigen().substring(0, 2);
+							String codProvinciaOrigen = bean.getCodUbigeoOrigen().substring(0, 4);
+							String codDistritoOrigen = bean.getCodUbigeoOrigen().substring(0, 6);
+							List<AdmUbigeo> provinciasOrigen = fiseUtil.listaProvincias(codDepartamentoOrigen);
+							List<AdmUbigeo> distritosOrigen = fiseUtil.listaDistritos(codProvinciaOrigen);
+							
+							String descDepartamentoOrigen = "";
+							String descProvinciaOrigen = "";
+							String descDistritoOrigen = "";
+							
+							for (AdmUbigeo depto : listaDepartamentos) {
+								if( codDepartamentoOrigen.concat("0000").equals(depto.getCodUbigeo().trim()) ){
+									descDepartamentoOrigen = depto.getNomUbigeo();
+									break;
+								}
 							}
-						}
-						for (AdmUbigeo prov : provinciasOrigen) {
-							if( codProvinciaOrigen.concat("00").equals(prov.getCodUbigeo().trim()) ){
-								descProvinciaOrigen = prov.getNomUbigeo();
-								break;
+							for (AdmUbigeo prov : provinciasOrigen) {
+								if( codProvinciaOrigen.concat("00").equals(prov.getCodUbigeo().trim()) ){
+									descProvinciaOrigen = prov.getNomUbigeo();
+									break;
+								}
 							}
-						}
-						for (AdmUbigeo dist : distritosOrigen) {
-							if( codDistritoOrigen.equals(dist.getCodUbigeo().trim()) ){
-								descDistritoOrigen = dist.getNomUbigeo();
-								break;
+							for (AdmUbigeo dist : distritosOrigen) {
+								if( codDistritoOrigen.equals(dist.getCodUbigeo().trim()) ){
+									descDistritoOrigen = dist.getNomUbigeo();
+									break;
+								}
 							}
+							
+							//seteamos los valores
+							//ORIGEN
+							bean.setCodDepartamentoOrigenHidden(codDepartamentoOrigen.concat("0000"));
+							bean.setCodProvinciaOrigenHidden(codProvinciaOrigen.concat("00"));
+							bean.setCodDistritoOrigenHidden(codDistritoOrigen);
+							bean.setDescDepartamentoOrigen(descDepartamentoOrigen);
+							bean.setDescProvinciaOrigen(descProvinciaOrigen);
+							bean.setDescDistritoOrigen(descDistritoOrigen);
 						}
-						//
-						for (AdmUbigeo depto : listaDepartamentos) {
-							if( codDepartamentoDestino.concat("0000").equals(depto.getCodUbigeo().trim()) ){
-								descDepartamentoDestino = depto.getNomUbigeo();
-								break;
+						if( null!=bean.getCodUbigeoDestino() ){
+							String codDepartamentoDestino = bean.getCodUbigeoDestino().substring(0, 2);
+							String codProvinciaDestino = bean.getCodUbigeoDestino().substring(0, 4);
+							String codDistritoDestino = bean.getCodUbigeoDestino().substring(0, 6);
+							List<AdmUbigeo> provinciasDestino = fiseUtil.listaProvincias(codDepartamentoDestino);
+							List<AdmUbigeo> distritosDestino = fiseUtil.listaDistritos(codProvinciaDestino);
+							
+							String descDepartamentoDestino = "";
+							String descProvinciaDestino = "";
+							String descDistritoDestino = "";
+							//
+							for (AdmUbigeo depto : listaDepartamentos) {
+								if( codDepartamentoDestino.concat("0000").equals(depto.getCodUbigeo().trim()) ){
+									descDepartamentoDestino = depto.getNomUbigeo();
+									break;
+								}
 							}
-						}
-						for (AdmUbigeo prov : provinciasDestino) {
-							if( codProvinciaDestino.concat("00").equals(prov.getCodUbigeo().trim()) ){
-								descProvinciaDestino = prov.getNomUbigeo();
-								break;
+							for (AdmUbigeo prov : provinciasDestino) {
+								if( codProvinciaDestino.concat("00").equals(prov.getCodUbigeo().trim()) ){
+									descProvinciaDestino = prov.getNomUbigeo();
+									break;
+								}
 							}
-						}
-						for (AdmUbigeo dist : distritosDestino) {
-							if( codDistritoDestino.equals(dist.getCodUbigeo().trim()) ){
-								descDistritoDestino = dist.getNomUbigeo();
-								break;
+							for (AdmUbigeo dist : distritosDestino) {
+								if( codDistritoDestino.equals(dist.getCodUbigeo().trim()) ){
+									descDistritoDestino = dist.getNomUbigeo();
+									break;
+								}
 							}
+							//DESTINO
+							bean.setCodDepartamentoDestinoHidden(codDepartamentoDestino.concat("0000"));
+							bean.setCodProvinciaDestinoHidden(codProvinciaDestino.concat("00"));
+							bean.setCodDistritoDestinoHidden(codDistritoDestino);
+							bean.setDescDepartamentoDestino(descDepartamentoDestino);
+							bean.setDescProvinciaDestino(descProvinciaDestino);
+							bean.setDescDistritoDestino(descDistritoDestino);
 						}
-						//seteamos los valores
-						//ORIGEN
-						bean.setCodDepartamentoOrigenHidden(codDepartamentoOrigen.concat("0000"));
-						bean.setCodProvinciaOrigenHidden(codProvinciaOrigen.concat("00"));
-						bean.setCodDistritoOrigenHidden(codDistritoOrigen);
-						bean.setDescDepartamentoOrigen(descDepartamentoOrigen);
-						bean.setDescProvinciaOrigen(descProvinciaOrigen);
-						bean.setDescDistritoOrigen(descDistritoOrigen);
-						//DESTINO
-						bean.setCodDepartamentoDestinoHidden(codDepartamentoDestino.concat("0000"));
-						bean.setCodProvinciaDestinoHidden(codProvinciaDestino.concat("00"));
-						bean.setCodDistritoDestinoHidden(codDistritoDestino);
-						bean.setDescDepartamentoDestino(descDepartamentoDestino);
-						bean.setDescProvinciaDestino(descProvinciaDestino);
-						bean.setDescDistritoDestino(descDistritoDestino);
 						
 						break;
 					}
@@ -981,7 +1011,11 @@ public class Formato12CGartController {
 
 			// Primero buscamos si existe una cabecera
 			FiseFormato12CC formato = formatoService.obtenerFormato12CCByPK(pk);
-
+			
+			//seteamos el codigo de ubigeo para oirgen y destino
+			bean.setCodUbigeoOrigen(bean.getCodDistritoOrigen());
+			bean.setCodUbigeoDestino(bean.getCodDistritoDestino());
+			
 			if (formato != null) {
 				//para modificar registros
 				if( CRUD_CREATE.equals(crud) ){
@@ -1616,14 +1650,16 @@ public class Formato12CGartController {
     	String codEmpresaEdit = uploadPortletRequest.getParameter("codigoEmpresaHidden");
     	String anioPresEdit = uploadPortletRequest.getParameter("anioPresentacion");
     	String mesPresEdit = uploadPortletRequest.getParameter("mesPresentacion");
+    	String etapaEdit = uploadPortletRequest.getParameter("etapa");
     	
     	String anioPresNew = "";
 		String mesPresNew = "";
+		String etapaNew = "";
 		
 		if(periodoEnvioPresNew!=null && periodoEnvioPresNew.length()>6){
     		anioPresNew = periodoEnvioPresNew.substring(0, 4);
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
-    		//----etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
+    		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
 		}
 		
 		FileEntry fileEntry=null;
@@ -1640,6 +1676,29 @@ public class Formato12CGartController {
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			//!!!!formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit);
 		}
+		
+		if( formatoMensaje.getFiseFormato12CC()!=null ){
+			response.setRenderParameter("tipo", FiseConstants.UPDATE+"");
+			response.setRenderParameter("codEmpresa", formatoMensaje.getFiseFormato12CC().getId().getCodEmpresa());
+			response.setRenderParameter("anioPresentacion", ""+formatoMensaje.getFiseFormato12CC().getId().getAnoPresentacion());
+			response.setRenderParameter("mesPresentacion", ""+formatoMensaje.getFiseFormato12CC().getId().getMesPresentacion());
+			response.setRenderParameter("etapa", formatoMensaje.getFiseFormato12CC().getId().getEtapa());
+		}else{
+			if(CRUD_CREATE.equals(tipoOperacion)){
+				//response.setRenderParameter("tipo", FiseConstants.+"");
+				response.setRenderParameter("codEmpresa", codEmpresaNew);
+				response.setRenderParameter("anioPresentacion", anioPresNew);
+				response.setRenderParameter("mesPresentacion", mesPresNew);
+				response.setRenderParameter("etapa", etapaNew);
+			}else if(CRUD_UPDATE.equals(tipoOperacion)){
+				response.setRenderParameter("tipo", FiseConstants.UPDATE+"");
+				response.setRenderParameter("codEmpresa", codEmpresaEdit);
+				response.setRenderParameter("anioPresentacion", anioPresEdit);
+				response.setRenderParameter("mesPresentacion", mesPresEdit);
+				response.setRenderParameter("etapa", etapaEdit);
+			}
+		}
+		
 		
 		/*if( formatoMensaje.getFiseFormato12CC()!=null ){
 			String codEmpresa = formatoMensaje.getFiseFormato14AC().getId().getCodEmpresa();
@@ -1689,6 +1748,17 @@ public class Formato12CGartController {
 	    pRequest.getPortletSession().setAttribute("anoEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("mesEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
 	    pRequest.getPortletSession().setAttribute("etapaEdit", "", PortletSession.APPLICATION_SCOPE);*/
+		
+		response.setRenderParameter("action", "viewedit");
+		
+		/*response.setRenderParameter("codEmpresa", FiseConstants.UPDATE+"");
+		response.setRenderParameter("anioPresentacion", cabecerapk.getAnoPresentacion() + "");
+		response.setRenderParameter("mesPresentacion", cabecerapk.getMesPresentacion() + "");
+		response.setRenderParameter("etapa", cabecerapk.getEtapa() + "");
+		response.setRenderParameter("periodoDeclaracion", command.getPeridoDeclaracion());
+		response.setRenderParameter("descripcionPeriodo", command.getDescripcionPeriodo());
+		response.setRenderParameter("codEmpresaHidden", command.getCodEmpresaHidden());
+		response.setRenderParameter("descripcionPeriodoHidden", command.getDescripcionPeriodoHidden());*/
 		
 	}
 	
@@ -2366,9 +2436,10 @@ public class Formato12CGartController {
 									for( int i=0; i<listaDetalle.size(); i++ ){
 										if( i==0 ){
 											formatoNuevo = formatoService.registrarFormato12CCregistrarFormato12CD(listaDetalle.get(i));
+											objeto = formatoNuevo;
 										}else{
 											if( formatoNuevo!=null ){
-												formatoService.modificarFormato12CCregistrarFormato12CD(listaDetalle.get(i), formatoNuevo);
+												objeto = formatoService.modificarFormato12CCregistrarFormato12CD(listaDetalle.get(i), formatoNuevo);
 											}
 										}
 										
@@ -2391,7 +2462,7 @@ public class Formato12CGartController {
 									}
 									//agregamos todos los detalles que se estan cargando
 									for (Formato12CCBean detalle : listaDetalle) {
-										formatoService.modificarFormato12CCregistrarFormato12CD(detalle, formatoModif);
+										objeto = formatoService.modificarFormato12CCregistrarFormato12CD(detalle, formatoModif);
 									}
 								}
 							}
@@ -2417,6 +2488,7 @@ public class Formato12CGartController {
 			errorBean.setId(cont);
 			errorBean.setDescripcion(error);
 			listaError.add(errorBean);
+			objeto = null;
 		}finally{
 			StreamUtil.cleanUp(is);
 		}
