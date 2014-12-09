@@ -580,7 +580,7 @@ public class FiseUtil {
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
 						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
-						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n, correspondiente a"						
+						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n, correspondiente a "						
 						+ descGrupoInf + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formatos "
 						+"y Anexo de Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
