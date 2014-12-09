@@ -69,7 +69,7 @@ var envioDefinitivoGlobal= {
 			
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="busquedaEnvioDefinitivo" />';					
-			this.urlEnvioDefinitivo='<portlet:resourceURL id="procesarNotificacion" />';
+			this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivoGeneral" />';
 			this.urlCargaGrupoInf='<portlet:resourceURL id="cargarGrupoInformacion" />';
 			//this.urlVerObservaciones='<portlet:resourceURL id="verObservacionesValidacion" />';
 			//this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionNotificacion" />';
@@ -326,7 +326,7 @@ var envioDefinitivoGlobal= {
 			console.debug("entranado a envio definitivo ");			
 			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("desc grupo inf. seleccionado:  "+desGrupo);
-			$.blockUI({ message: envioDefinitivoGlobal.mensajeEnvio });
+			$.blockUI({ message: envioDefinitivoGlobal.mensajeEnvio});
 			jQuery.ajax({
 				url: envioDefinitivoGlobal.urlEnvioDefinitivo+'&'+envioDefinitivoGlobal.formCommand.serialize(),
 				type: 'post',
@@ -337,21 +337,21 @@ var envioDefinitivoGlobal= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Se realizó la notificación a los correos sgtes:'+data.Correo; 					
+						var addhtml2='Se realizó el envio general con éxito'; 					
 						envioDefinitivoGlobal.dialogMessageContent.html(addhtml2);
 						envioDefinitivoGlobal.dialogMessage.dialog("open");					
 						envioDefinitivoGlobal.initBlockUI();
 					}else if(data.resultado == "NO_DATOS"){
-						alert("No existe ninguna lista pra realizar la notificación");
+						alert("No existe ninguna lista pra realizar el envio general");
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "EMAIL"){
-						alert(data.Correo);
+						alert(data.mensaje);
 						envioDefinitivoGlobal.initBlockUI();	
-					}else if(data.resultado == "Mensaje"){
-						alert("Error al realizar el cambio de etapa");
+					}else if(data.resultado == "CERRADO"){
+						alert(data.mensaje);
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "ERROR"){
-						alert("Error al realizar la notificación");
+						alert("Error al realizar el envio general");
 						envioDefinitivoGlobal.initBlockUI();
 					}
 				},error : function(){

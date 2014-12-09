@@ -537,6 +537,116 @@ public class FiseUtil {
 		return valor;
 	}
 	
+	public boolean enviarMailsAdjuntoEnvioGeneral(PortletRequest request,List<FileEntryJSP> listaArchivo,
+			String descEmpresa,String descGrupoInf) throws Exception {
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
+		
+		boolean admin= enviarMailAdjuntoAdmEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
+				descGrupoInf);
+		
+		boolean user =enviarMailAdjuntoUsuEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
+				descGrupoInf);	
+		if(admin && user){
+		    return true;	
+		}else{
+			return false;
+		}
+	}
+	
+	private boolean enviarMailAdjuntoAdmEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+			String descEmpresa, String descGrupoInf) throws Exception {
+		boolean valor = true;
+		try {
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.setHTMLFormat(true);
+			
+			String nombreUsuario = themeDisplay.getUser().getFullName();
+			
+			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);			
+			String correoD = themeDisplay.getUser().getEmailAddress();
+			
+			logger.info("correo remitente: "+correoR);
+			logger.info("correo a copiar: "+correoD);
+			//
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
+			//validamos que tanto el correo del from ni del to deben estar vacios
+			if( !FiseConstants.BLANCO.equals(correoR) && (listaCorreoDestino!=null && !listaCorreoDestino.isEmpty()) ){
+				mailMessage.setFrom(new InternetAddress(correoR));
+				mailMessage.setSubject("Notificación de envío de formatos para el administrador del FISE (GART-DDE)");
+				mailMessage.setTo(getArrayCorreoDestinatarios(listaCorreoDestino));
+				if( !FiseConstants.BLANCO.equals(correoD) ){
+					mailMessage.setCC(new InternetAddress(correoD));
+				}
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
+						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
+						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n, correspondiente a"						
+						+ descGrupoInf + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formatos "
+						+"y Anexo de Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+				for (FileEntryJSP fej : listaArchivo) {
+					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
+				}
+				MailServiceUtil.sendEmail(mailMessage);			   
+			}else{
+				//throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
+				valor = false;
+			}
+
+		} catch (Exception e) {
+			valor = false;
+			e.printStackTrace();
+			//throw e;
+		}
+		return valor;
+	}
+	
+	private boolean enviarMailAdjuntoUsuEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+			String descEmpresa, String descGrupoInf) throws Exception {
+		boolean valor = true;
+		try {
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.setHTMLFormat(true);
+			
+			String nombreUsuario = themeDisplay.getUser().getFullName();		
+			
+			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
+			String correoD = themeDisplay.getUser().getEmailAddress();
+			
+			logger.info("correo remitente: "+correoR);
+			logger.info("correo destinatario: "+correoD);
+			
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
+			
+			if( !FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) ){
+				mailMessage.setFrom(new InternetAddress(correoR));
+				mailMessage.setSubject("Notificación de envío de formatos para el usuario de la Distribuidora Eléctrica");
+				mailMessage.setTo(new InternetAddress(correoD));
+				if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
+					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
+				}
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
+						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
+						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n correspondiente a "
+						+ descGrupoInf + ""
+					    + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formatos "
+					    + " y Anexo de Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
+						+ "<p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
+						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+				for (FileEntryJSP fej : listaArchivo) {
+					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
+				}
+				MailServiceUtil.sendEmail(mailMessage);				
+			}else{
+				//throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
+				valor = false;
+			}
+		} catch (Exception e) {
+			valor = false;
+			e.printStackTrace();			
+			//throw e;
+		}
+		return valor;
+	}	
 	
 	public InternetAddress[] getArrayCorreoDestinatarios(List<CorreoBean> listaCorreo) throws Exception{
 		InternetAddress[] arrayCorreo = new InternetAddress[listaCorreo.size()];
