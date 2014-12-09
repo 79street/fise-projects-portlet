@@ -32,6 +32,9 @@ $(document).ready(function () {
 	<form:hidden path="periodoEnvioHidden" />
 	<form:hidden path="tipoOperacion" />
 	
+	<form:hidden path="descGrupoInformacion" />
+	<form:hidden path="descEstado" />
+	
 	<input type="hidden" id="<portlet:namespace/>flagCarga" name="<portlet:namespace/>flagCarga" value="" style="display: none;" />
    
 	<div id="d_listado" class="net-frame-listado">
@@ -147,7 +150,7 @@ $(document).ready(function () {
 														</td>														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descGrupoInformacion" ></output>
+														  <output id="o_descGrupoInformacion" ></output>
 													   </td>
 													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													   <td>
@@ -156,7 +159,7 @@ $(document).ready(function () {
 														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descEstado"></output>														 
+														  <output id="o_descEstado"></output>														 
 													    </td>
 													 </tr>													
 												</table>
