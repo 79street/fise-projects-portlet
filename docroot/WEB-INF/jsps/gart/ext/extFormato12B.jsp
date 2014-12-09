@@ -407,6 +407,7 @@
 			}else if(formato12B.tpOperacion.val()=='1'){
 				formato12B.showCamposOculto();
 				formato12B.eventButtons();
+				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),'');
 			
 			}else if(formato12B.tpOperacion.val()=='2'){
 				formato12B.cmbCodEmpresa.change(function(){
@@ -418,6 +419,8 @@
 				});
 				formato12B.eventButtons();
 				formato12B.cmbCodEmpresa.trigger('change');
+				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),'');
+				
 			}
 			
 			formato12B.showHiddenButtons(formato12B.tpOperacion.val());
@@ -788,6 +791,8 @@
 			var form = formato12B.formNewEdit.serialize();
 			jQuery.ajax({	
 				url: formato12B.urlSave,
+				cache : false,
+				async : false,
 				type: 'post',
 				data : form,
 				dataType : "text",
@@ -796,7 +801,6 @@
 				},				
 				success: function(data) {					
 					if(data == '1'){
-						alert(formato12B.tpOperacion.val());
 						if(formato12B.tpOperacion.val()== '2'){
 							formato12B.tpOperacion.val('1');
 							formato12B.showCamposOculto();
@@ -1011,6 +1015,29 @@
 			}else{
 				alert("Primero debe realizar el envío definitivo");
 			}
+		},
+		updateStyleClassInput:function (tipo,emp){
+			//formato14B.f_impValEdeR.addClass("fise-editable");
+			//formato14B.f_impValEdeR.removeClass("fise-editable");
+			formato12B.txtnroValesImpreso.addClass("fise-editable");
+			formato12B.txtnroValesImpresoProv.addClass("fise-editable");
+			formato12B.txtnroValesImpresoLim.addClass("fise-editable");
+			formato12B.txtnroValesRepartidosDomi.addClass("fise-editable");
+			formato12B.txtnroValesRepartidosDomiProv.addClass("fise-editable");
+			formato12B.txtnroValesRepartidosDomiLim.addClass("fise-editable");
+			formato12B.txtnroValesEntregadoDisEl.addClass("fise-editable");
+			formato12B.txtnroValesEntregadoDisElProv.addClass("fise-editable");
+			formato12B.txtnroValesEntregadoDisElLim.addClass("fise-editable");
+			formato12B.txtnroValesFisicosCanjeados.addClass("fise-editable");
+			formato12B.txtnroValesFisicosCanjeadosProv.addClass("fise-editable");
+			formato12B.txtnroValesFisicosCanjeadosLim.addClass("fise-editable");
+			formato12B.txtnroValesDigitalCanjeados.addClass("fise-editable");
+			formato12B.txtnroValesDigitalCanjeadosProv.addClass("fise-editable");
+			formato12B.txtnroValesDigitalCanjeadosLim.addClass("fise-editable");
+			formato12B.txtnroAtenciones.addClass("fise-editable");
+			formato12B.txtnroAtencionesProv.addClass("fise-editable");
+			formato12B.txtnroAtencionesLim.addClass("fise-editable");
+			
 		},
 		initDialogs : function(){	
 			formato12B.dialogObservacion.dialog({

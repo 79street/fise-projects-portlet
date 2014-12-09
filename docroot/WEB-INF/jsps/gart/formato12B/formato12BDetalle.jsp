@@ -248,7 +248,7 @@
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValeImpre" /> <input
 											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValeImpre"
+											id="txtcostoEstandarUnitValeImpre" class=""
 											value="${formato12BGartCommand.costoEstandarUnitValeImpre}"
 											type="text" readonly="readonly" /></td>
 										<td align="center"><form:input type="hidden"
