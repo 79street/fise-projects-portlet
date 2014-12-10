@@ -58,6 +58,37 @@ $(document).ready(function () {
 											<td></td>
 										</tr>
 										<tr>
+										  <td>
+											<div id="<portlet:namespace/>divInformacion">
+												<fieldset class="net-frame-border">
+												  <table>
+													 <tr> 
+														<td>
+														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
+														</td>														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="o_descGrupoInformacion" ></output>
+													   </td>
+													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+													   <td>
+														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
+														</td>
+														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="o_descEstado"></output>														 
+													    </td>
+													 </tr>													
+												</table>
+											   </fieldset>
+										     </div>										
+										  </td>
+										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>
+										<tr>
 											<td>
 												<table class="" style="width: 100%;" border="0">
 													<tr>
@@ -135,37 +166,6 @@ $(document).ready(function () {
 													</tr>
 												</table>
 											</td>
-										</tr>
-										<tr height="10px">
-											<td></td>
-										</tr>
-										<tr>
-										  <td>
-											<div id="<portlet:namespace/>divInformacion">
-												<fieldset class="net-frame-border">
-												  <table>
-													 <tr> 
-														<td>
-														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
-														</td>														
-														<td style="text-align: center;">
-														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="o_descGrupoInformacion" ></output>
-													   </td>
-													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-													   <td>
-														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
-														</td>
-														
-														<td style="text-align: center;">
-														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="o_descEstado"></output>														 
-													    </td>
-													 </tr>													
-												</table>
-											   </fieldset>
-										     </div>										
-										  </td>
 										</tr>
 										<tr height="10px">
 											<td></td>

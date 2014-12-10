@@ -104,7 +104,7 @@ $(document).ready(function () {
 								   							</fieldset>
 								   						</td>
 								   						<td width="10%">
-								   							<input type="hidden" id="flagPeriodoEjecucion" value="" />
+								   							<input type="hidden" id="flagPeriodoEjecucion" value="${readonlyFlagPeriodo}" />
 								   						</td>
 								   						<td width="45%">
 								   							<div id="divPeriodoEjecucion" >
@@ -202,7 +202,7 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">Localidad origen:</td>
 				   										<td>
-				   											<form:input path="localidadOrigen" disabled="${readonlyEdit}"/>
+				   											<form:input path="localidadOrigen" disabled="${readonlyEdit}" maxlength="50" />
 				   										</td>
 													</tr>
 													<tr>
@@ -236,7 +236,7 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">Localidad destino:</td>
 				   										<td>
-				   											<form:input path="localidadDestino" disabled="${readonlyEdit}"/>
+				   											<form:input path="localidadDestino" disabled="${readonlyEdit}" maxlength="50" />
 				   										</td>
 													</tr>
 													
@@ -252,12 +252,12 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">Cuenta contable:</td>
 				   										<td>
-				   											<form:input path="codCuentaContable" disabled="${readonlyEdit}"/>
+				   											<form:input path="codCuentaContable" disabled="${readonlyEdit}" maxlength="30" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Actividad:</td>
 				   										<td>
-				   											<form:input path="actividad" disabled="${readonlyEdit}"/>
+				   											<form:input path="actividad" disabled="${readonlyEdit}" maxlength="250" />
 				   										</td>
 				   										<td colspan="3"></td>
 													</tr>
@@ -274,44 +274,44 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">RUC empresa:</td>
 				   										<td>
-				   											<form:input path="rucEmpresa" disabled="${readonlyEdit}"/>
+				   											<form:input path="rucEmpresa" disabled="${readonlyEdit}" maxlength="11" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Serie doc. Referencia:</td>
 				   										<td>
-				   											<form:input path="serieDocumento" disabled="${readonlyEdit}"/>
+				   											<form:input path="serieDocumento" disabled="${readonlyEdit}" maxlength="6" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Nro. doc. Referencia:</td>
 				   										<td>
-				   											<form:input path="nroDocumento" disabled="${readonlyEdit}"/>
+				   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" />
 				   										</td>
 													</tr>
 													<tr>
 														<td width="120px">Número de días:</td>
 				   										<td>
-				   											<form:input path="nroDias" disabled="${readonlyEdit}"/>
+				   											<form:input path="nroDias" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Alimentación:</td>
 				   										<td>
-				   											<form:input path="montoAlimentacion" cssClass="target" disabled="${readonlyEdit}"/>
+				   											<form:input path="montoAlimentacion" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Alojamiento:</td>
 				   										<td>
-				   											<form:input path="montoAlojamiento" cssClass="target" disabled="${readonlyEdit}"/>
+				   											<form:input path="montoAlojamiento" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Movilidad:</td>
 				   										<td>
-				   											<form:input path="montoMovilidad" cssClass="target" disabled="${readonlyEdit}"/>
+				   											<form:input path="montoMovilidad" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
 				   										</td>
 													</tr>
 													<tr>
 														<td width="120px">Total:</td> 
 														<td>
-															<form:input path="totalGeneral" disabled="true"/>																			
+															<form:input path="totalGeneral" disabled="true" cssStyle="text-align: right;" />																			
 														</td>
 													</tr>
 													
@@ -377,4 +377,14 @@ $(document).ready(function () {
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		/*alert('seteando');
+		$('#codDepartamentoOrigen').val($('#codDepartamentoOrigenHidden').val());
+		$('#codProvinciaOrigen').val($('#codProvinciaOrigenHidden').val());
+		$('#codDistritoOrigen').val($('#codDistritoOrigenHidden').val());
+		alert('dejando de setar');*/
+	
+	</script>
+	
 </form:form>

@@ -421,8 +421,10 @@ public class Formato12CGartController {
 				}
 				
 			}
-
-			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12C, FiseConstants.NOMBRE_EXCEL_FORMATO12C, FiseConstants.NOMBRE_HOJA_FORMATO12C, listaFormato);
+			//implementacion
+			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12CD_IMPLEMENTACION, FiseConstants.NOMBRE_EXCEL_FORMATO12CD_IMPLEMENTACION, FiseConstants.NOMBRE_HOJA_FORMATO12CD_IMPLEMENTACION, listaFormato);
+			//mensual
+			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12CD_MENSUAL, FiseConstants.NOMBRE_EXCEL_FORMATO12CD_MENSUAL, FiseConstants.NOMBRE_HOJA_FORMATO12CD_MENSUAL, listaFormato);
 			
 			logger.info("arreglo jsonarray:" + jsonArray);
 			logger.info("arreglo jsonimplemtacion:" + jsonArrayImplementacion);
@@ -2062,7 +2064,9 @@ public class Formato12CGartController {
 							if( HSSFCell.CELL_TYPE_STRING == celdaRUCEmpresa.getCellType() ){
 								detalleBean.setRucEmpresa(celdaRUCEmpresa.toString());
 							}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaRUCEmpresa.getCellType()  ){
-								String valor = "" + celdaRUCEmpresa.getNumericCellValue();
+								double d = celdaRUCEmpresa.getNumericCellValue();
+								String valor = FormatoUtil.conversion(d);
+								//String valor = "" + celdaRUCEmpresa.getNumericCellValue();
 								detalleBean.setRucEmpresa(FormatoUtil.eliminaDecimales(valor));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaRUCEmpresa.getCellType()  ){
 								detalleBean.setRucEmpresa(FiseConstants.BLANCO);
@@ -2325,7 +2329,9 @@ public class Formato12CGartController {
 							if( HSSFCell.CELL_TYPE_STRING == celdaRUCEmpresa.getCellType() ){
 								detalleBean.setRucEmpresa(celdaRUCEmpresa.toString());
 							}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaRUCEmpresa.getCellType()  ){
-								String valor = "" + celdaRUCEmpresa.getNumericCellValue();
+								double d = celdaRUCEmpresa.getNumericCellValue();
+								String valor = FormatoUtil.conversion(d);
+								//String valor = "" + celdaRUCEmpresa.getNumericCellValue();
 								detalleBean.setRucEmpresa(FormatoUtil.eliminaDecimales(valor));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaRUCEmpresa.getCellType()  ){
 								detalleBean.setRucEmpresa(FiseConstants.BLANCO);
