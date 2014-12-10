@@ -1,7 +1,9 @@
 package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.EnvioDefinitivoBean;
+import gob.osinergmin.fise.bean.Formato12A12BGeneric;
 import gob.osinergmin.fise.bean.Formato12ACBean;
+import gob.osinergmin.fise.bean.Formato12BCBean;
 import gob.osinergmin.fise.bean.Formato12C12D13Generic;
 import gob.osinergmin.fise.bean.Formato12CCBean;
 import gob.osinergmin.fise.bean.Formato13ACBean;
@@ -19,6 +21,10 @@ import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
 import gob.osinergmin.fise.domain.FiseFormato12AD;
 import gob.osinergmin.fise.domain.FiseFormato12ADOb;
+import gob.osinergmin.fise.domain.FiseFormato12BC;
+import gob.osinergmin.fise.domain.FiseFormato12BCPK;
+import gob.osinergmin.fise.domain.FiseFormato12BD;
+import gob.osinergmin.fise.domain.FiseFormato12BDOb;
 import gob.osinergmin.fise.domain.FiseFormato12CC;
 import gob.osinergmin.fise.domain.FiseFormato12CCPK;
 import gob.osinergmin.fise.domain.FiseFormato12CD;
@@ -44,6 +50,7 @@ import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
+import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.service.Formato12CGartService;
 import gob.osinergmin.fise.gart.service.Formato13AGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
@@ -117,6 +124,10 @@ public class EnvioDefinitivoController {
 	private Formato12AGartService formatoService12A;
 	
 	@Autowired
+	@Qualifier("formato12BGartServiceImpl")
+	private Formato12BGartService formatoService12B;
+	
+	@Autowired
 	@Qualifier("formato12CGartServiceImpl")
 	private Formato12CGartService formatoService12C;
 	
@@ -149,7 +160,7 @@ public class EnvioDefinitivoController {
 	
 	
 	private List<MensajeErrorBean> listaObs12A;
-	//private List<MensajeErrorBean> listaObs12B;
+	private List<MensajeErrorBean> listaObs12B;
 	private List<MensajeErrorBean> listaObs12C;
 	//private List<MensajeErrorBean> listaObs12D;
 	private List<MensajeErrorBean> listaObs13A;
@@ -305,8 +316,26 @@ public class EnvioDefinitivoController {
   	  		          break;
   	  		        }
   	  		        cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());	
+  	  		        
   				}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(not.getFormato())){ 
-  				//falta	
+  					FiseFormato12BCPK pk=new FiseFormato12BCPK();
+  					pk.setCodEmpresa(not.getCodEmpresa());
+  	  				pk.setAnoPresentacion(new Integer(not.getAnioPres()));
+  	  		        pk.setMesPresentacion(new Integer(not.getMesPres()));
+  	  		        pk.setAnoEjecucionGasto(new Integer(not.getAnioEjec()));
+  	  		        pk.setMesEjecucionGasto(new Integer(not.getMesEjec()));
+  	  		        pk.setEtapa(not.getEtapa());  
+  	  		        FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);
+  	  		        Formato12A12BGeneric formato12Generic = new Formato12A12BGeneric(formato12B);
+	        	    int i = commonService.validarFormatos_12A12B(formato12Generic, 
+	        	    		FiseConstants.NOMBRE_FORMATO_12B, 
+	        	    		user, terminal);
+	        	    if(i!=0){
+	        	    	valor = false;
+	        	    	break;
+	        	    }
+	        	    cargarListaObservaciones12B(formato12B.getFiseFormato12BDs());
+	        	    
   				}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(not.getFormato())){ 
   					FiseFormato12CCPK pk = new FiseFormato12CCPK();
   					pk.setCodEmpresa(not.getCodEmpresa());
@@ -322,8 +351,12 @@ public class EnvioDefinitivoController {
 				    	break;
 		  		    } 
 				    cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());
+				    
   				}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(not.getFormato())){ 
-  				//falta	
+  				
+  					
+  					
+  					
   				}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(not.getFormato())){ 
   					FiseFormato13ACPK pk = new FiseFormato13ACPK();
   					pk.setCodEmpresa(not.getCodEmpresa());
@@ -339,6 +372,7 @@ public class EnvioDefinitivoController {
 	  		          break;
 	  		        } 
   	  		        cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+  	  		        
   				}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(not.getFormato())){ 
   					FiseFormato14ACPK pk = new FiseFormato14ACPK();
   					pk.setCodEmpresa(not.getCodEmpresa());
@@ -355,7 +389,8 @@ public class EnvioDefinitivoController {
 	  		          valor = false;
 	  		          break;
 	  		       }
-  		    	   cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());	
+  		    	   cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());
+  		    	   
   				}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(not.getFormato())){ 
   					FiseFormato14BCPK pk = new FiseFormato14BCPK();
   					pk.setCodEmpresa(not.getCodEmpresa());
@@ -373,6 +408,7 @@ public class EnvioDefinitivoController {
 	  		          break;
 	  		       }
   		    	   cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());	
+  		    	   
   				}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(not.getFormato())){ 
   					Formato14CBean f14C = new Formato14CBean();  					
   					f14C.setCodEmpresa(not.getCodEmpresa());
@@ -418,6 +454,28 @@ public class EnvioDefinitivoController {
 				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
 				//obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
 				listaObs12A.add(obs);
+			}
+		}
+	}
+  	
+  	private void cargarListaObservaciones12B(List<FiseFormato12BD> listaDetalle){
+		int cont=0;
+		listaObs12B = new ArrayList<MensajeErrorBean>();
+		for (FiseFormato12BD detalle : listaDetalle) {
+			detalle.setFiseFormato12BDObs(formatoService12B.getLstFormatoObs(detalle));			
+			List<FiseFormato12BDOb> listaObser = formatoService12B.getLstFormatoObs(detalle); 
+			for (FiseFormato12BDOb observacion : listaObser) {
+				cont++;
+				MensajeErrorBean obs = new MensajeErrorBean();
+				obs.setId(cont);
+				obs.setDescZonaBenef(observacion.getId()!=null?
+						(observacion.getId().getIdZonaBenef()==FiseConstants.ZONA_RURAL?FiseConstants.ZONABENEF_RURAL_DESC:
+						(observacion.getId().getIdZonaBenef()==FiseConstants.ZONA_LIMA?FiseConstants.ZONABENEF_LIMA_DESC:
+						(observacion.getId().getIdZonaBenef()==FiseConstants.ZONA_PROVINCIA?FiseConstants.ZONABENEF_PROVINCIA_DESC:""))
+						):"");
+				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());				
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());				
+				listaObs12B.add(obs);
 			}
 		}
 	}
@@ -518,9 +576,8 @@ public class EnvioDefinitivoController {
 	
 	/*****LLENAR MAP DE PARAMETROS FORMATOS MENSUALES*******/	
 	private Map<String, Object> parametros12A(String codEmpresa,String anioPres,String mesPres,
-			String etapa,String anioEjec,String mesEjec,
-			String rutaImg,String rutaCheck,String rutaUncheck,String usuario,
-			String terminal,String email){
+			String anioEjec,String mesEjec,String etapa,
+			String rutaImg,String usuario,String terminal,String email){
 		
 		Map<String, Object> mapa = null;		
 		FiseFormato12AC formato =null;
@@ -578,10 +635,70 @@ public class EnvioDefinitivoController {
 		return mapa;
 	}
 	
+	private Map<String, Object> parametros12B(String codEmpresa,String anioPres,String mesPres,
+			String anioEjec,String mesEjec,String etapa,
+			String rutaImg,String usuario,String terminal,String email){
+		
+		Map<String, Object> mapa = null;		
+		FiseFormato12BC formato =null;
+		Formato12BCBean bean =null;
+		FiseFormato12BCPK pk =null;
+		try {
+			pk = new FiseFormato12BCPK();
+		    pk.setCodEmpresa(codEmpresa);
+	        pk.setAnoPresentacion(new Integer(anioPres));
+	        pk.setMesPresentacion(new Integer(mesPres));
+	        pk.setAnoEjecucionGasto(new Integer(anioEjec));
+	        pk.setMesEjecucionGasto(new Integer(mesEjec));
+	        pk.setEtapa(etapa);
+
+	        formato = formatoService12B.getFormatoCabeceraById(pk);
+		    if( formato!=null ){  	    	
+		    	bean = formatoService12B.estructurarFormato12BBeanByFiseFormato12BC(formato);
+	        	bean.setDescEmpresa(formato.getAdmEmpresa().getDscCortaEmpresa());
+	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+	        	mapa = formatoService12B.mapearParametrosFormato12B(bean);
+	        	
+	        	CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12B);
+	        	String descripcionFormato = "";
+	        	if( tabla!=null ){
+	        		descripcionFormato = tabla.getDescripcionTabla();
+	        	}
+	        	if(mapa!=null){	        	
+	        		mapa.put("IMG", rutaImg);
+	        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+	        		//verificar si ponerlo aca o no
+	        		mapa.put("USUARIO", usuario);
+	        		mapa.put("NOMBRE_FORMATO", descripcionFormato);
+	        		mapa.put("FECHA_ENVIO", formato.getFechaEnvioDefinitivo());
+	        		mapa.put("CORREO", email);
+	        		mapa.put("NRO_OBSERVACIONES", (listaObs12B!=null && !listaObs12B.isEmpty())?listaObs12B.size():0);
+	        		mapa.put("MSG_OBSERVACIONES", (listaObs12B!=null && !listaObs12B.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);	        		
+	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
+	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
+	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	 			}//fin if map !=null    	
+		    }//fin del if formato !=null			
+		} catch (Exception e) {
+		   logger.error("Error al llenar parametros del formato 12B "+e);
+		   e.printStackTrace();
+		}finally{
+		 if(pk!=null){
+			 pk=null;
+		 }
+		 if(formato!=null){
+			 formato=null; 
+		 }
+		 if(bean!=null){
+			 bean=null; 
+		 }
+		}
+		return mapa;
+	}
+	
 	private Map<String, Object> parametros12C(String codEmpresa,String anioPres,String mesPres,
-			String etapa,String anioEjec,String mesEjec,
-			String rutaImg,String rutaCheck,String rutaUncheck,String usuario,
-			String terminal,String email){
+			String anioEjec,String mesEjec,String etapa,
+			String rutaImg,String usuario,String terminal,String email){
 		
 		Map<String, Object> mapa = null;		
 		FiseFormato12CC formato =null;
@@ -976,7 +1093,7 @@ public class EnvioDefinitivoController {
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirUncheckedImage);
   	  		        }     		 
-  	  		        formatos = formatos+"FISE 12A ";
+  	  		        formatos = formatos+" FISE 12A ";
   	  		        mapa.put("NAMEF12A", "FISE 12A"); 	     		  
   	  		        mapa.put("UNCHECKED12A", dirUncheckedImage);     		  
   	  		        mapa.put("FFIRMADO12A", "Formato Firmado(3)");  			  
@@ -986,7 +1103,41 @@ public class EnvioDefinitivoController {
   	  		        mapa.put("NAMEOTROS12A", "Otros: ___________"); 
   	  		        
   				}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(not.getFormato())){ 
-  				//falta	
+  					 FiseFormato12BCPK pk=new FiseFormato12BCPK();
+  					pk.setCodEmpresa(not.getCodEmpresa());
+  	  				pk.setAnoPresentacion(new Integer(not.getAnioPres()));
+  	  		        pk.setMesPresentacion(new Integer(not.getMesPres()));
+  	  		        pk.setAnoEjecucionGasto(new Integer(not.getAnioEjec()));
+  	  		        pk.setMesEjecucionGasto(new Integer(not.getMesEjec()));
+  	  		        pk.setEtapa(not.getEtapa()); 
+  	  		        FiseFormato12BC formato12B = formatoService12B.getFormatoCabeceraById(pk);
+  	  		        boolean cumplePlazo = false;
+  	  		        cumplePlazo = commonService.fechaEnvioCumplePlazo(
+  	  		        		FiseConstants.TIPO_FORMATO_12B, 
+  	  		        	    formato12B.getId().getCodEmpresa(), 
+  	  		                formato12B.getId().getAnoPresentacion().longValue(), 
+  	  		                formato12B.getId().getMesPresentacion().longValue(), 
+  	  		                formato12B.getId().getEtapa(), 
+  	  		        		FechaUtil.fecha_DD_MM_YYYY(formato12B.getFechaEnvioDefinitivo()));
+  	  		        if(cumplePlazo ){
+  	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12B", dirCheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12B", dirUncheckedImage);
+  	  		        }
+  	  		        if(listaObs12B!=null && !listaObs12B.isEmpty() ){
+  	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirCheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirUncheckedImage);
+  	  		        }     		 
+  	  		        formatos = formatos+" FISE 12B ";
+  	  		        mapa.put("NAMEF12B", "FISE 12B"); 	     		  
+  	  		        mapa.put("UNCHECKED12B", dirUncheckedImage);     		  
+  	  		        mapa.put("FFIRMADO12B", "Formato Firmado(3)");  			  
+  	  		        mapa.put("NAMEPLAZO12B", "Cumple Plazos");  			  
+  	  		        mapa.put("NAMEOBS12B", "Con Observaciones");  			  
+  	  		        mapa.put("CHECKED12B",dirCheckedImage);  			  
+  	  		        mapa.put("NAMEOTROS12B", "Otros: ___________");
+  					
   				}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(not.getFormato())){ 
   					FiseFormato12CCPK pk = new FiseFormato12CCPK();
   					pk.setCodEmpresa(not.getCodEmpresa());
@@ -1012,7 +1163,7 @@ public class EnvioDefinitivoController {
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirUncheckedImage);
   	  		        }     		 
-  	  		        formatos = formatos+"FISE 12C ";
+  	  		        formatos = formatos+" FISE 12C ";
   	  		        mapa.put("NAMEF12C", "FISE 12C"); 	     		  
   	  		        mapa.put("UNCHECKED12C", dirUncheckedImage);     		  
   	  		        mapa.put("FFIRMADO12C", "Formato Firmado(3)");  			  
@@ -1022,7 +1173,10 @@ public class EnvioDefinitivoController {
   	  		        mapa.put("NAMEOTROS12C", "Otros: ___________");  	
   	  		        
   				}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(not.getFormato())){ 
-  				//falta	
+  				
+  					
+  					
+  					
   				}	    
   			}//fin del for de la lista	
            mapa.put("FORMATOS", formatos); 			  		
@@ -1114,16 +1268,17 @@ public class EnvioDefinitivoController {
   	  		        		formato13A.getId().getEtapa(), 
   	  		        		FechaUtil.fecha_DD_MM_YYYY(formato13A.getFechaEnvioDefinitivo()));
   	  		        if(cumplePlazo ){
+  	  		           logger.info("cumple plazo true 13A: "+cumplePlazo); 
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_13A", dirCheckedImage);
   	  		        }else{
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_13A", dirUncheckedImage);
   	  		        }
   	  		        if(listaObs13A!=null && !listaObs13A.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirCheckedImage);
-  	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirUncheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirCheckedImage);
   	  		        }     		 
-  	  		        formatos = formatos+"FISE 13A";
+  	  		        formatos = formatos+" FISE 13A ";
   	  		        mapa.put("NAMEF13A", "FISE 13A"); 	     		  
   	  		        mapa.put("UNCHECKED13A", dirUncheckedImage);     		  
   	  		        mapa.put("FFIRMADO13A", "Formato Firmado(1)");
@@ -1151,16 +1306,17 @@ public class EnvioDefinitivoController {
   			        		formato14A.getId().getEtapa(), 
   			        		FechaUtil.fecha_DD_MM_YYYY(formato14A.getFechaEnvioDefinitivo()));
   			        if(cumplePlazo ){
+  			        	logger.info("cumple plazo true 14A: "+cumplePlazo); 
   			        	mapa.put("CHECKED_CUMPLE_PLAZO_14A", dirCheckedImage);
   			        }else{
   			        	mapa.put("CHECKED_CUMPLE_PLAZO_14A", dirUncheckedImage);
   			        }
   			        if(listaObs14A!=null && !listaObs14A.isEmpty() ){
-  			        	mapa.put("CHECKED_OBSERVACION_14A", dirCheckedImage);
-  			        }else{
   			        	mapa.put("CHECKED_OBSERVACION_14A", dirUncheckedImage);
+  			        }else{
+  			        	mapa.put("CHECKED_OBSERVACION_14A", dirCheckedImage);
   			        }     		 
-  			        formatos = formatos+"FISE 14A";
+  			        formatos = formatos+" FISE 14A ";
   			        mapa.put("NAMEF14A", "FISE 14A"); 	     		  
   			        mapa.put("UNCHECKED14A", dirUncheckedImage);     		  
   			        mapa.put("FFIRMADO14A", "Formato Firmado(1)");
@@ -1188,16 +1344,17 @@ public class EnvioDefinitivoController {
 			        		formato14B.getId().getEtapa(), 
 			        		FechaUtil.fecha_DD_MM_YYYY(formato14B.getFechaEnvioDefinitivo()));
 			        if(cumplePlazo ){
+			        	logger.info("cumple plazo true 14B: "+cumplePlazo); 
 			        	mapa.put("CHECKED_CUMPLE_PLAZO_14B", dirCheckedImage);
 			        }else{
 			        	mapa.put("CHECKED_CUMPLE_PLAZO_14B", dirUncheckedImage);
 			        }
 			        if(listaObs14B!=null && !listaObs14B.isEmpty() ){
-			        	mapa.put("CHECKED_OBSERVACION_14B", dirCheckedImage);
-			        }else{
 			        	mapa.put("CHECKED_OBSERVACION_14B", dirUncheckedImage);
+			        }else{
+			        	mapa.put("CHECKED_OBSERVACION_14B", dirCheckedImage);
 			        }     		 
-			        formatos = formatos+"FISE 14B";
+			        formatos = formatos+" FISE 14B ";
 			        mapa.put("NAMEF14B", "FISE 14B"); 	     		  
 			        mapa.put("UNCHECKED14B", dirUncheckedImage);     		  
 			        mapa.put("FFIRMADO14B", "Formato Firmado(1)");
@@ -1225,16 +1382,17 @@ public class EnvioDefinitivoController {
  			        		formato14C.getId().getEtapa(), 
  			        		FechaUtil.fecha_DD_MM_YYYY(formato14C.getFechaEnvioDefinitivo()));
  			        if(cumplePlazo ){
+ 			        	logger.info("cumple plazo true 14C: "+cumplePlazo); 
  			        	mapa.put("CHECKED_CUMPLE_PLAZO_14C", dirCheckedImage);
  			        }else{
  			        	mapa.put("CHECKED_CUMPLE_PLAZO_14C", dirUncheckedImage);
  			        }
  			        if(listaObs14C!=null && !listaObs14C.isEmpty() ){
- 			        	mapa.put("CHECKED_OBSERVACION_14C", dirCheckedImage);
- 			        }else{
  			        	mapa.put("CHECKED_OBSERVACION_14C", dirUncheckedImage);
+ 			        }else{
+ 			        	mapa.put("CHECKED_OBSERVACION_14C", dirCheckedImage);
  			        }     		 
- 			        formatos = formatos+"FISE 14BC";
+ 			        formatos = formatos+" FISE 14C ";
  			        mapa.put("NAMEF14C", "FISE 14C"); 	     		  
  			        mapa.put("UNCHECKED14C", dirUncheckedImage);     		  
  			        mapa.put("FFIRMADO14C", "Formato Firmado(1)");
@@ -1291,6 +1449,7 @@ public class EnvioDefinitivoController {
 			boolean valorEmail = false;
 			boolean valorValidacion = false;
 			boolean actaEnvio = false;
+			boolean actualizar = false;
 			String f12A = "0";
 			String f12B = "0";
 			String f12C = "0";
@@ -1334,9 +1493,8 @@ public class EnvioDefinitivoController {
 	  	  				   /******FORMATO 12A**************/
 		  	  			   if(FiseConstants.NOMBRE_FORMATO_12A.equals(m.getFormato())&&valorValidacion){
 		  	  				  /*****Obtenemos los parametros del map*******/
-		  	  			      mapa = parametros12A(codEmpresa, m.getAnioPres(), m.getMesPres(), etapa, 
-		  	  			    		   m.getAnioEjec(), m.getMesEjec(), rutaImg, rutaImgCheck, 
-		  	  			    		   rutaImgUncheck, usuario, terminal, email);		  	  			     
+		  	  			      mapa = parametros12A(codEmpresa, m.getAnioPres(), m.getMesPres(), 
+		  	  			    		   m.getAnioEjec(), m.getMesEjec(), etapa, rutaImg, usuario, terminal, email);		  	  			     
 		  	  				/*REPORTE FORMATO 12A*/
 		  	  			      if(mapa!=null){
 		  	  			       nombreReporte = "formato12A";	  	  			       
@@ -1362,7 +1520,8 @@ public class EnvioDefinitivoController {
 			  	  			       directorio =  "/reports/"+nombreReporte+".jasper";
 			  	  			       File reportFile12AObs = new File(session.getServletContext().getRealPath(directorio));
 			  	  		    	   byte[] bytes12AObs = null;		  	  			      
-			  	  		    	   bytes12AObs = JasperRunManager.runReportToPdf(reportFile12AObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs12A));		  	  		    	 
+			  	  		    	   bytes12AObs = JasperRunManager.runReportToPdf(reportFile12AObs.getPath(), 
+			  	  		    			   mapa, new JRBeanCollectionDataSource(listaObs12A));		  	  		    	 
 			  	  			       if (bytes12AObs != null) {	  			    	   
 			  	  			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
 			  	  			    			Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
@@ -1381,13 +1540,55 @@ public class EnvioDefinitivoController {
 		  	  			   }  	  				   			
 	  	  				/******FORMATO 12B**************/
 		  	  			if(FiseConstants.NOMBRE_FORMATO_12B.equals(m.getFormato())&&valorValidacion){
-		  	  				
+		  	  				mapa = parametros12B(codEmpresa, m.getAnioPres(), m.getMesPres(),
+		  	  						m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);
+		  	  				if(mapa!=null){
+		  	  					nombreReporte = "formato12B";		 		      
+		  	  					directorio =  "/reports/"+nombreReporte+".jasper";
+		  	  					File reportFile12B = new File(session.getServletContext().getRealPath(directorio));
+		  	  					byte[] bytes = null;
+		  	  					bytes = JasperRunManager.runReportToPdf(reportFile12B.getPath(), 
+		  	  							mapa, new JREmptyDataSource());
+		  	  					if (bytes != null) {		  	  					
+		  	  						String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+		  	  								Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+		  	  								FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+		  	  						FileEntry archivo12B = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
+		  	  						if(archivo12B!=null ){
+		  	  							FileEntryJSP fileEntryJsp = new FileEntryJSP();
+		  	  							fileEntryJsp.setNombreArchivo(nombre);
+		  	  							fileEntryJsp.setFileEntry(archivo12B);
+		  	  							listaArchivo.add(fileEntryJsp);
+		  	  						}
+		  	  					}
+		  	  					/**REPORTE OBSERVACIONES*/
+		  	  					if(listaObs12B!=null && listaObs12B.size()>0 ){
+		  	  						nombreReporte = "validacion";		  	  					
+		  	  						directorio =  "/reports/"+nombreReporte+".jasper";
+		  	  						File reportFile12BObs = new File(session.getServletContext().getRealPath(directorio));
+		  	  						byte[] bytes12BObs = null;
+		  	  						bytes12BObs = JasperRunManager.runReportToPdf(reportFile12BObs.getPath(), 
+		  	  								mapa, new JRBeanCollectionDataSource(listaObs12B));		  	  					
+		  	  						if (bytes12BObs != null) {		  	  						
+		  	  							String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+		  	  									Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+		  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+		  	  							FileEntry archivo12BObs = fiseUtil.subirDocumentoBytes(request, bytes12BObs, "application/pdf", nombre);
+		  	  							if(archivo12BObs!=null ){
+		  	  								FileEntryJSP fileEntryJsp = new FileEntryJSP();
+		  	  								fileEntryJsp.setNombreArchivo(nombre);
+		  	  								fileEntryJsp.setFileEntry(archivo12BObs);
+		  	  								listaArchivo.add(fileEntryJsp);
+		  	  							}
+		  	  						}
+		  	  					}
+		  	  				  f12B = "1";
+		  	  				}//fin if mapa ! null			  	  				
 		  	  			}
 	  	  				/******FORMATO 12C**************/
 		  	  		    if(FiseConstants.NOMBRE_FORMATO_12C.equals(m.getFormato())&&valorValidacion){
-		  	  		    	mapa = parametros12C(codEmpresa, m.getAnioPres(), m.getMesPres(), etapa, 
-		  	  		    			m.getAnioEjec(), m.getMesEjec(), rutaImg, rutaImgCheck, 
-		  	  		    			rutaImgUncheck, usuario, terminal, email);	
+		  	  		    	mapa = parametros12C(codEmpresa, m.getAnioPres(), m.getMesPres(),
+		  	  		    			m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);	
 		  	  		    	
 		  	  		    	FiseFormato12CCPK pk = new FiseFormato12CCPK();
 		  	  		    	pk.setCodEmpresa(codEmpresa);
@@ -1439,6 +1640,8 @@ public class EnvioDefinitivoController {
 	  	  			    }	
 	  	  			    /******FORMATO 12D**************/
 		  	  		   if(FiseConstants.NOMBRE_FORMATO_12D.equals(m.getFormato())&&valorValidacion){
+		  	  			   
+		  	  			   
 	  	  				
 	  	  			   }		  	  		       
 	  	  			 }/*fin del for para mensual*/	  	  				
@@ -1691,42 +1894,43 @@ public class EnvioDefinitivoController {
 	  	  			   }//fin if mapa!null
 	  	  			   
   	  			   }//fin del if formatos bienales y Mensuales
-  	  			  /**********ENVIO DE EMAIL*********/
-  	  			  logger.info("Valor del acta envio:  "+actaEnvio ); 
-  	  			  if(listaArchivo!=null && listaArchivo.size()>0 && actaEnvio){		    	  
- 		    	   logger.info("Entrando a enviar email envio general."); 
- 		    	   valorEmail = fiseUtil.enviarMailsAdjuntoEnvioGeneral(
- 		    			   request,
- 		    			   listaArchivo, 
- 		    			   mapaEmpresa.get(codEmpresa),		    			  
- 		    			  n.getDescGrupoInf());
- 		    	   logger.info("El envio de email fue correctamente envio general.");	    	  
- 		         }
-  	  			 logger.info("Valor del envio de email:  "+valorEmail); 
+  	  			 
   	  			 /**********ECTUALIZACION DE FECHA ENVIO*********/
-  	  			 if(valorEmail){
   	  				Map<String, Object> paramts = new HashMap<String, Object>();				
-  					paramts.put("listaEnvio", lista);
-  					paramts.put("f12A", f12A);				
-  					paramts.put("f12B", f12B);	
-  					paramts.put("f12C", f12C);	
-  					paramts.put("f12D", f12D);	
-  					paramts.put("f13A", f13A);	
-  					paramts.put("f14A", f14A);	
-  					paramts.put("f14B", f14B);	
-  					paramts.put("f14C", f14C);
-  					paramts.put("usuario", usuario);
-  					paramts.put("terminal", terminal);
-  					boolean actualizar = commonService.actualizarFechaEnvioGeneral(paramts);
-  				    if(actualizar){
-  				    	jsonObj.put("resultado", "OK");	
-  				    }else{
-  				    	jsonObj.put("resultado", "ERROR");
-  				    }
-  	  			 }else{
-  	  				jsonObj.put("resultado", "EMAIL");
-  	  				jsonObj.put("mensaje", "Error al enviar el email del consolidado "); 
-  	  			 }		
+  	  				paramts.put("listaEnvio", lista);
+  	  				paramts.put("f12A", f12A);				
+  	  				paramts.put("f12B", f12B);	
+  	  				paramts.put("f12C", f12C);	
+  	  				paramts.put("f12D", f12D);	
+  	  				paramts.put("f13A", f13A);	
+  	  				paramts.put("f14A", f14A);	
+  	  				paramts.put("f14B", f14B);	
+  	  				paramts.put("f14C", f14C);
+  	  				paramts.put("usuario", usuario);
+  	  				paramts.put("terminal", terminal);
+  	  				actualizar = commonService.actualizarFechaEnvioGeneral(paramts);
+  	  				if(actualizar){
+  	  					/**********ENVIO DE EMAIL*********/
+  	  					logger.info("Valor del acta envio:  "+actaEnvio ); 
+  	  					if(listaArchivo!=null && listaArchivo.size()>0 && actaEnvio){		    	  
+  	  						logger.info("Entrando a enviar email envio general."); 
+  	  						valorEmail = fiseUtil.enviarMailsAdjuntoEnvioGeneral(
+  	  								request,
+  	  								listaArchivo, 
+  	  								mapaEmpresa.get(codEmpresa),		    			  
+  	  								n.getDescGrupoInf());
+  	  						logger.info("El envio de email fue correctamente envio general.");	    	  
+  	  					}
+  	  					logger.info("Valor del envio de email:  "+valorEmail); 
+  	  					if(valorEmail){
+  	  						jsonObj.put("resultado", "OK"); 
+  	  					}else{
+  	  						jsonObj.put("resultado", "EMAIL");
+  	  						jsonObj.put("mensaje", "Error al enviar el email del consolidado "); 
+  	  					}
+  	  				}else{
+  	  					jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio
+  	  				}	  			 
   	  			}//fin del estado cerrado =true
   	  			else{
   	  				jsonObj.put("resultado", "CERRADO");
