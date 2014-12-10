@@ -221,6 +221,11 @@ public class FiseUtil {
 		session.setAttribute(FiseConstants.KEY_CFG_EXCEL_EXPORT,xlsWorkbookConfig);	
 	}
 	
+	public void configuracionExportarExcelImplementacionMensual(HttpSession session, String tipoFormato, List<?> lista){
+		session.setAttribute(FiseConstants.TIPO_FORMATO_EXCEL_EXPORT, tipoFormato);
+		session.setAttribute(FiseConstants.LISTA_FORMATO_EXCEL_EXPORT, lista);
+	}
+	
 	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) {
 		// TODO Auto-generated method stub
 		FileEntry fileEntry=null;
@@ -402,23 +407,29 @@ public class FiseUtil {
 	
 	public void enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo,
 			String descEmpresa,	Long anoPresentacion, Long mesPresentacion, 
-			String tipoFormato, String descripcionFormato) throws Exception {		
+			String tipoFormato, String descripcionFormato, String frecuencia) throws Exception {		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
 		enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, 
-				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato);
+				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia);
 		enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, 
-				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato);		
+				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia);		
 	}
 	
 	private void enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, Long anoPresentacion, Long mesPresentacion, 
-			String tipoFormato, String descripcionFormato) throws Exception {
+			String tipoFormato, String descripcionFormato, String frecuencia) throws Exception {
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
 			
 			String nombreUsuario = themeDisplay.getUser().getFullName();
 			String periodoEnvio = ""+anoPresentacion+"-"+mesPresentacion;
+			String descripcionCosto ="";
+			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
+				descripcionCosto = "Est&aacute;ndares";
+			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
+				descripcionCosto = "Operativos";
+			}
 			
 			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
 			
@@ -439,7 +450,8 @@ public class FiseUtil {
 						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
 						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n para el periodo "
 						+ periodoEnvio + " del "
-						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formato "
+						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos "
+						+ descripcionCosto	+ " Formato "
 						+ tipoFormato + ", y Anexo de Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
@@ -457,13 +469,19 @@ public class FiseUtil {
 	
 	private void enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato,
-			String descripcionFormato) throws Exception {
+			String descripcionFormato, String frecuencia) throws Exception {
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
 			
 			String nombreUsuario = themeDisplay.getUser().getFullName();
 			String periodoEnvio = ""+anoPresentacion+"-"+mesPresentacion;
+			String descripcionCosto ="";
+			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
+				descripcionCosto = "Est&aacute;ndares";
+			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
+				descripcionCosto = "Operativos";
+			}
 			
 			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
 			String correoD = themeDisplay.getUser().getEmailAddress();
@@ -483,7 +501,8 @@ public class FiseUtil {
 						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
 						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
 						+ periodoEnvio + " del "
-						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formato "
+						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos "
+						+ descripcionCosto	+ " Formato "
 						+ tipoFormato + ", y Anexo de Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
 						+ "<p>Recomendamos tener en cuenta aquellos formatos faltantes para que, de acuerdo a sus necesidades, lo registren y env&iacute;en a la brevedad. As&iacute; mismo una vez enviado todos los formatos, cerrar el proceso de env&iacute;o.<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
