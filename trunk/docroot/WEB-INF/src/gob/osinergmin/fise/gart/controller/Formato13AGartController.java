@@ -1534,7 +1534,8 @@ public class Formato13AGartController {
 			    			   formato.getId().getAnoPresentacion(),
 			    			   formato.getId().getMesPresentacion(),
 			    			   FiseConstants.TIPO_FORMATO_13A,
-			    			   descripcionFormato);
+			    			   descripcionFormato,
+			    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
 				}
 			}
 
