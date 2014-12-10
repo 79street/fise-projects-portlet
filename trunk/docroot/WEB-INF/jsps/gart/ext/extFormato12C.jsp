@@ -118,12 +118,21 @@ var formato12C= {
 	/**********DETALLE CRUD**********/
 	botonGuardarDetalle:null,
 	
+	flagPeriodoDetalle:null,
+	
 	codDepaOrigen:null,
 	codProvOrigen:null,
 	codDistOrigen:null,
 	codDepaDestino:null,
 	codProvDestino:null,
 	codDistDestino:null,
+	
+	codDepartamentoOrigen:null,
+	codProvinciaOrigen:null,
+	codDistritoOrigen:null,
+	codDepartamentoDestino:null,
+	codProvinciaDestino:null,
+	codDistritoDestino:null,
 	
 	codDepartamentoOrigenHidden:null,
 	codProvinciaOrigenHidden:null,
@@ -386,6 +395,9 @@ var formato12C= {
 	},
 	initCRUDDetalle : function(operacion,urlGuardarDetalle,urlRegresarDetalle){
 		this.formDetalle=$("#formato12CCBean");
+		
+		this.flagPeriodoDetalle=$("#flagPeriodoEjecucion");
+		
 		//origen
 		this.codDepaOrigen=$("select[name='codDepartamentoOrigen']");
 		this.codProvOrigen=$("select[name='codProvinciaOrigen']");
@@ -423,6 +435,13 @@ var formato12C= {
 		this.montoAlojamientoDetalle=$('#montoAlojamiento');
 		this.montoMovilidadDetalle=$('#montoMovilidad');
 		this.totalDetalle=$('#totalGeneral');
+		
+		this.codDepartamentoOrigen=$('#codDepartamentoOrigen');
+		this.codProvinciaOrigen=$('#codProvinciaOrigen');
+		this.codDistritoOrigen=$('#codDistritoOrigen');
+		this.codDepartamentoDestino=$('#codDepartamentoDestino');
+		this.codProvinciaDestino=$('#codProvinciaDestino');
+		this.codDistritoDestino=$('#codDistritoDestino');
 		
 		//origen
 		this.codDepartamentoOrigenHidden=$('#codDepartamentoOrigenHidden');
@@ -489,6 +508,11 @@ var formato12C= {
 			formato12C.soloNumerosEnteros();
 			formato12C.soloNumerosDecimales();
 			
+			formato12C.iniciamosValores();
+			
+			formato12C.mostrarPeriodoEjecucion();
+			formato12C.estiloEdicionDetalle();
+			
 		</c:if>
 		
 		<c:if test="${crud =='READ'}">
@@ -503,13 +527,6 @@ var formato12C= {
 			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 			
-			console.debug(formato12C.codDepartamentoOrigenHidden.val());
-			console.debug(formato12C.codProvinciaOrigenHidden.val());
-			console.debug(formato12C.codDistritoOrigenHidden.val());
-			console.debug(formato12C.codDepartamentoDestinoHidden.val());
-			console.debug(formato12C.codProvinciaDestinoHidden.val());
-			console.debug(formato12C.codDistritoDestinoHidden.val());
-			
 			formato12C.codDepaOrigen.val(formato12C.codDepartamentoOrigenHidden.val());
 			//formato12C.construirDepartamentoOrigen(formato12C.codDepartamentoOrigenHidden.val(), formato12C.descDepaOrigen.val());
 			formato12C.construirProvinciaOrigen(formato12C.codProvinciaOrigenHidden.val(), formato12C.descProvOrigen.val());
@@ -521,6 +538,9 @@ var formato12C= {
 			formato12C.construirDistritoDestino(formato12C.codDistritoDestinoHidden.val(), formato12C.descDistDestino.val());
 			
 			formato12C.formularioCompletarDecimales();
+			
+			formato12C.quitarEstiloEdicionPKDetalle();
+			formato12C.quitarEstiloEdicionDetalle();
 			
 		</c:if>
 		
@@ -535,13 +555,6 @@ var formato12C= {
 			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 			
-			console.debug(formato12C.codDepartamentoOrigenHidden.val());
-			console.debug(formato12C.codProvinciaOrigenHidden.val());
-			console.debug(formato12C.codDistritoOrigenHidden.val());
-			console.debug(formato12C.codDepartamentoDestinoHidden.val());
-			console.debug(formato12C.codProvinciaDestinoHidden.val());
-			console.debug(formato12C.codDistritoDestinoHidden.val());
-			
 			formato12C.codDepaOrigen.val(formato12C.codDepartamentoOrigenHidden.val());
 			//formato12C.construirDepartamentoOrigen(formato12C.codDepartamentoOrigenHidden.val(), formato12C.descDepaOrigen.val());
 			formato12C.construirProvinciaOrigen(formato12C.codProvinciaOrigenHidden.val(), formato12C.descProvOrigen.val());
@@ -553,6 +566,9 @@ var formato12C= {
 			formato12C.construirDistritoDestino(formato12C.codDistritoDestinoHidden.val(), formato12C.descDistDestino.val());
 			
 			formato12C.formularioCompletarDecimales();
+			
+			formato12C.quitarEstiloEdicionPKDetalle();
+			formato12C.quitarEstiloEdicionDetalle();
 			
 		</c:if>
 		
@@ -596,25 +612,22 @@ var formato12C= {
 			formato12C.mesEjecucionDetalle.val(formato12C.mesEjecucionHiddenDetalle.val());
 			formato12C.etapaEjecucionDetalle.val(formato12C.etapaEjecucionHiddenDetalle.val());
 			
-			//cargamos los ubigeos
-			formato12C.listarProvincias(formato12C.codDepartamentoOrigenHidden.val(), '0');
-			formato12C.listarDistritos(formato12C.codProvinciaOrigenHidden.val(), '0');
+			formato12C.codDepartamentoOrigen.val(formato12C.codDepartamentoOrigenHidden.val());
+			formato12C.listarProvinciasEdit(formato12C.codDepartamentoOrigenHidden.val(),formato12C.codProvinciaOrigenHidden.val(),formato12C.codDistritoOrigenHidden.val(),'0');
+			//formato12C.listarDistritosEdit(formato12C.codProvinciaOrigenHidden.val(),formato12C.codDistritoOrigenHidden.val(),'0');
 			
-			formato12C.codDepaOrigen.val(formato12C.codDepartamentoOrigenHidden.val());
-			formato12C.codProvOrigen.val(formato12C.codProvinciaOrigenHidden.val());
-			formato12C.codDistOrigen.val(formato12C.codDistritoOrigenHidden.val());
-			
-			formato12C.listarProvincias(formato12C.codDepartamentoDestinoHidden.val(), '1');
-			formato12C.listarDistritos(formato12C.codProvinciaDestinoHidden.val(), '1');
-			
-			formato12C.codDepaDestino.val(formato12C.codDepartamentoDestinoHidden.val());
-			formato12C.codProvDestino.val(formato12C.codProvinciaDestinoHidden.val());
-			formato12C.codDistDestino.val(formato12C.codDistritoDestinoHidden.val());
+			formato12C.codDepartamentoDestino.val(formato12C.codDepartamentoDestinoHidden.val());
+			formato12C.listarProvinciasEdit(formato12C.codDepartamentoDestinoHidden.val(),formato12C.codProvinciaDestinoHidden.val(),formato12C.codDistritoDestinoHidden.val(),'1');
+			//formato12C.listarDistritosEdit(formato12C.codProvinciaDestinoHidden.val(),formato12C.codDistritoDestinoHidden.val(),'1');
 			
 			formato12C.soloNumerosEnteros();
 			formato12C.soloNumerosDecimales();
 			
 			formato12C.formularioCompletarDecimales();
+			
+			formato12C.mostrarPeriodoEjecucion();
+			formato12C.estiloEdicionDetalle();
+			
 		</c:if>
 		
 	},
@@ -676,11 +689,10 @@ var formato12C= {
 	buildGridsImplementacion : function () {	
 		formato12C.tablaImplementacion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
-					{ name: 'descEtapaEjecucion', index: 'descEtapaEjecucion', width: 100},
 					{ name: 'item', index: 'item', width: 40},
 					{ name: 'ubigeoOrigen', index: 'ubigeoOrigen', width: 120, align:'left'},
 					{ name: 'localidadOrigen', index: 'localidadOrigen', width: 120, align:'left'},
@@ -777,11 +789,10 @@ var formato12C= {
 	buildGridsMensual : function () {	
 		formato12C.tablaMensual.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
-					{ name: 'descEtapaEjecucion', index: 'descEtapaEjecucion', width: 100},
 					{ name: 'item', index: 'item', width: 40},
 					{ name: 'ubigeoOrigen', index: 'ubigeoOrigen', width: 120, align:'left'},
 					{ name: 'localidadOrigen', index: 'localidadOrigen', width: 120, align:'left'},
@@ -879,11 +890,10 @@ var formato12C= {
 	buildGridsImplementacionView : function () {	
 		formato12C.tablaImplementacionView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
-					{ name: 'descEtapaEjecucion', index: 'descEtapaEjecucion', width: 100},
 					{ name: 'item', index: 'item', width: 40},
 					{ name: 'ubigeoOrigen', index: 'ubigeoOrigen', width: 120, align:'left'},
 					{ name: 'localidadOrigen', index: 'localidadOrigen', width: 120, align:'left'},
@@ -960,11 +970,10 @@ var formato12C= {
 	buildGridsMensualView : function () {	
 		formato12C.tablaMensualView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Etapa Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
-					{ name: 'descEtapaEjecucion', index: 'descEtapaEjecucion', width: 100},
 					{ name: 'item', index: 'item', width: 40},
 					{ name: 'ubigeoOrigen', index: 'ubigeoOrigen', width: 120, align:'left'},
 					{ name: 'localidadOrigen', index: 'localidadOrigen', width: 120, align:'left'},
@@ -1072,8 +1081,8 @@ var formato12C= {
 					if( valPeriodo.length!='' ){
 						dwr.util.setValue("periodoEnvio", valPeriodo);
 					}
-					/*formato12C.<portlet:namespace/>loadCargaFlagPeriodo();
-					
+					/*
+					formato12C.<portlet:namespace/>loadCargaFlagPeriodo();
 					//validar lima edelnor y luz del sur
 					if(formato12C.cod_empresa_edelnor.val()==formato12C.f_empresa.val() || formato12C.cod_empresa_luz_sur.val()==formato12C.f_empresa.val()){
 						formato12C.habilitarLima();										
@@ -1087,6 +1096,14 @@ var formato12C= {
 					formato12C.unblockUI();
 				}
 		});
+	},
+	mostrarPeriodoEjecucion : function(){
+		//if( formato12C.flagPeriodoDetalle.val()==true ){
+		if( formato12C.flagPeriodoDetalle.val()=='false' ){
+			formato12C.estiloEdicionPKDetalle();
+		}else{  
+			formato12C.quitarEstiloEdicionPKDetalle();
+		}
 	},
 	buscarDetalles : function () {	
         return jQuery.ajax({			
@@ -1158,8 +1175,46 @@ var formato12C= {
 						formato12C.unblockUI();
 					}
 			});
-
-
+	},
+	listarProvinciasEdit : function (codDepartamento,provSelected,distSelected,fuente) {	
+		// fuente: '0' : ORIGEN
+		// fuente: '1' : DESTINO
+		jQuery.ajax({			
+					url: formato12C.urlProvincias,
+					type: 'post',
+					dataType: 'json',
+					data:{
+						codDepartamento:codDepartamento
+					},
+					beforeSend:function(){
+						formato12C.blockUI();
+					},				
+					success: function(data) {	
+						
+						if(fuente=='0'){
+							dwr.util.removeAllOptions("codProvinciaOrigen");
+							dwr.util.addOptions("codProvinciaOrigen", data,"codigoItem","descripcionItem");
+							dwr.util.setValue("codProvinciaOrigen", provSelected);
+							formato12C.limpiarDistritosOrigen();
+							
+							formato12C.listarDistritosEdit(provSelected, distSelected, fuente);
+							
+						}else if(fuente=='1'){
+							dwr.util.removeAllOptions("codProvinciaDestino");
+							dwr.util.addOptions("codProvinciaDestino", data,"codigoItem","descripcionItem");
+							dwr.util.setValue("codProvinciaDestino", provSelected);
+							formato12C.limpiarDistritosDestino();
+							
+							formato12C.listarDistritosEdit(provSelected, distSelected, fuente);
+							
+						}
+						
+						formato12C.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato12C.unblockUI();
+					}
+			});
 	},
 	listarDistritos : function (codProvincia,fuente) {	
 		// fuente: '0' : ORIGEN
@@ -1191,6 +1246,39 @@ var formato12C= {
 						formato12C.unblockUI();
 					}
 			});
+	},
+	listarDistritosEdit : function (codProvincia,distSelected,fuente) {	
+		// fuente: '0' : ORIGEN
+		// fuente: '1' : DESTINO
+		jQuery.ajax({			
+					url: formato12C.urlDistritos,
+					type: 'post',
+					dataType: 'json',
+					data:{
+						codProvincia:codProvincia
+					},
+					beforeSend:function(){
+						formato12C.blockUI();
+					},				
+					success: function(data) {			
+						
+						if(fuente=='0'){
+							dwr.util.removeAllOptions("codDistritoOrigen");
+							dwr.util.addOptions("codDistritoOrigen", data,"codigoItem","descripcionItem");
+							dwr.util.setValue("codDistritoOrigen", distSelected);
+						}else if(fuente=='1'){
+							dwr.util.removeAllOptions("codDistritoDestino");
+							dwr.util.addOptions("codDistritoDestino", data,"codigoItem","descripcionItem");
+							dwr.util.setValue("codDistritoDestino", distSelected);
+						}
+						
+						
+						formato12C.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato12C.unblockUI();
+					}
+			});
 
 
 	},
@@ -1202,7 +1290,7 @@ var formato12C= {
 		$.unblockUI();
 	},
 	/***OTROS***/
-	recargarPeriodoEjecucion : function(valAnioInicio,valAnioFin){
+	/*recargarPeriodoEjecucion : function(valAnioInicio,valAnioFin){
 		$('#anioInicioVigencia').val(valAnioInicio);
 		$('#anioFinVigencia').val(valAnioFin);
 	},
@@ -1210,7 +1298,7 @@ var formato12C= {
 		$('#anioInicioVigencia').attr("disabled",true);
 		$('#anioFinVigencia').attr("disabled",true);
 		//formato14A.quitarEstiloEdicionCabecera();
-	},
+	},*/
 	construirPeriodoEnvio : function(anoPresentacion,mesPresentacion,etapa){
 		dwr.util.removeAllOptions("periodoEnvio");
 		var codigo=''+anoPresentacion+completarCerosIzq(mesPresentacion,2)+etapa;
@@ -1836,7 +1924,7 @@ var formato12C= {
 		return true; 
 	},
 	soloNumerosEnteros : function(){
-		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nrodias',7,0)");
+		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nrodias',3,0)");
 	},
 	soloNumerosDecimales : function(){
 		formato12C.montoAlimentacionDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlimentacion',7,2)");
@@ -1853,6 +1941,42 @@ var formato12C= {
 		completarDecimal('montoAlimentacion',2);
 		completarDecimal('montoAlojamiento',2);
 		completarDecimal('montoMovilidad',2);
+		completarDecimal('totalGeneral',2);
+	},
+	estiloEdicionPKDetalle : function(){
+		formato12C.anoEjecucionDetalle.addClass("fise-editable");
+		//formato12C.mesEjecucionDetalle.addClass("fise-editable");
+	},
+	estiloEdicionDetalle : function(){
+		formato12C.localidadOrigenDetalle.addClass("fise-editable");
+		formato12C.localidadDestinoDetalle.addClass("fise-editable");
+		formato12C.cuentaContableDetalle.addClass("fise-editable");
+		formato12C.actividadDetalle.addClass("fise-editable");
+		formato12C.rucEmpresaDetalle.addClass("fise-editable");
+		formato12C.serieDocDetalle.addClass("fise-editable");
+		formato12C.nroDocDetalle.addClass("fise-editable");
+		formato12C.nroDiasDetalle.addClass("fise-editable");
+		formato12C.montoAlimentacionDetalle.addClass("fise-editable");
+		formato12C.montoAlojamientoDetalle.addClass("fise-editable");
+		formato12C.montoMovilidadDetalle.addClass("fise-editable");
+	},
+	//quitar estilos
+	quitarEstiloEdicionPKDetalle : function(){
+		formato12C.anoEjecucionDetalle.removeClass("fise-editable");
+		//formato12C.mesEjecucionDetalle.removeClass("fise-editable");
+	},
+	quitarEstiloEdicionDetalle : function(){
+		formato12C.localidadOrigenDetalle.removeClass("fise-editable");
+		formato12C.localidadDestinoDetalle.removeClass("fise-editable");
+		formato12C.cuentaContableDetalle.removeClass("fise-editable");
+		formato12C.actividadDetalle.removeClass("fise-editable");
+		formato12C.rucEmpresaDetalle.removeClass("fise-editable");
+		formato12C.serieDocDetalle.removeClass("fise-editable");
+		formato12C.nroDocDetalle.removeClass("fise-editable");
+		formato12C.nroDiasDetalle.removeClass("fise-editable");
+		formato12C.montoAlimentacionDetalle.removeClass("fise-editable");
+		formato12C.montoAlojamientoDetalle.removeClass("fise-editable");
+		formato12C.montoMovilidadDetalle.removeClass("fise-editable");
 	}
 };
 
