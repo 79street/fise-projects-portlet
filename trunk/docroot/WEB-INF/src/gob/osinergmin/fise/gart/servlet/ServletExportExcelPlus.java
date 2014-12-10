@@ -1,5 +1,6 @@
 package gob.osinergmin.fise.gart.servlet;
 
+import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.gart.xls.FormatoExcelExport;
 import gob.osinergmin.fise.xls.XlsWorkbookConfig;
@@ -7,6 +8,7 @@ import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,9 +32,28 @@ public class ServletExportExcelPlus extends HttpServlet {
 		
 		FormatoExcelExport formatoExcel = new FormatoExcelExport();
 		
+		FiseUtil fiseUtil = new FiseUtil();
+		
+		String etapaEjec = "";
+		
 		String key = FiseConstants.KEY_CFG_EXCEL_EXPORT;
-				
+	
 		HttpSession sesion = request.getSession();
+		
+		String tipoFormato = (String)sesion.getAttribute(FiseConstants.TIPO_FORMATO_EXCEL_EXPORT);
+		String listaFormatoExcel = FiseConstants.LISTA_FORMATO_EXCEL_EXPORT;
+		;
+		if( FiseConstants.TIPO_FORMATO_12CD.equals(tipoFormato) ){
+			etapaEjec = request.getParameter("etapaEjec");
+			List<?> lista = (List<?>)sesion.getAttribute(listaFormatoExcel);
+			if( FiseConstants.ETAPAEJECUCION_IMPLEMENTACION_EXCEL_EXPORT.equals(etapaEjec) ){
+				fiseUtil.configuracionExportarExcel(sesion, FiseConstants.TIPO_FORMATO_12CD_IMPLEMENTACION, FiseConstants.NOMBRE_EXCEL_FORMATO12CD_IMPLEMENTACION, FiseConstants.NOMBRE_HOJA_FORMATO12CD_IMPLEMENTACION, lista);
+			}else if( FiseConstants.ETAPAEJECUCION_MENSUAL_EXCEL_EXPORT.equals(etapaEjec) ){
+				fiseUtil.configuracionExportarExcel(sesion, FiseConstants.TIPO_FORMATO_12CD_MENSUAL, FiseConstants.NOMBRE_EXCEL_FORMATO12CD_MENSUAL, FiseConstants.NOMBRE_HOJA_FORMATO12CD_MENSUAL, lista);
+			}
+		}
+		
+		//HttpSession sesion = request.getSession();
 		XlsWorkbookConfig xlsWorkbook = (XlsWorkbookConfig)sesion.getAttribute(key);
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-disposition","attachment;filename="+xlsWorkbook.getName()+".xls");

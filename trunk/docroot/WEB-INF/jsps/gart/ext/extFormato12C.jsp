@@ -782,7 +782,7 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=0")%>';
 		       } 
 		}); 
 	},
@@ -882,7 +882,7 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=1")%>';
 		       } 
 		}); 
 	},
@@ -963,7 +963,7 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=0")%>';
 		       } 
 		}); 
 	},
@@ -1043,7 +1043,7 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=1")%>';
 		       } 
 		}); 
 	},
@@ -1531,11 +1531,11 @@ var formato12C= {
 			dataType : 'json',
 			data : {
 				//<portlet:namespace />periodoEnvio: formato12C.f_periodoEnvio.val(),
-				<portlet:namespace />nombreReporte: 'validacion13',
-				<portlet:namespace />nombreArchivo: 'validacion13',
-				<portlet:namespace />tipoArchivo: '0',
-				anioInicioVigencia:formato12C.txtInicioVig.val(),
-				anioFinVigencia:formato12C.txtFinVig.val() //PDF
+				<portlet:namespace />nombreReporte: 'validacion12',
+				<portlet:namespace />nombreArchivo: 'validacion12',
+				<portlet:namespace />tipoArchivo: '0'//PDF
+				//anioInicioVigencia:formato12C.txtInicioVig.val(),
+				//anioFinVigencia:formato12C.txtFinVig.val() //PDF
 			},
 			success : function(gridData) {
 				formato12C.verReporte();
@@ -1580,10 +1580,10 @@ var formato12C= {
 	buildGridsObservacion : function () {	
 		formato12C.tablaObservacion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Sector Típico','Grupo Zona','Código','Descripción'],
+	       colNames: ['Etapa ejecución','Nro. item etapa','Código','Descripción'],
 	       colModel: [
-						{ name: 'descSectorTipico', index: 'descSectorTipico', width: 80 ,align: 'left'},
-						{ name: 'descZonaBenef', index: 'descZonaBenef', width: 100 ,align: 'left'},
+						{ name: 'descEtapaEjecucion', index: 'descEtapaEjecucion', width: 100 ,align: 'left'},
+						{ name: 'nroItemEtapa', index: 'nroItemEtapa', width: 70 ,align: 'left'},
 						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
 		                { name: 'descripcion', index: 'descripcion', width: 420 ,align: 'left'}               
 			   	    ],

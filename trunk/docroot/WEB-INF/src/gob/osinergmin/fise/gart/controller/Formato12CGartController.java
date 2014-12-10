@@ -421,10 +421,8 @@ public class Formato12CGartController {
 				}
 				
 			}
-			//implementacion
-			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12CD_IMPLEMENTACION, FiseConstants.NOMBRE_EXCEL_FORMATO12CD_IMPLEMENTACION, FiseConstants.NOMBRE_HOJA_FORMATO12CD_IMPLEMENTACION, listaFormato);
-			//mensual
-			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12CD_MENSUAL, FiseConstants.NOMBRE_EXCEL_FORMATO12CD_MENSUAL, FiseConstants.NOMBRE_HOJA_FORMATO12CD_MENSUAL, listaFormato);
+			
+			fiseUtil.configuracionExportarExcelImplementacionMensual(session, FiseConstants.TIPO_FORMATO_12CD, listaFormato);
 			
 			logger.info("arreglo jsonarray:" + jsonArray);
 			logger.info("arreglo jsonimplemtacion:" + jsonArrayImplementacion);
@@ -1231,21 +1229,21 @@ public class Formato12CGartController {
 			if (formato != null) {
 				// int cont=0;
 				Formato12C12D13Generic formato13Generic = new Formato12C12D13Generic(formato);
-				int i = commonService.validarFormatos_12C12D13A(formato13Generic, FiseConstants.NOMBRE_FORMATO_12C, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLogin());
+				int i = commonService.validarFormatos_12C12D13A(formato13Generic, FiseConstants.NOMBRE_FORMATO_12C, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 				if (i == 0) {
 					cargarListaObservaciones(formato.getFiseFormato12CDs());
 					for (MensajeErrorBean error : listaObservaciones) {
 						JSONObject jsonObj = new JSONObject();
 						jsonObj.put("id", error.getId());
-						jsonObj.put("descZonaBenef", error.getDescZonaBenef());
+						jsonObj.put("nroItemEtapa", error.getNroItemEtapa());
 						jsonObj.put("codigo", error.getCodigo());
 						jsonObj.put("descripcion", error.getDescripcion());
-						//jsonObj.put("descSectorTipico", error.getDescCodSectorTipico());
+						jsonObj.put("descEtapaEjecucion", error.getDescEtapaEjecucion());
 						// agregar los valores
 						jsonArray.put(jsonObj);
 					}
 					// **exportar excel
-					fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, FiseConstants.NOMBRE_EXCEL_VALIDACION_F12C, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+					fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL_12C, FiseConstants.NOMBRE_EXCEL_VALIDACION_F12C, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
 				}
 			}
 
@@ -1272,7 +1270,7 @@ public class Formato12CGartController {
 
 			String nombreReporte = request.getParameter("nombreReporte").trim();
 			String nombreArchivo = request.getParameter("nombreArchivo").trim();
-			String tipoFormato = FiseConstants.TIPO_FORMATO_VAL_13A;
+			String tipoFormato = FiseConstants.TIPO_FORMATO_VAL_12C;
 			String tipoArchivo = request.getParameter("tipoArchivo").trim();
 			
 			String anioInicioVigencia = request.getParameter("anioInicioVigencia");
@@ -1300,13 +1298,13 @@ public class Formato12CGartController {
 			Map<String, Object> mapa = new HashMap<String, Object>();
 			mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
-			//mapa.put(FiseConstants.PARAM_ANO_PRES_F13A, anoPresentacion);
-			//mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F13A, fiseUtil.getMapaMeses().get(Long.parseLong(mesPresentacion)));
-			mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-			mapa.put("NOMBRE_FORMATO", descripcionFormato);
-			mapa.put("NRO_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
-			mapa.put("INICIO_VIGENCIA", anioInicioVigencia!=null?anioInicioVigencia:"");//anioInicioVigencia!=null?anioInicioVigencia:""
-			mapa.put("FIN_VIGENCIA", anioFinVigencia!=null?anioFinVigencia:"");//-anioFinVigencia!=null?anioFinVigencia:""
+			mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, anoPresentacion);
+			mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(mesPresentacion));
+			mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
+			mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
+			mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
+			//mapa.put("INICIO_VIGENCIA", anioInicioVigencia!=null?anioInicioVigencia:"");//anioInicioVigencia!=null?anioInicioVigencia:""
+			//mapa.put("FIN_VIGENCIA", anioFinVigencia!=null?anioFinVigencia:"");//-anioFinVigencia!=null?anioFinVigencia:""
 			// add
 			mapa.put("DESC_EMPRESA", fiseUtil.getMapaEmpresa().get(codEmpresa));
 			mapa.put("ETAPA", etapa);
@@ -1482,7 +1480,8 @@ public class Formato12CGartController {
 			    			   formato.getId().getAnoPresentacion(),
 			    			   formato.getId().getMesPresentacion(),
 			    			   FiseConstants.TIPO_FORMATO_12C,
-			    			   descripcionFormato);
+			    			   descripcionFormato,
+			    			   FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION);
 				}
 			}
 
@@ -1507,11 +1506,10 @@ public class Formato12CGartController {
 				cont++;
 				MensajeErrorBean obs = new MensajeErrorBean();
 				obs.setId(cont);
-				/****VERIFICAR REPORTE DE VALIDACION PARA LOS FORMATOS 12C YA QUE TIENE MAS CAMPOS COMO CLAVE PRIMARIA EN OBSERVACIONES****/
-				//---obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
+				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
 				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
-				//obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
+				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
 				listaObservaciones.add(obs);
 			}
 		}

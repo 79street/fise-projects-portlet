@@ -2244,7 +2244,8 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    			   formato.getId().getAnoPresentacion(),
 	    			   formato.getId().getMesPresentacion(),
 	    			   FiseConstants.TIPO_FORMATO_14B,
-	    			   descripcionFormato);
+	    			   descripcionFormato,
+	    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
 	       }
         }
         
