@@ -337,6 +337,9 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.dialogMessageContent.html(addhtml2);
 						envioDefinitivoGlobal.dialogMessage.dialog("open");					
 						envioDefinitivoGlobal.initBlockUI();
+					}else if(data.resultado == "ENVIADO"){
+						alert("Este grupo ya ha sido enviado.");
+						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "NO_DATOS"){
 						alert("No existe ninguna lista pra realizar el envio general");
 						envioDefinitivoGlobal.initBlockUI();	
