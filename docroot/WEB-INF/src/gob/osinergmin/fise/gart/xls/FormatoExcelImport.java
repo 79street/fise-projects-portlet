@@ -334,7 +334,7 @@ public class FormatoExcelImport {
 					 System.out.println("iniio1"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK ){
 						  formato.setNumeroValesImpreso((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValeImpre(fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
 						  formato.setCostoTotalImpresionVale(formato.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(formato.getNumeroValesImpreso())));
 						  numfilallenas++;
 					 }
@@ -343,7 +343,7 @@ public class FormatoExcelImport {
 					 System.out.println("iniio2"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroValesRepartidosDomi((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValeRepar(fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValeRepar((fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null)?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
 						  formato.setCostoTotalRepartoValesDomi(formato.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(formato.getNumeroValesRepartidosDomi())));
 						  numfilallenas++;
 					 }
@@ -352,7 +352,7 @@ public class FormatoExcelImport {
 					 System.out.println("iniio3"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroValesEntregadoDisEl((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValDisEl(fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValDisEl((fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null)?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
 						  formato.setCostoTotalEntregaValDisEl(formato.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(formato.getNumeroValesEntregadoDisEl())));
 						  numfilallenas++;
 					 }
@@ -361,7 +361,7 @@ public class FormatoExcelImport {
 					 System.out.println("iniio4"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroValesFisicosCanjeados((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValFiCan(fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValFiCan((fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null)?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
 						  formato.setCostoTotalCanjeLiqValeFis(formato.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(formato.getNumeroValesFisicosCanjeados())));
 						  numfilallenas++;
 					 }
@@ -370,7 +370,7 @@ public class FormatoExcelImport {
 					 System.out.println("iniio5"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroValesDigitalCanjeados((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValDgCan(fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValDgCan((fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null)?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
 						  formato.setCostoTotalCanjeLiqValeDig(formato.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(formato.getNumeroValesDigitalCanjeados())));
 						  numfilallenas++;
 					 }
@@ -379,7 +379,7 @@ public class FormatoExcelImport {
 					 System.out.println("iniio6"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroAtenciones((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitAtencion(fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0));
+						  formato.setCostoEstandarUnitAtencion((fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null)?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0));
 						  formato.setCostoTotalAtencionConsRecl(formato.getCostoEstandarUnitAtencion().multiply(new BigDecimal(formato.getNumeroAtenciones())));
 						  numfilallenas++;
 					 }

@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 
 @SessionAttributes({ "esAdministrador" })
 @Controller("formato13AGartController")
@@ -949,9 +950,16 @@ public class Formato13AGartController {
 			command.setDescripcionPeriodo(FiseUtil.descripcionPeriodo(cabecerapk.getMesPresentacion(), cabecerapk.getAnoPresentacion(), cabecerapk.getEtapa()));
 			command.setDescripcionPeriodoHidden(periodo);
 		}
-
-		FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-		List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk, tipoaccion);
+		FileEntry fileEntry=null;
+  try{
+		 fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+		
+  }catch(FileMimeTypeException ex){
+		
+	}catch (Exception e) {
+		// TODO: handle exception
+	}
+  List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk, tipoaccion);
 		System.out.println("tipo de errores::" + lstErrores.size());
 
 		if (lstErrores != null && !lstErrores.isEmpty()) {

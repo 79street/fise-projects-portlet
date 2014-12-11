@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 
 @SessionAttributes({ "esAdministrador" })
 @Controller("formato12CGartController")
@@ -1661,7 +1662,7 @@ public class Formato12CGartController {
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
     		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
 		}
-		
+		try{
 		FileEntry fileEntry=null;
 		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
@@ -1675,6 +1676,11 @@ public class Formato12CGartController {
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			//!!!!formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit);
+		}
+		}catch(FileMimeTypeException ex){
+			
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
 		
 		if( formatoMensaje.getFiseFormato12CC()!=null ){

@@ -204,7 +204,7 @@ $(document).ready(function () {
 														</td>														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descGrupoInformacion" ></output>
+														  <output id="descGrupoInformacion"  ></output>
 													   </td>
 													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													   <td>
@@ -230,7 +230,7 @@ $(document).ready(function () {
 													<tr>
 														<td>Distribuidora Eléctrica:</td>
 														<td>
-															<form:select path="codigoEmpresa" cssClass="select" cssStyle="width: 375px;" >
+															<form:select path="codigoEmpresa" cssClass="select" cssStyle="width: 375px;"  >
 																<form:options items="${formato14BCBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 															</form:select>
 														</td>

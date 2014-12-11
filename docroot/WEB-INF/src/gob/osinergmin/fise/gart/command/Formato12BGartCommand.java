@@ -217,6 +217,7 @@ public class Formato12BGartCommand implements Serializable {
 			command.setUsuarioCreacion(bean.getUsuarioCreacion());
 			command.setDescEstado(bean.getFechaEnvioDefinitivo()!=null?FiseConstants.ESTADO_FECHAENVIO_ENVIADO:FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
 			command.setEstadoEnvio(bean.getFechaEnvioDefinitivo()!=null?FiseConstants.ESTADO_ENVIADO:FiseConstants.ESTADO_POR_ENVIAR);
+		   
 		}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -364,7 +365,6 @@ public class Formato12BGartCommand implements Serializable {
 					command.setMesEjecucionGasto(lst.get(0).getId().getMesEjecucionGasto());
 					command.setMesPresentacion(lst.get(0).getId().getMesPresentacion());
 					command.setIdZonaBenef(lst.get(0).getId().getIdZonaBenef());
-					
 					
 					command.setPeridoDeclaracion(lst.get(0).getId().getAnoPresentacion()+""+lst.get(0).getId().getMesPresentacion()+lst.get(0).getId().getEtapa());
 					command.setPeridoDeclaracionHidden(lst.get(0).getId().getAnoPresentacion()+""+lst.get(0).getId().getMesPresentacion()+lst.get(0).getId().getEtapa());
