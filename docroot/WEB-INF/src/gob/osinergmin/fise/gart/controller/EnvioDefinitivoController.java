@@ -326,7 +326,8 @@ public class EnvioDefinitivoController {
   	  		        pk.setAnoEjecucionGasto(new Integer(not.getAnioEjec()));
   	  		        pk.setMesEjecucionGasto(new Integer(not.getMesEjec()));
   	  		        pk.setEtapa(not.getEtapa());  
-  	  		        FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);
+  	  		        FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);  	  		       
+  	  		       logger.info("Tamaño de la lista detalle   "+formato12B.getListaDetalle12BDs());
   	  		        Formato12A12BGeneric formato12Generic = new Formato12A12BGeneric(formato12B);
 	        	    int i = commonService.validarFormatos_12A12B(formato12Generic, 
 	        	    		FiseConstants.NOMBRE_FORMATO_12B, 
@@ -335,7 +336,7 @@ public class EnvioDefinitivoController {
 	        	    	valor = false;
 	        	    	break;
 	        	    }
-	        	    cargarListaObservaciones12B(formato12B.getFiseFormato12BDs());
+	        	    cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());
 	        	    
   				}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(not.getFormato())){ 
   					FiseFormato12CCPK pk = new FiseFormato12CCPK();
@@ -462,6 +463,7 @@ public class EnvioDefinitivoController {
   	private void cargarListaObservaciones12B(List<FiseFormato12BD> listaDetalle){
 		int cont=0;
 		listaObs12B = new ArrayList<MensajeErrorBean>();
+		logger.info("Tamaño de la lista detalle de B:   "+listaDetalle.size()); 
 		for (FiseFormato12BD detalle : listaDetalle) {
 			detalle.setFiseFormato12BDObs(formatoService12B.getLstFormatoObs(detalle));			
 			List<FiseFormato12BDOb> listaObser = formatoService12B.getLstFormatoObs(detalle); 
