@@ -1151,7 +1151,7 @@ public class Formato12BGartController {
 		    			   formato.getId().getAnoPresentacion().longValue(),
 		    			   formato.getId().getMesPresentacion().longValue(),
 		    			   FiseConstants.TIPO_FORMATO_12B,
-		    			   descripcionFormato);
+		    			   descripcionFormato,FiseConstants.TIPO_FORMATO_12B);
 		       }
 	        }
 	        

@@ -227,7 +227,7 @@ public class FiseUtil {
 		session.setAttribute(FiseConstants.LISTA_FORMATO_EXCEL_EXPORT, lista);
 	}
 	
-	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) {
+	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) throws FileMimeTypeException,Exception{
 
 		// TODO Auto-generated method stub
 		FileEntry fileEntry=null;
