@@ -221,12 +221,14 @@ public class FiseUtil {
 		session.setAttribute(FiseConstants.KEY_CFG_EXCEL_EXPORT,xlsWorkbookConfig);	
 	}
 	
+
 	public void configuracionExportarExcelImplementacionMensual(HttpSession session, String tipoFormato, List<?> lista){
 		session.setAttribute(FiseConstants.TIPO_FORMATO_EXCEL_EXPORT, tipoFormato);
 		session.setAttribute(FiseConstants.LISTA_FORMATO_EXCEL_EXPORT, lista);
 	}
 	
 	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) {
+
 		// TODO Auto-generated method stub
 		FileEntry fileEntry=null;
 		//--UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
@@ -261,6 +263,7 @@ public class FiseUtil {
 
 			logger.info("MIME ARCHIVO:"+mimeType);
 			if (Arrays.binarySearch(mimeTypes, mimeType) < 0) {
+				System.out.println(mimeType);
 				throw new FileMimeTypeException(mimeType);
 			}
 			//solo para txt/verificar luego

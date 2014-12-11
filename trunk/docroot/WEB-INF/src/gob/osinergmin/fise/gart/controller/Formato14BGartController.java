@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 
 @Controller("formato14BGartController")
 @RequestMapping("VIEW")
@@ -725,6 +726,7 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
 		String etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapaEdit", PortletSession.APPLICATION_SCOPE);
 		
 		FileEntry fileEntry=null;
+		try{
 		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioIniVigNew, anioFinVigNew, etapaNew);
@@ -738,6 +740,11 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit);
 		}
+	}catch(FileMimeTypeException ex){
+		
+	}catch (Exception e) {
+		// TODO: handle exception
+	}
 		
 		if( formatoMensaje.getFiseFormato14BC()!=null ){
 			String codEmpresa = formatoMensaje.getFiseFormato14BC().getId().getCodEmpresa();

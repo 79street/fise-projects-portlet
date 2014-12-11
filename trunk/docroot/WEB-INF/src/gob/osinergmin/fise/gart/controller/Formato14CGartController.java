@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 
 @Controller("formato14CGartController")
 @RequestMapping("VIEW")
@@ -643,7 +644,7 @@ public class Formato14CGartController {
 		String etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapaEdit", PortletSession.APPLICATION_SCOPE);
 		
 		FileEntry fileEntry=null;
-		
+		try{
 		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
 			logger.info("Empesando a subir exel registro nuevo."); 
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
@@ -664,6 +665,11 @@ public class Formato14CGartController {
 			formatoMensaje = readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), 
 					flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit,flagCosto);
 		}
+	}catch(FileMimeTypeException ex){
+		
+	}catch (Exception e) {
+		// TODO: handle exception
+	}
 		
 		if(("1").equals(formatoMensaje.getValor())){
 			String codEmpresa = formatoMensaje.getFormato14CBean().getCodEmpresa();
