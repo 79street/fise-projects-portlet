@@ -914,7 +914,7 @@ public class Formato13AGartController {
 	}
 
 	@ActionMapping(params = "action=uploadFile")
-	public void cargarDocumento(ActionRequest request, ActionResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+	public void cargarDocumento(ActionRequest request, ActionResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) throws FileMimeTypeException {
 		System.out.println("aqui en upload controller");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -954,9 +954,7 @@ public class Formato13AGartController {
   try{
 		 fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 		
-  }catch(FileMimeTypeException ex){
-		
-	}catch (Exception e) {
+  }catch (Exception e) {
 		// TODO: handle exception
 	}
   List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk, tipoaccion);
