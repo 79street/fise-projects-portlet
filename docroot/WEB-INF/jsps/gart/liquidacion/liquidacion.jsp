@@ -116,12 +116,12 @@ $(document).ready(function () {
 										<td align="right">	
 										    <input type="button" class="net-button-small"
 											      id="<portlet:namespace/>btnGenerarEtapa"
-											      name="<portlet:namespace/>btnGenerarEtapa" value="Generar Etapa" />										
+											      name="<portlet:namespace/>btnGenerarEtapa" value="Generar Etapa Reconocido" />										
 										</td>
-										<td align="right">											
+										<td align="center">											
 										   <input type="button" class="net-button-small"
 											      id="<portlet:namespace/>btnLiquidar"
-											      name="<portlet:namespace/>btnLiquidar" value="Liquidar" />											
+											      name="<portlet:namespace/>btnLiquidar" value="Liquidar Etapa Reconocido" />											
 										</td>										
 									</tr>
 								</table>
