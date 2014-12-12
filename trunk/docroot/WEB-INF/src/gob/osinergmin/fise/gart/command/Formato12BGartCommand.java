@@ -22,7 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class Formato12BGartCommand implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -35,9 +34,9 @@ public class Formato12BGartCommand implements Serializable {
 	private Integer anioInicio;
 	private Integer mesFin;
 	private Integer anioFin;
-	
+
 	private List<FisePeriodoEnvio> listaPeriodo;
-    private String peridoDeclaracion;
+	private String peridoDeclaracion;
 	private String descEmpresa;
 	private String descGrupo;
 	private String descEstado;
@@ -45,7 +44,7 @@ public class Formato12BGartCommand implements Serializable {
 	private String descMesEjec;
 
 	private String codEmpresa;
-	
+
 	private Integer anoPresentacion;
 	private Integer mesPresentacion;
 	private Integer anoEjecucionGasto;
@@ -53,13 +52,13 @@ public class Formato12BGartCommand implements Serializable {
 	private String etapa;
 
 	private Integer idZonaBenef;
- 
+
 	private Date fechaEnvioDefinitivo;
 	private String strfechaEnvioDefinitivo;
 	private String nombreArchivoExcel;
-    private String nombreArchivoTexto;
-	
-    private String usuarioActualizacion;
+	private String nombreArchivoTexto;
+
+	private String usuarioActualizacion;
 	private String usuarioCreacion;
 	private Date fechaActualizacion;
 	private Date fechaCreacion;
@@ -69,7 +68,7 @@ public class Formato12BGartCommand implements Serializable {
 
 	private Integer idGrupoInf;
 
-	//RURAL
+	// RURAL
 	private BigDecimal costoEstandarUnitAtencion;
 	private BigDecimal costoEstandarUnitValDgCan;
 	private BigDecimal costoEstandarUnitValDisEl;
@@ -91,8 +90,8 @@ public class Formato12BGartCommand implements Serializable {
 	private BigDecimal totalActividadesExtraord;
 	private BigDecimal totalDesplazamientoPersonal;
 	private BigDecimal totalGestionAdministrativa;
-	
-	//PROVINCIA
+
+	// PROVINCIA
 	private BigDecimal costoEstandarUnitAtencionProv;
 	private BigDecimal costoEstandarUnitValDgCanProv;
 	private BigDecimal costoEstandarUnitValDisElProv;
@@ -114,8 +113,8 @@ public class Formato12BGartCommand implements Serializable {
 	private BigDecimal totalActividadesExtraordProv;
 	private BigDecimal totalDesplazamientoPersonalProv;
 	private BigDecimal totalGestionAdministrativaProv;
-	
-	//LIMA
+
+	// LIMA
 	private BigDecimal costoEstandarUnitAtencionLim;
 	private BigDecimal costoEstandarUnitValDgCanLim;
 	private BigDecimal costoEstandarUnitValDisElLim;
@@ -137,227 +136,258 @@ public class Formato12BGartCommand implements Serializable {
 	private BigDecimal totalActividadesExtraordLim;
 	private BigDecimal totalDesplazamientoPersonalLim;
 	private BigDecimal totalGestionAdministrativaLim;
-	
+
 	private Integer tipoOperacion;
 	private String codEmpresaHidden;
 	private String peridoDeclaracionHidden;
-	
+
 	private Integer estadoEnvio;
 	private String estadoProceso;
-	
-	
-	
-	public static FiseFormato12BC toBeanCabecera(Formato12BGartCommand command){
-		
-		FiseFormato12BC bean=null;
-		try{
-		if(command!=null){
-			bean=new FiseFormato12BC();
-			FiseFormato12BCPK pk=new FiseFormato12BCPK();
-			pk.setAnoEjecucionGasto(command.getAnoEjecucionGasto());
-			pk.setAnoPresentacion(command.getAnoPresentacion());
-			pk.setCodEmpresa(command.getCodEmpresa());
-			pk.setEtapa(command.getEtapa());
-			pk.setMesEjecucionGasto(command.getMesEjecucionGasto());
-			pk.setMesPresentacion(command.getMesPresentacion());
-			bean.setId(pk);
-			
-			bean.setFechaActualizacion(command.getFechaActualizacion());
-			bean.setFechaCreacion(command.getFechaCreacion());
-			bean.setFechaEnvioDefinitivo(command.getFechaEnvioDefinitivo());
-			FiseGrupoInformacion grupo=new FiseGrupoInformacion();
-			grupo.setIdGrupoInformacion(command.getIdGrupoInf().longValue());
-			bean.setFiseGrupoInformacion(grupo);
-			bean.setNombreArchivoExcel(command.getNombreArchivoExcel());
-			bean.setNombreArchivoTexto(command.getNombreArchivoTexto());
-			bean.setTerminalActualizacion(command.getTerminalActualizacion());
-			bean.setTerminalCreacion(command.getTerminalCreacion());
-			bean.setTotalReconocer(command.getTotalReconocer());
-			bean.setUsuarioActualizacion(command.getUsuarioActualizacion());
-			bean.setUsuarioCreacion(command.getUsuarioCreacion());
-		}
-		}catch(Exception e){
-			
+
+	private BigDecimal porImpresionVales;
+	private BigDecimal porRepartoDom;
+	private BigDecimal porEntregaValesDE;
+	private BigDecimal porValesFisicos;
+	private BigDecimal porValesDigitales;
+	private BigDecimal porAtencionReclamos;
+	private BigDecimal porGestionAdm;
+	private BigDecimal porDesplazamientoPers;
+	private BigDecimal porActividadExtra;
+	private BigDecimal totalGeneralReconocer;
+
+	public static FiseFormato12BC toBeanCabecera(Formato12BGartCommand command) {
+
+		FiseFormato12BC bean = null;
+		try {
+			if (command != null) {
+				bean = new FiseFormato12BC();
+				FiseFormato12BCPK pk = new FiseFormato12BCPK();
+				pk.setAnoEjecucionGasto(command.getAnoEjecucionGasto());
+				pk.setAnoPresentacion(command.getAnoPresentacion());
+				pk.setCodEmpresa(command.getCodEmpresa());
+				pk.setEtapa(command.getEtapa());
+				pk.setMesEjecucionGasto(command.getMesEjecucionGasto());
+				pk.setMesPresentacion(command.getMesPresentacion());
+				bean.setId(pk);
+
+				bean.setFechaActualizacion(command.getFechaActualizacion());
+				bean.setFechaCreacion(command.getFechaCreacion());
+				bean.setFechaEnvioDefinitivo(command.getFechaEnvioDefinitivo());
+				FiseGrupoInformacion grupo = new FiseGrupoInformacion();
+				grupo.setIdGrupoInformacion(command.getIdGrupoInf().longValue());
+				bean.setFiseGrupoInformacion(grupo);
+				bean.setNombreArchivoExcel(command.getNombreArchivoExcel());
+				bean.setNombreArchivoTexto(command.getNombreArchivoTexto());
+				bean.setTerminalActualizacion(command.getTerminalActualizacion());
+				bean.setTerminalCreacion(command.getTerminalCreacion());
+				bean.setTotalReconocer(command.getTotalReconocer());
+				bean.setUsuarioActualizacion(command.getUsuarioActualizacion());
+				bean.setUsuarioCreacion(command.getUsuarioCreacion());
+			}
+		} catch (Exception e) {
+
 		}
 		return bean;
 	}
-	
-	public static Formato12BGartCommand toCommandCabecera(FiseFormato12BC bean){
-		Formato12BGartCommand command=null;
-		try{
-		
-		if(bean!=null){
-			command=new Formato12BGartCommand();
-			
-			command.setAnoEjecucionGasto(bean.getId().getAnoEjecucionGasto());
-			command.setAnoPresentacion(bean.getId().getAnoPresentacion());
-			command.setCodEmpresa(bean.getId().getCodEmpresa());
-			command.setCodEmpresaHidden(bean.getId().getCodEmpresa());
-			command.setDescEmpresa(bean.getAdmEmpresa()!=null?bean.getAdmEmpresa().getDscCortaEmpresa():"");
-			command.setEtapa(bean.getId().getEtapa());
-			command.setMesEjecucionGasto(bean.getId().getMesEjecucionGasto());
-			command.setMesPresentacion(bean.getId().getMesPresentacion());
-			command.setDescMes((bean.getId().getMesPresentacion()!=null && bean.getId().getMesPresentacion()>0)?FiseUtil.descripcionMes(bean.getId().getMesPresentacion()):"");
-			command.setDescMesEjec((bean.getId().getMesEjecucionGasto()!=null && bean.getId().getMesEjecucionGasto()>0)?FiseUtil.descripcionMes(bean.getId().getMesEjecucionGasto()):"");
-			command.setPeridoDeclaracion(bean.getId().getAnoPresentacion()+""+bean.getId().getMesPresentacion()+bean.getId().getEtapa());
-			command.setPeridoDeclaracionHidden(bean.getId().getAnoPresentacion()+""+bean.getId().getMesPresentacion()+bean.getId().getEtapa());
-			
-			command.setFechaActualizacion(bean.getFechaActualizacion());
-			command.setFechaCreacion(bean.getFechaCreacion());
-			command.setFechaEnvioDefinitivo(bean.getFechaEnvioDefinitivo());
-			command.setStrfechaEnvioDefinitivo(FiseUtil.toStringFormat(bean.getFechaEnvioDefinitivo(), FiseUtil.FORMATO_DDMMYYYY));
-			command.setIdGrupoInf(bean.getFiseGrupoInformacion()!=null?bean.getFiseGrupoInformacion().getIdGrupoInformacion().intValue():null);
-			command.setDescGrupo(bean.getFiseGrupoInformacion()!=null?bean.getFiseGrupoInformacion().getDescripcion():"");
-			command.setNombreArchivoExcel(bean.getNombreArchivoExcel());
-			command.setNombreArchivoTexto(bean.getNombreArchivoTexto());
-			command.setTerminalActualizacion(bean.getTerminalActualizacion());
-			command.setTerminalCreacion(bean.getTerminalCreacion());
-			command.setTotalReconocer(bean.getTotalReconocer());
-			command.setUsuarioActualizacion(bean.getUsuarioActualizacion());
-			command.setUsuarioCreacion(bean.getUsuarioCreacion());
-			command.setDescEstado(bean.getFechaEnvioDefinitivo()!=null?FiseConstants.ESTADO_FECHAENVIO_ENVIADO:FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-			command.setEstadoEnvio(bean.getFechaEnvioDefinitivo()!=null?FiseConstants.ESTADO_ENVIADO:FiseConstants.ESTADO_POR_ENVIAR);
-		   
-		}
-		}catch(Exception e){
+
+	public static Formato12BGartCommand toCommandCabecera(FiseFormato12BC bean) {
+		Formato12BGartCommand command = null;
+		try {
+
+			if (bean != null) {
+				command = new Formato12BGartCommand();
+
+				command.setAnoEjecucionGasto(bean.getId().getAnoEjecucionGasto());
+				command.setAnoPresentacion(bean.getId().getAnoPresentacion());
+				command.setCodEmpresa(bean.getId().getCodEmpresa());
+				command.setCodEmpresaHidden(bean.getId().getCodEmpresa());
+				command.setDescEmpresa(bean.getAdmEmpresa() != null ? bean.getAdmEmpresa().getDscCortaEmpresa() : "");
+				command.setEtapa(bean.getId().getEtapa());
+				command.setMesEjecucionGasto(bean.getId().getMesEjecucionGasto());
+				command.setMesPresentacion(bean.getId().getMesPresentacion());
+				command.setDescMes((bean.getId().getMesPresentacion() != null && bean.getId().getMesPresentacion() > 0) ? FiseUtil.descripcionMes(bean.getId().getMesPresentacion()) : "");
+				command.setDescMesEjec((bean.getId().getMesEjecucionGasto() != null && bean.getId().getMesEjecucionGasto() > 0) ? FiseUtil.descripcionMes(bean.getId().getMesEjecucionGasto()) : "");
+
+				String mesPres = ((bean.getId().getMesPresentacion() + "").length() > 1 ? bean.getId().getMesPresentacion() + "" : "0" + bean.getId().getMesPresentacion());
+				command.setPeridoDeclaracion(bean.getId().getAnoPresentacion() + "" + mesPres + bean.getId().getEtapa());
+				command.setPeridoDeclaracionHidden(bean.getId().getAnoPresentacion() + mesPres + bean.getId().getEtapa());
+
+				command.setFechaActualizacion(bean.getFechaActualizacion());
+				command.setFechaCreacion(bean.getFechaCreacion());
+				command.setFechaEnvioDefinitivo(bean.getFechaEnvioDefinitivo());
+				command.setStrfechaEnvioDefinitivo(FiseUtil.toStringFormat(bean.getFechaEnvioDefinitivo(), FiseUtil.FORMATO_DDMMYYYY));
+				command.setIdGrupoInf(bean.getFiseGrupoInformacion() != null ? bean.getFiseGrupoInformacion().getIdGrupoInformacion().intValue() : null);
+				command.setDescGrupo(bean.getFiseGrupoInformacion() != null ? bean.getFiseGrupoInformacion().getDescripcion() : "");
+				command.setNombreArchivoExcel(bean.getNombreArchivoExcel());
+				command.setNombreArchivoTexto(bean.getNombreArchivoTexto());
+				command.setTerminalActualizacion(bean.getTerminalActualizacion());
+				command.setTerminalCreacion(bean.getTerminalCreacion());
+				command.setTotalReconocer(bean.getTotalReconocer());
+				command.setUsuarioActualizacion(bean.getUsuarioActualizacion());
+				command.setUsuarioCreacion(bean.getUsuarioCreacion());
+				command.setDescEstado(bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_FECHAENVIO_ENVIADO : FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+				command.setEstadoEnvio(bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_ENVIADO : FiseConstants.ESTADO_POR_ENVIAR);
+
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return command;
 	}
-	
-	public static JSONObject toJSONCabecera(FiseFormato12BC bean,CommonGartService commonService) throws JSONException{
-		JSONObject jsonObj=null;
-		if(bean!=null){
+
+	public static JSONObject toJSONCabecera(FiseFormato12BC bean, CommonGartService commonService) throws JSONException {
+		JSONObject jsonObj = null;
+		if (bean != null) {
 			jsonObj = new JSONObject();
-			
-			jsonObj.put("anoEjecucionGasto",bean.getId().getAnoEjecucionGasto());
-			jsonObj.put("anoPresentacion",bean.getId().getAnoPresentacion());
-			jsonObj.put("codEmpresa",bean.getId().getCodEmpresa());
-			jsonObj.put("descEmpresa",bean.getAdmEmpresa()!=null?bean.getAdmEmpresa().getDscCortaEmpresa():"");
-			jsonObj.put("etapa",bean.getId().getEtapa());
-			jsonObj.put("mesEjecucionGasto",bean.getId().getMesEjecucionGasto());
-			jsonObj.put("mesPresentacion",bean.getId().getMesPresentacion());
-			jsonObj.put("strfechaEnvioDefinitivo",bean.getFechaEnvioDefinitivo()!=null?FiseUtil.toStringFormat(bean.getFechaEnvioDefinitivo(), FiseUtil.FORMATO_DDMMYYYY):"");
-			jsonObj.put("idGrupoInf",bean.getFiseGrupoInformacion()!=null?bean.getFiseGrupoInformacion().getIdGrupoInformacion().intValue():null);
-			jsonObj.put("descGrupo",bean.getFiseGrupoInformacion()!=null?bean.getFiseGrupoInformacion().getDescripcion():"");
-			jsonObj.put("nombreArchivoExcel",bean.getNombreArchivoExcel());
-			jsonObj.put("nombreArchivoTexto",bean.getNombreArchivoTexto());
-			jsonObj.put("totalReconocer",bean.getTotalReconocer());
-			jsonObj.put("descEstado",bean.getFechaEnvioDefinitivo()!=null?FiseConstants.ESTADO_FECHAENVIO_ENVIADO:FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-			jsonObj.put("descMes",(bean.getId().getMesPresentacion()!=null && bean.getId().getMesPresentacion()>0)?FiseUtil.descripcionMes(bean.getId().getMesPresentacion()):"");
-			jsonObj.put("estadoEnvio",bean.getFechaEnvioDefinitivo()!=null?FiseConstants.ESTADO_ENVIADO:FiseConstants.ESTADO_POR_ENVIAR);
-			jsonObj.put("estadoProceso",commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa()));
-			jsonObj.put("mesEjecucionGasto",bean.getId().getMesEjecucionGasto());
-			jsonObj.put("descMesEjec",(bean.getId().getMesEjecucionGasto()!=null && bean.getId().getMesEjecucionGasto()>0)?FiseUtil.descripcionMes(bean.getId().getMesEjecucionGasto()):"");
-			jsonObj.put("anoEjecucionGasto",bean.getId().getAnoEjecucionGasto());
-			
-			System.out.println("estado:"+commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa()));
+
+			jsonObj.put("anoEjecucionGasto", bean.getId().getAnoEjecucionGasto());
+			jsonObj.put("anoPresentacion", bean.getId().getAnoPresentacion());
+			jsonObj.put("codEmpresa", bean.getId().getCodEmpresa());
+			jsonObj.put("descEmpresa", bean.getAdmEmpresa() != null ? bean.getAdmEmpresa().getDscCortaEmpresa() : "");
+			jsonObj.put("etapa", bean.getId().getEtapa());
+			jsonObj.put("mesEjecucionGasto", bean.getId().getMesEjecucionGasto());
+			jsonObj.put("mesPresentacion", bean.getId().getMesPresentacion());
+			jsonObj.put("strfechaEnvioDefinitivo", bean.getFechaEnvioDefinitivo() != null ? FiseUtil.toStringFormat(bean.getFechaEnvioDefinitivo(), FiseUtil.FORMATO_DDMMYYYY) : "");
+			jsonObj.put("idGrupoInf", bean.getFiseGrupoInformacion() != null ? bean.getFiseGrupoInformacion().getIdGrupoInformacion().intValue() : null);
+			jsonObj.put("descGrupo", bean.getFiseGrupoInformacion() != null ? bean.getFiseGrupoInformacion().getDescripcion() : "");
+			jsonObj.put("nombreArchivoExcel", bean.getNombreArchivoExcel());
+			jsonObj.put("nombreArchivoTexto", bean.getNombreArchivoTexto());
+			jsonObj.put("totalReconocer", bean.getTotalReconocer());
+			jsonObj.put("descEstado", bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_FECHAENVIO_ENVIADO : FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+			jsonObj.put("descMes", (bean.getId().getMesPresentacion() != null && bean.getId().getMesPresentacion() > 0) ? FiseUtil.descripcionMes(bean.getId().getMesPresentacion()) : "");
+			jsonObj.put("estadoEnvio", bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_ENVIADO : FiseConstants.ESTADO_POR_ENVIAR);
+			jsonObj.put("estadoProceso", commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa()));
+			jsonObj.put("mesEjecucionGasto", bean.getId().getMesEjecucionGasto());
+			jsonObj.put("descMesEjec", (bean.getId().getMesEjecucionGasto() != null && bean.getId().getMesEjecucionGasto() > 0) ? FiseUtil.descripcionMes(bean.getId().getMesEjecucionGasto()) : "");
+			jsonObj.put("anoEjecucionGasto", bean.getId().getAnoEjecucionGasto());
+
+			System.out.println("estado:" + commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa()));
 		}
 		return jsonObj;
-		
+
 	}
-	
-	public static List<Formato12BGartCommand> toListCommandCabecera(List<FiseFormato12BC> lst){
-		List<Formato12BGartCommand> lstReturn=null;
-		try{
-			if(lst!=null && !lst.isEmpty()){
-				lstReturn=new ArrayList<Formato12BGartCommand>();
-				for(FiseFormato12BC bean:lst){
-				 lstReturn.add(toCommandCabecera(bean));
-				
+
+	public static List<Formato12BGartCommand> toListCommandCabecera(List<FiseFormato12BC> lst) {
+		List<Formato12BGartCommand> lstReturn = null;
+		try {
+			if (lst != null && !lst.isEmpty()) {
+				lstReturn = new ArrayList<Formato12BGartCommand>();
+				for (FiseFormato12BC bean : lst) {
+					lstReturn.add(toCommandCabecera(bean));
+
 				}
 			}
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return lstReturn;
 	}
-	
-	public static JSONArray toListJSONCabecera(List<FiseFormato12BC> lst,CommonGartService commonService) throws JSONException{
-		JSONArray lstReturn=null;
-		
-			if(lst!=null && !lst.isEmpty()){
-				lstReturn=new JSONArray();
-				for(FiseFormato12BC bean:lst){
-				 lstReturn.put(toJSONCabecera(bean,commonService));
-				
-				}
+
+	public static JSONArray toListJSONCabecera(List<FiseFormato12BC> lst, CommonGartService commonService) throws JSONException {
+		JSONArray lstReturn = null;
+
+		if (lst != null && !lst.isEmpty()) {
+			lstReturn = new JSONArray();
+			for (FiseFormato12BC bean : lst) {
+				lstReturn.put(toJSONCabecera(bean, commonService));
+
 			}
+		}
 		return lstReturn;
 	}
-	
-/*	public static Formato12BGartCommand toCommandDetalleOne(FiseFormato12BD bean){
-		Formato12BGartCommand command=null;
-		if(bean!=null){
-			command=new Formato12BGartCommand();
-			
-			command.setAnoEjecucionGasto(bean.getId().getAnoEjecucionGasto());
-			command.setAnoPresentacion(bean.getId().getAnoPresentacion());
-			command.setCodEmpresa(bean.getId().getCodEmpresa());
-			command.setEtapa(bean.getId().getEtapa());
-			command.setMesEjecucionGasto(bean.getId().getMesEjecucionGasto());
-			command.setMesPresentacion(bean.getId().getMesPresentacion());
-			command.setIdZonaBenef(bean.getId().getIdZonaBenef());
-			
-			//command.setDescEstado(descEstado);
-			//command.getDescGrupo();
-			
-			command.setDescMes((bean.getId().getMesPresentacion()!=null && bean.getId().getMesPresentacion()>0)?FiseUtil.descripcionMes(bean.getId().getMesPresentacion()):"");
-			command.setDescMesEjec((bean.getId().getMesEjecucionGasto()!=null && bean.getId().getMesEjecucionGasto()>0)?FiseUtil.descripcionMes(bean.getId().getMesEjecucionGasto()):"");
-			
-			
-			command.setFechaActualizacion(bean.getFechaActualizacion());
-			command.setFechaCreacion(bean.getFechaCreacion());
-			command.setTerminalActualizacion(bean.getTerminalActualizacion());
-			command.setTerminalCreacion(bean.getTerminalCreacion());
-			command.setTotalReconocer(bean.getTotalReconocer());
-			command.setUsuarioActualizacion(bean.getUsuarioActualizacion());
-			command.setUsuarioCreacion(bean.getUsuarioCreacion());
-			
-			
-				command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion());
-				command.setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan());
-				command.setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl());
-				command.setCostoEstandarUnitValeImpre(bean.getCostoEstandarUnitValeImpre());
-				command.setCostoEstandarUnitValeRepar(bean.getCostoEstandarUnitValeRepar());
-				command.setCostoEstandarUnitValFiCan(bean.getCostoEstandarUnitValFiCan());
-				
-				command.setCostoTotalAtencionConsRecl(bean.getCostoTotalAtencionConsRecl());
-				command.setCostoTotalCanjeLiqValeDig(bean.getCostoTotalCanjeLiqValeDig());
-				command.setCostoTotalCanjeLiqValeFis(bean.getCostoTotalCanjeLiqValeFis());
-				command.setCostoTotalEntregaValDisEl(bean.getCostoTotalEntregaValDisEl());
-				command.setCostoTotalImpresionVale(bean.getCostoTotalImpresionVale());
-				command.setCostoTotalRepartoValesDomi(bean.getCostoTotalRepartoValesDomi());
-				
-				command.setNumeroAtenciones(bean.getNumeroAtenciones());
-				command.setNumeroValesDigitalCanjeados(bean.getNumeroValesDigitalCanjeados());
-				command.setNumeroValesEntregadoDisEl(bean.getNumeroValesEntregadoDisEl());
-				command.setNumeroValesFisicosCanjeados(bean.getNumeroValesFisicosCanjeados());
-				command.setNumeroValesImpreso(bean.getNumeroValesImpreso());
-				command.setNumeroValesRepartidosDomi(bean.getNumeroValesRepartidosDomi());
-				
-				command.setTotalActividadesExtraord(bean.getTotalActividadesExtraord());
-				command.setTotalDesplazamientoPersonal(bean.getTotalDesplazamientoPersonal());
-				command.setTotalGestionAdministrativa(bean.getTotalGestionAdministrativa());
-			
-			
-			
-			
-			
-		}
-		return command;
-	}*/
-	
-	public static Formato12BGartCommand toCommandDetalle(List<FiseFormato12BD> lst,Formato12BGartCommand command){
-		
-		try{
-			
-			if(lst!=null && !lst.isEmpty()){
-				if(command==null){
-					command=new Formato12BGartCommand();
-					
+
+	/*
+	 * public static Formato12BGartCommand toCommandDetalleOne(FiseFormato12BD
+	 * bean){ Formato12BGartCommand command=null; if(bean!=null){ command=new
+	 * Formato12BGartCommand();
+	 * 
+	 * command.setAnoEjecucionGasto(bean.getId().getAnoEjecucionGasto());
+	 * command.setAnoPresentacion(bean.getId().getAnoPresentacion());
+	 * command.setCodEmpresa(bean.getId().getCodEmpresa());
+	 * command.setEtapa(bean.getId().getEtapa());
+	 * command.setMesEjecucionGasto(bean.getId().getMesEjecucionGasto());
+	 * command.setMesPresentacion(bean.getId().getMesPresentacion());
+	 * command.setIdZonaBenef(bean.getId().getIdZonaBenef());
+	 * 
+	 * //command.setDescEstado(descEstado); //command.getDescGrupo();
+	 * 
+	 * command.setDescMes((bean.getId().getMesPresentacion()!=null &&
+	 * bean.getId(
+	 * ).getMesPresentacion()>0)?FiseUtil.descripcionMes(bean.getId().
+	 * getMesPresentacion()):"");
+	 * command.setDescMesEjec((bean.getId().getMesEjecucionGasto()!=null &&
+	 * bean.
+	 * getId().getMesEjecucionGasto()>0)?FiseUtil.descripcionMes(bean.getId(
+	 * ).getMesEjecucionGasto()):"");
+	 * 
+	 * 
+	 * command.setFechaActualizacion(bean.getFechaActualizacion());
+	 * command.setFechaCreacion(bean.getFechaCreacion());
+	 * command.setTerminalActualizacion(bean.getTerminalActualizacion());
+	 * command.setTerminalCreacion(bean.getTerminalCreacion());
+	 * command.setTotalReconocer(bean.getTotalReconocer());
+	 * command.setUsuarioActualizacion(bean.getUsuarioActualizacion());
+	 * command.setUsuarioCreacion(bean.getUsuarioCreacion());
+	 * 
+	 * 
+	 * command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion());
+	 * command
+	 * .setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan());
+	 * command
+	 * .setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl());
+	 * command
+	 * .setCostoEstandarUnitValeImpre(bean.getCostoEstandarUnitValeImpre());
+	 * command
+	 * .setCostoEstandarUnitValeRepar(bean.getCostoEstandarUnitValeRepar());
+	 * command
+	 * .setCostoEstandarUnitValFiCan(bean.getCostoEstandarUnitValFiCan());
+	 * 
+	 * command.setCostoTotalAtencionConsRecl(bean.getCostoTotalAtencionConsRecl()
+	 * );
+	 * command.setCostoTotalCanjeLiqValeDig(bean.getCostoTotalCanjeLiqValeDig(
+	 * ));
+	 * command.setCostoTotalCanjeLiqValeFis(bean.getCostoTotalCanjeLiqValeFis
+	 * ());
+	 * command.setCostoTotalEntregaValDisEl(bean.getCostoTotalEntregaValDisEl
+	 * ());
+	 * command.setCostoTotalImpresionVale(bean.getCostoTotalImpresionVale());
+	 * command
+	 * .setCostoTotalRepartoValesDomi(bean.getCostoTotalRepartoValesDomi());
+	 * 
+	 * command.setNumeroAtenciones(bean.getNumeroAtenciones());
+	 * command.setNumeroValesDigitalCanjeados
+	 * (bean.getNumeroValesDigitalCanjeados());
+	 * command.setNumeroValesEntregadoDisEl
+	 * (bean.getNumeroValesEntregadoDisEl());
+	 * command.setNumeroValesFisicosCanjeados
+	 * (bean.getNumeroValesFisicosCanjeados());
+	 * command.setNumeroValesImpreso(bean.getNumeroValesImpreso());
+	 * command.setNumeroValesRepartidosDomi
+	 * (bean.getNumeroValesRepartidosDomi());
+	 * 
+	 * command.setTotalActividadesExtraord(bean.getTotalActividadesExtraord());
+	 * command
+	 * .setTotalDesplazamientoPersonal(bean.getTotalDesplazamientoPersonal());
+	 * command
+	 * .setTotalGestionAdministrativa(bean.getTotalGestionAdministrativa());
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * } return command; }
+	 */
+
+	public static Formato12BGartCommand toCommandDetalle(List<FiseFormato12BD> lst, Formato12BGartCommand command) {
+
+		try {
+
+			if (lst != null && !lst.isEmpty()) {
+				if (command == null) {
+					command = new Formato12BGartCommand();
+
 					command.setAnoEjecucionGasto(lst.get(0).getId().getAnoEjecucionGasto());
 					command.setAnoPresentacion(lst.get(0).getId().getAnoPresentacion());
 					command.setCodEmpresa(lst.get(0).getId().getCodEmpresa());
@@ -365,13 +395,15 @@ public class Formato12BGartCommand implements Serializable {
 					command.setMesEjecucionGasto(lst.get(0).getId().getMesEjecucionGasto());
 					command.setMesPresentacion(lst.get(0).getId().getMesPresentacion());
 					command.setIdZonaBenef(lst.get(0).getId().getIdZonaBenef());
-					
-					command.setPeridoDeclaracion(lst.get(0).getId().getAnoPresentacion()+""+lst.get(0).getId().getMesPresentacion()+lst.get(0).getId().getEtapa());
-					command.setPeridoDeclaracionHidden(lst.get(0).getId().getAnoPresentacion()+""+lst.get(0).getId().getMesPresentacion()+lst.get(0).getId().getEtapa());
-					command.setDescGrupo(lst.get(0).getFiseFormato12BC().getFiseGrupoInformacion()!=null?lst.get(0).getFiseFormato12BC().getFiseGrupoInformacion().getDescripcion():"");
+
+					String mesPres = ((lst.get(0).getId().getMesPresentacion() + "").length() > 1 ? lst.get(0).getId().getMesPresentacion() + "" : "0" + lst.get(0).getId().getMesPresentacion());
+					command.setPeridoDeclaracion(lst.get(0).getId().getAnoPresentacion() + mesPres + lst.get(0).getId().getEtapa());
+					command.setPeridoDeclaracionHidden(lst.get(0).getId().getAnoPresentacion() + mesPres + lst.get(0).getId().getEtapa());
+
+					command.setDescGrupo(lst.get(0).getFiseFormato12BC().getFiseGrupoInformacion() != null ? lst.get(0).getFiseFormato12BC().getFiseGrupoInformacion().getDescripcion() : "");
 					command.setCodEmpresaHidden(lst.get(0).getId().getCodEmpresa());
-					command.setDescEmpresa(lst.get(0).getFiseFormato12BC()!=null?lst.get(0).getFiseFormato12BC().getAdmEmpresa().getDscCortaEmpresa():"");
-					
+					command.setDescEmpresa(lst.get(0).getFiseFormato12BC() != null ? lst.get(0).getFiseFormato12BC().getAdmEmpresa().getDscCortaEmpresa() : "");
+
 					command.setFechaActualizacion(lst.get(0).getFechaActualizacion());
 					command.setFechaCreacion(lst.get(0).getFechaCreacion());
 					command.setTerminalActualizacion(lst.get(0).getTerminalActualizacion());
@@ -379,235 +411,290 @@ public class Formato12BGartCommand implements Serializable {
 					command.setTotalReconocer(lst.get(0).getTotalReconocer());
 					command.setUsuarioActualizacion(lst.get(0).getUsuarioActualizacion());
 					command.setUsuarioCreacion(lst.get(0).getUsuarioCreacion());
-					
-					command.setDescMes((lst.get(0).getId().getMesPresentacion()!=null && lst.get(0).getId().getMesPresentacion()>0)?FiseUtil.descripcionMes(lst.get(0).getId().getMesPresentacion()):"");
-					command.setDescMesEjec((lst.get(0).getId().getMesEjecucionGasto()!=null && lst.get(0).getId().getMesEjecucionGasto()>0)?FiseUtil.descripcionMes(lst.get(0).getId().getMesEjecucionGasto()):"");
-					
-					
+
+					command.setDescMes((lst.get(0).getId().getMesPresentacion() != null && lst.get(0).getId().getMesPresentacion() > 0) ? FiseUtil.descripcionMes(lst.get(0).getId().getMesPresentacion()) : "");
+					command.setDescMesEjec((lst.get(0).getId().getMesEjecucionGasto() != null && lst.get(0).getId().getMesEjecucionGasto() > 0) ? FiseUtil.descripcionMes(lst.get(0).getId().getMesEjecucionGasto()) : "");
+
 				}
-				
-				
-				
-				
-				for(FiseFormato12BD bean:lst){
-					if(bean.getId().getIdZonaBenef()==FiseConstants.ZONA_RURAL){
-						command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion());
-						command.setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan());
-						command.setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl());
-						command.setCostoEstandarUnitValeImpre(bean.getCostoEstandarUnitValeImpre());
-						command.setCostoEstandarUnitValeRepar(bean.getCostoEstandarUnitValeRepar());
-						command.setCostoEstandarUnitValFiCan(bean.getCostoEstandarUnitValFiCan());
-						
-						command.setCostoTotalAtencionConsRecl(bean.getCostoTotalAtencionConsRecl());
-						command.setCostoTotalCanjeLiqValeDig(bean.getCostoTotalCanjeLiqValeDig());
-						command.setCostoTotalCanjeLiqValeFis(bean.getCostoTotalCanjeLiqValeFis());
-						command.setCostoTotalEntregaValDisEl(bean.getCostoTotalEntregaValDisEl());
-						command.setCostoTotalImpresionVale(bean.getCostoTotalImpresionVale());
-						command.setCostoTotalRepartoValesDomi(bean.getCostoTotalRepartoValesDomi());
-						
+
+				for (FiseFormato12BD bean : lst) {
+					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_RURAL) {
+						// round(new BigDecimal("12.390"), 2, true);
+
+						command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion():new BigDecimal(0));
+						command.setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan():new BigDecimal(0));
+						command.setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl():new BigDecimal(0));
+						command.setCostoEstandarUnitValeImpre(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre():new BigDecimal(0));
+						command.setCostoEstandarUnitValeRepar(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar():new BigDecimal(0));
+						command.setCostoEstandarUnitValFiCan(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan():new BigDecimal(0));
+
+						command.setCostoTotalAtencionConsRecl(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl():new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeDig(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig():new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeFis(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis():new BigDecimal(0));
+						command.setCostoTotalEntregaValDisEl(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl():new BigDecimal(0));
+						command.setCostoTotalImpresionVale(bean.getCostoTotalImpresionVale()!=null?bean.getCostoTotalImpresionVale():new BigDecimal(0));
+						command.setCostoTotalRepartoValesDomi(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi():new BigDecimal(0));
+
 						command.setNumeroAtenciones(bean.getNumeroAtenciones());
 						command.setNumeroValesDigitalCanjeados(bean.getNumeroValesDigitalCanjeados());
 						command.setNumeroValesEntregadoDisEl(bean.getNumeroValesEntregadoDisEl());
 						command.setNumeroValesFisicosCanjeados(bean.getNumeroValesFisicosCanjeados());
 						command.setNumeroValesImpreso(bean.getNumeroValesImpreso());
 						command.setNumeroValesRepartidosDomi(bean.getNumeroValesRepartidosDomi());
-						
-						command.setTotalActividadesExtraord(bean.getTotalActividadesExtraord());
-						command.setTotalDesplazamientoPersonal(bean.getTotalDesplazamientoPersonal());
-						command.setTotalGestionAdministrativa(bean.getTotalGestionAdministrativa());
-					
-					}if(bean.getId().getIdZonaBenef()==FiseConstants.ZONA_PROVINCIA){
-						command.setCostoEstandarUnitAtencionProv(bean.getCostoEstandarUnitAtencion());
-						command.setCostoEstandarUnitValDgCanProv(bean.getCostoEstandarUnitValDgCan());
-						command.setCostoEstandarUnitValDisElProv(bean.getCostoEstandarUnitValDisEl());
-						command.setCostoEstandarUnitValeImpreProv(bean.getCostoEstandarUnitValeImpre());
-						command.setCostoEstandarUnitValeReparProv(bean.getCostoEstandarUnitValeRepar());
-						command.setCostoEstandarUnitValFiCanProv(bean.getCostoEstandarUnitValFiCan());
-						
-						command.setCostoTotalAtencionConsReclProv(bean.getCostoTotalAtencionConsRecl());
-						command.setCostoTotalCanjeLiqValeDigProv(bean.getCostoTotalCanjeLiqValeDig());
-						command.setCostoTotalCanjeLiqValeFisProv(bean.getCostoTotalCanjeLiqValeFis());
-						command.setCostoTotalEntregaValDisElProv(bean.getCostoTotalEntregaValDisEl());
-						command.setCostoTotalImpresionValeProv(bean.getCostoTotalImpresionVale());
-						command.setCostoTotalRepartoValesDomiProv(bean.getCostoTotalRepartoValesDomi());
-						
+
+						command.setTotalActividadesExtraord(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord():new BigDecimal(0));
+						command.setTotalDesplazamientoPersonal(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal():new BigDecimal(0));
+						command.setTotalGestionAdministrativa(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa():new BigDecimal(0));
+
+						command.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalEntregaValDisEl().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalImpresionVale().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_UP);
+
+					}
+					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_PROVINCIA) {
+						command.setCostoEstandarUnitAtencionProv(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion():new BigDecimal(0));
+						command.setCostoEstandarUnitValDgCanProv(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan():new BigDecimal(0));
+						command.setCostoEstandarUnitValDisElProv(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl():new BigDecimal(0));
+						command.setCostoEstandarUnitValeImpreProv(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre():new BigDecimal(0));
+						command.setCostoEstandarUnitValeReparProv(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar():new BigDecimal(0));
+						command.setCostoEstandarUnitValFiCanProv(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan():new BigDecimal(0));
+
+						command.setCostoTotalAtencionConsReclProv(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl():new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeDigProv(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig():new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeFisProv(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis():new BigDecimal(0));
+						command.setCostoTotalEntregaValDisElProv(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl():new BigDecimal(0));
+						command.setCostoTotalImpresionValeProv(bean.getCostoTotalImpresionVale()!=null?bean.getCostoTotalImpresionVale():new BigDecimal(0));
+						command.setCostoTotalRepartoValesDomiProv(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi():new BigDecimal(0));
+
 						command.setNumeroAtencionesProv(bean.getNumeroAtenciones());
 						command.setNumeroValesDigitalCanjeadosProv(bean.getNumeroValesDigitalCanjeados());
 						command.setNumeroValesEntregadoDisElProv(bean.getNumeroValesEntregadoDisEl());
 						command.setNumeroValesFisicosCanjeadosProv(bean.getNumeroValesFisicosCanjeados());
 						command.setNumeroValesImpresoProv(bean.getNumeroValesImpreso());
 						command.setNumeroValesRepartidosDomiProv(bean.getNumeroValesRepartidosDomi());
-						
-						command.setTotalActividadesExtraordProv(bean.getTotalActividadesExtraord());
-						command.setTotalDesplazamientoPersonalProv(bean.getTotalDesplazamientoPersonal());
-						command.setTotalGestionAdministrativaProv(bean.getTotalGestionAdministrativa());
-						
-					}if(bean.getId().getIdZonaBenef()==FiseConstants.ZONA_LIMA){
-						command.setCostoEstandarUnitAtencionLim(bean.getCostoEstandarUnitAtencion());
-						command.setCostoEstandarUnitValDgCanLim(bean.getCostoEstandarUnitValDgCan());
-						command.setCostoEstandarUnitValDisElLim(bean.getCostoEstandarUnitValDisEl());
-						command.setCostoEstandarUnitValeImpreLim(bean.getCostoEstandarUnitValeImpre());
-						command.setCostoEstandarUnitValeReparLim(bean.getCostoEstandarUnitValeRepar());
-						command.setCostoEstandarUnitValFiCanLim(bean.getCostoEstandarUnitValFiCan());
-						command.setCostoTotalAtencionConsReclLim(bean.getCostoTotalAtencionConsRecl());
-						command.setCostoTotalCanjeLiqValeDigLim(bean.getCostoTotalCanjeLiqValeDig());
-						command.setCostoTotalCanjeLiqValeFisLim(bean.getCostoTotalCanjeLiqValeFis());
-						command.setCostoTotalEntregaValDisElLim(bean.getCostoTotalEntregaValDisEl());
-						command.setCostoTotalImpresionValeLim(bean.getCostoTotalImpresionVale());
-						command.setCostoTotalRepartoValesDomiLim(bean.getCostoTotalRepartoValesDomi());
+
+						command.setTotalActividadesExtraordProv(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord():new BigDecimal(0));
+						command.setTotalDesplazamientoPersonalProv(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal():new BigDecimal(0));
+						command.setTotalGestionAdministrativaProv(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa():new BigDecimal(0));
+
+						command.getCostoEstandarUnitAtencionProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValDgCanProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValDisElProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValeImpreProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValeReparProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValFiCanProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalAtencionConsReclProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalCanjeLiqValeDigProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalCanjeLiqValeFisProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalEntregaValDisElProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalImpresionValeProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalRepartoValesDomiProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalActividadesExtraordProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalDesplazamientoPersonalProv().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalGestionAdministrativaProv().setScale(2, BigDecimal.ROUND_UP);
+
+					}
+					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_LIMA) {
+						command.setCostoEstandarUnitAtencionLim(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion():new BigDecimal(0));
+						command.setCostoEstandarUnitValDgCanLim(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan():new BigDecimal(0));
+						command.setCostoEstandarUnitValDisElLim(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl():new BigDecimal(0));
+						command.setCostoEstandarUnitValeImpreLim(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre():new BigDecimal(0));
+						command.setCostoEstandarUnitValeReparLim(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar():new BigDecimal(0));
+						command.setCostoEstandarUnitValFiCanLim(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan():new BigDecimal(0));
+						command.setCostoTotalAtencionConsReclLim(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl():new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeDigLim(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig():new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeFisLim(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis():new BigDecimal(0));
+						command.setCostoTotalEntregaValDisElLim(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl():new BigDecimal(0));
+						command.setCostoTotalImpresionValeLim(bean.getCostoTotalImpresionVale()!=null?bean.getCostoTotalImpresionVale():new BigDecimal(0));
+						command.setCostoTotalRepartoValesDomiLim(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi():new BigDecimal(0));
 						command.setNumeroAtencionesLim(bean.getNumeroAtenciones());
 						command.setNumeroValesDigitalCanjeadosLim(bean.getNumeroValesDigitalCanjeados());
 						command.setNumeroValesEntregadoDisElLim(bean.getNumeroValesEntregadoDisEl());
 						command.setNumeroValesFisicosCanjeadosLim(bean.getNumeroValesFisicosCanjeados());
 						command.setNumeroValesImpresoLim(bean.getNumeroValesImpreso());
 						command.setNumeroValesRepartidosDomiLim(bean.getNumeroValesRepartidosDomi());
-						command.setTotalActividadesExtraordLim(bean.getTotalActividadesExtraord());
-						command.setTotalDesplazamientoPersonalLim(bean.getTotalDesplazamientoPersonal());
-						command.setTotalGestionAdministrativaLim(bean.getTotalGestionAdministrativa());
+						command.setTotalActividadesExtraordLim(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord():new BigDecimal(0));
+						command.setTotalDesplazamientoPersonalLim(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal():new BigDecimal(0));
+						command.setTotalGestionAdministrativaLim(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa():new BigDecimal(0));
+
+						command.getCostoEstandarUnitAtencionLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValDgCanLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValDisElLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValeImpreLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValeReparLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoEstandarUnitValFiCanLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalAtencionConsReclLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalCanjeLiqValeDigLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalCanjeLiqValeFisLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalEntregaValDisElLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalImpresionValeLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalRepartoValesDomiLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalActividadesExtraordLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalDesplazamientoPersonalLim().setScale(2, BigDecimal.ROUND_UP);
+						command.getTotalGestionAdministrativaLim().setScale(2, BigDecimal.ROUND_UP);
 					}
 				}
-				
+
 			}
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		return command;	
-		
+
+		return command;
+
 	}
-	
-	/*public static List<Formato12BGartCommand> toListCommandDetalle(List<FiseFormato12BD> lst){
-		List<Formato12BGartCommand> lstReturn=null;
-		if(lst!=null && !lst.isEmpty()){
-			lstReturn=new ArrayList<Formato12BGartCommand>();
-			for(FiseFormato12BD bean:lst){
-			lstReturn.add(toCommandDetalleOne(bean));
+
+	/*
+	 * public static List<Formato12BGartCommand>
+	 * toListCommandDetalle(List<FiseFormato12BD> lst){
+	 * List<Formato12BGartCommand> lstReturn=null; if(lst!=null &&
+	 * !lst.isEmpty()){ lstReturn=new ArrayList<Formato12BGartCommand>();
+	 * for(FiseFormato12BD bean:lst){ lstReturn.add(toCommandDetalleOne(bean));
+	 * } } return lstReturn; }
+	 */
+
+	public static List<FiseFormato12BD> toBeanDetalle(Formato12BGartCommand command) {
+		List<FiseFormato12BD> lstresult = new ArrayList<FiseFormato12BD>();
+		FiseFormato12BD bean = null;
+		int nro = 0;
+		boolean isAdd = true;
+		if (command != null) {
+			while (nro < 3) {
+
+				bean = new FiseFormato12BD();
+				FiseFormato12BDPK pk = new FiseFormato12BDPK();
+				pk.setAnoEjecucionGasto(command.getAnoEjecucionGasto());
+				pk.setAnoPresentacion(command.getAnoPresentacion());
+				pk.setCodEmpresa(command.getCodEmpresa());
+				pk.setEtapa(command.getEtapa());
+				pk.setMesEjecucionGasto(command.getMesEjecucionGasto());
+				pk.setMesPresentacion(command.getMesPresentacion());
+
+				bean.setFechaActualizacion(command.getFechaActualizacion());
+				bean.setFechaCreacion(command.getFechaCreacion());
+				bean.setTerminalActualizacion(command.getTerminalActualizacion());
+				bean.setTerminalCreacion(command.getTerminalCreacion());
+				bean.setTotalReconocer(command.getTotalReconocer());
+				bean.setUsuarioActualizacion(command.getUsuarioActualizacion());
+				bean.setUsuarioCreacion(command.getUsuarioCreacion());
+
+				if (nro == 0) {
+
+					bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencion());
+					bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCan());
+					bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisEl());
+					bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpre());
+					bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeRepar());
+					bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCan());
+
+					bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsRecl());
+					bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDig());
+					bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFis());
+					bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisEl());
+					bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionVale());
+					bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomi());
+
+					bean.setNumeroAtenciones(command.getNumeroAtenciones());
+					bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeados());
+					bean.setNumeroValesEntregadoDisEl(command.getNumeroValesEntregadoDisEl());
+					bean.setNumeroValesFisicosCanjeados(command.getNumeroValesFisicosCanjeados());
+					bean.setNumeroValesImpreso(command.getNumeroValesImpreso());
+					bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomi());
+
+					bean.setTotalActividadesExtraord(command.getTotalActividadesExtraord());
+					bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonal());
+					bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativa());
+					pk.setIdZonaBenef(FiseConstants.ZONA_RURAL);
+
+				} else if (nro == 1) {
+					// provincial
+					bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionProv());
+					bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanProv());
+					bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElProv());
+					bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpreProv());
+					bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeReparProv());
+					bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCanProv());
+
+					bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsReclProv());
+					bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDigProv());
+					bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFisProv());
+					bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisElProv());
+					bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionValeProv());
+					bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomiProv());
+
+					bean.setNumeroAtenciones(command.getNumeroAtencionesProv());
+					bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeadosProv());
+					bean.setNumeroValesEntregadoDisEl(command.getNumeroValesEntregadoDisElProv());
+					bean.setNumeroValesFisicosCanjeados(command.getNumeroValesFisicosCanjeadosProv());
+					bean.setNumeroValesImpreso(command.getNumeroValesImpresoProv());
+					bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomiProv());
+
+					bean.setTotalActividadesExtraord(command.getTotalActividadesExtraordProv());
+					bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonalProv());
+					bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativaProv());
+					pk.setIdZonaBenef(FiseConstants.ZONA_PROVINCIA);
+
+				} else if (nro == 2) {
+					if (command.getCodEmpresa().trim() == "EDLN" || command.getCodEmpresa().trim() == "LDS") {
+                       
+						// lima
+						bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionLim());
+						bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanLim());
+						bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElLim());
+						bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpreLim());
+						bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeReparLim());
+						bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCanLim());
+
+						bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsReclLim());
+						bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDigLim());
+						bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFisLim());
+						bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisElLim());
+						bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionValeLim());
+						bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomiLim());
+
+						bean.setNumeroAtenciones(command.getNumeroAtencionesLim());
+						bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeadosLim());
+						bean.setNumeroValesEntregadoDisEl(command.getNumeroValesEntregadoDisElLim());
+						bean.setNumeroValesFisicosCanjeados(command.getNumeroValesFisicosCanjeadosLim());
+						bean.setNumeroValesImpreso(command.getNumeroValesImpresoLim());
+						bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomiLim());
+
+						bean.setTotalActividadesExtraord(command.getTotalActividadesExtraordLim());
+						bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonalLim());
+						bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativaLim());
+						pk.setIdZonaBenef(FiseConstants.ZONA_LIMA);
+
+					}else{
+						isAdd=false;
+					}
+
+				}
+                
+				if(isAdd){
+					bean.setId(pk);
+					lstresult.add(bean);
+				}
+				nro++;
+				
 			}
+
 		}
-		return lstReturn;
-	}*/
-	
-	public static List<FiseFormato12BD> toBeanDetalle(Formato12BGartCommand command){
-		List<FiseFormato12BD> lstresult=new ArrayList<FiseFormato12BD>();
-		FiseFormato12BD bean=null;
-		int nro=0;
-		if(command!=null){
-		while(nro<3){
-			
-			bean=new FiseFormato12BD();
-			FiseFormato12BDPK pk=new FiseFormato12BDPK();
-			pk.setAnoEjecucionGasto(command.getAnoEjecucionGasto());
-			pk.setAnoPresentacion(command.getAnoPresentacion());
-			pk.setCodEmpresa(command.getCodEmpresa());
-			pk.setEtapa(command.getEtapa());
-			pk.setMesEjecucionGasto(command.getMesEjecucionGasto());
-			pk.setMesPresentacion(command.getMesPresentacion());
-			
-			bean.setFechaActualizacion(command.getFechaActualizacion());
-			bean.setFechaCreacion(command.getFechaCreacion());
-			bean.setTerminalActualizacion(command.getTerminalActualizacion());
-			bean.setTerminalCreacion(command.getTerminalCreacion());
-			bean.setTotalReconocer(command.getTotalReconocer());
-			bean.setUsuarioActualizacion(command.getUsuarioActualizacion());
-			bean.setUsuarioCreacion(command.getUsuarioCreacion());
-			
-			if(nro==0){
-				
-				bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencion());
-				bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCan());
-				bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisEl());
-				bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpre());
-				bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeRepar());
-				bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCan());
-				
-				bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsRecl());
-				bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDig());
-				bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFis());
-				bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisEl());
-				bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionVale());
-				bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomi());
-				
-				bean.setNumeroAtenciones(command.getNumeroAtenciones());
-				bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeados());
-				bean.setNumeroValesEntregadoDisEl(command.getNumeroValesEntregadoDisEl());
-				bean.setNumeroValesFisicosCanjeados(command.getNumeroValesFisicosCanjeados());
-				bean.setNumeroValesImpreso(command.getNumeroValesImpreso());
-				bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomi());
-				
-				bean.setTotalActividadesExtraord(command.getTotalActividadesExtraord());
-				bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonal());
-				bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativa());
-				pk.setIdZonaBenef(FiseConstants.ZONA_RURAL);
-				
-			}else if(nro==1){
-				//provincial
-				bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionProv());
-				bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanProv());
-				bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElProv());
-				bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpreProv());
-				bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeReparProv());
-				bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCanProv());
-				
-				bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsReclProv());
-				bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDigProv());
-				bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFisProv());
-				bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisElProv());
-				bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionValeProv());
-				bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomiProv());
-				
-				bean.setNumeroAtenciones(command.getNumeroAtencionesProv());
-				bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeadosProv());
-				bean.setNumeroValesEntregadoDisEl(command.getNumeroValesEntregadoDisElProv());
-				bean.setNumeroValesFisicosCanjeados(command.getNumeroValesFisicosCanjeadosProv());
-				bean.setNumeroValesImpreso(command.getNumeroValesImpresoProv());
-				bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomiProv());
-				
-				bean.setTotalActividadesExtraord(command.getTotalActividadesExtraordProv());
-				bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonalProv());
-				bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativaProv());
-				pk.setIdZonaBenef(FiseConstants.ZONA_PROVINCIA);
-				
-			}else if(nro==2){
-				//lima
-				bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionLim());
-				bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanLim());
-				bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElLim());
-				bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpreLim());
-				bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeReparLim());
-				bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCanLim());
-				
-				bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsReclLim());
-				bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDigLim());
-				bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFisLim());
-				bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisElLim());
-				bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionValeLim());
-				bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomiLim());
-				
-				bean.setNumeroAtenciones(command.getNumeroAtencionesLim());
-				bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeadosLim());
-				bean.setNumeroValesEntregadoDisEl(command.getNumeroValesEntregadoDisElLim());
-				bean.setNumeroValesFisicosCanjeados(command.getNumeroValesFisicosCanjeadosLim());
-				bean.setNumeroValesImpreso(command.getNumeroValesImpresoLim());
-				bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomiLim());
-				
-				bean.setTotalActividadesExtraord(command.getTotalActividadesExtraordLim());
-				bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonalLim());
-				bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativaLim());
-				pk.setIdZonaBenef(FiseConstants.ZONA_LIMA);
-				
-			  }
-			   bean.setId(pk);
-			   nro++;
-			   lstresult.add(bean);
-		   }
-		
-		}
-		System.out.println("lista de detalle::"+lstresult.size());
+		System.out.println("lista de detalle::" + lstresult.size());
 		return lstresult;
 	}
-	
 
 	public Map<Long, String> getListaMes() {
 		return listaMes;
@@ -640,8 +727,6 @@ public class Formato12BGartCommand implements Serializable {
 	public void setCodEmpresa(String codEmpresa) {
 		this.codEmpresa = codEmpresa;
 	}
-
-	
 
 	public String getEtapa() {
 		return etapa;
@@ -1403,8 +1488,6 @@ public class Formato12BGartCommand implements Serializable {
 		this.estadoEnvio = estadoEnvio;
 	}
 
-	
-
 	public String getDescMesEjec() {
 		return descMesEjec;
 	}
@@ -1421,16 +1504,84 @@ public class Formato12BGartCommand implements Serializable {
 		this.estadoProceso = estadoProceso;
 	}
 
-	
+	public BigDecimal getPorImpresionVales() {
+		return porImpresionVales;
+	}
 
-	
+	public void setPorImpresionVales(BigDecimal porImpresionVales) {
+		this.porImpresionVales = porImpresionVales;
+	}
 
-	
+	public BigDecimal getPorRepartoDom() {
+		return porRepartoDom;
+	}
 
-	
+	public void setPorRepartoDom(BigDecimal porRepartoDom) {
+		this.porRepartoDom = porRepartoDom;
+	}
 
-	
-	
-	
+	public BigDecimal getPorEntregaValesDE() {
+		return porEntregaValesDE;
+	}
+
+	public void setPorEntregaValesDE(BigDecimal porEntregaValesDE) {
+		this.porEntregaValesDE = porEntregaValesDE;
+	}
+
+	public BigDecimal getPorValesFisicos() {
+		return porValesFisicos;
+	}
+
+	public void setPorValesFisicos(BigDecimal porValesFisicos) {
+		this.porValesFisicos = porValesFisicos;
+	}
+
+	public BigDecimal getPorValesDigitales() {
+		return porValesDigitales;
+	}
+
+	public void setPorValesDigitales(BigDecimal porValesDigitales) {
+		this.porValesDigitales = porValesDigitales;
+	}
+
+	public BigDecimal getPorAtencionReclamos() {
+		return porAtencionReclamos;
+	}
+
+	public void setPorAtencionReclamos(BigDecimal porAtencionReclamos) {
+		this.porAtencionReclamos = porAtencionReclamos;
+	}
+
+	public BigDecimal getPorGestionAdm() {
+		return porGestionAdm;
+	}
+
+	public void setPorGestionAdm(BigDecimal porGestionAdm) {
+		this.porGestionAdm = porGestionAdm;
+	}
+
+	public BigDecimal getPorDesplazamientoPers() {
+		return porDesplazamientoPers;
+	}
+
+	public void setPorDesplazamientoPers(BigDecimal porDesplazamientoPers) {
+		this.porDesplazamientoPers = porDesplazamientoPers;
+	}
+
+	public BigDecimal getPorActividadExtra() {
+		return porActividadExtra;
+	}
+
+	public void setPorActividadExtra(BigDecimal porActividadExtra) {
+		this.porActividadExtra = porActividadExtra;
+	}
+
+	public BigDecimal getTotalGeneralReconocer() {
+		return totalGeneralReconocer;
+	}
+
+	public void setTotalGeneralReconocer(BigDecimal totalGeneralReconocer) {
+		this.totalGeneralReconocer = totalGeneralReconocer;
+	}
 
 }

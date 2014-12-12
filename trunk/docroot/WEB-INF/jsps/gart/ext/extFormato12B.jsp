@@ -120,12 +120,12 @@
         urlValidacion:null,
         urlReporteValidacion:null,
         urlEnvioDefinitivo:null,
+        urlReporteEnvioDefinitivo:null,
         
         txtAnioEjec:null,
-        txtMesEjec:null,
         txtAnioEjecCommand:null,
-        txtMesEjecCommnad:null,
-        cmbMesEjec:null,
+       
+        
         
         dialogObservacion:null,
         tablaObservacion:null,
@@ -140,8 +140,14 @@
         urlRetornar:null,
         dialogMessageGeneral:null,
         lblMessage:null,
+       
+        cmbMesEjecucion:null,
+        txtMesEjechidden:null,
         
-		blockUI : function() {
+        dialogMessageGeneralInicial:null,
+        lblMessageInicial:null,
+        
+        blockUI : function() {
 			$.blockUI({
 						message : '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>'
 					});
@@ -161,7 +167,10 @@
 			this.dlgConfirmacion=$("#dlgConfirmacion");
 			this.urlDeleteFormato='<portlet:resourceURL id="deleteFormato"/>';
 			
+			this. dialogMessageGeneralInicial=$("#dialogMessageGeneralInicio");
+			this.lblMessageInicial=$("#lblMessageInicio");
 			
+			formato12B.initDialogsInit();
 			this.urlViewFormato=urlView;
 			formato12B.btnBuscar.click(function() {
 				formato12B.searchFormato();
@@ -175,15 +184,70 @@
 				location.href=urlNew;
 			});
 			
-		},
+		},buildGridsBusqueda : function () {	
+			formato12B.tablaBusqueda.jqGrid({
+				   datatype: "local",
+			       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Anular','','','','','','',''],
+			       colModel: [
+							{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
+			               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
+			               { name: 'descMes', index: 'descMes', width: 30},
+			               { name: 'etapa', index: 'etapa',width: 50},
+			               { name: 'descGrupo', index: 'descGrupo', width: 50},
+			               { name: 'descEstado', index: 'descEstado', width: 50},
+			               { name: 'view', index: 'view', width: 20,align:'center' },
+			               { name: 'edit', index: 'edit', width: 20,align:'center' },
+			               { name: 'elim', index: 'elim', width: 20,align:'center' },
+			               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
+			               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
+			               { name: 'estadoEnvio', index: 'estadoEnvio', hidden: true},
+			               { name: 'estadoProceso', index: 'estadoProceso', hidden: true},
+			               { name: 'mesEjecucionGasto', index: 'mesEjecucionGasto', hidden: true},
+			               { name: 'descMesEjec', index: 'descMesEjec', hidden: true},
+			               { name: 'anoEjecucionGasto', index: 'anoEjecucionGasto', hidden: true}
+				   	    ],
+				   	 multiselect: false,
+						rowNum:10,
+					   	rowList:[10,20,50],
+						height: 200,
+					   	autowidth: true,
+						rownumbers: true,
+						shrinkToFit:true,
+						pager: formato12B.paginadoBusqueda,
+					    viewrecords: true,
+					   	caption: "Formatos",
+					    sortorder: "asc",	   	    	   	   
+			       gridComplete: function(){
+			      		var ids = formato12B.tablaBusqueda.jqGrid('getDataIDs');
+			      		for(var i=0;i < ids.length;i++){
+			      			var cl = ids[i];
+			      			var ret = formato12B.tablaBusqueda.jqGrid('getRowData',cl); 
+			      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','0');\" /></a> ";
+			      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','1');\" /></a> ";
+			      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','3');\" /></a> ";
+			      			
+			      			
+			      			formato12B.tablaBusqueda.jqGrid('setRowData',ids[i],{view:view});
+			      			formato12B.tablaBusqueda.jqGrid('setRowData',ids[i],{edit:edit});
+			      			formato12B.tablaBusqueda.jqGrid('setRowData',ids[i],{elim:elem});
+			      		}
+			      }
+			  	});
+				formato12B.tablaBusqueda.jqGrid('navGrid',formato12B.paginadoBusqueda,{add:false,edit:false,del:false,search: false,refresh: false});	
+				formato12B.tablaBusqueda.jqGrid('navButtonAdd',formato12B.paginadoBusqueda,{
+				       caption:"Exportar a Excel",
+				       buttonicon: "ui-icon-bookmark",
+				       onClickButton : function () {
+				           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+				       } 
+				}); 
+			},
 		searchFormato : function () {	
-                  
-			jQuery.ajax({			
+            jQuery.ajax({			
 						url: formato12B.urlBusqueda+'&'+formato12B.formBusqueda.serialize(),
 						dataType: "json",
                         contentType: "application/json; charset=utf-8",
-		                async : false,
-						type: 'post',
+		                type: 'post',
 						beforeSend:function(){
 							formato12B.blockUI();
 						},				
@@ -200,67 +264,8 @@
 							formato12B.unblockUI();
 						}
 				});
-
-
-		},
-		buildGridsBusqueda : function () {	
-			formato12B.tablaBusqueda.jqGrid({
-			   datatype: "local",
-		       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Anular','','','','','','',''],
-		       colModel: [
-						{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
-		               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
-		               { name: 'descMes', index: 'descMes', width: 30},
-		               { name: 'etapa', index: 'etapa',width: 50},
-		               { name: 'descGrupo', index: 'descGrupo', width: 50},
-		               { name: 'descEstado', index: 'descEstado', width: 50},
-		               { name: 'view', index: 'view', width: 20,align:'center' },
-		               { name: 'edit', index: 'edit', width: 20,align:'center' },
-		               { name: 'elim', index: 'elim', width: 20,align:'center' },
-		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
-		               { name: 'mesPresentacion', index: 'mesPresentacion', hidden: true},
-		               { name: 'estadoEnvio', index: 'estadoEnvio', hidden: true},
-		               { name: 'estadoProceso', index: 'estadoProceso', hidden: true},
-		               { name: 'mesEjecucionGasto', index: 'mesEjecucionGasto', hidden: true},
-		               { name: 'descMesEjec', index: 'descMesEjec', hidden: true},
-		               { name: 'anoEjecucionGasto', index: 'anoEjecucionGasto', hidden: true}
-			   	    ],
-			   	 multiselect: false,
-					rowNum:10,
-				   	rowList:[10,20,50],
-					height: 200,
-				   	autowidth: true,
-					rownumbers: true,
-					shrinkToFit:true,
-					pager: formato12B.paginadoBusqueda,
-				    viewrecords: true,
-				   	caption: "Formatos",
-				    sortorder: "asc",	   	    	   	   
-		       gridComplete: function(){
-		      		var ids = formato12B.tablaBusqueda.jqGrid('getDataIDs');
-		      		for(var i=0;i < ids.length;i++){
-		      			var cl = ids[i];
-		      			var ret = formato12B.tablaBusqueda.jqGrid('getRowData',cl); 
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','0');\" /></a> ";
-		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','1');\" /></a> ";
-		      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','3');\" /></a> ";
-		      			
-		      			
-		      			formato12B.tablaBusqueda.jqGrid('setRowData',ids[i],{view:view});
-		      			formato12B.tablaBusqueda.jqGrid('setRowData',ids[i],{edit:edit});
-		      			formato12B.tablaBusqueda.jqGrid('setRowData',ids[i],{elim:elem});
-		      		}
-		      }
-		  	});
-			formato12B.tablaBusqueda.jqGrid('navGrid',formato12B.paginadoBusqueda,{add:false,edit:false,del:false,search: false,refresh: false});	
-			formato12B.tablaBusqueda.jqGrid('navButtonAdd',formato12B.paginadoBusqueda,{
-			       caption:"Exportar a Excel",
-			       buttonicon: "ui-icon-bookmark",
-			       onClickButton : function () {
-			           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
-			       } 
-			}); 
-		},
+        },
+		
 		loadInitDetalle:function(urlBack){
 			
 			this.urlRetornar=urlBack;
@@ -288,10 +293,12 @@
 			
 			
 			this.txtAnioEjec=$('#txtanoEjecucionGasto');
-			this.txtMesEjec=$('#txtmesEjecucionGasto');
+		//	this.txtMesEjec=$('#txtmesEjecucionGasto');
 			this.txtAnioEjecCommand=$('#anoEjecucionGasto');
-			this. txtMesEjecCommnad=$('#mesEjecucionGasto');
+		//	this. txtMesEjecCommnad=$('#mesEjecucionGasto');
 			
+			 this.cmbMesEjecucion=$('#cmbMesEjecucion');
+			 this.txtMesEjechidden=$('#txtmesEjecucionGasto');
 			
 			this.txtnroValesImpreso=$('#numeroValesImpreso');
 			this.txtnroValesImpresoProv=$('#numeroValesImpresoProv');
@@ -380,7 +387,8 @@
            this.urlValidacion='<portlet:resourceURL id="showValidacion" />';
            this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivo" />';
            this.urlReporteValidacion='<portlet:resourceURL id="showReporteValidacion" />';
-        
+           this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="showRptEnvioDefinitivo" />';
+           
             
          this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");   
          this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
@@ -395,11 +403,8 @@
          
          this.dialogMessageGeneral=$("#dialogMessageGeneral");
          this.lblMessage=$("#lblMessage");
- 		
-        // alert("ACCION"+formato12B.tpOperacion.val());
          
-         
-         formato12B.initDialogs();
+          formato12B.initDialogs();
  		
             formato12B.btnBack.click(function(){
 				formato12B.blockUI();
@@ -419,6 +424,8 @@
 				formato12B.btnReporteExpExcel.click(function() {formato12B.viewReporte('1');});
 				formato12B.btnReporteActaEnvio.click(function() {formato12B.showActaEnvio();});
 				
+				formato12B.loadTotales($("#codEmpresaHidden").val());
+				
 			}else if(formato12B.tpOperacion.val()=='1'){
 				formato12B.cmbCodEmpresa.change(function(){
 					formato12B.loadPeriodoDeclaracion(formato12B.tpOperacion.val());
@@ -427,8 +434,9 @@
 				
 				formato12B.showCamposOculto();
 				formato12B.eventButtons(formato12B.tpOperacion.val());
-				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),'');
+				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val());
 				formato12B.buildGridsObservacion();
+				formato12B.loadTotales($("#codEmpresaHidden").val());
 			
 			}else if(formato12B.tpOperacion.val()=='2'){
 				formato12B.cmbCodEmpresa.change(function(){
@@ -439,12 +447,12 @@
 					formato12B.loadCostosUnitarios();
 				});
 				formato12B.eventButtons(formato12B.tpOperacion.val());
-				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),'');
+				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val());
 				
-				
+				formato12B.loadTotales(formato12B.cmbCodEmpresa.val());
 			}
 			
-			
+		
 			
 		},
 		eventButtons:function (tipo){
@@ -519,32 +527,48 @@
 				
 				formato12B.txtnroValesImpreso.prop('disabled', false);
 				formato12B.txtnroValesImpresoProv.prop('disabled', false);
-				formato12B.txtnroValesImpresoLim.prop('disabled', false);
 				formato12B.txtnroValesRepartidosDomi.prop('disabled', false);
 				formato12B.txtnroValesRepartidosDomiProv.prop('disabled', false);
-				formato12B.txtnroValesRepartidosDomiLim.prop('disabled', false);
 				formato12B.txtnroValesEntregadoDisEl.prop('disabled', false);
 				formato12B.txtnroValesEntregadoDisElProv.prop('disabled', false);
-				formato12B.txtnroValesEntregadoDisElLim.prop('disabled', false);
 				formato12B.txtnroValesFisicosCanjeados.prop('disabled', false);
 				formato12B.txtnroValesFisicosCanjeadosProv.prop('disabled', false);
-				formato12B.txtnroValesFisicosCanjeadosLim.prop('disabled', false);
 				formato12B.txtnroValesDigitalCanjeados.prop('disabled', false);
 				formato12B.txtnroValesDigitalCanjeadosProv.prop('disabled', false);
-				formato12B.txtnroValesDigitalCanjeadosLim.prop('disabled', false);
 				formato12B.txtnroAtenciones.prop('disabled', false);
 				formato12B.txtnroAtencionesProv.prop('disabled', false);
-				formato12B.txtnroAtencionesLim.prop('disabled', false);
-				
 				formato12B.txtTotalGestionAdministrativa.prop('disabled', false);
 				formato12B.txtTotalGestionAdministrativaProv.prop('disabled', false);
-				formato12B.txtTotalGestionAdministrativaLim.prop('disabled', false);
 				formato12B.txtTotalDesplazamientoPersonal.prop('disabled', false);
 				formato12B.txtTotalDesplazamientoPersonalProv.prop('disabled', false);
-				formato12B.txtTotalDesplazamientoPersonalLim.prop('disabled', false);
 				formato12B.txtTotalActividadesExtraord.prop('disabled', false);
 				formato12B.txtTotalActividadesExtraordProv.prop('disabled', false);
-				formato12B.txtTotalActividadesExtraordLim.prop('disabled', false);
+				
+				if(formato12B.cmbCodEmpresa.val()=='EDLN' || formato12B.cmbCodEmpresa.val()=='LDS'){
+					formato12B.txtnroValesImpresoLim.prop('disabled', false);
+					formato12B.txtnroValesRepartidosDomiLim.prop('disabled', false);
+					formato12B.txtnroValesEntregadoDisElLim.prop('disabled', false);
+					formato12B.txtnroValesFisicosCanjeadosLim.prop('disabled', false);
+					formato12B.txtnroValesDigitalCanjeadosLim.prop('disabled', false);
+					formato12B.txtnroAtencionesLim.prop('disabled', false);
+					formato12B.txtTotalGestionAdministrativaLim.prop('disabled', false);
+					formato12B.txtTotalDesplazamientoPersonalLim.prop('disabled', false);
+					formato12B.txtTotalActividadesExtraordLim.prop('disabled', false);
+				
+				}else{
+					formato12B.txtnroValesImpresoLim.prop('disabled', true);
+					formato12B.txtnroValesRepartidosDomiLim.prop('disabled', true);
+					formato12B.txtnroValesEntregadoDisElLim.prop('disabled', true);
+					formato12B.txtnroValesFisicosCanjeadosLim.prop('disabled', true);
+					formato12B.txtnroValesDigitalCanjeadosLim.prop('disabled', true);
+					formato12B.txtnroAtencionesLim.prop('disabled', true);
+					formato12B.txtTotalGestionAdministrativaLim.prop('disabled', true);
+					formato12B.txtTotalDesplazamientoPersonalLim.prop('disabled', true);
+					formato12B.txtTotalActividadesExtraordLim.prop('disabled', true);
+				}
+
+			
+				
 			}
 			
 			
@@ -565,6 +589,7 @@
 					if(tipo =='0' || tipo =='1'){
 						formato12B.cmbPeriodo.val($("#peridoDeclaracionHidden").val());	
 					}
+					
 					formato12B.unblockUI();
 				},error : function(){
 					alert("Error de conexión.");
@@ -572,6 +597,8 @@
 				}
 			});
 		},
+		
+		
 		loadCostosUnitarios : function(){
 			var periodo=formato12B.cmbPeriodo.val();
 			var anioPres=periodo.substring(0,4);
@@ -589,9 +616,12 @@
 				success: function(data) {		
 					
 					formato12B.txtAnioEjec.val(anioPres);
-					formato12B.txtMesEjec.val(mesPres);
 					formato12B.txtAnioEjecCommand.val(anioPres);
-					formato12B.txtMesEjecCommnad.val(mesPres);
+					formato12B.cmbMesEjecucion.val(parseInt(mesPres));
+					formato12B.txtMesEjechidden.val(parseInt(mesPres));
+					//formato12B.txtMesEjec.val(mesPres);
+					//formato12B.txtMesEjecCommnad.val(mesPres);
+					
 					formato12B.unblockUI();
 					formato12B.loadDataCostoUnitario(data);
 					
@@ -604,6 +634,7 @@
 		loadDataCostoUnitario: function(data){
 			if(data!=null && data.length>0){
 				$.each(data, function (i, item) {
+					
 					 if(item.idZonaBenef == '1'){
 						 formato12B.txtEtndrUnitValeImpre.val(item.costoUnitarioImpresionVales);
 						 $('#costoEstandarUnitValeImpre').val(item.costoUnitarioImpresionVales);
@@ -642,26 +673,30 @@
 						 formato12B.txtEtndrUnitAtencionProv.val(item.costoUnitarioPorAtencion);
 						 $('#costoEstandarUnitAtencionProv').val(item.costoUnitarioPorAtencion);
 						 
-					 }else if(item.idZonaBenef == '3'){
-						 formato12B.txtEtndrUnitValeImpreLim.val(item.costoUnitarioImpresionVales);
-						 $('#costoEstandarUnitValeImpreLim').val(item.costoUnitarioImpresionVales);
-						 
-						 formato12B.txtEtndrUnitValeReparLim.val(item.costoUnitReprtoValeDomici);
-						 $('#costoEstandarUnitValeReparLim').val(item.costoUnitReprtoValeDomici);
-						 
-						 formato12B.txtEtndrUnitValDisElLim.val(item.costoUnitEntregaValDisEl);
-						 $('#costoEstandarUnitValDisElLim').val(item.costoUnitEntregaValDisEl);
-						 
-						 formato12B.txtEtndrUnitValFiCanLim.val(item.costoUnitCanjeLiqValFisi);
-						 $('#costoEstandarUnitValFiCanLim').val(item.costoUnitCanjeLiqValFisi);
-						 
-						 formato12B.txtEtndrUnitValDgCanLim.val(item.costoUnitCanjeValDigital);
-						 $('#costoEstandarUnitValDgCanLim').val(item.costoUnitCanjeValDigital);
-						 
-						 formato12B.txtEtndrUnitAtencionLim.val(item.costoUnitarioPorAtencion);
-						 $('#costoEstandarUnitAtencionLim').val(item.costoUnitarioPorAtencion);
-						 
 					 }
+					 if(item.codEmpresa == 'EDLN' || item.codEmpresa == 'LDS'){
+						 if(item.idZonaBenef == '3'){
+							 formato12B.txtEtndrUnitValeImpreLim.val(item.costoUnitarioImpresionVales);
+							 $('#costoEstandarUnitValeImpreLim').val(item.costoUnitarioImpresionVales);
+							 
+							 formato12B.txtEtndrUnitValeReparLim.val(item.costoUnitReprtoValeDomici);
+							 $('#costoEstandarUnitValeReparLim').val(item.costoUnitReprtoValeDomici);
+							 
+							 formato12B.txtEtndrUnitValDisElLim.val(item.costoUnitEntregaValDisEl);
+							 $('#costoEstandarUnitValDisElLim').val(item.costoUnitEntregaValDisEl);
+							 
+							 formato12B.txtEtndrUnitValFiCanLim.val(item.costoUnitCanjeLiqValFisi);
+							 $('#costoEstandarUnitValFiCanLim').val(item.costoUnitCanjeLiqValFisi);
+							 
+							 formato12B.txtEtndrUnitValDgCanLim.val(item.costoUnitCanjeValDigital);
+							 $('#costoEstandarUnitValDgCanLim').val(item.costoUnitCanjeValDigital);
+							 
+							 formato12B.txtEtndrUnitAtencionLim.val(item.costoUnitarioPorAtencion);
+							 $('#costoEstandarUnitAtencionLim').val(item.costoUnitarioPorAtencion);
+							 
+						 }
+					 }
+					 
 					 
 	               
 	             });
@@ -703,88 +738,173 @@
 					 formato12B.txtEtndrUnitAtencionProv.val("0");
 					 $('#costoEstandarUnitAtencionProv').val("0");
 					 				
-					 formato12B.txtEtndrUnitValeImpreLim.val("0");
-					 $('#costoEstandarUnitValeImpreLim').val("0");
 					 
-					 formato12B.txtEtndrUnitValeReparLim.val("0");
-					 $('#costoEstandarUnitValeReparLim').val("0");
-					 
-					 formato12B.txtEtndrUnitValDisElLim.val("0");
-					 $('#costoEstandarUnitValDisElLim').val("0");
-					 
-					 formato12B.txtEtndrUnitValFiCanLim.val("0");
-					 $('#costoEstandarUnitValFiCanLim').val("0");
-					 
-					 formato12B.txtEtndrUnitValDgCanLim.val("0");
-					 $('#costoEstandarUnitValDgCanLim').val("0");
-					 
-					 formato12B.txtEtndrUnitAtencionLim.val("0");
-					 $('#costoEstandarUnitAtencionLim').val("0");
+					 if(formato12B.cmbCodEmpresa.val()=='EDLN' || formato12B.cmbCodEmpresa.val()=='LDS'){
+						 formato12B.txtEtndrUnitValeImpreLim.val("0");
+						 $('#costoEstandarUnitValeImpreLim').val("0");
+						 
+						 formato12B.txtEtndrUnitValeReparLim.val("0");
+						 $('#costoEstandarUnitValeReparLim').val("0");
+						 
+						 formato12B.txtEtndrUnitValDisElLim.val("0");
+						 $('#costoEstandarUnitValDisElLim').val("0");
+						 
+						 formato12B.txtEtndrUnitValFiCanLim.val("0");
+						 $('#costoEstandarUnitValFiCanLim').val("0");
+						 
+						 formato12B.txtEtndrUnitValDgCanLim.val("0");
+						 $('#costoEstandarUnitValDgCanLim').val("0");
+						 
+						 formato12B.txtEtndrUnitAtencionLim.val("0");
+						 $('#costoEstandarUnitAtencionLim').val("0");
+					 }
+					
 					 
 					formato12B.lblMessage.html("El periodo seleccionado no tiene informacion de costos unitarios en el formato 14B");
 					formato12B.dialogMessageGeneral.dialog("open");
 			}
-			formato12B.loadCostoTotal();
+			formato12B.loadCostoTotal(formato12B.cmbCodEmpresa.val());
 			
 		},
-		loadCostoTotal:function(){
+		loadCostoTotal:function(emp){
 			formato12B.txtTotalImpresionVale.val((formato12B.txtnroValesImpreso.val()!=null && formato12B.txtnroValesImpreso.length>0)?(formato12B.txtnroValesImpreso.val()*formato12B.txtEtndrUnitValeImpre.val()):'0');
-			formato12B.txtTotalImpresionValeLim.val((formato12B.txtnroValesImpresoLim.val()!=null && formato12B.txtnroValesImpresoLim.length>0)?(formato12B.txtnroValesImpresoLim.val()*formato12B.txtEtndrUnitValeImpreLim.val()):'0');
 			formato12B.txtTotalImpresionValeProv.val((formato12B.txtnroValesImpresoProv.val()!=null && formato12B.txtnroValesImpresoProv.length>0)?(formato12B.txtnroValesImpresoProv.val()*formato12B.txtEtndrUnitValeImpreProv.val()):'0');
+			formato12B.txtTotalImpresionVale.val(redondeo(formato12B.txtTotalImpresionVale.val(), 2));
+			formato12B.txtTotalImpresionValeProv.val(redondeo(formato12B.txtTotalImpresionValeProv.val(), 2));
 			$('#costoTotalImpresionVale').val(formato12B.txtTotalImpresionVale.val());
 			$('#costoTotalImpresionValeProv').val(formato12B.txtTotalImpresionValeProv.val());
-			$('#costoTotalImpresionValeLim').val(formato12B.txtTotalImpresionValeLim.val());
-			
-			
+		
 			formato12B.txtTotalRepartoValesDomi.val((formato12B.txtnroValesRepartidosDomi.val()!=null && formato12B.txtnroValesRepartidosDomi.length>0)?(formato12B.txtnroValesRepartidosDomi.val()*formato12B.txtEtndrUnitValeRepar.val()):'0');
 			formato12B.txtTotalRepartoValesDomiProv.val((formato12B.txtnroValesRepartidosDomiProv.val()!=null && formato12B.txtnroValesRepartidosDomiProv.length>0)?(formato12B.txtnroValesRepartidosDomiProv.val()*formato12B.txtEtndrUnitValeReparProv.val()):'0');
-			formato12B.txtTotalRepartoValesDomiLim.val((formato12B.txtnroValesRepartidosDomiLim.val()!=null && formato12B.txtnroValesRepartidosDomiLim.length>0)?(formato12B.txtnroValesRepartidosDomiLim.val()*formato12B.txtEtndrUnitValeReparLim.val()):'0');
+			formato12B.txtTotalRepartoValesDomi.val(redondeo(formato12B.txtTotalRepartoValesDomi.val(), 2));
+			formato12B.txtTotalRepartoValesDomiProv.val(redondeo(formato12B.txtTotalRepartoValesDomiProv.val(), 2));
 			$('#costoTotalRepartoValesDomi').val(formato12B.txtTotalRepartoValesDomi.val());
 			$('#costoTotalRepartoValesDomiProv').val(formato12B.txtTotalRepartoValesDomiProv.val());
-			$('#costoTotalRepartoValesDomiLim').val(formato12B.txtTotalRepartoValesDomiLim.val());
-		
 			
-			
-			formato12B.txtTotalEntregaValDisEl.val((formato12B.txtnroValesEntregadoDisEl.val()!=null && formato12B.txtnroValesEntregadoDisEl.length>0)?(formato12B.txtnroValesEntregadoDisEl.val()*formato12B.txtEtndrUnitValDisEl.val()):'0');
+		    formato12B.txtTotalEntregaValDisEl.val((formato12B.txtnroValesEntregadoDisEl.val()!=null && formato12B.txtnroValesEntregadoDisEl.length>0)?(formato12B.txtnroValesEntregadoDisEl.val()*formato12B.txtEtndrUnitValDisEl.val()):'0');
 			formato12B.txtTotalEntregaValDisElProv.val((formato12B.txtnroValesEntregadoDisElProv.val()!=null && formato12B.txtnroValesEntregadoDisElProv.length>0)?(formato12B.txtnroValesEntregadoDisElProv.val()*formato12B.txtEtndrUnitValDisElProv.val()):'0');
-			formato12B.txtTotalEntregaValDisElLim.val((formato12B.txtnroValesEntregadoDisElLim.val()!=null && formato12B.txtnroValesEntregadoDisElLim.length>0)?(formato12B.txtnroValesEntregadoDisElLim.val()*formato12B.txtEtndrUnitValDisElLim.val()):'0');
+			formato12B.txtTotalEntregaValDisEl.val(redondeo(formato12B.txtTotalEntregaValDisEl.val(), 2));
+			formato12B.txtTotalEntregaValDisElProv.val(redondeo(formato12B.txtTotalEntregaValDisElProv.val(), 2));
 			$('#costoTotalEntregaValDisEl').val(formato12B.txtTotalEntregaValDisEl.val());
 			$('#costoTotalEntregaValDisElProv').val(formato12B.txtTotalEntregaValDisElProv.val());
-			$('#costoTotalEntregaValDisElLim').val(formato12B.txtTotalEntregaValDisElLim.val());
-		
 			
-			
-			formato12B.txtTotalCanjeLiqValeFis.val((formato12B.txtnroValesFisicosCanjeados.val()!=null && formato12B.txtnroValesFisicosCanjeados.length>0)?(formato12B.txtnroValesFisicosCanjeados.val()*formato12B.txtEtndrUnitValFiCan.val()):'0');
+		    formato12B.txtTotalCanjeLiqValeFis.val((formato12B.txtnroValesFisicosCanjeados.val()!=null && formato12B.txtnroValesFisicosCanjeados.length>0)?(formato12B.txtnroValesFisicosCanjeados.val()*formato12B.txtEtndrUnitValFiCan.val()):'0');
 			formato12B.txtTotalCanjeLiqValeFisProv.val((formato12B.txtnroValesFisicosCanjeadosProv.val()!=null && formato12B.txtnroValesFisicosCanjeadosProv.length>0)?(formato12B.txtnroValesFisicosCanjeadosProv.val()*formato12B.txtEtndrUnitValFiCanProv.val()):'0');
-			formato12B.txtTotalCanjeLiqValeFisLim.val((formato12B.txtnroValesFisicosCanjeadosLim.val()!=null && formato12B.txtnroValesFisicosCanjeadosLim.length>0)?(formato12B.txtnroValesFisicosCanjeadosLim.val()*formato12B.txtEtndrUnitValFiCanLim.val()):'0');
+			formato12B.txtTotalCanjeLiqValeFis.val(redondeo(formato12B.txtTotalCanjeLiqValeFis.val(), 2));
+			formato12B.txtTotalCanjeLiqValeFisProv.val(redondeo(formato12B.txtTotalCanjeLiqValeFisProv.val(), 2));
 			$('#costoTotalCanjeLiqValeFis').val(formato12B.txtTotalCanjeLiqValeFis.val());
 			$('#costoTotalCanjeLiqValeFisProv').val(formato12B.txtTotalCanjeLiqValeFisProv.val());
-			$('#costoTotalCanjeLiqValeFisLim').val(formato12B.txtTotalCanjeLiqValeFisLim.val());
-		
 			
 			formato12B.txtTotalCanjeLiqValeDig.val((formato12B.txtnroValesDigitalCanjeados.val()!=null && formato12B.txtnroValesDigitalCanjeados.length>0)?(formato12B.txtnroValesDigitalCanjeados.val()*formato12B.txtEtndrUnitValDgCan.val()):'0');
 			formato12B.txtTotalCanjeLiqValeDigProv.val((formato12B.txtnroValesDigitalCanjeadosProv.val()!=null && formato12B.txtnroValesDigitalCanjeadosProv.length>0)?(formato12B.txtnroValesDigitalCanjeadosProv.val()*formato12B.txtEtndrUnitValDgCanProv.val()):'0');
-			formato12B.txtTotalCanjeLiqValeDigLim.val((formato12B.txtnroValesDigitalCanjeadosLim.val()!=null && formato12B.txtnroValesDigitalCanjeadosLim.length>0)?(formato12B.txtnroValesDigitalCanjeadosLim.val()*formato12B.txtEtndrUnitValDgCanLim.val()):'0');
+			formato12B.txtTotalCanjeLiqValeDig.val(redondeo(formato12B.txtTotalCanjeLiqValeDig.val(), 2));
+			formato12B.txtTotalCanjeLiqValeDigProv.val(redondeo(formato12B.txtTotalCanjeLiqValeDigProv.val(), 2));
 			$('#costoTotalCanjeLiqValeDig').val(formato12B.txtTotalCanjeLiqValeDig.val());
 			$('#costoTotalCanjeLiqValeDigProv').val(formato12B.txtTotalCanjeLiqValeDigProv.val());
-			$('#costoTotalCanjeLiqValeDigLim').val(formato12B.txtTotalCanjeLiqValeDigLim.val());
-		
 			
 			formato12B.txtTotalAtencionConsRecl.val((formato12B.txtnroAtenciones.val()!=null && formato12B.txtnroAtenciones.length>0)?(formato12B.txtnroAtenciones.val()*formato12B.txtEtndrUnitAtencion.val()):'0');
 			formato12B.txtTotalAtencionConsReclProv.val((formato12B.txtnroAtencionesProv.val()!=null && formato12B.txtnroAtencionesProv.length>0)?(formato12B.txtnroAtencionesProv.val()*formato12B.txtEtndrUnitAtencionProv.val()):'0');
-			formato12B.txtTotalAtencionConsReclLim.val((formato12B.txtnroAtencionesLim.val()!=null && formato12B.txtnroAtencionesLim.length>0)?(formato12B.txtnroAtencionesLim.val()*formato12B.txtEtndrUnitAtencionLim.val()):'0');
+			formato12B.txtTotalAtencionConsRecl.val(redondeo(formato12B.txtTotalAtencionConsRecl.val(), 2));
+			formato12B.txtTotalAtencionConsReclProv.val(redondeo(formato12B.txtTotalAtencionConsReclProv.val(), 2));
 			$('#costoTotalAtencionConsRecl').val(formato12B.txtTotalAtencionConsRecl.val());
 			$('#costoTotalAtencionConsReclProv').val(formato12B.txtTotalAtencionConsReclProv.val());
-			$('#costoTotalAtencionConsReclLim').val(formato12B.txtTotalAtencionConsReclLim.val());
+			
 		
+			if(emp =='EDLN' || emp =='LDS'){
+				formato12B.txtTotalImpresionValeLim.val((formato12B.txtnroValesImpresoLim.val()!=null && formato12B.txtnroValesImpresoLim.length>0)?(formato12B.txtnroValesImpresoLim.val()*formato12B.txtEtndrUnitValeImpreLim.val()):'0');
+			    formato12B.txtTotalRepartoValesDomiLim.val((formato12B.txtnroValesRepartidosDomiLim.val()!=null && formato12B.txtnroValesRepartidosDomiLim.length>0)?(formato12B.txtnroValesRepartidosDomiLim.val()*formato12B.txtEtndrUnitValeReparLim.val()):'0');
+			    formato12B.txtTotalEntregaValDisElLim.val((formato12B.txtnroValesEntregadoDisElLim.val()!=null && formato12B.txtnroValesEntregadoDisElLim.length>0)?(formato12B.txtnroValesEntregadoDisElLim.val()*formato12B.txtEtndrUnitValDisElLim.val()):'0');
+			    formato12B.txtTotalCanjeLiqValeFisLim.val((formato12B.txtnroValesFisicosCanjeadosLim.val()!=null && formato12B.txtnroValesFisicosCanjeadosLim.length>0)?(formato12B.txtnroValesFisicosCanjeadosLim.val()*formato12B.txtEtndrUnitValFiCanLim.val()):'0');
+			    formato12B.txtTotalCanjeLiqValeDigLim.val((formato12B.txtnroValesDigitalCanjeadosLim.val()!=null && formato12B.txtnroValesDigitalCanjeadosLim.length>0)?(formato12B.txtnroValesDigitalCanjeadosLim.val()*formato12B.txtEtndrUnitValDgCanLim.val()):'0');
+			    formato12B.txtTotalAtencionConsReclLim.val((formato12B.txtnroAtencionesLim.val()!=null && formato12B.txtnroAtencionesLim.length>0)?(formato12B.txtnroAtencionesLim.val()*formato12B.txtEtndrUnitAtencionLim.val()):'0');
+			    
+			    formato12B.txtTotalImpresionValeLim.val(redondeo(formato12B.txtTotalImpresionValeLim.val(), 2));
+				formato12B.txtTotalRepartoValesDomiLim.val(redondeo(formato12B.txtTotalRepartoValesDomiLim.val(), 2));
+				formato12B.txtTotalEntregaValDisElLim.val(redondeo(formato12B.txtTotalEntregaValDisElLim.val(), 2));
+				formato12B.txtTotalCanjeLiqValeFisLim.val(redondeo(formato12B.txtTotalCanjeLiqValeFisLim.val(), 2));
+				formato12B.txtTotalCanjeLiqValeDigLim.val(redondeo(formato12B.txtTotalCanjeLiqValeDigLim.val(), 2));
+				formato12B.txtTotalAtencionConsReclLim.val(redondeo(formato12B.txtTotalAtencionConsReclLim.val(), 2));
+				
+			    
+			    $('#costoTotalImpresionValeLim').val(formato12B.txtTotalImpresionValeLim.val());
+			    $('#costoTotalRepartoValesDomiLim').val(formato12B.txtTotalRepartoValesDomiLim.val());
+			    $('#costoTotalEntregaValDisElLim').val(formato12B.txtTotalEntregaValDisElLim.val());
+			   $('#costoTotalCanjeLiqValeFisLim').val(formato12B.txtTotalCanjeLiqValeFisLim.val());
+			   $('#costoTotalCanjeLiqValeDigLim').val(formato12B.txtTotalCanjeLiqValeDigLim.val());
+			   $('#costoTotalAtencionConsReclLim').val(formato12B.txtTotalAtencionConsReclLim.val());
+			}
+			
+		    formato12B.loadTotales(emp);
+		},
+		loadTotales : function(emp){
+			
+			if(emp =='EDLN' || emp =='LDS'){
+				$('#porImpresionVales').val(Number($('#costoTotalImpresionVale').val())+Number($('#costoTotalImpresionValeProv').val())+Number($('#costoTotalImpresionValeLim').val()));
+				$('#porRepartoDom').val(Number($('#costoTotalRepartoValesDomi').val())+Number($('#costoTotalRepartoValesDomiProv').val())+Number($('#costoTotalRepartoValesDomiLim').val()));
+				$('#porEntregaValesDE').val(Number($('#costoTotalEntregaValDisEl').val())+Number($('#costoTotalEntregaValDisElProv').val())+Number($('#costoTotalEntregaValDisElLim').val()));
+				$('#porValesFisicos').val(Number($('#costoTotalCanjeLiqValeFis').val())+Number($('#costoTotalCanjeLiqValeFisProv').val())+Number($('#costoTotalCanjeLiqValeFisLim').val()));
+				$('#porValesDigitales').val(Number($('#costoTotalCanjeLiqValeDig').val())+Number($('#costoTotalCanjeLiqValeDigProv').val())+Number($('#costoTotalCanjeLiqValeDigLim').val()));
+				$('#porAtencionReclamos').val(Number($('#costoTotalAtencionConsRecl').val())+Number($('#costoTotalAtencionConsReclProv').val())+Number($('#costoTotalAtencionConsReclLim').val()));
+				$('#porGestionAdm').val(Number($('#totalGestionAdministrativa').val())+Number($('#totalGestionAdministrativaProv').val())+Number($('#totalGestionAdministrativaLim').val()));
+				$('#porDesplazamientoPers').val(Number($('#totalDesplazamientoPersonal').val())+Number($('#totalDesplazamientoPersonalProv').val())+Number($('#totalDesplazamientoPersonalLim').val()));
+				$('#porActividadExtra').val(Number($('#totalActividadesExtraord').val())+Number($('#totalActividadesExtraordProv').val())+Number($('#totalActividadesExtraordLim').val()));
+			
+			}else{
+				
+				$('#porImpresionVales').val(Number($('#costoTotalImpresionVale').val())+Number($('#costoTotalImpresionValeProv').val()));
+				$('#porRepartoDom').val(Number($('#costoTotalRepartoValesDomi').val())+Number($('#costoTotalRepartoValesDomiProv').val()));
+				$('#porEntregaValesDE').val(Number($('#costoTotalEntregaValDisEl').val())+Number($('#costoTotalEntregaValDisElProv').val()));
+				$('#porValesFisicos').val(Number($('#costoTotalCanjeLiqValeFis').val())+Number($('#costoTotalCanjeLiqValeFisProv').val()));
+				$('#porValesDigitales').val(Number($('#costoTotalCanjeLiqValeDig').val())+Number($('#costoTotalCanjeLiqValeDigProv').val()));
+				$('#porAtencionReclamos').val(Number($('#costoTotalAtencionConsRecl').val())+Number($('#costoTotalAtencionConsReclProv').val()));
+				$('#porGestionAdm').val(Number($('#totalGestionAdministrativa').val())+Number($('#totalGestionAdministrativaProv').val()));
+				$('#porDesplazamientoPers').val(Number($('#totalDesplazamientoPersonal').val())+Number($('#totalDesplazamientoPersonalProv').val()));
+				$('#porActividadExtra').val(Number($('#totalActividadesExtraord').val())+Number($('#totalActividadesExtraordProv').val()));
+			}
+			
+			$('#porImpresionVales').val(redondeo($('#porImpresionVales').val(), 2));
+			$('#porRepartoDom').val(redondeo($('#porRepartoDom').val(), 2));	
+			$('#porEntregaValesDE').val(redondeo($('#porEntregaValesDE').val(), 2));
+			$('#porValesFisicos').val(redondeo($('#porValesFisicos').val(), 2));
+			$('#porValesDigitales').val(redondeo($('#porValesDigitales').val(), 2));
+			$('#porAtencionReclamos').val(redondeo($('#porAtencionReclamos').val(), 2));
+			$('#porGestionAdm').val(redondeo($('#porGestionAdm').val(), 2));
+			$('#porDesplazamientoPers').val(redondeo($('#porDesplazamientoPers').val(), 2));
+			$('#porActividadExtra').val(redondeo($('#porActividadExtra').val(), 2));
+			formato12B.loadTotalReconocer();
 		
 		},
-		loadCostoTotatByInput:function (total,nro,costo,id){
-			//alert(total.val()+"/"+nro.val()+"/"+costo.val());
-			total.val((nro.val()!=null && nro.length>0)?(nro.val()*costo.val()):'0');
-			 $("#"+id).val(total.val());
-			//var new_num = num.toFixed(2);
+		loadGestion:function(idpor,idinput){
 			
+			 if(formato12B.cmbCodEmpresa.val()=='EDLN' || formato12B.cmbCodEmpresa.val()=='LDS'){
+				 $("#"+idpor).val(Number($("#"+idinput).val())+Number($("#"+idinput+"Prov").val())+Number($("#"+idinput+"Lim").val())); 
+			 }else{
+				 $("#"+idpor).val(Number($("#"+idinput).val())+Number($("#"+idinput+"Prov").val()));
+			 }
+			$("#"+idpor).val(redondeo( $("#"+idpor).val(), 2));
+			formato12B.loadTotalReconocer();
+		},
+		loadTotalReconocer : function(){
+			$('#totalGeneralReconocer').val(Number($('#porImpresionVales').val())+Number($('#porRepartoDom').val())+Number($('#porEntregaValesDE').val())+
+					Number($('#porValesFisicos').val())+Number($('#porValesDigitales').val())+Number($('#porAtencionReclamos').val())+Number($('#porGestionAdm').val())+
+							Number($('#porDesplazamientoPers').val())+Number($('#porActividadExtra').val()));	
+			$('#totalGeneralReconocer').val(redondeo( $('#totalGeneralReconocer').val(), 2));
+		},
+		loadCostoTotatByInput:function (total,nro,costo,idhidden,idstandar,idtotal){
+			total.val((nro.val()!=null && nro.length>0)?(nro.val()*costo.val()):'0');
+			$("#"+idhidden).val(total.val());
+			 if(formato12B.cmbCodEmpresa.val()=='EDLN' || formato12B.cmbCodEmpresa.val()=='LDS'){
+				 $("#"+idtotal).val(Number($("#"+idstandar).val())+Number($("#"+idstandar+"Prov").val())+Number($("#"+idstandar+"Lim").val()));
+			 }else{
+				 $("#"+idtotal).val(Number($("#"+idstandar).val())+Number($("#"+idstandar+"Prov").val()));
+			 }
+			 $("#"+idtotal).val(redondeo( $("#"+idtotal).val(), 2));
+             formato12B.loadTotalReconocer();
+			
+			 //alert($("#"+idstandar).val()+"/"+$("#"+idstandar+"Prov").val()+"/"+$("#"+idstandar+"Lim").val());
+			//alert(total.val()+"/"+nro.val()+"/"+costo.val()+"/"+idtotal+"/"+idhidden);
+			
+			//var new_num = num.toFixed(2);
 		},
 		showConfirmacion : function (emp,mes,anio,etapa,desmes,stdEnvio,std,mesEjec,desmesEjec,anioEjec,tipo) {	
 			//alert(emp+"/"+mes+"/"+anio+"/"+etapa+"/"+desmes+"/"+stdEnvio+"/"+std+"/"+mesEjec+"/"+desmesEjec+"/"+anioEjec+"/"+tipo);
@@ -815,24 +935,42 @@
 			
             if(show){
 				formato12B.dlgConfirmacion.html(msj);
-				formato12B.dlgConfirmacion.dialog({ 
-			     	title:"Eliminar formato",
-			     	height:150,
-					width: 400,	
-			         modal: true,
-			         buttons:{
-			        	 "Aceptar":function(){
-			        		 $( this ).dialog( "close" );
-			        		 formato12B.deleteFormato(emp, mes, anio, etapa, formato12B.dlgConfirmacion);
-			        		
-			        	 },
-			        	 "Cancelar":function(){
-			        		 $( this ).dialog( "close" );
-			        		
-			        	 }
-			         },
-			         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
-			     }).load();
+				if(tipo == '1'){
+					titulo="Aviso";
+					formato12B.dlgConfirmacion.dialog({ 
+				     	title:titulo,
+				     	height:150,
+						width: 400,	
+				         modal: true,
+				         buttons:{
+				        	 "Aceptar":function(){
+				        		 $( this ).dialog( "close" );
+				        	}
+				         },
+				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
+				     }).load();
+				}else{
+					formato12B.dlgConfirmacion.dialog({ 
+				     	title:"Eliminar formato",
+				     	height:150,
+						width: 400,	
+				         modal: true,
+				         buttons:{
+				        	 "Aceptar":function(){
+				        		 $( this ).dialog( "close" );
+				        		 formato12B.deleteFormato(emp, mes, anio, etapa, formato12B.dlgConfirmacion);
+				        		 
+				        	 },
+				        	 "Cancelar":function(){
+				        		 $( this ).dialog( "close" );
+				        		
+				        	 }
+				         },
+				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
+				     }).load();
+					
+				}
+				
 			}
            
 
@@ -861,14 +999,14 @@
 			formato12B.divgrupoestado.css("display","block");
 			formato12B.cmbCodEmpresa.prop('disabled', true);
 			formato12B.cmbPeriodo.prop('disabled', true);
-			
-			
-			//formato12B.txtEmpresa.css("display","block");
-			//formato12B.txtPeriodo.css("display","block");
+		
 			formato12B.txtAnioEjec.prop("type","text");
-			formato12B.txtMesEjec.prop("type","text");
 			formato12B.txtAnioEjecCommand.prop("type","hidden");
-			formato12B.txtMesEjecCommnad.prop("type","hidden");
+			
+			//formato12B.txtMesEjecCommnad.prop("type","hidden");
+			//formato12B.txtMesEjec.prop("type","text");
+			formato12B.cmbMesEjecucion.prop('disabled', true);
+			
 			
 			
 			
@@ -889,19 +1027,22 @@
 				success: function(data) {
 					if(data!=null && data.length>0){
 						$.each(data, function (i, item) {
-							alert(item.msg);
-							if(item.msg == "1"){
+							
+						   if(item.msg == "1"){
 								if(formato12B.tpOperacion.val()== '2'){
 									formato12B.tpOperacion.val('1');
-									$("codEmpresaHidden").val(item.codEmpresaHidden);
-									$("peridoDeclaracionHidden").val(item.peridoDeclaracionHidden);
-									$("txtDescGrup").val(item.descGrupo);
-									$("txtDescEst").val(item.descEstado);
-									$("anoEjecucionGasto").val(item.anoEjecucionGasto);
-									$("mesEjecucionGasto").val(item.mesEjecucionGasto);
-									$("mesPresentacion").val(item.mesPresentacion);
-									$("anoPresentacion").val(item.anoPresentacion);
-									$("etapa").val(item.etapa);
+									
+									$("#codEmpresaHidden").val(item.codEmpresaHidden);
+									$("#peridoDeclaracionHidden").val(item.peridoDeclaracionHidden);
+									$("#outTxtGrupo").val(item.descGrupo);
+									$("#outTxtEstado").val(item.descEstado);
+									$("#txtDescGrup").val(item.descGrupo);
+									$("#txtDescEst").val(item.descEstado);
+									$("#anoEjecucionGasto").val(item.anoEjecucionGasto);
+									$("#mesEjecucionGasto").val(item.mesEjecucionGasto);
+									$("#mesPresentacion").val(item.mesPresentacion);
+									$("#anoPresentacion").val(item.anoPresentacion);
+									$("#etapa").val(item.etapa);
 									
 									formato12B.showCamposOculto();
 								}else{
@@ -942,7 +1083,6 @@
 		
 			jQuery.ajax({	
 				url: formato12B.urlDeleteFormato,
-				
 				type: 'post',
 				data : {"codEmpresa":emp,
 					"mespres":mes,
@@ -954,18 +1094,19 @@
 					formato12B.blockUI();
 				},				
 				success: function(data) {					
-					if(data == '1'){
-						formato12B.searchFormato();
-						formato12B.lblMessage.html("Se Elimino correctamente");
-						formato12B.dialogMessageGeneral.dialog("open");
+					if(data == '1' ){
+						//formato12B.btnBuscar.trigger('click');
+						formato12B.lblMessageInicial.html("Se Elimino correctamente");
+						formato12B.dialogMessageGeneralInicial.dialog("open");
+						
 						
 					}else if(data == '-1'){
-						formato12B.lblMessage.html("Error al eliminar");
-						formato12B.dialogMessageGeneral.dialog("open");
+						formato12B.lblMessageInicial.html("Error al eliminar");
+						formato12B.dialogMessageGeneralInicial.dialog("open");
 						
 					}
-					
-					
+					formato12B.searchFormato();
+					//formato12B.btnBuscar.trigger('click');
 					formato12B.unblockUI();
 				},error : function(){
 					alert("Error de conexión.");
@@ -1132,35 +1273,63 @@
 			
 			formato12B.txtnroValesImpreso.addClass("fise-editable");
 			formato12B.txtnroValesImpresoProv.addClass("fise-editable");
-			formato12B.txtnroValesImpresoLim.addClass("fise-editable");
 			formato12B.txtnroValesRepartidosDomi.addClass("fise-editable");
 			formato12B.txtnroValesRepartidosDomiProv.addClass("fise-editable");
-			formato12B.txtnroValesRepartidosDomiLim.addClass("fise-editable");
 			formato12B.txtnroValesEntregadoDisEl.addClass("fise-editable");
 			formato12B.txtnroValesEntregadoDisElProv.addClass("fise-editable");
-			formato12B.txtnroValesEntregadoDisElLim.addClass("fise-editable");
 			formato12B.txtnroValesFisicosCanjeados.addClass("fise-editable");
 			formato12B.txtnroValesFisicosCanjeadosProv.addClass("fise-editable");
-			formato12B.txtnroValesFisicosCanjeadosLim.addClass("fise-editable");
 			formato12B.txtnroValesDigitalCanjeados.addClass("fise-editable");
 			formato12B.txtnroValesDigitalCanjeadosProv.addClass("fise-editable");
-			formato12B.txtnroValesDigitalCanjeadosLim.addClass("fise-editable");
 			formato12B.txtnroAtenciones.addClass("fise-editable");
 			formato12B.txtnroAtencionesProv.addClass("fise-editable");
-			formato12B.txtnroAtencionesLim.addClass("fise-editable");
-			
 			formato12B.txtTotalGestionAdministrativa.addClass("fise-editable");
 			formato12B.txtTotalGestionAdministrativaProv.addClass("fise-editable");
-			formato12B.txtTotalGestionAdministrativaLim.addClass("fise-editable");
 			formato12B.txtTotalDesplazamientoPersonal.addClass("fise-editable");
 			formato12B.txtTotalDesplazamientoPersonalProv.addClass("fise-editable");
-			formato12B.txtTotalDesplazamientoPersonalLim.addClass("fise-editable");
 			formato12B.txtTotalActividadesExtraord.addClass("fise-editable");
 			formato12B.txtTotalActividadesExtraordProv.addClass("fise-editable");
+			
+		if(emp=='EDLN' || emp=='LDS'){
+			formato12B.txtnroValesImpresoLim.addClass("fise-editable");
+			formato12B.txtnroValesRepartidosDomiLim.addClass("fise-editable");
+			formato12B.txtnroValesEntregadoDisElLim.addClass("fise-editable");
+			formato12B.txtnroValesFisicosCanjeadosLim.addClass("fise-editable");
+			formato12B.txtnroValesDigitalCanjeadosLim.addClass("fise-editable");
+			formato12B.txtnroAtencionesLim.addClass("fise-editable");
+			formato12B.txtTotalGestionAdministrativaLim.addClass("fise-editable");
+			formato12B.txtTotalDesplazamientoPersonalLim.addClass("fise-editable");
 			formato12B.txtTotalActividadesExtraordLim.addClass("fise-editable");
-		
+		}
 			
-			
+		},initDialogsInit : function(){	
+				formato12B.dialogMessageGeneralInicial.dialog({
+				modal: true,
+				height: 120,
+				width: 400,
+				autoOpen: false,
+				buttons: {
+					Cerrar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+		},
+		mostrarReporteEnvioDefinitivo : function(){
+			jQuery.ajax({
+				url: formato12B.urlReporteEnvioDefinitivo+'&'+formato12B.formNewEdit.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {
+					<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+				},
+				success : function(gridData) {
+					formato12B.verReporte();
+				},error : function(){
+					alert("Error de conexión.");
+					formato12B.initBlockUI();
+				}
+			});
 		},
 		initDialogs : function(){	
 			formato12B.dialogObservacion.dialog({
@@ -1179,11 +1348,10 @@
 				autoOpen: false,
 				buttons: {
 					'Imprimir Pdf': function() {
-						formato12B.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+						formato12B.mostrarReporteEnvioDefinitivo();
 						$( this ).dialog("close");
-						//mostrar cabecera 1 fromulario;
 						formato12B.urlRetornar;
-						formato12B.botonBuscar.trigger('click');
+						formato12B.btnBuscar.trigger('click');
 					},
 					Ok: function() {
 						$( this ).dialog("close");

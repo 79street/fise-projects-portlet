@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/jsps/gart/ext/extFormato12B.jsp"%>
-<link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet"
-	type="text/css">
+<link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
+
 
 <portlet:renderURL var="urlNew">
 	<portlet:param name="action" value="newFormato" />
@@ -9,7 +9,7 @@
 	<portlet:param name="action" value="uploadFile" />
 </portlet:actionURL>
 <portlet:renderURL var="urlBack" />
-
+<script type="text/javascript" src="/fise-projects-portlet/js/fise.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		formato12B.loadInitDetalle('${urlBack}');
@@ -55,7 +55,7 @@
 																<td style="text-align: center;">
 																	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 																	
-																	 <output>${formato12BGartCommand.descGrupo}</output>
+																	 <output id="outTxtGrupo">${formato12BGartCommand.descGrupo}</output>
 																	<form:input path="descGrupo" id="txtDescGrup" type="hidden"/>
 																	
 
@@ -68,7 +68,7 @@
 
 																<td style="text-align: center;">
 																	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-																	 <output>${formato12BGartCommand.descEstado}</output>
+																	 <output id="outTxtEstado">${formato12BGartCommand.descEstado}</output>
 																	<form:input path="descEstado" id="txtDescEst" type="hidden"/>
 																	
                                                                    
@@ -154,11 +154,11 @@
 																		</td>
 																		<td width="10px"></td>
 																		<td width="110px">Mes Ejecucion:</td>
-																		<td><form:input path="mesEjecucionGasto"
-																				style="width: 50px" maxlength="4" /> <input
-																			id="txtmesEjecucionGasto" type="hidden"
-																			value="${formato12BGartCommand.mesEjecucionGasto}"
-																			style="width: 50px" maxlength="4" readonly="readonly" />
+																		<td><!--<form:input path="mesEjecucionGasto" style="width: 50px" maxlength="4" /> -->
+																			<form:select path="mesEjecucionGasto" id="cmbMesEjecucion" cssClass="select" cssStyle="width: 104px;" disabled="false">
+													                          <form:options items="${formato12BGartCommand.listaMes}" />
+												                            </form:select>
+																			<input id="txtmesEjecucionGasto" type="hidden" value="${formato12BGartCommand.mesEjecucionGasto}" />
 																		</td>
 																	</tr>
 																</table>
@@ -224,17 +224,17 @@
 											Impresos</td>
 										<td align="center"><form:input path="numeroValesImpreso" onkeypress="formato12B.validateInputTextNumber('numeroValesImpreso')"
 												disabled="false" cssClass="target"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionVale,formato12B.txtnroValesImpreso,formato12B.txtEtndrUnitValeImpre,'costoTotalImpresionVale');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionVale,formato12B.txtnroValesImpreso,formato12B.txtEtndrUnitValeImpre,'costoTotalImpresionVale','costoTotalImpresionVale','porImpresionVales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input onkeypress="formato12B.validateInputTextNumber('numeroValesImpresoProv')"
 												path="numeroValesImpresoProv" cssClass="target "
 												disabled="false"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionValeProv,formato12B.txtnroValesImpresoProv,formato12B.txtEtndrUnitValeImpreProv,'costoTotalImpresionValeProv');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionValeProv,formato12B.txtnroValesImpresoProv,formato12B.txtEtndrUnitValeImpreProv,'costoTotalImpresionValeProv','costoTotalImpresionVale','porImpresionVales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input onkeypress="formato12B.validateInputTextNumber('numeroValesImpresoLim')"
 												path="numeroValesImpresoLim" cssClass="target"
 												disabled="false"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionValeLim,formato12B.txtnroValesImpresoLim,formato12B.txtEtndrUnitValeImpreLim,'costoTotalImpresionValeLim');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionValeLim,formato12B.txtnroValesImpresoLim,formato12B.txtEtndrUnitValeImpreLim,'costoTotalImpresionValeLim','costoTotalImpresionVale','porImpresionVales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
@@ -310,17 +310,17 @@
 										<td align="center"><form:input
 												path="numeroValesRepartidosDomi" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesRepartidosDomi')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomi,formato12B.txtnroValesRepartidosDomi,formato12B.txtEtndrUnitValeRepar,'costoTotalRepartoValesDomi');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomi,formato12B.txtnroValesRepartidosDomi,formato12B.txtEtndrUnitValeRepar,'costoTotalRepartoValesDomi','costoTotalRepartoValesDomi','porRepartoDom');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesRepartidosDomiProv" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesRepartidosDomiProv')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomiProv,formato12B.txtnroValesRepartidosDomiProv,formato12B.txtEtndrUnitValeReparProv,'costoTotalRepartoValesDomiProv');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomiProv,formato12B.txtnroValesRepartidosDomiProv,formato12B.txtEtndrUnitValeReparProv,'costoTotalRepartoValesDomiProv','costoTotalRepartoValesDomi','porRepartoDom');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesRepartidosDomiLim" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesRepartidosDomiLim')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomiLim,formato12B.txtnroValesRepartidosDomiLim,formato12B.txtEtndrUnitValeReparLim,'costoTotalRepartoValesDomiLim');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomiLim,formato12B.txtnroValesRepartidosDomiLim,formato12B.txtEtndrUnitValeReparLim,'costoTotalRepartoValesDomiLim','costoTotalRepartoValesDomi','porRepartoDom');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
@@ -400,17 +400,17 @@
 										<td align="center"><form:input
 												path="numeroValesEntregadoDisEl" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesEntregadoDisEl')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisEl,formato12B.txtnroValesEntregadoDisEl,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisEl');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisEl,formato12B.txtnroValesEntregadoDisEl,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisEl','costoTotalEntregaValDisEl','porEntregaValesDE');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesEntregadoDisElProv" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesEntregadoDisElProv')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElProv,formato12B.txtnroValesEntregadoDisElProv,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisElProv');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElProv,formato12B.txtnroValesEntregadoDisElProv,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisElProv','costoTotalEntregaValDisEl','porEntregaValesDE');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesEntregadoDisElLim" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesEntregadoDisElLim')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElLim,formato12B.txtnroValesEntregadoDisElLim,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisElLim');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElLim,formato12B.txtnroValesEntregadoDisElLim,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisElLim','costoTotalEntregaValDisEl','porEntregaValesDE');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
@@ -486,17 +486,17 @@
 										<td align="center"><form:input
 												path="numeroValesFisicosCanjeados" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesFisicosCanjeados')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFis,formato12B.txtnroValesFisicosCanjeados,formato12B.txtEtndrUnitValFiCan,'costoTotalCanjeLiqValeFis');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFis,formato12B.txtnroValesFisicosCanjeados,formato12B.txtEtndrUnitValFiCan,'costoTotalCanjeLiqValeFis','costoTotalCanjeLiqValeFis','porValesFisicos');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesFisicosCanjeadosProv" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesFisicosCanjeadosProv')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFisProv,formato12B.txtnroValesFisicosCanjeadosProv,formato12B.txtEtndrUnitValFiCanProv,'costoTotalCanjeLiqValeFisProv');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFisProv,formato12B.txtnroValesFisicosCanjeadosProv,formato12B.txtEtndrUnitValFiCanProv,'costoTotalCanjeLiqValeFisProv','costoTotalCanjeLiqValeFis','porValesFisicos');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesFisicosCanjeadosLim" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesFisicosCanjeadosLim')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFisLim,formato12B.txtnroValesFisicosCanjeadosLim,formato12B.txtEtndrUnitValFiCanLim,'costoTotalCanjeLiqValeFisLim');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFisLim,formato12B.txtnroValesFisicosCanjeadosLim,formato12B.txtEtndrUnitValFiCanLim,'costoTotalCanjeLiqValeFisLim','costoTotalCanjeLiqValeFis','porValesFisicos');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
@@ -573,17 +573,17 @@
 										<td align="center"><form:input
 												path="numeroValesDigitalCanjeados" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesDigitalCanjeados')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDig,formato12B.txtnroValesDigitalCanjeados,formato12B.txtEtndrUnitValDgCan,'costoEstandarUnitValDgCan');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDig,formato12B.txtnroValesDigitalCanjeados,formato12B.txtEtndrUnitValDgCan,'costoEstandarUnitValDgCan','costoEstandarUnitValDgCan','porValesDigitales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesDigitalCanjeadosProv" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesDigitalCanjeadosProv')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigProv,formato12B.txtnroValesDigitalCanjeadosProv,formato12B.txtEtndrUnitValDgCanProv,'costoEstandarUnitValDgCanProv');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigProv,formato12B.txtnroValesDigitalCanjeadosProv,formato12B.txtEtndrUnitValDgCanProv,'costoEstandarUnitValDgCanProv','costoEstandarUnitValDgCan','porValesDigitales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesDigitalCanjeadosLim" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesDigitalCanjeadosLim')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigLim,formato12B.txtnroValesDigitalCanjeadosLim,formato12B.txtEtndrUnitValDgCanLim,'costoEstandarUnitValDgCanLim');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigLim,formato12B.txtnroValesDigitalCanjeadosLim,formato12B.txtEtndrUnitValDgCanLim,'costoEstandarUnitValDgCanLim','costoEstandarUnitValDgCan','porValesDigitales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
@@ -659,16 +659,16 @@
 											Atenciones</td>
 										<td align="center"><form:input path="numeroAtenciones"
 												disabled="false" cssClass="target" onkeypress="formato12B.validateInputTextNumber('numeroAtenciones')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsRecl,formato12B.txtnroAtenciones,formato12B.txtEtndrUnitAtencion,'costoTotalAtencionConsRecl');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsRecl,formato12B.txtnroAtenciones,formato12B.txtEtndrUnitAtencion,'costoTotalAtencionConsRecl','costoTotalAtencionConsRecl','porAtencionReclamos');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroAtencionesProv" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroAtencionesProv')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsReclProv,formato12B.txtnroAtencionesProv,formato12B.txtEtndrUnitAtencionProv,'costoTotalAtencionConsReclProv');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsReclProv,formato12B.txtnroAtencionesProv,formato12B.txtEtndrUnitAtencionProv,'costoTotalAtencionConsReclProv','costoTotalAtencionConsRecl','porAtencionReclamos');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input path="numeroAtencionesLim"
 												disabled="false" cssClass="target" onkeypress="formato12B.validateInputTextNumber('numeroAtencionesLim')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsReclLim,formato12B.txtnroAtencionesLim,formato12B.txtEtndrUnitAtencionLim,'costoTotalAtencionConsReclLim');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsReclLim,formato12B.txtnroAtencionesLim,formato12B.txtEtndrUnitAtencionLim,'costoTotalAtencionConsReclLim','costoTotalAtencionConsRecl','porAtencionReclamos');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
@@ -737,9 +737,9 @@
 
 									<tr style="padding-top: 10px:">
 										<td>7. Gestión Administrativa</td>
-										<td align="center"><form:input path="totalGestionAdministrativa" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativa')"  cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
-										<td align="center"><form:input path="totalGestionAdministrativaProv" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaProv')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
-										<td align="center"><form:input path="totalGestionAdministrativaLim" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaLim')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"><form:input path="totalGestionAdministrativa" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativa')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"><form:input path="totalGestionAdministrativaProv" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaProv')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"><form:input path="totalGestionAdministrativaLim" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaLim')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>
@@ -753,13 +753,13 @@
 									<tr style="padding-top: 10px:">
 										<td>8. Desplazamiento de Personal</td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalDesplazamientoPersonal')"
-												path="totalDesplazamientoPersonal" cssClass="target"
+												path="totalDesplazamientoPersonal" cssClass="target"   onblur="formato12B.loadGestion('porDesplazamientoPers','totalDesplazamientoPersonal')" 
 												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalDesplazamientoPersonalProv')"
-												path="totalDesplazamientoPersonalProv" cssClass="target"
+												path="totalDesplazamientoPersonalProv" cssClass="target"  onblur="formato12B.loadGestion('porDesplazamientoPers','totalDesplazamientoPersonal')" 
 												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalDesplazamientoPersonalLim')"
-												path="totalDesplazamientoPersonalLim" cssClass="target"
+												path="totalDesplazamientoPersonalLim" cssClass="target"  onblur="formato12B.loadGestion('porDesplazamientoPers','totalDesplazamientoPersonal')" 
 												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
@@ -774,14 +774,130 @@
 									<tr style="padding-top: 10px:">
 										<td>9. Actividades Extraordinarias</td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalActividadesExtraord')"
-												path="totalActividadesExtraord" cssClass="target"
+												path="totalActividadesExtraord" cssClass="target"  onblur="formato12B.loadGestion('porActividadExtra','totalActividadesExtraord')" 
 												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalActividadesExtraordProv')"
-												path="totalActividadesExtraordProv" cssClass="target"
+												path="totalActividadesExtraordProv" cssClass="target"  onblur="formato12B.loadGestion('porActividadExtra','totalActividadesExtraord')" 
 												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalActividadesExtraordLim')"
-												path="totalActividadesExtraordLim" cssClass="target"
+												path="totalActividadesExtraordLim" cssClass="target"  onblur="formato12B.loadGestion('porActividadExtra','totalActividadesExtraord')" 
 												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+									</tr>
+									<tr>
+										<td colspan="4" height="10px"></td>
+									</tr>
+									<tr class="filete-top" style="padding-top: 10px:">
+										<td colspan="4"></td>
+									</tr>
+									<tr>
+										<td colspan="4" height="10px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>10. Importe a reconocer a la Distribuidora Electrica</td>
+										<td align="center">Total</td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Impresion de Vales (1.3)</td>
+										<td align="center"><form:input  path="porImpresionVales" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Reparto de Vales a domicilio (2.3)</td>
+										<td align="center"><form:input  path="porRepartoDom" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Entrega de Vales en la Distribuidora Electrica (3.3)</td>
+										<td align="center"><form:input  path="porEntregaValesDE" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Canje y Liquidación de Vales Fisicos (4.3)</td>
+										<td align="center"><form:input  path="porValesFisicos" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Canje y Liquidación de Vales Digitales (5.3)</td>
+										<td align="center"><form:input  path="porValesDigitales" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Atencion de Soluciones,Consultas y Reclamos (6.3)</td>
+										<td align="center"><form:input  path="porAtencionReclamos" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Gestion Administrativa (7)</td>
+										<td align="center"><form:input  path="porGestionAdm" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Desplazamiento de Personal  (8)</td>
+										<td align="center"><form:input  path="porDesplazamientoPers" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Actividades Extraordinarias  (9)</td>
+										<td align="center"><form:input  path="porActividadExtra" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
+									</tr>
+									<tr>
+										<td colspan="4" height="5px"></td>
+									</tr>
+									<tr style="padding-top: 10px:">
+										<td>11. Total General a Reconocer </td>
+										<td align="center"><form:input  path="totalGeneralReconocer" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"></td>
+										<td align="center"></td>
+									
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>
@@ -912,7 +1028,14 @@
 
 
 		</div>
-
+        <div class="ui-resizable-handle ui-resizable-n" style="z-index: 1000;"></div>
+        <div class="ui-resizable-handle ui-resizable-e" style="z-index: 1000;"></div>
+        <div class="ui-resizable-handle ui-resizable-s" style="z-index: 1000;"></div>
+        <div class="ui-resizable-handle ui-resizable-w" style="z-index: 1000;"></div>
+        <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se ui-icon-grip-diagonal-se" style="z-index: 1000;"></div>
+		<div class="ui-resizable-handle ui-resizable-sw" style="z-index: 1000;"></div>
+		<div class="ui-resizable-handle ui-resizable-ne" style="z-index: 1000;"></div>
+		<div class="ui-resizable-handle ui-resizable-nw" style="z-index: 1000;"></div>
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 			<div class="ui-dialog-buttonset">
 				<input type="button" class="net-button-small"
