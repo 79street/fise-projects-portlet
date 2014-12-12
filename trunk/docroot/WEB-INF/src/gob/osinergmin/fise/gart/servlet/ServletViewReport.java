@@ -141,7 +141,7 @@ public class ServletViewReport extends HttpServlet {
 				exporter.exportReport();
 			}
 			//
-			else if( FiseConstants.FORMATO_EXPORT_ACTAENVIO.equals(tipoArchivo) ){
+			else if(FiseConstants.FORMATO_EXPORT_ACTAENVIO.equals(tipoArchivo) ){
 				byte[] bytes3 = (byte[])sesion.getAttribute("bytesActaEnvio");
 				response.reset();
 				response.setBufferSize(DEFAULT_BUFFER_SIZE);
@@ -151,7 +151,16 @@ public class ServletViewReport extends HttpServlet {
 				output = new BufferedOutputStream(servletOutputStream, DEFAULT_BUFFER_SIZE);
 				output.write(bytes3);
 			}
-			
+			else if(FiseConstants.FORMATO_EXPORT_FORMATO_COMPLETO.equals(tipoArchivo) ){
+				byte[] bytes3 = (byte[])sesion.getAttribute("bytesFormato");
+				response.reset();
+				response.setBufferSize(DEFAULT_BUFFER_SIZE);
+				response.setHeader("Content-Length", String.valueOf(bytes3.length));
+				response.setContentType("application/pdf");
+				response.setHeader("Content-Disposition", "inline;filename=\"" + tipoFormato + ".pdf" + "\"");
+				output = new BufferedOutputStream(servletOutputStream, DEFAULT_BUFFER_SIZE);
+				output.write(bytes3);
+			}			
 			servletOutputStream.flush();
 			servletOutputStream.close();
 		} catch (Exception e) {

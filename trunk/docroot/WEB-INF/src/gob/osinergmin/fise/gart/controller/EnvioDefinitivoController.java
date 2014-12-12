@@ -760,7 +760,7 @@ public class EnvioDefinitivoController {
 	
 	/*****LLENAR MAP DE PARAMETROS FORMATOS BIENALES*******/	
 	private Map<String, Object> parametros13A(String codEmpresa,String anioPres,String mesPres,
-			String etapa, String rutaImg,String rutaCheck,String rutaUncheck,String usuario,
+			String etapa, String rutaImg,String usuario,
 			String terminal,String email){
 		
 		Map<String, Object> mapa = null;
@@ -823,8 +823,7 @@ public class EnvioDefinitivoController {
 	
 	private Map<String, Object> parametros14A(String codEmpresa,String anioPres,String mesPres,
 			String anioIniVig,String anioFinVig,String etapa,
-			String rutaImg,String rutaCheck,String rutaUncheck,String usuario,
-			String terminal,String email){
+			String rutaImg,String usuario,String terminal,String email){
 		
 		Map<String, Object> mapa = null;
 		FiseFormato14ACPK pk =null;
@@ -886,8 +885,7 @@ public class EnvioDefinitivoController {
 	
 	private Map<String, Object> parametros14B(String codEmpresa,String anioPres,String mesPres,
 			String anioIniVig,String anioFinVig,String etapa,
-			String rutaImg,String rutaCheck,String rutaUncheck,String usuario,
-			String terminal,String email){
+			String rutaImg,String usuario,String terminal,String email){
 		
 		Map<String, Object> mapa = null;
 		FiseFormato14BCPK pk =null;
@@ -949,8 +947,7 @@ public class EnvioDefinitivoController {
 	
 	private Map<String, Object> parametros14C(String codEmpresa,String anioPres,String mesPres,
 			String anioIniVig,String anioFinVig,String etapa,
-			String rutaImg,String rutaCheck,String rutaUncheck,String usuario,
-			String terminal,String email){
+			String rutaImg,String usuario,String terminal,String email){
 		
 		Map<String, Object> mapa = null;
 		Formato14CBean f =null;
@@ -1552,14 +1549,14 @@ public class EnvioDefinitivoController {
   			  	  					nombreReporte = "formato12B";		 		      
   			  	  					directorio =  "/reports/"+nombreReporte+".jasper";
   			  	  					File reportFile12B = new File(session.getServletContext().getRealPath(directorio));
-  			  	  					byte[] bytes = null;
-  			  	  					bytes = JasperRunManager.runReportToPdf(reportFile12B.getPath(), 
+  			  	  					byte[] bytes12B = null;
+  			  	  				    bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), 
   			  	  							mapa, new JREmptyDataSource());
-  			  	  					if (bytes != null) {		  	  					
+  			  	  					if (bytes12B != null) {		  	  					
   			  	  						String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
   			  	  								Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
   			  	  								FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  			  	  						FileEntry archivo12B = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
+  			  	  						FileEntry archivo12B = fiseUtil.subirDocumentoBytes(request, bytes12B, "application/pdf", nombre);
   			  	  						if(archivo12B!=null ){
   			  	  							FileEntryJSP fileEntryJsp = new FileEntryJSP();
   			  	  							fileEntryJsp.setNombreArchivo(nombre);
@@ -1685,7 +1682,7 @@ public class EnvioDefinitivoController {
   		                	  if(FiseConstants.NOMBRE_FORMATO_13A.equals(b.getFormato())&&valorValidacion){
   		                		   /*****Obtenemos los parametros del map*******/
   			  	  			        mapa = parametros13A(codEmpresa, b.getAnioPres(), b.getMesPres(), etapa, 
-  			  	  			    		   rutaImg, rutaImgCheck,rutaImgUncheck, usuario, terminal, email); 
+  			  	  			    		   rutaImg, usuario, terminal, email); 
   			  	  			       /* REPORTE FORMATO 13A */
   			  	  			       if(mapa!=null){
   			  	  			    	nombreReporte = "formato13A";	       				
@@ -1733,8 +1730,7 @@ public class EnvioDefinitivoController {
   			                  if(FiseConstants.NOMBRE_FORMATO_14A.equals(b.getFormato())&&valorValidacion){
   			                	 /*****Obtenemos los parametros del map*******/
   			                	  mapa = parametros14A(codEmpresa, b.getAnioPres(), b.getMesPres(),  
-  			  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(),etapa,rutaImg, rutaImgCheck, 
-  			  	  			    		   rutaImgUncheck, usuario, terminal, email);
+  			  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(),etapa,rutaImg, usuario, terminal, email);
   			                	  /* REPORTE FORMATO 14A */
   			                	    if(mapa!=null){
   			                	    	nombreReporte = "formato14A";	       				
@@ -1782,8 +1778,7 @@ public class EnvioDefinitivoController {
   			                  if(FiseConstants.NOMBRE_FORMATO_14B.equals(b.getFormato())&&valorValidacion){
   				                	 /*****Obtenemos los parametros del map*******/
   				                	  mapa = parametros14B(codEmpresa, b.getAnioPres(), b.getMesPres(),  
-  				  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(),etapa, rutaImg, rutaImgCheck, 
-  				  	  			    		   rutaImgUncheck, usuario, terminal, email);
+  				  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(),etapa, rutaImg, usuario, terminal, email);
   				                	  /* REPORTE FORMATO 14B */
   				                	  if(mapa!=null){
   				                		  nombreReporte = "formato14B";	       				
@@ -1830,8 +1825,7 @@ public class EnvioDefinitivoController {
   			                  if(FiseConstants.NOMBRE_FORMATO_14C.equals(b.getFormato())&&valorValidacion){
   				                	 /*****Obtenemos los parametros del map*******/
   				                	  mapa = parametros14C(codEmpresa, b.getAnioPres(), b.getMesPres(),  
-  				  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(), etapa,rutaImg, rutaImgCheck, 
-  				  	  			    		   rutaImgUncheck, usuario, terminal, email);
+  				  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(), etapa,rutaImg,usuario, terminal, email);
   				                	  /* REPORTE FORMATO 14C */
   				                	   if(mapa!=null){
   				                		   nombreReporte = "formato14C";	       				
