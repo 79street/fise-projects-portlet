@@ -1254,7 +1254,7 @@ public class Formato12BGartController {
 					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
 				}
 				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, formato.getAdmEmpresa().getDscCortaEmpresa());
-				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());
+				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, (long)formato.getId().getAnoPresentacion());
 				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
 				
