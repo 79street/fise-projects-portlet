@@ -17,6 +17,8 @@ var liquidacionVar= {
 		dialogConfirm:null,//para eliminar
 		dialogConfirmContent:null,//para mostrar la confirmacion de eliminar		
 		dialogObservacion:null,
+		dialogObservacion12:null,
+		dialogObservacion13:null,
 		
 		
 		
@@ -55,8 +57,15 @@ var liquidacionVar= {
 		//grillas
 		tablaResultados:null,
 		paginadoResultados:null,	
+		
 		tablaObservacion:null,	
 		paginadoObservacion:null,
+		
+		tablaObservacion12:null,	
+		paginadoObservacion12:null,
+		
+		tablaObservacion13:null,	
+		paginadoObservacion13:null,
 		
 		
 		init : function() {
@@ -70,7 +79,9 @@ var liquidacionVar= {
 			
 			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm-eliminar");//para elimar
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content-eliminar");//para eliminar
-			this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");		
+			this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");	
+			this.dialogObservacion12=$("#<portlet:namespace/>dialog-form-observacion12");
+			this.dialogObservacion13=$("#<portlet:namespace/>dialog-form-observacion13");
 			
 			
 			//mensajes						
@@ -109,8 +120,16 @@ var liquidacionVar= {
 			this.buildGrids();	//cargar el modelo de la grilla			
 			
 			this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");			
-			this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
-			this.buildGridsObservacion();	
+			this.paginadoObservacion='#<portlet:namespace/>pager_observacion';			
+			this.buildGridsObservacion();
+			
+			this.tablaObservacion12=$("#<portlet:namespace/>grid_observacion12");			
+			this.paginadoObservacion12='#<portlet:namespace/>pager_observacion12';		
+			this.buildGridsObservacion12();
+			
+			this.tablaObservacion13=$("#<portlet:namespace/>grid_observacion13");			
+			this.paginadoObservacion13='#<portlet:namespace/>pager_observacion13';		
+			this.buildGridsObservacion13();
 			
 			
 			//llamado a la funciones de cada boton
@@ -197,7 +216,7 @@ var liquidacionVar= {
 			liquidacionVar.tablaResultados.jqGrid('navGrid',liquidacionVar.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});				
 		},
 		
-		//Modelo de la grilla para mostrar Observaciones
+		//Modelo de la grilla para mostrar Observaciones para los formatos 12A,12B,14A,14B 14C
 		buildGridsObservacion : function () {	
 		   liquidacionVar.tablaObservacion.jqGrid({
 		   datatype: "local",
@@ -218,6 +237,82 @@ var liquidacionVar= {
 			    sortorder: "asc"
 		  	});
 		    liquidacionVar.tablaObservacion.jqGrid('navGrid',liquidacionVar.paginadoObservacion,{add:false,edit:false,del:false,search: false,refresh: false});	
+		   <%--  liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
+			       caption:"Exportar a Excel",
+			       buttonicon: "ui-icon-bookmark",
+			       onClickButton : function () {
+			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			       } 
+			}); 
+		    liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
+			       caption:"Exportar a Pdf",
+			       buttonicon: "ui-icon-bookmark",
+			       onClickButton : function () {
+			    	   liquidacionVar.<portlet:namespace/>mostrarReporteObservaciones();
+			       } 
+			}); --%>
+		},
+		
+		//Modelo de la grilla para mostrar Observaciones para los formatos 12C y 12D
+		buildGridsObservacion12 : function () {	
+		   liquidacionVar.tablaObservacion12.jqGrid({
+		   datatype: "local",
+		   colNames: ['Etapa ejecución','Nro. item etapa','Código','Descripción'],
+	       colModel: [
+						{ name: 'descEtapaEjecucion', index: 'descEtapaEjecucion', width: 100 ,align: 'left'},
+						{ name: 'nroItemEtapa', index: 'nroItemEtapa', width: 75 ,align: 'left'},
+						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
+		                { name: 'descripcion', index: 'descripcion', width: 430 ,align: 'left'}               
+			   	    ],
+		   	 multiselect: false,
+				rowNum:10,
+			   	rowList:[10,20,50],
+				height: 'auto',
+			   	autowidth: true,
+				rownumbers: true,				
+				pager: liquidacionVar.paginadoObservacion12,
+			    viewrecords: true,			   
+			    sortorder: "asc"
+		  	});
+		    liquidacionVar.tablaObservacion12.jqGrid('navGrid',liquidacionVar.paginadoObservacion12,{add:false,edit:false,del:false,search: false,refresh: false});	
+		   <%--  liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
+			       caption:"Exportar a Excel",
+			       buttonicon: "ui-icon-bookmark",
+			       onClickButton : function () {
+			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			       } 
+			}); 
+		    liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
+			       caption:"Exportar a Pdf",
+			       buttonicon: "ui-icon-bookmark",
+			       onClickButton : function () {
+			    	   liquidacionVar.<portlet:namespace/>mostrarReporteObservaciones();
+			       } 
+			}); --%>
+		},
+		
+		//Modelo de la grilla para mostrar Observaciones para los formatos 13A
+		buildGridsObservacion13 : function () {	
+		   liquidacionVar.tablaObservacion13.jqGrid({
+		   datatype: "local",
+		   colNames: ['Sector Típico','Grupo Zona','Código','Descripción'],
+	       colModel: [
+						{ name: 'descSectorTipico', index: 'descSectorTipico', width: 80 ,align: 'left'},
+						{ name: 'descZonaBenef', index: 'descZonaBenef', width: 100 ,align: 'left'},
+						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
+		                { name: 'descripcion', index: 'descripcion', width: 430 ,align: 'left'}               
+			   	    ],
+		   	 multiselect: false,
+				rowNum:10,
+			   	rowList:[10,20,50],
+				height: 'auto',
+			   	autowidth: true,
+				rownumbers: true,				
+				pager: liquidacionVar.paginadoObservacion13,
+			    viewrecords: true,			   
+			    sortorder: "asc"
+		  	});
+		    liquidacionVar.tablaObservacion13.jqGrid('navGrid',liquidacionVar.paginadoObservacion13,{add:false,edit:false,del:false,search: false,refresh: false});	
 		   <%--  liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
@@ -291,11 +386,28 @@ var liquidacionVar= {
 				},
 				success : function(data) {
 					if( data!=null ){
-						liquidacionVar.dialogObservacion.dialog("open");
-						liquidacionVar.tablaObservacion.clearGridData(true);
-						liquidacionVar.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
-						liquidacionVar.tablaObservacion[0].refreshIndex();
-						liquidacionVar.initBlockUI();
+						console.debug("formato al lanzar el modelo de las observaciones: "+cod_formato);
+						if(cod_formato=='F12C' || cod_formato=='F12D'){
+							console.debug("entrando en formato 12C y 12D");
+							liquidacionVar.dialogObservacion12.dialog("open");
+							liquidacionVar.tablaObservacion12.clearGridData(true);
+							liquidacionVar.tablaObservacion12.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+							liquidacionVar.tablaObservacion12[0].refreshIndex();
+							liquidacionVar.initBlockUI();	
+						}else if(cod_formato=='F13A'){
+							console.debug("entrando en formato13A ");
+							liquidacionVar.dialogObservacion13.dialog("open");
+							liquidacionVar.tablaObservacion13.clearGridData(true);
+							liquidacionVar.tablaObservacion13.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+							liquidacionVar.tablaObservacion13[0].refreshIndex();
+							liquidacionVar.initBlockUI();	
+						}else{
+							liquidacionVar.dialogObservacion.dialog("open");
+							liquidacionVar.tablaObservacion.clearGridData(true);
+							liquidacionVar.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+							liquidacionVar.tablaObservacion[0].refreshIndex();
+							liquidacionVar.initBlockUI();	
+						}						
 					}else{
 						alert("Error al ver las observaciones");
 						liquidacionVar.initBlockUI();	
@@ -500,6 +612,28 @@ var liquidacionVar= {
 					}
 				}
 			}); 
+			 
+			 liquidacionVar.dialogObservacion12.dialog({
+					modal: true,
+					width: 740,
+					autoOpen: false,
+					buttons: {
+						Cerrar: function() {
+							$( this ).dialog("close");
+						}
+					}
+				}); 
+			 
+			 liquidacionVar.dialogObservacion13.dialog({
+					modal: true,
+					width: 730,
+					autoOpen: false,
+					buttons: {
+						Cerrar: function() {
+							$( this ).dialog("close");
+						}
+					}
+				}); 
 			
 		}, /***fin de inicializar los dialogos**/	
 		
