@@ -1323,6 +1323,7 @@ public class Formato12DGartController {
 				reportBean = formatoService.estructurarFormato12DBeanByFiseFormato12DC(formato);
 				reportBean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
 				reportBean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				reportBean.setDescMesEjecucion(fiseUtil.getMapaMeses().get(formato.getMesEjecucionDetalle()));
 				mapa = formatoService.mapearParametrosFormato12D(reportBean);
 
 				CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12D);
@@ -1351,9 +1352,6 @@ public class Formato12DGartController {
 					mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
 					mapa.put("NRO_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
 					mapa.put("MSG_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? FiseConstants.MSG_OBSERVACION_REPORTE_LLENO : FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
-					// add para acta envio
-					//mapa.put("ANO_INICIO_VIGENCIA", formato.getAnoInicioVigenciaDetalle());
-					//mapa.put("ANO_FIN_VIGENCIA", formato.getAnoFinVigenciaDetalle());
 					mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 					mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
 					// prueba de envio definitivo
@@ -1399,7 +1397,7 @@ public class Formato12DGartController {
 				}
 				/** REPORTE OBSERVACIONES */
 				if (listaObservaciones != null && listaObservaciones.size() > 0) {
-					nombreReporte = "validacion";
+					nombreReporte = "validacion12";
 					nombreArchivo = nombreReporte;
 					directorio = "/reports/" + nombreReporte + ".jasper";
 					File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
@@ -1418,7 +1416,7 @@ public class Formato12DGartController {
 					}
 				}
 				/** REPORTE ACTA DE ENVIO */
-				nombreReporte = "actaEnvio";
+				nombreReporte = "gastoMensualIndividual";
 				nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
@@ -1529,7 +1527,7 @@ public class Formato12DGartController {
 			Long mesPresentacion = bean.getMesPresentacion();
 			String etapa = bean.getEtapa();
 
-			String nombreReporte = "actaEnvio";
+			String nombreReporte = "gastoMensualIndividual";
 		    String nombreArchivo = nombreReporte;
 			
 		    FiseFormato12DCPK pk = new FiseFormato12DCPK();
@@ -1548,10 +1546,6 @@ public class Formato12DGartController {
 				mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
 				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
-				
-				//mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getAnoInicioVigenciaDetalle());
-				//mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, formato.getAnoFinVigenciaDetalle());
-
 				mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
 				mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
 				String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
@@ -1580,6 +1574,8 @@ public class Formato12DGartController {
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());
 				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
+				mapa.put(FiseConstants.PARAM_ANO_EJECUCION, formato.getAnoEjecucionDetalle());
+				mapa.put(FiseConstants.PARAM_DESC_MES_EJECUCION, fiseUtil.getMapaMeses().get(formato.getMesEjecucionDetalle()));
 				
 				session.setAttribute("mapa", mapa);
 			}
