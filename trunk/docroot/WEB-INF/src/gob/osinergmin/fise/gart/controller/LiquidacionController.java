@@ -3,6 +3,7 @@ package gob.osinergmin.fise.gart.controller;
 import gob.osinergmin.fise.bean.Formato12ACBean;
 import gob.osinergmin.fise.bean.Formato12BCBean;
 import gob.osinergmin.fise.bean.Formato12CCBean;
+import gob.osinergmin.fise.bean.Formato12DCBean;
 import gob.osinergmin.fise.bean.Formato13ACBean;
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.bean.Formato14ACBean;
@@ -26,6 +27,10 @@ import gob.osinergmin.fise.domain.FiseFormato12CC;
 import gob.osinergmin.fise.domain.FiseFormato12CCPK;
 import gob.osinergmin.fise.domain.FiseFormato12CD;
 import gob.osinergmin.fise.domain.FiseFormato12CDOb;
+import gob.osinergmin.fise.domain.FiseFormato12DC;
+import gob.osinergmin.fise.domain.FiseFormato12DCPK;
+import gob.osinergmin.fise.domain.FiseFormato12DD;
+import gob.osinergmin.fise.domain.FiseFormato12DDOb;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13ACPK;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
@@ -48,6 +53,7 @@ import gob.osinergmin.fise.gart.service.FiseLiquidacionService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.service.Formato12CGartService;
+import gob.osinergmin.fise.gart.service.Formato12DGartService;
 import gob.osinergmin.fise.gart.service.Formato13AGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
 import gob.osinergmin.fise.gart.service.Formato14BGartService;
@@ -124,6 +130,10 @@ public class LiquidacionController {
 	private Formato12CGartService formatoService12C;
 	
 	@Autowired
+	@Qualifier("formato12DGartServiceImpl")
+	private Formato12DGartService formatoService12D;
+	
+	@Autowired
 	@Qualifier("formato13AGartServiceImpl")
 	private Formato13AGartService formatoService13A;
 	
@@ -149,12 +159,13 @@ public class LiquidacionController {
 	private Map<String, String> mapaEmpresa;
 	private Map<String, String> mapaErrores;
 	private Map<String, String> mapaSectorTipico;
+	private Map<Long, String> mapaEtapaEjecucion;
 	
 	
 	private List<MensajeErrorBean> listaObs12A;
 	private List<MensajeErrorBean> listaObs12B;
 	private List<MensajeErrorBean> listaObs12C;
-	//private List<MensajeErrorBean> listaObs12D;
+	private List<MensajeErrorBean> listaObs12D;
 	private List<MensajeErrorBean> listaObs13A;
 	private List<MensajeErrorBean> listaObs14A;
 	private List<MensajeErrorBean> listaObs14B;
@@ -187,6 +198,8 @@ public class LiquidacionController {
     		mapaErrores = fiseUtil.getMapaErrores();
     		
     		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
+    		
+    		mapaEtapaEjecucion = fiseUtil.getMapaEtapaEjecucion();
     		
     		model.addAttribute("model", l);
     		
@@ -465,10 +478,24 @@ public class LiquidacionController {
 				}		        
 
 			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(l.getFormato())){ 
-
-
-
-
+				jsonArray = new JSONArray();
+				FiseFormato12DCPK pk = new FiseFormato12DCPK();
+				pk.setCodEmpresa(l.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(l.getAnioPres()));
+				pk.setMesPresentacion(new Long(l.getMesPres()));
+				pk.setEtapa(l.getEtapa()); 
+				FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk);  
+				cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
+				for (MensajeErrorBean error : listaObs12D) {
+					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("id", error.getId());
+					jsonObj.put("nroItemEtapa", error.getNroItemEtapa());
+					jsonObj.put("codigo", error.getCodigo());
+					jsonObj.put("descripcion", error.getDescripcion());
+					jsonObj.put("descEtapaEjecucion", error.getDescEtapaEjecucion());					
+					jsonArray.put(jsonObj);
+				}
+				
 			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(l.getFormato())){ 
 				jsonArray = new JSONArray();
 				FiseFormato13ACPK pk = new FiseFormato13ACPK();
@@ -567,9 +594,9 @@ public class LiquidacionController {
 			if(listaObs12C!=null){
 				listaObs12C=null;	
 			}
-			/*if(listaObs12D!=null){
+			if(listaObs12D!=null){
 				listaObs12D=null;	
-			}*/
+			}
 			if(listaObs13A!=null){
 				listaObs13A=null;	
 			}
@@ -679,9 +706,26 @@ public class LiquidacionController {
 				}
 
 			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(l.getFormato())){ 
-
-
-
+				nombreReporte = "formato12D";  	  		    	
+				directorio = "/reports/" + nombreReporte + ".jasper";
+				mapa = parametros12D(l.getCodEmpresa(), l.getAnioPres(), l.getMesPres(), 
+						l.getAnioEjec(), l.getMesEjec(), l.getEtapa(), rutaImg, usuario, terminal, email);	
+				FiseFormato12DCPK pk = new FiseFormato12DCPK();
+				pk.setCodEmpresa(l.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(l.getAnioPres()));
+				pk.setMesPresentacion(new Long(l.getMesPres()));
+				pk.setEtapa(l.getEtapa());
+				FiseFormato12DC formato = formatoService12D.obtenerFormato12DCByPK(pk);	
+				if(mapa!=null && formato!=null){				
+					File reportFile = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes12D = null;
+					bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+							new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+					if (bytes12D != null) {				  	  		    		
+						session.setAttribute("bytesFormato", bytes12D);
+						valorReporte =true;
+					}
+				}
 
 			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(l.getFormato())){ 
 				nombreReporte = "formato13A";	       				
@@ -826,7 +870,24 @@ public class LiquidacionController {
 			}
 		}
 	}
-	
+  	
+  	public void cargarListaObservaciones12D(List<FiseFormato12DD> listaDetalle) {
+		int cont = 0;
+		listaObs12D = new ArrayList<MensajeErrorBean>();
+		for (FiseFormato12DD detalle : listaDetalle) {
+			List<FiseFormato12DDOb> listaObser = formatoService12D.listarFormato12DDObByFormato12DD(detalle);
+			for (FiseFormato12DDOb observacion : listaObser) {
+				cont++;
+				MensajeErrorBean obs = new MensajeErrorBean();
+				obs.setId(cont);
+				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
+				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
+				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
+				listaObs12D.add(obs);
+			}
+		}
+	}	
   	
   	/*****LLENAR OBSERVACIONES FORMATOS BIENALES*******/
 	private void cargarListaObservaciones13A(List<FiseFormato13AD> listaDetalle) {
@@ -1067,6 +1128,63 @@ public class LiquidacionController {
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
 		   logger.error("Error al llenar parametros del formato 12C "+e);
+		   e.printStackTrace();
+		}finally{
+		 if(pk!=null){
+			 pk=null;
+		 }
+		 if(formato!=null){
+			 formato=null; 
+		 }
+		 if(bean!=null){
+			 bean=null; 
+		 }
+		}
+		return mapa;
+	}
+	
+	private Map<String, Object> parametros12D(String codEmpresa,String anioPres,String mesPres,
+			String anioEjec,String mesEjec,String etapa,
+			String rutaImg,String usuario,String terminal,String email){
+		
+		Map<String, Object> mapa = null;		
+		FiseFormato12DC formato =null;
+		Formato12DCBean bean =null;
+		FiseFormato12DCPK pk =null;
+		try {
+			pk = new FiseFormato12DCPK();
+		    pk.setCodEmpresa(codEmpresa);
+	        pk.setAnoPresentacion(new Long(anioPres));
+	        pk.setMesPresentacion(new Long(mesPres));	        
+	        pk.setEtapa(etapa);		       
+			formato = formatoService12D.obtenerFormato12DCByPK(pk);
+		    if( formato!=null ){  	    
+				bean = formatoService12D.estructurarFormato12DBeanByFiseFormato12DC(formato);
+				bean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
+				bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				mapa = formatoService12D.mapearParametrosFormato12D(bean);
+				CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12D);
+				String descripcionFormato = "";
+				if (tabla != null) {
+					descripcionFormato = tabla.getDescripcionTabla();
+				}			
+	        	if(mapa!=null){	        	
+	        		mapa.put("IMG", rutaImg);
+	        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+	        		//verificar si ponerlo aca o no
+	        		mapa.put("USUARIO", usuario);
+	        		mapa.put("NOMBRE_FORMATO", descripcionFormato);
+	        		mapa.put("FECHA_ENVIO", formato.getFechaEnvioDefinitivo());
+	        		mapa.put("CORREO", email);
+	        		mapa.put("NRO_OBSERVACIONES", (listaObs12D!=null && !listaObs12D.isEmpty())?listaObs12D.size():0);
+	        		mapa.put("MSG_OBSERVACIONES", (listaObs12D!=null && !listaObs12D.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);	        		
+	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
+	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
+	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	 			}//fin if map !=null    	
+		    }//fin del if formato !=null			
+		} catch (Exception e) {
+		   logger.error("Error al llenar parametros del formato 12D "+e);
 		   e.printStackTrace();
 		}finally{
 		 if(pk!=null){
