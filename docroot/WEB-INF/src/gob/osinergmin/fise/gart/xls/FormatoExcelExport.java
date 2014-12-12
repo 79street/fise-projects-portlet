@@ -6,12 +6,15 @@ import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12CC;
 import gob.osinergmin.fise.domain.FiseFormato12CD;
+import gob.osinergmin.fise.domain.FiseFormato12DC;
+import gob.osinergmin.fise.domain.FiseFormato12DD;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato14AC;
 import gob.osinergmin.fise.domain.FiseFormato14BC;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato12BGartCommand;
+import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.xls.XlsTableConfig;
 import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
@@ -386,7 +389,7 @@ public class FormatoExcelExport {
 		a10.setCellStyle(headerCellStyle);
 		
 		HSSFCell a11 = segundaFila.createCell(11);
-		a11.setCellValue(new HSSFRichTextString("Tipo"));
+		a11.setCellValue(new HSSFRichTextString("Tipo Doc."));
 		a11.setCellStyle(headerCellStyle);
 		
 		HSSFCell a12 = segundaFila.createCell(12);
@@ -394,7 +397,7 @@ public class FormatoExcelExport {
 		a12.setCellStyle(headerCellStyle);
 		
 		HSSFCell a13 = segundaFila.createCell(13);
-		a13.setCellValue(new HSSFRichTextString("Serie 	Doc."));
+		a13.setCellValue(new HSSFRichTextString("Serie Doc."));
 		a13.setCellStyle(headerCellStyle);
 		
 		HSSFCell a14 = segundaFila.createCell(14);
@@ -613,7 +616,7 @@ public class FormatoExcelExport {
 		a10.setCellStyle(headerCellStyle);
 		
 		HSSFCell a11 = segundaFila.createCell(11);
-		a11.setCellValue(new HSSFRichTextString("Tipo"));
+		a11.setCellValue(new HSSFRichTextString("Tipo Doc."));
 		a11.setCellStyle(headerCellStyle);
 		
 		HSSFCell a12 = segundaFila.createCell(12);
@@ -621,7 +624,7 @@ public class FormatoExcelExport {
 		a12.setCellStyle(headerCellStyle);
 		
 		HSSFCell a13 = segundaFila.createCell(13);
-		a13.setCellValue(new HSSFRichTextString("Serie 	Doc."));
+		a13.setCellValue(new HSSFRichTextString("Serie Doc."));
 		a13.setCellStyle(headerCellStyle);
 		
 		HSSFCell a14 = segundaFila.createCell(14);
@@ -743,6 +746,566 @@ public class FormatoExcelExport {
 	
 	
 	//FORMATO 12D
+	public HSSFSheet construirExcelFormato12D(List<?> listaFormato12D) {
+
+		HSSFFont fuenteH = _wb.createFont();
+		fuenteH.setFontHeightInPoints((short) 10);
+		fuenteH.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteH.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+
+		// Creamos el objto HHSSFeclStyle que aplicara para el estilo a la celda
+		HSSFCellStyle headerCellStyle = _wb.createCellStyle();
+		headerCellStyle.setWrapText(false);
+		headerCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		headerCellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		headerCellStyle.setFont(fuenteH);
+
+		// Definimos los bordes de las celdas
+		headerCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setBottomBorderColor((short) 8);
+		headerCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setLeftBorderColor((short) 8);
+		headerCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setRightBorderColor((short) 8);
+		headerCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setTopBorderColor((short) 8);
+
+		// Establecemos el tipo de sombreado de nuestra celda
+		headerCellStyle.setFillForegroundColor(new HSSFColor.GREY_25_PERCENT().getIndex());
+		headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+		// Para el contenido general
+		HSSFFont fuenteC = _wb.createFont();
+		fuenteC.setFontHeightInPoints((short) 9);
+		fuenteC.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteC.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+
+		// Luego creamos el objeto que se encargara de aplicar el estilo a la
+		// celda
+		HSSFCellStyle dataCellStyle = _wb.createCellStyle();
+		dataCellStyle.setFont(fuenteC);
+
+		// Tambien, podemos establecer bordes...
+		dataCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setBottomBorderColor((short) 8);
+		dataCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setLeftBorderColor((short) 8);
+		dataCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setRightBorderColor((short) 8);
+		dataCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setTopBorderColor((short) 8);
+
+		HSSFCellStyle dateCellStyle = _wb.createCellStyle();
+		dateCellStyle.cloneStyleFrom(dataCellStyle);
+		dateCellStyle.setDataFormat((short) 15);
+
+		//HSSFRow row = _xlsSheet.createRow(iRow);
+
+		HSSFRow segundaFila = _xlsSheet.createRow(0);
+		segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+
+		HSSFCell a1 = segundaFila.createCell(1);
+		a1.setCellValue(new HSSFRichTextString("Empresa"));
+		a1.setCellStyle(headerCellStyle);
+		
+		HSSFCell a2 = segundaFila.createCell(2);
+		a2.setCellValue(new HSSFRichTextString("Año Pres."));
+		a2.setCellStyle(headerCellStyle);
+		
+		HSSFCell a3 = segundaFila.createCell(3);
+		a3.setCellValue(new HSSFRichTextString("Mes. Pres."));
+		a3.setCellStyle(headerCellStyle);
+	
+		HSSFCell a4 = segundaFila.createCell(4);
+		a4.setCellValue(new HSSFRichTextString("Etapa"));
+		a4.setCellStyle(headerCellStyle);
+		
+		HSSFCell a6 = segundaFila.createCell(5);
+		a6.setCellValue(new HSSFRichTextString("Grupo de información"));
+		a6.setCellStyle(headerCellStyle);
+		
+		HSSFCell a7 = segundaFila.createCell(6);
+		a7.setCellValue(new HSSFRichTextString("Estado"));
+		a7.setCellStyle(headerCellStyle);
+
+		if( listaFormato12D!=null && listaFormato12D.size()>0 ){
+			for( int i=0;i<listaFormato12D.size();i++ ){
+				
+				FiseFormato12DC fiseFormato12D = (FiseFormato12DC) listaFormato12D.get(i);
+				
+				HSSFRow fila = _xlsSheet.createRow(i+1);
+				HSSFCell ax1 = fila.createCell(1);
+				ax1.setCellValue(new HSSFRichTextString(fiseFormato12D.getDescEmpresa()));
+				ax1.setCellStyle(dateCellStyle);
+				HSSFCell ax2 = fila.createCell(2);
+				ax2.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12D.getId().getAnoPresentacion())));
+				ax2.setCellStyle(dateCellStyle);
+				HSSFCell ax3 = fila.createCell(3);
+				ax3.setCellValue(new HSSFRichTextString(fiseFormato12D.getDescMesPresentacion()));
+				ax3.setCellStyle(dateCellStyle);
+				HSSFCell ax4 = fila.createCell(4);
+				ax4.setCellValue(new HSSFRichTextString(fiseFormato12D.getId().getEtapa()));
+				ax4.setCellStyle(dateCellStyle);
+				HSSFCell ax5 = fila.createCell(5);
+				ax5.setCellValue(new HSSFRichTextString(fiseFormato12D.getDescGrupoInformacion()));
+				ax5.setCellStyle(dateCellStyle);
+				HSSFCell ax6 = fila.createCell(6);
+				ax6.setCellValue(new HSSFRichTextString(fiseFormato12D.getDescEstado()));
+				ax6.setCellStyle(dateCellStyle);
+			}
+		}
+
+		/**
+		 * longitud automatica de columnas
+		 */
+		_xlsSheet.autoSizeColumn((short) 1);
+		_xlsSheet.autoSizeColumn((short) 2);
+		_xlsSheet.autoSizeColumn((short) 3);
+		_xlsSheet.autoSizeColumn((short) 4);
+		_xlsSheet.autoSizeColumn((short) 5);
+		_xlsSheet.autoSizeColumn((short) 6);
+		
+		return _xlsSheet;
+
+	}
+	
+	public HSSFSheet construirExcelFormato12DDImplementacion(List<?> listaFormato12DDImplementacion) {
+
+		HSSFFont fuenteH = _wb.createFont();
+		fuenteH.setFontHeightInPoints((short) 10);
+		fuenteH.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteH.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+
+		// Creamos el objto HHSSFeclStyle que aplicara para el estilo a la celda
+		HSSFCellStyle headerCellStyle = _wb.createCellStyle();
+		headerCellStyle.setWrapText(false);
+		headerCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		headerCellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		headerCellStyle.setFont(fuenteH);
+
+		// Definimos los bordes de las celdas
+		headerCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setBottomBorderColor((short) 8);
+		headerCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setLeftBorderColor((short) 8);
+		headerCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setRightBorderColor((short) 8);
+		headerCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setTopBorderColor((short) 8);
+
+		// Establecemos el tipo de sombreado de nuestra celda
+		headerCellStyle.setFillForegroundColor(new HSSFColor.GREY_25_PERCENT().getIndex());
+		headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+		// Para el contenido general
+		HSSFFont fuenteC = _wb.createFont();
+		fuenteC.setFontHeightInPoints((short) 9);
+		fuenteC.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteC.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+
+		// Luego creamos el objeto que se encargara de aplicar el estilo a la
+		// celda
+		HSSFCellStyle dataCellStyle = _wb.createCellStyle();
+		dataCellStyle.setFont(fuenteC);
+
+		// Tambien, podemos establecer bordes...
+		dataCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setBottomBorderColor((short) 8);
+		dataCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setLeftBorderColor((short) 8);
+		dataCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setRightBorderColor((short) 8);
+		dataCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setTopBorderColor((short) 8);
+
+		HSSFCellStyle dateCellStyle = _wb.createCellStyle();
+		dateCellStyle.cloneStyleFrom(dataCellStyle);
+		dateCellStyle.setDataFormat((short) 15);
+
+		//HSSFRow row = _xlsSheet.createRow(iRow);
+
+		HSSFRow segundaFila = _xlsSheet.createRow(0);
+		segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+
+		HSSFCell a1 = segundaFila.createCell(1);
+		a1.setCellValue(new HSSFRichTextString("Año Ejec."));
+		a1.setCellStyle(headerCellStyle);
+		
+		HSSFCell a2 = segundaFila.createCell(2);
+		a2.setCellValue(new HSSFRichTextString("Mes Ejec."));
+		a2.setCellStyle(headerCellStyle);
+		
+		HSSFCell a3 = segundaFila.createCell(3);
+		a3.setCellValue(new HSSFRichTextString("Item"));
+		a3.setCellStyle(headerCellStyle);
+	
+		HSSFCell a4 = segundaFila.createCell(4);
+		a4.setCellValue(new HSSFRichTextString("Cod. Ubigeo"));
+		a4.setCellStyle(headerCellStyle);
+		
+		HSSFCell a5 = segundaFila.createCell(5);
+		a5.setCellValue(new HSSFRichTextString("Localidad"));
+		a5.setCellStyle(headerCellStyle);
+		
+		HSSFCell a6 = segundaFila.createCell(6);
+		a6.setCellValue(new HSSFRichTextString("Zona Benef."));
+		a6.setCellStyle(headerCellStyle);
+		
+		HSSFCell a7 = segundaFila.createCell(7);
+		a7.setCellValue(new HSSFRichTextString("Cta. Contable"));
+		a7.setCellStyle(headerCellStyle);
+		
+		HSSFCell a8 = segundaFila.createCell(8);
+		a8.setCellValue(new HSSFRichTextString("Gasto"));
+		a8.setCellStyle(headerCellStyle);
+		
+		HSSFCell a9 = segundaFila.createCell(9);
+		a9.setCellValue(new HSSFRichTextString("Tipo gasto"));
+		a9.setCellStyle(headerCellStyle);
+		
+		HSSFCell a10 = segundaFila.createCell(10);
+		a10.setCellValue(new HSSFRichTextString("Tipo Doc."));
+		a10.setCellStyle(headerCellStyle);
+		
+		HSSFCell a11 = segundaFila.createCell(11);
+		a11.setCellValue(new HSSFRichTextString("RUC"));
+		a11.setCellStyle(headerCellStyle);
+		
+		HSSFCell a12 = segundaFila.createCell(12);
+		a12.setCellValue(new HSSFRichTextString("Serie Doc."));
+		a12.setCellStyle(headerCellStyle);
+		
+		HSSFCell a13 = segundaFila.createCell(13);
+		a13.setCellValue(new HSSFRichTextString("Nro. Doc."));
+		a13.setCellStyle(headerCellStyle);
+		
+		HSSFCell a14 = segundaFila.createCell(14);
+		a14.setCellValue(new HSSFRichTextString("Fecha autorización"));
+		a14.setCellStyle(headerCellStyle);
+		
+		HSSFCell a15 = segundaFila.createCell(15);
+		a15.setCellValue(new HSSFRichTextString("Nro. Doc. autorización"));
+		a15.setCellStyle(headerCellStyle);
+		
+		HSSFCell a16 = segundaFila.createCell(16);
+		a16.setCellValue(new HSSFRichTextString("Cantidad"));
+		a16.setCellStyle(headerCellStyle);
+		
+		HSSFCell a17 = segundaFila.createCell(17);
+		a17.setCellValue(new HSSFRichTextString("Cto.unitario"));
+		a17.setCellStyle(headerCellStyle);
+		
+		int m=0;
+
+		if( listaFormato12DDImplementacion!=null && listaFormato12DDImplementacion.size()>0 ){
+			for( int i=0;i<listaFormato12DDImplementacion.size();i++ ){
+				
+				FiseFormato12DD fiseFormato12DD = (FiseFormato12DD) listaFormato12DDImplementacion.get(i);
+				
+				if( FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD == fiseFormato12DD.getId().getEtapaEjecucion() ){
+					
+					HSSFRow fila = _xlsSheet.createRow(m+1);
+					HSSFCell ax1 = fila.createCell(1);
+					ax1.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getId().getAnoEjecucionGasto())));
+					ax1.setCellStyle(dateCellStyle);
+					HSSFCell ax2 = fila.createCell(2);
+					ax2.setCellValue(new HSSFRichTextString(fiseFormato12DD.getDescMesEjecucion()));
+					ax2.setCellStyle(dateCellStyle);
+					HSSFCell ax3 = fila.createCell(3);
+					ax3.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getId().getNumeroItemEtapa())));
+					ax3.setCellStyle(dateCellStyle);
+					HSSFCell ax4 = fila.createCell(4);
+					ax4.setCellValue(new HSSFRichTextString(fiseFormato12DD.getCodUbigeo()));
+					ax4.setCellStyle(dateCellStyle);
+					HSSFCell ax5 = fila.createCell(5);
+					ax5.setCellValue(new HSSFRichTextString(fiseFormato12DD.getDescripcionLocalidad()));
+					ax5.setCellStyle(dateCellStyle);
+					HSSFCell ax6 = fila.createCell(6);
+					ax6.setCellValue(new HSSFRichTextString(fiseFormato12DD.getDescZonaBenef()));
+					ax6.setCellStyle(dateCellStyle);
+					HSSFCell ax7 = fila.createCell(7);
+					ax7.setCellValue(new HSSFRichTextString(fiseFormato12DD.getCodigoCuentaContaEde()));
+					ax7.setCellStyle(dateCellStyle);
+					HSSFCell ax8 = fila.createCell(8);
+					ax8.setCellValue(new HSSFRichTextString(fiseFormato12DD.getDescripcionGasto()));
+					ax8.setCellStyle(dateCellStyle);
+					HSSFCell ax9 = fila.createCell(9);
+					ax9.setCellValue(new HSSFRichTextString(fiseFormato12DD.getIdTipGasto()));
+					ax9.setCellStyle(dateCellStyle);
+					HSSFCell ax10 = fila.createCell(10);
+					ax10.setCellValue(new HSSFRichTextString(fiseFormato12DD.getIdTipDocRef()));
+					ax10.setCellStyle(dateCellStyle);
+					HSSFCell ax11 = fila.createCell(11);
+					ax11.setCellValue(new HSSFRichTextString(fiseFormato12DD.getRucEmpresaEmiteDocRef()));
+					ax11.setCellStyle(dateCellStyle);
+					HSSFCell ax12 = fila.createCell(12);
+					ax12.setCellValue(new HSSFRichTextString(fiseFormato12DD.getSerieDocumentoReferencia()));
+					ax12.setCellStyle(dateCellStyle);
+					HSSFCell ax13 = fila.createCell(13);
+					ax13.setCellValue(new HSSFRichTextString(fiseFormato12DD.getNumeroDocumentoRefGasto()));
+					ax13.setCellStyle(dateCellStyle);
+					HSSFCell ax14 = fila.createCell(14);
+					ax14.setCellValue(new HSSFRichTextString(FechaUtil.fecha_DD_MM_YYYY(fiseFormato12DD.getFechaAutorizacionGasto())));
+					ax14.setCellStyle(dateCellStyle);
+					HSSFCell ax15 = fila.createCell(15);
+					ax15.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getNumeroDocAutorizaGasto())));
+					ax15.setCellStyle(dateCellStyle);
+					HSSFCell ax16 = fila.createCell(16);
+					ax16.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getCantidad())));
+					ax16.setCellStyle(dateCellStyle);
+					HSSFCell ax17 = fila.createCell(17);
+					ax17.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getCostoUnitario())));
+					ax17.setCellStyle(dateCellStyle);
+					
+					m++;
+				}
+				
+			}
+		}
+
+		/**
+		 * longitud automatica de columnas
+		 */
+		_xlsSheet.autoSizeColumn((short) 1);
+		_xlsSheet.autoSizeColumn((short) 2);
+		_xlsSheet.autoSizeColumn((short) 3);
+		_xlsSheet.autoSizeColumn((short) 4);
+		_xlsSheet.autoSizeColumn((short) 5);
+		_xlsSheet.autoSizeColumn((short) 6);
+		_xlsSheet.autoSizeColumn((short) 7);
+		_xlsSheet.autoSizeColumn((short) 8);
+		_xlsSheet.autoSizeColumn((short) 9);
+		_xlsSheet.autoSizeColumn((short) 10);
+		_xlsSheet.autoSizeColumn((short) 11);
+		_xlsSheet.autoSizeColumn((short) 12);
+		_xlsSheet.autoSizeColumn((short) 13);
+		_xlsSheet.autoSizeColumn((short) 14);
+		_xlsSheet.autoSizeColumn((short) 15);
+		_xlsSheet.autoSizeColumn((short) 16);
+		_xlsSheet.autoSizeColumn((short) 17);
+		
+		return _xlsSheet;
+
+	}
+	
+	public HSSFSheet construirExcelFormato12DDMensual(List<?> listaFormato12DDMensual) {
+
+		HSSFFont fuenteH = _wb.createFont();
+		fuenteH.setFontHeightInPoints((short) 10);
+		fuenteH.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteH.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+
+		// Creamos el objto HHSSFeclStyle que aplicara para el estilo a la celda
+		HSSFCellStyle headerCellStyle = _wb.createCellStyle();
+		headerCellStyle.setWrapText(false);
+		headerCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		headerCellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		headerCellStyle.setFont(fuenteH);
+
+		// Definimos los bordes de las celdas
+		headerCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setBottomBorderColor((short) 8);
+		headerCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setLeftBorderColor((short) 8);
+		headerCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setRightBorderColor((short) 8);
+		headerCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setTopBorderColor((short) 8);
+
+		// Establecemos el tipo de sombreado de nuestra celda
+		headerCellStyle.setFillForegroundColor(new HSSFColor.GREY_25_PERCENT().getIndex());
+		headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+		// Para el contenido general
+		HSSFFont fuenteC = _wb.createFont();
+		fuenteC.setFontHeightInPoints((short) 9);
+		fuenteC.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteC.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+
+		// Luego creamos el objeto que se encargara de aplicar el estilo a la
+		// celda
+		HSSFCellStyle dataCellStyle = _wb.createCellStyle();
+		dataCellStyle.setFont(fuenteC);
+
+		// Tambien, podemos establecer bordes...
+		dataCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setBottomBorderColor((short) 8);
+		dataCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setLeftBorderColor((short) 8);
+		dataCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setRightBorderColor((short) 8);
+		dataCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setTopBorderColor((short) 8);
+
+		HSSFCellStyle dateCellStyle = _wb.createCellStyle();
+		dateCellStyle.cloneStyleFrom(dataCellStyle);
+		dateCellStyle.setDataFormat((short) 15);
+
+		//HSSFRow row = _xlsSheet.createRow(iRow);
+
+		HSSFRow segundaFila = _xlsSheet.createRow(0);
+		segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+
+		HSSFCell a1 = segundaFila.createCell(1);
+		a1.setCellValue(new HSSFRichTextString("Año Ejec."));
+		a1.setCellStyle(headerCellStyle);
+		
+		HSSFCell a2 = segundaFila.createCell(2);
+		a2.setCellValue(new HSSFRichTextString("Mes Ejec."));
+		a2.setCellStyle(headerCellStyle);
+		
+		HSSFCell a3 = segundaFila.createCell(3);
+		a3.setCellValue(new HSSFRichTextString("Item"));
+		a3.setCellStyle(headerCellStyle);
+	
+		HSSFCell a4 = segundaFila.createCell(4);
+		a4.setCellValue(new HSSFRichTextString("Cod. Ubigeo"));
+		a4.setCellStyle(headerCellStyle);
+		
+		HSSFCell a5 = segundaFila.createCell(5);
+		a5.setCellValue(new HSSFRichTextString("Localidad"));
+		a5.setCellStyle(headerCellStyle);
+		
+		HSSFCell a6 = segundaFila.createCell(6);
+		a6.setCellValue(new HSSFRichTextString("Zona Benef."));
+		a6.setCellStyle(headerCellStyle);
+		
+		HSSFCell a7 = segundaFila.createCell(7);
+		a7.setCellValue(new HSSFRichTextString("Cta. Contable"));
+		a7.setCellStyle(headerCellStyle);
+		
+		HSSFCell a8 = segundaFila.createCell(8);
+		a8.setCellValue(new HSSFRichTextString("Gasto"));
+		a8.setCellStyle(headerCellStyle);
+		
+		HSSFCell a9 = segundaFila.createCell(9);
+		a9.setCellValue(new HSSFRichTextString("Tipo gasto"));
+		a9.setCellStyle(headerCellStyle);
+		
+		HSSFCell a10 = segundaFila.createCell(10);
+		a10.setCellValue(new HSSFRichTextString("Tipo Doc."));
+		a10.setCellStyle(headerCellStyle);
+		
+		HSSFCell a11 = segundaFila.createCell(11);
+		a11.setCellValue(new HSSFRichTextString("RUC"));
+		a11.setCellStyle(headerCellStyle);
+		
+		HSSFCell a12 = segundaFila.createCell(12);
+		a12.setCellValue(new HSSFRichTextString("Serie Doc."));
+		a12.setCellStyle(headerCellStyle);
+		
+		HSSFCell a13 = segundaFila.createCell(13);
+		a13.setCellValue(new HSSFRichTextString("Nro. Doc."));
+		a13.setCellStyle(headerCellStyle);
+		
+		HSSFCell a14 = segundaFila.createCell(14);
+		a14.setCellValue(new HSSFRichTextString("Fecha autorización"));
+		a14.setCellStyle(headerCellStyle);
+		
+		HSSFCell a15 = segundaFila.createCell(15);
+		a15.setCellValue(new HSSFRichTextString("Nro. Doc. autorización"));
+		a15.setCellStyle(headerCellStyle);
+		
+		HSSFCell a16 = segundaFila.createCell(16);
+		a16.setCellValue(new HSSFRichTextString("Cantidad"));
+		a16.setCellStyle(headerCellStyle);
+		
+		HSSFCell a17 = segundaFila.createCell(17);
+		a17.setCellValue(new HSSFRichTextString("Cto.unitario"));
+		a17.setCellStyle(headerCellStyle);
+
+		int m=0;
+		
+		if( listaFormato12DDMensual!=null && listaFormato12DDMensual.size()>0 ){
+			for( int i=0;i<listaFormato12DDMensual.size();i++ ){
+				
+				FiseFormato12DD fiseFormato12DD = (FiseFormato12DD) listaFormato12DDMensual.get(i);
+				
+				if( FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD == fiseFormato12DD.getId().getEtapaEjecucion() ){
+					
+					HSSFRow fila = _xlsSheet.createRow(m+1);
+					HSSFCell ax1 = fila.createCell(1);
+					ax1.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getId().getAnoEjecucionGasto())));
+					ax1.setCellStyle(dateCellStyle);
+					HSSFCell ax2 = fila.createCell(2);
+					ax2.setCellValue(new HSSFRichTextString(fiseFormato12DD.getDescMesEjecucion()));
+					ax2.setCellStyle(dateCellStyle);
+					HSSFCell ax3 = fila.createCell(3);
+					ax3.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getId().getNumeroItemEtapa())));
+					ax3.setCellStyle(dateCellStyle);
+					HSSFCell ax4 = fila.createCell(4);
+					ax4.setCellValue(new HSSFRichTextString(fiseFormato12DD.getCodUbigeo()));
+					ax4.setCellStyle(dateCellStyle);
+					HSSFCell ax5 = fila.createCell(5);
+					ax5.setCellValue(new HSSFRichTextString(fiseFormato12DD.getDescripcionLocalidad()));
+					ax5.setCellStyle(dateCellStyle);
+					HSSFCell ax6 = fila.createCell(6);
+					ax6.setCellValue(new HSSFRichTextString(fiseFormato12DD.getDescZonaBenef()));
+					ax6.setCellStyle(dateCellStyle);
+					HSSFCell ax7 = fila.createCell(7);
+					ax7.setCellValue(new HSSFRichTextString(fiseFormato12DD.getCodigoCuentaContaEde()));
+					ax7.setCellStyle(dateCellStyle);
+					HSSFCell ax8 = fila.createCell(8);
+					ax8.setCellValue(new HSSFRichTextString(fiseFormato12DD.getDescripcionGasto()));
+					ax8.setCellStyle(dateCellStyle);
+					HSSFCell ax9 = fila.createCell(9);
+					ax9.setCellValue(new HSSFRichTextString(fiseFormato12DD.getIdTipGasto()));
+					ax9.setCellStyle(dateCellStyle);
+					HSSFCell ax10 = fila.createCell(10);
+					ax10.setCellValue(new HSSFRichTextString(fiseFormato12DD.getIdTipDocRef()));
+					ax10.setCellStyle(dateCellStyle);
+					HSSFCell ax11 = fila.createCell(11);
+					ax11.setCellValue(new HSSFRichTextString(fiseFormato12DD.getRucEmpresaEmiteDocRef()));
+					ax11.setCellStyle(dateCellStyle);
+					HSSFCell ax12 = fila.createCell(12);
+					ax12.setCellValue(new HSSFRichTextString(fiseFormato12DD.getSerieDocumentoReferencia()));
+					ax12.setCellStyle(dateCellStyle);
+					HSSFCell ax13 = fila.createCell(13);
+					ax13.setCellValue(new HSSFRichTextString(fiseFormato12DD.getNumeroDocumentoRefGasto()));
+					ax13.setCellStyle(dateCellStyle);
+					HSSFCell ax14 = fila.createCell(14);
+					ax14.setCellValue(new HSSFRichTextString(FechaUtil.fecha_DD_MM_YYYY(fiseFormato12DD.getFechaAutorizacionGasto())));
+					ax14.setCellStyle(dateCellStyle);
+					HSSFCell ax15 = fila.createCell(15);
+					ax15.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getNumeroDocAutorizaGasto())));
+					ax15.setCellStyle(dateCellStyle);
+					HSSFCell ax16 = fila.createCell(16);
+					ax16.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getCantidad())));
+					ax16.setCellStyle(dateCellStyle);
+					HSSFCell ax17 = fila.createCell(17);
+					ax17.setCellValue(new HSSFRichTextString(String.valueOf(fiseFormato12DD.getCostoUnitario())));
+					ax17.setCellStyle(dateCellStyle);
+					
+					m++;
+				}
+				
+			}
+		}
+
+		/**
+		 * longitud automatica de columnas
+		 */
+		_xlsSheet.autoSizeColumn((short) 1);
+		_xlsSheet.autoSizeColumn((short) 2);
+		_xlsSheet.autoSizeColumn((short) 3);
+		_xlsSheet.autoSizeColumn((short) 4);
+		_xlsSheet.autoSizeColumn((short) 5);
+		_xlsSheet.autoSizeColumn((short) 6);
+		_xlsSheet.autoSizeColumn((short) 7);
+		_xlsSheet.autoSizeColumn((short) 8);
+		_xlsSheet.autoSizeColumn((short) 9);
+		_xlsSheet.autoSizeColumn((short) 10);
+		_xlsSheet.autoSizeColumn((short) 11);
+		_xlsSheet.autoSizeColumn((short) 12);
+		_xlsSheet.autoSizeColumn((short) 13);
+		_xlsSheet.autoSizeColumn((short) 14);
+		_xlsSheet.autoSizeColumn((short) 15);
+		_xlsSheet.autoSizeColumn((short) 16);
+		_xlsSheet.autoSizeColumn((short) 17);
+		
+		return _xlsSheet;
+
+	}
 	
 	/***cambios euclides */
 	public HSSFSheet construirExcelFormato14C(List<?> listaFormato14C) {
@@ -1179,8 +1742,8 @@ public class FormatoExcelExport {
 
 	}
 	
-	//OBSERVACIONES FORMATO 12B
-	public HSSFSheet construirExcelObservaciones12C(List<?> listaObservacion) {
+	//OBSERVACIONES FORMATO 12C y 12D
+	public HSSFSheet construirExcelObservaciones12(List<?> listaObservacion) {
 
 		HSSFFont fuenteH = _wb.createFont();
 		fuenteH.setFontHeightInPoints((short) 10);
@@ -2044,7 +2607,11 @@ public class FormatoExcelExport {
 			}else if( FiseConstants.TIPO_FORMATO_12CD_MENSUAL.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelFormato12CDMensual(xlsTableConfig.getLista());
 			}else if( FiseConstants.TIPO_FORMATO_12D.equals(xlsTableConfig.getTipoFormato()) ){
-				//construirExcelFormato12D(xlsTableConfig.getLista());
+				construirExcelFormato12D(xlsTableConfig.getLista());
+			}else if( FiseConstants.TIPO_FORMATO_12CD_IMPLEMENTACION.equals(xlsTableConfig.getTipoFormato()) ){
+				construirExcelFormato12DDImplementacion(xlsTableConfig.getLista());
+			}else if( FiseConstants.TIPO_FORMATO_12CD_MENSUAL.equals(xlsTableConfig.getTipoFormato()) ){
+				construirExcelFormato12DDMensual(xlsTableConfig.getLista());
 			}else if( FiseConstants.TIPO_FORMATO_13A.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelFormato13A(xlsTableConfig.getLista());
 			}else if( FiseConstants.TIPO_FORMATO_13AD.equals(xlsTableConfig.getTipoFormato()) ){
@@ -2063,7 +2630,9 @@ public class FormatoExcelExport {
 			else if( FiseConstants.TIPO_FORMATO_VAL.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelObservaciones(xlsTableConfig.getLista());
 			}else if( FiseConstants.TIPO_FORMATO_VAL_12C.equals(xlsTableConfig.getTipoFormato()) ){
-				construirExcelObservaciones12C(xlsTableConfig.getLista());
+				construirExcelObservaciones12(xlsTableConfig.getLista());
+			}else if( FiseConstants.TIPO_FORMATO_VAL_12D.equals(xlsTableConfig.getTipoFormato()) ){
+				construirExcelObservaciones12(xlsTableConfig.getLista());
 			}
 		}
 		return _xlsSheet;

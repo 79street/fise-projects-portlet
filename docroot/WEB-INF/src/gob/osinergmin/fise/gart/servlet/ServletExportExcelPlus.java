@@ -42,7 +42,7 @@ public class ServletExportExcelPlus extends HttpServlet {
 		
 		String tipoFormato = (String)sesion.getAttribute(FiseConstants.TIPO_FORMATO_EXCEL_EXPORT);
 		String listaFormatoExcel = FiseConstants.LISTA_FORMATO_EXCEL_EXPORT;
-		;
+		
 		if( FiseConstants.TIPO_FORMATO_12CD.equals(tipoFormato) ){
 			etapaEjec = request.getParameter("etapaEjec");
 			List<?> lista = (List<?>)sesion.getAttribute(listaFormatoExcel);
@@ -50,6 +50,14 @@ public class ServletExportExcelPlus extends HttpServlet {
 				fiseUtil.configuracionExportarExcel(sesion, FiseConstants.TIPO_FORMATO_12CD_IMPLEMENTACION, FiseConstants.NOMBRE_EXCEL_FORMATO12CD_IMPLEMENTACION, FiseConstants.NOMBRE_HOJA_FORMATO12CD_IMPLEMENTACION, lista);
 			}else if( FiseConstants.ETAPAEJECUCION_MENSUAL_EXCEL_EXPORT.equals(etapaEjec) ){
 				fiseUtil.configuracionExportarExcel(sesion, FiseConstants.TIPO_FORMATO_12CD_MENSUAL, FiseConstants.NOMBRE_EXCEL_FORMATO12CD_MENSUAL, FiseConstants.NOMBRE_HOJA_FORMATO12CD_MENSUAL, lista);
+			}
+		}else if( FiseConstants.TIPO_FORMATO_12DD.equals(tipoFormato) ){
+			etapaEjec = request.getParameter("etapaEjec");
+			List<?> lista = (List<?>)sesion.getAttribute(listaFormatoExcel);
+			if( FiseConstants.ETAPAEJECUCION_IMPLEMENTACION_EXCEL_EXPORT.equals(etapaEjec) ){
+				fiseUtil.configuracionExportarExcel(sesion, FiseConstants.TIPO_FORMATO_12DD_IMPLEMENTACION, FiseConstants.NOMBRE_EXCEL_FORMATO12DD_IMPLEMENTACION, FiseConstants.NOMBRE_HOJA_FORMATO12DD_IMPLEMENTACION, lista);
+			}else if( FiseConstants.ETAPAEJECUCION_MENSUAL_EXCEL_EXPORT.equals(etapaEjec) ){
+				fiseUtil.configuracionExportarExcel(sesion, FiseConstants.TIPO_FORMATO_12DD_MENSUAL, FiseConstants.NOMBRE_EXCEL_FORMATO12DD_MENSUAL, FiseConstants.NOMBRE_HOJA_FORMATO12DD_MENSUAL, lista);
 			}
 		}
 		
