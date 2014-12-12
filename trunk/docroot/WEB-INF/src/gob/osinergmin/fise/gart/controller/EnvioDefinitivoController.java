@@ -6,6 +6,7 @@ import gob.osinergmin.fise.bean.Formato12ACBean;
 import gob.osinergmin.fise.bean.Formato12BCBean;
 import gob.osinergmin.fise.bean.Formato12C12D13Generic;
 import gob.osinergmin.fise.bean.Formato12CCBean;
+import gob.osinergmin.fise.bean.Formato12DCBean;
 import gob.osinergmin.fise.bean.Formato13ACBean;
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.bean.Formato14ACBean;
@@ -30,6 +31,10 @@ import gob.osinergmin.fise.domain.FiseFormato12CC;
 import gob.osinergmin.fise.domain.FiseFormato12CCPK;
 import gob.osinergmin.fise.domain.FiseFormato12CD;
 import gob.osinergmin.fise.domain.FiseFormato12CDOb;
+import gob.osinergmin.fise.domain.FiseFormato12DC;
+import gob.osinergmin.fise.domain.FiseFormato12DCPK;
+import gob.osinergmin.fise.domain.FiseFormato12DD;
+import gob.osinergmin.fise.domain.FiseFormato12DDOb;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13ACPK;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
@@ -53,6 +58,7 @@ import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.service.Formato12CGartService;
+import gob.osinergmin.fise.gart.service.Formato12DGartService;
 import gob.osinergmin.fise.gart.service.Formato13AGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
 import gob.osinergmin.fise.gart.service.Formato14BGartService;
@@ -133,6 +139,10 @@ public class EnvioDefinitivoController {
 	private Formato12CGartService formatoService12C;
 	
 	@Autowired
+	@Qualifier("formato12DGartServiceImpl")
+	private Formato12DGartService formatoService12D;
+	
+	@Autowired
 	@Qualifier("formato13AGartServiceImpl")
 	private Formato13AGartService formatoService13A;
 	
@@ -158,12 +168,13 @@ public class EnvioDefinitivoController {
 	private Map<String, String> mapaEmpresa;
 	private Map<String, String> mapaErrores;
 	private Map<String, String> mapaSectorTipico;
+	private Map<Long, String> mapaEtapaEjecucion;
 	
 	
 	private List<MensajeErrorBean> listaObs12A;
 	private List<MensajeErrorBean> listaObs12B;
 	private List<MensajeErrorBean> listaObs12C;
-	//private List<MensajeErrorBean> listaObs12D;
+	private List<MensajeErrorBean> listaObs12D;
 	private List<MensajeErrorBean> listaObs13A;
 	private List<MensajeErrorBean> listaObs14A;
 	private List<MensajeErrorBean> listaObs14B;
@@ -196,6 +207,8 @@ public class EnvioDefinitivoController {
     		mapaErrores = fiseUtil.getMapaErrores();
     		
     		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
+    		
+    		mapaEtapaEjecucion = fiseUtil.getMapaEtapaEjecucion();
     		
     		model.addAttribute("model", n);
     		
@@ -355,9 +368,20 @@ public class EnvioDefinitivoController {
 				    cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());
 				    
   				}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(not.getFormato())){ 
-  				
-  					
-  					
+  					FiseFormato12DCPK pk = new FiseFormato12DCPK();
+  					pk.setCodEmpresa(not.getCodEmpresa());
+  					pk.setAnoPresentacion(new Long(not.getAnioPres()));
+  	  		        pk.setMesPresentacion(new Long(not.getMesPres()));
+  	  		        pk.setEtapa(not.getEtapa()); 
+  					FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk);
+  					Formato12C12D13Generic formato12Generic = new Formato12C12D13Generic(formato12D);
+  					int i = commonService.validarFormatos_12C12D13A(formato12Generic, FiseConstants.NOMBRE_FORMATO_12D,
+  							user, terminal);
+  					if (i == 0) {
+  						valor = false;
+				    	break;	
+  					}  					
+  					cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
   					
   				}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(not.getFormato())){ 
   					FiseFormato13ACPK pk = new FiseFormato13ACPK();
@@ -498,6 +522,24 @@ public class EnvioDefinitivoController {
 				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
 				//obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
 				listaObs12C.add(obs);
+			}
+		}
+	}
+  	
+  	public void cargarListaObservaciones12D(List<FiseFormato12DD> listaDetalle) {
+		int cont = 0;
+		listaObs12D = new ArrayList<MensajeErrorBean>();
+		for (FiseFormato12DD detalle : listaDetalle) {
+			List<FiseFormato12DDOb> listaObser = formatoService12D.listarFormato12DDObByFormato12DD(detalle);
+			for (FiseFormato12DDOb observacion : listaObser) {
+				cont++;
+				MensajeErrorBean obs = new MensajeErrorBean();
+				obs.setId(cont);
+				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
+				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
+				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
+				listaObs12D.add(obs);
 			}
 		}
 	}
@@ -742,6 +784,63 @@ public class EnvioDefinitivoController {
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
 		   logger.error("Error al llenar parametros del formato 12C "+e);
+		   e.printStackTrace();
+		}finally{
+		 if(pk!=null){
+			 pk=null;
+		 }
+		 if(formato!=null){
+			 formato=null; 
+		 }
+		 if(bean!=null){
+			 bean=null; 
+		 }
+		}
+		return mapa;
+	}
+	
+	private Map<String, Object> parametros12D(String codEmpresa,String anioPres,String mesPres,
+			String anioEjec,String mesEjec,String etapa,
+			String rutaImg,String usuario,String terminal,String email){
+		
+		Map<String, Object> mapa = null;		
+		FiseFormato12DC formato =null;
+		Formato12DCBean bean =null;
+		FiseFormato12DCPK pk =null;
+		try {
+			pk = new FiseFormato12DCPK();
+		    pk.setCodEmpresa(codEmpresa);
+	        pk.setAnoPresentacion(new Long(anioPres));
+	        pk.setMesPresentacion(new Long(mesPres));	        
+	        pk.setEtapa(etapa);		       
+			formato = formatoService12D.obtenerFormato12DCByPK(pk);
+		    if( formato!=null ){  	    
+				bean = formatoService12D.estructurarFormato12DBeanByFiseFormato12DC(formato);
+				bean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
+				bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				mapa = formatoService12D.mapearParametrosFormato12D(bean);
+				CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12D);
+				String descripcionFormato = "";
+				if (tabla != null) {
+					descripcionFormato = tabla.getDescripcionTabla();
+				}			
+	        	if(mapa!=null){	        	
+	        		mapa.put("IMG", rutaImg);
+	        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+	        		//verificar si ponerlo aca o no
+	        		mapa.put("USUARIO", usuario);
+	        		mapa.put("NOMBRE_FORMATO", descripcionFormato);
+	        		mapa.put("FECHA_ENVIO", formato.getFechaEnvioDefinitivo());
+	        		mapa.put("CORREO", email);
+	        		mapa.put("NRO_OBSERVACIONES", (listaObs12D!=null && !listaObs12D.isEmpty())?listaObs12D.size():0);
+	        		mapa.put("MSG_OBSERVACIONES", (listaObs12D!=null && !listaObs12D.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);	        		
+	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
+	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
+	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	 			}//fin if map !=null    	
+		    }//fin del if formato !=null			
+		} catch (Exception e) {
+		   logger.error("Error al llenar parametros del formato 12D "+e);
 		   e.printStackTrace();
 		}finally{
 		 if(pk!=null){
@@ -1173,10 +1272,38 @@ public class EnvioDefinitivoController {
   	  		        mapa.put("NAMEOTROS12C", "Otros: ___________");  	
   	  		        
   				}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(not.getFormato())){ 
-  				
-  					
-  					
-  					
+  					FiseFormato12DCPK pk = new FiseFormato12DCPK();
+  					pk.setCodEmpresa(not.getCodEmpresa());
+  	  				pk.setAnoPresentacion(new Long(not.getAnioPres()));
+  	  		        pk.setMesPresentacion(new Long(not.getMesPres()));  	  		       
+  	  		        pk.setEtapa(not.getEtapa());
+  	  		        FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk);
+  	  		        boolean cumplePlazo = false; 	  		       
+  	  		        cumplePlazo = commonService.fechaEnvioCumplePlazo(
+	  		        		FiseConstants.TIPO_FORMATO_12D, 
+	  		        		formato12D.getId().getCodEmpresa(), 
+	  		        		formato12D.getId().getAnoPresentacion(), 
+	  		        		formato12D.getId().getMesPresentacion(), 
+	  		        		formato12D.getId().getEtapa(), 
+	  		        		FechaUtil.fecha_DD_MM_YYYY(formato12D.getFechaEnvioDefinitivo()));
+  	  		        if(cumplePlazo ){
+  	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12D", dirCheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12D", dirUncheckedImage);
+  	  		        }
+  	  		        if(listaObs12D!=null && !listaObs12D.isEmpty() ){
+  	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirCheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirUncheckedImage);
+  	  		        }     		 
+  	  		        formatos = formatos+" FISE 12D ";
+  	  		        mapa.put("NAMEF12D", "FISE 12D"); 	     		  
+  	  		        mapa.put("UNCHECKED12D", dirUncheckedImage);     		  
+  	  		        mapa.put("FFIRMADO12D", "Formato Firmado(3)");  			  
+  	  		        mapa.put("NAMEPLAZO12D", "Cumple Plazos");  			  
+  	  		        mapa.put("NAMEOBS12D", "Con Observaciones");  			  
+  	  		        mapa.put("CHECKED12D",dirCheckedImage);  			  
+  	  		        mapa.put("NAMEOTROS12D", "Otros: ___________");   					
   				}	    
   			}//fin del for de la lista	
            mapa.put("FORMATOS", formatos); 			  		
@@ -1624,7 +1751,8 @@ public class EnvioDefinitivoController {
   			  	  		        		directorio = "/reports/" + nombreReporte + ".jasper";
   			  	  		        		File reportFile12CObs = new File(session.getServletContext().getRealPath(directorio));
   			  	  		        		byte[] bytes12CObs = null;
-  			  	  		        		bytes12CObs = JasperRunManager.runReportToPdf(reportFile12CObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs12C));
+  			  	  		        		bytes12CObs = JasperRunManager.runReportToPdf(reportFile12CObs.getPath(), mapa, 
+  			  	  		        				new JRBeanCollectionDataSource(listaObs12C));
   			  	  		        		if (bytes12CObs != null) {	  	  		    			
   			  	  		        			String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
   			  	  		        					Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
@@ -1643,9 +1771,57 @@ public class EnvioDefinitivoController {
   		  	  			    }	
   		  	  			    /******FORMATO 12D**************/
   			  	  		   if(FiseConstants.NOMBRE_FORMATO_12D.equals(m.getFormato())&&valorValidacion){
-  			  	  			   
-  			  	  			   
-  		  	  				
+  			  	  			   mapa = parametros12D(codEmpresa, m.getAnioPres(), m.getMesPres(),
+  			  	  					   m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);	
+
+  			  	  			   FiseFormato12DCPK pk = new FiseFormato12DCPK();
+  			  	  			   pk.setCodEmpresa(codEmpresa);
+  			  	  			   pk.setAnoPresentacion(new Long(m.getAnioPres()));
+  			  	  			   pk.setMesPresentacion(new Long(m.getMesPres()));
+  			  	  			   pk.setEtapa(etapa);
+  			  	  			   FiseFormato12DC formato = formatoService12D.obtenerFormato12DCByPK(pk);
+  			  	  			   if(mapa!=null && formato!=null){
+  			  	  				   nombreReporte = "formato12D";	  	  		    	
+  			  	  				   directorio = "/reports/" + nombreReporte + ".jasper";
+  			  	  				   File reportFile = new File(session.getServletContext().getRealPath(directorio));
+  			  	  				   byte[] bytes12D = null;
+  			  	  				   bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+  			  	  						   new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+  			  	  				   if (bytes12D != null) {				  	  		    		
+  			  	  					   String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+  			  	  							   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+  			  	  							   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  	
+  			  	  					   FileEntry archivo12D = fiseUtil.subirDocumentoBytes(request, bytes12D, "application/pdf", nombre);
+  			  	  					   if (archivo12D != null) {
+  			  	  						   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  			  	  						   fileEntryJsp.setNombreArchivo(nombre);
+  			  	  						   fileEntryJsp.setFileEntry(archivo12D);
+  			  	  						   listaArchivo.add(fileEntryJsp);
+  			  	  					   }
+  			  	  				   }
+  			  	  				   /** REPORTE OBSERVACIONES */
+  			  	  				   if (listaObs12D != null && listaObs12D.size() > 0) {
+  			  	  					   nombreReporte = "validacion";		  	  		    		
+  			  	  					   directorio = "/reports/" + nombreReporte + ".jasper";
+  			  	  					   File reportFile12DObs = new File(session.getServletContext().getRealPath(directorio));
+  			  	  					   byte[] bytes12DObs = null;
+  			  	  					   bytes12DObs = JasperRunManager.runReportToPdf(reportFile12DObs.getPath(), mapa, 
+  			  	  							   new JRBeanCollectionDataSource(listaObs12D));
+  			  	  					   if (bytes12DObs != null) {	  	  		    			
+  			  	  						   String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+  			  	  								   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+  			  	  								   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+  			  	  						   FileEntry archivo12DObs = fiseUtil.subirDocumentoBytes(request, bytes12DObs, "application/pdf", nombre);
+  			  	  						   if (archivo12DObs != null) {
+  			  	  							   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  			  	  							   fileEntryJsp.setNombreArchivo(nombre);
+  			  	  							   fileEntryJsp.setFileEntry(archivo12DObs);
+  			  	  							   listaArchivo.add(fileEntryJsp);
+  			  	  						   }
+  			  	  					   }
+  			  	  				   }
+  			  	  				   f12D = "1";
+  			  	  			   }//fin del if map!=null			  	  				
   		  	  			   }		  	  		       
   		  	  			 }/*fin del for para mensual*/	  	  				
   		  	  			 /**********ACTA CONSOLIDADO MENSUAL*********/ 
@@ -1964,9 +2140,9 @@ public class EnvioDefinitivoController {
 			if(listaObs12C!=null){
 				listaObs12C=null;	
 			}
-			/*if(listaObs12D!=null){
+			if(listaObs12D!=null){
 				listaObs12D=null;	
-			}*/
+			}
 			if(listaObs13A!=null){
 				listaObs13A=null;	
 			}

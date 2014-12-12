@@ -148,19 +148,19 @@ var liquidacionVar= {
 		buildGrids : function () {	
 			liquidacionVar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa.','Formato.','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Ori.','Liquidado','Etapa Reco.','Ver','Ver Obs.','Anular','','','',''],
+		       colNames: ['Empresa.','Formato.','Etapa Ori.','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Reco.','Liquidado','Ver','Ver Obs.','Anular','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
+					   { name: 'etapa', index: 'etapa', width: 30,align:'center'},	  	           
 		               { name: 'anioPres', index: 'anioPres', width: 20,align:'center' },  
 		               { name: 'desMes', index: 'desMes', width: 30,align:'center'},
 		               { name: 'anioEjec', index: 'anioEjec', width: 20,align:'center' },   
 		               { name: 'desMesEje', index: 'desMesEje', width: 30,align:'center'},
 		               { name: 'anioIniVig', index: 'anioIniVig', width: 20,align:'center' },   
 		               { name: 'anioFinVig', index: 'anioFinVig', width: 20,align:'center'},
-		               { name: 'etapa', index: 'etapa', width: 30,align:'center'},	  	              
-		               { name: 'liquidado', index: 'liquidado', width: 20,align:'center' }, 
-		               { name: 'etapaReconocido', index: 'etapaReconocido', width: 30,align:'center' },
+		               { name: 'etapaReconocido', index: 'etapaReconocido', width: 30,align:'center' },  
+		               { name: 'liquidado', index: 'liquidado', width: 20,align:'center' }, 		              
 		               { name: 'verF', index: 'verF', width: 20,align:'center' },
 		               { name: 'verObs', index: 'verObs', width: 20,align:'center' },	 
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
