@@ -76,6 +76,7 @@ $(document).ready(function () {
 											<td><output>Empresa:</output></td>
 											<td>
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">												
+													<form:option value="TODO">-Todos-</form:option>
 													<form:options items="${liquidacionBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 												</form:select>
 											</td>																											
