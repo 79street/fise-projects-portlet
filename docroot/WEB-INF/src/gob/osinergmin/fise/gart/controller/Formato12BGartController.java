@@ -107,6 +107,7 @@ public class Formato12BGartController {
 	private String nameGrupo;
 
 	List<MensajeErrorBean> listaObservaciones;
+	List<FisePeriodoEnvio> listaPeriodoEnvio;
 
 	@RequestMapping
 	public String defaultView(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
@@ -140,9 +141,9 @@ public class Formato12BGartController {
 				List<Formato12BGartCommand> lstCommand = Formato12BGartCommand.toListCommandCabecera(lstFise);
 				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12B, FiseConstants.NOMBRE_EXCEL_FORMATO12B, FiseConstants.NOMBRE_HOJA_FORMATO12B, lstCommand);
 				jsonArray = Formato12BGartCommand.toListJSONCabecera(lstFise, commonService);
-
+				
 			}
-
+          
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray != null ? jsonArray.toString() : "");
 			pw.flush();
@@ -180,6 +181,7 @@ public class Formato12BGartController {
 		}
 	}
 	
+		
 	@ResourceMapping("loadCostoUnitario")
 	public void loadCostoUnitario(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		try {
@@ -197,6 +199,7 @@ public class Formato12BGartController {
 			if(lstfise14D!=null && !lstfise14D.isEmpty()){
 				for (FiseFormato14BD fise14D : lstfise14D) {
 					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("codEmpresa", command.getCodEmpresa());
 					jsonObj.put("idZonaBenef", fise14D.getId().getIdZonaBenef());
 					jsonObj.put("costoUnitarioImpresionVales", fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():0);
 					jsonObj.put("costoUnitReprtoValeDomici", fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():0);
@@ -277,7 +280,7 @@ public class Formato12BGartController {
 		} 
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		command.setTipoOperacion((tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE : FiseConstants.ADD);
-		
+		command.setListaMes(fiseUtil.getMapaMeses());
 		model.addAttribute("formato12BGartCommand", command);
 
 		// model.addAttribute("tipoOperacion", FiseConstants.ADD);
@@ -412,9 +415,12 @@ public class Formato12BGartController {
 									if (lstDetalle != null && !lstDetalle.isEmpty()) {
 										for (FiseFormato12BD detalle : lstDetalle) {
 											detalle.getId().setEtapa(pk.getEtapa());
+											detalle.setUsuarioCreacion(fise12BC.getUsuarioCreacion());
+											detalle.setTerminalCreacion(fise12BC.getTerminalCreacion());
+											 detalle.setFechaCreacion(fise12BC.getFechaCreacion());
 											detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
 											detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-											 detalle.setFechaCreacion(new Date());
+											 detalle.setFechaActualizacion(new Date());
 											//formatoService.deleteFormatoObs(detalle.getId().getCodEmpresa().trim(), detalle.getId().getAnoPresentacion(), detalle.getId().getMesPresentacion(),detalle.getId().getEtapa(),detalle.getId().getAnoEjecucionGasto(), detalle.getId().getMesEjecucionGasto(),detalle.getId().getIdZonaBenef(),null);
 											formatoService.updateFormatoDetalle(detalle); 
 											
@@ -509,7 +515,7 @@ public class Formato12BGartController {
         String codEmpresa = request.getParameter("codEmpresa");
 		String periodo = request.getParameter("periodoDeclaracion");
 		String codEmpresaHidden = request.getParameter("codEmpresaHidden");
-		String periodoHidden = request.getParameter("peridoDeclaracion");
+		String periodoHidden = request.getParameter("peridoDeclaracionHidden");
 		String error = request.getParameter("error");
 
 		String anio = request.getParameter("anoPresentacion");
@@ -568,7 +574,7 @@ public class Formato12BGartController {
 		command = Formato12BGartCommand.toCommandDetalle(lstFiseDetalle, command);
 		command.setTipoOperacion(tipoOperacion != null ? Integer.parseInt(tipoOperacion) : FiseConstants.VIEW);
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(request));
-		
+		command.setListaMes(fiseUtil.getMapaMeses());
 		model.addAttribute("formato12BGartCommand", command);
 
 		return "formato12BDetalle";
@@ -588,9 +594,11 @@ public class Formato12BGartController {
 			System.out.println("peridoHiden::" + command.getPeridoDeclaracionHidden());
 			System.out.println("tipoOperacion::" + command.getTipoOperacion());
 			System.out.println("año presentacion::" + command.getAnoPresentacion());
-			
+			System.out.println("requestEmp::" + request.getParameter("codEmpresaHidden"));
+			System.out.println("requestPeriodo::" + request.getParameter("peridoDeclaracionHidden"));
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 
+			
 			FiseFormato12BCPK pkCbcr = new FiseFormato12BCPK();
 			FiseFormato12BC result = null;
 
@@ -828,7 +836,8 @@ public class Formato12BGartController {
 		    	}
 		    	Formato12BCBean bean=formatoService.estructurarFormato12BBeanByFiseFormato12BC(formato);
 		    	bean.setDescEmpresa(formato.getAdmEmpresa().getDscCortaEmpresa());
-	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+	        	bean.setDescMesPresentacion(FiseUtil.descripcionMes(formato.getId().getMesPresentacion()));
+	        	bean.setDescMesEjecucion(FiseUtil.descripcionMes(formato.getId().getMesEjecucionGasto()));
 	        	session.setAttribute("mapa", formatoService.mapearParametrosFormato12B(bean));
 		    	
 		    }
@@ -945,7 +954,7 @@ public class Formato12BGartController {
 		    pk.setEtapa(command.getEtapa());
 		    FiseFormato12BC formato=formatoService.getFormatoCabeceraById(pk);
 		    
-		    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14B);
+		    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12B);
 	    	String descripcionFormato = "";
 	    	if( tabla!=null ){
 	    		descripcionFormato = tabla.getDescripcionTabla();
@@ -1048,8 +1057,8 @@ public class Formato12BGartController {
 					mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
 					mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 					mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
-					mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getId().getAnoEjecucionGasto());
-					mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, formato.getId().getMesEjecucionGasto());
+					mapa.put(FiseConstants.PARAM_ANO_EJEC_F12B_R, (long)formato.getId().getAnoEjecucionGasto());
+					mapa.put(FiseConstants.PARAM_DESC_MES_EJEC_F12B, fiseUtil.getMapaMeses().get(formato.getId().getMesEjecucionGasto()));
 					mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
 					mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
 					String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
@@ -1123,7 +1132,7 @@ public class Formato12BGartController {
 			       }
 		       }
 		       /**REPORTE ACTA DE ENVIO*/
-		       nombreReporte = "actaEnvio";
+		       nombreReporte = "gastoMensualIndividual";
 		       nombreArchivo = nombreReporte;
 		       directorio =  "/reports/"+nombreReporte+".jasper";
 		       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
@@ -1151,7 +1160,7 @@ public class Formato12BGartController {
 		    			   formato.getId().getAnoPresentacion().longValue(),
 		    			   formato.getId().getMesPresentacion().longValue(),
 		    			   FiseConstants.TIPO_FORMATO_12B,
-		    			   descripcionFormato,FiseConstants.TIPO_FORMATO_12B);
+		    			   descripcionFormato,FiseConstants.MENSUAL);
 		       }
 	        }
 	        
@@ -1181,14 +1190,14 @@ public class Formato12BGartController {
 			String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
 			String tipoArchivo = FiseConstants.FORMATO_EXPORT_PDF;
 			
-			CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14B);
+			CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12B);
 			String descripcionFormato = "";
 			if( tabla!=null ){
 				descripcionFormato = tabla.getDescripcionTabla();
 			}
 			
 			    
-			String nombreReporte = "actaEnvio";
+			String nombreReporte = "gastoMensualIndividual";
 		    String nombreArchivo = nombreReporte;
 			
 
@@ -1215,8 +1224,11 @@ public class Formato12BGartController {
 				mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
 				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
-				mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getId().getAnoEjecucionGasto());
-				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, formato.getId().getMesEjecucionGasto());
+				mapa.put(FiseConstants.PARAM_ANO_EJEC_F12B_R, (long)formato.getId().getAnoEjecucionGasto());
+				mapa.put(FiseConstants.PARAM_DESC_MES_EJEC_F12B, fiseUtil.getMapaMeses().get(formato.getId().getMesEjecucionGasto()));
+				
+				//mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (long)formato.getId().getAnoEjecucionGasto());
+			//	mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA,(long) formato.getId().getMesEjecucionGasto());
 				mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
 				mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
 				String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
@@ -1263,7 +1275,29 @@ public class Formato12BGartController {
 		}
 	}
 
-
+	@ResourceMapping("showRptEnvioDefinitivo")
+	public void showRptEnvioDefinitivo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();	
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_ACTAENVIO;
+		    String tipoArchivo = FiseConstants.FORMATO_EXPORT_ACTAENVIO;
+		   
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+	        
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	
 	public void cargarListaObservaciones(List<FiseFormato12BD> listaDetalle){

@@ -301,8 +301,11 @@ public class FormatoExcelImport {
 		System.out.println("leuyendo deatlle");
 		//fiseUtil=new FiseUtil();
 		List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
-		
-		for(int clnm=FiseConstants.COLUMN_G;clnm<=FiseConstants.COLUMN_I;clnm++){
+		int numColumns=FiseConstants.COLUMN_H;
+		if(pk.getCodEmpresa().trim().equalsIgnoreCase("EDLN") || pk.getCodEmpresa().trim().equalsIgnoreCase("LDS")){
+			numColumns=FiseConstants.COLUMN_I;
+		}
+		for(int clnm=FiseConstants.COLUMN_G;clnm<=numColumns;clnm++){
 			System.out.println("**********************COLUMNA NRO"+clnm+"*****************************");
 			Integer idzona=FiseConstants.ZONA_RURAL;
 			if(clnm==FiseConstants.COLUMN_H){
