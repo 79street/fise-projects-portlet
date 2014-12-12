@@ -1229,8 +1229,8 @@ public class Formato12CGartController {
 			formato = formatoService.obtenerFormato12CCByPK(pk);
 			if (formato != null) {
 				// int cont=0;
-				Formato12C12D13Generic formato13Generic = new Formato12C12D13Generic(formato);
-				int i = commonService.validarFormatos_12C12D13A(formato13Generic, FiseConstants.NOMBRE_FORMATO_12C, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
+				Formato12C12D13Generic formato12Generic = new Formato12C12D13Generic(formato);
+				int i = commonService.validarFormatos_12C12D13A(formato12Generic, FiseConstants.NOMBRE_FORMATO_12C, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 				if (i == 0) {
 					cargarListaObservaciones(formato.getFiseFormato12CDs());
 					for (MensajeErrorBean error : listaObservaciones) {
@@ -1366,8 +1366,8 @@ public class Formato12CGartController {
 					descripcionFormato = tabla.getDescripcionTabla();
 				}
 
-				Formato12C12D13Generic formato13Generic = new Formato12C12D13Generic(formato);
-				int i = commonService.validarFormatos_12C12D13A(formato13Generic, FiseConstants.NOMBRE_FORMATO_12C, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
+				Formato12C12D13Generic formato12Generic = new Formato12C12D13Generic(formato);
+				int i = commonService.validarFormatos_12C12D13A(formato12Generic, FiseConstants.NOMBRE_FORMATO_12C, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 				if (i == 0) {
 					cargarListaObservaciones(formato.getFiseFormato12CDs());
 				}
@@ -1662,21 +1662,24 @@ public class Formato12CGartController {
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
     		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
 		}
+		
 		try{
-		FileEntry fileEntry=null;
-		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
-			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew);
-		}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
-			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit);
-		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
-			fileEntry =fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-			//!!!!formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew);
-		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
-			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-			//!!!!formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit);
-		}
+		
+			FileEntry fileEntry=null;
+			if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
+				fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+				formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew);
+			}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
+				fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+				formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit);
+			}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
+				fileEntry =fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+				//!!!!formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew);
+			}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
+				fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+				//!!!!formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit);
+			}
+		
 		}catch(FileMimeTypeException ex){
 			
 		}catch (Exception e) {
@@ -1776,10 +1779,7 @@ public class Formato12CGartController {
 		//	2: para registros modificados
 		//---------------------
 		Formato12CMensajeBean formatoMensaje = new Formato12CMensajeBean();
-		
-		boolean procesaNuloImplementacion = false;
-		boolean procesaNuloOperativa = false;
-		
+
 		InputStream is=null;
 		FiseFormato12CC objeto = null;
 		String sMsg = "";
@@ -1841,17 +1841,19 @@ public class Formato12CGartController {
 					
 					for( int i=0; i<numRows; i++ ){
 						HSSFRow row= hojaF12.getRow(i);
-						HSSFCell cell = row.getCell(0);//cogemos la primera columna del excel, para detectar las posicion inicial de cada sector
-						if( HSSFCell.CELL_TYPE_STRING==cell.getCellType()  && HSSFCell.CELL_TYPE_BLANK != cell.getCellType() ){
-							if( FiseConstants.DESC_FILA_INICIO_IMPLEMENTACION.equalsIgnoreCase(cell.toString()) ){
-								inicioImplementacion = i;
-							}else if( FiseConstants.DESC_FILA_INICIO_OPERATIVO.equalsIgnoreCase(cell.toString()) ){
-								inicioOperativa = i;
-							}else if( FiseConstants.DESC_FILA_FIN_REGISTROS.equalsIgnoreCase(cell.toString()) ){
-								finRegistros = i;
-							}
-							if( inicioImplementacion!=0 && inicioOperativa!=0 && finRegistros!=0 ){
-								break;
+						if( row != null ){
+							HSSFCell cell = row.getCell(0);//cogemos la primera columna del excel, para detectar las posicion inicial de cada sector
+							if( HSSFCell.CELL_TYPE_STRING==cell.getCellType()  && HSSFCell.CELL_TYPE_BLANK != cell.getCellType() ){
+								if( FiseConstants.DESC_FILA_INICIO_IMPLEMENTACION_FORMATO12C.equalsIgnoreCase(cell.toString()) ){
+									inicioImplementacion = i;
+								}else if( FiseConstants.DESC_FILA_INICIO_OPERATIVO_FORMATO12C.equalsIgnoreCase(cell.toString()) ){
+									inicioOperativa = i;
+								}else if( FiseConstants.DESC_FILA_FIN_REGISTROS_FORMATO12C.equalsIgnoreCase(cell.toString()) ){
+									finRegistros = i;
+								}
+								if( inicioImplementacion!=0 && inicioOperativa!=0 && finRegistros!=0 ){
+									break;
+								}
 							}
 						}
 					}
@@ -2028,7 +2030,7 @@ public class Formato12CGartController {
 							//CUENTA CONTABLE
 							if( HSSFCell.CELL_TYPE_STRING == celdaCuentaContable.getCellType() ){
 								detalleBean.setCodCuentaContable(celdaCuentaContable.toString());
-							}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaZonaBeneficiario.getCellType()  ){
+							}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCuentaContable.getCellType()  ){
 								String valor = "" + celdaCuentaContable.getNumericCellValue();
 								detalleBean.setCodCuentaContable(FormatoUtil.eliminaDecimales(valor));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaCuentaContable.getCellType()  ){
@@ -2084,6 +2086,9 @@ public class Formato12CGartController {
 							//SERIE DOCUMENTO
 							if( HSSFCell.CELL_TYPE_STRING == celdaSerieDocumento.getCellType() ){
 								detalleBean.setSerieDocumento(celdaSerieDocumento.toString());
+							}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaSerieDocumento.getCellType()  ){
+								String valor = "" + celdaSerieDocumento.getNumericCellValue();
+								detalleBean.setSerieDocumento(FormatoUtil.eliminaDecimales(valor));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaSerieDocumento.getCellType()  ){
 								detalleBean.setSerieDocumento(FiseConstants.BLANCO);
 								cont++;
@@ -2293,7 +2298,7 @@ public class Formato12CGartController {
 							//CUENTA CONTABLE
 							if( HSSFCell.CELL_TYPE_STRING == celdaCuentaContable.getCellType() ){
 								detalleBean.setCodCuentaContable(celdaCuentaContable.toString());
-							}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaZonaBeneficiario.getCellType()  ){
+							}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCuentaContable.getCellType()  ){
 								String valor = "" + celdaCuentaContable.getNumericCellValue();
 								detalleBean.setCodCuentaContable(FormatoUtil.eliminaDecimales(valor));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaCuentaContable.getCellType()  ){
