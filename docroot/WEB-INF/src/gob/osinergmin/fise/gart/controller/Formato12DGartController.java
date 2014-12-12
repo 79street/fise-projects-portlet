@@ -1151,6 +1151,7 @@ public class Formato12DGartController {
 				// setamos los valores en el bean
 				reportBean = formatoService.estructurarFormato12DBeanByFiseFormato12DC(formato);
 				reportBean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
+				reportBean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 				//
 				// cargamos la lista a enviar
 				session.setAttribute("lista", formato.getFiseFormato12DDs());
@@ -1239,9 +1240,6 @@ public class Formato12DGartController {
 			String tipoFormato = FiseConstants.TIPO_FORMATO_VAL_12D;
 			String tipoArchivo = request.getParameter("tipoArchivo").trim();
 			
-			String anioInicioVigencia = request.getParameter("anioInicioVigencia");
-			String anioFinVigencia = request.getParameter("anioFinVigencia");
-
 			session.setAttribute("nombreReporte", nombreReporte);
 			session.setAttribute("nombreArchivo", nombreArchivo);
 			session.setAttribute("tipoFormato", tipoFormato);
@@ -1269,8 +1267,6 @@ public class Formato12DGartController {
 			mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
 			mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
 			mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
-			//mapa.put("INICIO_VIGENCIA", anioInicioVigencia!=null?anioInicioVigencia:"");//anioInicioVigencia!=null?anioInicioVigencia:""
-			//mapa.put("FIN_VIGENCIA", anioFinVigencia!=null?anioFinVigencia:"");//-anioFinVigencia!=null?anioFinVigencia:""
 			// add
 			mapa.put("DESC_EMPRESA", fiseUtil.getMapaEmpresa().get(codEmpresa));
 			mapa.put("ETAPA", etapa);
@@ -1323,7 +1319,6 @@ public class Formato12DGartController {
 				reportBean = formatoService.estructurarFormato12DBeanByFiseFormato12DC(formato);
 				reportBean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
 				reportBean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
-				reportBean.setDescMesEjecucion(fiseUtil.getMapaMeses().get(formato.getMesEjecucionDetalle()));
 				mapa = formatoService.mapearParametrosFormato12D(reportBean);
 
 				CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12D);
@@ -1416,7 +1411,7 @@ public class Formato12DGartController {
 					}
 				}
 				/** REPORTE ACTA DE ENVIO */
-				nombreReporte = "gastoMensualIndividual";
+				nombreReporte = "gastoMensualIndividualCD";
 				nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
@@ -1527,7 +1522,7 @@ public class Formato12DGartController {
 			Long mesPresentacion = bean.getMesPresentacion();
 			String etapa = bean.getEtapa();
 
-			String nombreReporte = "gastoMensualIndividual";
+			String nombreReporte = "gastoMensualIndividualCD";
 		    String nombreArchivo = nombreReporte;
 			
 		    FiseFormato12DCPK pk = new FiseFormato12DCPK();
@@ -1574,8 +1569,6 @@ public class Formato12DGartController {
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());
 				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
-				mapa.put(FiseConstants.PARAM_ANO_EJECUCION, formato.getAnoEjecucionDetalle());
-				mapa.put(FiseConstants.PARAM_DESC_MES_EJECUCION, fiseUtil.getMapaMeses().get(formato.getMesEjecucionDetalle()));
 				
 				session.setAttribute("mapa", mapa);
 			}
