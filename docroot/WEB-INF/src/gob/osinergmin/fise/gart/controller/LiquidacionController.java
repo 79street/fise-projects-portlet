@@ -492,7 +492,7 @@ public class LiquidacionController {
 					jsonObj.put("nroItemEtapa", error.getNroItemEtapa());
 					jsonObj.put("codigo", error.getCodigo());
 					jsonObj.put("descripcion", error.getDescripcion());
-					jsonObj.put("descEtapaEjecucion", error.getDescEtapaEjecucion());					
+					jsonObj.put("descEtapaEjecucion", error.getDescEtapaEjecucion());			
 					jsonArray.put(jsonObj);
 				}
 				
@@ -531,7 +531,7 @@ public class LiquidacionController {
 					jsonObj.put("id", error.getId());	
 					jsonObj.put("descZonaBenef", error.getDescZonaBenef());
 					jsonObj.put("codigo", error.getCodigo());			
-					jsonObj.put("descripcion", error.getDescripcion());						
+					jsonObj.put("descripcion", error.getDescripcion());					
 					jsonArray.put(jsonObj);		
 				}
 
@@ -861,11 +861,10 @@ public class LiquidacionController {
 				cont++;
 				MensajeErrorBean obs = new MensajeErrorBean();
 				obs.setId(cont);
-				/****VERIFICAR REPORTE DE VALIDACION PARA LOS FORMATOS 12C YA QUE TIENE MAS CAMPOS COMO CLAVE PRIMARIA EN OBSERVACIONES****/
-				//---obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
+				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
 				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
-				//obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
+				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
 				listaObs12C.add(obs);
 			}
 		}

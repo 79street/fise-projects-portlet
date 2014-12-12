@@ -516,11 +516,10 @@ public class EnvioDefinitivoController {
 				cont++;
 				MensajeErrorBean obs = new MensajeErrorBean();
 				obs.setId(cont);
-				/****VERIFICAR REPORTE DE VALIDACION PARA LOS FORMATOS 12C YA QUE TIENE MAS CAMPOS COMO CLAVE PRIMARIA EN OBSERVACIONES****/
-				//---obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
+				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
 				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
-				//obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
+				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
 				listaObs12C.add(obs);
 			}
 		}
@@ -1747,7 +1746,7 @@ public class EnvioDefinitivoController {
   			  	  		        	}
   			  	  		        	/** REPORTE OBSERVACIONES */
   			  	  		        	if (listaObs12C != null && listaObs12C.size() > 0) {
-  			  	  		        		nombreReporte = "validacion";		  	  		    		
+  			  	  		        		nombreReporte = "validacion12";		  	  		    		
   			  	  		        		directorio = "/reports/" + nombreReporte + ".jasper";
   			  	  		        		File reportFile12CObs = new File(session.getServletContext().getRealPath(directorio));
   			  	  		        		byte[] bytes12CObs = null;
@@ -1801,7 +1800,7 @@ public class EnvioDefinitivoController {
   			  	  				   }
   			  	  				   /** REPORTE OBSERVACIONES */
   			  	  				   if (listaObs12D != null && listaObs12D.size() > 0) {
-  			  	  					   nombreReporte = "validacion";		  	  		    		
+  			  	  					   nombreReporte = "validacion12";		  	  		    		
   			  	  					   directorio = "/reports/" + nombreReporte + ".jasper";
   			  	  					   File reportFile12DObs = new File(session.getServletContext().getRealPath(directorio));
   			  	  					   byte[] bytes12DObs = null;
