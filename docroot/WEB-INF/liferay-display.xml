@@ -18,5 +18,6 @@
 		<portlet id="gartNotificacion"/>
 		<portlet id="gartGrupoInformacion"/>
 		<portlet id="gartEnvioDefinitivo"/>
+		<portlet id="gartLiquidacion"/>
 	</category>
 </display>
