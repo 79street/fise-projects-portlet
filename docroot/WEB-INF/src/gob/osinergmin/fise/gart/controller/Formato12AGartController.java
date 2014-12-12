@@ -12,8 +12,6 @@ import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
 import gob.osinergmin.fise.domain.FiseFormato12AD;
 import gob.osinergmin.fise.domain.FiseFormato12ADOb;
-import gob.osinergmin.fise.domain.FiseFormato14AC;
-import gob.osinergmin.fise.domain.FiseFormato14ACPK;
 import gob.osinergmin.fise.domain.FiseFormato14AD;
 import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
@@ -31,9 +29,6 @@ import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
-import gob.osinergmin.fise.xls.XlsTableConfig;
-import gob.osinergmin.fise.xls.XlsWorkbookConfig;
-import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -46,7 +41,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1877,7 +1871,7 @@ public class Formato12AGartController {
 		    formato = formatoService.obtenerFormato12ACByPK(pk);
 		    if( formato!=null ){
 		    	//int cont=0;
-		    	int i = formatoService.validarFormato12A(formato, FiseConstants.NOMBRE_FORMATO_12A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLogin());
+		    	int i = formatoService.validarFormato12A(formato, FiseConstants.NOMBRE_FORMATO_12A, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 			    if(i==0){
 			    	//se tendra que setear todos las observaciones a cada detalle de los 
 			    	/*for (FiseFormato12AD detalle : formato.getFiseFormato12ADs()) {
@@ -2047,6 +2041,7 @@ public class Formato12AGartController {
 	        	bean = formatoService.estructurarFormato12ABeanByFiseFormato12AC(formato);
 	        	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
 	        	bean.setDescMesPresentacion(listaMes.get(formato.getId().getMesPresentacion()));
+	        	bean.setDescMesEjecucion(listaMes.get(formato.getId().getMesEjecucionGasto()));
 	        	mapa = formatoService.mapearParametrosFormato12A(bean);
 	        	
 	        	
@@ -2078,9 +2073,7 @@ public class Formato12AGartController {
 	     		   mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 	     		   mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 	 			
-	     		   //---mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getId().getAnoInicioVigencia());
-				   //---mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, formato.getId().getAnoFinVigencia());
-				   mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
+	     		   mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
 				   mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
 				   String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
 				   String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
@@ -2147,7 +2140,7 @@ public class Formato12AGartController {
 			       }
 		       }
 		       /**REPORTE ACTA DE ENVIO*/
-		       nombreReporte = "actaEnvio";
+		       nombreReporte = "gastoMensualIndividual";
 		       nombreArchivo = nombreReporte;
 		       directorio =  "/reports/"+nombreReporte+".jasper";
 		       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
@@ -2321,7 +2314,7 @@ public class Formato12AGartController {
 			anoEjecucion = request.getParameter("anoEjecucion");
 			mesEjecucion = request.getParameter("mesEjecucion");
 			    
-			String nombreReporte = "actaEnvio";
+			String nombreReporte = "gastoMensualIndividual";
 		    String nombreArchivo = nombreReporte;
 			
 			FiseFormato12ACPK pk = new FiseFormato12ACPK();
@@ -2342,8 +2335,6 @@ public class Formato12AGartController {
 				mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
 				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
-				//---mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getId().getAnoInicioVigencia());
-				//---mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, formato.getId().getAnoFinVigencia());
 				mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
 				mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
 				String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
@@ -2372,6 +2363,8 @@ public class Formato12AGartController {
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());
 				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
+				mapa.put(FiseConstants.PARAM_ANO_EJECUCION, formato.getId().getAnoPresentacion());
+				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 				
 				session.setAttribute("mapa", mapa);
 			}
