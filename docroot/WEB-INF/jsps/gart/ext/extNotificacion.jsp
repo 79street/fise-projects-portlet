@@ -19,6 +19,8 @@ var notificarValidar= {
 		dialogObservacion:null,
 		dialogMessageEliminar:null,
 		dialogConfirmContentEliminar:null,
+		dialogObservacion12:null,
+		dialogObservacion13:null,
 		
 		//mensajes		
 		mensajeNotificar:null,
@@ -55,6 +57,12 @@ var notificarValidar= {
 		tablaObservacion:null,	
 		paginadoObservacion:null,
 		
+		tablaObservacion12:null,	
+		paginadoObservacion12:null,
+		
+		tablaObservacion13:null,	
+		paginadoObservacion13:null,
+		
 		
 		init : function() {
 			
@@ -67,6 +75,8 @@ var notificarValidar= {
 			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm_notificacion");//para notificar
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content_notificacion");//para notificar
 			this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");	
+			this.dialogObservacion12=$("#<portlet:namespace/>dialog-form-observacion12");	
+			this.dialogObservacion13=$("#<portlet:namespace/>dialog-form-observacion13");	
 			this.dialogConfirmEliminar=$("#<portlet:namespace/>dialog-confirm");//para elimiar
 			this.dialogConfirmContentEliminar=$("#<portlet:namespace/>dialog-confirm-content");//para notificar
 			this.dialogMessageEliminar=$("#<portlet:namespace/>dialog-message-notificacion");
@@ -108,6 +118,13 @@ var notificarValidar= {
 			this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
 			this.buildGridsObservacion();
 			
+			this.tablaObservacion12=$("#<portlet:namespace/>grid_observacion12");			
+			this.paginadoObservacion12='#<portlet:namespace/>pager_observacion12';		
+			this.buildGridsObservacion12();
+			
+			this.tablaObservacion13=$("#<portlet:namespace/>grid_observacion13");			
+			this.paginadoObservacion13='#<portlet:namespace/>pager_observacion13';		
+			this.buildGridsObservacion13();
 			
 			
 			
@@ -193,7 +210,7 @@ var notificarValidar= {
 			notificarValidar.tablaResultados.jqGrid('navGrid',notificarValidar.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});				
 		},
 		
-		//Modelo de la grilla para mostrar Observaciones
+		//Modelo de la grilla para mostrar Observaciones formatos 12A,12B,14A,14B y 14C
 		buildGridsObservacion : function () {	
 		   notificarValidar.tablaObservacion.jqGrid({
 		   datatype: "local",
@@ -224,6 +241,86 @@ var notificarValidar= {
 			       } 
 			}); 
 		    notificarValidar.tablaObservacion.jqGrid('navButtonAdd',notificarValidar.paginadoObservacion,{
+			       caption:"Exportar a Pdf",
+			       buttonicon: "ui-icon-bookmark",
+			       onClickButton : function () {
+			    	   notificarValidar.<portlet:namespace/>mostrarReporteObservaciones();
+			       } 
+			});
+		},
+		
+		//Modelo de la grilla para mostrar Observaciones formatos 12C,12D
+		buildGridsObservacion12 : function () {	
+		   notificarValidar.tablaObservacion12.jqGrid({
+		   datatype: "local",
+		   colNames: ['Etapa ejecución','Nro. item etapa','Código','Descripción'],
+	       colModel: [
+						{ name: 'descEtapaEjecucion', index: 'descEtapaEjecucion', width: 100 ,align: 'left'},
+						{ name: 'nroItemEtapa', index: 'nroItemEtapa', width: 75 ,align: 'left'},
+						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
+		                { name: 'descripcion', index: 'descripcion', width: 430 ,align: 'left'}               
+			   	    ],
+		   	 multiselect: false,
+				rowNum:10,
+			   	rowList:[10,20,50],
+				height: 'auto',
+			   	autowidth: true,
+				rownumbers: true,
+				//shrinkToFit:true,
+				pager: notificarValidar.paginadoObservacion12,
+			    viewrecords: true,
+			   	//caption: "Formatos",
+			    sortorder: "asc"
+		  	});
+		    notificarValidar.tablaObservacion12.jqGrid('navGrid',notificarValidar.paginadoObservacion12,{add:false,edit:false,del:false,search: false,refresh: false});	
+		    notificarValidar.tablaObservacion12.jqGrid('navButtonAdd',notificarValidar.paginadoObservacion12,{
+			       caption:"Exportar a Excel",
+			       buttonicon: "ui-icon-bookmark",
+			       onClickButton : function () {
+			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			       } 
+			}); 
+		    notificarValidar.tablaObservacion12.jqGrid('navButtonAdd',notificarValidar.paginadoObservacion12,{
+			       caption:"Exportar a Pdf",
+			       buttonicon: "ui-icon-bookmark",
+			       onClickButton : function () {
+			    	   notificarValidar.<portlet:namespace/>mostrarReporteObservaciones();
+			       } 
+			});
+		},
+		
+		//Modelo de la grilla para mostrar Observaciones formatos 13A
+		buildGridsObservacion13 : function () {	
+		   notificarValidar.tablaObservacion13.jqGrid({
+		   datatype: "local",
+		   colNames: ['Sector Típico','Grupo Zona','Código','Descripción'],
+	       colModel: [
+						{ name: 'descSectorTipico', index: 'descSectorTipico', width: 80 ,align: 'left'},
+						{ name: 'descZonaBenef', index: 'descZonaBenef', width: 100 ,align: 'left'},
+						{ name: 'codigo', index: 'codigo', width: 50 ,align: 'center'},
+		                { name: 'descripcion', index: 'descripcion', width: 430 ,align: 'left'}               
+			   	    ],
+		   	 multiselect: false,
+				rowNum:10,
+			   	rowList:[10,20,50],
+				height: 'auto',
+			   	autowidth: true,
+				rownumbers: true,
+				//shrinkToFit:true,
+				pager: notificarValidar.paginadoObservacion13,
+			    viewrecords: true,
+			   	//caption: "Formatos",
+			    sortorder: "asc"
+		  	});
+		    notificarValidar.tablaObservacion13.jqGrid('navGrid',notificarValidar.paginadoObservacion13,{add:false,edit:false,del:false,search: false,refresh: false});	
+		    notificarValidar.tablaObservacion13.jqGrid('navButtonAdd',notificarValidar.paginadoObservacion13,{
+			       caption:"Exportar a Excel",
+			       buttonicon: "ui-icon-bookmark",
+			       onClickButton : function () {
+			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			       } 
+			}); 
+		    notificarValidar.tablaObservacion13.jqGrid('navButtonAdd',notificarValidar.paginadoObservacion13,{
 			       caption:"Exportar a Pdf",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
@@ -318,12 +415,29 @@ var notificarValidar= {
 					   <portlet:namespace />formato: cod_formato
 				},
 				success : function(data) {
-					if( data!=null ){
-						notificarValidar.dialogObservacion.dialog("open");
-						notificarValidar.tablaObservacion.clearGridData(true);
-						notificarValidar.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
-						notificarValidar.tablaObservacion[0].refreshIndex();
-						notificarValidar.initBlockUI();
+					if( data!=null ){					
+						console.debug("formato al lanzar el modelo de las observaciones: "+cod_formato);
+						if(cod_formato=='F12C' || cod_formato=='F12D'){
+							console.debug("entrando en formato 12C y 12D");
+							notificarValidar.dialogObservacion12.dialog("open");
+							notificarValidar.tablaObservacion12.clearGridData(true);
+							notificarValidar.tablaObservacion12.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+							notificarValidar.tablaObservacion12[0].refreshIndex();
+							notificarValidar.initBlockUI();	
+						}else if(cod_formato=='F13A'){
+							console.debug("entrando en formato13A ");
+							notificarValidar.dialogObservacion13.dialog("open");
+							notificarValidar.tablaObservacion13.clearGridData(true);
+							notificarValidar.tablaObservacion13.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+							notificarValidar.tablaObservacion13[0].refreshIndex();
+							notificarValidar.initBlockUI();	
+						}else{
+							notificarValidar.dialogObservacion.dialog("open");
+							notificarValidar.tablaObservacion.clearGridData(true);
+							notificarValidar.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+							notificarValidar.tablaObservacion[0].refreshIndex();
+							notificarValidar.initBlockUI();	
+						}				
 					}else{
 						alert("Error al realizar la validación");
 						notificarValidar.initBlockUI();	
@@ -532,6 +646,28 @@ var notificarValidar= {
 					}
 				}
 			});
+			
+			notificarValidar.dialogObservacion12.dialog({
+				modal: true,
+				width: 740,
+				autoOpen: false,
+				buttons: {
+					Cerrar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			}); 
+		 
+			notificarValidar.dialogObservacion13.dialog({
+				modal: true,
+				width: 730,
+				autoOpen: false,
+				buttons: {
+					Cerrar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			}); 
 			
 		}, /***fin de inicializar los dialogos**/	
 		
