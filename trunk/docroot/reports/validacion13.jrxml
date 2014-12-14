@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="validacion13" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="561"/>
+	<property name="ireport.x" value="53"/>
+	<property name="ireport.y" value="468"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="NOMBRE_FORMATO" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -11,8 +11,8 @@
 	<parameter name="NRO_OBSERVACIONES" class="java.lang.Integer"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ETAPA" class="java.lang.String"/>
-	<parameter name="INICIO_VIGENCIA" class="java.lang.String"/>
-	<parameter name="FIN_VIGENCIA" class="java.lang.String"/>
+	<parameter name="ANO_INICIO_VIGENCIA" class="java.lang.String"/>
+	<parameter name="ANO_FIN_VIGENCIA" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -193,7 +193,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="138" y="209" width="30" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{INICIO_VIGENCIA}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ANO_INICIO_VIGENCIA}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="170" y="209" width="15" height="16"/>
@@ -203,7 +203,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="187" y="209" width="30" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{FIN_VIGENCIA}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ANO_FIN_VIGENCIA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
