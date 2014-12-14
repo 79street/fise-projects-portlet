@@ -1359,8 +1359,8 @@ public class Formato13AGartController {
 			mapa.put("USUARIO", themeDisplay.getUser().getLogin());
 			mapa.put("NOMBRE_FORMATO", descripcionFormato);
 			mapa.put("NRO_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
-			mapa.put("INICIO_VIGENCIA", anioInicioVigencia!=null?anioInicioVigencia:"");//anioInicioVigencia!=null?anioInicioVigencia:""
-			mapa.put("FIN_VIGENCIA", anioFinVigencia!=null?anioFinVigencia:"");//-anioFinVigencia!=null?anioFinVigencia:""
+			mapa.put("ANO_INICIO_VIGENCIA", anioInicioVigencia!=null?anioInicioVigencia:"");//anioInicioVigencia!=null?anioInicioVigencia:""
+			mapa.put("ANO_FIN_VIGENCIA", anioFinVigencia!=null?anioFinVigencia:"");//-anioFinVigencia!=null?anioFinVigencia:""
 			// add
 			mapa.put("DESC_EMPRESA", fiseUtil.getMapaEmpresa().get(codEmpresa));
 			mapa.put("ETAPA", etapa);
