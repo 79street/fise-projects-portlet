@@ -926,18 +926,17 @@ public class Formato14CGartController {
 	    		descripcionFormato = tabla.getDescripcionTabla();
 	    	}
 		    Map<String, Object> mapa = new HashMap<String, Object>();
-	    	mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+	    	mapa.put(FiseConstants.PARAM_IMG_LOGOTIPO, session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
 		   	mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
-		   	mapa.put(FiseConstants.PARAM_ANO_PRES_F14A, Long.parseLong(anoPresentacion));
-		   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F14A, fiseUtil.getMapaMeses().get(Long.parseLong(mesPresentacion)));
-		   	mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-		   	mapa.put("NOMBRE_FORMATO", descripcionFormato);
-		   	mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
-			//add
-		   	mapa.put("DESC_EMPRESA", mapaEmpresa.get(f.getCodEmpresa().length()==3?f.getCodEmpresa()+" ": f.getCodEmpresa()));
-		   	mapa.put("ETAPA", f.getEtapa());		   	
-		   	session.setAttribute("mapa", mapa);
-		    //
+		   	mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(anoPresentacion));
+		   	mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(Long.parseLong(mesPresentacion)));
+		   	mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
+		   	mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
+		   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+		   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(f.getCodEmpresa().length()==3?f.getCodEmpresa()+" ": f.getCodEmpresa()));
+		   	mapa.put(FiseConstants.PARAM_ETAPA, f.getEtapa());  	 	
+		   	
+		   	session.setAttribute("mapa", mapa);		   
 		   	
 		    response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
