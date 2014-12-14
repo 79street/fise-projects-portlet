@@ -159,6 +159,28 @@ $(document).ready(function () {
 					</fieldset>
 					<br>
 		</div>	
+		
+		<div id="<portlet:namespace/>dialog-form-observacion12" class="net-frame-border"
+					style="display: none; background: #fff;"
+					title=" Resultados de validación ">
+					<fieldset class="net-frame-border">
+						<table id="<portlet:namespace/>grid_observacion12" width="100%">
+						</table>
+						<div id="<portlet:namespace/>pager_observacion12"></div>
+					</fieldset>
+					<br>
+		</div>	
+		
+		<div id="<portlet:namespace/>dialog-form-observacion13" class="net-frame-border"
+					style="display: none; background: #fff;"
+					title=" Resultados de validación ">
+					<fieldset class="net-frame-border">
+						<table id="<portlet:namespace/>grid_observacion13" width="100%">
+						</table>
+						<div id="<portlet:namespace/>pager_observacion13"></div>
+					</fieldset>
+					<br>
+		</div>	
 	<!--FIN DIALOGO PARA MOSTRAR OBSERVACIONES -->	
 
    <!-- DIVS PARA MENSAJES -->
