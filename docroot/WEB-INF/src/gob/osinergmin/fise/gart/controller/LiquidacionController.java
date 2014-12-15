@@ -832,7 +832,7 @@ public class LiquidacionController {
   	private void cargarListaObservaciones12B(List<FiseFormato12BD> listaDetalle){
 		int cont=0;
 		listaObs12B = new ArrayList<MensajeErrorBean>();
-		logger.info("Tamaño de la lista detalle de B:   "+listaDetalle.size()); 
+		//logger.info("Tamaño de la lista detalle de B:   "+listaDetalle.size()); 
 		for (FiseFormato12BD detalle : listaDetalle) {
 			detalle.setFiseFormato12BDObs(formatoService12B.getLstFormatoObs(detalle));			
 			List<FiseFormato12BDOb> listaObser = formatoService12B.getLstFormatoObs(detalle); 
@@ -1043,8 +1043,9 @@ public class LiquidacionController {
 	        formato = formatoService12B.getFormatoCabeceraById(pk);
 		    if( formato!=null ){  	    	
 		    	bean = formatoService12B.estructurarFormato12BBeanByFiseFormato12BC(formato);
-	        	bean.setDescEmpresa(formato.getAdmEmpresa().getDscCortaEmpresa());
-	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+		    	bean.setDescEmpresa(formato.getAdmEmpresa().getDscCortaEmpresa());
+	        	bean.setDescMesPresentacion(FiseUtil.descripcionMes(formato.getId().getMesPresentacion()));
+	        	bean.setDescMesEjecucion(FiseUtil.descripcionMes(formato.getId().getMesEjecucionGasto()));
 	        	mapa = formatoService12B.mapearParametrosFormato12B(bean);
 	        	
 	        	CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12B);

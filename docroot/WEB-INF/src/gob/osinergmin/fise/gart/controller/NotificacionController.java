@@ -185,6 +185,8 @@ public class NotificacionController {
     		
     		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
     		
+    		mapaEtapaEjecucion = fiseUtil.getMapaEtapaEjecucion();
+    		
     		model.addAttribute("model", n);
     		
 		} catch (Exception e) {
@@ -324,6 +326,7 @@ public class NotificacionController {
   	  		        		themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
   	  		        if(i!=0){
   	  		          valor = false;
+  	  		          logger.info("Valor de procesar notificacion 12A: "+valor); 
   	  		          break;
   	  		        }
   	  		        
@@ -342,6 +345,7 @@ public class NotificacionController {
 	        	    		themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 	        	    if(i!=0){
 	        	    	valor = false;
+	        	    	 logger.info("Valor de procesar notificacion 12B: "+valor);
 	        	    	break;
 	        	    }
 	        	    
@@ -357,6 +361,7 @@ public class NotificacionController {
 				    		themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 				    if(i!=0){
 				    	valor = false;
+				    	 logger.info("Valor de procesar notificacion 12C: "+valor);
 				    	break;
 		  		    } 
 				    
@@ -370,8 +375,9 @@ public class NotificacionController {
   					Formato12C12D13Generic formato12Generic = new Formato12C12D13Generic(formato12D);
   					int i = commonService.validarFormatos_12C12D13A(formato12Generic, FiseConstants.NOMBRE_FORMATO_12D,
   							themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
-  					if (i == 0) {
+  					if (i != 0) {
   						valor = false;
+  						 logger.info("Valor de procesar notificacion 12D: "+valor);
 				    	break;
   					}  		 					
   					
@@ -387,6 +393,7 @@ public class NotificacionController {
   	  		    		   themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
   	  		       if(i!=0){
 	  		          valor = false;
+	  		        logger.info("Valor de procesar notificacion 13A: "+valor);
 	  		          break;
 	  		        } 	  		       
   				}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(not.getFormato())){ 
@@ -403,6 +410,7 @@ public class NotificacionController {
   		    			   themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
   		    	   if(i!=0){
 	  		          valor = false;
+	  		          logger.info("Valor de procesar notificacion 14A: "+valor);
 	  		          break;
 	  		       } 	  		
   				}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(not.getFormato())){ 
@@ -419,6 +427,7 @@ public class NotificacionController {
   		    	    		themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
   		    	   if(i!=0){
 	  		          valor = false;
+	  		          logger.info("Valor de procesar notificacion 14B: "+valor);
 	  		          break;
 	  		       }  			   
   				}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(not.getFormato())){ 
@@ -435,6 +444,7 @@ public class NotificacionController {
   			    			themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
   			    	if(i!=0){
   			    		valor = false;
+  			    		 logger.info("Valor de procesar notificacion 14C: "+valor);
   			    		break;
   			    	}  	
   				}				
@@ -737,7 +747,7 @@ public class NotificacionController {
 	private void cargarListaObservaciones12B(List<FiseFormato12BD> listaDetalle){
 		int cont=0;
 		listaObservaciones = new ArrayList<MensajeErrorBean>();
-		logger.info("Tamaño de la lista detalle de B:   "+listaDetalle.size()); 
+		//logger.info("Tamaño de la lista detalle de B:   "+listaDetalle.size()); 
 		for (FiseFormato12BD detalle : listaDetalle) {
 			detalle.setFiseFormato12BDObs(formatoService12B.getLstFormatoObs(detalle));			
 			List<FiseFormato12BDOb> listaObser = formatoService12B.getLstFormatoObs(detalle); 
@@ -786,7 +796,7 @@ public class NotificacionController {
 				obs.setId(cont);
 				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));				
 				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
 				listaObservaciones.add(obs);
 			}
