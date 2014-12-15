@@ -173,9 +173,9 @@ public class Formato12BGartController {
 				jsonArray = Formato12BGartCommand.toListJSONCabecera(lstFise, commonService);
 				
 			}
-          
+			
 			PrintWriter pw = response.getWriter();
-			pw.write(jsonArray != null ? jsonArray.toString() : "");
+			pw.write(jsonArray != null ? jsonArray.toString():(new JSONArray()).toString());
 			pw.flush();
 			pw.close();
 

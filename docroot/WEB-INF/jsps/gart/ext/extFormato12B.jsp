@@ -1303,11 +1303,12 @@
 					}
 				});
 			}else{
-				alert("Primero debe realizar el envío definitivo");
+				formato12B.lblMessage.html("Primero debe realizar el envío definitivo");
+			    formato12B.dialogMessageGeneral.dialog("open");
+				
 			}
 		},
 		updateStyleClassInput:function (tipo,emp){
-			alert("updateStyleClassInput  "+emp);
 			formato12B.txtnroValesImpreso.addClass("fise-editable");
 			formato12B.txtnroValesImpresoProv.addClass("fise-editable");
 			formato12B.txtnroValesRepartidosDomi.addClass("fise-editable");
