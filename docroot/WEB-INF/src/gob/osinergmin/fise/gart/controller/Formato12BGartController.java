@@ -16,6 +16,7 @@ import gob.osinergmin.fise.bean.Formato12BCBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
+import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
 import gob.osinergmin.fise.domain.FiseFormato12BC;
 import gob.osinergmin.fise.domain.FiseFormato12BCPK;
@@ -26,6 +27,7 @@ import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato12BGartCommand;
 import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
+import gob.osinergmin.fise.gart.service.CfgCampoGartService;
 import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
@@ -102,6 +104,10 @@ public class Formato12BGartController {
 	@Autowired
 	@Qualifier("cfgTablaGartServiceImpl")
 	CfgTablaGartService tablaService;
+	
+	@Autowired
+	@Qualifier("cfgCampoGartServiceImpl")
+	CfgCampoGartService campoService;
 
 	private String nameEstado;
 	private String nameGrupo;
@@ -131,16 +137,15 @@ public class Formato12BGartController {
 				command.setAnioFin(fiseUtil.obtenerNroAnioFechaActual() != null ? Integer.parseInt(fiseUtil.obtenerNroAnioFechaActual()) : null);
 				
 			}
-			if(formato12BBusqueda!=null && formato12BBusqueda.getMesInicio()!=null){
+			if(formato12BBusqueda!=null ){
+				System.out.println("volvio entrar MES INICIO::"+formato12BBusqueda.getMesInicio());
 				command.setMesInicio(formato12BBusqueda.getMesInicio());
-			}else{
-				command.setMesInicio(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1) : null);
-			}
-			if(formato12BBusqueda!=null && formato12BBusqueda.getMesFin()!=null){
 				command.setMesFin(formato12BBusqueda.getMesFin());
 			}else{
+				command.setMesInicio(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1) : null);
 				command.setMesFin(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())) : null);
-            }
+			}
+			
 			if(formato12BBusqueda!=null && formato12BBusqueda.getEtapaBusqueda()!=null){
 				command.setEtapaBusqueda(formato12BBusqueda.getEtapaBusqueda());
 			}
@@ -223,7 +228,7 @@ public class Formato12BGartController {
 				command.setMesPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(4, 6)));
 				command.setEtapa(command.getPeridoDeclaracion().substring(6, command.getPeridoDeclaracion().length()));
 			}
-			List<FiseFormato14BD> lstfise14D=fiseUtil.getLstCostoUnitario(command.getCodEmpresa(), command.getAnoPresentacion(),command.getMesPresentacion(), null, FiseConstants.ETAPA_RECONOCIDO);
+			List<FiseFormato14BD> lstfise14D=fiseUtil.getLstCostoUnitario(command.getCodEmpresa(), command.getAnoPresentacion(),null, null, FiseConstants.ETAPA_RECONOCIDO);
 			
 			JSONArray jsonArray = new JSONArray();
 			if(lstfise14D!=null && !lstfise14D.isEmpty()){
@@ -322,6 +327,8 @@ public class Formato12BGartController {
           formato12BBusqueda.setAnioInicio(command.getAnioInicio());
           formato12BBusqueda.setAnioFin(command.getAnioFin());
           formato12BBusqueda.setMesInicio(command.getMesInicio());
+          System.out.println("MES INICIO CARGA NUEVO****"+command.getAnioInicio());
+          System.out.println("MES INICIO CARGA NUEVO****"+command.getMesInicio());
           formato12BBusqueda.setMesFin(command.getMesFin());
           formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
           formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
@@ -336,6 +343,9 @@ public class Formato12BGartController {
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		
 		String tipoaccion = uploadPortletRequest.getParameter("tipoOperacion");
+		String typeFile = uploadPortletRequest.getParameter("typeFile");
+		
+		System.out.println("TIPO FILE ::"+typeFile);
 		String codEmp = null;
 		String periodo = null;
 		
@@ -375,8 +385,14 @@ public class Formato12BGartController {
 		List<MensajeErrorBean> lstErrores=new ArrayList<MensajeErrorBean>();
 		
 			try{
-				FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-				lstErrores = readExcelFile(fileEntry, themeDisplay, cabeceraPk, tipoaccion, fiseUtil);
+				if(typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"")){
+					FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+					lstErrores = readExcelFile(fileEntry, themeDisplay, cabeceraPk, tipoaccion, fiseUtil);
+				}else if(typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"")){
+					FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+					lstErrores = readTxtFile(fileEntry, themeDisplay, cabeceraPk, tipoaccion, fiseUtil);
+			   }
+				
 				
 			}catch(FileMimeTypeException ex){
 				ex.printStackTrace();
@@ -417,6 +433,8 @@ public class Formato12BGartController {
 		response.setRenderParameter("etapa", cabeceraPk.getEtapa());
 		response.setRenderParameter("anoEjecucionGasto", cabeceraPk.getAnoPresentacion() + "");
 		response.setRenderParameter("mesEjecucionGasto", cabeceraPk.getMesPresentacion() + "");
+		
+		
 
 	}
 
@@ -546,7 +564,52 @@ public class Formato12BGartController {
 	}
 
 
+	public List<MensajeErrorBean> readTxtFile(FileEntry archivo, ThemeDisplay themeDisplay, FiseFormato12BCPK pk, String tipoOperacion, FiseUtil util) {
+		InputStream is = null;
+		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
+		int cont = 0;
+		try {
+
+			if (archivo != null) {
+				is = archivo.getContentStream();
+				CfgTabla tabla = new CfgTabla();
+				tabla.setIdTabla(FiseConstants.ID_TABLA_FORMATO12B);
+				List<CfgCampo> listaCampo = campoService.listarCamposByTabla(tabla);
+				if(listaCampo!=null){
+					for(CfgCampo campo:listaCampo){
+						
+					}
+				}
+				
+			} 
+			
+			
+			
+		}catch(ConstraintViolationException c){
+			c.printStackTrace();
+			MensajeErrorBean msg = new MensajeErrorBean();
+			msg.setId(cont);
+			msg.setDescripcion("El formato ya existe");
+			listaError.add(msg);
+			
+		} catch (DataIntegrityViolationException ex) {
+			ex.printStackTrace();
+			MensajeErrorBean msg = new MensajeErrorBean();
+			msg.setId(cont);
+			msg.setDescripcion(ex.toString());
+			listaError.add(msg);
+			
+		} catch (Exception ex) {
+			MensajeErrorBean msg = new MensajeErrorBean();
+			msg.setId(cont);
+			msg.setDescripcion(ex.toString());
+			listaError.add(msg);
+
+		}
+
+		return listaError;
 	
+	}
 	
 	@RequestMapping(params = "action=viewFormato")
 	public String viewFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
@@ -623,6 +686,8 @@ public class Formato12BGartController {
          formato12BBusqueda.setAnioInicio(command.getAnioInicio());
          formato12BBusqueda.setAnioFin(command.getAnioFin());
          formato12BBusqueda.setMesInicio(command.getMesInicio());
+         System.out.println("MES INICIO CARGA ****"+command.getAnioInicio());
+         System.out.println("MES INICIO CARGA ****"+command.getMesInicio());
          formato12BBusqueda.setMesFin(command.getMesFin());
          formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
          formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
@@ -787,8 +852,10 @@ public class Formato12BGartController {
 			  @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		
 		System.out.println("empresa::***"+request.getParameter("codEmpresa")+"***command**"+command.getCodEmpresa());
-		System.out.println("mes::***"+request.getParameter("mespres")+"*****"+command.getMesPresentacion());
-		System.out.println("anio::***"+request.getParameter("aniopres"));
+		System.out.println("mes::***"+request.getParameter("mesPresentacion")+"*****"+command.getMesPresentacion());
+		System.out.println("anio::***"+request.getParameter("anoPresentacion")+"*****"+command.getAnoPresentacion());
+		System.out.println("mesEjec::***"+request.getParameter("mesEjecucionGasto")+"*****"+command.getMesEjecucionGasto());
+		System.out.println("anioEjec::***"+request.getParameter("anoEjecucionGasto")+"*****"+command.getAnoEjecucionGasto());
 		System.out.println("etapa::***"+request.getParameter("etapa")+"*****"+command.getEtapa());
 		System.out.println("eliminando....");
 		

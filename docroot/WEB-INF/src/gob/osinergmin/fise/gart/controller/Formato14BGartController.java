@@ -1838,6 +1838,8 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 	return formatoMensaje;
 }
 
+
+
 @ResourceMapping("reporte")
 public void reporte(ResourceRequest request,ResourceResponse response, @ModelAttribute("formato14BCBean")Formato14BCBean command) {
 	try {

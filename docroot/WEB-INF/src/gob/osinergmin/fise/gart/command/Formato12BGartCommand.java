@@ -156,6 +156,8 @@ public class Formato12BGartCommand implements Serializable {
 	private BigDecimal porDesplazamientoPers;
 	private BigDecimal porActividadExtra;
 	private BigDecimal totalGeneralReconocer;
+	
+	private Integer typeFile;
 
 	public static FiseFormato12BC toBeanCabecera(Formato12BGartCommand command) {
 
@@ -1608,6 +1610,14 @@ public class Formato12BGartCommand implements Serializable {
 
 	public void setCodEmpresaBusqueda(String codEmpresaBusqueda) {
 		this.codEmpresaBusqueda = codEmpresaBusqueda;
+	}
+
+	public Integer getTypeFile() {
+		return typeFile;
+	}
+
+	public void setTypeFile(Integer typeFile) {
+		this.typeFile = typeFile;
 	}
 	
 	

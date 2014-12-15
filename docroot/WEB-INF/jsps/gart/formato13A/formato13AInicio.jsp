@@ -68,7 +68,9 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Desde año:</output></td>
 											<td>
-												<form:input path="anioInicio" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
+												<form:input path="anioInicio" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"
+												 onkeypress="formato13A.validateInputTextNumber('anioInicio')"
+												 onblur="formato13A.validateInputAnioTxt(formato13A.txtAnioInicio,formato13A.txtAnioFin)"/>
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
@@ -80,7 +82,9 @@ $(document).ready(function () {
 											</td>
 											<td><output>Hasta año:</output></td>
 											<td>
-												<form:input path="anioFin" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
+												<form:input path="anioFin" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"
+												 onkeypress="formato13A.validateInputTextNumber('anioFin')"
+												 onblur="formato13A.validateInputAnioTxt(formato13A.txtAnioInicio,formato13A.txtAnioFin)"/>
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
@@ -174,6 +178,13 @@ $(document).ready(function () {
 	</div>
 	<div id="<portlet:namespace/>divDlgDelete" >
 	<span  id="estado_proceso"></span>
+	</div>
+	<div id="dialogMessageGeneralInicio" title="Aviso">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="lblMessageInicio">Datos grabados exit&oacute;samente.</label>
+		</p>	
 	</div>
 	
 	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
