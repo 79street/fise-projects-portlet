@@ -120,6 +120,11 @@ var formato13A= {
 	 
 	 emailConfigured:null,
 	 
+	 lblMessageInicial:null,
+	 dialogMessageGeneralInicial:null,
+	 txtAnioInicio:null,
+	 txtAnioFin:null,
+	 
 	init : function(urlNuevo,urlView,urlEdit){
 		
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
@@ -139,6 +144,13 @@ var formato13A= {
 		this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");
 		this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");
 		
+		
+		this. dialogMessageGeneralInicial=$("#dialogMessageGeneralInicio");
+		this.lblMessageInicial=$("#lblMessageInicio");
+		this.txtAnioInicio=$("#anioInicio");
+		this.txtAnioFin=$("#anioFin");
+		
+		
 		formato13A.initDialogs();
 		
 		formato13A.botonCrearFormato.click(function() {
@@ -157,6 +169,50 @@ var formato13A= {
 		
 		
 	},
+	validateInputAnioTxt : function(inicio,fin){
+		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
+			 formato13A.lblMessageInicial.html("El año debe contener 4 digitos");
+			 formato13A.dialogMessageGeneralInicial.dialog("open");
+   		
+   	 }else if(inicio.val().length>0){
+   		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
+   			formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
+   			formato13A.dialogMessageGeneralInicial.dialog("open"); 
+   		 }
+   	 }else if(fin.val().length>0){
+   		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
+   			formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
+   			formato13A.dialogMessageGeneralInicial.dialog("open"); 
+   		 }
+   		 
+   	 }
+		//var n=formato12B.validateInputAnio(inicio,fin);
+	},
+	validateInputAnio : function(inicio,fin){//validateInputAnio
+		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
+			 formato13A.lblMessageInicial.html("El año debe contener 4 digitos");
+			 formato13A.dialogMessageGeneralInicial.dialog("open");
+			 return false; 
+   		
+   	 }else if(inicio.val().length>0){
+   		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
+   			 fin.focus();
+   			formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
+   			formato13A.dialogMessageGeneralInicial.dialog("open"); 
+				 return false; 
+   		 }
+   	 }else if(fin.val().length>0){
+   		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
+   			 inicio.focus();
+   			formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
+   			formato13A.dialogMessageGeneralInicial.dialog("open"); 
+				 return false; 
+   		 }
+   		 
+   	 }
+  
+	 return true; 
+},
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
@@ -315,6 +371,7 @@ var formato13A= {
 		
 		
 	},
+	
 	initCRUDDetalle : function(operacion,urlGuardarDetalle,urlRegresarDetalle){
 		this.formDetalle=$("#formato13AGartCommand");
 		this.codDepa=$("select[name='codDepartamento']");
@@ -465,24 +522,26 @@ var formato13A= {
 		}); 
 	},
 	buscarFormatos : function () {	
-
-		jQuery.ajax({			
-					url: formato13A.urlBusqueda+'&'+formato13A.formBusqueda.serialize(),
-					type: 'post',
-					dataType: 'json',
-					beforeSend:function(){
-						formato13A.blockUI();
-					},				
-					success: function(gridData) {					
-						formato13A.tablaResultados.clearGridData(true);
-						formato13A.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
-						formato13A.tablaResultados[0].refreshIndex();
-						formato13A.unblockUI();
-					},error : function(){
-						alert("Error de conexión.");
-						formato13A.unblockUI();
-					}
-			});
+ if(formato13A.validateInputAnio(formato13A.txtAnioInicio,formato13A.txtAnioFin)){
+	 jQuery.ajax({			
+			url: formato13A.urlBusqueda+'&'+formato13A.formBusqueda.serialize(),
+			type: 'post',
+			dataType: 'json',
+			beforeSend:function(){
+				formato13A.blockUI();
+			},				
+			success: function(gridData) {					
+				formato13A.tablaResultados.clearGridData(true);
+				formato13A.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+				formato13A.tablaResultados[0].refreshIndex();
+				formato13A.unblockUI();
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+	}); 
+ }
+		
 
 
 	},
@@ -1098,6 +1157,17 @@ var formato13A= {
 	},
 	//inicializar dialogs
 	initDialogs : function(){	
+		formato13A.dialogMessageGeneralInicial.dialog({
+			modal: true,
+			height: 120,
+			width: 400,
+			autoOpen: false,
+			buttons: {
+				Cerrar: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
 		formato13A.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
@@ -1282,7 +1352,14 @@ var formato13A= {
 		formato13A.lblEstado.css("display","block");
 		formato13A.divPeriodoVigencia.css("display","block");
 		
-	}
+	},
+	validateInputTextNumber:function(id){
+		$("#"+id).keyup(function () {
+		    if (!this.value.match(/^([0-9]{0,10})$/)) {
+		        this.value = this.value.replace(/[^0-9]/g, '').substring(0,10);
+		    }
+		});	
+	},
 };
 
 

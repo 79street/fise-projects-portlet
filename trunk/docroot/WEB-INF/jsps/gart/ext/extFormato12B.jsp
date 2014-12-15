@@ -16,6 +16,8 @@
 		urlBusqueda: null,
 		btnBuscar:null,
 		btnNew:null,
+		txtAnioInicio:null,
+		txtAnioFin:null,
 		
 		tpOperacion:null,
 		formNewEdit: null,	
@@ -32,6 +34,9 @@
 		divOverlay:null,
 		btnShowLoadExcel:null,
         btnUploadExcel:null,
+        btnShowLoadTxt:null,
+        txtTypeFile:null,
+       // btnUploadTxt:null,
         dlgConfirmacion:null,
         
         urlViewFormato:null,
@@ -169,6 +174,8 @@
 			
 			this. dialogMessageGeneralInicial=$("#dialogMessageGeneralInicio");
 			this.lblMessageInicial=$("#lblMessageInicio");
+			this.txtAnioInicio=$("#anioInicio");
+			this.txtAnioFin=$("#anioFin");
 			
 			formato12B.initDialogsInit();
 			this.urlViewFormato=urlView;
@@ -186,7 +193,54 @@
 				//formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
 			});
 			
-		},buildGridsBusqueda : function () {	
+		}, 
+		validateInputAnioTxt : function(inicio,fin){
+			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
+	    		 formato12B.lblMessageInicial.html("El año debe contener 4 digitos");
+				 formato12B.dialogMessageGeneralInicial.dialog("open");
+	    		
+	    	 }else if(inicio.val().length>0){
+	    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
+	    			 
+	    			 formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
+					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
+	    		 }
+	    	 }else if(fin.val().length>0){
+	    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
+	    			
+	    			 formato12B.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
+					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
+	    		 }
+	    		 
+	    	 }
+			//var n=formato12B.validateInputAnio(inicio,fin);
+		},
+		validateInputAnio : function(inicio,fin){//validateInputAnio
+			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
+	    		 formato12B.lblMessageInicial.html("El año debe contener 4 digitos");
+				 formato12B.dialogMessageGeneralInicial.dialog("open");
+				 return false; 
+	    		
+	    	 }else if(inicio.val().length>0){
+	    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
+	    			
+	    			 formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
+					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
+					 return false; 
+	    		 }
+	    	 }else if(fin.val().length>0){
+	    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
+	    			
+	    			 formato12B.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
+					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
+					 return false; 
+	    		 }
+	    		 
+	    	 }
+       
+    	 return true; 
+     },
+     buildGridsBusqueda : function () {	
 			formato12B.tablaBusqueda.jqGrid({
 				   datatype: "local",
 			       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Anular','','','','','','',''],
@@ -244,29 +298,34 @@
 				       } 
 				}); 
 			},
-		searchFormato : function () {	
-            jQuery.ajax({			
-						url: formato12B.urlBusqueda+'&'+formato12B.formBusqueda.serialize(),
-						dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-		                type: 'post',
-						beforeSend:function(){
-							formato12B.blockUI();
-						},				
-						success: function(gridData) {
-							if(gridData!=null){
-								formato12B.tablaBusqueda.clearGridData(true);
-								formato12B.tablaBusqueda.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
-								formato12B.tablaBusqueda[0].refreshIndex();
-							}
-							
-							formato12B.unblockUI();
-						},error : function(){
-							alert("Error de conexión.");
-							formato12B.unblockUI();
+		searchFormato : function () {
+			
+			if(formato12B.validateInputAnio(formato12B.txtAnioInicio,formato12B.txtAnioFin)){
+				jQuery.ajax({			
+					url: formato12B.urlBusqueda+'&'+formato12B.formBusqueda.serialize(),
+					dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+	                type: 'post',
+					beforeSend:function(){
+						formato12B.blockUI();
+					},				
+					success: function(gridData) {
+						if(gridData!=null){
+							formato12B.tablaBusqueda.clearGridData(true);
+							formato12B.tablaBusqueda.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+							formato12B.tablaBusqueda[0].refreshIndex();
 						}
-				});
+						
+						formato12B.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato12B.unblockUI();
+					}
+			});
+			}
+            
         },
+       
 		
 		loadInitDetalle:function(urlBack){
 			
@@ -285,6 +344,9 @@
 			this.btnGuardar=$('#<portlet:namespace/>guardarFormato');
 			this.urlSave='<portlet:resourceURL id="saveNuevoFormato"/>';
 			
+			this.btnShowLoadTxt=$('#<portlet:namespace/>cargaTxt');
+			this.txtTypeFile=$("#txtTypeFile");
+			//this.btnUploadTxt=$('#btnUploadTxt');
 			
 			this.btnBack=$("#<portlet:namespace/>regresarFormato");
 			
@@ -417,23 +479,15 @@
 			
             
 			if(formato12B.tpOperacion.val()=='0'){
-				formato12B.cmbCodEmpresa.change(function(){
-					formato12B.loadPeriodoDeclaracion(formato12B.tpOperacion.val());
-				});
-				formato12B.cmbCodEmpresa.trigger('change');
+			 	formato12B.cmbPeriodo.append($("<option></option>").attr("value",$("#peridoDeclaracionHidden").val()).text(formato12B.txtPeriodo.val())); 
 				formato12B.showCamposOculto();
 				formato12B.btnReportePdf.click(function() {formato12B.viewReporte('0');});
 				formato12B.btnReporteExpExcel.click(function() {formato12B.viewReporte('1');});
 				formato12B.btnReporteActaEnvio.click(function() {formato12B.showActaEnvio();});
-				
 				formato12B.loadTotales($("#codEmpresaHidden").val());
 				
 			}else if(formato12B.tpOperacion.val()=='1'){
-				formato12B.cmbCodEmpresa.change(function(){
-					formato12B.loadPeriodoDeclaracion(formato12B.tpOperacion.val());
-				});
-				formato12B.cmbCodEmpresa.trigger('change');
-				
+				formato12B.cmbPeriodo.append($("<option></option>").attr("value",$("#peridoDeclaracionHidden").val()).text(formato12B.txtPeriodo.val())); 
 				formato12B.showCamposOculto();
 				formato12B.eventButtons(formato12B.tpOperacion.val());
 				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
@@ -464,8 +518,9 @@
 			formato12B.divLoadFile.css("display","block");
 			formato12B.btnGuardar.css("display","block");
 			
-			formato12B.btnShowLoadExcel.click(function() {formato12B.showLoadFile('1');});
-			formato12B.btnUploadExcel.click(function() {formato12B.uploadFile('1');});
+			formato12B.btnShowLoadExcel.click(function() {formato12B.showLoadFile('1');});//excel
+			formato12B.btnShowLoadTxt.click(function() {formato12B.showLoadFile('2');});//txt
+			formato12B.btnUploadExcel.click(function() {formato12B.uploadFile(formato12B.txtTypeFile.val());});
 			formato12B.btnGuardar.click(function(){formato12B.save();});
 		
 			if(tipo == '1'){//editar
@@ -946,6 +1001,7 @@
 		showConfirmacion : function (emp,mes,anio,etapa,desmes,stdEnvio,std,mesEjec,desmesEjec,anioEjec,tipo) {	
 			//alert(emp+"/"+mes+"/"+anio+"/"+etapa+"/"+desmes+"/"+stdEnvio+"/"+std+"/"+mesEjec+"/"+desmesEjec+"/"+anioEjec+"/"+tipo);
 			var show=true;
+			var numModal=2;//modsl aviso
 			var msj='El formato ya fue enviado a OSINERGMIN-GART';
 			switch(tipo) {
 			case '0':{//vista
@@ -962,17 +1018,35 @@
 			}break;
 			case '3':{//eliminar
 				if(std=='ABIERTO'){//1enviado 0=x enviar
+				 show=true;
 			     msj='¿Está seguro que desea eliminar el registro seleccionado?';
-			    }else{
-			    	//show=false;
-			    	//alert(msj);
+			     numModal=1;
 			    }
 			 }break;
 			}
 			
             if(show){
 				formato12B.dlgConfirmacion.html(msj);
-				if(tipo == '1' || tipo == '3'){
+				if(numModal == 1){
+					formato12B.dlgConfirmacion.dialog({ 
+				     	title:"Eliminar formato",
+				     	height:150,
+						width: 400,	
+				         modal: true,
+				         buttons:{
+				        	 "Aceptar":function(){
+				        		 $( this ).dialog( "close" );
+				        		 formato12B.deleteFormato(emp, mes, anio, etapa,mesEjec,anioEjec, formato12B.dlgConfirmacion);
+				        		 //emp,mes,anio,etapa,desmes,stdEnvio,std,mesEjec,desmesEjec,anioEjec,tipo
+				        	 },
+				        	 "Cancelar":function(){
+				        		 $( this ).dialog( "close" );
+				        		
+				        	 }
+				         },
+				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
+				     }).load();
+				}else{
 					titulo="Aviso";
 					formato12B.dlgConfirmacion.dialog({ 
 				     	title:titulo,
@@ -986,34 +1060,15 @@
 				         },
 				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
 				     }).load();
-				}else{
-					formato12B.dlgConfirmacion.dialog({ 
-				     	title:"Eliminar formato",
-				     	height:150,
-						width: 400,	
-				         modal: true,
-				         buttons:{
-				        	 "Aceptar":function(){
-				        		 $( this ).dialog( "close" );
-				        		 formato12B.deleteFormato(emp, mes, anio, etapa, formato12B.dlgConfirmacion);
-				        		 
-				        	 },
-				        	 "Cancelar":function(){
-				        		 $( this ).dialog( "close" );
-				        		
-				        	 }
-				         },
-				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
-				     }).load();
-					
 				}
+				
 				
 			}
            
 
 		},
 		showLoadFile:function(tipoFile){
-			
+			formato12B.txtTypeFile.val(tipoFile);
 			formato12B.divOverlay.show();
 		    formato12B.dlgLoadFile.show();
 		    formato12B.dlgLoadFile.css({ 
@@ -1029,7 +1084,40 @@
 			formato12B.divOverlay.hide();   
 		},
 		uploadFile : function(tipoFile){
-			 formato12B.formNewEdit.submit(); 
+			var nameFile=$("#archivoExcel").val();
+			var isSubmit=true;
+			
+			$("#msjUploadFile").html("");
+			if(typeof (nameFile) == "undefined" || nameFile.length==0){
+				alert("cant"+nameFile.length);
+				isSubmit=false;
+				$("#msjUploadFile").html("Debe seleccionar un archivo");
+			}else{
+				var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);
+				alert(extension+"/"+tipoFile);
+				if(tipoFile == '1'){
+					if(extension == 'xls' || extension == 'xlsx'){
+						isSubmit=true;
+					}else{
+						isSubmit=false;
+						$("#msjUploadFile").html("Archivo invalido");
+					}
+					
+				}else if(tipoFile == '2'){
+					if(extension == 'txt' ){
+						isSubmit=true;
+					}else{
+						isSubmit=false;
+						$("#msjUploadFile").html("Archivo invalido");
+					}
+				}
+			}
+			
+			if(isSubmit){
+				 formato12B.formNewEdit.submit(); 
+			}
+			 
+			
 		},
 		showCamposOculto: function(){
 			
@@ -1116,21 +1204,24 @@
 			
 		},
 		
-		deleteFormato:function(emp,mes,anio,etapa,dlg){
+		deleteFormato:function(emp,mes,anio,etapa,mesEjec,anioEjec,dlg){
 		
 			jQuery.ajax({	
 				url: formato12B.urlDeleteFormato,
 				type: 'post',
 				data : {"codEmpresa":emp,
-					"mespres":mes,
-					"aniopres":anio,
+					"mesPresentacion":mes,
+					"anoPresentacion":anio,
 					"etapa":etapa,
+					"mesEjecucionGasto":mesEjec,
+					"anoEjecucionGasto":anioEjec,
 				},
 				dataType : "text",
 				beforeSend:function(){
 					formato12B.blockUI();
 				},				
-				success: function(data) {					
+				success: function(data) {		
+					alert(data);
 					if(data == '1' ){
 						//formato12B.btnBuscar.trigger('click');
 						formato12B.lblMessageInicial.html("Se Elimino correctamente");

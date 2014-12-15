@@ -1008,7 +1008,7 @@
 		<div
 			class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 			<span class="ui-dialog-title" id="ui-dialog-title-dialog-form-carga">
-				Cargar archivo excel </span> <a href="#"
+				Cargar archivo  </span> <a href="#"
 				class="ui-dialog-titlebar-close ui-corner-all" role="button"
 				onclick="formato12B.closeLoadFile();"> <span
 				class="ui-icon ui-icon-closethick">close</span>
@@ -1024,8 +1024,15 @@
 						<td></td>
 					</tr>
 					<tr>
+					<td><form:input type="hidden" id="txtTypeFile"  path="typeFile"/></td>
 						<td>Archivo:</td>
 						<td><input type="file" id="archivoExcel" name="archivoExcel" /></td>
+					</tr>
+					<tr>
+						<td height="10px;"></td>
+					</tr>
+					<tr>
+						<td colspan="3"><span id="msjUploadFile" style="color: red;"></span></td>
 					</tr>
 				</table>
 			</fieldset>
