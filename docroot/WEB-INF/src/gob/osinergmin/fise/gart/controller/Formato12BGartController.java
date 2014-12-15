@@ -108,21 +108,51 @@ public class Formato12BGartController {
 
 	List<MensajeErrorBean> listaObservaciones;
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
+	
+	private Formato12BGartCommand formato12BBusqueda;
 
 	@RequestMapping
 	public String defaultView(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		command.setListaMes(fiseUtil.getMapaMeses());
-		command.setAnioInicio(fiseUtil.obtenerNroAnioFechaActual() != null ? Integer.parseInt(fiseUtil.obtenerNroAnioFechaActual()) : null);
-		command.setMesInicio(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1) : null);
-		command.setAnioFin(fiseUtil.obtenerNroAnioFechaActual() != null ? Integer.parseInt(fiseUtil.obtenerNroAnioFechaActual()) : null);
-		command.setMesFin(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())) : null);
-
+		
+		
+			System.out.println("volvio entrar::");
+			if(formato12BBusqueda!=null && formato12BBusqueda.getAnioInicio()!=null){
+				System.out.println("volvio entrar anio inicio::"+formato12BBusqueda.getAnioInicio());
+				command.setAnioInicio(formato12BBusqueda.getAnioInicio());
+			}else{
+				command.setAnioInicio(fiseUtil.obtenerNroAnioFechaActual() != null ? Integer.parseInt(fiseUtil.obtenerNroAnioFechaActual()) : null);
+			}
+			if(formato12BBusqueda!=null && formato12BBusqueda.getAnioFin()!=null){
+				command.setAnioFin(formato12BBusqueda.getAnioFin());
+			}else{
+				command.setAnioFin(fiseUtil.obtenerNroAnioFechaActual() != null ? Integer.parseInt(fiseUtil.obtenerNroAnioFechaActual()) : null);
+				
+			}
+			if(formato12BBusqueda!=null && formato12BBusqueda.getMesInicio()!=null){
+				command.setMesInicio(formato12BBusqueda.getMesInicio());
+			}else{
+				command.setMesInicio(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1) : null);
+			}
+			if(formato12BBusqueda!=null && formato12BBusqueda.getMesFin()!=null){
+				command.setMesFin(formato12BBusqueda.getMesFin());
+			}else{
+				command.setMesFin(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())) : null);
+            }
+			if(formato12BBusqueda!=null && formato12BBusqueda.getEtapaBusqueda()!=null){
+				command.setEtapaBusqueda(formato12BBusqueda.getEtapaBusqueda());
+			}
+			if(formato12BBusqueda!=null && formato12BBusqueda.getCodEmpresaBusqueda()!=null){
+				command.setCodEmpresaBusqueda(formato12BBusqueda.getCodEmpresaBusqueda());
+			}
+		
+		
 		model.addAttribute("esAdministrador", fiseUtil.esAdministrador(renderRequest));
 		
 
-		logger.info("admin1.1:" + model.get("esAdministrador"));
+		logger.info("admin1.1 busqueda:" + model.get("esAdministrador"));
 
 		return "formato12BInicio";
 	}
@@ -135,7 +165,7 @@ public class Formato12BGartController {
 			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);
 			HttpSession session = req.getSession();
 
-			List<FiseFormato12BC> lstFise = formatoService.getLstFormatoCabecera(command.getCodEmpresa(), command.getAnioInicio(), command.getMesInicio(), command.getAnioFin(), command.getMesFin(), command.getEtapa());
+			List<FiseFormato12BC> lstFise = formatoService.getLstFormatoCabecera(command.getCodEmpresaBusqueda(), command.getAnioInicio(), command.getMesInicio(), command.getAnioFin(), command.getMesFin(), command.getEtapaBusqueda());
 
 			if (lstFise != null && !lstFise.isEmpty()) {
 				List<Formato12BGartCommand> lstCommand = Formato12BGartCommand.toListCommandCabecera(lstFise);
@@ -235,6 +265,10 @@ public class Formato12BGartController {
 		String anioEjec = renderRequest.getParameter("anoEjecucionGasto");
 		String mesEjec = renderRequest.getParameter("mesEjecucionGasto");
 
+		System.out.println("anio::busqueda "+command.getAnioInicio());
+		System.out.println("mes:: busqueda"+command.getMesInicio());
+		System.out.println("etapa ::: busqueda"+command.getEtapa());
+		
 		if (error != null) {
 			model.addAttribute("error", error);
 		}
@@ -273,7 +307,7 @@ public class Formato12BGartController {
 			id.setMesEjecucionGasto(mesEjec != null ? Integer.valueOf(mesEjec) : null);
 			id.setMesPresentacion(mes != null ? Integer.valueOf(mes) : null);
 			FiseFormato12BC cabeceraBean = formatoService.getFormatoCabeceraById(id);
-			command = Formato12BGartCommand.toCommandCabecera(cabeceraBean);
+			command = Formato12BGartCommand.toCommandCabecera(cabeceraBean,command);
 			List<FiseFormato12BD> lstFiseDetalle = formatoService.getLstFormatoDetalle(id);
 			command = Formato12BGartCommand.toCommandDetalle(lstFiseDetalle, command);
 			
@@ -281,9 +315,17 @@ public class Formato12BGartController {
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		command.setTipoOperacion((tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE : FiseConstants.ADD);
 		command.setListaMes(fiseUtil.getMapaMeses());
+		
+		
 		model.addAttribute("formato12BGartCommand", command);
-
-		// model.addAttribute("tipoOperacion", FiseConstants.ADD);
+          formato12BBusqueda=new Formato12BGartCommand();
+          formato12BBusqueda.setAnioInicio(command.getAnioInicio());
+          formato12BBusqueda.setAnioFin(command.getAnioFin());
+          formato12BBusqueda.setMesInicio(command.getMesInicio());
+          formato12BBusqueda.setMesFin(command.getMesFin());
+          formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
+          formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
+		
 		return "formato12BDetalle";
 	}
 
@@ -511,8 +553,9 @@ public class Formato12BGartController {
 
 		String tipoOperacion = request.getParameter("tipoOperacion");
         System.out.println("en view formato tipo operacion::"+tipoOperacion+" /command::"+command.getTipoOperacion()+"-"+command.getCodEmpresa());
-		
-        String codEmpresa = request.getParameter("codEmpresa");
+		System.out.println("command busqueda::"+command.getAnioInicio());
+    
+		String codEmpresa = request.getParameter("codEmpresa");
 		String periodo = request.getParameter("periodoDeclaracion");
 		String codEmpresaHidden = request.getParameter("codEmpresaHidden");
 		String periodoHidden = request.getParameter("peridoDeclaracionHidden");
@@ -523,7 +566,6 @@ public class Formato12BGartController {
 		String etapa = request.getParameter("etapa");
 		String anioEjec = request.getParameter("anoEjecucionGasto");
 		String mesEjec = request.getParameter("mesEjecucionGasto");
-		
 		
 
 		if (error != null) {
@@ -569,13 +611,22 @@ public class Formato12BGartController {
 		id.setMesEjecucionGasto(command.getMesEjecucionGasto());
 		id.setMesPresentacion(command.getMesPresentacion() != null ? Integer.valueOf(command.getMesPresentacion()) : null);
 		FiseFormato12BC cabeceraBean = formatoService.getFormatoCabeceraById(id);
-		command = Formato12BGartCommand.toCommandCabecera(cabeceraBean);
+		command = Formato12BGartCommand.toCommandCabecera(cabeceraBean,command);
 		List<FiseFormato12BD> lstFiseDetalle = formatoService.getLstFormatoDetalle(id);
 		command = Formato12BGartCommand.toCommandDetalle(lstFiseDetalle, command);
 		command.setTipoOperacion(tipoOperacion != null ? Integer.parseInt(tipoOperacion) : FiseConstants.VIEW);
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(request));
 		command.setListaMes(fiseUtil.getMapaMeses());
 		model.addAttribute("formato12BGartCommand", command);
+		
+		 formato12BBusqueda=new Formato12BGartCommand();
+         formato12BBusqueda.setAnioInicio(command.getAnioInicio());
+         formato12BBusqueda.setAnioFin(command.getAnioFin());
+         formato12BBusqueda.setMesInicio(command.getMesInicio());
+         formato12BBusqueda.setMesFin(command.getMesFin());
+         formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
+         formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
+		
 
 		return "formato12BDetalle";
 	}
@@ -616,7 +667,7 @@ public class Formato12BGartController {
 				pkCbcr.setEtapa(command.getEtapa());
 				result = formatoService.getFormatoCabeceraById(pkCbcr);
 				
-				Formato12BGartCommand commandCabecera=Formato12BGartCommand.toCommandCabecera(result);
+				Formato12BGartCommand commandCabecera=Formato12BGartCommand.toCommandCabecera(result,command);
 				
 				if (commandCabecera != null) {
 					result.setUsuarioActualizacion(command.getUsuarioActualizacion());

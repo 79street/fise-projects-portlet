@@ -41,7 +41,7 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Empresa:</output></td>
 											<td colspan="7">
-												<form:select path="codEmpresa" cssClass="select" cssStyle="width: 375px;">
+												<form:select path="codEmpresaBusqueda" cssClass="select" cssStyle="width: 375px;">
 
 													<c:if test="${esAdministrador}">
 														<form:option value="">-Todos-</form:option>
@@ -84,7 +84,7 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Etapa:</output></td>
 											<td colspan="7">
-												<form:select path="etapa" cssClass="select" cssStyle="width: 140px;">
+												<form:select path="etapaBusqueda" cssClass="select" cssStyle="width: 140px;">
 													<form:option value="SOLICITUD">SOLICITUD</form:option>
 													<form:option value="LEV.OBS">LEV.OBS</form:option>
 													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>

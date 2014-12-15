@@ -44,12 +44,14 @@ public class Formato12BGartCommand implements Serializable {
 	private String descMesEjec;
 
 	private String codEmpresa;
+	private String codEmpresaBusqueda;
 
 	private Integer anoPresentacion;
 	private Integer mesPresentacion;
 	private Integer anoEjecucionGasto;
 	private Integer mesEjecucionGasto;
 	private String etapa;
+	private String etapaBusqueda;
 
 	private Integer idZonaBenef;
 
@@ -190,12 +192,21 @@ public class Formato12BGartCommand implements Serializable {
 		return bean;
 	}
 
-	public static Formato12BGartCommand toCommandCabecera(FiseFormato12BC bean) {
+	public static Formato12BGartCommand toCommandCabecera(FiseFormato12BC bean,Formato12BGartCommand busqueda) {
 		Formato12BGartCommand command = null;
 		try {
 
 			if (bean != null) {
 				command = new Formato12BGartCommand();
+				
+				if(busqueda!=null){
+					command.setAnioInicio(busqueda.getAnioInicio());
+					command.setAnioFin(busqueda.getAnioFin());
+					command.setMesInicio(busqueda.getMesInicio());
+					command.setMesFin(busqueda.getMesFin());
+					command.setEtapaBusqueda(busqueda.getEtapaBusqueda());
+					command.setCodEmpresaBusqueda(busqueda.getCodEmpresaBusqueda());
+				}
 
 				command.setAnoEjecucionGasto(bean.getId().getAnoEjecucionGasto());
 				command.setAnoPresentacion(bean.getId().getAnoPresentacion());
@@ -273,7 +284,7 @@ public class Formato12BGartCommand implements Serializable {
 			if (lst != null && !lst.isEmpty()) {
 				lstReturn = new ArrayList<Formato12BGartCommand>();
 				for (FiseFormato12BC bean : lst) {
-					lstReturn.add(toCommandCabecera(bean));
+					lstReturn.add(toCommandCabecera(bean,null));
 
 				}
 			}
@@ -505,8 +516,7 @@ public class Formato12BGartCommand implements Serializable {
 						command.getTotalDesplazamientoPersonalProv().setScale(2, BigDecimal.ROUND_UP);
 						command.getTotalGestionAdministrativaProv().setScale(2, BigDecimal.ROUND_UP);
 
-					}
-					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_LIMA) {
+					} if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_LIMA) {
 						command.setCostoEstandarUnitAtencionLim(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion():new BigDecimal(0));
 						command.setCostoEstandarUnitValDgCanLim(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan():new BigDecimal(0));
 						command.setCostoEstandarUnitValDisElLim(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl():new BigDecimal(0));
@@ -1583,5 +1593,23 @@ public class Formato12BGartCommand implements Serializable {
 	public void setTotalGeneralReconocer(BigDecimal totalGeneralReconocer) {
 		this.totalGeneralReconocer = totalGeneralReconocer;
 	}
+
+	public String getEtapaBusqueda() {
+		return etapaBusqueda;
+	}
+
+	public void setEtapaBusqueda(String etapaBusqueda) {
+		this.etapaBusqueda = etapaBusqueda;
+	}
+
+	public String getCodEmpresaBusqueda() {
+		return codEmpresaBusqueda;
+	}
+
+	public void setCodEmpresaBusqueda(String codEmpresaBusqueda) {
+		this.codEmpresaBusqueda = codEmpresaBusqueda;
+	}
+	
+	
 
 }
