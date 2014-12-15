@@ -20,7 +20,8 @@ var envioDefinitivoGlobal= {
 		
 		
 		//mensajes		
-		mensajeEnvio:null,		
+		mensajeEnvio:null,	
+		mensajeReporte:null,
 		
 		//urls
 		urlBusqueda: null,	    
@@ -29,6 +30,8 @@ var envioDefinitivoGlobal= {
 		//urlReporteObservaciones:null,
 		urlEnvioDefinitivo:null,
 		urlReporteEnvioDefinitivo:null,
+		urlVerFormatos:null,
+		
 		
 		//botones		
 		botonBuscar:null,		
@@ -66,7 +69,7 @@ var envioDefinitivoGlobal= {
 			
 			//mensajes						
 			this.mensajeEnvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Realizando Envio Definitivo </h3>';			
-			
+			this.mensajeReporte='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo el Reporte </h3>';
 			
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="busquedaEnvioDefinitivo" />';					
@@ -75,6 +78,8 @@ var envioDefinitivoGlobal= {
 			//this.urlVerObservaciones='<portlet:resourceURL id="verObservacionesValidacion" />';
 			//this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionNotificacion" />';
 			this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivo" />';
+			this.urlVerFormatos='<portlet:resourceURL id="verFormatosReporteEnvio" />'; 
+			
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarEnvioDefinitivo");		
@@ -131,7 +136,7 @@ var envioDefinitivoGlobal= {
 		buildGrids : function () {	
 			envioDefinitivoGlobal.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa.','Formato.','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa','Estado','','',''],
+		       colNames: ['Empresa.','Formato.','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa','Estado','Ver','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
@@ -143,8 +148,8 @@ var envioDefinitivoGlobal= {
 		               { name: 'anioFinVig', index: 'anioFinVig', width: 20,align:'center'},
 		               { name: 'etapa', index: 'etapa', width: 30},	  	              
 		               { name: 'estado', index: 'estado', width: 20,align:'center' }, 
-		              /* { name: 'ver', index: 'ver', width: 20,align:'center' },
-		               { name: 'elim', index: 'elim', width: 20,align:'center' },	*/	              
+		               { name: 'ver', index: 'ver', width: 20,align:'center' },
+		               /*{ name: 'elim', index: 'elim', width: 20,align:'center' },*/	              
 		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 		               { name: 'mesPres', index: 'mesPres', hidden: true},             
 		               { name: 'mesEjec', index: 'mesEjec', hidden: true}
@@ -160,20 +165,16 @@ var envioDefinitivoGlobal= {
 					pager: envioDefinitivoGlobal.paginadoResultados,
 				    viewrecords: true,
 				   	caption: "Envio General",
-				    sortorder: "asc"	   	    	   	   
-		      /* gridComplete: function(){
+				    sortorder: "asc",	   	    	   	   
+		         gridComplete: function(){
 		      		var ids = envioDefinitivoGlobal.tablaResultados.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
-		      			var ret = envioDefinitivoGlobal.tablaResultados.jqGrid('getRowData',cl);	      			
-		      			notificar = "<a href='#'><img border='0' title='Notificar' src='/net-theme/images/img-net/lock.png' align='center' onclick=\"notificar.confirmarnotificar('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"');\" /></a> "; 
-		      			ver = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png' align='center' onclick=\"envioDefinitivoGlobal.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"envioDefinitivoGlobal.confirmarEliminarNotificacion('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
-		      			envioDefinitivoGlobal.tablaResultados.jqGrid('setRowData',ids[i],{notificar:notificar});
-		      			envioDefinitivoGlobal.tablaResultados.jqGrid('setRowData',ids[i],{ver:ver});
-		      		    envioDefinitivoGlobal.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
+		      			var ret = envioDefinitivoGlobal.tablaResultados.jqGrid('getRowData',cl);	    			
+		      			ver = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png' align='center' onclick=\"envioDefinitivoGlobal.mostrarFormatosReporte('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
+		      			envioDefinitivoGlobal.tablaResultados.jqGrid('setRowData',ids[i],{ver:ver});		    
 		      		}
-		      } */
+		      } 
 		  	});
 			envioDefinitivoGlobal.tablaResultados.jqGrid('navGrid',envioDefinitivoGlobal.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});				
 		},
@@ -250,6 +251,40 @@ var envioDefinitivoGlobal= {
 					}
 			});
 		},	
+		
+		mostrarFormatosReporte : function(cod_Empresa,anio_Pres,mes_Pres,anio_Ejec,mes_Ejec,anio_IniVig,anio_FinVig,cod_etapa,cod_formato){
+			console.debug("entranado a  ver el reporte del formato");
+			$.blockUI({ message: envioDefinitivoGlobal.mensajeReporte});
+			jQuery.ajax({
+				url: envioDefinitivoGlobal.urlVerFormatos+'&'+envioDefinitivoGlobal.formCommand.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {
+					   <portlet:namespace />codEmpresa: cod_Empresa,
+					   <portlet:namespace />anioPres: anio_Pres,
+					   <portlet:namespace />mesPres: mes_Pres,
+					   <portlet:namespace />etapa: cod_etapa,
+					   <portlet:namespace />anioEjec: anio_Ejec,
+					   <portlet:namespace />mesEjec: mes_Ejec,
+					   <portlet:namespace />anioIniVig: anio_IniVig,
+					   <portlet:namespace />anioFinVig: anio_FinVig,
+					   <portlet:namespace />formato: cod_formato
+				},
+				success : function(data) {
+					if(data.resultado=='OK'){
+						envioDefinitivoGlobal.verReporteEnvio();	
+						envioDefinitivoGlobal.initBlockUI();
+					}else{
+						alert("Error al mostrar el reporte del formato");
+						envioDefinitivoGlobal.initBlockUI();
+					}
+				},error : function(){
+					alert("Error de conexión.");
+					envioDefinitivoGlobal.initBlockUI();
+				}
+			});
+		}, 		
+		
 		
 		/* verObservaciones : function(cod_Empresa,anio_Pres,mes_Pres,anio_Ejec,mes_Ejec,anio_IniVig,anio_FinVig,cod_etapa,cod_formato){
 			jQuery.ajax({
@@ -376,10 +411,10 @@ var envioDefinitivoGlobal= {
 				}
 			});
 		},		
-		//funcion para ver reposrte en una nueva pestaña
+		//funcion para ver reporte acta envio en una nueva pestaña
 		verReporteEnvio : function(){
 			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
-		}, 
+		}, 	
 		
 		//DIALOGOS
 		initDialogs : function(){		

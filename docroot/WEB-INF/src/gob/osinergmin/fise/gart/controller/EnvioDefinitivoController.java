@@ -2184,5 +2184,204 @@ public class EnvioDefinitivoController {
 			e.printStackTrace();
 		}
 	}	
+	
+	
+	@ResourceMapping("verFormatosReporteEnvio")
+	public void verFormatos(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("envioDefinitivoBean")EnvioDefinitivoBean n) {		
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
+			
+			logger.info("Entrando a ver reporte de cada formato"); 			
+			logger.info("Codigo empresa:  "+ n.getCodEmpresa()); 
+			logger.info("anioPres:  "+ n.getAnioPres());	
+			logger.info("mespres:  "+ n.getMesPres());	
+			logger.info("etapa:  "+ n.getEtapa());	
+			logger.info("anioEjec:  "+ n.getAnioEjec());	
+			logger.info("mesEjec:  "+ n.getMesEjec());	
+			logger.info("anioIniVig:  "+ n.getAnioIniVig());	
+			logger.info("anioFinVig:  "+ n.getAnioFinVig());	
+			logger.info("formato:  "+ n.getFormato());				
+			
+			String usuario = themeDisplay.getUser().getLogin();
+		    String terminal = themeDisplay.getUser().getLoginIP();
+		    String email =  themeDisplay.getUser().getEmailAddress(); 
+		    Map<String, Object> mapa =null;	
+		    String directorio =  "";	
+		    String nombreReporte = "";
+		    boolean valorReporte = false; 
+		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+		   
+		    JSONObject jsonObj = new JSONObject();	   
+		    
+		    String tipoFormato = "FORMATO "+n.getFormato();
+		    String tipoArchivo = "3";//PDF		   
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);		
+		
+			if(FiseConstants.NOMBRE_FORMATO_12A.equals(n.getFormato())){ 
+				nombreReporte = "formato12A";	  	  			       
+				directorio =  "/reports/"+nombreReporte+".jasper";
+				mapa = parametros12A(n.getCodEmpresa(), n.getAnioPres(), n.getMesPres(), 
+						n.getAnioEjec(), n.getMesEjec(), n.getEtapa(), rutaImg, usuario, terminal, email);
+				if(mapa!=null){
+					logger.info("Map diferente de null"); 
+					File reportFile12A = new File(session.getServletContext().getRealPath(directorio));
+					logger.info("file diferente de null"); 
+					byte[] bytes12A = null;		  	  			       
+					bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa, new JREmptyDataSource());
+					logger.info("Tamaño del arreglo de bytes>>>>>"+bytes12A.length); 
+					if (bytes12A != null) {	  	  			    	 
+						session.setAttribute("bytesFormato", bytes12A);
+						valorReporte =true;
+					}
+				}
+
+			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 
+				nombreReporte = "formato12B";		 		      
+				directorio =  "/reports/"+nombreReporte+".jasper";
+				mapa = parametros12B(n.getCodEmpresa(), n.getAnioPres(), n.getMesPres(), 
+						n.getAnioEjec(), n.getMesEjec(), n.getEtapa(), rutaImg, usuario, terminal, email);
+				if(mapa!=null){	  					
+					File reportFile12B = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes12B = null;
+					bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), 
+							mapa, new JREmptyDataSource());
+					if (bytes12B != null) {		  	  					
+						session.setAttribute("bytesFormato", bytes12B);
+						valorReporte =true;
+					}
+				}
+
+			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){
+				nombreReporte = "formato12C";		  	  		    	
+				directorio = "/reports/" + nombreReporte + ".jasper";
+				mapa = parametros12C(n.getCodEmpresa(), n.getAnioPres(), n.getMesPres(), 
+						n.getAnioEjec(), n.getMesEjec(), n.getEtapa(), rutaImg, usuario, terminal, email);	
+				FiseFormato12CCPK pk = new FiseFormato12CCPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setEtapa(n.getEtapa());
+				FiseFormato12CC formato = formatoService12C.obtenerFormato12CCByPK(pk);	
+				if(mapa!=null && formato!=null){				
+					File reportFile = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes12C = null;
+					bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+							new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
+					if (bytes12C != null) {				  	  		    		
+						session.setAttribute("bytesFormato", bytes12C);
+						valorReporte =true;
+					}
+				}
+
+			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){ 
+				nombreReporte = "formato12D";  	  		    	
+				directorio = "/reports/" + nombreReporte + ".jasper";
+				mapa = parametros12D(n.getCodEmpresa(), n.getAnioPres(), n.getMesPres(), 
+						n.getAnioEjec(), n.getMesEjec(), n.getEtapa(), rutaImg, usuario, terminal, email);	
+				FiseFormato12DCPK pk = new FiseFormato12DCPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setEtapa(n.getEtapa());
+				FiseFormato12DC formato = formatoService12D.obtenerFormato12DCByPK(pk);	
+				if(mapa!=null && formato!=null){				
+					File reportFile = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes12D = null;
+					bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+							new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+					if (bytes12D != null) {				  	  		    		
+						session.setAttribute("bytesFormato", bytes12D);
+						valorReporte =true;
+					}
+				}
+
+			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){ 
+				nombreReporte = "formato13A";	       				
+				directorio = "/reports/" + nombreReporte + ".jasper";
+				mapa = parametros13A(n.getCodEmpresa(), n.getAnioPres(), n.getMesPres(), n.getEtapa(), 
+						rutaImg, usuario, terminal, email); 				
+				if(mapa!=null){					
+					File reportFile13A = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes13A = null;	       				  				
+					bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, 
+							new JRBeanCollectionDataSource(listaZonas13A));	       				
+					if (bytes13A != null) {	        					
+						session.setAttribute("bytesFormato", bytes13A);
+						valorReporte =true;
+					}
+				}
+
+			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 
+				nombreReporte = "formato14A";	       				
+				directorio = "/reports/" + nombreReporte + ".jasper";
+				mapa = parametros14A(n.getCodEmpresa(), n.getAnioPres(), n.getMesPres(),  
+						n.getAnioIniVig(), n.getAnioFinVig(),n.getEtapa(),rutaImg, usuario, terminal, email);            	 
+				if(mapa!=null){            	    	
+					File reportFile14A = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes14A = null;	       				  				
+					bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa, new JREmptyDataSource());	       				
+					if (bytes14A != null) {	        					
+						session.setAttribute("bytesFormato", bytes14A);
+						valorReporte =true;
+					}
+				}
+            	    
+			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){
+				nombreReporte = "formato14B";	       				
+				directorio = "/reports/" + nombreReporte + ".jasper";
+				mapa = parametros14B(n.getCodEmpresa(), n.getAnioPres(), n.getMesPres(),  
+						n.getAnioIniVig(), n.getAnioFinVig(),n.getEtapa(),rutaImg, usuario, terminal, email);
+				if(mapa!=null){            		 
+					File reportFile14B = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes14B = null;	       				  				
+					bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa, new JREmptyDataSource());	       				
+					if (bytes14B != null) {	        					
+						session.setAttribute("bytesFormato", bytes14B);
+						valorReporte =true;
+					}
+				}
+
+			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 
+				nombreReporte = "formato14C";	       				
+				directorio = "/reports/" + nombreReporte + ".jasper";
+				mapa = parametros14C(n.getCodEmpresa(), n.getAnioPres(), n.getMesPres(),  
+						n.getAnioIniVig(), n.getAnioFinVig(),n.getEtapa(),rutaImg, usuario, terminal, email);           	 
+				if(mapa!=null){           		 
+					File reportFile14C = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes14C = null;	       				  				
+					bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa, new JREmptyDataSource());	       				
+					if (bytes14C != null) {	        					
+						session.setAttribute("bytesFormato", bytes14C);
+						valorReporte =true;
+					}
+				}           	   
+			}
+			if(valorReporte){
+				jsonObj.put("resultado", "OK");	   		
+			}else{
+				jsonObj.put("resultado", "ERROR");	   	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver  formatos: "+e); 
+			e.printStackTrace();
+		}finally{			
+			if(listaZonas13A!=null){
+				listaZonas13A=null;	
+			}						
+		}
+    }			
+	
+	
 
 }
