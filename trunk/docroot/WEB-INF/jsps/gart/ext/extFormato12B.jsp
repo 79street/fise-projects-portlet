@@ -181,7 +181,9 @@
 			
 			formato12B.btnNew.click(function() {
 				formato12B.blockUI();
-				location.href=urlNew;
+				location.href=urlNew+'&'+formato12B.formBusqueda.serialize();
+				
+				//formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 		},buildGridsBusqueda : function () {	
@@ -434,20 +436,23 @@
 				
 				formato12B.showCamposOculto();
 				formato12B.eventButtons(formato12B.tpOperacion.val());
-				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val());
+				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 				formato12B.buildGridsObservacion();
 				formato12B.loadTotales($("#codEmpresaHidden").val());
 			
 			}else if(formato12B.tpOperacion.val()=='2'){
 				formato12B.cmbCodEmpresa.change(function(){
+					formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 					$.when(formato12B.loadPeriodoDeclaracion(formato12B.tpOperacion.val())).then(formato12B.loadCostosUnitarios());
+					 formato12B.showHiddenButtons(formato12B.tpOperacion.val());
 				});
 				formato12B.cmbCodEmpresa.trigger('change');
 				formato12B.cmbPeriodo.change(function(){
+					formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 					formato12B.loadCostosUnitarios();
 				});
 				formato12B.eventButtons(formato12B.tpOperacion.val());
-				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val());
+			//	formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 				
 				formato12B.loadTotales(formato12B.cmbCodEmpresa.val());
 			}
@@ -544,7 +549,7 @@
 				formato12B.txtTotalActividadesExtraord.prop('disabled', false);
 				formato12B.txtTotalActividadesExtraordProv.prop('disabled', false);
 				
-				if(formato12B.cmbCodEmpresa.val()=='EDLN' || formato12B.cmbCodEmpresa.val()=='LDS'){
+				if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
 					formato12B.txtnroValesImpresoLim.prop('disabled', false);
 					formato12B.txtnroValesRepartidosDomiLim.prop('disabled', false);
 					formato12B.txtnroValesEntregadoDisElLim.prop('disabled', false);
@@ -554,6 +559,36 @@
 					formato12B.txtTotalGestionAdministrativaLim.prop('disabled', false);
 					formato12B.txtTotalDesplazamientoPersonalLim.prop('disabled', false);
 					formato12B.txtTotalActividadesExtraordLim.prop('disabled', false);
+					
+
+					formato12B.txtnroValesImpresoLim.val('');
+					formato12B.txtnroValesRepartidosDomiLim.val('');
+					formato12B.txtnroValesEntregadoDisElLim.val('');
+					formato12B.txtnroValesFisicosCanjeadosLim.val('');
+					formato12B.txtnroValesDigitalCanjeadosLim.val('');
+					formato12B.txtnroAtencionesLim.val('');
+					formato12B.txtTotalGestionAdministrativaLim.val('');
+					formato12B.txtTotalDesplazamientoPersonalLim.val('');
+					formato12B.txtTotalActividadesExtraordLim.val('');
+					 formato12B.txtEtndrUnitValeImpreLim.val('');
+					 $('#costoEstandarUnitValeImpreLim').val('');
+					 
+					 formato12B.txtEtndrUnitValeReparLim.val('');
+					 $('#costoEstandarUnitValeReparLim').val('');
+					 
+					 formato12B.txtEtndrUnitValDisElLim.val('');
+					 $('#costoEstandarUnitValDisElLim').val('');
+					 
+					 formato12B.txtEtndrUnitValFiCanLim.val('');
+					 $('#costoEstandarUnitValFiCanLim').val('');
+					 
+					 formato12B.txtEtndrUnitValDgCanLim.val('');
+					 $('#costoEstandarUnitValDgCanLim').val('');
+					 
+					 formato12B.txtEtndrUnitAtencionLim.val('');
+					 $('#costoEstandarUnitAtencionLim').val('');
+					 
+					
 				
 				}else{
 					formato12B.txtnroValesImpresoLim.prop('disabled', true);
@@ -674,8 +709,10 @@
 						 $('#costoEstandarUnitAtencionProv').val(item.costoUnitarioPorAtencion);
 						 
 					 }
-					 if(item.codEmpresa == 'EDLN' || item.codEmpresa == 'LDS'){
+					
+					 if(item.codEmpresa.trim() == 'EDLN' || item.codEmpresa.trim() == 'LDS'){
 						 if(item.idZonaBenef == '3'){
+							
 							 formato12B.txtEtndrUnitValeImpreLim.val(item.costoUnitarioImpresionVales);
 							 $('#costoEstandarUnitValeImpreLim').val(item.costoUnitarioImpresionVales);
 							 
@@ -739,7 +776,7 @@
 					 $('#costoEstandarUnitAtencionProv').val("0");
 					 				
 					 
-					 if(formato12B.cmbCodEmpresa.val()=='EDLN' || formato12B.cmbCodEmpresa.val()=='LDS'){
+					 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
 						 formato12B.txtEtndrUnitValeImpreLim.val("0");
 						 $('#costoEstandarUnitValeImpreLim').val("0");
 						 
@@ -810,7 +847,7 @@
 			$('#costoTotalAtencionConsReclProv').val(formato12B.txtTotalAtencionConsReclProv.val());
 			
 		
-			if(emp =='EDLN' || emp =='LDS'){
+			if(emp.trim() =='EDLN' || emp.trim() =='LDS'){
 				formato12B.txtTotalImpresionValeLim.val((formato12B.txtnroValesImpresoLim.val()!=null && formato12B.txtnroValesImpresoLim.length>0)?(formato12B.txtnroValesImpresoLim.val()*formato12B.txtEtndrUnitValeImpreLim.val()):'0');
 			    formato12B.txtTotalRepartoValesDomiLim.val((formato12B.txtnroValesRepartidosDomiLim.val()!=null && formato12B.txtnroValesRepartidosDomiLim.length>0)?(formato12B.txtnroValesRepartidosDomiLim.val()*formato12B.txtEtndrUnitValeReparLim.val()):'0');
 			    formato12B.txtTotalEntregaValDisElLim.val((formato12B.txtnroValesEntregadoDisElLim.val()!=null && formato12B.txtnroValesEntregadoDisElLim.length>0)?(formato12B.txtnroValesEntregadoDisElLim.val()*formato12B.txtEtndrUnitValDisElLim.val()):'0');
@@ -838,7 +875,7 @@
 		},
 		loadTotales : function(emp){
 			
-			if(emp =='EDLN' || emp =='LDS'){
+			if(emp.trim() =='EDLN' || emp.trim() =='LDS'){
 				$('#porImpresionVales').val(Number($('#costoTotalImpresionVale').val())+Number($('#costoTotalImpresionValeProv').val())+Number($('#costoTotalImpresionValeLim').val()));
 				$('#porRepartoDom').val(Number($('#costoTotalRepartoValesDomi').val())+Number($('#costoTotalRepartoValesDomiProv').val())+Number($('#costoTotalRepartoValesDomiLim').val()));
 				$('#porEntregaValesDE').val(Number($('#costoTotalEntregaValDisEl').val())+Number($('#costoTotalEntregaValDisElProv').val())+Number($('#costoTotalEntregaValDisElLim').val()));
@@ -876,27 +913,27 @@
 		},
 		loadGestion:function(idpor,idinput){
 			
-			 if(formato12B.cmbCodEmpresa.val()=='EDLN' || formato12B.cmbCodEmpresa.val()=='LDS'){
-				 $("#"+idpor).val(Number($("#"+idinput).val())+Number($("#"+idinput+"Prov").val())+Number($("#"+idinput+"Lim").val())); 
+			 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
+				 $("#"+idpor).val(parseFloat($("#"+idinput).val())+parseFloat($("#"+idinput+"Prov").val())+parseFloat($("#"+idinput+"Lim").val())); 
 			 }else{
-				 $("#"+idpor).val(Number($("#"+idinput).val())+Number($("#"+idinput+"Prov").val()));
+				 $("#"+idpor).val(parseFloat($("#"+idinput).val())+parseFloat($("#"+idinput+"Prov").val()));
 			 }
 			$("#"+idpor).val(redondeo( $("#"+idpor).val(), 2));
 			formato12B.loadTotalReconocer();
 		},
 		loadTotalReconocer : function(){
-			$('#totalGeneralReconocer').val(Number($('#porImpresionVales').val())+Number($('#porRepartoDom').val())+Number($('#porEntregaValesDE').val())+
-					Number($('#porValesFisicos').val())+Number($('#porValesDigitales').val())+Number($('#porAtencionReclamos').val())+Number($('#porGestionAdm').val())+
-							Number($('#porDesplazamientoPers').val())+Number($('#porActividadExtra').val()));	
+			$('#totalGeneralReconocer').val(parseFloat($('#porImpresionVales').val())+Number($('#porRepartoDom').val())+parseFloat($('#porEntregaValesDE').val())+
+					parseFloat($('#porValesFisicos').val())+parseFloat($('#porValesDigitales').val())+parseFloat($('#porAtencionReclamos').val())+parseFloat($('#porGestionAdm').val())+
+					parseFloat($('#porDesplazamientoPers').val())+parseFloat($('#porActividadExtra').val()));	
 			$('#totalGeneralReconocer').val(redondeo( $('#totalGeneralReconocer').val(), 2));
 		},
 		loadCostoTotatByInput:function (total,nro,costo,idhidden,idstandar,idtotal){
 			total.val((nro.val()!=null && nro.length>0)?(nro.val()*costo.val()):'0');
 			$("#"+idhidden).val(total.val());
-			 if(formato12B.cmbCodEmpresa.val()=='EDLN' || formato12B.cmbCodEmpresa.val()=='LDS'){
-				 $("#"+idtotal).val(Number($("#"+idstandar).val())+Number($("#"+idstandar+"Prov").val())+Number($("#"+idstandar+"Lim").val()));
+			 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
+				 $("#"+idtotal).val(parseFloat($("#"+idstandar).val())+parseFloat($("#"+idstandar+"Prov").val())+parseFloat($("#"+idstandar+"Lim").val()));
 			 }else{
-				 $("#"+idtotal).val(Number($("#"+idstandar).val())+Number($("#"+idstandar+"Prov").val()));
+				 $("#"+idtotal).val(parseFloat($("#"+idstandar).val())+parseFloat($("#"+idstandar+"Prov").val()));
 			 }
 			 $("#"+idtotal).val(redondeo( $("#"+idtotal).val(), 2));
              formato12B.loadTotalReconocer();
@@ -914,7 +951,7 @@
 			case '0':{//vista
 				show=false;
 				formato12B.blockUI();
-				location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec;
+				location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec+'&'+formato12B.formBusqueda.serialize();
 			}break;
 			case '1':{//edit
 			       if(std =='ABIERTO'){//1enviado 0=x enviar
@@ -927,15 +964,15 @@
 				if(std=='ABIERTO'){//1enviado 0=x enviar
 			     msj='¿Está seguro que desea eliminar el registro seleccionado?';
 			    }else{
-			    	show=false;
-			    	alert(msj);
+			    	//show=false;
+			    	//alert(msj);
 			    }
 			 }break;
 			}
 			
             if(show){
 				formato12B.dlgConfirmacion.html(msj);
-				if(tipo == '1'){
+				if(tipo == '1' || tipo == '3'){
 					titulo="Aviso";
 					formato12B.dlgConfirmacion.dialog({ 
 				     	title:titulo,
@@ -1270,7 +1307,7 @@
 			}
 		},
 		updateStyleClassInput:function (tipo,emp){
-			
+			alert("updateStyleClassInput  "+emp);
 			formato12B.txtnroValesImpreso.addClass("fise-editable");
 			formato12B.txtnroValesImpresoProv.addClass("fise-editable");
 			formato12B.txtnroValesRepartidosDomi.addClass("fise-editable");
@@ -1290,7 +1327,7 @@
 			formato12B.txtTotalActividadesExtraord.addClass("fise-editable");
 			formato12B.txtTotalActividadesExtraordProv.addClass("fise-editable");
 			
-		if(emp=='EDLN' || emp=='LDS'){
+		if(emp == 'EDLN' || emp == 'LDS'){
 			formato12B.txtnroValesImpresoLim.addClass("fise-editable");
 			formato12B.txtnroValesRepartidosDomiLim.addClass("fise-editable");
 			formato12B.txtnroValesEntregadoDisElLim.addClass("fise-editable");
@@ -1300,6 +1337,28 @@
 			formato12B.txtTotalGestionAdministrativaLim.addClass("fise-editable");
 			formato12B.txtTotalDesplazamientoPersonalLim.addClass("fise-editable");
 			formato12B.txtTotalActividadesExtraordLim.addClass("fise-editable");
+		}else{
+			
+			formato12B.txtnroValesImpresoLim.removeClass("fise-editable");
+			formato12B.txtnroValesRepartidosDomiLim.removeClass("fise-editable");
+			formato12B.txtnroValesEntregadoDisElLim.removeClass("fise-editable");
+			formato12B.txtnroValesFisicosCanjeadosLim.removeClass("fise-editable");
+			formato12B.txtnroValesDigitalCanjeadosLim.removeClass("fise-editable");
+			formato12B.txtnroAtencionesLim.removeClass("fise-editable");
+			formato12B.txtTotalGestionAdministrativaLim.removeClass("fise-editable");
+			formato12B.txtTotalDesplazamientoPersonalLim.removeClass("fise-editable");
+			formato12B.txtTotalActividadesExtraordLim.removeClass("fise-editable");
+			
+			/*formato12B.txtnroValesImpresoLim.addClass("target");
+			formato12B.txtnroValesRepartidosDomiLim.addClass("target");
+			formato12B.txtnroValesEntregadoDisElLim.addClass("target");
+			formato12B.txtnroValesFisicosCanjeadosLim.addClass("target");
+			formato12B.txtnroValesDigitalCanjeadosLim.addClass("target");
+			formato12B.txtnroAtencionesLim.addClass("target");
+			formato12B.txtTotalGestionAdministrativaLim.addClass("target");
+			formato12B.txtTotalDesplazamientoPersonalLim.addClass("target");
+			formato12B.txtTotalActividadesExtraordLim.addClass("target");*/
+			
 		}
 			
 		},initDialogsInit : function(){	

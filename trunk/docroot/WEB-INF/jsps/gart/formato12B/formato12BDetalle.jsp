@@ -9,10 +9,14 @@
 	<portlet:param name="action" value="uploadFile" />
 </portlet:actionURL>
 <portlet:renderURL var="urlBack" />
+
+
 <script type="text/javascript" src="/fise-projects-portlet/js/fise.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		
 		formato12B.loadInitDetalle('${urlBack}');
+		
 		var error = '${error}';
 		if (error.length > 0) {
 			formato12B.lblMessage.html(error);
