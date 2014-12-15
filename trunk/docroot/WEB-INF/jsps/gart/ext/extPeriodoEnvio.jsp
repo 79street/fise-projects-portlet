@@ -487,6 +487,9 @@ var periodoEnvio= {
 						}else if(data.resultado == "Mayor"){				
 							alert('La fecha hasta no debe ser mayor a la fecha de ampliacion.'); 
 							periodoEnvio.f_fechaAmpl.focus();	
+						}else if(data.resultado == "FECHA"){				
+							alert('La fecha desde no debe ser mayor a la fecha hasta.'); 
+							periodoEnvio.f_desde.focus();	
 						}else if(data.resultado == "Error"){				
 							var addhtml2='Se produjo un error al guardar los datos.';
 							periodoEnvio.dialogMessageContent.html(addhtml2);

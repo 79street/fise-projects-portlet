@@ -205,11 +205,26 @@ public class PeriodoEnvioController {
 			p.setDesde(fechaDesde); 
 			p.setHasta(fechaHasta);		
 			
-			if(FormatoUtil.isNotBlank(p.getHasta()) && FormatoUtil.isNotBlank(p.getFechaAmpl())){
-				if(FechaUtil.fechaMayor(p.getHasta(),p.getFechaAmpl())){
-					String fechaAmpl = p.getFechaAmpl() + " " +FechaUtil.getHoraActual();
-					p.setFechaAmpl(fechaAmpl); 	
+			if(FechaUtil.fechaMayor(p.getDesde(),p.getHasta())){
+				
+				if(FormatoUtil.isNotBlank(p.getHasta()) && FormatoUtil.isNotBlank(p.getFechaAmpl())){
 					
+					if(FechaUtil.fechaMayor(p.getHasta(),p.getFechaAmpl())){
+						String fechaAmpl = p.getFechaAmpl() + " " +FechaUtil.getHoraActual();
+						p.setFechaAmpl(fechaAmpl); 	
+						
+						String valor = fisePeriodoEnvioGartService.insertarDatosFisePeriodoEnvio(p);
+						logger.info("valor de la transaccion al insertar:  "+valor); 
+						if(!valor.equals("0")){ 
+							jsonObj.put("resultado", "OK");	
+							jsonObj.put("secuencia", valor);	
+						}else{
+							jsonObj.put("resultado", "Error");	
+						}					
+					}else{
+						jsonObj.put("resultado", "Mayor");		
+					}		
+				}else{				
 					String valor = fisePeriodoEnvioGartService.insertarDatosFisePeriodoEnvio(p);
 					logger.info("valor de la transaccion al insertar:  "+valor); 
 					if(!valor.equals("0")){ 
@@ -218,19 +233,10 @@ public class PeriodoEnvioController {
 					}else{
 						jsonObj.put("resultado", "Error");	
 					}					
-				}else{
-					jsonObj.put("resultado", "Mayor");		
-				}		
-			}else{				
-				String valor = fisePeriodoEnvioGartService.insertarDatosFisePeriodoEnvio(p);
-				logger.info("valor de la transaccion al insertar:  "+valor); 
-				if(!valor.equals("0")){ 
-					jsonObj.put("resultado", "OK");	
-					jsonObj.put("secuencia", valor);	
-				}else{
-					jsonObj.put("resultado", "Error");	
-				}					
-			}
+				}
+			}else{
+				jsonObj.put("resultado", "FECHA");	//fecha desde es mayor a fecha hasta
+			}		
 			response.setContentType("application/json");
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonObj.toString());
