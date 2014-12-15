@@ -243,6 +243,7 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
   			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14B, FiseConstants.NOMBRE_EXCEL_FORMATO14B, FiseConstants.NOMBRE_HOJA_FORMATO14B, listaFormato);
   			
   			logger.info("arreglo json:"+jsonArray);
+  			System.out.println("INFORMACION OBTENIDA :::"+jsonArray.toString());
   			PrintWriter pw = response.getWriter();
   			pw.write(jsonArray.toString());
   			pw.flush();
