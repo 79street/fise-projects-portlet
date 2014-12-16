@@ -48,12 +48,12 @@ $(document).ready(function () {
 											<td colspan="4"></td>
 										</tr>
 										<tr>
-											<td><output>Id Observacion:</output></td>
+											<td><output>Id Observación:</output></td>
 											<td>
 											 <form:input path="idBusq" size="10"/>		
 											</td>
 											
-											<td><output>Descripcion:</output></td>
+											<td><output>Descripción:</output></td>
 											<td>
 											 <form:input path="descripcionBusq" size="30"/>		
 											</td>
