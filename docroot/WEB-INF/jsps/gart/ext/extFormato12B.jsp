@@ -511,12 +511,14 @@
 			}else if(formato12B.tpOperacion.val()=='2'){
 				formato12B.cmbCodEmpresa.change(function(){
 					formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
+					formato12B.clearCampoLima();
 					$.when(formato12B.loadPeriodoDeclaracion(formato12B.tpOperacion.val())).then(formato12B.loadCostosUnitarios());
 					formato12B.showHiddenButtons(formato12B.tpOperacion.val(),'2');
 				});
 				formato12B.cmbCodEmpresa.trigger('change');
 				formato12B.cmbPeriodo.change(function(){
 					formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
+					formato12B.clearCampoLima();
 					formato12B.loadCostosUnitarios();
 					formato12B.showHiddenButtons(formato12B.tpOperacion.val(),'2');
 				});
@@ -642,7 +644,7 @@
 					formato12B.txtTotalActividadesExtraordLim.prop('disabled', true);
 				}
 				
-				if(isclear == '1'){
+				
 					var impre=formato12B.txtnroValesImpresoLim.val();
 					 var repar=formato12B.txtnroValesRepartidosDomiLim.val();
 					 var entre=formato12B.txtnroValesEntregadoDisElLim.val();
@@ -681,9 +683,7 @@
 					 
 					 formato12B.txtEtndrUnitAtencionLim.val(formato12B.txtEtndrUnitAtencionLim.val().length>0?formato12B.txtEtndrUnitAtencionLim.val():'');
 					 $('#costoEstandarUnitAtencionLim').val(formato12B.txtEtndrUnitAtencionLim.val());
-				}else{
-					formato12B.clearCampoLima();
-				}
+				
 
 			
 				
@@ -692,7 +692,7 @@
 			
 		},
 		clearCampoLima :function(){
-			alert("limpiando");
+			
 			formato12B.txtnroValesImpresoLim.val('');
 			formato12B.txtnroValesRepartidosDomiLim.val('');
 			formato12B.txtnroValesEntregadoDisElLim.val('');
