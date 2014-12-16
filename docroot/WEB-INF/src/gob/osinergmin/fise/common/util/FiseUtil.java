@@ -250,10 +250,13 @@ public class FiseUtil {
 			 
 			String nameFileInput = null;
 			if( FiseConstants.TIPOARCHIVO_XLS.equals(tipoArchivo) ){
+				System.out.println("tipo xls");
 				nameFileInput = "archivoExcel";
 				mimeTypes = mimeTypesXls;
 			}else if( FiseConstants.TIPOARCHIVO_TXT.equals(tipoArchivo) ){
-				nameFileInput = "archivoTxt";
+				System.out.println("tipo txt");
+				nameFileInput = "archivoExcel";
+				//nameFileInput = "archivoTxt";
 				mimeTypes = mimeTypesTxt;
 			}else{
 				throw new Exception("Archivo de formato diferente");

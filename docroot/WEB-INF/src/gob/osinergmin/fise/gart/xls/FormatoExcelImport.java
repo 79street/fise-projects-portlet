@@ -302,6 +302,7 @@ public class FormatoExcelImport {
 		//fiseUtil=new FiseUtil();
 		List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
 		int numColumns=FiseConstants.COLUMN_H;
+		
 		if(pk.getCodEmpresa().trim().equalsIgnoreCase("EDLN") || pk.getCodEmpresa().trim().equalsIgnoreCase("LDS")){
 			numColumns=FiseConstants.COLUMN_I;
 		}

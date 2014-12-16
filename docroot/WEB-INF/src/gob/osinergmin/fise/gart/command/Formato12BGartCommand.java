@@ -583,6 +583,7 @@ public class Formato12BGartCommand implements Serializable {
 		FiseFormato12BD bean = null;
 		int nro = 0;
 		boolean isAdd = true;
+		System.out.println("COMMAND ==> "+command.getCodEmpresa());
 		if (command != null) {
 			while (nro < 3) {
 
@@ -660,7 +661,7 @@ public class Formato12BGartCommand implements Serializable {
 					pk.setIdZonaBenef(FiseConstants.ZONA_PROVINCIA);
 
 				} else if (nro == 2) {
-					if (command.getCodEmpresa().trim() == "EDLN" || command.getCodEmpresa().trim() == "LDS") {
+					if (command.getCodEmpresa().trim().equalsIgnoreCase("EDLN") || command.getCodEmpresa().trim().equalsIgnoreCase("LDS") ) {
                        
 						// lima
 						bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionLim());
