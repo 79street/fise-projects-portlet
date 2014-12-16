@@ -34,6 +34,7 @@ var fiseObservacion= {
 		urlActualizar:null,
 		urlEditarView:null,		
 	    urlEliminar:null,
+	    urlNuevo:null,
 		
 		//botones		
 		botonBuscar:null,
@@ -85,6 +86,9 @@ var fiseObservacion= {
 			this.urlActualizar='<portlet:resourceURL id="actualizarObservacion" />';
 			this.urlEditarView='<portlet:resourceURL id="editarViewObservacion" />';			
 			this.urlEliminar='<portlet:resourceURL id="eliminarObservacion" />';
+			this.urlNuevo='<portlet:resourceURL id="nuevoRegistroObservacion" />';
+			
+			
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarObservaciones");
@@ -203,20 +207,29 @@ var fiseObservacion= {
 		},		
 		//funcion para nuevo registro
 		<portlet:namespace/>nuevofiseObservacion : function(){	
-			
-			fiseObservacion.f_id.val('');
-			fiseObservacion.f_descripcion.val('');			
-        	fiseObservacion.f_id.removeAttr("disabled");        	
-        	fiseObservacion.f_descripcion.removeAttr("disabled");	
-			
-			fiseObservacion.divNuevo.show();
-			fiseObservacion.divBuscar.hide();		
-						
-			console.debug("boton nuevo registro:  ");
-			
-			$('#<portlet:namespace/>guardarfiseObservacion').css('display','block');
-			$('#<portlet:namespace/>actualizarfiseObservacion').css('display','none');
-			
+			jQuery.ajax({			
+				url: fiseObservacion.urlNuevo+'&'+fiseObservacion.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',				
+				success: function(data) {					
+					fiseObservacion.f_id.val(data.id);
+					fiseObservacion.f_descripcion.val('');			
+					fiseObservacion.f_id.attr("disabled",true);  	
+		        	fiseObservacion.f_descripcion.removeAttr("disabled");	
+					
+					fiseObservacion.divNuevo.show();
+					fiseObservacion.divBuscar.hide();		
+								
+					console.debug("boton nuevo registro:  ");
+					
+					$('#<portlet:namespace/>guardarfiseObservacion').css('display','block');
+					$('#<portlet:namespace/>actualizarfiseObservacion').css('display','none');	
+					
+				},error : function(){
+						alert("Error de conexión.");
+						fiseObservacion.initBlockUI();
+				}
+			});			
 		},
 		
 		//Function para Visualizar los datos del formulario		
