@@ -299,7 +299,7 @@ $(document).ready(function () {
 										     </tr>
 																						
 											<tr>
-											 <td><label style="font-size: 12px; font-weight: bold">Envio Obs.:</label>
+											 <td><label style="font-size: 12px; font-weight: bold">Envio con Obs:</label>
 											 </td>
 											 <td>											 
 											     <input type="radio"	name="flagEnvioObs"
@@ -311,7 +311,7 @@ $(document).ready(function () {
 											     										
 											 </td>
 											 
-											 <td><label style="font-size: 12px; font-weight: bold">Mostrar Año Mes:</label>
+											 <td><label style="font-size: 12px; font-weight: bold">Mostrar Año/Mes Ejecución:</label>
 											 </td>
 											 <td>											
 												<input type="radio"	name="flagAnioMesEjec"
@@ -323,7 +323,7 @@ $(document).ready(function () {
 											  							
 											 </td>	
 											 
-											 <td><label style="font-size: 12px; font-weight: bold">Habilita Costos:</label>
+											 <td><label style="font-size: 12px; font-weight: bold">Habilita Costos(F14C):</label>
 											 </td>
 											 <td>												     
 											     <input type="radio"	name="flagHabCostos"
@@ -358,7 +358,7 @@ $(document).ready(function () {
 											 </td>											 
 											 
 											 <td>
-											     <label style="font-size: 12px; font-weight: bold">Días antes de Cierre:</label>
+											     <label style="font-size: 12px; font-weight: bold">Días a notificar antes de cierre:</label>
 											  </td>
 											  <td>											   
 											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2"/>											
