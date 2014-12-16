@@ -140,13 +140,13 @@ var fiseObservacion= {
 		buildGrids : function () {	
 			fiseObservacion.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Observacion','Descripcion','Visualizar','Editar','Anular'],
+		       colNames: ['Id Observación','Descripción','Visualizar','Editar'],
 		       colModel: [
                        { name: 'idObservacion', index: 'idObservacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},					  
 		               { name: 'view', index: 'view', width: 20,align:'center' },
-		               { name: 'edit', index: 'edit', width: 20,align:'center' },
-		               { name: 'elim', index: 'elim', width: 20,align:'center' }  
+		               { name: 'edit', index: 'edit', width: 20,align:'center' }
+		               //{ name: 'elim', index: 'elim', width: 20,align:'center' }  
 		               
 			   	    ],
 			   	 multiselect: false,
@@ -167,21 +167,21 @@ var fiseObservacion= {
 		      			var ret = fiseObservacion.tablaResultados.jqGrid('getRowData',cl);           
 		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseObservacion.verfiseObservacion('"+ret.idObservacion+"');\" /></a> ";
 		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseObservacion.editarfiseObservacion('"+ret.idObservacion+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseObservacion.confirmarEliminarfiseObservacion('"+ret.idObservacion+"');\" /></a> ";              			
+		      			//elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseObservacion.confirmarEliminarfiseObservacion('"+ret.idObservacion+"');\" /></a> ";              			
 		      			fiseObservacion.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			fiseObservacion.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
-		      			fiseObservacion.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
+		      			//fiseObservacion.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
 		      		}
 		      }
 		  	});
 			fiseObservacion.tablaResultados.jqGrid('navGrid',fiseObservacion.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});	
-			fiseObservacion.tablaResultados.jqGrid('navButtonAdd',fiseObservacion.paginadoResultados,{
+			<%-- fiseObservacion.tablaResultados.jqGrid('navButtonAdd',fiseObservacion.paginadoResultados,{
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			      <%--  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';  --%> 
+			      location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
 			       } 
-			}); 
+			});  --%>
 		},
 		//funcion para buscar
 		buscarfiseObservacion : function () {		
@@ -414,15 +414,15 @@ var fiseObservacion= {
 		validarFormulario : function() {
 			console.debug("tamaño de descripcion:  "+fiseObservacion.f_descripcion.val().length);
 			if(fiseObservacion.f_id.val().length == ''){
-				alert('Debe ingresar el id de Observacion.'); 
+				alert('Debe ingresar el id de Observación.'); 
 				fiseObservacion.f_id.focus();
 			  	return false; 
 			}else if(fiseObservacion.f_descripcion.val().length == ''){
-				alert('Debe ingresar descripcion.'); 
+				alert('Debe ingresar descripción.'); 
 				fiseObservacion.f_descripcion.focus();
 			  	return false; 
 			}else if(fiseObservacion.f_descripcion.val().length > 100){
-				alert('La  descripcion acepta como maximo 100 caracteres.'); 
+				alert('La  descripción acepta como máximo 100 caracteres.'); 
 				fiseObservacion.f_descripcion.focus();
 			  	return false; 
 			}else{
