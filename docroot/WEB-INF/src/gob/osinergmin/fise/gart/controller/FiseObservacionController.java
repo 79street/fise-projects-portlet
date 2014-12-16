@@ -3,6 +3,7 @@ package gob.osinergmin.fise.gart.controller;
 
 
 import gob.osinergmin.fise.bean.FiseObservacionBean;
+import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
 
@@ -42,9 +43,9 @@ public class FiseObservacionController {
 	@Qualifier("fiseObservacionGartServiceImpl")
 	FiseObservacionGartService fiseObservacionGartService;
 
-	/*@Autowired
+	@Autowired
 	@Qualifier("fiseUtil")
-	FiseUtil fiseUtil;*/
+	private FiseUtil fiseUtil;
 	
 	
 	
@@ -111,6 +112,32 @@ public class FiseObservacionController {
 		String data = String.valueOf(result);
 		return data;
 	}
+	
+	@ResourceMapping("nuevoRegistroObservacion")
+	public void nuevoRegistroObservacion(ModelMap model,ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("fiseObservacionBean")FiseObservacionBean p) { 		
+		try {	
+			String id ="0";
+			
+			JSONObject jsonObj = new JSONObject();
+			
+			logger.info("entrando a nuevo registro de observacion ");					
+			
+			id = fiseObservacionGartService.obtenerIdObservacion();
+			
+			jsonObj.put("id", id);			
+			
+			response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonObj.toString());
+		    pw.flush();
+		    pw.close();		
+			logger.info("DATA CONVERTER JSON ID:  "+jsonObj); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
 
 	@ResourceMapping("grabarObservacion")
 	public void grabarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
