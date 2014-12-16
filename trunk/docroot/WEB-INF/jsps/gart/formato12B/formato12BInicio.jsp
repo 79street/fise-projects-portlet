@@ -127,15 +127,25 @@ $(document).ready(function () {
 							<td>
 								<table style="width: 100%;" border="0">
 									<tr>
+									<td>
+											<%-- <input type="button" class="net-button-small" id="<portlet:namespace/>excelFormato" name="<portlet:namespace/>excelFormato"  value="Excel" /> --%>
+										</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
 										
-										<td align="right" width="90px" colspan="7">
+										<td align="right" width="90px" >
 											<div id="d_opc_crear">
 												<input type="button" class="net-button-small"
 													id="<portlet:namespace/>newFormato"
 													name="<portlet:namespace/>newFormato" value="Nuevo" />
 											</div>
 										</td>
-										
+										<td align="right" width="90px">
+											<%-- <input type="button" class="net-button-small" id="<portlet:namespace/>salirFormato" name="<portlet:namespace/>salirFormato"  value="Salir" /> --%>
+										</td>
 									</tr>
 								</table>
 							</td>

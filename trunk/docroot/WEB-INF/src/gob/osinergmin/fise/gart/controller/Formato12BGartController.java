@@ -1,8 +1,10 @@
 package gob.osinergmin.fise.gart.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -575,10 +577,204 @@ public class Formato12BGartController {
 				CfgTabla tabla = new CfgTabla();
 				tabla.setIdTabla(FiseConstants.ID_TABLA_FORMATO12B);
 				List<CfgCampo> listaCampo = campoService.listarCamposByTabla(tabla);
-				if(listaCampo!=null){
+				List<CfgCampo> listaCampoRead=new ArrayList<CfgCampo>();
+				int lenghtEmpresa=0;
+				int lenghtAnioPres=0;
+				int lenghtMesPres=0;
+				int lenghtAnioEjec=0;
+				int lenghtMesEjec=0;
+				int lenghtZona=0;
+				
+				int lenghtValesImp=0;
+				int lenghtValeRepartido=0;
+				int lenghtValeEntrDE=0;
+				int lenghtValeFisico=0;
+				int lenghtValeDigital=0;
+				int lenghtAtenciones=0;
+				int lenghtGestion=0;
+				int lenghtDesplazamiento=0;
+				int lenghtActividades=0;
+				int lenghtReconocer=0;
+				
+				int lenghtCostoValesImp=0;
+				int lenghtCostoValeRepartido=0;
+				int lenghtCostoValeEntrDE=0;
+				int lenghtCostoValeFisico=0;
+				int lenghtCostoValeDigital=0;
+				int lenghtCostoAtenciones=0;
+				int lenghtTotalValesImp=0;
+				int lenghtTotalValeRepartido=0;
+				int lenghtTotalValeEntrDE=0;
+				int lenghtTotalValeFisico=0;
+				int lenghtTotalValeDigital=0;
+				int lenghtTotalAtenciones=0;
+				
+				if(listaCampo!=null && !listaCampo.isEmpty()){
+					
 					for(CfgCampo campo:listaCampo){
+						boolean isAdd=false;
+						System.out.println("COD CAMPO::"+campo.getCodCampo());
+						if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_EMPRESA.trim())){
+							isAdd=true;
+							lenghtEmpresa=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_PRESENTACION.trim())){
+							isAdd=true;
+							lenghtAnioPres=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_MES_PRESENTACION.trim())){
+							isAdd=true;
+							lenghtMesPres=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_ANO_EJECUCION_GASTO.trim())){
+							isAdd=true;
+							lenghtAnioEjec=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_MES_EJECUCION_GASTO.trim())){
+							isAdd=true;
+							lenghtMesEjec=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ID_ZONA_BENEF.trim())){
+							isAdd=true;
+							lenghtZona=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_IMPRESO.trim())){
+							isAdd=true;
+							lenghtValesImp=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_REPARTIDOS_DOMI.trim())){
+							isAdd=true;
+							lenghtValeRepartido=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_ENTREGADO_DIS_EL.trim())){
+							isAdd=true;
+							lenghtValeEntrDE=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_FISICOS_CANJEADOS.trim())){
+							isAdd=true;
+							lenghtValeFisico=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_DIGITAL_CANJEADOS.trim())){
+							isAdd=true;
+							lenghtValeDigital=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_ATENCIONES.trim())){
+							isAdd=true;
+							lenghtAtenciones=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_GESTION_ADMINISTRATIVA.trim())){
+							isAdd=true;
+							lenghtGestion=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_DESPLAZAMIENTO_PERSONAL.trim())){
+							isAdd=true;
+							lenghtDesplazamiento=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_ACTIVIDADES_EXTRAORD.trim())){
+							isAdd=true;
+							lenghtActividades=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_RECONOCER.trim())){
+						isAdd=true;
+							lenghtReconocer=campo.getLongitud().intValue();////costos
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_IMPRE.trim())){
+							isAdd=false;
+							lenghtCostoValesImp=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_IMPRESION_VALE.trim())){
+							isAdd=false;
+							lenghtTotalValesImp=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_REPAR.trim())){
+							isAdd=false;
+							lenghtCostoValeRepartido=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_REPARTO_VALES_DOMI.trim())){
+							isAdd=false;
+							lenghtTotalValeRepartido=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_DIS_EL.trim())){
+							isAdd=false;
+							lenghtCostoValeEntrDE=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_ENTREGA_VAL_DIS_EL.trim())){
+							isAdd=false;
+							lenghtTotalValeEntrDE=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_FI_CAN.trim())){
+							isAdd=false;
+							lenghtCostoValeFisico=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_CANJE_LIQ_VALE_FIS.trim())){
+							isAdd=false;
+							lenghtTotalValeFisico=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_DG_CAN.trim())){
+							isAdd=false;
+							lenghtCostoValeDigital=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_CANJE_LIQ_VALE_DIG.trim())){
+							isAdd=false;
+							lenghtTotalValeDigital=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_ATENCION.trim())){
+							isAdd=false;
+							lenghtCostoAtenciones=campo.getLongitud().intValue();
+						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_ATENCION_CONS_RECL.trim())){
+							isAdd=false;
+							lenghtTotalAtenciones=campo.getLongitud().intValue();
+						}
+						if(isAdd){
+							listaCampoRead.add(campo);
+						}
 						
 					}
+				}
+				System.out.println("CANTIDAD CAMPOS ::"+listaCampoRead.size());
+				BufferedReader br = new BufferedReader( new InputStreamReader(is));
+				//List<String> listaDetalleTxt= new ArrayList<String>();
+				String sCurrentLine;
+				
+				
+			
+				while ((sCurrentLine = br.readLine()) != null) {
+					System.out.println("total::"+sCurrentLine.length());
+					System.out.println(sCurrentLine);
+					int posInicial=0;
+					String codEm=sCurrentLine.substring(posInicial, lenghtEmpresa);
+						posInicial=posInicial+lenghtEmpresa;
+						System.out.println("codEm ::"+codEm+"/"+posInicial+"/"+lenghtAnioPres);//0+4
+						System.out.println("sCurrentLine ::"+sCurrentLine.length());//0+4
+						
+						String anioPres=sCurrentLine.substring(posInicial, posInicial+lenghtAnioPres);
+						System.out.println("anioPres ::"+anioPres+"/"+posInicial);
+						posInicial=posInicial+lenghtAnioPres;
+						String mesPres=sCurrentLine.substring(posInicial, posInicial+lenghtMesPres);
+						System.out.println("mesPres ::"+mesPres+"/"+posInicial);
+						posInicial=posInicial+lenghtMesPres;
+						String anioEjec=sCurrentLine.substring(posInicial, posInicial+lenghtAnioEjec);
+						System.out.println("anioEjec ::"+anioEjec+"/"+posInicial);
+						posInicial=posInicial+lenghtAnioEjec;
+						String mesEjec=sCurrentLine.substring(posInicial, posInicial+lenghtMesEjec);
+						System.out.println("mesEjec ::"+mesEjec+"/"+posInicial);
+						posInicial=posInicial+lenghtMesEjec;
+						
+					String numValesImp=sCurrentLine.substring(posInicial,posInicial+ lenghtValesImp);
+						posInicial=posInicial+lenghtValesImp+lenghtCostoValesImp+lenghtTotalValesImp;
+						String numValesRepar=sCurrentLine.substring(posInicial, posInicial+lenghtValeRepartido);
+						posInicial=posInicial+lenghtValeRepartido+lenghtCostoValeRepartido+lenghtTotalValeRepartido;
+						String numValesEntrDE=sCurrentLine.substring(posInicial, posInicial+lenghtValeEntrDE);
+						posInicial=posInicial+lenghtValeEntrDE+lenghtCostoValeEntrDE+lenghtTotalValeEntrDE;
+						String numValesFisico=sCurrentLine.substring(posInicial, posInicial+lenghtValeFisico);
+						posInicial=posInicial+lenghtValeFisico+lenghtCostoValeFisico+lenghtTotalValeFisico;
+						String numValesDigital=sCurrentLine.substring(posInicial, posInicial+lenghtValeDigital);
+						posInicial=posInicial+lenghtValeDigital+lenghtCostoValeDigital+lenghtTotalValeDigital;
+						String numValeAtenciones=sCurrentLine.substring(posInicial, posInicial+lenghtAtenciones);
+						posInicial=posInicial+lenghtAtenciones+lenghtCostoAtenciones+lenghtTotalAtenciones;
+						String numValeGestion=sCurrentLine.substring(posInicial, posInicial+lenghtGestion);
+						posInicial=posInicial+lenghtGestion;
+						String numValeDesplazamiento=sCurrentLine.substring(posInicial, posInicial+lenghtDesplazamiento);
+						posInicial=posInicial+lenghtDesplazamiento;
+						String numValeActividad=sCurrentLine.substring(posInicial, posInicial+lenghtActividades);
+						posInicial=posInicial+lenghtActividades;
+						String totalreconocer=sCurrentLine.substring(posInicial, posInicial+lenghtReconocer);
+						
+						
+						System.out.println("codEm ::"+codEm);
+						System.out.println("anioPres ::"+anioPres);
+						System.out.println("mesPres ::"+mesPres);
+						
+						System.out.println("anioEjec ::"+anioEjec);
+						System.out.println("mesEjec ::"+mesEjec);
+						System.out.println("numValesImp ::"+numValesImp);
+						System.out.println("numValesRepar ::"+numValesRepar);
+						System.out.println("numValesEntrDE ::"+numValesEntrDE);
+						System.out.println("numValesFisico ::"+numValesFisico);
+						System.out.println("numValesDigital ::"+numValesDigital);
+						System.out.println("numValeAtenciones ::"+numValeAtenciones);
+						System.out.println("numValeGestion ::"+numValeGestion);
+						System.out.println("numValeDesplazamiento ::"+numValeDesplazamiento);
+						System.out.println("numValeActividad ::"+numValeActividad);
+						System.out.println("totalreconocer ::"+totalreconocer);
+					   
+					
+					
+					
 				}
 				
 			} 
@@ -610,6 +806,8 @@ public class Formato12BGartController {
 		return listaError;
 	
 	}
+	
+	
 	
 	@RequestMapping(params = "action=viewFormato")
 	public String viewFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
