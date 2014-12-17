@@ -34,6 +34,8 @@ var formato12C= {
 	flagCarga:null,
 	divInformacion:null,
 	
+	msgTransaccion:null,
+	
 	//implementacion
 	tablaImplementacion:null,
 	paginadoImplementacion:null,
@@ -101,9 +103,16 @@ var formato12C= {
 	//div
 	divOverlay:null,
 	//dialogs
+	dialogMessage:null,
+	dialogMessageContent:null,
+	
+	dialogError:null,
+	
+	dialogMessageDetalle:null,
 	dialogObservacion:null,
 	dialogMessageReport:null,
 	dialogConfirmEnvio:null,
+	dialogMessageDetalleContent:null,
 	dialogMessageReportContent:null,
 	dialogConfirmEnvioContent:null,
 	dialogConfirmDetalle:null,
@@ -149,6 +158,8 @@ var formato12C= {
 	descDistDestino:null,
 	
 	//detalleCRUD
+	msgTransaccionDetalle:null,
+	
 	codEmpresaDetalle:null,
 	anoPresentacionDetalle:null,
 	mesPresentacionDetalle:null,
@@ -217,6 +228,8 @@ var formato12C= {
 		this.flagCarga=$('#<portlet:namespace/>flagCarga');
 		this.divInformacion=$("#<portlet:namespace/>divInformacion");
 		
+		this.msgTransaccion=$("#msgTransaccion");
+		
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
 		
 		this.urlCargaPeriodo='<portlet:resourceURL id="cargaPeriodo" />';
@@ -269,6 +282,8 @@ var formato12C= {
 		//divoverlay
 		this.divOverlay=$("#<portlet:namespace/>divOverlay");
 		//dialogs
+		this.dialogError=$("#<portlet:namespace/>dialog-form-error");
+		
 		this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");
 		this.dialogMessageReport=$("#<portlet:namespace/>dialog-message-report");
 		this.dialogMessageReportContent=$("#<portlet:namespace/>dialog-message-report-content");
@@ -276,6 +291,9 @@ var formato12C= {
 		this.dialogConfirmEnvioContent=$("#<portlet:namespace/>dialog-confirm-envio-content");
 		this.dialogConfirmDetalle=$("#<portlet:namespace/>dialog-confirm-detalle");
 		this.dialogConfirmDetalleContent=$("#<portlet:namespace/>dialog-confirm-detalle-content");
+		
+		this.dialogMessage=$("#<portlet:namespace/>dialog-message");
+		this.dialogMessageContent=$("#<portlet:namespace/>dialog-message-content");
 		//reportes
 		this.urlReporte='<portlet:resourceURL id="reporte" />';
 		this.botonReportePdf=$("#<portlet:namespace/>reportePdf");
@@ -336,6 +354,15 @@ var formato12C= {
 				location.href=urlRegresarBusqueda;
 			});
 
+			//mostramos el mensaje de informacion
+			if( formato12C.msgTransaccion.val()=='OK' ){
+				var addhtml='Datos guardados satisfactoriamente';
+				formato12C.dialogMessageContent.html(addhtml);
+				formato12C.dialogMessage.dialog("open");
+			}else if( formato12C.msgTransaccion.val()=='ERROR' ){
+				formato12C.dialogError.dialog( "open" );
+			}
+			
 			
 		}if(operacion=='READ'){
 			
@@ -388,6 +415,14 @@ var formato12C= {
 			formato12C.botonValidacion.click(function() {formato12C.<portlet:namespace/>validacionFormato();});
 			formato12C.botonEnvioDefinitivo.click(function() {formato12C.confirmarEnvioDefinitivo();});
 
+			//mostramos el mensaje de informacion
+			if( formato12C.msgTransaccion.val()=='OK' ){
+				var addhtml='Datos guardados satisfactoriamente';
+				formato12C.dialogMessageContent.html(addhtml);
+				formato12C.dialogMessage.dialog("open");
+			}else if( formato12C.msgTransaccion.val()=='ERROR' ){
+				formato12C.dialogError.dialog( "open" );
+			}
 			
 		}
 		
@@ -397,6 +432,7 @@ var formato12C= {
 		this.formDetalle=$("#formato12CCBean");
 		
 		this.flagPeriodoDetalle=$("#flagPeriodoEjecucion");
+		this.msgTransaccionDetalle=$("#msgTransaccionDetalle");
 		
 		//origen
 		this.codDepaOrigen=$("select[name='codDepartamentoOrigen']");
@@ -464,6 +500,12 @@ var formato12C= {
 		this.mesEjecucionHiddenDetalle=$('#mesEjecucionHidden');
 		this.etapaEjecucionHiddenDetalle=$('#etapaEjecucionHidden');
 		
+		//dialogs
+		this.dialogMessageDetalle=$("#<portlet:namespace/>dialog-message-detalle");
+		this.dialogMessageDetalleContent=$("#<portlet:namespace/>dialog-message-detalle-content");
+		
+		formato12C.initDialogsCRUDDetalle();
+		
 		$('input.target[type=text]').on('change', function(){
 			formato12C.calculoTotal();
 		});
@@ -506,12 +548,24 @@ var formato12C= {
 			formato12C.mesEjecucionDetalle.val(formato12C.mesPresentacionDetalle.val());
 		
 			formato12C.soloNumerosEnteros();
-			formato12C.soloNumerosDecimales();
+			formato12C.soloNumerosDecimalesFormulario();
 			
 			formato12C.iniciamosValores();
 			
 			formato12C.mostrarPeriodoEjecucion();
 			formato12C.estiloEdicionDetalle();
+			
+			//alert(formato12C.msgTransaccion.val());
+			//mostramos el mensaje de informacion
+			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
+				var addhtml='Datos guardados satisfactoriamente';
+				formato12C.dialogMessageDetalleContent.html(addhtml);
+				formato12C.dialogMessageDetalle.dialog("open");
+			}else if( formato12C.msgTransaccionDetalle.val()=='ERROR' ){
+				var addhtml='Se produjo un error al guardar el detalle';
+				formato12C.dialogMessageDetalleContent.html(addhtml);
+				formato12C.dialogMessageDetalle.dialog("open");
+			}
 			
 		</c:if>
 		
@@ -621,12 +675,23 @@ var formato12C= {
 			//formato12C.listarDistritosEdit(formato12C.codProvinciaDestinoHidden.val(),formato12C.codDistritoDestinoHidden.val(),'1');
 			
 			formato12C.soloNumerosEnteros();
-			formato12C.soloNumerosDecimales();
+			formato12C.soloNumerosDecimalesFormulario();
 			
 			formato12C.formularioCompletarDecimales();
 			
 			formato12C.mostrarPeriodoEjecucion();
 			formato12C.estiloEdicionDetalle();
+			
+			//mostramos el mensaje de informacion
+			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
+				var addhtml='Datos guardados satisfactoriamente';
+				formato12C.dialogMessageDetalleContent.html(addhtml);
+				formato12C.dialogMessageDetalle.dialog("open");
+			}else if( formato12C.msgTransaccionDetalle.val()=='ERROR' ){
+				var addhtml='Se produjo un error al guardar el detalle';
+				formato12C.dialogMessageDetalleContent.html(addhtml);
+				formato12C.dialogMessageDetalle.dialog("open");
+			}
 			
 		</c:if>
 		
@@ -741,6 +806,7 @@ var formato12C= {
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READCREATEUPDATE");
+		  	      			urlView.setParameter("msg", "DONE");
 		  	      			urlView.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
 		  	      			urlView.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 		  	      			urlView.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
@@ -755,6 +821,7 @@ var formato12C= {
 		  	      			var urlEdit=Liferay.PortletURL.createRenderURL();
 					  	    urlEdit.setParameter("action", "detalle");
 					  	    urlEdit.setParameter("crud", "UPDATE");
+					  	  	urlEdit.setParameter("msg", "DONE");
 					  	  	urlEdit.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
 					  	  	urlEdit.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 					  		urlEdit.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
@@ -841,6 +908,7 @@ var formato12C= {
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READCREATEUPDATE");
+		  	      			urlView.setParameter("msg", "DONE");
 			  	      		urlView.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
 			  	      		urlView.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 		  	      			urlView.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
@@ -855,6 +923,7 @@ var formato12C= {
 		  	      			var urlEdit=Liferay.PortletURL.createRenderURL();
 					  	    urlEdit.setParameter("action", "detalle");
 					  	    urlEdit.setParameter("crud", "UPDATE");
+					  	  	urlEdit.setParameter("msg", "DONE");
 					  	  	urlEdit.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
 					  	 	urlEdit.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 					  		urlEdit.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
@@ -940,6 +1009,7 @@ var formato12C= {
 		  	      		
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READ");
+		  	      			urlView.setParameter("msg", "DONE");
 			  	      		urlView.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
 			  	      		urlView.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 		  	      			urlView.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
@@ -1020,6 +1090,7 @@ var formato12C= {
 		  	      		
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READ");
+		  	      			urlView.setParameter("msg", "DONE");
 			  	      		urlView.setParameter("codigoEmpresaDetalle", ret.codEmpresa);
 			  	      		urlView.setParameter("periodoEnvioDetalle", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 		  	      			urlView.setParameter("anoPresentacionDetalle", ret.anoPresentacion);
@@ -1734,6 +1805,36 @@ var formato12C= {
 				}
 			}
 		});
+		formato12C.dialogError.dialog({
+			modal: true,
+			width: 750,
+			autoOpen: false,
+			buttons: {
+				Cerrar: function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+		formato12C.dialogMessage.dialog({
+			modal: true,
+			autoOpen: false,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+	},
+	initDialogsCRUDDetalle : function(){	
+		formato12C.dialogMessageDetalle.dialog({
+			modal: true,
+			autoOpen: false,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
 	},
 	//otros
 	confirmarEliminarCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion){
@@ -1926,7 +2027,7 @@ var formato12C= {
 	soloNumerosEnteros : function(){
 		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nrodias',3,0)");
 	},
-	soloNumerosDecimales : function(){
+	soloNumerosDecimalesFormulario : function(){
 		formato12C.montoAlimentacionDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlimentacion',7,2)");
 		formato12C.montoAlojamientoDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlojamiento',7,2)");
 		formato12C.montoMovilidadDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMovilidad',7,2)");

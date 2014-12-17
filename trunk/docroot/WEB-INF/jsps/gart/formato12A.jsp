@@ -105,7 +105,7 @@
 													<output>Desde año:</output>
 												</td>
 												<td>
-													<input type="text" name="i_anio_d" id="i_anio_d" style="width:50px;text-align:right;" maxlength="4"  >
+													<input type="text" name="i_anio_d" id="i_anio_d" style="width:50px;text-align:right;" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'i_anio_d',4,0)"   >
 												</td>
 												<td>
 													<output>Mes:</output>
@@ -122,7 +122,7 @@
 													<output>Hasta año:</output>
 												</td>
 												<td>
-													<input type="text" name="i_anio_h" id="i_anio_h" style="width:50px;text-align:right;" maxlength="4" >
+													<input type="text" name="i_anio_h" id="i_anio_h" style="width:50px;text-align:right;" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'i_anio_h',4,0)"  >
 												</td>
 												<td>
 													<output>Mes:</output>
@@ -296,7 +296,7 @@
 									   								<table>
 									   									<tr>
 									   										<td colspan="5">
-									   											<output class="net-titulo">Mes, Ano y Etapa de Presentación:</output>
+									   											<output class="net-titulo">Mes, Año y Etapa de Presentación:</output>
 									   										</td>
 									   									</tr>
 									   									<tr>
@@ -320,13 +320,13 @@
 										   								<table>
 										   									<tr>
 										   										<td colspan="5">
-										   											<output class="net-titulo">Periodo a ejecución</output>
+										   											<output class="net-titulo">Periodo de ejecución</output>
 										   										</td>
 										   									</tr>
 										   									<tr>
 										   										<td width="40px">Año:</td>
 										   										<td>
-										   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" >
+										   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'i_anioejecuc',4,0)" >
 										   										</td>
 										   										<td width="10px" ></td>
 										   										<td width="40px">Mes:</td>
@@ -366,7 +366,7 @@
 									   							<table style="width: 100%;" border="0" >
 									   								<tr>
 									   									<td colspan="3" align="center" >
-									   										<output class="net-titulo">Grupo de Beneficiarios según  Sector de distribución típico</output>
+									   										<output class="net-titulo">Grupo de Beneficiarios según Zona</output>
 									   									</td>
 									   								</tr>
 									   								<tr>
@@ -554,7 +554,7 @@
 									   					</tr>
 									   					<tr>
 									   						<td colspan="4">
-									   						5. Importe a reconocer a la EDE
+									   						5. Importe a reconocer a la Distribuidora Eléctrica
 									   						</td>
 									   					</tr>
 									   					<tr>

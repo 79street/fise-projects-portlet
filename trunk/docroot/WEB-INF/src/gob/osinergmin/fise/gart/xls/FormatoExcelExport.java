@@ -2608,9 +2608,9 @@ public class FormatoExcelExport {
 				construirExcelFormato12CDMensual(xlsTableConfig.getLista());
 			}else if( FiseConstants.TIPO_FORMATO_12D.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelFormato12D(xlsTableConfig.getLista());
-			}else if( FiseConstants.TIPO_FORMATO_12CD_IMPLEMENTACION.equals(xlsTableConfig.getTipoFormato()) ){
+			}else if( FiseConstants.TIPO_FORMATO_12DD_IMPLEMENTACION.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelFormato12DDImplementacion(xlsTableConfig.getLista());
-			}else if( FiseConstants.TIPO_FORMATO_12CD_MENSUAL.equals(xlsTableConfig.getTipoFormato()) ){
+			}else if( FiseConstants.TIPO_FORMATO_12DD_MENSUAL.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelFormato12DDMensual(xlsTableConfig.getLista());
 			}else if( FiseConstants.TIPO_FORMATO_13A.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelFormato13A(xlsTableConfig.getLista());

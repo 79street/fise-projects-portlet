@@ -25,6 +25,8 @@ $(document).ready(function () {
 
 <form:form  method="POST" modelAttribute="formato12CCBean" action="${accionURL}" enctype="multipart/form-data">
 
+	<input type="hidden" id="msgTransaccion" name="msgTransaccion" value="${msgTrans}" />
+
 	<form:hidden path="codigoEmpresaHidden" />
 	<form:hidden path="anioPresentacion" />
 	<form:hidden path="mesPresentacion" />
@@ -416,6 +418,24 @@ $(document).ready(function () {
 		style="display: none; width: 100%; height: 100%; z-index: 1001;">
 
 	</div>
+	
+	<div id="<portlet:namespace/>dialog-form-error" class="net-frame-border" style="display:none;background:#fff;" title=" Errores de archivo de carga ">				
+		<fieldset class="net-frame-border">							
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla">
+				<tr class="titulo_tabla">
+            		<td width="40">Nro.</td>
+            		<td width="378" height="37">Descripción</td>
+            	</tr>
+               		<c:forEach items="${listaError}" var="error" varStatus="status">															
+				<tr class="detalleTablaContenido">
+                   	<td align="center">${status.count}</td> 
+                   	<td align="left">${error.descripcion}</td>     
+                	 </tr>				
+				</c:forEach>            
+              	</table>
+		</fieldset>
+		<br>
+	</div>
 
 	
 	<div id="<portlet:namespace/>dialog-form-observacion"
@@ -457,6 +477,14 @@ $(document).ready(function () {
 				id="<portlet:namespace/>dialog-message-report-content">Datos
 				grabados exit&oacute;samente.</label>
 		</p>
+	</div>
+	
+	<div id="<portlet:namespace/>dialog-message" title="Osinergmin">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="<portlet:namespace/>dialog-message-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
 	</div>
 
 </form:form>
