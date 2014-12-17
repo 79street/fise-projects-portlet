@@ -55,6 +55,7 @@ $(document).ready(function () {
 	 var mesEjeSes = $("#mesEjecSes").val();
 	 var etapaSes = $("#etapaSes").val();
 	 //
+	 var flagOpera = 'ABIERTO';
 	 var flag = $("#flag").val();
 	 //alert('flagdecarga:'+flag);
 	 if( $('#flag').val()=='N' ){//solo ocurre cuando hay un error en la carga de formularios, sino se muestra el proceso normal
@@ -70,11 +71,12 @@ $(document).ready(function () {
 			 $("#s_mes_ejecuc").val(mesPresSes);
 		}
 		$('#<portlet:namespace/>validacionFormato').css('display','none');
+		$('#<portlet:namespace/>envioDefinitivo').css('display','none');
 		cargarPeriodoYCostos('',anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
 	 }else{
 		//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
 		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes != '' && mesEjeSes != '' && etapaSes != ''){
-		 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioEjeSes, mesEjeSes, etapaSes);
+		 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioEjeSes, mesEjeSes, etapaSes,flagOpera);
 		 }
 	 }
 	 
@@ -121,6 +123,8 @@ $(document).ready(function () {
 function inicializarFormulario(){
 	$('#s_empresa').val('');
 	
+	$("#<portlet:namespace/>divInformacion").hide();
+	
 	//validar lima edelnor y luz del sur
 	if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
 		habilitarLima();										
@@ -137,23 +141,23 @@ function inicializarFormulario(){
 	}
 	//
 	$('#i_nroEmpad_r').val('0').css('text-align','right');
-	$('#i_costoUnitEmpad_r').val('0').css('text-align','right');
+	$('#i_costoUnitEmpad_r').val('0.00').css('text-align','right');
 	$('#i_costoTotalEmpad_r').val('0.00').css('text-align','right');
 	$('#i_nroEmpad_p').val('0').css('text-align','right');
-	$('#i_costoUnitEmpad_p').val('0').css('text-align','right');
+	$('#i_costoUnitEmpad_p').val('0.00').css('text-align','right');
 	$('#i_costoTotalEmpad_p').val('0.00').css('text-align','right');
 	$('#i_nroEmpad_l').val('0').css('text-align','right');
-	$('#i_costoUnitEmpad_l').val('0').css('text-align','right');
+	$('#i_costoUnitEmpad_l').val('0.00').css('text-align','right');
 	$('#i_costoTotalEmpad_l').val('0.00').css('text-align','right');
 	//
 	$('#i_nroAgentGlp_r').val('0').css('text-align','right');
-	$('#i_costoUnitAgent_r').val('0').css('text-align','right');
+	$('#i_costoUnitAgent_r').val('0.00').css('text-align','right');
 	$('#i_costoTotalAgent_r').val('0.00').css('text-align','right');
 	$('#i_nroAgentGlp_p').val('0').css('text-align','right');
-	$('#i_costoUnitAgent_p').val('0').css('text-align','right');
+	$('#i_costoUnitAgent_p').val('0.00').css('text-align','right');
 	$('#i_costoTotalAgent_p').val('0.00').css('text-align','right');
 	$('#i_nroAgentGlp_l').val('0').css('text-align','right');
-	$('#i_costoUnitAgent_l').val('0').css('text-align','right');
+	$('#i_costoUnitAgent_l').val('0.00').css('text-align','right');
 	$('#i_costoTotalAgent_l').val('0.00').css('text-align','right');
 	//
 	$('#i_despPersonal_r').val('0.00').css('text-align','right');
@@ -176,6 +180,7 @@ function inicializarFormulario(){
 	//
 	deshabilitarCampos();
 	soloNumerosEnteros();
+	soloNumerosDecimalesFormulario();
 }
 function soloNumerosEnteros(){
 	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',7,0)");
@@ -184,6 +189,15 @@ function soloNumerosEnteros(){
 	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_r',7,0)");
 	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',7,0)");
 	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',7,0)");
+}
+function soloNumerosDecimalesFormulario(){
+	//
+	$('#i_despPersonal_r').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_despPersonal_r',7,2)");
+	$('#i_activExtraord_r').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_activExtraord_r',7,2)");
+	$('#i_despPersonal_p').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_despPersonal_p',7,2)");
+	$('#i_activExtraord_p').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_activExtraord_p',7,2)");
+	$('#i_despPersonal_l').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_despPersonal_l',7,2)");
+	$('#i_activExtraord_l').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_activExtraord_l',7,2)");
 }
 function realizarCalculoCampos(){
 	$('#i_nroEmpad_r').attr("onchange","calculoTotal()");
@@ -680,6 +694,16 @@ function validarFormulario() {
 		    return false; 
 	  }*/
 	  //
+	  
+	  //validar que todos sean diferentes de cero
+	   if($('#i_nroEmpad_r').val() == '0' && $('#i_nroAgentGlp_r').val() == '0' && $('#i_nroEmpad_p').val() == '0' && 
+			   $('#i_nroAgentGlp_p').val() == '0' && $('#i_nroEmpad_l').val() == '0' && $('#i_nroAgentGlp_l').val() == '0'  ) {		  
+		    alert('Debe ingresar al menos un valor en el nro. de empadronados o nro. de agentes autorizados para el grupo de beneficiario');
+		    //document.getElementById('i_nroEmpad_r').focus();
+		    return false; 
+	  }
+	  
+	  
 	  return true; 
 	}
 function validarArchivoCarga() {		
@@ -954,6 +978,7 @@ function <portlet:namespace/>crearFormato(){
 		 $("#s_mes_ejecuc").val(parseInt($("#mesDesdeSes").val()));
 	}
 	$('#<portlet:namespace/>validacionFormato').css('display','none');
+	$('#<portlet:namespace/>envioDefinitivo').css('display','none');
 	cargarPeriodoYCostos('','');
 	
 	estiloEdicionRural();
@@ -992,6 +1017,8 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 					$("#etapaEdit").val(etapa);
 					$("#div_formato").show();
 					$("#div_home").hide();
+					$("#<portlet:namespace/>divInformacion").show();
+					
 					dwr.util.removeAllOptions("s_periodoenvio_present");
 					dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
 					FillEditformato(data.formato);
@@ -1031,6 +1058,8 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 						//se deja el formulario activo
 						$("#div_formato").show();
 						$("#div_home").hide();
+						$("#<portlet:namespace/>divInformacion").show();
+						
 						dwr.util.removeAllOptions("s_periodoenvio_present");
 						dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
 						FillEditformato(data.formato);
@@ -1089,28 +1118,28 @@ function FillEditformato(row){
 	}*/
 	$("#etapaEdit").val(row.etapa);
 	$('#i_nroEmpad_r').val(row.nroEmpadR).css('text-align','right');
-	$('#i_costoUnitEmpad_r').val(row.costoUnitEmpadR).css('text-align','right');
+	$('#i_costoUnitEmpad_r').val(redondeo(row.costoUnitEmpadR,2)).css('text-align','right');
 	$('#i_costoTotalEmpad_r').css('text-align','right');
 	$('#i_nroAgentGlp_r').val(row.nroAgentR).css('text-align','right');
-	$('#i_costoUnitAgent_r').val(row.costoUnitAgentR).css('text-align','right');
+	$('#i_costoUnitAgent_r').val(redondeo(row.costoUnitAgentR,2)).css('text-align','right');
 	$('#i_costoTotalAgent_r').css('text-align','right');
 	$('#i_despPersonal_r').val(row.desplPersonalR).css('text-align','right');
 	$('#i_activExtraord_r').val(row.activExtraordR).css('text-align','right');
 	
 	$('#i_nroEmpad_p').val(row.nroEmpadP).css('text-align','right');
-	$('#i_costoUnitEmpad_p').val(row.costoUnitEmpadP).css('text-align','right');
+	$('#i_costoUnitEmpad_p').val(redondeo(row.costoUnitEmpadP,2)).css('text-align','right');
 	$('#i_costoTotalEmpad_p').css('text-align','right');
 	$('#i_nroAgentGlp_p').val(row.nroAgentP).css('text-align','right');
-	$('#i_costoUnitAgent_p').val(row.costoUnitAgentP).css('text-align','right');
+	$('#i_costoUnitAgent_p').val(redondeo(row.costoUnitAgentP,2)).css('text-align','right');
 	$('#i_costoTotalAgent_p').css('text-align','right');
 	$('#i_despPersonal_p').val(row.desplPersonalP).css('text-align','right');
 	$('#i_activExtraord_p').val(row.activExtraordP).css('text-align','right');
 	
 	$('#i_nroEmpad_l').val(row.nroEmpadL).css('text-align','right');
-	$('#i_costoUnitEmpad_l').val(row.costoUnitEmpadL).css('text-align','right');
+	$('#i_costoUnitEmpad_l').valredondeo(row.costoUnitEmpadL,2)().css('text-align','right');
 	$('#i_costoTotalEmpad_l').css('text-align','right');
 	$('#i_nroAgentGlp_l').val(row.nroAgentL).css('text-align','right');
-	$('#i_costoUnitAgent_l').val(row.costoUnitAgentL).css('text-align','right');
+	$('#i_costoUnitAgent_l').val(redondeo(row.costoUnitAgentL,2)).css('text-align','right');
 	$('#i_costoTotalAgent_l').css('text-align','right');
 	$('#i_despPersonal_l').val(row.desplPersonalL).css('text-align','right');
 	$('#i_activExtraord_l').val(row.activExtraordL).css('text-align','right');
@@ -1141,9 +1170,10 @@ function FillEditformato(row){
 	totalRedAgentesLima();
 	//
 	totalImportes();
-	$('#i_totalGeneral').val(row.totalGeneral);
+	$('#i_totalGeneral').val(redondeo(row.totalGeneral,2));
 	
 	soloNumerosEnteros();
+	soloNumerosDecimalesFormulario();
 	formularioCompletarDecimales();
 	$('#flagCarga').val('1');
 	//mostrarPeriodoEjecucion();
@@ -1251,6 +1281,7 @@ function mostrarFormularioModificado(){
 	 var mesPresM = $("#s_periodoenvio_present").val().substring(4,6);
 	 var anioEjeM;
 	 var mesEjeM;
+	 var flagOpera = 'ABIERTO';
 	 if( $('#flagPeriodoEjecucion').val()=='S' ){
 		 anioEjeM = $("#i_anioejecuc").val();
 		 mesEjeM = $("#s_mes_ejecuc").val();
@@ -1265,10 +1296,11 @@ function mostrarFormularioModificado(){
 	 }else{
 		//alert(codEmpM+','+anioPresM+','+mesPresM+','+anioEjeM+','+mesEjeM+','+etapaM);
 		 if(codEmpM != '' && anioPresM != '' && mesPresM != '' && anioEjeM != '' && mesEjeM != '' && etapaM != ''){
-		 	 editarFormato(codEmpM, anioPresM, mesPresM, anioEjeM, mesEjeM, etapaM);
+		 	 editarFormato(codEmpM, anioPresM, mesPresM, anioEjeM, mesEjeM, etapaM,flagOpera);
 		 }
 	 }
 	 $('#<portlet:namespace/>validacionFormato').css('display','');
+	 $('#<portlet:namespace/>envioDefinitivo').css('display','');
 }
 function cargarPeriodoYCostos(valCodEmpresa, valPeriodo){
 	<portlet:namespace/>loadPeriodo(valPeriodo);
@@ -1326,13 +1358,21 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				<portlet:namespace />s_empresa: $('#s_empresa').val(),
 				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val()
 				},
-			success: function(data) {				
-				dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
+			success: function(data) {		
+				//redondeamos a 2
+				dwr.util.setValue("i_costoUnitEmpad_r", redondeo(data.costoEmpR,2));
+				dwr.util.setValue("i_costoUnitAgent_r", redondeo(data.costoAgentR,2));
+				dwr.util.setValue("i_costoUnitEmpad_p", redondeo(data.costoEmpP,2));
+				dwr.util.setValue("i_costoUnitAgent_p", redondeo(data.costoAgentP,2));
+				dwr.util.setValue("i_costoUnitEmpad_l", redondeo(data.costoEmpL,2));
+				dwr.util.setValue("i_costoUnitAgent_l", redondeo(data.costoAgentL,2));
+				
+				/*dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
 				dwr.util.setValue("i_costoUnitAgent_r", data.costoAgentR);
 				dwr.util.setValue("i_costoUnitEmpad_p", data.costoEmpP);
 				dwr.util.setValue("i_costoUnitAgent_p", data.costoAgentP);
 				dwr.util.setValue("i_costoUnitEmpad_l", data.costoEmpL);
-				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);
+				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);*/
 				//
 				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
 				recargarPeriodoEjecucion();

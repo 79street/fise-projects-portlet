@@ -20,6 +20,8 @@ $(document).ready(function () {
 
 <form:form method="POST" modelAttribute="formato12CCBean">
 
+	<input type="hidden" id="msgTransaccionDetalle" name="msgTransaccionDetalle" value="${msg}" />
+
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
@@ -378,13 +380,12 @@ $(document).ready(function () {
 		</div>
 	</div>
 	
-	<script>
-		/*alert('seteando');
-		$('#codDepartamentoOrigen').val($('#codDepartamentoOrigenHidden').val());
-		$('#codProvinciaOrigen').val($('#codProvinciaOrigenHidden').val());
-		$('#codDistritoOrigen').val($('#codDistritoOrigenHidden').val());
-		alert('dejando de setar');*/
-	
-	</script>
+	<div id="<portlet:namespace/>dialog-message-detalle" title="Osinergmin">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="<portlet:namespace/>dialog-message-detalle-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
 	
 </form:form>

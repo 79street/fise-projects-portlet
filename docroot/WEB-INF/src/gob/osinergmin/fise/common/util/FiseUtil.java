@@ -255,8 +255,7 @@ public class FiseUtil {
 				mimeTypes = mimeTypesXls;
 			}else if( FiseConstants.TIPOARCHIVO_TXT.equals(tipoArchivo) ){
 				System.out.println("tipo txt");
-				nameFileInput = "archivoExcel";
-				//nameFileInput = "archivoTxt";
+				nameFileInput = "archivoTxt";
 				mimeTypes = mimeTypesTxt;
 			}else{
 				throw new Exception("Archivo de formato diferente");
@@ -717,6 +716,16 @@ public class FiseUtil {
 		return mensaje;
 	}
 	
+	public String agregarErrorBeanConMensajeEnFila(String mensaje,Map<String,String> mapaError, 
+			List<MensajeErrorBean> listaError, int idError, String codigoError,int nroFila){
+		mensaje = mensaje + mapaError.get(codigoError)+FiseConstants.SALTO_LINEA;
+		MensajeErrorBean error = new MensajeErrorBean();
+		error.setId(idError);
+		error.setDescripcion(mapaError.get(codigoError)+" en fila "+nroFila);
+		listaError.add(error);
+		return mensaje;
+	}
+	
 	public void agregarErrorBean(Map<String,String> mapaError, List<MensajeErrorBean> listaError,
 			int idError, String codigoError){
 		MensajeErrorBean error = new MensajeErrorBean();
@@ -811,5 +820,14 @@ public class FiseUtil {
 		return mapaTipoGasto;
 	}
 	
+	public Map<String, String> getMapaUbigeo(){
+		List<AdmUbigeo> listaUbigeo = admUbigeoService.listarAdmUbigeo();
+		Map<String, String> mapaUbigeo = new HashMap<String, String>();
+		for (AdmUbigeo ubigeo : listaUbigeo) {
+			logger.info("codUbigeo: "+ubigeo.getCodUbigeo()+" descripcion: "+ubigeo.getNomUbigeo());
+			mapaUbigeo.put(ubigeo.getCodUbigeo(), ubigeo.getNomUbigeo());
+		}
+		return mapaUbigeo;
+	}
 
 }
