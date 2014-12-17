@@ -1343,9 +1343,10 @@ public class Formato12BGartController {
 		    	}
 	        	bean = formatoService.estructurarFormato12BBeanByFiseFormato12BC(formato);
 	        	bean.setDescEmpresa(formato.getAdmEmpresa().getDscCortaEmpresa());
-	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+	        	bean.setDescMesPresentacion(FiseUtil.descripcionMes(formato.getId().getMesPresentacion()));
+	        	bean.setDescMesEjecucion(FiseUtil.descripcionMes(formato.getId().getMesEjecucionGasto()));
 	        	mapa = formatoService.mapearParametrosFormato12B(bean);
-	        	
+	        		
 	        	CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12B);
 	        	String descripcionFormato = "";
 	        	if( tabla!=null ){
@@ -1374,7 +1375,7 @@ public class Formato12BGartController {
 					mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 					mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 					mapa.put(FiseConstants.PARAM_ANO_EJEC_F12B_R, (long)formato.getId().getAnoEjecucionGasto());
-					mapa.put(FiseConstants.PARAM_DESC_MES_EJEC_F12B, fiseUtil.getMapaMeses().get(formato.getId().getMesEjecucionGasto()));
+					mapa.put(FiseConstants.PARAM_DESC_MES_EJEC_F12B,FiseUtil.descripcionMes(formato.getId().getMesEjecucionGasto()));
 					mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
 					mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
 					String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
@@ -1541,7 +1542,7 @@ public class Formato12BGartController {
 				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 				mapa.put(FiseConstants.PARAM_ANO_EJEC_F12B_R, (long)formato.getId().getAnoEjecucionGasto());
-				mapa.put(FiseConstants.PARAM_DESC_MES_EJEC_F12B, fiseUtil.getMapaMeses().get(formato.getId().getMesEjecucionGasto()));
+				mapa.put(FiseConstants.PARAM_DESC_MES_EJEC_F12B, FiseUtil.descripcionMes(formato.getId().getMesEjecucionGasto()));
 				
 				//mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (long)formato.getId().getAnoEjecucionGasto());
 			//	mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA,(long) formato.getId().getMesEjecucionGasto());
@@ -1571,7 +1572,7 @@ public class Formato12BGartController {
 				}
 				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, formato.getAdmEmpresa().getDscCortaEmpresa());
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, (long)formato.getId().getAnoPresentacion());
-				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, FiseUtil.descripcionMes(formato.getId().getMesPresentacion()));
 				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
 				
 				session.setAttribute("mapa", mapa);
