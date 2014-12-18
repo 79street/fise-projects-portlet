@@ -205,12 +205,15 @@ public class NotificacionController {
 			response.setContentType("application/json");
 			
 			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-			
+			long idGrupo=0;
 			String codEmpresa = n.getCodEmpresaBusq();				
 			String optionFormato = n.getOptionFormato();
 			String idgrupoInf = n.getGrupoInfBusq();
 			String etapa = n.getEtapaBusq();
-		    
+			
+			if(FormatoUtil.isNotBlank(n.getGrupoInfBusq())){ 
+		    	idGrupo = new Long(idgrupoInf);
+		    }
 			String data ="";			
 			logger.info("codigo empresa "+ codEmpresa);  			
   			logger.info("id Grupo inf "+ idgrupoInf);  	 			
@@ -219,7 +222,7 @@ public class NotificacionController {
   			
   			
   			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpresa, 
-  					optionFormato, etapa,new Long(idgrupoInf), "");
+  					optionFormato, etapa,idGrupo, "");
   			
   			logger.info("tamaño de la lista notificacion   :"+lista.size());
   			
@@ -294,12 +297,14 @@ public class NotificacionController {
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 			
 			JSONObject jsonObj = new JSONObject();
-			
+			long idGrupo=0;
 			String codEmpresa = n.getCodEmpresaBusq();				
 			String optionFormato = n.getOptionFormato();
 			String idgrupoInf = n.getGrupoInfBusq();
 			String etapa = n.getEtapaBusq();    
-			
+			if(FormatoUtil.isNotBlank(n.getGrupoInfBusq())){ 
+		    	idGrupo = new Long(idgrupoInf);
+		    }
 			boolean valor = true;
 			logger.info("codigo empresa "+ codEmpresa);  			
   			logger.info("id Grupo inf "+ idgrupoInf);  	 			
@@ -308,7 +313,7 @@ public class NotificacionController {
   			
   			
   			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpresa, 
-  					optionFormato, etapa, new Long(idgrupoInf),FiseConstants.PROCESAR_VALIDACION);
+  					optionFormato, etapa, idGrupo,FiseConstants.PROCESAR_VALIDACION);
   			
   			logger.info("tamaño de la lista notificacion al procesar   :"+lista.size());
   			for(NotificacionBean not:lista){
@@ -1448,11 +1453,12 @@ public class NotificacionController {
   	  				}//fin del for de la lista 
   	  			    if(listaArchivo!=null && listaArchivo.size()>0 ){		    	  
   		    	      logger.info("Entrando a enviar email envio notificacion a:  "+
-  	  			           themeDisplay.getUser().getEmailAddress());   		    	       
+  	  			           themeDisplay.getUser().getEmailAddress());  
+  		    	       String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresaLista, ' ', 4);
   		    	       respuestaEmail=fiseUtil.enviarMailsAdjuntoValidacion(
   		    	    		  request, 
   		    	    		  listaArchivo, 
-  		    	    		  mapaEmpresa.get(codEmpresaLista), 
+  		    	    		  mapaEmpresa.get(codEmpreCompleta), 
   		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--");
   		    	       logger.info("El envio de email fue correctamente al realizar notificacion."); 		    	       
   		    	       valor = true;

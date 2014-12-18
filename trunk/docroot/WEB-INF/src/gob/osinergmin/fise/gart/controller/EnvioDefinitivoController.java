@@ -229,11 +229,14 @@ public class EnvioDefinitivoController {
 			
 			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 			
+			long idGrupo=0;
 			String codEmpresa = n.getCodEmpresaBusq();				
 			String optionFormato = n.getOptionFormato();
 			String idgrupoInf = n.getGrupoInfBusq();
 			String etapa = n.getEtapaBusq();
-		    
+		    if(FormatoUtil.isNotBlank(n.getGrupoInfBusq())){ 
+		    	idGrupo = new Long(idgrupoInf);
+		    }
 			String data ="";			
 			logger.info("codigo empresa "+ codEmpresa);  			
   			logger.info("id Grupo inf "+ idgrupoInf);  	 			
@@ -242,7 +245,7 @@ public class EnvioDefinitivoController {
   			
   			
   			List<EnvioDefinitivoBean> lista =commonService.buscarEnvioDefinitivo(codEmpresa, 
-  					optionFormato, etapa, new Long(idgrupoInf));		
+  					optionFormato, etapa,idGrupo );		
   			
   			logger.info("tamaño de la lista envio Defin..   :"+lista.size());
   			
@@ -2093,10 +2096,11 @@ public class EnvioDefinitivoController {
   	  	  					logger.info("Valor del acta envio:  "+actaEnvio ); 
   	  	  					if(listaArchivo!=null && listaArchivo.size()>0 && actaEnvio){		    	  
   	  	  						logger.info("Entrando a enviar email envio general."); 
+  	  	  					    String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4);
   	  	  						valorEmail = fiseUtil.enviarMailsAdjuntoEnvioGeneral(
   	  	  								request,
   	  	  								listaArchivo, 
-  	  	  								mapaEmpresa.get(codEmpresa),		    			  
+  	  	  								mapaEmpresa.get(codEmpreCompleta),		    			  
   	  	  								n.getDescGrupoInf());
   	  	  						logger.info("El envio de email fue correctamente envio general.");	    	  
   	  	  					}
