@@ -261,7 +261,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Estado:</label>
 											   </td>
 											   <td>
-												<form:select path="estado" cssClass="select" cssStyle="width: 80px;">
+												<form:select path="estado" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="V">Vigente</form:option>
 													<form:option value="A">Anulado</form:option>													
 												</form:select>
@@ -289,7 +289,7 @@ $(document).ready(function () {
 											  <td><label style="font-size: 12px; font-weight: bold">Fecha Ampliada: (dd/mm/aaaa)</label>
 											  </td>
 											  <td>											  										 
-											   <form:input path="fechaAmpl" />								    												
+											   <form:input path="fechaAmpl" cssStyle="width: 104px;"/>								    												
 											  </td>
 											  								
 											</tr>

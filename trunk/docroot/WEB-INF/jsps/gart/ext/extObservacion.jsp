@@ -179,13 +179,13 @@ var fiseObservacion= {
 		      }
 		  	});
 			fiseObservacion.tablaResultados.jqGrid('navGrid',fiseObservacion.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});	
-			<%-- fiseObservacion.tablaResultados.jqGrid('navButtonAdd',fiseObservacion.paginadoResultados,{
+			fiseObservacion.tablaResultados.jqGrid('navButtonAdd',fiseObservacion.paginadoResultados,{
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
 			      location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
 			       } 
-			});  --%>
+			});  
 		},
 		//funcion para buscar
 		buscarfiseObservacion : function () {		

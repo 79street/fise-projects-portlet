@@ -12,6 +12,7 @@ import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato14AC;
 import gob.osinergmin.fise.domain.FiseFormato14BC;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
+import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato12BGartCommand;
 import gob.osinergmin.fise.util.FechaUtil;
@@ -1611,7 +1612,8 @@ public class FormatoExcelExport {
 				ax15.setCellValue(new HSSFRichTextString(periodo.getFlagHabilitaCostosDIF14c()));
 				ax15.setCellStyle(dateCellStyle);
 			}
-		}
+		}		
+		
 
 		/**
 		 * longitud automatica de columnas
@@ -1635,6 +1637,100 @@ public class FormatoExcelExport {
 		return _xlsSheet;
 
 	}
+	
+	public HSSFSheet construirExcelMantenimientoObservacion(List<?> listaObs) {
+
+		HSSFFont fuenteH = _wb.createFont();
+		fuenteH.setFontHeightInPoints((short) 10);
+		fuenteH.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteH.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+
+		// Creamos el objto HHSSFeclStyle que aplicara para el estilo a la celda
+		HSSFCellStyle headerCellStyle = _wb.createCellStyle();
+		headerCellStyle.setWrapText(false);
+		headerCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		headerCellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		headerCellStyle.setFont(fuenteH);
+
+		// Definimos los bordes de las celdas
+		headerCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setBottomBorderColor((short) 8);
+		headerCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setLeftBorderColor((short) 8);
+		headerCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setRightBorderColor((short) 8);
+		headerCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setTopBorderColor((short) 8);
+
+		// Establecemos el tipo de sombreado de nuestra celda
+		headerCellStyle.setFillForegroundColor(new HSSFColor.GREY_25_PERCENT().getIndex());
+		headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+		// Para el contenido general
+		HSSFFont fuenteC = _wb.createFont();
+		fuenteC.setFontHeightInPoints((short) 9);
+		fuenteC.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteC.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+
+		// Luego creamos el objeto que se encargara de aplicar el estilo a la
+		// celda
+		HSSFCellStyle dataCellStyle = _wb.createCellStyle();
+		dataCellStyle.setFont(fuenteC);
+
+		// Tambien, podemos establecer bordes...
+		dataCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setBottomBorderColor((short) 8);
+		dataCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setLeftBorderColor((short) 8);
+		dataCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setRightBorderColor((short) 8);
+		dataCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setTopBorderColor((short) 8);
+
+		HSSFCellStyle dateCellStyle = _wb.createCellStyle();
+		dateCellStyle.cloneStyleFrom(dataCellStyle);
+		dateCellStyle.setDataFormat((short) 15);
+
+		//HSSFRow row = _xlsSheet.createRow(iRow);
+
+		HSSFRow segundaFila = _xlsSheet.createRow(0);
+		segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+
+		HSSFCell a1 = segundaFila.createCell(1);
+		a1.setCellValue(new HSSFRichTextString("IdObservacion"));
+		a1.setCellStyle(headerCellStyle);
+		
+		HSSFCell a2 = segundaFila.createCell(2);
+		a2.setCellValue(new HSSFRichTextString("Descripcion"));
+		a2.setCellStyle(headerCellStyle);
+
+		if( listaObs!=null && listaObs.size()>0 ){
+			for( int i=0;i<listaObs.size();i++ ){
+				
+				FiseObservacion obs = (FiseObservacion) listaObs.get(i);
+				System.out.println("Entrando a llenar filas y celdas en el exel observacion"); 
+				HSSFRow fila = _xlsSheet.createRow(i+1);
+				
+				HSSFCell ax1 = fila.createCell(1);
+				ax1.setCellValue(new HSSFRichTextString(""+obs.getIdObservacion()));
+				ax1.setCellStyle(dateCellStyle);
+				HSSFCell ax2 = fila.createCell(2);
+				ax2.setCellValue(new HSSFRichTextString(""+obs.getDescripcion()));
+				ax2.setCellStyle(dateCellStyle);			
+			}
+		}
+		/**
+		 * longitud automatica de columnas
+		 */
+		_xlsSheet.autoSizeColumn((short) 1);
+		_xlsSheet.autoSizeColumn((short) 2);	
+		
+		return _xlsSheet;
+	}
+	
+	
+	
+	
 	
 	/**fin de cambios euclides*/
 	//OBSERVACIONES
@@ -2624,6 +2720,10 @@ public class FormatoExcelExport {
 				construirExcelFormato14C(xlsTableConfig.getLista());				
 			}else if( FiseConstants.TIPO_PERIODO_ENVIO.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelPeriodoEnvio(xlsTableConfig.getLista());				
+			}else if( FiseConstants.OBSERVACIONES_EXPORT_EXEL.equals(xlsTableConfig.getTipoFormato()) ){
+				construirExcelMantenimientoObservacion(xlsTableConfig.getLista());				
+			}else if( FiseConstants.CARGO_FIJO_EXPORT_EXEL.equals(xlsTableConfig.getTipoFormato()) ){
+				//construirExcelPeriodoEnvio(xlsTableConfig.getLista());				
 			}
 			//poner los otros formato
 			//ponemos la lista de observaciones

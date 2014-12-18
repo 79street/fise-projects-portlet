@@ -4,6 +4,7 @@ package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.FiseObservacionBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
+import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
 
@@ -14,6 +15,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
@@ -30,6 +33,7 @@ import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 
 
 @Controller("fiseObservacionController")
@@ -77,6 +81,9 @@ public class FiseObservacionController {
   			@ModelAttribute("fiseObservacionBean")FiseObservacionBean p){
 		
 		try{
+			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
+	        HttpSession session = req.getSession();	  
+	        
 			response.setContentType("application/json");	       
 	        	
 			String data = "";
@@ -89,10 +96,12 @@ public class FiseObservacionController {
   			List<FiseObservacion> listaObs = fiseObservacionGartService.buscarFiseObservacion(id, descripcion); 	 			
   			logger.info("tamaño de la lista observaciones   :"+listaObs.size());   			 			
   			  			
-  			/*fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_PERIODO_ENVIO, 
-  					"PERIODOS DE ENVIO", //title
-  					"PERIODO", //nombre hoja
-  					listaPeridoEnvioExportExel);*/
+  			fiseUtil.configuracionExportarExcel(session, FiseConstants.OBSERVACIONES_EXPORT_EXEL, 
+  					"OBSERVACIONES", //title
+  					"OBSERVACIONES", //nombre hoja
+  					listaObs);
+  			
+  			
   			data = toStringListJSON(listaObs);  		
   			logger.info("arreglo json:"+data);
   			PrintWriter pw = response.getWriter();
