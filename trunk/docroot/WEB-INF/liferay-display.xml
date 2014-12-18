@@ -19,5 +19,6 @@
 		<portlet id="gartGrupoInformacion"/>
 		<portlet id="gartEnvioDefinitivo"/>
 		<portlet id="gartLiquidacion"/>
+		<portlet id="gartCargoFijo"/>
 	</category>
 </display>
