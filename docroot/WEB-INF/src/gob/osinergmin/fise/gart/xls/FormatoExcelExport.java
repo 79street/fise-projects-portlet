@@ -1697,11 +1697,11 @@ public class FormatoExcelExport {
 		segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
 
 		HSSFCell a1 = segundaFila.createCell(1);
-		a1.setCellValue(new HSSFRichTextString("IdObservacion"));
+		a1.setCellValue(new HSSFRichTextString("IdObservación"));
 		a1.setCellStyle(headerCellStyle);
 		
 		HSSFCell a2 = segundaFila.createCell(2);
-		a2.setCellValue(new HSSFRichTextString("Descripcion"));
+		a2.setCellValue(new HSSFRichTextString("Descripción"));
 		a2.setCellStyle(headerCellStyle);
 
 		if( listaObs!=null && listaObs.size()>0 ){
