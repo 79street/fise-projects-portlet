@@ -1052,12 +1052,31 @@
 			 var value=$("#"+idinput).val();
 			 var valueProv=$("#"+idinput+"Prov").val();
 			 var valueLim=$("#"+idinput+"Lim").val();
+			 
+			 if(value.length>0){
+				 var numdec=value.length-(value.indexOf('.')+1);
+            	 if(numdec==0){
+            		 $("#"+idinput).val(value.substring(0, (value.indexOf('.')+1))+'00'); 
+            	}
+			 } if(valueProv.length>0){
+				 var numdec=valueProv.length-(valueProv.indexOf('.')+1);
+            	 if(numdec==0){
+            		 $("#"+idinput+"Prov").val(valueProv.substring(0, (valueProv.indexOf('.')+1))+'00'); 
+            	}
+			 } if(valueLim.length>0){
+				 var numdec=valueLim.length-(valueLim.indexOf('.')+1);
+            	 if(numdec==0){
+            		 $("#"+idinput+"Lim").val(valueLim.substring(0, (valueLim.indexOf('.')+1))+'00'); 
+            	}
+			 }
+			
+			 
 			 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
 				 $("#"+idpor).val(parseFloat(value.length>0?value:'0')+parseFloat(valueProv.length>0?valueProv:'0')+parseFloat(valueLim.length>0?valueLim:'0')); 
 			 }else{
 				 $("#"+idpor).val(parseFloat(value.length>0?value:'0')+parseFloat(valueProv.length>0?valueProv:'0'));
 			 }
-			//$("#"+idpor).val(redondeo( $("#"+idpor).val(), 2));
+		
 			$("#"+idpor).val(parseFloat($("#"+idpor).val()).toFixed(2));
 			formato12B.loadTotalReconocer();
 		},
@@ -1069,7 +1088,8 @@
 			$('#totalGeneralReconocer').val(Number($('#totalGeneralReconocer').val()).toFixed(2));
 		},
 		loadCostoTotatByInput:function (total,nro,costo,idhidden,idstandar,idtotal){
-			total.val((nro.val()!=null && nro.length>0)?(nro.val()*costo.val()):'0');
+			total.val((nro.val()!=null && nro.length>0)?(nro.val()*costo.val()):'0.00');
+			total.val(total.val().substring(0,total.val().indexOf('.')+3));
 			$("#"+idhidden).val(total.val());
 			 
 			var value=$("#"+idstandar).val();
@@ -1077,12 +1097,21 @@
 			 var valueLim=$("#"+idstandar+"Lim").val();
 			
 			 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
-				 $("#"+idtotal).val(parseFloat(value>0?value:'0')+parseFloat(valueProv>0?valueProv:'0')+parseFloat(valueLim>0?valueLim:'0'));
+				 $("#"+idtotal).val(parseFloat(value.length>0?value:'0.00')+parseFloat(valueProv.length>0?valueProv:'0.00')+parseFloat(valueLim.length>0?valueLim:'0.00'));
 			 }else{
-				 $("#"+idtotal).val(parseFloat(value>0?value:'0')+parseFloat(valueProv>0?valueProv:'0'));
+				 $("#"+idtotal).val(parseFloat(value.length>0?value:'0.00')+parseFloat(valueProv.length>0?valueProv:'0.00'));
 			 }
-			 $("#"+idtotal).val(parseFloat($("#"+idtotal).val()).toFixed(2));
-			// $("#"+idtotal).val(redondeo( $("#"+idtotal).val(), 2));
+			 
+			 
+			var totalT=$("#"+idtotal).val();
+			
+			if(totalT.length>0){
+				$("#"+idtotal).val(totalT.substring(0,totalT.indexOf('.')+3));	
+			}else{
+				$("#"+idtotal).val(totalT);	
+			}
+			 
+			
              formato12B.loadTotalReconocer();
 			
 		
@@ -1647,6 +1676,16 @@
 		          if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
 		                event.preventDefault();
 		            };
+		            var value=$(this).val();
+		            if(value.length>0){
+		            	var numdec=value.length-(value.indexOf('.')+1);
+		            	 if(numdec>2 && value.indexOf('.')!=-1){
+		            		$(this).val(value.substring(0, value.indexOf('.')+3)); 
+		            	}
+		            }
+		            
+		               
+		            
 			});
 			
 		}

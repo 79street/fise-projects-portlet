@@ -325,7 +325,7 @@ public class FormatoExcelImport {
 			dtlPk.setIdZonaBenef(idzona);
 			formato.setId(dtlPk);
 			
-			FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(dtlPk.getCodEmpresa(), dtlPk.getAnoPresentacion(),dtlPk.getMesPresentacion(), dtlPk.getIdZonaBenef(), FiseConstants.ETAPA_RECONOCIDO);
+			FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(dtlPk.getCodEmpresa(), dtlPk.getAnoPresentacion(),null, dtlPk.getIdZonaBenef(), FiseConstants.ETAPA_RECONOCIDO);
 			int numfilallenas=0;
 			System.out.println("FISE 14D :::"+fise14D);
 			
