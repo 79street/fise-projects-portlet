@@ -552,9 +552,9 @@ public class FiseUtil {
 			
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
 									
-			for(CorreoBean c:listaCorreoDestino){
-				correoD = correoD +","+ c.getDireccionCorreo();	
-			}
+//			for(CorreoBean c:listaCorreoDestino){
+//				correoD = correoD +","+ c.getDireccionCorreo();	
+//			}
 			
 			if( !FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) ){
 				mailMessage.setFrom(new InternetAddress(correoR));

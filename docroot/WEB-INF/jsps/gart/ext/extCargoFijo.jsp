@@ -185,7 +185,7 @@ var fiseCargoFijo= {
 		       colNames: ['Empresa','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físcios Emi.','N° Vales Físcios Canj.','N° Vales Digitales Emi.','N° Vales Digitales Canj.','Visualizar','Editar','Anular','',''],
 		       colModel: [
                        { name: 'descEmpresa', index: 'descEmpresa', width: 50},
-					   { name: 'id.faniorep', index: 'id.faniorep', width: 20},	
+					   { name: 'faniorep', index: 'id.faniorep', width: 20},	
 					   { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
 					   { name: 'cfinumusuben', index: 'cfinumusuben', width: 30},		
 					   { name: 'cfinumusuemp', index: 'cfinumusuemp', width: 30},
@@ -196,8 +196,8 @@ var fiseCargoFijo= {
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },
-		               { name: 'id.empcod', index: 'id.empcod', hidden: true},
-		               { name: 'id.fmesrep', index: 'id.fmesrep', hidden: true}		               
+		               { name: 'empcod', index: 'id.empcod', hidden: true},
+		               { name: 'fmesrep', index: 'id.fmesrep', hidden: true}		               
 			   	    ],
 			   	 multiselect: false,
 					rowNum:10,
