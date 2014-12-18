@@ -1758,22 +1758,43 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 									formulario.setUtilMatOficP(new BigDecimal(utilMatOfic));
 									
 								}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
-									formulario.setImpValDesctoEdeL(new BigDecimal(impValesEde));
-									formulario.setImpValDesctoNoEdeL(new BigDecimal(impValesNoEde));
-									formulario.setNroValesImpL(Long.parseLong(nroValesImp));
-									formulario.setCostoTotalValDesctoL(new BigDecimal(totalRepValesDescto));
-									formulario.setNroValesReptL(Long.parseLong(nroValesRep));
-									formulario.setCostoTotalValOficL(new BigDecimal(totalRepValesOfic));
-									formulario.setNroValesEntrL(Long.parseLong(nroValesEntr));
-									formulario.setCostoEnvPadronL(new BigDecimal(totalEnvPadron));
-									formulario.setNroValesFisL(Long.parseLong(nroValesFis));
-									formulario.setCostoUnitValesDigitL(new BigDecimal(costoUnitValesDigit));
-									formulario.setCostoAtenSolicL(new BigDecimal(costoAtenSolic));
-									formulario.setCostoAtenConsL(new BigDecimal(costoAtenConsul));
-									formulario.setNroTotalAtenL(Long.parseLong(nroAten));
-									formulario.setCostoPersonalL(new BigDecimal(costoPers));
-									formulario.setCapacAgentL(new BigDecimal(capacAgent));
-									formulario.setUtilMatOficL(new BigDecimal(utilMatOfic));
+									
+									if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+										formulario.setImpValDesctoEdeL(new BigDecimal(impValesEde));
+										formulario.setImpValDesctoNoEdeL(new BigDecimal(impValesNoEde));
+										formulario.setNroValesImpL(Long.parseLong(nroValesImp));
+										formulario.setCostoTotalValDesctoL(new BigDecimal(totalRepValesDescto));
+										formulario.setNroValesReptL(Long.parseLong(nroValesRep));
+										formulario.setCostoTotalValOficL(new BigDecimal(totalRepValesOfic));
+										formulario.setNroValesEntrL(Long.parseLong(nroValesEntr));
+										formulario.setCostoEnvPadronL(new BigDecimal(totalEnvPadron));
+										formulario.setNroValesFisL(Long.parseLong(nroValesFis));
+										formulario.setCostoUnitValesDigitL(new BigDecimal(costoUnitValesDigit));
+										formulario.setCostoAtenSolicL(new BigDecimal(costoAtenSolic));
+										formulario.setCostoAtenConsL(new BigDecimal(costoAtenConsul));
+										formulario.setNroTotalAtenL(Long.parseLong(nroAten));
+										formulario.setCostoPersonalL(new BigDecimal(costoPers));
+										formulario.setCapacAgentL(new BigDecimal(capacAgent));
+										formulario.setUtilMatOficL(new BigDecimal(utilMatOfic));
+									}else{
+										formulario.setImpValDesctoEdeL(new BigDecimal(0));
+										formulario.setImpValDesctoNoEdeL(new BigDecimal(0));
+										formulario.setNroValesImpL(0L);
+										formulario.setCostoTotalValDesctoL(new BigDecimal(0));
+										formulario.setNroValesReptL(0L);
+										formulario.setCostoTotalValOficL(new BigDecimal(0));
+										formulario.setNroValesEntrL(0L);
+										formulario.setCostoEnvPadronL(new BigDecimal(0));
+										formulario.setNroValesFisL(0L);
+										formulario.setCostoUnitValesDigitL(new BigDecimal(0));
+										formulario.setCostoAtenSolicL(new BigDecimal(0));
+										formulario.setCostoAtenConsL(new BigDecimal(0));
+										formulario.setNroTotalAtenL(0L);
+										formulario.setCostoPersonalL(new BigDecimal(0));
+										formulario.setCapacAgentL(new BigDecimal(0));
+										formulario.setUtilMatOficL(new BigDecimal(0));
+									}
+									
 									
 								}
 							}

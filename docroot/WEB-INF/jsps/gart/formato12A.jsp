@@ -296,7 +296,7 @@
 									   								<table>
 									   									<tr>
 									   										<td colspan="5">
-									   											<output class="net-titulo">Mes, Año y Etapa de Presentación:</output>
+									   											<output class="net-titulo">Periodo a declarar:</output>
 									   										</td>
 									   									</tr>
 									   									<tr>

@@ -1833,23 +1833,45 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 									formulario.setNroAgentP(Long.parseLong(nroAgentes));
 									
 								}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
-									formulario.setImprEsqInvitL(new BigDecimal(impEsqInvit));
-									formulario.setImprDeclaJuradaL(new BigDecimal(impDeclJurada));
-									formulario.setImprFichaVerifL(new BigDecimal(impFichaVerif));
-									formulario.setRepartoEsqInvitL(new BigDecimal(repEsqInvit));
-									formulario.setVerifInfoL(new BigDecimal(verifInfo));
-									formulario.setElabArchivoBenefL(new BigDecimal(elabArch));
-									formulario.setDigitFichaBenefL(new BigDecimal(digitFicha));
-									formulario.setImprVolantesL(new BigDecimal(impVolantes));
-									formulario.setImprAfichesL(new BigDecimal(impAfiches));
-									formulario.setRepFolletosL(new BigDecimal(repFolletos));
-									formulario.setSpotPublTvL(new BigDecimal(spotPublicTv));
-									formulario.setSpotPublRadioL(new BigDecimal(spotPublicRad));
-									formulario.setNroBenefEmpadL(Long.parseLong(nroBenef));
-									formulario.setPromConvAgentL(new BigDecimal(promConv));
-									formulario.setRegConvAgentL(new BigDecimal(regConv));
-									formulario.setImpEntrBandL(new BigDecimal(impBander));
-									formulario.setNroAgentL(Long.parseLong(nroAgentes));
+									if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+										formulario.setImprEsqInvitL(new BigDecimal(impEsqInvit));
+										formulario.setImprDeclaJuradaL(new BigDecimal(impDeclJurada));
+										formulario.setImprFichaVerifL(new BigDecimal(impFichaVerif));
+										formulario.setRepartoEsqInvitL(new BigDecimal(repEsqInvit));
+										formulario.setVerifInfoL(new BigDecimal(verifInfo));
+										formulario.setElabArchivoBenefL(new BigDecimal(elabArch));
+										formulario.setDigitFichaBenefL(new BigDecimal(digitFicha));
+										formulario.setImprVolantesL(new BigDecimal(impVolantes));
+										formulario.setImprAfichesL(new BigDecimal(impAfiches));
+										formulario.setRepFolletosL(new BigDecimal(repFolletos));
+										formulario.setSpotPublTvL(new BigDecimal(spotPublicTv));
+										formulario.setSpotPublRadioL(new BigDecimal(spotPublicRad));
+										formulario.setNroBenefEmpadL(Long.parseLong(nroBenef));
+										formulario.setPromConvAgentL(new BigDecimal(promConv));
+										formulario.setRegConvAgentL(new BigDecimal(regConv));
+										formulario.setImpEntrBandL(new BigDecimal(impBander));
+										formulario.setNroAgentL(Long.parseLong(nroAgentes));
+									}else{
+										formulario.setImprEsqInvitL(new BigDecimal(0));
+										formulario.setImprDeclaJuradaL(new BigDecimal(0));
+										formulario.setImprFichaVerifL(new BigDecimal(0));
+										formulario.setRepartoEsqInvitL(new BigDecimal(0));
+										formulario.setVerifInfoL(new BigDecimal(0));
+										formulario.setElabArchivoBenefL(new BigDecimal(0));
+										formulario.setDigitFichaBenefL(new BigDecimal(0));
+										formulario.setImprVolantesL(new BigDecimal(0));
+										formulario.setImprAfichesL(new BigDecimal(0));
+										formulario.setRepFolletosL(new BigDecimal(0));
+										formulario.setSpotPublTvL(new BigDecimal(0));
+										formulario.setSpotPublRadioL(new BigDecimal(0));
+										formulario.setNroBenefEmpadL(0);
+										formulario.setPromConvAgentL(new BigDecimal(0));
+										formulario.setRegConvAgentL(new BigDecimal(0));
+										formulario.setImpEntrBandL(new BigDecimal(0));
+										formulario.setNroAgentL(0);
+									}
+									
+									
 									
 								}
 							}
