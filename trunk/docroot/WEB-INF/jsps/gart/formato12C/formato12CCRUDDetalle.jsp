@@ -71,7 +71,7 @@ $(document).ready(function () {
 								   								<table>
 								   									<tr>
 								   										<td colspan="5">
-								   											<output class="net-titulo">Mes, Ano y Etapa de Presentación:</output>
+								   											<output class="net-titulo">Periodo a declarar:</output>
 								   										</td>
 								   									</tr>
 								   									<tr>
@@ -120,7 +120,7 @@ $(document).ready(function () {
 									   									<tr>
 									   										<td width="40px">Año:</td>
 									   										<td>
-									   											<form:input path="anioEjecucion" style="width: 50px" maxlength="4" disabled="${readonlyFlagPeriodo}" />
+									   											<form:input path="anioEjecucion" style="width: 50px" maxlength="4" disabled="${readonlyFlagPeriodo}" onkeypress="return soloNumerosDecimales(event, 1, 'anioEjecucion',4,0)"  />
 									   										</td>
 									   										<td width="10px" ></td>
 									   										<td width="40px">Mes:</td>

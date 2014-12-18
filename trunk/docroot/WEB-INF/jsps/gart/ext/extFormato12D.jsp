@@ -270,6 +270,8 @@ var formato12D= {
 		//divoverlay
 		this.divOverlay=$("#<portlet:namespace/>divOverlay");
 		//dialogs
+		this.dialogError=$("#<portlet:namespace/>dialog-form-error");
+		
 		this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");
 		this.dialogMessageReport=$("#<portlet:namespace/>dialog-message-report");
 		this.dialogMessageReportContent=$("#<portlet:namespace/>dialog-message-report-content");
@@ -305,6 +307,7 @@ var formato12D= {
 		formato12D.btnExcel.click(function() {formato12D.<portlet:namespace/>showUploadExcel();});
 		formato12D.btnCargarFormatoExcel.click(function() {formato12D.<portlet:namespace/>cargarFormatoExcel();});
 		formato12D.btnTxt.click(function() {formato12D.<portlet:namespace/>showUploadTxt();});
+		formato12D.btnCargarFormatoTexto.click(function() {formato12D.<portlet:namespace/>cargarFormatoTxt();});
 		
 		formato12D.buildGridsImplementacion();
 		formato12D.buildGridsMensual();
@@ -468,7 +471,7 @@ var formato12D= {
 		this.dialogMessageDetalle=$("#<portlet:namespace/>dialog-message-detalle");
 		this.dialogMessageDetalleContent=$("#<portlet:namespace/>dialog-message-detalle-content");
 		
-		formato12C.initDialogsCRUDDetalle();
+		formato12D.initDialogsCRUDDetalle();
 		
 		$('input.target[type=text]').on('change', function(){
 			formato12D.calculoTotal();
@@ -505,7 +508,7 @@ var formato12D= {
 			formato12D.mesEjecucionDetalle.val(formato12D.mesPresentacionDetalle.val());
 		
 			formato12D.soloNumerosEnteros();
-			formato12D.soloNumerosDecimalesFormulario();
+			formato12D.soloNumerosDecimales();
 			
 			formato12D.iniciamosValores();
 			
@@ -610,7 +613,7 @@ var formato12D= {
 			//formato12D.listarDistritosEdit(formato12D.codProvinciaOrigenHidden.val(),formato12D.codDistritoOrigenHidden.val(),'0');
 			
 			formato12D.soloNumerosEnteros();
-			formato12D.soloNumerosDecimalesFormulario();
+			formato12D.soloNumerosDecimales();
 			
 			formato12D.formularioCompletarDecimales();
 			
@@ -1341,6 +1344,10 @@ var formato12D= {
 		formato12D.divOverlay.hide();   
 	},
 
+	<portlet:namespace/>cargarFormatoTxt : function(){
+		formato12D.formNuevo.submit();
+		//formato12D.formNuevo.attr().submit();
+	},
 	
 	
 	emptySelectObject: function(){
@@ -1865,7 +1872,7 @@ var formato12D= {
 	soloNumerosEnteros : function(){
 		formato12D.cantidadDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'cantidad',6,0)");
 	},
-	soloNumerosDecimalesFormulario : function(){
+	soloNumerosDecimales : function(){
 		formato12D.costoUnitarioDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoUnitario',7,2)");
 	},
 	//

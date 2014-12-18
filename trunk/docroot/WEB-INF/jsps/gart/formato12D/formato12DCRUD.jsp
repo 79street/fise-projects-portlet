@@ -54,7 +54,7 @@ $(document).ready(function () {
 
 									<table class="" border="0" width="100%">
 										<tr class="filete-bottom">
-											<td><output class="net-titulo">FORMATO FISE-12D: </output> Detalle de Gastos de Desplazamiento de Personal</td>
+											<td><output class="net-titulo">FORMATO FISE-12D: </output> Detalle de Gastos por Actividades Extraordinarias</td>
 										</tr>
 										<tr height="10px">
 											<td></td>
@@ -324,7 +324,7 @@ $(document).ready(function () {
 								id="ui-dialog-title-dialog-form-carga"> Cargar archivo
 								excel </span> <a href="#"
 								class="ui-dialog-titlebar-close ui-corner-all" role="button"
-								onclick="formato13A.closeDialogCargaExcel();"> <span
+								onclick="formato12D.closeDialogCargaExcel();"> <span
 								class="ui-icon ui-icon-closethick">close</span>
 							</a>
 						</div>
@@ -357,57 +357,59 @@ $(document).ready(function () {
 								<input type="button" class="net-button-small"
 									name="<portlet:namespace/>cerrarFormatoExcel"
 									id="<portlet:namespace/>cerrarFormatoExcel" value="Cerrar"
-									onclick="formato13A.closeDialogCargaExcel();" />
+									onclick="formato12D.closeDialogCargaExcel();" />
+							</div>
+						</div>
+					</div>
+					
+					<!-- dialogo upload txt -->
+
+					<div id="<portlet:namespace/>dialog-form-cargaTxt"
+						class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
+						style="display: none; z-index: 1002; position: absolute; width: 400px;">
+						<div
+							class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+							<span class="ui-dialog-title"
+								id="ui-dialog-title-dialog-form-carga"> Cargar archivo de
+								texto </span> <a href="#" class="ui-dialog-titlebar-close ui-corner-all"
+								role="button" onclick="formato12D.closeDialogCargaTxt();"> <span
+								class="ui-icon ui-icon-closethick">close</span>
+							</a>
+						</div>
+	
+						<div class="ui-dialog-content ui-widget-content">
+							<!--tabla-->
+	
+							<fieldset class="">
+								<table style="width: 100%;">
+									<tr>
+										<td></td>
+									</tr>
+									<tr>
+										<td>Archivo:</td>
+										<td><input type="file" id="archivoTxt" name="archivoTxt" /></td>
+									</tr>
+								</table>
+							</fieldset>
+	
+	
+						</div>
+	
+						<div
+							class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+							<div class="ui-dialog-buttonset">
+								<input type="button" class="net-button-small"
+									name="<portlet:namespace/>cargarFormatoTxt"
+									id="<portlet:namespace/>cargarFormatoTxt" value="Cargar" /> <input
+									type="button" class="net-button-small"
+									name="<portlet:namespace/>cerrarFormatoTxt"
+									id="<portlet:namespace/>cerrarFormatoTxt" value="Cerrar"
+									onclick="formato12D.closeDialogCargaTxt();" />
 							</div>
 						</div>
 					</div>
 				</c:if>
-				<!-- dialogo upload txt -->
 
-				<div id="<portlet:namespace/>Formato13AGartController"
-					class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
-					style="display: none; z-index: 1002; position: absolute; width: 400px;">
-					<div
-						class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
-						<span class="ui-dialog-title"
-							id="ui-dialog-title-dialog-form-carga"> Cargar archivo
-							excel </span> <a href="#" class="ui-dialog-titlebar-close ui-corner-all"
-							role="button" onclick="formato13A.closeDialogCargaTxt();"> <span
-							class="ui-icon ui-icon-closethick">close</span>
-						</a>
-					</div>
-
-					<div class="ui-dialog-content ui-widget-content">
-						<!--tabla-->
-
-						<fieldset class="">
-							<table style="width: 100%;">
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td>Archivo:</td>
-									<td><input type="file" id="archivoTxt" name="archivoTxt" /></td>
-								</tr>
-							</table>
-						</fieldset>
-
-
-					</div>
-
-					<div
-						class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-						<div class="ui-dialog-buttonset">
-							<input type="button" class="net-button-small"
-								name="<portlet:namespace/>cargarFormatoTxt"
-								id="<portlet:namespace/>cargarFormatoTxtl" value="Cargar" /> <input
-								type="button" class="net-button-small"
-								name="<portlet:namespace/>cerrarFormatoTxt"
-								id="<portlet:namespace/>cerrarFormatoTxt" value="Cerrar"
-								onclick="formato13A.closeDialogCargaTxt();" />
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>

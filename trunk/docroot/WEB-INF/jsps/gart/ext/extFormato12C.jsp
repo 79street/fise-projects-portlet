@@ -319,6 +319,7 @@ var formato12C= {
 		formato12C.btnExcel.click(function() {formato12C.<portlet:namespace/>showUploadExcel();});
 		formato12C.btnCargarFormatoExcel.click(function() {formato12C.<portlet:namespace/>cargarFormatoExcel();});
 		formato12C.btnTxt.click(function() {formato12C.<portlet:namespace/>showUploadTxt();});
+		formato12C.btnCargarFormatoTexto.click(function() {formato12C.<portlet:namespace/>cargarFormatoTxt();});
 		
 		formato12C.buildGridsImplementacion();
 		formato12C.buildGridsMensual();
@@ -548,7 +549,7 @@ var formato12C= {
 			formato12C.mesEjecucionDetalle.val(formato12C.mesPresentacionDetalle.val());
 		
 			formato12C.soloNumerosEnteros();
-			formato12C.soloNumerosDecimalesFormulario();
+			formato12C.soloNumerosDecimales();
 			
 			formato12C.iniciamosValores();
 			
@@ -675,7 +676,7 @@ var formato12C= {
 			//formato12C.listarDistritosEdit(formato12C.codProvinciaDestinoHidden.val(),formato12C.codDistritoDestinoHidden.val(),'1');
 			
 			formato12C.soloNumerosEnteros();
-			formato12C.soloNumerosDecimalesFormulario();
+			formato12C.soloNumerosDecimales();
 			
 			formato12C.formularioCompletarDecimales();
 			
@@ -793,7 +794,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoImplementacion,
 			    viewrecords: true,
-			   	caption: "Desplazamiento de Personal Implementación",
+			   	caption: "Actividades Extraordinarias de Implementación",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -895,7 +896,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoMensual,
 			    viewrecords: true,
-			   	caption: "Desplazamiento de Personal Mensual",
+			   	caption: "Actividades Extraordinarias Operativas",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -996,7 +997,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoImplementacionView,
 			    viewrecords: true,
-			   	caption: "Desplazamiento de Personal Implementación",
+			   	caption: "Actividades Extraordinarias de Implementación",
 			    sortorder: "asc",	   	    	   	  
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -1077,7 +1078,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoMensualView,
 			    viewrecords: true,
-			   	caption: "Desplazamiento de Personal Mensual",
+			   	caption: "Actividades Extraordinarias Operativas",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -1476,6 +1477,11 @@ var formato12C= {
 	closeDialogCargaTxt : function(){
 		formato12C.dialogCargaTexto.hide();
 		formato12C.divOverlay.hide();   
+	},
+	
+	<portlet:namespace/>cargarFormatoTxt : function(){
+		formato12C.formNuevo.submit();
+		//formato12C.formNuevo.attr().submit();
 	},
 
 	
@@ -2025,9 +2031,9 @@ var formato12C= {
 		return true; 
 	},
 	soloNumerosEnteros : function(){
-		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nrodias',3,0)");
+		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroDias',3,0)");
 	},
-	soloNumerosDecimalesFormulario : function(){
+	soloNumerosDecimales : function(){
 		formato12C.montoAlimentacionDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlimentacion',7,2)");
 		formato12C.montoAlojamientoDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlojamiento',7,2)");
 		formato12C.montoMovilidadDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMovilidad',7,2)");

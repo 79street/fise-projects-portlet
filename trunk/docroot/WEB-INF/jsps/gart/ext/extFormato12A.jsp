@@ -1091,7 +1091,7 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 	}
 }
 function FillEditformato(row){
-	$('#s_empresa').val(row.codEmpresa);
+	$('#s_empresa').val(trim(row.codEmpresa));
 	//seteamos el concatenado
 	$('#s_periodoenvio_present').val(''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa);
 	
@@ -1123,8 +1123,8 @@ function FillEditformato(row){
 	$('#i_nroAgentGlp_r').val(row.nroAgentR).css('text-align','right');
 	$('#i_costoUnitAgent_r').val(redondeo(row.costoUnitAgentR,2)).css('text-align','right');
 	$('#i_costoTotalAgent_r').css('text-align','right');
-	$('#i_despPersonal_r').val(row.desplPersonalR).css('text-align','right');
-	$('#i_activExtraord_r').val(row.activExtraordR).css('text-align','right');
+	$('#i_despPersonal_r').val(redondeo(row.desplPersonalR,2)).css('text-align','right');
+	$('#i_activExtraord_r').val(redondeo(row.activExtraordR,2)).css('text-align','right');
 	
 	$('#i_nroEmpad_p').val(row.nroEmpadP).css('text-align','right');
 	$('#i_costoUnitEmpad_p').val(redondeo(row.costoUnitEmpadP,2)).css('text-align','right');
@@ -1132,17 +1132,17 @@ function FillEditformato(row){
 	$('#i_nroAgentGlp_p').val(row.nroAgentP).css('text-align','right');
 	$('#i_costoUnitAgent_p').val(redondeo(row.costoUnitAgentP,2)).css('text-align','right');
 	$('#i_costoTotalAgent_p').css('text-align','right');
-	$('#i_despPersonal_p').val(row.desplPersonalP).css('text-align','right');
-	$('#i_activExtraord_p').val(row.activExtraordP).css('text-align','right');
+	$('#i_despPersonal_p').val(redondeo(row.desplPersonalP,2)).css('text-align','right');
+	$('#i_activExtraord_p').val(redondeo(row.activExtraordP,2)).css('text-align','right');
 	
 	$('#i_nroEmpad_l').val(row.nroEmpadL).css('text-align','right');
-	$('#i_costoUnitEmpad_l').valredondeo(row.costoUnitEmpadL,2)().css('text-align','right');
+	$('#i_costoUnitEmpad_l').val(redondeo(row.costoUnitEmpadL,2)).css('text-align','right');
 	$('#i_costoTotalEmpad_l').css('text-align','right');
 	$('#i_nroAgentGlp_l').val(row.nroAgentL).css('text-align','right');
 	$('#i_costoUnitAgent_l').val(redondeo(row.costoUnitAgentL,2)).css('text-align','right');
 	$('#i_costoTotalAgent_l').css('text-align','right');
-	$('#i_despPersonal_l').val(row.desplPersonalL).css('text-align','right');
-	$('#i_activExtraord_l').val(row.activExtraordL).css('text-align','right');
+	$('#i_despPersonal_l').val(redondeo(row.desplPersonalL,2)).css('text-align','right');
+	$('#i_activExtraord_l').val(redondeo(row.activExtraordL,2)).css('text-align','right');
 	
 	$('#i_importeEmpad').css('text-align','right');
 	$('#i_importeAgent').css('text-align','right');
@@ -1289,8 +1289,8 @@ function mostrarFormularioModificado(){
 		 anioEjeM = anioPresM;
 		 mesEjeM = mesPresM;
 	 }
-	 var etapaM = "SOLICITUD";
-	 //var etapaM = $("#s_periodoenvio_present").val().substring(6,$("#s_periodoenvio_present").val().length);
+	 //var etapaM = "SOLICITUD";
+	 var etapaM = $("#s_periodoenvio_present").val().substring(6,$("#s_periodoenvio_present").val().length);
 	 if( $('#flagCarga').val()=='0' ){
 		 mostrarUltimoFormato();
 	 }else{

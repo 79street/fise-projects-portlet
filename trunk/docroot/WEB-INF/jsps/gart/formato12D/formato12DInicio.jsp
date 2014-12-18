@@ -69,7 +69,7 @@ $(document).ready(function () {
 											<td>
 												<output>Desde año:</output></td>
 											<td>
-												<form:input path="anioDesde" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
+												<form:input path="anioDesde" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'anioDesde',4,0)" />
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
@@ -82,7 +82,7 @@ $(document).ready(function () {
 											<td>
 												<output>Hasta año:</output></td>
 											<td>
-												<form:input path="anioHasta" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
+												<form:input path="anioHasta" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'anioHasta',4,0)" />
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
