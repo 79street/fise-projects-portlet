@@ -185,7 +185,7 @@ var fiseCargoFijo= {
 		       colNames: ['Empresa','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físcios Emi.','N° Vales Físcios Canj.','N° Vales Digitales Emi.','N° Vales Digitales Canj.','Visualizar','Editar','Anular','',''],
 		       colModel: [
                        { name: 'descEmpresa', index: 'descEmpresa', width: 50},
-					   { name: 'faniorep', index: 'faniorep', width: 20},	
+					   { name: 'anioRep', index: 'anioRep', width: 20},	
 					   { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
 					   { name: 'cfinumusuben', index: 'cfinumusuben', width: 30},		
 					   { name: 'cfinumusuemp', index: 'cfinumusuemp', width: 30},
@@ -196,8 +196,8 @@ var fiseCargoFijo= {
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },
-		               { name: 'empcod', index: 'empcod', hidden: true},
-		               { name: 'fmesrep', index: 'fmesrep', hidden: true}		                
+		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
+		               { name: 'mesRep', index: 'mesRep', hidden: true}		                
 			   	    ],
 			   	 multiselect: false,
 					rowNum:10,
@@ -215,9 +215,9 @@ var fiseCargoFijo= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = fiseCargoFijo.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.empcod+"','"+ret.faniorep+"','"+ret.fmesrep+"');\" /></a> ";
-		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.empcod+"','"+ret.faniorep+"','"+ret.fmesrep+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.empcod+"','"+ret.faniorep+"','"+ret.fmesrep+"');\" /></a> ";              			
+		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.codEmpresa+"','"+ret.anioRep+"','"+ret.mesRep+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.codEmpresa+"','"+ret.anioRep+"','"+ret.mesRep+"');\" /></a> ";
+		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codEmpresa+"','"+ret.anioRep+"','"+ret.mesRep+"');\" /></a> ";              			
 		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -225,13 +225,13 @@ var fiseCargoFijo= {
 		      }
 		  	});
 			fiseCargoFijo.tablaResultados.jqGrid('navGrid',fiseCargoFijo.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});	
-			<%-- fiseCargoFijo.tablaResultados.jqGrid('navButtonAdd',fiseCargoFijo.paginadoResultados,{
+			 fiseCargoFijo.tablaResultados.jqGrid('navButtonAdd',fiseCargoFijo.paginadoResultados,{
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
 			      location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
 			       } 
-			});  --%>
+			}); 
 		},
 		//funcion para buscar
 		buscarCargosFijos : function () {		
@@ -262,17 +262,17 @@ var fiseCargoFijo= {
 		},
 		
 		//Function para Visualizar los datos del formulario		
-		verCargoFijo : function(codEmpresa, anioRep, mesRep){	
-			console.debug("entrando a ver ");
+		verCargoFijo : function(cod_Empresa, anio_Rep, mes_Rep){	
+			console.debug("entrando a ver ");			
 			$.blockUI({ message: fiseCargoFijo.mensajeObteniendoDatos});
 			jQuery.ajax({
 					url: fiseCargoFijo.urlEditarView+'&'+fiseCargoFijo.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {						  
-					      <portlet:namespace />codEmpresa: codEmpresa,
-					      <portlet:namespace />anioRep: anioRep,
-					      <portlet:namespace />mesRep: mesRep
+					      <portlet:namespace />codEmpresa: cod_Empresa,
+					      <portlet:namespace />anioRepBusq: anio_Rep,
+					      <portlet:namespace />mesRep: mes_Rep
 						},
 					success: function(data) {
 					    if (data != null){															
@@ -297,7 +297,7 @@ var fiseCargoFijo= {
 		},
 		
 		//Function para editar los datos del formulario
-		editarCargoFijo : function(codEmpresa, anioRep, mesRep){	
+		editarCargoFijo : function(cod_Empresa, anio_Rep, mes_Rep){	
 			    console.debug("entrando a editar ");		
 				$.blockUI({ message: fiseCargoFijo.mensajeObteniendoDatos });			 
 				jQuery.ajax({
@@ -305,9 +305,9 @@ var fiseCargoFijo= {
 						type: 'post',
 						dataType: 'json',
 						data: {							
-							 <portlet:namespace />codEmpresa: codEmpresa,
-						     <portlet:namespace />anioRep: anioRep,
-						     <portlet:namespace />mesRep: mesRep					   				  
+							 <portlet:namespace />codEmpresa: cod_Empresa,
+						     <portlet:namespace />anioRep: anio_Rep,
+						     <portlet:namespace />mesRep: mes_Rep					   				  
 						},
 						success: function(data) {				
 							if (data != null){															
@@ -368,8 +368,7 @@ var fiseCargoFijo= {
 		},
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
-		confirmarEliminarCargoFijo : function(codEmpresa, anioRep, mesRep){
-			console.debug("entranado a eliminar confirmar:  "+idObservacion);
+		confirmarEliminarCargoFijo : function(codEmpresa, anioRep, mesRep){			
 			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 			fiseCargoFijo.dialogConfirmContent.html(addhtml);
 			fiseCargoFijo.dialogConfirm.dialog("open");	

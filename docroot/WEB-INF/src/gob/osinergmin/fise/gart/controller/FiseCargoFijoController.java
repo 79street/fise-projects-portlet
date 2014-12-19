@@ -4,6 +4,7 @@ package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.FiseCargoFijoBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
+import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseMcargofijo;
 import gob.osinergmin.fise.gart.service.FiseCargoFijoService;
 import gob.osinergmin.fise.util.FormatoUtil;
@@ -17,6 +18,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
@@ -33,6 +36,7 @@ import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 
 
 @Controller("fiseCargoFijoController")
@@ -92,6 +96,9 @@ public class FiseCargoFijoController {
   			@ModelAttribute("fiseCargoFijoBean")FiseCargoFijoBean c){
 		
 		try{
+			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
+	        HttpSession session = req.getSession();	 
+	        
 			response.setContentType("application/json");	       
 	        	
 			String data = "";
@@ -121,19 +128,28 @@ public class FiseCargoFijoController {
   			for(FiseMcargofijo cargo : lista){  				
   				cargo.setDescEmpresa(mapaEmpresa.get(cargo.getId().getEmpcod()));
   				cargo.setDescMesPresentacion(fiseUtil.getMapaMeses().get(Long.valueOf(cargo.getId().getFmesrep()))); 
-  				
+  				cargo.setCodEmpresa(cargo.getId().getEmpcod());
+  				cargo.setAnioRep(cargo.getId().getFaniorep());
+  				cargo.setMesRep(cargo.getId().getFmesrep()); 
   				if(1==cargo.getScficod()){ 
   					cargo.setDescEstado("Activo");			
   				}else{
   					cargo.setDescEstado("Inactivo");			
-  				}		  								
+  				}
+  				
+  				if(1==cargo.getCfiapliigv()){ 
+  					cargo.setAplicaIgv("SI");			
+  				}else{
+  					cargo.setAplicaIgv("NO");			
+  				}
+  				
   				listaCargoExel.add(cargo);
   			}   			
   			
-  			/*fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_PERIODO_ENVIO, 
-  					"PERIODOS DE ENVIO", //title
-  					"PERIODO", //nombre hoja
-  					listaPeridoEnvioExportExel);*/
+  		    fiseUtil.configuracionExportarExcel(session, FiseConstants.CARGO_FIJO_EXPORT_EXEL, 
+  					"CARGOS FIJOS", //title
+  					"CARGO FIJO", //nombre hoja
+  					listaCargoExel);
   			
   			data = toStringListJSON(listaCargoExel);  		
   			logger.info("arreglo json:"+data);
@@ -238,10 +254,10 @@ public class FiseCargoFijoController {
 			logger.info("entrando a editar o visualizar un registro");	
 			
 			logger.info("codEmpresa:  "+ c.getCodEmpresa()); 
-			logger.info("anio:  "+ c.getAnioRep());		
+			logger.info("anio:  "+ c.getAnioRepBusq());		
 			logger.info("mes:  "+ c.getMesRep());
 			
-			c= fiseCargoFijoService.buscarFiseCargoFijoEditar(c.getCodEmpresa(), c.getAnioRep(), c.getMesRep());
+			c= fiseCargoFijoService.buscarFiseCargoFijoEditar(c.getCodEmpresa(), c.getAnioRepBusq(), c.getMesRep());
 			
 			data = toStringJSON(c);						
 			response.setContentType("application/json");

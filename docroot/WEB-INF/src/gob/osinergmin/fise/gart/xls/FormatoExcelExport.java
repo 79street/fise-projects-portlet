@@ -12,6 +12,7 @@ import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato14AC;
 import gob.osinergmin.fise.domain.FiseFormato14BC;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
+import gob.osinergmin.fise.domain.FiseMcargofijo;
 import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato12BGartCommand;
@@ -1729,6 +1730,240 @@ public class FormatoExcelExport {
 	}
 	
 	
+	public HSSFSheet construirExcelCargosFijos(List<?> listaCargosFijos) {
+
+		HSSFFont fuenteH = _wb.createFont();
+		fuenteH.setFontHeightInPoints((short) 10);
+		fuenteH.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteH.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+
+		// Creamos el objto HHSSFeclStyle que aplicara para el estilo a la celda
+		HSSFCellStyle headerCellStyle = _wb.createCellStyle();
+		headerCellStyle.setWrapText(false);
+		headerCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		headerCellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		headerCellStyle.setFont(fuenteH);
+
+		// Definimos los bordes de las celdas
+		headerCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setBottomBorderColor((short) 8);
+		headerCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setLeftBorderColor((short) 8);
+		headerCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setRightBorderColor((short) 8);
+		headerCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		headerCellStyle.setTopBorderColor((short) 8);
+
+		// Establecemos el tipo de sombreado de nuestra celda
+		headerCellStyle.setFillForegroundColor(new HSSFColor.GREY_25_PERCENT().getIndex());
+		headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+		// Para el contenido general
+		HSSFFont fuenteC = _wb.createFont();
+		fuenteC.setFontHeightInPoints((short) 9);
+		fuenteC.setFontName(HSSFFont.FONT_ARIAL);
+		fuenteC.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+
+		// Luego creamos el objeto que se encargara de aplicar el estilo a la
+		// celda
+		HSSFCellStyle dataCellStyle = _wb.createCellStyle();
+		dataCellStyle.setFont(fuenteC);
+
+		// Tambien, podemos establecer bordes...
+		dataCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setBottomBorderColor((short) 8);
+		dataCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setLeftBorderColor((short) 8);
+		dataCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setRightBorderColor((short) 8);
+		dataCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		dataCellStyle.setTopBorderColor((short) 8);
+
+		HSSFCellStyle dateCellStyle = _wb.createCellStyle();
+		dateCellStyle.cloneStyleFrom(dataCellStyle);
+		dateCellStyle.setDataFormat((short) 15);
+
+		//HSSFRow row = _xlsSheet.createRow(iRow);
+
+		HSSFRow segundaFila = _xlsSheet.createRow(0);
+		segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+
+		HSSFCell a1 = segundaFila.createCell(1);
+		a1.setCellValue(new HSSFRichTextString("Empresa"));
+		a1.setCellStyle(headerCellStyle);
+		
+		HSSFCell a2 = segundaFila.createCell(2);
+		a2.setCellValue(new HSSFRichTextString("Año Reporte"));
+		a2.setCellStyle(headerCellStyle);
+		
+		HSSFCell a3 = segundaFila.createCell(3);
+		a3.setCellValue(new HSSFRichTextString("Mes Reporte"));
+		a3.setCellStyle(headerCellStyle);
+		
+		HSSFCell a4 = segundaFila.createCell(4);
+		a4.setCellValue(new HSSFRichTextString("N° Usu. Benef."));
+		a4.setCellStyle(headerCellStyle);	
+		
+		HSSFCell a5 = segundaFila.createCell(5);
+		a5.setCellValue(new HSSFRichTextString("N° Usu. Empad."));
+		a5.setCellStyle(headerCellStyle);	
+		
+		HSSFCell a6 = segundaFila.createCell(6);
+		a6.setCellValue(new HSSFRichTextString("N° Vales Físicos Emit."));
+		a6.setCellStyle(headerCellStyle);	
+		
+		HSSFCell a7 = segundaFila.createCell(7);
+		a7.setCellValue(new HSSFRichTextString("N° Vales Digitales Emit."));
+		a7.setCellStyle(headerCellStyle);	
+		
+		HSSFCell a8 = segundaFila.createCell(8);
+		a8.setCellValue(new HSSFRichTextString("N° Vales Físicos Cang."));
+		a8.setCellStyle(headerCellStyle);
+		
+		HSSFCell a9 = segundaFila.createCell(9);
+		a9.setCellValue(new HSSFRichTextString("N° Vales Digitales Cang."));
+		a9.setCellStyle(headerCellStyle);
+		
+		HSSFCell a10 = segundaFila.createCell(10);
+		a10.setCellValue(new HSSFRichTextString("N° Agentes"));
+		a10.setCellStyle(headerCellStyle);
+		
+		HSSFCell a11 = segundaFila.createCell(11);
+		a11.setCellValue(new HSSFRichTextString("Monto Transf. Cange"));
+		a11.setCellStyle(headerCellStyle);
+		
+		HSSFCell a12 = segundaFila.createCell(12);
+		a12.setCellValue(new HSSFRichTextString("Monto Cargo F. Mes"));
+		a12.setCellStyle(headerCellStyle);
+		
+		HSSFCell a13 = segundaFila.createCell(13);
+		a13.setCellValue(new HSSFRichTextString("Fecha Informe de Sust."));
+		a13.setCellStyle(headerCellStyle);
+		
+		HSSFCell a14 = segundaFila.createCell(14);
+		a14.setCellValue(new HSSFRichTextString("N° Doc. de Sust."));
+		a14.setCellStyle(headerCellStyle);
+		
+		HSSFCell a15 = segundaFila.createCell(15);
+		a15.setCellValue(new HSSFRichTextString("Estado"));
+		a15.setCellStyle(headerCellStyle);
+		
+		HSSFCell a16 = segundaFila.createCell(16);
+		a16.setCellValue(new HSSFRichTextString("Fecha Recepción Inf."));
+		a16.setCellStyle(headerCellStyle);
+		
+		HSSFCell a17 = segundaFila.createCell(17);
+		a17.setCellValue(new HSSFRichTextString("N° Doc. Recepción Inf."));
+		a17.setCellStyle(headerCellStyle);
+		
+		HSSFCell a18 = segundaFila.createCell(18);
+		a18.setCellValue(new HSSFRichTextString("IGV"));
+		a18.setCellStyle(headerCellStyle);
+		
+		HSSFCell a19 = segundaFila.createCell(19);
+		a19.setCellValue(new HSSFRichTextString("Aplica IGV"));
+		a19.setCellStyle(headerCellStyle);
+		
+		HSSFCell a20 = segundaFila.createCell(20);
+		a20.setCellValue(new HSSFRichTextString("Glosa"));
+		a20.setCellStyle(headerCellStyle);
+		
+
+		if(listaCargosFijos!=null && listaCargosFijos.size()>0 ){
+			for( int i=0;i<listaCargosFijos.size();i++ ){
+				
+				FiseMcargofijo cargo = (FiseMcargofijo) listaCargosFijos.get(i);
+				System.out.println("Entrando a llenar filas y celdas en el exel cargos fijos"); 
+				HSSFRow fila = _xlsSheet.createRow(i+1);
+				
+				HSSFCell ax1 = fila.createCell(1);
+				ax1.setCellValue(new HSSFRichTextString(""+cargo.getDescEmpresa()));
+				ax1.setCellStyle(dateCellStyle);
+				HSSFCell ax2 = fila.createCell(2);
+				ax2.setCellValue(new HSSFRichTextString(""+cargo.getAnioRep()));
+				ax2.setCellStyle(dateCellStyle);
+				HSSFCell ax3 = fila.createCell(3);
+				ax3.setCellValue(new HSSFRichTextString(""+cargo.getDescMesPresentacion()));
+				ax3.setCellStyle(dateCellStyle);
+				HSSFCell ax4 = fila.createCell(4);
+				ax4.setCellValue(new HSSFRichTextString(""+cargo.getCfinumusuben()));
+				ax4.setCellStyle(dateCellStyle);
+				HSSFCell ax5 = fila.createCell(5);
+				ax5.setCellValue(new HSSFRichTextString(""+cargo.getCfinumusuemp()));
+				ax5.setCellStyle(dateCellStyle);
+				HSSFCell ax6 = fila.createCell(6);
+				ax6.setCellValue(new HSSFRichTextString(""+cargo.getCfinumvalfemi()));
+				ax6.setCellStyle(dateCellStyle);
+				HSSFCell ax7 = fila.createCell(7);
+				ax7.setCellValue(new HSSFRichTextString(""+cargo.getCfinumvaldemi()));
+				ax7.setCellStyle(dateCellStyle);				
+				HSSFCell ax8 = fila.createCell(8);
+				ax8.setCellValue(new HSSFRichTextString(""+cargo.getCfinumvalfcan()));
+				ax8.setCellStyle(dateCellStyle);
+				HSSFCell ax9 = fila.createCell(9);
+				ax9.setCellValue(new HSSFRichTextString(""+cargo.getCfinumvaldcan()));
+				ax9.setCellStyle(dateCellStyle);
+				HSSFCell ax10 = fila.createCell(10);
+				ax10.setCellValue(new HSSFRichTextString(""+cargo.getCfinumage()));
+				ax10.setCellStyle(dateCellStyle);
+				HSSFCell ax11 = fila.createCell(11);
+				ax11.setCellValue(new HSSFRichTextString(""+cargo.getCfimontracan()));
+				ax11.setCellStyle(dateCellStyle);
+				HSSFCell ax12 = fila.createCell(12);
+				ax12.setCellValue(new HSSFRichTextString(""+cargo.getCfimon()));
+				ax12.setCellStyle(dateCellStyle);
+				HSSFCell ax13 = fila.createCell(13);
+				ax13.setCellValue(new HSSFRichTextString(cargo.getCfifecinf()==null?"": ""+cargo.getCfifecinf()));
+				ax13.setCellStyle(dateCellStyle);
+				HSSFCell ax14 = fila.createCell(14);
+				ax14.setCellValue(new HSSFRichTextString(cargo.getCfidoc()==null?"": ""+cargo.getCfidoc()));
+				ax14.setCellStyle(dateCellStyle);
+				HSSFCell ax15 = fila.createCell(15);
+				ax15.setCellValue(new HSSFRichTextString(cargo.getScficod()==null?"": ""+cargo.getDescEstado()));
+				ax15.setCellStyle(dateCellStyle);	
+				HSSFCell ax16 = fila.createCell(16);
+				ax16.setCellValue(new HSSFRichTextString(cargo.getCfifecrec()==null?"": ""+cargo.getCfifecrec()));
+				ax16.setCellStyle(dateCellStyle);	
+				HSSFCell ax17 = fila.createCell(17);
+				ax17.setCellValue(new HSSFRichTextString(cargo.getCfidocrec()==null?"": ""+cargo.getCfidocrec()));
+				ax17.setCellStyle(dateCellStyle);	
+				HSSFCell ax18 = fila.createCell(18);
+				ax18.setCellValue(new HSSFRichTextString(cargo.getCfiigv()==null?"": ""+cargo.getCfiigv()));
+				ax18.setCellStyle(dateCellStyle);	
+				HSSFCell ax19 = fila.createCell(19);
+				ax19.setCellValue(new HSSFRichTextString(cargo.getCfiapliigv()==null?"": ""+cargo.getAplicaIgv()));
+				ax19.setCellStyle(dateCellStyle);	
+				HSSFCell ax20 = fila.createCell(20);
+				ax20.setCellValue(new HSSFRichTextString(cargo.getCficom()==null?"": cargo.getCficom()));
+				ax20.setCellStyle(dateCellStyle);	
+			}
+		}
+		/**
+		 * longitud automatica de columnas
+		 */
+		_xlsSheet.autoSizeColumn((short) 1);
+		_xlsSheet.autoSizeColumn((short) 2);
+		_xlsSheet.autoSizeColumn((short) 3);
+		_xlsSheet.autoSizeColumn((short) 4);
+		_xlsSheet.autoSizeColumn((short) 5);
+		_xlsSheet.autoSizeColumn((short) 6);
+		_xlsSheet.autoSizeColumn((short) 7);
+		_xlsSheet.autoSizeColumn((short) 8);
+		_xlsSheet.autoSizeColumn((short) 9);
+		_xlsSheet.autoSizeColumn((short) 10);
+		_xlsSheet.autoSizeColumn((short) 11);
+		_xlsSheet.autoSizeColumn((short) 12);
+		_xlsSheet.autoSizeColumn((short) 13);
+		_xlsSheet.autoSizeColumn((short) 14);
+		_xlsSheet.autoSizeColumn((short) 15);	
+		_xlsSheet.autoSizeColumn((short) 16);
+		_xlsSheet.autoSizeColumn((short) 17);
+		_xlsSheet.autoSizeColumn((short) 18);
+		_xlsSheet.autoSizeColumn((short) 19);
+		_xlsSheet.autoSizeColumn((short) 20);
+		
+		return _xlsSheet;
+	}
 	
 	
 	
@@ -2723,7 +2958,7 @@ public class FormatoExcelExport {
 			}else if( FiseConstants.OBSERVACIONES_EXPORT_EXEL.equals(xlsTableConfig.getTipoFormato()) ){
 				construirExcelMantenimientoObservacion(xlsTableConfig.getLista());				
 			}else if( FiseConstants.CARGO_FIJO_EXPORT_EXEL.equals(xlsTableConfig.getTipoFormato()) ){
-				//construirExcelPeriodoEnvio(xlsTableConfig.getLista());				
+				construirExcelCargosFijos(xlsTableConfig.getLista());				
 			}
 			//poner los otros formato
 			//ponemos la lista de observaciones
