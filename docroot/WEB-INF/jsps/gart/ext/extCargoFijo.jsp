@@ -185,7 +185,7 @@ var fiseCargoFijo= {
 		       colNames: ['Empresa','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físcios Emi.','N° Vales Físcios Canj.','N° Vales Digitales Emi.','N° Vales Digitales Canj.','Visualizar','Editar','Anular','',''],
 		       colModel: [
                        { name: 'descEmpresa', index: 'descEmpresa', width: 50},
-					   { name: 'faniorep', index: 'id.faniorep', width: 20},	
+					   { name: 'faniorep', index: 'faniorep', width: 20},	
 					   { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
 					   { name: 'cfinumusuben', index: 'cfinumusuben', width: 30},		
 					   { name: 'cfinumusuemp', index: 'cfinumusuemp', width: 30},
@@ -196,8 +196,8 @@ var fiseCargoFijo= {
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },
-		               { name: 'empcod', index: 'id.empcod', hidden: true},
-		               { name: 'fmesrep', index: 'id.fmesrep', hidden: true}		               
+		               { name: 'empcod', index: 'empcod', hidden: true},
+		               { name: 'fmesrep', index: 'fmesrep', hidden: true}		                
 			   	    ],
 			   	 multiselect: false,
 					rowNum:10,
@@ -215,9 +215,9 @@ var fiseCargoFijo= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = fiseCargoFijo.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.id.empcod+"','"+ret.id.faniorep+"','"+ret.id.fmesrep+"');\" /></a> ";
-		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.id.empcod+"','"+ret.id.faniorep+"','"+ret.id.fmesrep+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.id.empcod+"','"+ret.id.faniorep+"','"+ret.id.fmesrep+"');\" /></a> ";              			
+		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.empcod+"','"+ret.faniorep+"','"+ret.fmesrep+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.empcod+"','"+ret.faniorep+"','"+ret.fmesrep+"');\" /></a> ";
+		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.empcod+"','"+ret.faniorep+"','"+ret.fmesrep+"');\" /></a> ";              			
 		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
