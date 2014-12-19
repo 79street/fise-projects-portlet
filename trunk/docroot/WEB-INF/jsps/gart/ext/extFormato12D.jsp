@@ -1610,7 +1610,7 @@ var formato12D= {
 			modal: true,
 			autoOpen: false,
 			buttons: {
-				'Imprimir Pdf': function() {
+				'Ver Acta': function() {
 					formato12D.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 					$(this).dialog("close");
 					formato12D.botonRegresarBusqueda.trigger('click');
