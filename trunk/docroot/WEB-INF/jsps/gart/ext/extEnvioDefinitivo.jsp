@@ -372,6 +372,7 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.dialogMessageContent.html(addhtml2);
 						envioDefinitivoGlobal.dialogMessage.dialog("open");					
 						envioDefinitivoGlobal.initBlockUI();
+						envioDefinitivoGlobal.botonBuscar.trigger('click');
 					}else if(data.resultado == "ENVIADO"){
 						alert("Este grupo ya ha sido enviado.");
 						envioDefinitivoGlobal.initBlockUI();	
@@ -439,7 +440,7 @@ var envioDefinitivoGlobal= {
 				modal: true,
 				autoOpen: false,
 				buttons: {
-					'Imprimir Pdf': function() {
+					'Acta': function() {
 						envioDefinitivoGlobal.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 						$( this ).dialog("close");							   
 					},

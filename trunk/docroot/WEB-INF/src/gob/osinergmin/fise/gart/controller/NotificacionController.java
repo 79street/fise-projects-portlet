@@ -1175,6 +1175,7 @@ public class NotificacionController {
   	  						if( tabla!=null ){
   	  							descripcionFormato = tabla.getDescripcionTabla();
   	  						}
+  	  					    mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(not.getAnioPres()));
   	  						mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, 
   	  								fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
   	  						mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
@@ -1215,7 +1216,8 @@ public class NotificacionController {
   	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12C);
   	  						if( tabla!=null ){
   	  							descripcionFormato = tabla.getDescripcionTabla();
-  	  						}  	  						
+  	  						}
+  	  					    mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(not.getAnioPres()));
   	  						mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, 
   	  								fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
   	  						mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
@@ -1255,7 +1257,8 @@ public class NotificacionController {
   	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12D);
   	  						if( tabla!=null ){
   	  							descripcionFormato = tabla.getDescripcionTabla();
-  	  						}  	  						
+  	  						} 
+  	  				    	mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(not.getAnioPres()));
   	  						mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, 
   	  								fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
   	  						mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
@@ -1296,6 +1299,7 @@ public class NotificacionController {
   	  						if( tabla!=null ){
   	  				    		descripcionFormato = tabla.getDescripcionTabla();
   	  				    	}
+  	  					    mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(not.getAnioPres()));
   	  						mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, 
   	  								fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
   	  						mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
@@ -1340,7 +1344,7 @@ public class NotificacionController {
   	  			    		if( tabla!=null ){
   	  				    		descripcionFormato = tabla.getDescripcionTabla();
   	  				    	}
-  	  			    		
+  	  			    	    mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(not.getAnioPres()));
   	  			    		mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, 
   	  			    				fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
   	  			    		mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
@@ -1383,6 +1387,7 @@ public class NotificacionController {
   	  			    		if( tabla!=null ){
   	  				    		descripcionFormato = tabla.getDescripcionTabla();
   	  				    	}
+  	  			    	    mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(not.getAnioPres()));
   	  			    		mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, 
   	  			    				fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
   	  			    		mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
@@ -1425,6 +1430,7 @@ public class NotificacionController {
   	  			    		if( tabla!=null ){
   	  				    		descripcionFormato = tabla.getDescripcionTabla();
   	  				    	}
+  	  			    	    mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(not.getAnioPres()));
   	  			    		mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, 
   	  			    				fiseUtil.getMapaMeses().get(Long.parseLong(not.getMesPres())));
   	  			    		mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
