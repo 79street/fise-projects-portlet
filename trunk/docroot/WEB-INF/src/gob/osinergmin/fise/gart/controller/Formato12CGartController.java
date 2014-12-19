@@ -619,7 +619,7 @@ public class Formato12CGartController {
 		}
 		// Cabecera
 		
-		bean.setCodigoEmpresa(codEmpresa);
+		bean.setCodigoEmpresa(codEmpresa.trim());
 		bean.setPeriodoEnvio(periodoDeclaracion);
 		bean.setDescEmpresa(mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4)));
 		bean.setAnioPresentacion(Long.parseLong(anioPres));
@@ -695,7 +695,7 @@ public class Formato12CGartController {
 					
 					for (FiseFormato12CD detalle : listaDetalle) {
 						
-						if( bean.getCodigoEmpresa().equals(detalle.getId().getCodEmpresa()) &&
+						if( bean.getCodigoEmpresa().trim().equals(detalle.getId().getCodEmpresa().trim()) &&
 								bean.getAnioPresentacion() == detalle.getId().getAnoPresentacion() &&
 								bean.getMesPresentacion() == detalle.getId().getMesPresentacion() &&
 								bean.getEtapa().equals(detalle.getId().getEtapa()) &&
