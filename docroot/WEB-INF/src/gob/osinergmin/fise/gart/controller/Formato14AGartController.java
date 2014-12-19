@@ -833,6 +833,8 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
 		int cont = 0;
 		
+		boolean process = false;
+		
 		try {
 			if (archivo != null) {
 				HSSFWorkbook libro = null;
@@ -840,10 +842,10 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 					is=archivo.getContentStream();
 					libro = new HSSFWorkbook(is);//Se lee libro xls
 				} catch (Exception e1) {
-					logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F14A_1620));
 					cont++;
-					sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_20);
-					throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F14A_1620);
+					throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F14A_1620));
 				}
 				int nroHojaSelec=0;
 				
@@ -853,674 +855,687 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 					for (int sheetNro = 0; sheetNro < libro.getNumberOfSheets(); sheetNro++){
 						logger.info("nombre de hoja "+sheetNro+":"+ libro.getSheetName(sheetNro));
 						if( FiseConstants.NOMBRE_HOJA_FORMATO14A.equals(libro.getSheetName(sheetNro)) ){
+							process = true;
 							nroHojaSelec = sheetNro;
 							break;
 						}
 					}
 					logger.info("nro de hoja seleccionada "+nroHojaSelec);
-					HSSFSheet hojaF14 = libro.getSheetAt(nroHojaSelec);
-					//int nroFilas = hojaF12.getLastRowNum()+1;
 					
-					HSSFRow filaEmpresa = hojaF14.getRow(FiseConstants.NRO_FILA_CODEMPRESA_FORMATO14A);						
-					HSSFRow filaAnioMes = hojaF14.getRow(FiseConstants.NRO_FILA_ANIOMES_FORMATO14A);	
-					
-					HSSFRow filaImpEsqInvitacion = hojaF14.getRow(FiseConstants.NRO_FILA_IMPESQINV_FORMATO14A);					
-					HSSFRow filaImpDeclJurada = hojaF14.getRow(FiseConstants.NRO_FILA_IMPDECLJURADA_FORMATO14A);					
-					HSSFRow filaImpFichaVerif = hojaF14.getRow(FiseConstants.NRO_FILA_IMPFICHAVERIF_FORMATO14A);				
-					HSSFRow filaRepEsqInvitacion = hojaF14.getRow(FiseConstants.NRO_FILA_REPESQINV_FORMATO14A);	
-					HSSFRow filaVerifInformacion = hojaF14.getRow(FiseConstants.NRO_FILA_VERIFINFO_FORMATO14A);
-					HSSFRow filaElabArchBeneficiario = hojaF14.getRow(FiseConstants.NRO_FILA_ELABARCHBENEF_FORMATO14A);
-					HSSFRow filaDigitFichaBeneficiario = hojaF14.getRow(FiseConstants.NRO_FILA_DIGITFICHABENEF_FORMATO14A);
-					HSSFRow filaImpVolantes = hojaF14.getRow(FiseConstants.NRO_FILA_IMPVOLANTES_FORMATO14A);
-					HSSFRow filaImpAfiche = hojaF14.getRow(FiseConstants.NRO_FILA_IMPAFICHES_FORMATO14A);
-					HSSFRow filaRepFolletos = hojaF14.getRow(FiseConstants.NRO_FILA_REPFOLLETOS_FORMATO14A);
-					HSSFRow filaSpotPublicTv = hojaF14.getRow(FiseConstants.NRO_FILA_SPOTPUBLICTV_FORMATO14A);
-					HSSFRow filaSpotPublicRadio = hojaF14.getRow(FiseConstants.NRO_FILA_SPOTPUBLICRADIO_FORMATO14A);
-					HSSFRow filaNroEmpad = hojaF14.getRow(FiseConstants.NRO_FILA_EMPAD_FORMATO14A);
-					HSSFRow filaPromConvenios = hojaF14.getRow(FiseConstants.NRO_FILA_PROMCONVENIOS_FORMATO14A);
-					HSSFRow filaRegFirmaConvenios = hojaF14.getRow(FiseConstants.NRO_FILA_REGFIRMACONV_FORMATO14A);
-					HSSFRow filaImpBanderola = hojaF14.getRow(FiseConstants.NRO_FILA_IMPENTBANDER_FORMATO14A);	
-					HSSFRow filaNroAgentes = hojaF14.getRow(FiseConstants.NRO_FILA_AGENTES_FORMATO14A);
-					
-					Formato14ACBean formulario = new Formato14ACBean();
-					
-					HSSFCell celdaEmpresa = filaEmpresa.getCell(FiseConstants.NRO_CELDA_EMPRESA_FORMATO14A);
-					HSSFCell celdaAnio = filaAnioMes.getCell(FiseConstants.NRO_CELDA_ANIO_FORMATO14A);
-					HSSFCell celdaMes = filaAnioMes.getCell(FiseConstants.NRO_CELDA_MES_FORMATO14A);
-					
-					HSSFCell celdaImpEsqInvitacionR = filaImpEsqInvitacion.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaImpDeclJuradaR = filaImpDeclJurada.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaImpFichaVerifR = filaImpFichaVerif.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaRepEsqInvitacionR = filaRepEsqInvitacion.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaVerifInformacionR = filaVerifInformacion.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaElabArchBeneficiarioR = filaElabArchBeneficiario.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaDigitFichaBeneficiarioR = filaDigitFichaBeneficiario.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaImpVolantesR = filaImpVolantes.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaImpAficheR = filaImpAfiche.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaRepFolletosR = filaRepFolletos.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaSpotPublicTvR = filaSpotPublicTv.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaSpotPublicRadioR = filaSpotPublicRadio.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaNroEmpadR = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaPromConveniosR = filaPromConvenios.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaRegFirmaConveniosR = filaRegFirmaConvenios.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaImpBanderolaR = filaImpBanderola.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					HSSFCell celdaNroAgentesR = filaNroAgentes.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
-					//PROVINCIA
-					HSSFCell celdaImpEsqInvitacionP = filaImpEsqInvitacion.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaImpDeclJuradaP = filaImpDeclJurada.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaImpFichaVerifP = filaImpFichaVerif.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaRepEsqInvitacionP = filaRepEsqInvitacion.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaVerifInformacionP = filaVerifInformacion.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaElabArchBeneficiarioP = filaElabArchBeneficiario.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaDigitFichaBeneficiarioP = filaDigitFichaBeneficiario.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaImpVolantesP = filaImpVolantes.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaImpAficheP = filaImpAfiche.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaRepFolletosP = filaRepFolletos.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaSpotPublicTvP = filaSpotPublicTv.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaSpotPublicRadioP = filaSpotPublicRadio.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaNroEmpadP = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaPromConveniosP = filaPromConvenios.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaRegFirmaConveniosP = filaRegFirmaConvenios.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaImpBanderolaP = filaImpBanderola.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					HSSFCell celdaNroAgentesP = filaNroAgentes.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
-					//LIMA
-					HSSFCell celdaImpEsqInvitacionL = filaImpEsqInvitacion.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaImpDeclJuradaL = filaImpDeclJurada.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaImpFichaVerifL = filaImpFichaVerif.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaRepEsqInvitacionL = filaRepEsqInvitacion.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaVerifInformacionL = filaVerifInformacion.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaElabArchBeneficiarioL = filaElabArchBeneficiario.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaDigitFichaBeneficiarioL = filaDigitFichaBeneficiario.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaImpVolantesL = filaImpVolantes.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaImpAficheL = filaImpAfiche.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaRepFolletosL = filaRepFolletos.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaSpotPublicTvL = filaSpotPublicTv.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaSpotPublicRadioL = filaSpotPublicRadio.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaNroEmpadL = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaPromConveniosL = filaPromConvenios.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaRegFirmaConveniosL = filaRegFirmaConvenios.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaImpBanderolaL = filaImpBanderola.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					HSSFCell celdaNroAgentesL = filaNroAgentes.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
-					
-					
-					//tipos
-					if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType() ){
-						formulario.setCodigoEmpresa(celdaEmpresa.toString());
-					}else if( HSSFCell.CELL_TYPE_FORMULA == celdaEmpresa.getCellType()  ){
-						formulario.setCodigoEmpresa(celdaEmpresa.getRichStringCellValue().toString());
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaEmpresa.getCellType()  ){
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30);
-					}else{
-						formulario.setCodigoEmpresa("");
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_40);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnio.getCellType()  ){
-						formulario.setAnioPresent(new Double(celdaAnio.getNumericCellValue()).longValue());
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnio.getCellType()  ){
-						formulario.setAnioPresent(0);
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_50);
-					}else{
-						formulario.setAnioPresent(0);
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_60);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaMes.getCellType()  ){
-						formulario.setMesPresent(new Double(celdaMes.getNumericCellValue()).longValue());
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaMes.getCellType()  ){
-						formulario.setMesPresent(0);
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70);
-					}else{
-						formulario.setMesPresent(0);
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_80);
-					}
-					//valores
-					//RURAL
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpEsqInvitacionR.getCellType()  ){
-						formulario.setImprEsqInvitR(new BigDecimal(celdaImpEsqInvitacionR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpEsqInvitacionR.getCellType()  ){
-						formulario.setImprEsqInvitR(new BigDecimal(0.00));
-					}else{
-						formulario.setImprEsqInvitR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpDeclJuradaR.getCellType()  ){
-						formulario.setImprDeclaJuradaR(new BigDecimal(celdaImpDeclJuradaR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpDeclJuradaR.getCellType()  ){
-						formulario.setImprDeclaJuradaR(new BigDecimal(0.00));
-					}else{
-						formulario.setImprDeclaJuradaR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifR.getCellType()  ){
-						formulario.setImprFichaVerifR(new BigDecimal(celdaImpFichaVerifR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifR.getCellType()  ){
-						formulario.setImprFichaVerifR(new BigDecimal(0.00));
-					}else{
-						formulario.setImprFichaVerifR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepEsqInvitacionR.getCellType()  ){
-						formulario.setRepartoEsqInvitR(new BigDecimal(celdaRepEsqInvitacionR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepEsqInvitacionR.getCellType()  ){
-						formulario.setRepartoEsqInvitR(new BigDecimal(0.00));
-					}else{
-						formulario.setRepartoEsqInvitR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaVerifInformacionR.getCellType()  ){
-						formulario.setVerifInfoR(new BigDecimal(celdaVerifInformacionR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaVerifInformacionR.getCellType()  ){
-						formulario.setVerifInfoR(new BigDecimal(0.00));
-					}else{
-						formulario.setVerifInfoR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaElabArchBeneficiarioR.getCellType()  ){
-						formulario.setElabArchivoBenefR(new BigDecimal(celdaElabArchBeneficiarioR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaElabArchBeneficiarioR.getCellType()  ){
-						formulario.setElabArchivoBenefR(new BigDecimal(0.00));
-					}else{
-						formulario.setElabArchivoBenefR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaDigitFichaBeneficiarioR.getCellType()  ){
-						formulario.setDigitFichaBenefR(new BigDecimal(celdaDigitFichaBeneficiarioR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaDigitFichaBeneficiarioR.getCellType()  ){
-						formulario.setDigitFichaBenefR(new BigDecimal(0.00));
-					}else{
-						formulario.setDigitFichaBenefR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpVolantesR.getCellType()  ){
-						formulario.setImprVolantesR(new BigDecimal(celdaImpVolantesR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpVolantesR.getCellType()  ){
-						formulario.setImprVolantesR(new BigDecimal(0.00));
-					}else{
-						formulario.setImprVolantesR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpAficheR.getCellType()  ){
-						formulario.setImprAfichesR(new BigDecimal(celdaImpAficheR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpAficheR.getCellType()  ){
-						formulario.setImprAfichesR(new BigDecimal(0.00));
-					}else{
-						formulario.setImprAfichesR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepFolletosR.getCellType()  ){
-						formulario.setRepFolletosR(new BigDecimal(celdaRepFolletosR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepFolletosR.getCellType()  ){
-						formulario.setRepFolletosR(new BigDecimal(0.00));
-					}else{
-						formulario.setRepFolletosR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicTvR.getCellType()  ){
-						formulario.setSpotPublTvR(new BigDecimal(celdaSpotPublicTvR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicTvR.getCellType()  ){
-						formulario.setSpotPublTvR(new BigDecimal(0.00));
-					}else{
-						formulario.setSpotPublTvR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicRadioR.getCellType()  ){
-						formulario.setSpotPublRadioR(new BigDecimal(celdaSpotPublicRadioR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicRadioR.getCellType()  ){
-						formulario.setSpotPublRadioR(new BigDecimal(0.00));
-					}else{
-						formulario.setSpotPublRadioR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadR.getCellType()  ){
-						formulario.setNroBenefEmpadR(new Double(celdaNroEmpadR.getNumericCellValue()).longValue());
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroEmpadR.getCellType()  ){
-						formulario.setNroBenefEmpadR(0);
-					}else{
-						formulario.setNroBenefEmpadR(0);
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					//agentes
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaPromConveniosR.getCellType()  ){
-						formulario.setPromConvAgentR(new BigDecimal(celdaPromConveniosR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaPromConveniosR.getCellType()  ){
-						formulario.setPromConvAgentR(new BigDecimal(0.00));
-					}else{
-						formulario.setPromConvAgentR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaRegFirmaConveniosR.getCellType()  ){
-						formulario.setRegConvAgentR(new BigDecimal(celdaRegFirmaConveniosR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaRegFirmaConveniosR.getCellType()  ){
-						formulario.setRegConvAgentR(new BigDecimal(0.00));
-					}else{
-						formulario.setRegConvAgentR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpBanderolaR.getCellType()  ){
-						formulario.setImpEntrBandR(new BigDecimal(celdaImpBanderolaR.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpBanderolaR.getCellType()  ){
-						formulario.setImpEntrBandR(new BigDecimal(0.00));
-					}else{
-						formulario.setImpEntrBandR(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroAgentesR.getCellType()  ){
-						formulario.setNroAgentR(new Double(celdaNroAgentesR.getNumericCellValue()).longValue());
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroAgentesR.getCellType()  ){
-						formulario.setNroAgentR(0);
-					}else{
-						formulario.setNroAgentR(0);
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_90);
-					}
-					
-					
-					//PROVINCIA
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpEsqInvitacionP.getCellType()  ){
-						formulario.setImprEsqInvitP(new BigDecimal(celdaImpEsqInvitacionP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpEsqInvitacionP.getCellType()  ){
-						formulario.setImprEsqInvitP(new BigDecimal(0.00));
-					}else{
-						formulario.setImprEsqInvitP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpDeclJuradaP.getCellType()  ){
-						formulario.setImprDeclaJuradaP(new BigDecimal(celdaImpDeclJuradaP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpDeclJuradaP.getCellType()  ){
-						formulario.setImprDeclaJuradaP(new BigDecimal(0.00));
-					}else{
-						formulario.setImprDeclaJuradaP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifP.getCellType()  ){
-						formulario.setImprFichaVerifP(new BigDecimal(celdaImpFichaVerifP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifP.getCellType()  ){
-						formulario.setImprFichaVerifP(new BigDecimal(0.00));
-					}else{
-						formulario.setImprFichaVerifP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepEsqInvitacionP.getCellType()  ){
-						formulario.setRepartoEsqInvitP(new BigDecimal(celdaRepEsqInvitacionP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepEsqInvitacionP.getCellType()  ){
-						formulario.setRepartoEsqInvitP(new BigDecimal(0.00));
-					}else{
-						formulario.setRepartoEsqInvitP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaVerifInformacionP.getCellType()  ){
-						formulario.setVerifInfoP(new BigDecimal(celdaVerifInformacionP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaVerifInformacionP.getCellType()  ){
-						formulario.setVerifInfoP(new BigDecimal(0.00));
-					}else{
-						formulario.setVerifInfoP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaElabArchBeneficiarioP.getCellType()  ){
-						formulario.setElabArchivoBenefP(new BigDecimal(celdaElabArchBeneficiarioP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaElabArchBeneficiarioP.getCellType()  ){
-						formulario.setElabArchivoBenefP(new BigDecimal(0.00));
-					}else{
-						formulario.setElabArchivoBenefP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaDigitFichaBeneficiarioP.getCellType()  ){
-						formulario.setDigitFichaBenefP(new BigDecimal(celdaDigitFichaBeneficiarioP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaDigitFichaBeneficiarioP.getCellType()  ){
-						formulario.setDigitFichaBenefP(new BigDecimal(0.00));
-					}else{
-						formulario.setDigitFichaBenefP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpVolantesP.getCellType()  ){
-						formulario.setImprVolantesP(new BigDecimal(celdaImpVolantesP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpVolantesP.getCellType()  ){
-						formulario.setImprVolantesP(new BigDecimal(0.00));
-					}else{
-						formulario.setImprVolantesP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpAficheP.getCellType()  ){
-						formulario.setImprAfichesP(new BigDecimal(celdaImpAficheP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpAficheR.getCellType()  ){
-						formulario.setImprAfichesP(new BigDecimal(0.00));
-					}else{
-						formulario.setImprAfichesP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepFolletosP.getCellType()  ){
-						formulario.setRepFolletosP(new BigDecimal(celdaRepFolletosP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepFolletosP.getCellType()  ){
-						formulario.setRepFolletosP(new BigDecimal(0.00));
-					}else{
-						formulario.setRepFolletosP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicTvP.getCellType()  ){
-						formulario.setSpotPublTvP(new BigDecimal(celdaSpotPublicTvP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicTvP.getCellType()  ){
-						formulario.setSpotPublTvP(new BigDecimal(0.00));
-					}else{
-						formulario.setSpotPublTvP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicRadioP.getCellType()  ){
-						formulario.setSpotPublRadioP(new BigDecimal(celdaSpotPublicRadioP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicRadioP.getCellType()  ){
-						formulario.setSpotPublRadioP(new BigDecimal(0.00));
-					}else{
-						formulario.setSpotPublRadioP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadP.getCellType()  ){
-						formulario.setNroBenefEmpadP(new Double(celdaNroEmpadP.getNumericCellValue()).longValue());
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroEmpadP.getCellType()  ){
-						formulario.setNroBenefEmpadP(0);
-					}else{
-						formulario.setNroBenefEmpadP(0);
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					//agentes
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaPromConveniosP.getCellType()  ){
-						formulario.setPromConvAgentP(new BigDecimal(celdaPromConveniosP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaPromConveniosP.getCellType()  ){
-						formulario.setPromConvAgentP(new BigDecimal(0.00));
-					}else{
-						formulario.setPromConvAgentP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaRegFirmaConveniosP.getCellType()  ){
-						formulario.setRegConvAgentP(new BigDecimal(celdaRegFirmaConveniosP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaRegFirmaConveniosP.getCellType()  ){
-						formulario.setRegConvAgentP(new BigDecimal(0.00));
-					}else{
-						formulario.setRegConvAgentP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpBanderolaP.getCellType()  ){
-						formulario.setImpEntrBandP(new BigDecimal(celdaImpBanderolaP.getNumericCellValue()));
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpBanderolaP.getCellType()  ){
-						formulario.setImpEntrBandP(new BigDecimal(0.00));
-					}else{
-						formulario.setImpEntrBandP(new BigDecimal(0.00));
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
-					}
-					if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroAgentesP.getCellType()  ){
-						formulario.setNroAgentP(new Double(celdaNroAgentesP.getNumericCellValue()).longValue());
-					}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroAgentesP.getCellType()  ){
-						formulario.setNroAgentP(0);
-					}else{
-						formulario.setNroAgentP(0);
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_90);
-					}
-					
-					if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
+					if(process){
+						
+						HSSFSheet hojaF14 = libro.getSheetAt(nroHojaSelec);
+						//int nroFilas = hojaF12.getLastRowNum()+1;
+						
+						HSSFRow filaEmpresa = hojaF14.getRow(FiseConstants.NRO_FILA_CODEMPRESA_FORMATO14A);						
+						HSSFRow filaAnioMes = hojaF14.getRow(FiseConstants.NRO_FILA_ANIOMES_FORMATO14A);	
+						
+						HSSFRow filaImpEsqInvitacion = hojaF14.getRow(FiseConstants.NRO_FILA_IMPESQINV_FORMATO14A);					
+						HSSFRow filaImpDeclJurada = hojaF14.getRow(FiseConstants.NRO_FILA_IMPDECLJURADA_FORMATO14A);					
+						HSSFRow filaImpFichaVerif = hojaF14.getRow(FiseConstants.NRO_FILA_IMPFICHAVERIF_FORMATO14A);				
+						HSSFRow filaRepEsqInvitacion = hojaF14.getRow(FiseConstants.NRO_FILA_REPESQINV_FORMATO14A);	
+						HSSFRow filaVerifInformacion = hojaF14.getRow(FiseConstants.NRO_FILA_VERIFINFO_FORMATO14A);
+						HSSFRow filaElabArchBeneficiario = hojaF14.getRow(FiseConstants.NRO_FILA_ELABARCHBENEF_FORMATO14A);
+						HSSFRow filaDigitFichaBeneficiario = hojaF14.getRow(FiseConstants.NRO_FILA_DIGITFICHABENEF_FORMATO14A);
+						HSSFRow filaImpVolantes = hojaF14.getRow(FiseConstants.NRO_FILA_IMPVOLANTES_FORMATO14A);
+						HSSFRow filaImpAfiche = hojaF14.getRow(FiseConstants.NRO_FILA_IMPAFICHES_FORMATO14A);
+						HSSFRow filaRepFolletos = hojaF14.getRow(FiseConstants.NRO_FILA_REPFOLLETOS_FORMATO14A);
+						HSSFRow filaSpotPublicTv = hojaF14.getRow(FiseConstants.NRO_FILA_SPOTPUBLICTV_FORMATO14A);
+						HSSFRow filaSpotPublicRadio = hojaF14.getRow(FiseConstants.NRO_FILA_SPOTPUBLICRADIO_FORMATO14A);
+						HSSFRow filaNroEmpad = hojaF14.getRow(FiseConstants.NRO_FILA_EMPAD_FORMATO14A);
+						HSSFRow filaPromConvenios = hojaF14.getRow(FiseConstants.NRO_FILA_PROMCONVENIOS_FORMATO14A);
+						HSSFRow filaRegFirmaConvenios = hojaF14.getRow(FiseConstants.NRO_FILA_REGFIRMACONV_FORMATO14A);
+						HSSFRow filaImpBanderola = hojaF14.getRow(FiseConstants.NRO_FILA_IMPENTBANDER_FORMATO14A);	
+						HSSFRow filaNroAgentes = hojaF14.getRow(FiseConstants.NRO_FILA_AGENTES_FORMATO14A);
+						
+						Formato14ACBean formulario = new Formato14ACBean();
+						
+						HSSFCell celdaEmpresa = filaEmpresa.getCell(FiseConstants.NRO_CELDA_EMPRESA_FORMATO14A);
+						HSSFCell celdaAnio = filaAnioMes.getCell(FiseConstants.NRO_CELDA_ANIO_FORMATO14A);
+						HSSFCell celdaMes = filaAnioMes.getCell(FiseConstants.NRO_CELDA_MES_FORMATO14A);
+						
+						HSSFCell celdaImpEsqInvitacionR = filaImpEsqInvitacion.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaImpDeclJuradaR = filaImpDeclJurada.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaImpFichaVerifR = filaImpFichaVerif.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaRepEsqInvitacionR = filaRepEsqInvitacion.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaVerifInformacionR = filaVerifInformacion.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaElabArchBeneficiarioR = filaElabArchBeneficiario.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaDigitFichaBeneficiarioR = filaDigitFichaBeneficiario.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaImpVolantesR = filaImpVolantes.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaImpAficheR = filaImpAfiche.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaRepFolletosR = filaRepFolletos.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaSpotPublicTvR = filaSpotPublicTv.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaSpotPublicRadioR = filaSpotPublicRadio.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaNroEmpadR = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaPromConveniosR = filaPromConvenios.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaRegFirmaConveniosR = filaRegFirmaConvenios.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaImpBanderolaR = filaImpBanderola.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						HSSFCell celdaNroAgentesR = filaNroAgentes.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO14A);
+						//PROVINCIA
+						HSSFCell celdaImpEsqInvitacionP = filaImpEsqInvitacion.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaImpDeclJuradaP = filaImpDeclJurada.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaImpFichaVerifP = filaImpFichaVerif.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaRepEsqInvitacionP = filaRepEsqInvitacion.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaVerifInformacionP = filaVerifInformacion.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaElabArchBeneficiarioP = filaElabArchBeneficiario.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaDigitFichaBeneficiarioP = filaDigitFichaBeneficiario.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaImpVolantesP = filaImpVolantes.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaImpAficheP = filaImpAfiche.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaRepFolletosP = filaRepFolletos.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaSpotPublicTvP = filaSpotPublicTv.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaSpotPublicRadioP = filaSpotPublicRadio.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaNroEmpadP = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaPromConveniosP = filaPromConvenios.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaRegFirmaConveniosP = filaRegFirmaConvenios.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaImpBanderolaP = filaImpBanderola.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
+						HSSFCell celdaNroAgentesP = filaNroAgentes.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO14A);
 						//LIMA
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpEsqInvitacionL.getCellType()  ){
-							formulario.setImprEsqInvitL(new BigDecimal(celdaImpEsqInvitacionL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpEsqInvitacionL.getCellType()  ){
-							formulario.setImprEsqInvitL(new BigDecimal(0.00));
-						}else{
-							formulario.setImprEsqInvitL(new BigDecimal(0.00));
+						HSSFCell celdaImpEsqInvitacionL = filaImpEsqInvitacion.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaImpDeclJuradaL = filaImpDeclJurada.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaImpFichaVerifL = filaImpFichaVerif.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaRepEsqInvitacionL = filaRepEsqInvitacion.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaVerifInformacionL = filaVerifInformacion.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaElabArchBeneficiarioL = filaElabArchBeneficiario.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaDigitFichaBeneficiarioL = filaDigitFichaBeneficiario.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaImpVolantesL = filaImpVolantes.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaImpAficheL = filaImpAfiche.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaRepFolletosL = filaRepFolletos.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaSpotPublicTvL = filaSpotPublicTv.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaSpotPublicRadioL = filaSpotPublicRadio.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaNroEmpadL = filaNroEmpad.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaPromConveniosL = filaPromConvenios.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaRegFirmaConveniosL = filaRegFirmaConvenios.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaImpBanderolaL = filaImpBanderola.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						HSSFCell celdaNroAgentesL = filaNroAgentes.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO14A);
+						
+						
+						//tipos
+						if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType() ){
+							formulario.setCodigoEmpresa(celdaEmpresa.toString());
+						}else if( HSSFCell.CELL_TYPE_FORMULA == celdaEmpresa.getCellType()  ){
+							formulario.setCodigoEmpresa(celdaEmpresa.getRichStringCellValue().toString());
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaEmpresa.getCellType()  ){
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1630);
+						}else{
+							formulario.setCodigoEmpresa("");
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1640);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpDeclJuradaL.getCellType()  ){
-							formulario.setImprDeclaJuradaL(new BigDecimal(celdaImpDeclJuradaL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpDeclJuradaL.getCellType()  ){
-							formulario.setImprDeclaJuradaL(new BigDecimal(0.00));
-						}else{
-							formulario.setImprDeclaJuradaL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnio.getCellType()  ){
+							formulario.setAnioPresent(new Double(celdaAnio.getNumericCellValue()).longValue());
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnio.getCellType()  ){
+							formulario.setAnioPresent(0);
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1650);
+						}else{
+							formulario.setAnioPresent(0);
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1660);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifL.getCellType()  ){
-							formulario.setImprFichaVerifL(new BigDecimal(celdaImpFichaVerifL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifL.getCellType()  ){
-							formulario.setImprFichaVerifL(new BigDecimal(0.00));
-						}else{
-							formulario.setImprFichaVerifL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaMes.getCellType()  ){
+							formulario.setMesPresent(new Double(celdaMes.getNumericCellValue()).longValue());
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaMes.getCellType()  ){
+							formulario.setMesPresent(0);
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1670);
+						}else{
+							formulario.setMesPresent(0);
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1680);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepEsqInvitacionL.getCellType()  ){
-							formulario.setRepartoEsqInvitL(new BigDecimal(celdaRepEsqInvitacionL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepEsqInvitacionL.getCellType()  ){
-							formulario.setRepartoEsqInvitL(new BigDecimal(0.00));
+						//valores
+						//RURAL
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpEsqInvitacionR.getCellType()  ){
+							formulario.setImprEsqInvitR(new BigDecimal(celdaImpEsqInvitacionR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpEsqInvitacionR.getCellType()  ){
+							formulario.setImprEsqInvitR(new BigDecimal(0.00));
 						}else{
-							formulario.setRepartoEsqInvitL(new BigDecimal(0.00));
+							formulario.setImprEsqInvitR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1690);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaVerifInformacionL.getCellType()  ){
-							formulario.setVerifInfoL(new BigDecimal(celdaVerifInformacionL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaVerifInformacionL.getCellType()  ){
-							formulario.setVerifInfoL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpDeclJuradaR.getCellType()  ){
+							formulario.setImprDeclaJuradaR(new BigDecimal(celdaImpDeclJuradaR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpDeclJuradaR.getCellType()  ){
+							formulario.setImprDeclaJuradaR(new BigDecimal(0.00));
 						}else{
-							formulario.setVerifInfoL(new BigDecimal(0.00));
+							formulario.setImprDeclaJuradaR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1700);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaElabArchBeneficiarioL.getCellType()  ){
-							formulario.setElabArchivoBenefL(new BigDecimal(celdaElabArchBeneficiarioL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaElabArchBeneficiarioL.getCellType()  ){
-							formulario.setElabArchivoBenefL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifR.getCellType()  ){
+							formulario.setImprFichaVerifR(new BigDecimal(celdaImpFichaVerifR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifR.getCellType()  ){
+							formulario.setImprFichaVerifR(new BigDecimal(0.00));
 						}else{
-							formulario.setElabArchivoBenefL(new BigDecimal(0.00));
+							formulario.setImprFichaVerifR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1710);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaDigitFichaBeneficiarioL.getCellType()  ){
-							formulario.setDigitFichaBenefL(new BigDecimal(celdaDigitFichaBeneficiarioL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaDigitFichaBeneficiarioL.getCellType()  ){
-							formulario.setDigitFichaBenefL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepEsqInvitacionR.getCellType()  ){
+							formulario.setRepartoEsqInvitR(new BigDecimal(celdaRepEsqInvitacionR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepEsqInvitacionR.getCellType()  ){
+							formulario.setRepartoEsqInvitR(new BigDecimal(0.00));
 						}else{
-							formulario.setDigitFichaBenefL(new BigDecimal(0.00));
+							formulario.setRepartoEsqInvitR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1720);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpVolantesL.getCellType()  ){
-							formulario.setImprVolantesL(new BigDecimal(celdaImpVolantesL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpVolantesL.getCellType()  ){
-							formulario.setImprVolantesL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaVerifInformacionR.getCellType()  ){
+							formulario.setVerifInfoR(new BigDecimal(celdaVerifInformacionR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaVerifInformacionR.getCellType()  ){
+							formulario.setVerifInfoR(new BigDecimal(0.00));
 						}else{
-							formulario.setImprVolantesL(new BigDecimal(0.00));
+							formulario.setVerifInfoR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1730);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpAficheL.getCellType()  ){
-							formulario.setImprAfichesL(new BigDecimal(celdaImpAficheL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpAficheL.getCellType()  ){
-							formulario.setImprAfichesL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaElabArchBeneficiarioR.getCellType()  ){
+							formulario.setElabArchivoBenefR(new BigDecimal(celdaElabArchBeneficiarioR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaElabArchBeneficiarioR.getCellType()  ){
+							formulario.setElabArchivoBenefR(new BigDecimal(0.00));
 						}else{
-							formulario.setImprAfichesL(new BigDecimal(0.00));
+							formulario.setElabArchivoBenefR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1740);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepFolletosL.getCellType()  ){
-							formulario.setRepFolletosL(new BigDecimal(celdaRepFolletosL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepFolletosL.getCellType()  ){
-							formulario.setRepFolletosL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaDigitFichaBeneficiarioR.getCellType()  ){
+							formulario.setDigitFichaBenefR(new BigDecimal(celdaDigitFichaBeneficiarioR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaDigitFichaBeneficiarioR.getCellType()  ){
+							formulario.setDigitFichaBenefR(new BigDecimal(0.00));
 						}else{
-							formulario.setRepFolletosL(new BigDecimal(0.00));
+							formulario.setDigitFichaBenefR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1750);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicTvL.getCellType()  ){
-							formulario.setSpotPublTvL(new BigDecimal(celdaSpotPublicTvL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicTvL.getCellType()  ){
-							formulario.setSpotPublTvL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpVolantesR.getCellType()  ){
+							formulario.setImprVolantesR(new BigDecimal(celdaImpVolantesR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpVolantesR.getCellType()  ){
+							formulario.setImprVolantesR(new BigDecimal(0.00));
 						}else{
-							formulario.setSpotPublTvL(new BigDecimal(0.00));
+							formulario.setImprVolantesR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1760);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicRadioL.getCellType()  ){
-							formulario.setSpotPublRadioL(new BigDecimal(celdaSpotPublicRadioL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicRadioL.getCellType()  ){
-							formulario.setSpotPublRadioL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpAficheR.getCellType()  ){
+							formulario.setImprAfichesR(new BigDecimal(celdaImpAficheR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpAficheR.getCellType()  ){
+							formulario.setImprAfichesR(new BigDecimal(0.00));
 						}else{
-							formulario.setSpotPublRadioL(new BigDecimal(0.00));
+							formulario.setImprAfichesR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1770);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadL.getCellType()  ){
-							formulario.setNroBenefEmpadL(new Double(celdaNroEmpadL.getNumericCellValue()).longValue());
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroEmpadL.getCellType()  ){
-							formulario.setNroBenefEmpadL(0);
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepFolletosR.getCellType()  ){
+							formulario.setRepFolletosR(new BigDecimal(celdaRepFolletosR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepFolletosR.getCellType()  ){
+							formulario.setRepFolletosR(new BigDecimal(0.00));
 						}else{
-							formulario.setNroBenefEmpadL(0);
+							formulario.setRepFolletosR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1780);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicTvR.getCellType()  ){
+							formulario.setSpotPublTvR(new BigDecimal(celdaSpotPublicTvR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicTvR.getCellType()  ){
+							formulario.setSpotPublTvR(new BigDecimal(0.00));
+						}else{
+							formulario.setSpotPublTvR(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1790);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicRadioR.getCellType()  ){
+							formulario.setSpotPublRadioR(new BigDecimal(celdaSpotPublicRadioR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicRadioR.getCellType()  ){
+							formulario.setSpotPublRadioR(new BigDecimal(0.00));
+						}else{
+							formulario.setSpotPublRadioR(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1790);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadR.getCellType()  ){
+							formulario.setNroBenefEmpadR(new Double(celdaNroEmpadR.getNumericCellValue()).longValue());
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroEmpadR.getCellType()  ){
+							formulario.setNroBenefEmpadR(0);
+						}else{
+							formulario.setNroBenefEmpadR(0);
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1800);
 						}
 						//agentes
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaPromConveniosL.getCellType()  ){
-							formulario.setPromConvAgentL(new BigDecimal(celdaPromConveniosL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaPromConveniosL.getCellType()  ){
-							formulario.setPromConvAgentL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaPromConveniosR.getCellType()  ){
+							formulario.setPromConvAgentR(new BigDecimal(celdaPromConveniosR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaPromConveniosR.getCellType()  ){
+							formulario.setPromConvAgentR(new BigDecimal(0.00));
 						}else{
-							formulario.setPromConvAgentL(new BigDecimal(0.00));
+							formulario.setPromConvAgentR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1810);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRegFirmaConveniosL.getCellType()  ){
-							formulario.setRegConvAgentL(new BigDecimal(celdaRegFirmaConveniosL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRegFirmaConveniosL.getCellType()  ){
-							formulario.setRegConvAgentL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRegFirmaConveniosR.getCellType()  ){
+							formulario.setRegConvAgentR(new BigDecimal(celdaRegFirmaConveniosR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRegFirmaConveniosR.getCellType()  ){
+							formulario.setRegConvAgentR(new BigDecimal(0.00));
 						}else{
-							formulario.setRegConvAgentL(new BigDecimal(0.00));
+							formulario.setRegConvAgentR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1820);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpBanderolaL.getCellType()  ){
-							formulario.setImpEntrBandL(new BigDecimal(celdaImpBanderolaL.getNumericCellValue()));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpBanderolaL.getCellType()  ){
-							formulario.setImpEntrBandL(new BigDecimal(0.00));
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpBanderolaR.getCellType()  ){
+							formulario.setImpEntrBandR(new BigDecimal(celdaImpBanderolaR.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpBanderolaR.getCellType()  ){
+							formulario.setImpEntrBandR(new BigDecimal(0.00));
 						}else{
-							formulario.setImpEntrBandL(new BigDecimal(0.00));
+							formulario.setImpEntrBandR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_150);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1830);
 						}
-						if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroAgentesL.getCellType()  ){
-							formulario.setNroAgentL(new Double(celdaNroAgentesL.getNumericCellValue()).longValue());
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroAgentesL.getCellType()  ){
-							formulario.setNroAgentL(0);
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroAgentesR.getCellType()  ){
+							formulario.setNroAgentR(new Double(celdaNroAgentesR.getNumericCellValue()).longValue());
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroAgentesR.getCellType()  ){
+							formulario.setNroAgentR(0);
 						}else{
-							formulario.setNroAgentL(0);
+							formulario.setNroAgentR(0);
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_90);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1840);
 						}
-					}
-					
-					
-					
-					
-					//VALIDACIONES DE OBLIGATOREIDAD
-					//validar que siempre que ingrese un valor en la comlumna si se ingreso otro valor
-					if( BigDecimal.ZERO.equals(formulario.getNroBenefEmpadR()) && !BigDecimal.ZERO.equals(formulario.getNroAgentR()) ){
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_300);
-					}else if( BigDecimal.ZERO.equals(formulario.getNroAgentR()) && !BigDecimal.ZERO.equals(formulario.getNroBenefEmpadR()) ){
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_310);
-					}
-					if( BigDecimal.ZERO.equals(formulario.getNroBenefEmpadP()) && !BigDecimal.ZERO.equals(formulario.getNroAgentP()) ){
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_320);
-					}else if( BigDecimal.ZERO.equals(formulario.getNroAgentP()) && !BigDecimal.ZERO.equals(formulario.getNroBenefEmpadP()) ){
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_330);
-					}
-					
-					if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
-						if( BigDecimal.ZERO.equals(formulario.getNroBenefEmpadL()) && !BigDecimal.ZERO.equals(formulario.getNroAgentL()) ){
-							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_340);
-						}else if( BigDecimal.ZERO.equals(formulario.getNroAgentL()) && !BigDecimal.ZERO.equals(formulario.getNroBenefEmpadL()) ){
-							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_350);
-						}
-					}
-					
-					
-					///
-					
-					/**verificar*/
-					formulario.setAnioInicioVigencia(Long.parseLong(anioIniVigencia));
-					formulario.setAnioFinVigencia(Long.parseLong(anioFinVigencia));
-					/***/
-					
-					if( FiseConstants.BLANCO.equals(sMsg) ){
 						
-						//
-						formulario.setUsuario(user.getLogin());
-						formulario.setTerminal(user.getLoginIP());
-						formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_XLS);
-						formulario.setNombreArchivo(archivo.getTitle());
-						//
-						if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
-								anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
-								Long.parseLong(mesPres) == formulario.getMesPresent() &&
-								anioIniVigencia.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&
-								anioFinVigencia.equals(String.valueOf(formulario.getAnioFinVigencia()))
-								){
-							if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO.equals(flagCarga) ){
-								objeto = formato14Service.registrarFormato14AC(formulario);
-							}else if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION.equals(flagCarga) ){
-								FiseFormato14AC formatoModif = new FiseFormato14AC();
-								FiseFormato14ACPK id = new FiseFormato14ACPK();
-								id.setCodEmpresa(formulario.getCodigoEmpresa());
-								id.setAnoPresentacion(formulario.getAnioPresent());
-								id.setMesPresentacion(formulario.getMesPresent());
-								id.setAnoInicioVigencia(formulario.getAnioInicioVigencia());
-								id.setAnoFinVigencia(formulario.getAnioFinVigencia());
-								id.setEtapa(FiseConstants.ETAPA_SOLICITUD);
-								formatoModif = formato14Service.obtenerFormato14ACByPK(id);
-								objeto = formato14Service.modificarFormato14AC(formulario, formatoModif);
-							}
-							
+						
+						//PROVINCIA
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpEsqInvitacionP.getCellType()  ){
+							formulario.setImprEsqInvitP(new BigDecimal(celdaImpEsqInvitacionP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpEsqInvitacionP.getCellType()  ){
+							formulario.setImprEsqInvitP(new BigDecimal(0.00));
 						}else{
+							formulario.setImprEsqInvitP(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_210);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1850);
 						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpDeclJuradaP.getCellType()  ){
+							formulario.setImprDeclaJuradaP(new BigDecimal(celdaImpDeclJuradaP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpDeclJuradaP.getCellType()  ){
+							formulario.setImprDeclaJuradaP(new BigDecimal(0.00));
+						}else{
+							formulario.setImprDeclaJuradaP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1860);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifP.getCellType()  ){
+							formulario.setImprFichaVerifP(new BigDecimal(celdaImpFichaVerifP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifP.getCellType()  ){
+							formulario.setImprFichaVerifP(new BigDecimal(0.00));
+						}else{
+							formulario.setImprFichaVerifP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1870);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepEsqInvitacionP.getCellType()  ){
+							formulario.setRepartoEsqInvitP(new BigDecimal(celdaRepEsqInvitacionP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepEsqInvitacionP.getCellType()  ){
+							formulario.setRepartoEsqInvitP(new BigDecimal(0.00));
+						}else{
+							formulario.setRepartoEsqInvitP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1880);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaVerifInformacionP.getCellType()  ){
+							formulario.setVerifInfoP(new BigDecimal(celdaVerifInformacionP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaVerifInformacionP.getCellType()  ){
+							formulario.setVerifInfoP(new BigDecimal(0.00));
+						}else{
+							formulario.setVerifInfoP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1890);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaElabArchBeneficiarioP.getCellType()  ){
+							formulario.setElabArchivoBenefP(new BigDecimal(celdaElabArchBeneficiarioP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaElabArchBeneficiarioP.getCellType()  ){
+							formulario.setElabArchivoBenefP(new BigDecimal(0.00));
+						}else{
+							formulario.setElabArchivoBenefP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1900);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaDigitFichaBeneficiarioP.getCellType()  ){
+							formulario.setDigitFichaBenefP(new BigDecimal(celdaDigitFichaBeneficiarioP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaDigitFichaBeneficiarioP.getCellType()  ){
+							formulario.setDigitFichaBenefP(new BigDecimal(0.00));
+						}else{
+							formulario.setDigitFichaBenefP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1910);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpVolantesP.getCellType()  ){
+							formulario.setImprVolantesP(new BigDecimal(celdaImpVolantesP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpVolantesP.getCellType()  ){
+							formulario.setImprVolantesP(new BigDecimal(0.00));
+						}else{
+							formulario.setImprVolantesP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1920);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpAficheP.getCellType()  ){
+							formulario.setImprAfichesP(new BigDecimal(celdaImpAficheP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpAficheR.getCellType()  ){
+							formulario.setImprAfichesP(new BigDecimal(0.00));
+						}else{
+							formulario.setImprAfichesP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1930);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepFolletosP.getCellType()  ){
+							formulario.setRepFolletosP(new BigDecimal(celdaRepFolletosP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepFolletosP.getCellType()  ){
+							formulario.setRepFolletosP(new BigDecimal(0.00));
+						}else{
+							formulario.setRepFolletosP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1940);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicTvP.getCellType()  ){
+							formulario.setSpotPublTvP(new BigDecimal(celdaSpotPublicTvP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicTvP.getCellType()  ){
+							formulario.setSpotPublTvP(new BigDecimal(0.00));
+						}else{
+							formulario.setSpotPublTvP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1950);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicRadioP.getCellType()  ){
+							formulario.setSpotPublRadioP(new BigDecimal(celdaSpotPublicRadioP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicRadioP.getCellType()  ){
+							formulario.setSpotPublRadioP(new BigDecimal(0.00));
+						}else{
+							formulario.setSpotPublRadioP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1950);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadP.getCellType()  ){
+							formulario.setNroBenefEmpadP(new Double(celdaNroEmpadP.getNumericCellValue()).longValue());
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroEmpadP.getCellType()  ){
+							formulario.setNroBenefEmpadP(0);
+						}else{
+							formulario.setNroBenefEmpadP(0);
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1960);
+						}
+						//agentes
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaPromConveniosP.getCellType()  ){
+							formulario.setPromConvAgentP(new BigDecimal(celdaPromConveniosP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaPromConveniosP.getCellType()  ){
+							formulario.setPromConvAgentP(new BigDecimal(0.00));
+						}else{
+							formulario.setPromConvAgentP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1970);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaRegFirmaConveniosP.getCellType()  ){
+							formulario.setRegConvAgentP(new BigDecimal(celdaRegFirmaConveniosP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaRegFirmaConveniosP.getCellType()  ){
+							formulario.setRegConvAgentP(new BigDecimal(0.00));
+						}else{
+							formulario.setRegConvAgentP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1980);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpBanderolaP.getCellType()  ){
+							formulario.setImpEntrBandP(new BigDecimal(celdaImpBanderolaP.getNumericCellValue()));
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpBanderolaP.getCellType()  ){
+							formulario.setImpEntrBandP(new BigDecimal(0.00));
+						}else{
+							formulario.setImpEntrBandP(new BigDecimal(0.00));
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1990);
+						}
+						if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroAgentesP.getCellType()  ){
+							formulario.setNroAgentP(new Double(celdaNroAgentesP.getNumericCellValue()).longValue());
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroAgentesP.getCellType()  ){
+							formulario.setNroAgentP(0);
+						}else{
+							formulario.setNroAgentP(0);
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2000);
+						}
+						
+						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
+							//LIMA
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpEsqInvitacionL.getCellType()  ){
+								formulario.setImprEsqInvitL(new BigDecimal(celdaImpEsqInvitacionL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpEsqInvitacionL.getCellType()  ){
+								formulario.setImprEsqInvitL(new BigDecimal(0.00));
+							}else{
+								formulario.setImprEsqInvitL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2010);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpDeclJuradaL.getCellType()  ){
+								formulario.setImprDeclaJuradaL(new BigDecimal(celdaImpDeclJuradaL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpDeclJuradaL.getCellType()  ){
+								formulario.setImprDeclaJuradaL(new BigDecimal(0.00));
+							}else{
+								formulario.setImprDeclaJuradaL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2020);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpFichaVerifL.getCellType()  ){
+								formulario.setImprFichaVerifL(new BigDecimal(celdaImpFichaVerifL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpFichaVerifL.getCellType()  ){
+								formulario.setImprFichaVerifL(new BigDecimal(0.00));
+							}else{
+								formulario.setImprFichaVerifL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2030);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepEsqInvitacionL.getCellType()  ){
+								formulario.setRepartoEsqInvitL(new BigDecimal(celdaRepEsqInvitacionL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepEsqInvitacionL.getCellType()  ){
+								formulario.setRepartoEsqInvitL(new BigDecimal(0.00));
+							}else{
+								formulario.setRepartoEsqInvitL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2040);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaVerifInformacionL.getCellType()  ){
+								formulario.setVerifInfoL(new BigDecimal(celdaVerifInformacionL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaVerifInformacionL.getCellType()  ){
+								formulario.setVerifInfoL(new BigDecimal(0.00));
+							}else{
+								formulario.setVerifInfoL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2050);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaElabArchBeneficiarioL.getCellType()  ){
+								formulario.setElabArchivoBenefL(new BigDecimal(celdaElabArchBeneficiarioL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaElabArchBeneficiarioL.getCellType()  ){
+								formulario.setElabArchivoBenefL(new BigDecimal(0.00));
+							}else{
+								formulario.setElabArchivoBenefL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2060);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaDigitFichaBeneficiarioL.getCellType()  ){
+								formulario.setDigitFichaBenefL(new BigDecimal(celdaDigitFichaBeneficiarioL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaDigitFichaBeneficiarioL.getCellType()  ){
+								formulario.setDigitFichaBenefL(new BigDecimal(0.00));
+							}else{
+								formulario.setDigitFichaBenefL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2070);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpVolantesL.getCellType()  ){
+								formulario.setImprVolantesL(new BigDecimal(celdaImpVolantesL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpVolantesL.getCellType()  ){
+								formulario.setImprVolantesL(new BigDecimal(0.00));
+							}else{
+								formulario.setImprVolantesL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2080);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpAficheL.getCellType()  ){
+								formulario.setImprAfichesL(new BigDecimal(celdaImpAficheL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpAficheL.getCellType()  ){
+								formulario.setImprAfichesL(new BigDecimal(0.00));
+							}else{
+								formulario.setImprAfichesL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2090);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaRepFolletosL.getCellType()  ){
+								formulario.setRepFolletosL(new BigDecimal(celdaRepFolletosL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaRepFolletosL.getCellType()  ){
+								formulario.setRepFolletosL(new BigDecimal(0.00));
+							}else{
+								formulario.setRepFolletosL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2100);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicTvL.getCellType()  ){
+								formulario.setSpotPublTvL(new BigDecimal(celdaSpotPublicTvL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicTvL.getCellType()  ){
+								formulario.setSpotPublTvL(new BigDecimal(0.00));
+							}else{
+								formulario.setSpotPublTvL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2110);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaSpotPublicRadioL.getCellType()  ){
+								formulario.setSpotPublRadioL(new BigDecimal(celdaSpotPublicRadioL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaSpotPublicRadioL.getCellType()  ){
+								formulario.setSpotPublRadioL(new BigDecimal(0.00));
+							}else{
+								formulario.setSpotPublRadioL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2110);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadL.getCellType()  ){
+								formulario.setNroBenefEmpadL(new Double(celdaNroEmpadL.getNumericCellValue()).longValue());
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroEmpadL.getCellType()  ){
+								formulario.setNroBenefEmpadL(0);
+							}else{
+								formulario.setNroBenefEmpadL(0);
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2120);
+							}
+							//agentes
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaPromConveniosL.getCellType()  ){
+								formulario.setPromConvAgentL(new BigDecimal(celdaPromConveniosL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaPromConveniosL.getCellType()  ){
+								formulario.setPromConvAgentL(new BigDecimal(0.00));
+							}else{
+								formulario.setPromConvAgentL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2130);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaRegFirmaConveniosL.getCellType()  ){
+								formulario.setRegConvAgentL(new BigDecimal(celdaRegFirmaConveniosL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaRegFirmaConveniosL.getCellType()  ){
+								formulario.setRegConvAgentL(new BigDecimal(0.00));
+							}else{
+								formulario.setRegConvAgentL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2140);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpBanderolaL.getCellType()  ){
+								formulario.setImpEntrBandL(new BigDecimal(celdaImpBanderolaL.getNumericCellValue()));
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpBanderolaL.getCellType()  ){
+								formulario.setImpEntrBandL(new BigDecimal(0.00));
+							}else{
+								formulario.setImpEntrBandL(new BigDecimal(0.00));
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2150);
+							}
+							if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroAgentesL.getCellType()  ){
+								formulario.setNroAgentL(new Double(celdaNroAgentesL.getNumericCellValue()).longValue());
+							}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroAgentesL.getCellType()  ){
+								formulario.setNroAgentL(0);
+							}else{
+								formulario.setNroAgentL(0);
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2160);
+							}
+						}
+						
+						
+						
+						
+						//VALIDACIONES DE OBLIGATOREIDAD
+						//validar que siempre que ingrese un valor en la comlumna si se ingreso otro valor
+						if( BigDecimal.ZERO.equals(formulario.getNroBenefEmpadR()) && !BigDecimal.ZERO.equals(formulario.getNroAgentR()) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2170);
+						}else if( BigDecimal.ZERO.equals(formulario.getNroAgentR()) && !BigDecimal.ZERO.equals(formulario.getNroBenefEmpadR()) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2180);
+						}
+						if( BigDecimal.ZERO.equals(formulario.getNroBenefEmpadP()) && !BigDecimal.ZERO.equals(formulario.getNroAgentP()) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2190);
+						}else if( BigDecimal.ZERO.equals(formulario.getNroAgentP()) && !BigDecimal.ZERO.equals(formulario.getNroBenefEmpadP()) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2200);
+						}
+						
+						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
+							if( BigDecimal.ZERO.equals(formulario.getNroBenefEmpadL()) && !BigDecimal.ZERO.equals(formulario.getNroAgentL()) ){
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2210);
+							}else if( BigDecimal.ZERO.equals(formulario.getNroAgentL()) && !BigDecimal.ZERO.equals(formulario.getNroBenefEmpadL()) ){
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2220);
+							}
+						}
+						
+						
+						///
+						
+						/**verificar*/
+						formulario.setAnioInicioVigencia(Long.parseLong(anioIniVigencia));
+						formulario.setAnioFinVigencia(Long.parseLong(anioFinVigencia));
+						/***/
+						
+						if( FiseConstants.BLANCO.equals(sMsg) ){
+							
+							//
+							formulario.setUsuario(user.getLogin());
+							formulario.setTerminal(user.getLoginIP());
+							formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_XLS);
+							formulario.setNombreArchivo(archivo.getTitle());
+							//
+							formulario.setEtapa(etapaEdit);
+							
+							if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+									anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
+									Long.parseLong(mesPres) == formulario.getMesPresent() &&
+									anioIniVigencia.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&
+									anioFinVigencia.equals(String.valueOf(formulario.getAnioFinVigencia()))
+									){
+								if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO.equals(flagCarga) ){
+									objeto = formato14Service.registrarFormato14AC(formulario);
+								}else if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION.equals(flagCarga) ){
+									FiseFormato14AC formatoModif = new FiseFormato14AC();
+									FiseFormato14ACPK id = new FiseFormato14ACPK();
+									id.setCodEmpresa(formulario.getCodigoEmpresa());
+									id.setAnoPresentacion(formulario.getAnioPresent());
+									id.setMesPresentacion(formulario.getMesPresent());
+									id.setAnoInicioVigencia(formulario.getAnioInicioVigencia());
+									id.setAnoFinVigencia(formulario.getAnioFinVigencia());
+									id.setEtapa(formulario.getEtapa());
+									formatoModif = formato14Service.obtenerFormato14ACByPK(id);
+									objeto = formato14Service.modificarFormato14AC(formulario, formatoModif);
+								}
+								
+							}else{
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2230);
+							}
+						}
+						
+					}else{
+						//--logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+						cont++;
+						sMsg = sMsg + "No se encuentra la hoja "+FiseConstants.NOMBRE_HOJA_FORMATO14A+" en el archivo cargado";
+						throw new Exception("No se encuentra la hoja "+FiseConstants.NOMBRE_HOJA_FORMATO14A+" en el archivo cargado");
 					}
 
 				}
@@ -1614,16 +1629,16 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 						listaDetalleTxt.add(sCurrentLine);
 					}else{
 						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_220);
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2240);
 					}
 				}else{
 					cont++;
-					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_230);
+					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2250);
 				}
 				sCurrentLine = br.readLine();
 				if( cont>3 ){
 					cont++;
-					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_240);
+					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2260);
 					break;
 				}
 			}
@@ -1648,7 +1663,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 						if( zonaSet.contains(zonaBenef) ){
 							process=false;
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_280);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2270);
 							break;
 						}else{
 							zonaSet.add(zonaBenef);
@@ -1657,7 +1672,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 					}else{
 						process=false;
 						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2280);
 						break;
 					}
 				}
@@ -1704,92 +1719,92 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 							if( !FormatoUtil.validarCampoLongTxt(zonaBenef) ){
 								//el campo Zona benef no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2300);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(impEsqInvit) ){
 								//el campo impEsqInvit no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2310);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(impDeclJurada) ){
 								//el campo impDeclJurada no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2320);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(impFichaVerif) ){
 								//el campo impFichaVerif no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2330);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(repEsqInvit) ){
 								//el campo repEsqInvit no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2340);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(verifInfo) ){
 								//el campo verifInfo no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2350);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(elabArch) ){
 								//el campo elabArch no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2360);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(digitFicha) ){
 								//el campo digitFicha no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2370);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(impVolantes) ){
 								//el campo impVolantes no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2380);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(impAfiches) ){
 								//el campo impAfiches no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2390);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(repFolletos) ){
 								//el campo repFolletos no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2400);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(spotPublicTv) ){
 								//el campo spotPublicTv no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(spotPublicRad) ){
 								//el campo spotPublicRad no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
 							}
 							if( !FormatoUtil.validarCampoLongTxt(nroBenef) ){
 								//el campo nroBenef no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2420);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(promConv) ){
 								//el campo promConv no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2430);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(regConv) ){
 								//el campo regConv no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2440);
 							}
 							if( !FormatoUtil.validarCampoBigDecimalTxt(impBander) ){
 								//el campo impBander no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2450);
 							}
 							if( !FormatoUtil.validarCampoLongTxt(nroAgentes) ){
 								//el campo nroAgentes no corresponde al tipo de dato correcto
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2460);
 							}
 							
 							//
@@ -1884,6 +1899,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 						formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
 						formulario.setNombreArchivo(archivo.getTitle());
 						//
+						formulario.setEtapa(etapaEdit);
 						
 						if( FiseConstants.BLANCO.equals(sMsg) ){
 							if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
@@ -1896,7 +1912,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 								id.setMesPresentacion(formulario.getMesPresent());
 								id.setAnoInicioVigencia(formulario.getAnioPresent());
 								id.setAnoFinVigencia(formulario.getAnioPresent());
-								id.setEtapa(FiseConstants.ETAPA_SOLICITUD);
+								id.setEtapa(formulario.getEtapa());
 								formatoModif = formato14Service.obtenerFormato14ACByPK(id);
 								objeto = formato14Service.modificarFormato14AC(formulario, formatoModif);
 							}
@@ -1904,7 +1920,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 						
 					}else{
 						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_270);
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2290);
 					}
 					
 				}

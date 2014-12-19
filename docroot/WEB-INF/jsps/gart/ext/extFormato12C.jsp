@@ -1757,7 +1757,7 @@ var formato12C= {
 			modal: true,
 			autoOpen: false,
 			buttons: {
-				'Imprimir Pdf': function() {
+				'Ver Acta': function() {
 					formato12C.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 					$(this).dialog("close");
 					formato12C.botonRegresarBusqueda.trigger('click');

@@ -1189,7 +1189,7 @@ var formato13A= {
 			modal: true,
 			autoOpen: false,
 			buttons: {
-				'Imprimir Pdf': function() {
+				'Ver Acta': function() {
 					formato13A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 					$(this).dialog("close");
 					formato13A.botonRegresarBusqueda.trigger('click');

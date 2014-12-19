@@ -2154,7 +2154,7 @@ var formato14A= {
 			modal: true,
 			autoOpen: false,
 			buttons: {
-				'Imprimir Pdf': function() {
+				'Ver Acta': function() {
 					formato14A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 					$( this ).dialog("close");
 					formato14A.divFormato.hide();

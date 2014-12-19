@@ -738,7 +738,7 @@ function initDialogs(){
 		modal: true,
 		autoOpen: false,
 		buttons: {
-			'Imprimir Pdf': function() {
+			'Ver Acta': function() {
 				<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 				$( this ).dialog("close");
 				$("#div_formato").hide();
