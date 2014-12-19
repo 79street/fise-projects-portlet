@@ -1400,11 +1400,45 @@ function mostrarPeriodoEjecucion(){
 //////CARGAR ARCHIVO EXCEL
 function <portlet:namespace/>cargarFormatoExcel(){
 	var frm = document.getElementById('form-formatofise12a');
-	frm.submit();
+	var nameFile=$("#archivoExcel").val();
+	var isSubmit=true;
+	
+	$("#msjFileExcel").html("");
+	if(typeof (nameFile) == "undefined" || nameFile.length==0){
+		isSubmit=false;
+		$("#msjFileExcel").html("Debe seleccionar un archivo");
+	}else{
+		isSubmit=true;
+		$("#msjFileExcel").html("");
+	}
+	if(isSubmit){
+		frm.submit();
+	}
+	//frm.submit();
 }
 function <portlet:namespace/>cargarFormatoTexto(){
 	var frm = document.getElementById('form-formatofise12a');
-	frm.submit();
+	var nameFile=$("#archivoTxt").val();
+	var isSubmit=true;
+	
+	$("#msjFileTxt").html("");
+	if(typeof (nameFile) == "undefined" || nameFile.length==0){
+		isSubmit=false;
+		$("#msjFileTxt").html("Debe seleccionar un archivo");
+	}else{
+		isSubmit=true;
+		$("#msjFileTxt").html("");
+	}
+	if(isSubmit){
+		frm.submit();
+	}
+	//frm.submit();
+}
+function iniciarMensajeExcel(){
+	$("#msjFileExcel").html("");
+}
+function iniciarMensajeTxt(){
+	$("#msjFileTxt").html("");
 }
 
 function <portlet:namespace/>mostrarFormularioCargaExcel(){
@@ -1420,10 +1454,12 @@ function <portlet:namespace/>mostrarFormularioCargaExcel(){
 	        'left': ($(window).width() / 2 - $("#dialog-form-cargaExcel").width() / 2) + 'px', 
 	        'top': ($(window).height()  - $("#dialog-form-cargaExcel").height() ) + 'px'
 	    });
+	    iniciarMensajeExcel();
 	}
 }
 function regresarFormularioCargaExcel(){
 	$('#flagCarga').val('');
+	iniciarMensajeExcel();
 	$("#dialog-form-cargaExcel").hide();
 	$('#divOverlay').hide();   
 }
@@ -1440,10 +1476,12 @@ function <portlet:namespace/>mostrarFormularioCargaTexto(){
 	        'left': ($(window).width() / 2 - $("#dialog-form-cargaTexto").width() / 2) + 'px', 
 	        'top': ($(window).height() - $("#dialog-form-cargaTexto").height() ) + 'px'
 	    });
+	    iniciarMensajeTxt();
 	}
 }
 function regresarFormularioCargaTexto(){
 	$('#flagCarga').val('');
+	iniciarMensajeTxt();
 	$("#dialog-form-cargaTexto").hide();
 	$('#divOverlay').hide();   
 }

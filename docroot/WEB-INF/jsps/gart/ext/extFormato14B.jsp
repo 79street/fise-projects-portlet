@@ -1809,11 +1809,39 @@ var formato14B= {
 	////
 	<portlet:namespace/>cargarFormatoExcel : function(){
 		var frm = document.getElementById('formato14BCBean');
-		frm.submit();
+		var nameFile=$("#archivoExcel").val();
+		var isSubmit=true;
+		
+		$("#msjFileExcel").html("");
+		if(typeof (nameFile) == "undefined" || nameFile.length==0){
+			isSubmit=false;
+			$("#msjFileExcel").html("Debe seleccionar un archivo");
+		}else{
+			isSubmit=true;
+			$("#msjFileExcel").html("");
+		}
+		if(isSubmit){
+			frm.submit();
+		}
+		//frm.submit();
 	},
 	<portlet:namespace/>cargarFormatoTexto : function(){
 		var frm = document.getElementById('formato14BCBean');
-		frm.submit();
+		var nameFile=$("#archivoTxt").val();
+		var isSubmit=true;
+		
+		$("#msjFileTxt").html("");
+		if(typeof (nameFile) == "undefined" || nameFile.length==0){
+			isSubmit=false;
+			$("#msjFileTxt").html("Debe seleccionar un archivo");
+		}else{
+			isSubmit=true;
+			$("#msjFileTxt").html("");
+		}
+		if(isSubmit){
+			frm.submit();
+		}
+		//frm.submit();
 	},
 	<portlet:namespace/>mostrarFormularioCargaExcel : function(){
 		if (formato14B.validarArchivoCarga()){
@@ -1829,10 +1857,12 @@ var formato14B= {
 		        'left': ($(window).width() / 2 - formato14B.dialogCargaExcel.width() / 2) + 'px', 
 		        'top': ($(window).height()  - formato14B.dialogCargaExcel.height() ) + 'px'
 		    });
+		    formato14B.iniciarMensajeExcel();
 		}
 	},
 	regresarFormularioCargaExcel : function(){
 		formato14B.flagCarga.val('');
+		formato14B.iniciarMensajeExcel();
 		formato14B.dialogCargaExcel.hide();
 		formato14B.divOverlay.hide();   
 	},
@@ -1849,12 +1879,20 @@ var formato14B= {
 		        'left': ($(window).width() / 2 - formato14B.dialogCargaTexto.width() / 2) + 'px', 
 		        'top': ($(window).height() - formato14B.dialogCargaTexto.height() ) + 'px'
 		    });
+			formato14B.iniciarMensajeTxt();
 		}
 	},
 	regresarFormularioCargaTexto : function(){
 		formato14B.flagCarga.val('');
+		formato14B.iniciarMensajeTxt();
 		formato14B.dialogCargaTexto.hide();
 		formato14B.divOverlay.hide();   
+	},
+	iniciarMensajeExcel : function(){
+		$("#msjFileExcel").html("");
+	},
+	iniciarMensajeTxt : function(){
+		$("#msjFileTxt").html("");
 	},
 	<portlet:namespace/>mostrarReportePdf : function(){
 		jQuery.ajax({

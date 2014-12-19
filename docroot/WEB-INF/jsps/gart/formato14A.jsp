@@ -790,12 +790,18 @@ $(document).ready(function () {
 						<fieldset class="">
 							<table style="width: 100%;">
 								<tr>
-									<td></td>
+									<td colspan="2"></td>
 								</tr>
 								<tr>
 									<td>Archivo:</td>
-									<td><input type="file" id="archivoExcel"
+									<td><input type="file" id="archivoExcel" onclick="formato14A.iniciarMensajeExcel();"
 										name="archivoExcel" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" height="10px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><span id="msjFileExcel" style="color: red;"></span></td>
 								</tr>
 							</table>
 						</fieldset>
@@ -833,8 +839,14 @@ $(document).ready(function () {
 								</tr>
 								<tr>
 									<td>Archivo:</td>
-									<td><input type="file" id="archivoTxt" name="archivoTxt" />
+									<td><input type="file" id="archivoTxt" name="archivoTxt" onclick="formato14A.iniciarMensajeTxt();" />
 									</td>
+								</tr>
+								<tr>
+									<td colspan="2" height="10px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><span id="msjFileTxt" style="color: red;"></span></td>
 								</tr>
 							</table>
 						</fieldset>

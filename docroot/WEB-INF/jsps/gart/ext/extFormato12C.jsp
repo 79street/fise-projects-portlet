@@ -1446,15 +1446,31 @@ var formato12C= {
 	        'left': ($(window).width() / 2 - formato12C.dialogCargaExcel.width() / 2) + 'px', 
 	        'top': ($(window).height()  - formato12C.dialogCargaExcel.height() ) + 'px'
 	    });
+		formato12C.iniciarMensajeExcel();
 	},
 	
 	closeDialogCargaExcel : function(){
+		formato12C.iniciarMensajeExcel();
 		formato12C.dialogCargaExcel.hide();
 		formato12C.divOverlay.hide();   
 	},
 	
 	<portlet:namespace/>cargarFormatoExcel : function(){
-		formato12C.formNuevo.submit();
+		var nameFile=$("#archivoExcel").val();
+		var isSubmit=true;
+		
+		$("#msjFileExcel").html("");
+		if(typeof (nameFile) == "undefined" || nameFile.length==0){
+			isSubmit=false;
+			$("#msjFileExcel").html("Debe seleccionar un archivo");
+		}else{
+			isSubmit=true;
+			$("#msjFileExcel").html("");
+		}
+		if(isSubmit){
+			formato12C.formNuevo.submit();
+		}
+		//formato12C.formNuevo.submit();
 		//formato12C.formNuevo.attr().submit();
 	},
 	
@@ -1472,19 +1488,40 @@ var formato12C= {
 	        'left': ($(window).width() / 2 - formato12C.dialogCargaTexto.width() / 2) + 'px', 
 	        'top': ($(window).height()  - formato12C.dialogCargaTexto.height() ) + 'px'
 	    });
+		formato12C.iniciarMensajeTxt();
 	},
 	
 	closeDialogCargaTxt : function(){
+		formato12C.iniciarMensajeTxt();
 		formato12C.dialogCargaTexto.hide();
 		formato12C.divOverlay.hide();   
 	},
 	
 	<portlet:namespace/>cargarFormatoTxt : function(){
-		formato12C.formNuevo.submit();
+		var nameFile=$("#archivoTxt").val();
+		var isSubmit=true;
+		
+		$("#msjFileTxt").html("");
+		if(typeof (nameFile) == "undefined" || nameFile.length==0){
+			isSubmit=false;
+			$("#msjFileTxt").html("Debe seleccionar un archivo");
+		}else{
+			isSubmit=true;
+			$("#msjFileTxt").html("");
+		}
+		if(isSubmit){
+			formato12C.formNuevo.submit();
+		}
+		//formato12C.formNuevo.submit();
 		//formato12C.formNuevo.attr().submit();
 	},
 
-	
+	iniciarMensajeExcel : function(){
+		$("#msjFileExcel").html("");
+	},
+	iniciarMensajeTxt : function(){
+		$("#msjFileTxt").html("");
+	},
 	
 	emptySelectObject: function(){
 		var jsonVacio='[{"descripcionItem":"--Seleccione--","codigoItem":""}]';

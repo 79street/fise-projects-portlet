@@ -729,8 +729,14 @@
 								<tr>
 									<td>Archivo:</td>
 									<td>
-										<input  type="file" id="archivoExcel"name="archivoExcel"/>
+										<input  type="file" id="archivoExcel"name="archivoExcel" onclick="iniciarMensajeExcel();" />
 									</td>
+								</tr>
+								<tr>
+									<td colspan="2" height="10px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><span id="msjFileExcel" style="color: red;"></span></td>
 								</tr>
 							</table>
 						</fieldset>
@@ -763,13 +769,19 @@
 							<fieldset class="">
 							<table style="width:100%;">
 								<tr>
-									<td></td>
+									<td colspan="2"></td>
 								</tr>
 								<tr>
 									<td>Archivo:</td>
 									<td>
-										<input  type="file" id="archivoTxt"name="archivoTxt"/>
+										<input  type="file" id="archivoTxt"name="archivoTxt" onclick="iniciarMensajeTxt();"/>
 									</td>
+								</tr>
+								<tr>
+									<td height="10px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><span id="msjFileTxt" style="color: red;"></span></td>
 								</tr>
 							</table>
 						</fieldset>
