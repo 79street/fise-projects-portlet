@@ -171,8 +171,12 @@ public class Formato12BGartController {
 			JSONArray jsonArray = null;
 			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);
 			HttpSession session = req.getSession();
-
-			List<FiseFormato12BC> lstFise = formatoService.getLstFormatoCabecera(command.getCodEmpresaBusqueda(), command.getAnioInicio(), command.getMesInicio(), command.getAnioFin(), command.getMesFin(), command.getEtapaBusqueda());
+            String codEmp=command.getCodEmpresaBusqueda()!=null?command.getCodEmpresaBusqueda().trim():null;
+            
+            if(command!=null){
+            	System.out.println("comman difente de nulo");
+            }
+			List<FiseFormato12BC> lstFise = formatoService.getLstFormatoCabecera(codEmp, command.getAnioInicio(), command.getMesInicio(), command.getAnioFin(), command.getMesFin(), command.getEtapaBusqueda());
 
 			if (lstFise != null && !lstFise.isEmpty()) {
 				List<Formato12BGartCommand> lstCommand = Formato12BGartCommand.toListCommandCabecera(lstFise);
@@ -944,6 +948,7 @@ public class Formato12BGartController {
 					List<FiseFormato12BD> lstDetalle = Formato12BGartCommand.toBeanDetalle(command);
 					if (lstDetalle != null && !lstDetalle.isEmpty()) {
 						for (FiseFormato12BD dtll : lstDetalle) {
+							System.out.println("costo Total digitales:::"+dtll.getCostoTotalCanjeLiqValeDig());
 							dtll.setUsuarioCreacion(result.getUsuarioCreacion());
 							 dtll.setTerminalCreacion(result.getTerminalCreacion());
 							 dtll.setFechaCreacion(result.getFechaCreacion());
