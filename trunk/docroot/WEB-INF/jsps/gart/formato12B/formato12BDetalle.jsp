@@ -577,17 +577,17 @@
 										<td align="center"><form:input
 												path="numeroValesDigitalCanjeados" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesDigitalCanjeados')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDig,formato12B.txtnroValesDigitalCanjeados,formato12B.txtEtndrUnitValDgCan,'costoEstandarUnitValDgCan','costoEstandarUnitValDgCan','porValesDigitales');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDig,formato12B.txtnroValesDigitalCanjeados,formato12B.txtEtndrUnitValDgCan,'costoTotalCanjeLiqValeDig','costoTotalCanjeLiqValeDig','porValesDigitales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesDigitalCanjeadosProv" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesDigitalCanjeadosProv')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigProv,formato12B.txtnroValesDigitalCanjeadosProv,formato12B.txtEtndrUnitValDgCanProv,'costoEstandarUnitValDgCanProv','costoEstandarUnitValDgCan','porValesDigitales');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigProv,formato12B.txtnroValesDigitalCanjeadosProv,formato12B.txtEtndrUnitValDgCanProv,'costoTotalCanjeLiqValeDigProv','costoTotalCanjeLiqValeDig','porValesDigitales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesDigitalCanjeadosLim" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesDigitalCanjeadosLim')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigLim,formato12B.txtnroValesDigitalCanjeadosLim,formato12B.txtEtndrUnitValDgCanLim,'costoEstandarUnitValDgCanLim','costoEstandarUnitValDgCan','porValesDigitales');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigLim,formato12B.txtnroValesDigitalCanjeadosLim,formato12B.txtEtndrUnitValDgCanLim,'costoTotalCanjeLiqValeDigLim','costoTotalCanjeLiqValeDig','porValesDigitales');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>

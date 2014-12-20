@@ -944,7 +944,8 @@ public class Formato12BGartController {
 					result.setTerminalActualizacion(command.getTerminalActualizacion());
 					result.setFechaActualizacion(new Date());
 					formatoService.updateFormatoCabecera(result);
-						
+					System.out.println("antes de setear costo Total digitales:::"+command.getCostoTotalCanjeLiqValeDig());
+					
 					List<FiseFormato12BD> lstDetalle = Formato12BGartCommand.toBeanDetalle(command);
 					if (lstDetalle != null && !lstDetalle.isEmpty()) {
 						for (FiseFormato12BD dtll : lstDetalle) {
