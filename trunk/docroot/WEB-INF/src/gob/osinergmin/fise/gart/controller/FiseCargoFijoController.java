@@ -81,7 +81,9 @@ public class FiseCargoFijoController {
     		c.setListaMes(fiseUtil.getMapaMeses());
     		c.setAnioRepBusq(fiseUtil.obtenerNroAnioFechaActual());
     		
-    		model.addAttribute("model", c);   
+    		model.addAttribute("model", c); 
+    		
+    		model.addAttribute("flagEditar", "false");
     		
 		} catch (Exception e) {
 			logger.info("Ocurrio un errror al caragar la pagina cargos fijos"); 
@@ -142,7 +144,7 @@ public class FiseCargoFijoController {
   				}else{
   					cargo.setAplicaIgv("NO");			
   				}
-  				
+  				logger.info("pasando todo ok en busqueda"); 
   				listaCargoExel.add(cargo);
   			}   			
   			
@@ -256,8 +258,15 @@ public class FiseCargoFijoController {
 			logger.info("codEmpresa:  "+ c.getCodEmpresa()); 
 			logger.info("anio:  "+ c.getAnioRepBusq());		
 			logger.info("mes:  "+ c.getMesRep());
+			logger.info("flag editar:  "+ c.getFlagEditar());
 			
 			c= fiseCargoFijoService.buscarFiseCargoFijoEditar(c.getCodEmpresa(), c.getAnioRepBusq(), c.getMesRep());
+			
+			if("E".equals(c.getFlagEditar())){ 
+				model.addAttribute("flagEditar", "false");	
+			}else{
+				model.addAttribute("flagEditar", "true");
+			}
 			
 			data = toStringJSON(c);						
 			response.setContentType("application/json");

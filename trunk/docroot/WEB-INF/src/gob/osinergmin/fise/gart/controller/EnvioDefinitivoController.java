@@ -1186,14 +1186,14 @@ public class EnvioDefinitivoController {
   	  		        		formato12A.getId().getEtapa(), 
   	  		        		FechaUtil.fecha_DD_MM_YYYY(formato12A.getFechaEnvioDefinitivo()));
   	  		        if(cumplePlazo ){
-  	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12A", dirCheckedImage);
+  	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12A", dirCheckedImage);//dirUncheckedImage
   	  		        }else{
-  	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12A", dirUncheckedImage);
+  	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12A", dirUncheckedImage);//dirCheckedImage
   	  		        }
   	  		        if(listaObs12A!=null && !listaObs12A.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirCheckedImage);
-  	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirUncheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirCheckedImage);
   	  		        }     		 
   	  		        formatos = formatos+" FISE 12A ";
   	  		        mapa.put("NAMEF12A", "FISE 12A"); 	     		  
@@ -1227,9 +1227,9 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12B", dirUncheckedImage);
   	  		        }
   	  		        if(listaObs12B!=null && !listaObs12B.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirCheckedImage);
-  	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirUncheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirCheckedImage);
   	  		        }     		 
   	  		        formatos = formatos+" FISE 12B ";
   	  		        mapa.put("NAMEF12B", "FISE 12B"); 	     		  
@@ -1261,9 +1261,9 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12C", dirUncheckedImage);
   	  		        }
   	  		        if(listaObs12C!=null && !listaObs12C.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirCheckedImage);
-  	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirUncheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirCheckedImage);
   	  		        }     		 
   	  		        formatos = formatos+" FISE 12C ";
   	  		        mapa.put("NAMEF12C", "FISE 12C"); 	     		  
@@ -1295,9 +1295,9 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12D", dirUncheckedImage);
   	  		        }
   	  		        if(listaObs12D!=null && !listaObs12D.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirCheckedImage);
-  	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirUncheckedImage);
+  	  		        }else{
+  	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirCheckedImage);
   	  		        }     		 
   	  		        formatos = formatos+" FISE 12D ";
   	  		        mapa.put("NAMEF12D", "FISE 12D"); 	     		  

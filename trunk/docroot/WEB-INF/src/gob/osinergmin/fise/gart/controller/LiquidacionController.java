@@ -58,6 +58,7 @@ import gob.osinergmin.fise.gart.service.Formato13AGartService;
 import gob.osinergmin.fise.gart.service.Formato14AGartService;
 import gob.osinergmin.fise.gart.service.Formato14BGartService;
 import gob.osinergmin.fise.gart.service.Formato14CGartService;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -224,7 +225,9 @@ public class LiquidacionController {
 			String optionFormato = l.getOptionFormato();
 			String idGrupoInf = l.getGrupoInfBusq();
 			String flagBusq = l.getFlagBusq();
-		    
+			
+			long idGrupo=0;
+			
 			String usuario = themeDisplay.getUser().getLogin();
 		    String terminal = themeDisplay.getUser().getLoginIP();
 		    
@@ -234,8 +237,11 @@ public class LiquidacionController {
   			logger.info("Option formato "+ optionFormato);
   			logger.info("flag busqueda "+ flagBusq);
   			
+  			if(FormatoUtil.isNotBlank(l.getGrupoInfBusq())){ 
+		    	idGrupo = new Long(idGrupoInf);
+		    }
   			List<LiquidacionBean> lista =liquidacionService.listarLiquidaciones(codEmpresa, 
-  					new Long(idGrupoInf), usuario, terminal,flagBusq);		
+  					idGrupo, usuario, terminal,flagBusq);		
   			
   			logger.info("tamaño de la lista envio Defin..   :"+lista.size());
   			
