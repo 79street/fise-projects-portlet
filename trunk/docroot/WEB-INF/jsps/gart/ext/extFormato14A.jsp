@@ -1314,54 +1314,65 @@ var formato14A= {
 		});	
 	},
 	editarFormato : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa,flagOperacion){	
+		var admin = '${formato14ACBean.admin}';
 		if(flagOperacion=='ABIERTO'){
-			$.blockUI({ message: formato14A.mensajeObteniendoDatos });
-			jQuery.ajax({
-					url: formato14A.urlCrud+'&'+formato14A.formCommand.serialize(),
-					type: 'post',
-					dataType: 'json',
-					data: {
-					   <portlet:namespace />tipo: "GET",
-					   <portlet:namespace />codEmpresa: codEmpresa,
-					   <portlet:namespace />anoPresentacion: anoPresentacion,
-					   <portlet:namespace />mesPresentacion: mesPresentacion,
-					   <portlet:namespace />anoIniVigencia: anoIniVigencia,
-					   <portlet:namespace />anoFinVigencia: anoFinVigencia,
-					   <portlet:namespace />etapa: etapa
-						},
-					success: function(data) {				
-						if (data.resultado == "OK"){
-							formato14A.procesoEstado.val("UPDATE");
-							formato14A.etapaEdit.val(etapa);
-							formato14A.divFormato.show();
-							formato14A.divHome.hide();
-							formato14A.divInformacion.show();
-							//dwr.util.removeAllOptions("periodoEnvio");
-							//dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
-							formato14A.FillEditformato(data.formato);
-							
-							formato14A.estiloEdicionRural();
-							formato14A.estiloEdicionProvincia();
-							
-							//validar lima edelnor y luz del sur
-							if(formato14A.cod_empresa_edelnor.val()==formato14A.f_empresa.val() || formato14A.cod_empresa_luz_sur.val()==formato14A.f_empresa.val()){
-								formato14A.habilitarLima();										
-							}else{
-								formato14A.deshabilitarLima();
+			//control para tipo de usuario
+			var process=true;
+			if( etapa=='RECONOCIDO' || !admin ){
+				process = false;
+			}
+			if(process){
+				$.blockUI({ message: formato14A.mensajeObteniendoDatos });
+				jQuery.ajax({
+						url: formato14A.urlCrud+'&'+formato14A.formCommand.serialize(),
+						type: 'post',
+						dataType: 'json',
+						data: {
+						   <portlet:namespace />tipo: "GET",
+						   <portlet:namespace />codEmpresa: codEmpresa,
+						   <portlet:namespace />anoPresentacion: anoPresentacion,
+						   <portlet:namespace />mesPresentacion: mesPresentacion,
+						   <portlet:namespace />anoIniVigencia: anoIniVigencia,
+						   <portlet:namespace />anoFinVigencia: anoFinVigencia,
+						   <portlet:namespace />etapa: etapa
+							},
+						success: function(data) {				
+							if (data.resultado == "OK"){
+								formato14A.procesoEstado.val("UPDATE");
+								formato14A.etapaEdit.val(etapa);
+								formato14A.divFormato.show();
+								formato14A.divHome.hide();
+								formato14A.divInformacion.show();
+								//dwr.util.removeAllOptions("periodoEnvio");
+								//dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
+								formato14A.FillEditformato(data.formato);
+								
+								formato14A.estiloEdicionRural();
+								formato14A.estiloEdicionProvincia();
+								
+								//validar lima edelnor y luz del sur
+								if(formato14A.cod_empresa_edelnor.val()==formato14A.f_empresa.val() || formato14A.cod_empresa_luz_sur.val()==formato14A.f_empresa.val()){
+									formato14A.habilitarLima();										
+								}else{
+									formato14A.deshabilitarLima();
+								}
+								formato14A.initBlockUI();
 							}
+							else{
+								alert("Error al recuperar los datos del registro seleccionado");
+								formato14A.initBlockUI();
+							}
+						},error : function(){
+							alert("Error de conexión.");
 							formato14A.initBlockUI();
 						}
-						else{
-							alert("Error al recuperar los datos del registro seleccionado");
-							formato14A.initBlockUI();
-						}
-					},error : function(){
-						alert("Error de conexión.");
-						formato14A.initBlockUI();
-					}
-			});
+				});
+			}else{
+				alert(" No tiene autorización para realizar esta operación");
+			}
+
 		}else if(flagOperacion=='CERRADO'){
-			alert(" No esta habilitado para realizar esta operacion");	
+			alert(" Está fuera de plazo");
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
@@ -1529,18 +1540,29 @@ var formato14A= {
 		}
 	},
 	confirmarEliminar : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa,flagOperacion){
+		var admin = '${formato14ACBean.admin}';
 		if(flagOperacion=='ABIERTO'){
-			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-			formato14A.dialogConfirmContent.html(addhtml);
-			formato14A.dialogConfirm.dialog("open");
-			cod_Empresa=codEmpresa;
-			ano_Presentacion=anoPresentacion;
-			mes_Presentacion=mesPresentacion;
-			ano_Inicio_Vigencia=anoIniVigencia;
-			ano_Fin_Vigencia=anoFinVigencia;
-			cod_Etapa=etapa;
+			//control para tipo de usuario
+			var process=true;
+			if( etapa=='RECONOCIDO' || !admin ){
+				process = false;
+			}
+			if(process){
+				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				formato14A.dialogConfirmContent.html(addhtml);
+				formato14A.dialogConfirm.dialog("open");
+				cod_Empresa=codEmpresa;
+				ano_Presentacion=anoPresentacion;
+				mes_Presentacion=mesPresentacion;
+				ano_Inicio_Vigencia=anoIniVigencia;
+				ano_Fin_Vigencia=anoFinVigencia;
+				cod_Etapa=etapa;
+			}else{
+				alert(" No tiene autorización para realizar esta operación");
+			}
+
 		}else if(flagOperacion=='CERRADO'){
-			alert(" No esta habilitado para realizar esta operacion");		
+			alert(" Está fuera de plazo");
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}

@@ -1881,16 +1881,25 @@ var formato12C= {
 	},
 	//otros
 	confirmarEliminarCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion){
+		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
-			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-			formato12C.dialogConfirmContent.html(addhtml);
-			formato12C.dialogConfirm.dialog("open");
-			cod_Empresa_cabecera=codEmpresa;
-			ano_Presentacion_cabecera=anoPresentacion;
-			mes_Presentacion_cabecera=mesPresentacion;
-			cod_Etapa_cabecera=etapa;
+			var process=true;
+			if( etapa=='RECONOCIDO' || !admin ){
+				process = false;
+			}
+			if(process){
+				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				formato12C.dialogConfirmContent.html(addhtml);
+				formato12C.dialogConfirm.dialog("open");
+				cod_Empresa_cabecera=codEmpresa;
+				ano_Presentacion_cabecera=anoPresentacion;
+				mes_Presentacion_cabecera=mesPresentacion;
+				cod_Etapa_cabecera=etapa;
+			}else{
+				alert(" No tiene autorización para realizar esta operación");
+			}
 		}else if(flagOperacion=='CERRADO'){
-			alert(" No esta habilitado para realizar esta operacion");		
+			alert(" Está fuera de plazo");		
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
@@ -1972,10 +1981,19 @@ var formato12C= {
 		});
 	},
 	confirmarEditCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion,grupoInfo,estado){
+		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
-			location.href=formato12C.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descGrupoInformacion='+grupoInfo+'&descEstado='+estado+'&tipo=1';
+			var process=true;
+			if( etapa=='RECONOCIDO' || !admin ){
+				process = false;
+			}
+			if(process){	
+				location.href=formato12C.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descGrupoInformacion='+grupoInfo+'&descEstado='+estado+'&tipo=1';
+			}else{
+				alert(" No tiene autorización para realizar esta operación");
+			}
 		}else if(flagOperacion=='CERRADO'){
-			alert(" No esta habilitado para realizar esta operacion");		
+			alert(" Está fuera de plazo");
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}

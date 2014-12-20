@@ -1246,16 +1246,25 @@ var formato13A= {
 	},
 	//otros
 	confirmarEliminarCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion){
+		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
-			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-			formato13A.dialogConfirmContent.html(addhtml);
-			formato13A.dialogConfirm.dialog("open");
-			cod_Empresa_cabecera=codEmpresa;
-			ano_Presentacion_cabecera=anoPresentacion;
-			mes_Presentacion_cabecera=mesPresentacion;
-			cod_Etapa_cabecera=etapa;
+			var process=true;
+			if( etapa=='RECONOCIDO' || !admin ){
+				process = false;
+			}
+			if(process){
+				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				formato13A.dialogConfirmContent.html(addhtml);
+				formato13A.dialogConfirm.dialog("open");
+				cod_Empresa_cabecera=codEmpresa;
+				ano_Presentacion_cabecera=anoPresentacion;
+				mes_Presentacion_cabecera=mesPresentacion;
+				cod_Etapa_cabecera=etapa;
+			}else{
+				alert(" No tiene autorización para realizar esta operación");
+			}
 		}else if(flagOperacion=='CERRADO'){
-			alert(" No esta habilitado para realizar esta operacion");		
+			alert(" Está fuera de plazo");
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
@@ -1334,10 +1343,20 @@ var formato13A= {
 	},
 	confirmarEditCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,descripcionPeriodo,descGrupo,descEstado,anioInicioVigencia,anioFinVigencia,flagOperacion){
 		//alert(flagOperacion+'-'+(flagOperacion=='ABIERTO'));
+		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){//"&anioInicioVigencia="+ret.anioInicioVigencia+"&anioFinVigencia="+ret.anioFinVigencia
-			location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descripcionPeriodo='+descripcionPeriodo+'&descGrupoInformacion='+descGrupo+'&descestado='+descEstado+'&anioInicioVigencia='+anioInicioVigencia+'&anioFinVigencia='+anioFinVigencia+'&tipo=1';
+			var process=true;
+			if( etapa=='RECONOCIDO' || !admin ){
+				process = false;
+			}
+			if(process){
+				location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descripcionPeriodo='+descripcionPeriodo+'&descGrupoInformacion='+descGrupo+'&descestado='+descEstado+'&anioInicioVigencia='+anioInicioVigencia+'&anioFinVigencia='+anioFinVigencia+'&tipo=1';	
+			}else{
+				alert(" No tiene autorización para realizar esta operación");
+			}
+			
 		}else if(flagOperacion=='CERRADO'){
-			alert(" No esta habilitado para realizar esta operacion");		
+			alert(" Está fuera de plazo");
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
