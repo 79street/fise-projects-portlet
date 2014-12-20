@@ -207,13 +207,13 @@ public class Formato12BGartCommand implements Serializable {
 					command.setMesInicio(busqueda.getMesInicio());
 					command.setMesFin(busqueda.getMesFin());
 					command.setEtapaBusqueda(busqueda.getEtapaBusqueda());
-					command.setCodEmpresaBusqueda(busqueda.getCodEmpresaBusqueda());
+					command.setCodEmpresaBusqueda(busqueda.getCodEmpresaBusqueda()!=null?busqueda.getCodEmpresaBusqueda().trim():null);
 				}
 
 				command.setAnoEjecucionGasto(bean.getId().getAnoEjecucionGasto());
 				command.setAnoPresentacion(bean.getId().getAnoPresentacion());
-				command.setCodEmpresa(bean.getId().getCodEmpresa());
-				command.setCodEmpresaHidden(bean.getId().getCodEmpresa());
+				command.setCodEmpresa(bean.getId().getCodEmpresa().trim());
+				command.setCodEmpresaHidden(bean.getId().getCodEmpresa().trim());
 				command.setDescEmpresa(bean.getAdmEmpresa() != null ? bean.getAdmEmpresa().getDscCortaEmpresa() : "");
 				command.setEtapa(bean.getId().getEtapa());
 				command.setMesEjecucionGasto(bean.getId().getMesEjecucionGasto());
@@ -403,7 +403,7 @@ public class Formato12BGartCommand implements Serializable {
 
 					command.setAnoEjecucionGasto(lst.get(0).getId().getAnoEjecucionGasto());
 					command.setAnoPresentacion(lst.get(0).getId().getAnoPresentacion());
-					command.setCodEmpresa(lst.get(0).getId().getCodEmpresa());
+					command.setCodEmpresa(lst.get(0).getId().getCodEmpresa().trim());
 					command.setEtapa(lst.get(0).getId().getEtapa());
 					command.setMesEjecucionGasto(lst.get(0).getId().getMesEjecucionGasto());
 					command.setMesPresentacion(lst.get(0).getId().getMesPresentacion());

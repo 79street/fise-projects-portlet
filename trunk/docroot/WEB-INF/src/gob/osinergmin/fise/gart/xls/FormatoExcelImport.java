@@ -32,22 +32,28 @@ public class FormatoExcelImport {
 	@Qualifier("fiseUtil")
 	private static FiseUtil fiseUtil;
 	
-	private static HSSFSheet readExcel(HSSFWorkbook libro){
+	private static HSSFSheet readExcel(HSSFWorkbook libro,String tipoHoja){
 		int nroHojaSelec=0;
 		
 		for (int sheetNro = 0; sheetNro < libro.getNumberOfSheets(); sheetNro++){
 			
-			if(FiseConstants.NOMBRE_HOJA_FORMATO13A.equals(libro.getSheetName(sheetNro)) ){
-				nroHojaSelec = sheetNro;
-				break;
-			}else if(FiseConstants.NOMBRE_HOJA_FORMATO12B.equals(libro.getSheetName(sheetNro))){
-				nroHojaSelec = sheetNro;
-				break;
+			if(tipoHoja.equalsIgnoreCase(FiseConstants.NOMBRE_HOJA_FORMATO13A)){
+				if(FiseConstants.NOMBRE_HOJA_FORMATO13A.equals(libro.getSheetName(sheetNro)) ){
+					nroHojaSelec = sheetNro;
+					break;
+				}
+			}else if(tipoHoja.equalsIgnoreCase(FiseConstants.NOMBRE_HOJA_FORMATO12B)){
+				if(FiseConstants.NOMBRE_HOJA_FORMATO12B.equals(libro.getSheetName(sheetNro))){
+					nroHojaSelec = sheetNro;
+					break;
+				}
 			}
+			
+			
 		}
 		
 		HSSFSheet hoja = libro.getSheetAt(nroHojaSelec);
-		
+		System.out.println("hoja nro ::"+nroHojaSelec);
 		return hoja;
 		
 		
@@ -55,7 +61,7 @@ public class FormatoExcelImport {
 	
 	
 	public static FiseFormato13AC readSheetCabecera(HSSFWorkbook libro) throws Exception{
-		HSSFSheet hojaF13A=readExcel(libro);
+		HSSFSheet hojaF13A=readExcel(libro,FiseConstants.NOMBRE_HOJA_FORMATO13A);
 		FiseFormato13AC fise13C =new FiseFormato13AC();
 		FiseFormato13ACPK pk=new FiseFormato13ACPK();
 		for(int i=FiseConstants.ROW_INFO_EMPRESA;i<=FiseConstants.ROW_INFO_FECHA ;i++){
@@ -106,7 +112,7 @@ public class FormatoExcelImport {
 	
 	
 	public static List<FiseFormato13AD> getListDetalleSheet(HSSFWorkbook libro,FiseFormato13AC cabecera)throws Exception{
-		HSSFSheet hojaF13A=readExcel(libro);
+		HSSFSheet hojaF13A=readExcel(libro,FiseConstants.NOMBRE_HOJA_FORMATO13A);
 		
 		int numRows=hojaF13A.getPhysicalNumberOfRows();
 		
@@ -247,7 +253,7 @@ public class FormatoExcelImport {
 	
 	
 	public static FiseFormato12BCPK readSheetCabecera12B(HSSFWorkbook libro) throws Exception{
-		HSSFSheet hojaF12B=readExcel(libro);
+		HSSFSheet hojaF12B=readExcel(libro,FiseConstants.NOMBRE_HOJA_FORMATO12B);
 		FiseFormato12BCPK pk=new FiseFormato12BCPK();
 		
 		for(int i=FiseConstants.ROW_INFO_EMPRESA_12B;i<=FiseConstants.ROW_INFO_FECHA_12B ;i++){
@@ -297,7 +303,7 @@ public class FormatoExcelImport {
 
 	
 	public static List<FiseFormato12BD> getListDetalleSheet12B(HSSFWorkbook libro,FiseFormato12BCPK pk,FiseUtil util)throws Exception{
-		HSSFSheet hojaF12B=readExcel(libro);
+		HSSFSheet hojaF12B=readExcel(libro,FiseConstants.NOMBRE_HOJA_FORMATO12B);
 		System.out.println("leuyendo deatlle");
 		//fiseUtil=new FiseUtil();
 		List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
@@ -325,7 +331,7 @@ public class FormatoExcelImport {
 			dtlPk.setIdZonaBenef(idzona);
 			formato.setId(dtlPk);
 			
-			FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(dtlPk.getCodEmpresa(), dtlPk.getAnoPresentacion(),null, dtlPk.getIdZonaBenef(), FiseConstants.ETAPA_RECONOCIDO);
+			FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(dtlPk.getCodEmpresa().trim(), dtlPk.getAnoPresentacion(),null, dtlPk.getIdZonaBenef(), FiseConstants.ETAPA_RECONOCIDO);
 			int numfilallenas=0;
 			System.out.println("FISE 14D :::"+fise14D);
 			
@@ -338,8 +344,9 @@ public class FormatoExcelImport {
 					 System.out.println("iniio1"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK ){
 						  formato.setNumeroValesImpreso((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
 						  formato.setCostoTotalImpresionVale(formato.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(formato.getNumeroValesImpreso())));
+						  formato.setCostoTotalImpresionVale(formato.getCostoTotalImpresionVale()!=null?formato.getCostoTotalImpresionVale().setScale(2, BigDecimal.ROUND_UP):new BigDecimal(0.00));
 						  numfilallenas++;
 					 }
 					
@@ -347,8 +354,9 @@ public class FormatoExcelImport {
 					 System.out.println("iniio2"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroValesRepartidosDomi((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValeRepar((fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null)?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValeRepar((fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null)?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0.00));
 						  formato.setCostoTotalRepartoValesDomi(formato.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(formato.getNumeroValesRepartidosDomi())));
+						  formato.setCostoTotalRepartoValesDomi(formato.getCostoTotalRepartoValesDomi()!=null?formato.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_UP):new BigDecimal(0.00));
 						  numfilallenas++;
 					 }
 					
@@ -356,17 +364,19 @@ public class FormatoExcelImport {
 					 System.out.println("iniio3"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroValesEntregadoDisEl((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValDisEl((fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null)?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValDisEl((fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null)?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0.00));
 						  formato.setCostoTotalEntregaValDisEl(formato.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(formato.getNumeroValesEntregadoDisEl())));
-						  numfilallenas++;
+						  formato.setCostoTotalEntregaValDisEl(formato.getCostoTotalEntregaValDisEl()!=null?formato.getCostoTotalEntregaValDisEl().setScale(2, BigDecimal.ROUND_UP):new BigDecimal(0.00));
+						   numfilallenas++;
 					 }
 					
 				 } if(row==FiseConstants.ROW_INIT_VALES_FISICO_12B){
 					 System.out.println("iniio4"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroValesFisicosCanjeados((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValFiCan((fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null)?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValFiCan((fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null)?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0.00));
 						  formato.setCostoTotalCanjeLiqValeFis(formato.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(formato.getNumeroValesFisicosCanjeados())));
+						  formato.setCostoTotalCanjeLiqValeFis(formato.getCostoTotalCanjeLiqValeFis()!=null?formato.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_UP):new BigDecimal(0.00));
 						  numfilallenas++;
 					 }
 					 
@@ -374,8 +384,9 @@ public class FormatoExcelImport {
 					 System.out.println("iniio5"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroValesDigitalCanjeados((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitValDgCan((fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null)?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
+						  formato.setCostoEstandarUnitValDgCan((fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null)?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0.00));
 						  formato.setCostoTotalCanjeLiqValeDig(formato.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(formato.getNumeroValesDigitalCanjeados())));
+						  formato.setCostoTotalCanjeLiqValeDig(formato.getCostoTotalCanjeLiqValeDig()!=null?formato.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_UP):new BigDecimal(0.00));
 						  numfilallenas++;
 					 }
 					
@@ -383,8 +394,10 @@ public class FormatoExcelImport {
 					 System.out.println("iniio6"+cell);
 					 if(cell.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						  formato.setNumeroAtenciones((int)Double.parseDouble(cell.toString()));
-						  formato.setCostoEstandarUnitAtencion((fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null)?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0));
+						  formato.setCostoEstandarUnitAtencion((fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null)?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0.00));
 						  formato.setCostoTotalAtencionConsRecl(formato.getCostoEstandarUnitAtencion().multiply(new BigDecimal(formato.getNumeroAtenciones())));
+						  formato.setCostoTotalAtencionConsRecl(formato.getCostoTotalAtencionConsRecl()!=null?formato.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_UP):new BigDecimal(0.00));
+						  
 						  numfilallenas++;
 					 }
 					

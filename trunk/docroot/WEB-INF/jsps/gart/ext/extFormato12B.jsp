@@ -721,6 +721,19 @@
 			 
 			 formato12B.txtEtndrUnitAtencionLim.val('');
 			 $('#costoEstandarUnitAtencionLim').val(formato12B.txtEtndrUnitAtencionLim.val());
+			 
+			
+			 formato12B.txtTotalImpresionValeLim.val('');
+			 formato12B.txtTotalRepartoValesDomiLim.val('');	
+			 formato12B.txtTotalEntregaValDisElLim.val('');
+			 formato12B.txtTotalCanjeLiqValeFisLim.val('');
+			 formato12B.txtTotalCanjeLiqValeDigLim.val('');
+			 formato12B.txtTotalAtencionConsReclLim.val('');
+			 $('#totalGestionAdministrativaLim').val('');
+	$('#totalDesplazamientoPersonalLim').val('');
+	$('#totalActividadesExtraordLim').val('');
+
+			 
 		},
 		loadPeriodoDeclaracion : function(tipo){
 			return jQuery.ajax({
@@ -750,8 +763,13 @@
 		
 		loadCostosUnitarios : function(){
 			var periodo=formato12B.cmbPeriodo.val();
-			var anioPres=periodo.substring(0,4);
-			var mesPres=periodo.substring(4,6);
+			var anioPres;
+			var mesPres;
+			if(periodo!=null && periodo.length>0){
+				 anioPres=periodo.substring(0,4);
+				 mesPres=periodo.substring(4,6);
+			}
+			
 			
 			return jQuery.ajax({
 				url: formato12B.urlLoadCostosUnitarios+'&'+formato12B.formNewEdit.serialize(),
@@ -918,43 +936,43 @@
 			
 		},
 		loadCostoTotal:function(emp){
-			formato12B.txtTotalImpresionVale.val((formato12B.txtnroValesImpreso.val()!=null && formato12B.txtnroValesImpreso.length>0)?(formato12B.txtnroValesImpreso.val()*formato12B.txtEtndrUnitValeImpre.val()):'0');
-			formato12B.txtTotalImpresionValeProv.val((formato12B.txtnroValesImpresoProv.val()!=null && formato12B.txtnroValesImpresoProv.length>0)?(formato12B.txtnroValesImpresoProv.val()*formato12B.txtEtndrUnitValeImpreProv.val()):'0');
+			formato12B.txtTotalImpresionVale.val((formato12B.txtnroValesImpreso.val()!=null && formato12B.txtnroValesImpreso.length>0)?(formato12B.txtnroValesImpreso.val()*formato12B.txtEtndrUnitValeImpre.val()):'0.00');
+			formato12B.txtTotalImpresionValeProv.val((formato12B.txtnroValesImpresoProv.val()!=null && formato12B.txtnroValesImpresoProv.length>0)?(formato12B.txtnroValesImpresoProv.val()*formato12B.txtEtndrUnitValeImpreProv.val()):'0.00');
 			formato12B.txtTotalImpresionVale.val(parseFloat(formato12B.txtTotalImpresionVale.val()).toFixed(2));
 			formato12B.txtTotalImpresionValeProv.val(parseFloat(formato12B.txtTotalImpresionValeProv.val()).toFixed(2));
 			$('#costoTotalImpresionVale').val(formato12B.txtTotalImpresionVale.val());
 			$('#costoTotalImpresionValeProv').val(formato12B.txtTotalImpresionValeProv.val());
 		
-			formato12B.txtTotalRepartoValesDomi.val((formato12B.txtnroValesRepartidosDomi.val()!=null && formato12B.txtnroValesRepartidosDomi.length>0)?(formato12B.txtnroValesRepartidosDomi.val()*formato12B.txtEtndrUnitValeRepar.val()):'0');
-			formato12B.txtTotalRepartoValesDomiProv.val((formato12B.txtnroValesRepartidosDomiProv.val()!=null && formato12B.txtnroValesRepartidosDomiProv.length>0)?(formato12B.txtnroValesRepartidosDomiProv.val()*formato12B.txtEtndrUnitValeReparProv.val()):'0');
+			formato12B.txtTotalRepartoValesDomi.val((formato12B.txtnroValesRepartidosDomi.val()!=null && formato12B.txtnroValesRepartidosDomi.length>0)?(formato12B.txtnroValesRepartidosDomi.val()*formato12B.txtEtndrUnitValeRepar.val()):'0.00');
+			formato12B.txtTotalRepartoValesDomiProv.val((formato12B.txtnroValesRepartidosDomiProv.val()!=null && formato12B.txtnroValesRepartidosDomiProv.length>0)?(formato12B.txtnroValesRepartidosDomiProv.val()*formato12B.txtEtndrUnitValeReparProv.val()):'0.00');
 			formato12B.txtTotalRepartoValesDomi.val(parseFloat(formato12B.txtTotalRepartoValesDomi.val()).toFixed(2));
 			formato12B.txtTotalRepartoValesDomiProv.val(parseFloat(formato12B.txtTotalRepartoValesDomiProv.val()).toFixed(2));
 			$('#costoTotalRepartoValesDomi').val(formato12B.txtTotalRepartoValesDomi.val());
 			$('#costoTotalRepartoValesDomiProv').val(formato12B.txtTotalRepartoValesDomiProv.val());
 			
-		    formato12B.txtTotalEntregaValDisEl.val((formato12B.txtnroValesEntregadoDisEl.val()!=null && formato12B.txtnroValesEntregadoDisEl.length>0)?(formato12B.txtnroValesEntregadoDisEl.val()*formato12B.txtEtndrUnitValDisEl.val()):'0');
-			formato12B.txtTotalEntregaValDisElProv.val((formato12B.txtnroValesEntregadoDisElProv.val()!=null && formato12B.txtnroValesEntregadoDisElProv.length>0)?(formato12B.txtnroValesEntregadoDisElProv.val()*formato12B.txtEtndrUnitValDisElProv.val()):'0');
+		    formato12B.txtTotalEntregaValDisEl.val((formato12B.txtnroValesEntregadoDisEl.val()!=null && formato12B.txtnroValesEntregadoDisEl.length>0)?(formato12B.txtnroValesEntregadoDisEl.val()*formato12B.txtEtndrUnitValDisEl.val()):'0.00');
+			formato12B.txtTotalEntregaValDisElProv.val((formato12B.txtnroValesEntregadoDisElProv.val()!=null && formato12B.txtnroValesEntregadoDisElProv.length>0)?(formato12B.txtnroValesEntregadoDisElProv.val()*formato12B.txtEtndrUnitValDisElProv.val()):'0.00');
 			formato12B.txtTotalEntregaValDisEl.val(parseFloat(formato12B.txtTotalEntregaValDisEl.val()).toFixed(2));
 			formato12B.txtTotalEntregaValDisElProv.val(parseFloat(formato12B.txtTotalEntregaValDisElProv.val()).toFixed(2));
 			$('#costoTotalEntregaValDisEl').val(formato12B.txtTotalEntregaValDisEl.val());
 			$('#costoTotalEntregaValDisElProv').val(formato12B.txtTotalEntregaValDisElProv.val());
 			
-		    formato12B.txtTotalCanjeLiqValeFis.val((formato12B.txtnroValesFisicosCanjeados.val()!=null && formato12B.txtnroValesFisicosCanjeados.length>0)?(formato12B.txtnroValesFisicosCanjeados.val()*formato12B.txtEtndrUnitValFiCan.val()):'0');
-			formato12B.txtTotalCanjeLiqValeFisProv.val((formato12B.txtnroValesFisicosCanjeadosProv.val()!=null && formato12B.txtnroValesFisicosCanjeadosProv.length>0)?(formato12B.txtnroValesFisicosCanjeadosProv.val()*formato12B.txtEtndrUnitValFiCanProv.val()):'0');
+		    formato12B.txtTotalCanjeLiqValeFis.val((formato12B.txtnroValesFisicosCanjeados.val()!=null && formato12B.txtnroValesFisicosCanjeados.length>0)?(formato12B.txtnroValesFisicosCanjeados.val()*formato12B.txtEtndrUnitValFiCan.val()):'0.00');
+			formato12B.txtTotalCanjeLiqValeFisProv.val((formato12B.txtnroValesFisicosCanjeadosProv.val()!=null && formato12B.txtnroValesFisicosCanjeadosProv.length>0)?(formato12B.txtnroValesFisicosCanjeadosProv.val()*formato12B.txtEtndrUnitValFiCanProv.val()):'0.00');
 			formato12B.txtTotalCanjeLiqValeFis.val(parseFloat(formato12B.txtTotalCanjeLiqValeFis.val()).toFixed(2));
 			formato12B.txtTotalCanjeLiqValeFisProv.val(parseFloat(formato12B.txtTotalCanjeLiqValeFisProv.val()).toFixed(2));
 			$('#costoTotalCanjeLiqValeFis').val(formato12B.txtTotalCanjeLiqValeFis.val());
 			$('#costoTotalCanjeLiqValeFisProv').val(formato12B.txtTotalCanjeLiqValeFisProv.val());
 			
 			formato12B.txtTotalCanjeLiqValeDig.val((formato12B.txtnroValesDigitalCanjeados.val()!=null && formato12B.txtnroValesDigitalCanjeados.length>0)?(formato12B.txtnroValesDigitalCanjeados.val()*formato12B.txtEtndrUnitValDgCan.val()):'0');
-			formato12B.txtTotalCanjeLiqValeDigProv.val((formato12B.txtnroValesDigitalCanjeadosProv.val()!=null && formato12B.txtnroValesDigitalCanjeadosProv.length>0)?(formato12B.txtnroValesDigitalCanjeadosProv.val()*formato12B.txtEtndrUnitValDgCanProv.val()):'0');
+			formato12B.txtTotalCanjeLiqValeDigProv.val((formato12B.txtnroValesDigitalCanjeadosProv.val()!=null && formato12B.txtnroValesDigitalCanjeadosProv.length>0)?(formato12B.txtnroValesDigitalCanjeadosProv.val()*formato12B.txtEtndrUnitValDgCanProv.val()):'0.00');
 			formato12B.txtTotalCanjeLiqValeDig.val(parseFloat(formato12B.txtTotalCanjeLiqValeDig.val()).toFixed(2));
 			formato12B.txtTotalCanjeLiqValeDigProv.val(parseFloat(formato12B.txtTotalCanjeLiqValeDigProv.val()).toFixed(2));
 			$('#costoTotalCanjeLiqValeDig').val(formato12B.txtTotalCanjeLiqValeDig.val());
 			$('#costoTotalCanjeLiqValeDigProv').val(formato12B.txtTotalCanjeLiqValeDigProv.val());
 			
-			formato12B.txtTotalAtencionConsRecl.val((formato12B.txtnroAtenciones.val()!=null && formato12B.txtnroAtenciones.length>0)?(formato12B.txtnroAtenciones.val()*formato12B.txtEtndrUnitAtencion.val()):'0');
-			formato12B.txtTotalAtencionConsReclProv.val((formato12B.txtnroAtencionesProv.val()!=null && formato12B.txtnroAtencionesProv.length>0)?(formato12B.txtnroAtencionesProv.val()*formato12B.txtEtndrUnitAtencionProv.val()):'0');
+			formato12B.txtTotalAtencionConsRecl.val((formato12B.txtnroAtenciones.val()!=null && formato12B.txtnroAtenciones.length>0)?(formato12B.txtnroAtenciones.val()*formato12B.txtEtndrUnitAtencion.val()):'0.00');
+			formato12B.txtTotalAtencionConsReclProv.val((formato12B.txtnroAtencionesProv.val()!=null && formato12B.txtnroAtencionesProv.length>0)?(formato12B.txtnroAtencionesProv.val()*formato12B.txtEtndrUnitAtencionProv.val()):'0.00');
 			formato12B.txtTotalAtencionConsRecl.val(parseFloat(formato12B.txtTotalAtencionConsRecl.val()).toFixed(2));
 			formato12B.txtTotalAtencionConsReclProv.val(parseFloat(formato12B.txtTotalAtencionConsReclProv.val()).toFixed(2));
 			$('#costoTotalAtencionConsRecl').val(formato12B.txtTotalAtencionConsRecl.val());
@@ -962,12 +980,12 @@
 			
 		
 			if(emp.trim() =='EDLN' || emp.trim() =='LDS'){
-				formato12B.txtTotalImpresionValeLim.val((formato12B.txtnroValesImpresoLim.val()!=null && formato12B.txtnroValesImpresoLim.length>0)?(formato12B.txtnroValesImpresoLim.val()*formato12B.txtEtndrUnitValeImpreLim.val()):'0');
-			    formato12B.txtTotalRepartoValesDomiLim.val((formato12B.txtnroValesRepartidosDomiLim.val()!=null && formato12B.txtnroValesRepartidosDomiLim.length>0)?(formato12B.txtnroValesRepartidosDomiLim.val()*formato12B.txtEtndrUnitValeReparLim.val()):'0');
-			    formato12B.txtTotalEntregaValDisElLim.val((formato12B.txtnroValesEntregadoDisElLim.val()!=null && formato12B.txtnroValesEntregadoDisElLim.length>0)?(formato12B.txtnroValesEntregadoDisElLim.val()*formato12B.txtEtndrUnitValDisElLim.val()):'0');
-			    formato12B.txtTotalCanjeLiqValeFisLim.val((formato12B.txtnroValesFisicosCanjeadosLim.val()!=null && formato12B.txtnroValesFisicosCanjeadosLim.length>0)?(formato12B.txtnroValesFisicosCanjeadosLim.val()*formato12B.txtEtndrUnitValFiCanLim.val()):'0');
-			    formato12B.txtTotalCanjeLiqValeDigLim.val((formato12B.txtnroValesDigitalCanjeadosLim.val()!=null && formato12B.txtnroValesDigitalCanjeadosLim.length>0)?(formato12B.txtnroValesDigitalCanjeadosLim.val()*formato12B.txtEtndrUnitValDgCanLim.val()):'0');
-			    formato12B.txtTotalAtencionConsReclLim.val((formato12B.txtnroAtencionesLim.val()!=null && formato12B.txtnroAtencionesLim.length>0)?(formato12B.txtnroAtencionesLim.val()*formato12B.txtEtndrUnitAtencionLim.val()):'0');
+				formato12B.txtTotalImpresionValeLim.val((formato12B.txtnroValesImpresoLim.val()!=null && formato12B.txtnroValesImpresoLim.length>0)?(formato12B.txtnroValesImpresoLim.val()*formato12B.txtEtndrUnitValeImpreLim.val()):'0.00');
+			    formato12B.txtTotalRepartoValesDomiLim.val((formato12B.txtnroValesRepartidosDomiLim.val()!=null && formato12B.txtnroValesRepartidosDomiLim.length>0)?(formato12B.txtnroValesRepartidosDomiLim.val()*formato12B.txtEtndrUnitValeReparLim.val()):'0.00');
+			    formato12B.txtTotalEntregaValDisElLim.val((formato12B.txtnroValesEntregadoDisElLim.val()!=null && formato12B.txtnroValesEntregadoDisElLim.length>0)?(formato12B.txtnroValesEntregadoDisElLim.val()*formato12B.txtEtndrUnitValDisElLim.val()):'0.00');
+			    formato12B.txtTotalCanjeLiqValeFisLim.val((formato12B.txtnroValesFisicosCanjeadosLim.val()!=null && formato12B.txtnroValesFisicosCanjeadosLim.length>0)?(formato12B.txtnroValesFisicosCanjeadosLim.val()*formato12B.txtEtndrUnitValFiCanLim.val()):'0.00');
+			    formato12B.txtTotalCanjeLiqValeDigLim.val((formato12B.txtnroValesDigitalCanjeadosLim.val()!=null && formato12B.txtnroValesDigitalCanjeadosLim.length>0)?(formato12B.txtnroValesDigitalCanjeadosLim.val()*formato12B.txtEtndrUnitValDgCanLim.val()):'0.00');
+			    formato12B.txtTotalAtencionConsReclLim.val((formato12B.txtnroAtencionesLim.val()!=null && formato12B.txtnroAtencionesLim.length>0)?(formato12B.txtnroAtencionesLim.val()*formato12B.txtEtndrUnitAtencionLim.val()):'0.00');
 			    
 			    formato12B.txtTotalImpresionValeLim.val(parseFloat(formato12B.txtTotalImpresionValeLim.val()).toFixed(2));
 				formato12B.txtTotalRepartoValesDomiLim.val(parseFloat(formato12B.txtTotalRepartoValesDomiLim.val()).toFixed(2));
@@ -1006,8 +1024,8 @@
 						+parseFloat($('#totalDesplazamientoPersonalLim').val().length>0?$('#totalDesplazamientoPersonalLim').val():'0'));
 				
 				$('#porActividadExtra').val(parseFloat($('#totalActividadesExtraord').val().length>0?$('#totalActividadesExtraord').val():'0')
-						+parseFloat($('#totalActividadesExtraordProv').val().length>0?$('#totalActividadesExtraord').val():'0')
-						+parseFloat($('#totalActividadesExtraordLim').val().length>0?$('#totalActividadesExtraord').val():'0'));
+						+parseFloat($('#totalActividadesExtraordProv').val().length>0?$('#totalActividadesExtraordProv').val():'0')
+						+parseFloat($('#totalActividadesExtraordLim').val().length>0?$('#totalActividadesExtraordLim').val():'0'));
 			
 			}else{
 				
@@ -1291,11 +1309,11 @@
 								}else{
 									formato12B.tpOperacion.val('1');
 								}
-								formato12B.lblMessage.html("Se registro correctamente");
+								formato12B.lblMessage.html("Datos guardados satisfactoriamente");
 								formato12B.dialogMessageGeneral.dialog("open");
 								
 							}else if(item.msg == "-1"){
-								formato12B.lblMessage.html("El formato ya existe para esa empresa para ese periodo");
+								formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");
 								formato12B.dialogMessageGeneral.dialog("open");
 								
 							}else if(item.msg == "-2"){
@@ -1307,7 +1325,7 @@
 								formato12B.dialogMessageGeneral.dialog("open");
 								
 							}else if(item.msg == "-4"){
-								formato12B.lblMessage.html("Error al registrar");
+								formato12B.lblMessage.html("Se produjo un error al guardar los datos");
 								formato12B.dialogMessageGeneral.dialog("open");
 								
 							}
@@ -1342,12 +1360,12 @@
 					
 					if(data == '1' ){
 						//formato12B.btnBuscar.trigger('click');
-						formato12B.lblMessageInicial.html("Se Elimino correctamente");
+						formato12B.lblMessageInicial.html("Registro eliminado con éxito");
 						formato12B.dialogMessageGeneralInicial.dialog("open");
 						
 						
 					}else if(data == '-1'){
-						formato12B.lblMessageInicial.html("Error al eliminar");
+						formato12B.lblMessageInicial.html("Error al eliminar registro");
 						formato12B.dialogMessageGeneralInicial.dialog("open");
 						
 					}

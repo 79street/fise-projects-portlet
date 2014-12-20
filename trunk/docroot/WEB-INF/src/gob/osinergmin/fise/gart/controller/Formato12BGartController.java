@@ -225,12 +225,14 @@ public class Formato12BGartController {
 			System.out.println("codEmpresa::" + command.getCodEmpresa());
 			System.out.println("periodo::" + command.getPeridoDeclaracion());
 			
-			if (command != null && command.getPeridoDeclaracion().length() > 6) {
+			if (command != null && (command.getPeridoDeclaracion() !=null && command.getPeridoDeclaracion().length() > 6)) {
 				command.setAnoPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(0, 4)));
 				command.setMesPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(4, 6)));
 				command.setEtapa(command.getPeridoDeclaracion().substring(6, command.getPeridoDeclaracion().length()));
 			}
 			List<FiseFormato14BD> lstfise14D=fiseUtil.getLstCostoUnitario(command.getCodEmpresa(), command.getAnoPresentacion(),null, null, FiseConstants.ETAPA_RECONOCIDO);
+			//List<FiseFormato14BD> lstfise14D=fiseUtil.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion().longValue(),command.getIdZonaBenef().longValue());
+			
 			
 			JSONArray jsonArray = new JSONArray();
 			if(lstfise14D!=null && !lstfise14D.isEmpty()){
@@ -886,6 +888,7 @@ public class Formato12BGartController {
          formato12BBusqueda.setMesInicio(command.getMesInicio());
          System.out.println("MES INICIO CARGA ****"+command.getAnioInicio());
          System.out.println("MES INICIO CARGA ****"+command.getMesInicio());
+         System.out.println("EMORESA CARGADA CARGA ****"+command.getCodEmpresa());
          formato12BBusqueda.setMesFin(command.getMesFin());
          formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
          formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
@@ -983,8 +986,8 @@ public class Formato12BGartController {
 					if (lstDetalle != null && !lstDetalle.isEmpty()) {
 						for (FiseFormato12BD dtll : lstDetalle) {
 							dtll.setUsuarioCreacion(result.getUsuarioCreacion());
-							  dtll.setTerminalCreacion(result.getTerminalCreacion());
-							  dtll.setFechaCreacion(result.getFechaCreacion());
+							dtll.setTerminalCreacion(result.getTerminalCreacion());
+							dtll.setFechaCreacion(result.getFechaCreacion());
 							dtll = formatoService.saveFormatoDetalle(dtll);
 						}
 					}
@@ -1279,7 +1282,7 @@ public class Formato12BGartController {
 		    mapa.put(FiseConstants.PARAM_IMG_LOGOTIPO, session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
 			mapa.put(FiseConstants.PARAM_ANO_PRES_F12B, command.getAnoPresentacion().longValue());
-		   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F12B, fiseUtil.getMapaMeses().get(command.getMesPresentacion()));
+		   	mapa.put(FiseConstants.PARAM_DESC_MES_PRES_F12B,FiseUtil.descripcionMes(command.getMesPresentacion()) );
 		   	mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
 			mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
 		   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
@@ -1289,6 +1292,8 @@ public class Formato12BGartController {
 		   	
 		   	session.setAttribute("mapa", mapa);
 		    //
+		   	
+		   
 		    
 		    response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
