@@ -1735,16 +1735,25 @@ var formato12D= {
 	},
 	//otros
 	confirmarEliminarCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion){
+		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
-			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-			formato12D.dialogConfirmContent.html(addhtml);
-			formato12D.dialogConfirm.dialog("open");
-			cod_Empresa_cabecera=codEmpresa;
-			ano_Presentacion_cabecera=anoPresentacion;
-			mes_Presentacion_cabecera=mesPresentacion;
-			cod_Etapa_cabecera=etapa;
+			var process=true;
+			if( etapa=='RECONOCIDO' || !admin ){
+				process = false;
+			}
+			if(process){
+				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				formato12D.dialogConfirmContent.html(addhtml);
+				formato12D.dialogConfirm.dialog("open");
+				cod_Empresa_cabecera=codEmpresa;
+				ano_Presentacion_cabecera=anoPresentacion;
+				mes_Presentacion_cabecera=mesPresentacion;
+				cod_Etapa_cabecera=etapa;
+			}else{
+				alert(" No tiene autorización para realizar esta operación");
+			}
 		}else if(flagOperacion=='CERRADO'){
-			alert(" No esta habilitado para realizar esta operacion");		
+			alert(" Está fuera de plazo");		
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
