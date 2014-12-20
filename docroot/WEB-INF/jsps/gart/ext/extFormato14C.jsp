@@ -3060,7 +3060,26 @@ var formato14C= {
 		
 		<portlet:namespace/>cargarFormatoExcel : function(){
 			var frm = document.getElementById('formato14CBean');
-			frm.submit();
+			
+			var nameFile=$("#archivoExcel").val();
+			var isSubmit=true;
+			
+			$("#msjUploadFileExel").html("");
+			if(typeof (nameFile) == "undefined" || nameFile.length==0){				
+				isSubmit=false;
+				$("#msjUploadFileExel").html("Debe seleccionar un archivo");
+			}else{
+				var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
+				if(extension == 'xls' || extension == 'xlsx'){
+					isSubmit=true;
+				}else{
+					isSubmit=false;
+					$("#msjUploadFileExel").html("Archivo invalido");
+				}				
+			}			
+			if(isSubmit){
+				frm.submit();
+			}			
 		},
 		
 		<portlet:namespace/>mostrarFormularioCargaTexto : function(){
@@ -3085,8 +3104,27 @@ var formato14C= {
 		},
 		
 		<portlet:namespace/>cargarFormatoTexto : function(){
-			var frm = document.getElementById('formato14CBean');
-			frm.submit();
+			var frm = document.getElementById('formato14CBean');	
+			
+			var nameFile=$("#archivoTxt").val();
+			var isSubmit=true;
+			
+			$("#msjUploadFileText").html("");
+			if(typeof (nameFile) == "undefined" || nameFile.length==0){				
+				isSubmit=false;
+				$("#msjUploadFileText").html("Debe seleccionar un archivo");
+			}else{
+				var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
+				if(extension == 'txt'){
+					isSubmit=true;
+				}else{
+					isSubmit=false;
+					$("#msjUploadFileText").html("Archivo invalido");
+				}				
+			}			
+			if(isSubmit){
+				frm.submit();
+			}		
 		},
 		//funcion para desabiliar campos lima
 		deshabilitarLima : function(){
@@ -3647,7 +3685,7 @@ var formato14C= {
 				modal: true,
 				autoOpen: false,
 				buttons: {
-					'Imprimir Pdf': function() {
+					'Ver Acta': function() {
 						formato14C.<portlet:namespace/>mostrarReporteEnvioDefinitivoF14C();
 						$( this ).dialog("close");
 						formato14C.divNuevo.hide();

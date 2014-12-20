@@ -10,6 +10,19 @@
 $(document).ready(function () {	
 	fiseCargoFijo.init();
 });
+
+$(function() {
+	$( ".datepicker" ).datepicker({
+	      changeDay: true,
+		changeMonth: true,
+	      changeYear: true,
+	      showOn: "button",
+	      buttonImage: "/net-theme/images/img-net/calendar.png",
+	      buttonImageOnly: true,
+	      yearRange: '-100:+0'
+	    });
+});
+
 </script>
            
            
@@ -270,7 +283,7 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Fecha Informe Sustento: (dd/mm/aaaa)</label>
 											  </td>
 											  <td>											  										 
-											   <form:input path="fechaSustento" />								    												
+											   <form:input path="fechaSustento" cssStyle="text-align: right;" cssClass="${flagEditar==true?'':'datepicker'}"/>								    												
 											  </td>
 											
 											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Informe Sustento:</label>
@@ -282,7 +295,7 @@ $(document).ready(function () {
 											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Info.: (dd/mm/aaaa)</label>
 											  </td>
 											  <td>											  										 
-											   <form:input path="fechaRecepcion" />								    												
+											   <form:input path="fechaRecepcion" cssStyle="text-align: right;" cssClass="${flagEditar==true?'':'datepicker'}"/>								    												
 											  </td>		
 											  										 											 
 											</tr>

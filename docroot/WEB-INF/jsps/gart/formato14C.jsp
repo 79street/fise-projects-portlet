@@ -738,7 +738,7 @@ $(document).ready(function () {
 						<!--tabla-->
 	
 						<fieldset class="">
-							<table style="width: 100%;">
+							<!-- <table style="width: 100%;">
 								<tr>
 									<td></td>
 								</tr>
@@ -747,7 +747,30 @@ $(document).ready(function () {
 									<td><input type="file" id="archivoExcel"
 										name="archivoExcel" /></td>
 								</tr>
+							</table> -->
+							
+							 <table style="width: 100%;">
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+								<%--
+								<td>
+								    <form:input type="hidden" id="txtTypeFile"  path="typeFile"/>
+								</td> 
+								--%>
+								<td>Archivo:</td>
+								<td>
+								    <input type="file" id="archivoExcel" name="archivoExcel" /></td>
+								</tr>
+								<tr>
+									<td height="10px;"></td>
+								</tr>
+								<tr>
+									<td colspan="3"><span id="msjUploadFileExel" style="color: red;"></span></td>
+								</tr>
 							</table>
+							
 						</fieldset>
 	
 	
@@ -786,6 +809,12 @@ $(document).ready(function () {
 									<td>Archivo:</td>
 									<td><input type="file" id="archivoTxt" name="archivoTxt" />
 									</td>
+								</tr>
+								<tr>
+									<td height="10px;"></td>
+								</tr>
+								<tr>
+									<td colspan="3"><span id="msjUploadFileText" style="color: red;"></span></td>
 								</tr>
 							</table>
 						</fieldset>

@@ -256,10 +256,68 @@ var fiseCargoFijo= {
 		<portlet:namespace/>nuevoCargoFijo : function(){
 			console.debug("boton nuevo registro:  ");	
 			fiseCargoFijo.divNuevo.show();
-			fiseCargoFijo.divBuscar.hide();							
+			fiseCargoFijo.divBuscar.hide();
+			
+			fiseCargoFijo.inicializarFormulario();			
+			
+			fiseCargoFijo.verElementosEditar();
+			
+			fiseCargoFijo.habilitarCamposView();
+			
 		    $('#<portlet:namespace/>guardarCargoFijo').css('display','block');
 			$('#<portlet:namespace/>actualizarCargoFijo').css('display','none');			
 		},
+		
+		//function para inicializar el formulario
+		inicializarFormulario : function(){		
+			var f = new Date();
+			fiseCargoFijo.f_codEmpresa.val('');			
+			fiseCargoFijo.f_anioRep.val(f.getFullYear());
+			fiseCargoFijo.f_mesRep.val('');		
+			
+			fiseCargoFijo.f_numUsuBenef.val('0');
+			fiseCargoFijo.f_numUsuEmp.val('0');			
+			fiseCargoFijo.f_numValDCan.val('0');
+			fiseCargoFijo.f_numValDEmi.val('0');			
+			fiseCargoFijo.f_numValFCan.val('0');
+			fiseCargoFijo.f_numValFEmi.val('0');			
+			fiseCargoFijo.f_numAgen.val('0');
+			fiseCargoFijo.f_montoMes.val('0.00');			
+			fiseCargoFijo.f_montoCanje.val('0.00');
+			fiseCargoFijo.f_numDoc.val('');			
+			fiseCargoFijo.f_numDocRecepcion.val('');
+			fiseCargoFijo.f_fechaSustento.val('');		
+			fiseCargoFijo.f_fechaRecepcion.val('');			
+			fiseCargoFijo.f_igv.val('0.00');			
+			fiseCargoFijo.f_gloza.val('');		
+			
+			fiseCargoFijo.f_codEmpresa.attr("disabled",false);
+			fiseCargoFijo.f_anioRep.attr("disabled",false);
+			fiseCargoFijo.f_mesRep.attr("disabled",false);
+			
+			fiseCargoFijo.soloNumerosEnteros();
+			fiseCargoFijo.soloNumerosDecimales();
+		},		
+		//function para validar solo numeros enteros
+		soloNumerosEnteros : function(){		
+			fiseCargoFijo.f_anioRep.attr("onkeypress","return soloNumerosDecimales(event, 1, 'anioRep',4,0)");
+			fiseCargoFijo.f_numUsuBenef.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuBenef',7,0)");
+			fiseCargoFijo.f_numUsuEmp.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuEmp',7,0)");			
+			fiseCargoFijo.f_numValDCan.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDCan',7,0)");
+			fiseCargoFijo.f_numValDEmi.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDEmi',7,0)");		
+			fiseCargoFijo.f_numValFCan.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFCan',7,0)");
+			fiseCargoFijo.f_numValFEmi.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFEmi',7,0)");			
+			fiseCargoFijo.f_numAgen.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numAgen',7,0)");
+			fiseCargoFijo.f_numDoc.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numDoc',20,0)");			
+			fiseCargoFijo.f_numDocRecepcion.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numDocRecepcion',20,0)");		
+		},
+		
+		//function para validar solo numeros decimales
+		soloNumerosDecimales : function(){			
+			fiseCargoFijo.f_montoMes.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMes',7,2)");
+			fiseCargoFijo.f_montoCanje.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoCanje',7,2)");
+			fiseCargoFijo.f_igv.attr("onkeypress","return soloNumerosDecimales(event, 2, 'igv',1,2)");	
+		},	
 		
 		//Function para Visualizar los datos del formulario		
 		verCargoFijo : function(cod_Empresa, anio_Rep, mes_Rep){	
@@ -272,7 +330,8 @@ var fiseCargoFijo= {
 					data: {						  
 					      <portlet:namespace />codEmpresa: cod_Empresa,
 					      <portlet:namespace />anioRepBusq: anio_Rep,
-					      <portlet:namespace />mesRep: mes_Rep
+					      <portlet:namespace />mesRep: mes_Rep,
+					      <portlet:namespace />flagEditar: 'V'
 						},
 					success: function(data) {
 					    if (data != null){															
@@ -280,6 +339,11 @@ var fiseCargoFijo= {
 					    	fiseCargoFijo.divBuscar.hide();	
 					    	
 					    	fiseCargoFijo.llenarDatosEditar(data);
+					    	
+					    	fiseCargoFijo.ocultarElementosEditar();
+					    	
+					    	fiseCargoFijo.deshabilitarCamposView();
+					    	
 					    	
 					    	fiseCargoFijo.initBlockUI();				    	
 					    	$('#<portlet:namespace/>guardarCargoFijo').css('display','none');
@@ -307,7 +371,9 @@ var fiseCargoFijo= {
 						data: {							
 							 <portlet:namespace />codEmpresa: cod_Empresa,
 						     <portlet:namespace />anioRep: anio_Rep,
-						     <portlet:namespace />mesRep: mes_Rep					   				  
+						     <portlet:namespace />mesRep: mes_Rep,
+						     <portlet:namespace />flagEditar: 'E'
+						     
 						},
 						success: function(data) {				
 							if (data != null){															
@@ -315,6 +381,10 @@ var fiseCargoFijo= {
 								fiseCargoFijo.divBuscar.hide();	
 								
 								fiseCargoFijo.llenarDatosEditar(data);
+								
+								fiseCargoFijo.ocultarElementosEditar();			
+								
+								fiseCargoFijo.habilitarCamposView();								
 								
 								fiseCargoFijo.initBlockUI();			
 								$('#<portlet:namespace/>guardarCargoFijo').css('display','none');
@@ -348,10 +418,8 @@ var fiseCargoFijo= {
 			fiseCargoFijo.f_numDoc.val(bean.numDoc);			
 			fiseCargoFijo.f_numDocRecepcion.val(bean.numDocRecepcion);
 			fiseCargoFijo.f_fechaSustento.val(bean.fechaSustento);		
-			fiseCargoFijo.f_fechaRecepcion.val(bean.fechaRecepcion);
-			//fiseCargoFijo.f_estado.val(bean.estado);			
-			fiseCargoFijo.f_igv.val(bean.igv);
-			//fiseCargoFijo.f_aplicaIgv.val(bean.aplicaIgv);			
+			fiseCargoFijo.f_fechaRecepcion.val(bean.fechaRecepcion);					
+			fiseCargoFijo.f_igv.val(bean.igv);		
 			fiseCargoFijo.f_gloza.val(bean.gloza);
 			
 			if(bean.estado=='1'){				
@@ -365,6 +433,91 @@ var fiseCargoFijo= {
 			}else{				
 				 document.getElementById('rbtIgvNO').checked = true;
 			}
+		},
+		
+		ocultarElementosEditar : function(){	
+			$('#codEmpresa').attr("disabled",true);
+			$('#anioRep').attr("disabled",true);
+			$('#mesRep').attr("disabled",true);	
+			//estilo
+			$('#anioRep').removeClass("fise-editable");
+		},
+        verElementosEditar : function(){	
+        	$('#codEmpresa').attr("disabled",false);
+        	$('#anioRep').attr("disabled",false);
+        	$('#mesRep').attr("disabled",false);
+        	//estilo
+        	$('#anioRep').addClass("fise-editable");	
+		},
+		
+		deshabilitarCamposView : function(){			
+			fiseCargoFijo.f_numUsuBenef.attr("disabled",true);
+			fiseCargoFijo.f_numUsuEmp.attr("disabled",true);
+			fiseCargoFijo.f_numValDCan.attr("disabled",true);
+			fiseCargoFijo.f_numValDEmi.attr("disabled",true);
+			fiseCargoFijo.f_numValFCan.attr("disabled",true);
+			fiseCargoFijo.f_numValFEmi.attr("disabled",true);
+			fiseCargoFijo.f_numAgen.attr("disabled",true);
+			fiseCargoFijo.f_montoMes.attr("disabled",true);
+			fiseCargoFijo.f_montoCanje.attr("disabled",true);
+			fiseCargoFijo.f_numDoc.attr("disabled",true);
+			fiseCargoFijo.f_numDocRecepcion.attr("disabled",true);
+			fiseCargoFijo.f_fechaSustento.attr("disabled",true);
+			fiseCargoFijo.f_fechaRecepcion.attr("disabled",true);
+			fiseCargoFijo.f_igv.attr("disabled",true);
+			fiseCargoFijo.f_gloza.attr("disabled",true);		
+			
+			//ESTILOS
+			fiseCargoFijo.f_numUsuBenef.removeClass("fise-editable");
+			fiseCargoFijo.f_numUsuEmp.removeClass("fise-editable");	
+			fiseCargoFijo.f_numValDCan.removeClass("fise-editable");
+			fiseCargoFijo.f_numValDEmi.removeClass("fise-editable");		
+			fiseCargoFijo.f_numValFCan.removeClass("fise-editable");
+			fiseCargoFijo.f_numValFEmi.removeClass("fise-editable");				
+			fiseCargoFijo.f_numAgen.removeClass("fise-editable");
+			fiseCargoFijo.f_montoMes.removeClass("fise-editable");		
+			fiseCargoFijo.f_montoCanje.removeClass("fise-editable");
+			fiseCargoFijo.f_numDoc.removeClass("fise-editable");		
+			fiseCargoFijo.f_numDocRecepcion.removeClass("fise-editable");
+			fiseCargoFijo.f_fechaSustento.removeClass("fise-editable");		
+			fiseCargoFijo.f_fechaRecepcion.removeClass("fise-editable");
+			fiseCargoFijo.f_igv.removeClass("fise-editable");		
+			fiseCargoFijo.f_gloza.removeClass("fise-editable");		
+		},
+		//Funcion para habilitar los campos que se desabilitan en la visualizacion opcion ver
+		habilitarCamposView : function(){				
+			fiseCargoFijo.f_numUsuBenef.removeAttr("disabled");
+			fiseCargoFijo.f_numUsuEmp.removeAttr("disabled");
+			fiseCargoFijo.f_numValDCan.removeAttr("disabled");
+			fiseCargoFijo.f_numValDEmi.removeAttr("disabled");
+			fiseCargoFijo.f_numValFCan.removeAttr("disabled");
+			fiseCargoFijo.f_numValFEmi.removeAttr("disabled");
+			fiseCargoFijo.f_numAgen.removeAttr("disabled");
+			fiseCargoFijo.f_montoMes.removeAttr("disabled");
+			fiseCargoFijo.f_montoCanje.removeAttr("disabled");
+			fiseCargoFijo.f_numDoc.removeAttr("disabled");
+			fiseCargoFijo.f_numDocRecepcion.removeAttr("disabled");
+			fiseCargoFijo.f_fechaSustento.removeAttr("disabled");
+			fiseCargoFijo.f_fechaRecepcion.removeAttr("disabled");
+			fiseCargoFijo.f_igv.removeAttr("disabled");
+			fiseCargoFijo.f_gloza.removeAttr("disabled");		
+			
+			//ESTILOS
+			fiseCargoFijo.f_numUsuBenef.addClass("fise-editable");
+			fiseCargoFijo.f_numUsuEmp.addClass("fise-editable");	
+			fiseCargoFijo.f_numValDCan.addClass("fise-editable");
+			fiseCargoFijo.f_numValDEmi.addClass("fise-editable");		
+			fiseCargoFijo.f_numValFCan.addClass("fise-editable");
+			fiseCargoFijo.f_numValFEmi.addClass("fise-editable");				
+			fiseCargoFijo.f_numAgen.addClass("fise-editable");
+			fiseCargoFijo.f_montoMes.addClass("fise-editable");		
+			fiseCargoFijo.f_montoCanje.addClass("fise-editable");
+			fiseCargoFijo.f_numDoc.addClass("fise-editable");		
+			fiseCargoFijo.f_numDocRecepcion.addClass("fise-editable");
+			fiseCargoFijo.f_fechaSustento.addClass("fise-editable");		
+			fiseCargoFijo.f_fechaRecepcion.addClass("fise-editable");
+			fiseCargoFijo.f_igv.addClass("fise-editable");		
+			fiseCargoFijo.f_gloza.addClass("fise-editable");		
 		},
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
