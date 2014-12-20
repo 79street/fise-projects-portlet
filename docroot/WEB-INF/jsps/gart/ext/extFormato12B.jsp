@@ -1110,6 +1110,7 @@
 			total.val(total.val().substring(0,total.val().indexOf('.')+3));
 			
 			$("#"+idhidden).val(total.val());
+			
 			 
 			var value=$("#"+idstandar).val();
 			 var valueProv=$("#"+idstandar+"Prov").val();
