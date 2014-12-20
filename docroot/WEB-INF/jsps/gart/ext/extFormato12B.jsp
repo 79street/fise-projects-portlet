@@ -1108,6 +1108,7 @@
 		loadCostoTotatByInput:function (total,nro,costo,idhidden,idstandar,idtotal){
 			total.val((nro.val()!=null && nro.length>0)?(nro.val()*costo.val()):'0.00');
 			total.val(total.val().substring(0,total.val().indexOf('.')+3));
+			
 			$("#"+idhidden).val(total.val());
 			 
 			var value=$("#"+idstandar).val();
@@ -1211,7 +1212,7 @@
 		        'left': ($(window).width() / 3 - formato12B.dlgLoadFile.width() / 3) + 'px', 
 		        'top': ($(window).height()  - formato12B.dlgLoadFile.height() ) + 'px'
 		    });
-			
+		    $("#msjUploadFile").html("");
 			
 			
 		},
