@@ -708,56 +708,65 @@ var formato14C= {
 		},
 		//Function para editar los datos del formulario
 		editarFormato14C : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa,flagOperacion){	
-			console.debug("flag operacion editar : "+flagOperacion);			
+			console.debug("flag operacion editar : "+flagOperacion);			 
+			var admin = '${formato14CBean.admin}';
 			if(flagOperacion=='ABIERTO'){
-				$.blockUI({ message: formato14C.mensajeObteniendoDatos });			 
-				jQuery.ajax({
-						url: formato14C.urlEditarView+'&'+formato14C.formCommand.serialize(),
-						type: 'post',
-						dataType: 'json',
-						data: {							
-						   <portlet:namespace />codEmpresa: codEmpresa,
-						   <portlet:namespace />anioPres: anoPresentacion,
-						   <portlet:namespace />mesPres: mesPresentacion,
-						   <portlet:namespace />anoIniVigencia: anoIniVigencia,
-						   <portlet:namespace />anoFinVigencia: anoFinVigencia,
-						   <portlet:namespace />etapa: etapa						  
-						},
-						success: function(data) {				
-							if (data != null){															
-								formato14C.divNuevo.show();
-								formato14C.divBuscar.hide();							
-							    formato14C.llenarDatosEditar(data);
-							    formato14C.divInformacion.show();
-								formato14C.initBlockUI();
-								formato14C.ocultarElementosEditar();
-								$('#<portlet:namespace/>guardarFormatoF14C').css('display','none');
-								$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');	
-								
-								$('#<portlet:namespace/>validacionFormatoF14C').css('display','block');		
-								$('#<portlet:namespace/>envioDefinitivoF14C').css('display','block');
-								//ESTILOS
-								//CABECERA			
-								formato14C.f_nombreSede.addClass("fise-editable");
-								formato14C.f_numRural.addClass("fise-editable");
-								formato14C.f_numUrbProv.addClass("fise-editable");			
-								formato14C.f_costoPromRural.addClass("fise-editable");		
-								formato14C.f_costoPromUrbProv.addClass("fise-editable");
-								
-								formato14C.f_anoIniVigencia.removeClass("fise-editable");
-								formato14C.f_anoFinVigencia.removeClass("fise-editable");
-					         }
-							else{
-								alert("Error al recuperar los datos del registro seleccionado");
+				var process=true;
+				if( etapa=='RECONOCIDO' || !admin ){
+					process = false;
+				}
+				if(process){
+					$.blockUI({ message: formato14C.mensajeObteniendoDatos });			 
+					jQuery.ajax({
+							url: formato14C.urlEditarView+'&'+formato14C.formCommand.serialize(),
+							type: 'post',
+							dataType: 'json',
+							data: {							
+							   <portlet:namespace />codEmpresa: codEmpresa,
+							   <portlet:namespace />anioPres: anoPresentacion,
+							   <portlet:namespace />mesPres: mesPresentacion,
+							   <portlet:namespace />anoIniVigencia: anoIniVigencia,
+							   <portlet:namespace />anoFinVigencia: anoFinVigencia,
+							   <portlet:namespace />etapa: etapa						  
+							},
+							success: function(data) {				
+								if (data != null){															
+									formato14C.divNuevo.show();
+									formato14C.divBuscar.hide();							
+								    formato14C.llenarDatosEditar(data);
+								    formato14C.divInformacion.show();
+									formato14C.initBlockUI();
+									formato14C.ocultarElementosEditar();
+									$('#<portlet:namespace/>guardarFormatoF14C').css('display','none');
+									$('#<portlet:namespace/>actualizarFormatoF14C').css('display','block');	
+									
+									$('#<portlet:namespace/>validacionFormatoF14C').css('display','block');		
+									$('#<portlet:namespace/>envioDefinitivoF14C').css('display','block');
+									//ESTILOS
+									//CABECERA			
+									formato14C.f_nombreSede.addClass("fise-editable");
+									formato14C.f_numRural.addClass("fise-editable");
+									formato14C.f_numUrbProv.addClass("fise-editable");			
+									formato14C.f_costoPromRural.addClass("fise-editable");		
+									formato14C.f_costoPromUrbProv.addClass("fise-editable");
+									
+									formato14C.f_anoIniVigencia.removeClass("fise-editable");
+									formato14C.f_anoFinVigencia.removeClass("fise-editable");
+						         }
+								else{
+									alert("Error al recuperar los datos del registro seleccionado");
+									formato14C.initBlockUI();
+								}
+							},error : function(){
+								alert("Error de conexión.");
 								formato14C.initBlockUI();
 							}
-						},error : function(){
-							alert("Error de conexión.");
-							formato14C.initBlockUI();
-						}
-				});		
+					});			
+				}else{
+					alert(" No tiene autorización para realizar esta operación");
+				}				
 			}else if(flagOperacion=='CERRADO'){
-				alert(" No esta habilitado para realizar esta operacion");	
+				alert(" Está fuera de plazo");
 			}else{
 				alert("El formato ya fue enviado a OSINERGMIN-GART");	
 			}	
@@ -909,18 +918,27 @@ var formato14C= {
 		},
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarF14C : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa,flagOperacion){	
+			var admin = '${formato14CBean.admin}';
 			if(flagOperacion=='ABIERTO'){
-				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-				formato14C.dialogConfirmContent.html(addhtml);
-				formato14C.dialogConfirm.dialog("open");
-				cod_Empresa=codEmpresa;
-				ano_Presentacion=anoPresentacion;
-				mes_Presentacion=mesPresentacion;
-				ano_Inicio_Vigencia=anoIniVigencia;
-				ano_Fin_Vigencia=anoFinVigencia;
-				cod_Etapa=etapa;	
+				var process=true;
+				if( etapa=='RECONOCIDO' || !admin ){
+					process = false;
+				}
+				if(process){
+					var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+					formato14C.dialogConfirmContent.html(addhtml);
+					formato14C.dialogConfirm.dialog("open");
+					cod_Empresa=codEmpresa;
+					ano_Presentacion=anoPresentacion;
+					mes_Presentacion=mesPresentacion;
+					ano_Inicio_Vigencia=anoIniVigencia;
+					ano_Fin_Vigencia=anoFinVigencia;
+					cod_Etapa=etapa;	
+				}else{
+					alert(" No tiene autorización para realizar esta operación");	
+				}			
 			}else if(flagOperacion=='CERRADO'){
-				alert(" No esta habilitado para realizar esta operacion");		
+				alert(" Está fuera de plazo");
 			}else{
 				alert("El formato ya fue enviado a OSINERGMIN-GART");	
 			}			
