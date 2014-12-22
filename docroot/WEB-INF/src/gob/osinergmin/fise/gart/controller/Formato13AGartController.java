@@ -683,12 +683,56 @@ public class Formato13AGartController {
 					command.setAnioInicioVigencia(String.valueOf(f.getAnioInicioVigencia()));
 					command.setAnioFinVigencia(String.valueOf(f.getAnioFinVigencia()));
 
-					String ubigeo = f.getCodUbigeo();
+					List<AdmUbigeo> listaDepartamentos = fiseUtil.listaDepartamentos();
+					
+					if( null!=f.getCodUbigeo() ){
+						String ubigeo = f.getCodUbigeo();
+						if (StringUtils.isNotBlank(ubigeo)) {
+							String codDepartamento = f.getCodUbigeo().substring(0, 2);
+							String codProvincia = f.getCodUbigeo().substring(0, 4);
+							String codDistrito = f.getCodUbigeo().substring(0, 6);
+							List<AdmUbigeo> provincias = fiseUtil.listaProvincias(codDepartamento);
+							List<AdmUbigeo> distritos = fiseUtil.listaDistritos(codProvincia);
+							
+							String descDepartamento = "";
+							String descProvincia = "";
+							String descDistrito = "";
+							
+							for (AdmUbigeo depto : listaDepartamentos) {
+								if( codDepartamento.concat("0000").equals(depto.getCodUbigeo().trim()) ){
+									descDepartamento = depto.getNomUbigeo();
+									break;
+								}
+							}
+							for (AdmUbigeo prov : provincias) {
+								if( codProvincia.concat("00").equals(prov.getCodUbigeo().trim()) ){
+									descProvincia = prov.getNomUbigeo();
+									break;
+								}
+							}
+							for (AdmUbigeo dist : distritos) {
+								if( codDistrito.equals(dist.getCodUbigeo().trim()) ){
+									descDistrito = dist.getNomUbigeo();
+									break;
+								}
+							}
+							
+							//seteamos los valores
+							command.setCodDepartamentoHidden(codDepartamento.concat("0000"));
+							command.setCodProvinciaHidden(codProvincia.concat("00"));
+							command.setCodDistritoHidden(codDistrito);
+							command.setDescDepartamento(descDepartamento);
+							command.setDescProvincia(descProvincia);
+							command.setDescDistrito(descDistrito);
+						}
+					}
+					
+					/*String ubigeo = f.getCodUbigeo();
 					if (StringUtils.isNotBlank(ubigeo)) {
 						command.setCodDepartamento(ubigeo.substring(0, 2).concat("0000"));
 						command.setCodProvincia(ubigeo.substring(0, 4).concat("00"));
 						command.setCodDistrito(ubigeo);
-					}
+					}*/
 
 					command.setLocalidad(f.getDescLocalidad());
 					command.setSt1(String.valueOf(f.getNroBenefPoteSecTipico1()));

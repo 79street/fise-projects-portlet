@@ -57,8 +57,13 @@ public class Formato13AGartCommand {
 	private String anioInicioVigencia;
 	private String anioFinVigencia;
 	
-	
-	
+	//add
+	private String descDepartamento;
+	private String descProvincia;
+	private String descDistrito;
+	private String codDepartamentoHidden;
+	private String codProvinciaHidden;
+	private String codDistritoHidden;
 	
 
 	private List<FisePeriodoEnvio> listaPeriodo;
@@ -442,6 +447,54 @@ public class Formato13AGartCommand {
 
 	public void setDescestado(String descestado) {
 		this.descestado = descestado;
+	}
+
+	public String getDescDepartamento() {
+		return descDepartamento;
+	}
+
+	public void setDescDepartamento(String descDepartamento) {
+		this.descDepartamento = descDepartamento;
+	}
+
+	public String getDescProvincia() {
+		return descProvincia;
+	}
+
+	public void setDescProvincia(String descProvincia) {
+		this.descProvincia = descProvincia;
+	}
+
+	public String getDescDistrito() {
+		return descDistrito;
+	}
+
+	public void setDescDistrito(String descDistrito) {
+		this.descDistrito = descDistrito;
+	}
+
+	public String getCodDepartamentoHidden() {
+		return codDepartamentoHidden;
+	}
+
+	public void setCodDepartamentoHidden(String codDepartamentoHidden) {
+		this.codDepartamentoHidden = codDepartamentoHidden;
+	}
+
+	public String getCodProvinciaHidden() {
+		return codProvinciaHidden;
+	}
+
+	public void setCodProvinciaHidden(String codProvinciaHidden) {
+		this.codProvinciaHidden = codProvinciaHidden;
+	}
+
+	public String getCodDistritoHidden() {
+		return codDistritoHidden;
+	}
+
+	public void setCodDistritoHidden(String codDistritoHidden) {
+		this.codDistritoHidden = codDistritoHidden;
 	}
 
 	
