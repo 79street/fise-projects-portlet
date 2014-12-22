@@ -3063,12 +3063,14 @@ var formato14C= {
 			}
 		},		
 		validarArchivoCarga : function() {		
-			if(formato14C.f_empresa.val().length == '' ) { 	
+			if(formato14C.f_empresa.val()==null || 
+					formato14C.f_empresa.val().length == '' ) { 	
 				alert('Seleccione una empresa para proceder con la carga de archivo'); 
 				formato14C.f_empresa.focus();
 				return false; 
 			}
-			if(formato14C.f_periodoEnvio.val().length == '' ) {		  
+			if(formato14C.f_periodoEnvio.val()==null || 
+					formato14C.f_periodoEnvio.val().length == '' ) {		  
 				alert('Debe ingresar el periodo de presentación');
 				formato14C.f_periodoEnvio.focus();
 				return false; 

@@ -414,7 +414,7 @@ $(document).ready(function () {
 													 <label style="margin-left:0.5cm;">1.1 Nombre de la Sede: </label>
 													</td>	
 													<td style="text-align:left">
-													    <form:input path="nombreSede" maxlength="60" onblur="letras(this);"/>
+													    <form:input path="nombreSede" maxlength="60" onkeypress="return soloLetras(event)"/>
 													</td> 
 													<!-- RURAL --> 
 													<td style="text-align:center;display:none" colspan="5"></td>

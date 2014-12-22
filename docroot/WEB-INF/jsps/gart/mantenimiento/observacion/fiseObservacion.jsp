@@ -149,7 +149,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Descripcion:</label>
 											   </td>
 											   <td>
-												 <form:textarea path="descripcion" cols="30" rows="4" />  
+												 <form:textarea path="descripcion" cols="30" rows="4" onkeypress="return soloLetras(event)"/>  
 											   </td>								   
 										     </tr>						
 										  </table>								 								
