@@ -741,9 +741,9 @@
 
 									<tr style="padding-top: 10px:">
 										<td>7. Gestión Administrativa</td>
-										<td align="center"><form:input path="totalGestionAdministrativa" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativa')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
-										<td align="center"><form:input path="totalGestionAdministrativaProv" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaProv')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
-										<td align="center"><form:input path="totalGestionAdministrativaLim" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaLim')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+										<td align="center"><form:input path="totalGestionAdministrativa" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativa')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
+										<td align="center"><form:input path="totalGestionAdministrativaProv" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaProv')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
+										<td align="center"><form:input path="totalGestionAdministrativaLim" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaLim')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>
@@ -758,13 +758,13 @@
 										<td>8. Desplazamiento de Personal</td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalDesplazamientoPersonal')"
 												path="totalDesplazamientoPersonal" cssClass="target"   onblur="formato12B.loadGestion('porDesplazamientoPers','totalDesplazamientoPersonal')" 
-												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+												disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalDesplazamientoPersonalProv')"
 												path="totalDesplazamientoPersonalProv" cssClass="target"  onblur="formato12B.loadGestion('porDesplazamientoPers','totalDesplazamientoPersonal')" 
-												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+												disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12" /></td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalDesplazamientoPersonalLim')"
 												path="totalDesplazamientoPersonalLim" cssClass="target"  onblur="formato12B.loadGestion('porDesplazamientoPers','totalDesplazamientoPersonal')" 
-												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+												disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>
@@ -779,13 +779,13 @@
 										<td>9. Actividades Extraordinarias</td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalActividadesExtraord')"
 												path="totalActividadesExtraord" cssClass="target"  onblur="formato12B.loadGestion('porActividadExtra','totalActividadesExtraord')" 
-												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+												disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12" /></td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalActividadesExtraordProv')"
 												path="totalActividadesExtraordProv" cssClass="target"  onblur="formato12B.loadGestion('porActividadExtra','totalActividadesExtraord')" 
-												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+												disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12" /></td>
 										<td align="center"><form:input  onkeypress="formato12B.validateInputTextDecimal('totalActividadesExtraordLim')"
 												path="totalActividadesExtraordLim" cssClass="target"  onblur="formato12B.loadGestion('porActividadExtra','totalActividadesExtraord')" 
-												disabled="false" cssStyle="width: 100px; text-align: right;" /></td>
+												disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>

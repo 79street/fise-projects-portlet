@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import gob.osinergmin.fise.domain.FiseFormato12BC;
 import gob.osinergmin.fise.domain.FiseFormato12BCPK;
 import gob.osinergmin.fise.domain.FiseFormato12BD;
 import gob.osinergmin.fise.domain.FiseFormato12BDOb;
+import gob.osinergmin.fise.domain.FiseFormato12BDPK;
 import gob.osinergmin.fise.domain.FiseFormato14BD;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
@@ -64,7 +66,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
@@ -173,6 +175,7 @@ public class Formato12BGartController {
 			HttpSession session = req.getSession();
             String codEmp=command.getCodEmpresaBusqueda()!=null?command.getCodEmpresaBusqueda().trim():null;
             
+            
             if(command!=null){
             	System.out.println("comman difente de nulo");
             }
@@ -184,6 +187,14 @@ public class Formato12BGartController {
 				jsonArray = Formato12BGartCommand.toListJSONCabecera(lstFise, commonService);
 				
 			}
+			
+			  formato12BBusqueda=new Formato12BGartCommand();
+	          formato12BBusqueda.setAnioInicio(command.getAnioInicio());
+	          formato12BBusqueda.setAnioFin(command.getAnioFin());
+	          formato12BBusqueda.setMesInicio(command.getMesInicio());
+	          formato12BBusqueda.setMesFin(command.getMesFin());
+	          formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
+	          formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
 			
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray != null ? jsonArray.toString():(new JSONArray()).toString());
@@ -280,7 +291,7 @@ public class Formato12BGartController {
 
 		System.out.println("anio::busqueda "+command.getAnioInicio());
 		System.out.println("mes:: busqueda"+command.getMesInicio());
-		System.out.println("etapa ::: busqueda"+command.getEtapa());
+		System.out.println("etapa ::: busqueda"+command.getEtapaBusqueda());
 		
 		if (error != null) {
 			model.addAttribute("error", error);
@@ -335,11 +346,13 @@ public class Formato12BGartController {
           formato12BBusqueda.setAnioInicio(command.getAnioInicio());
           formato12BBusqueda.setAnioFin(command.getAnioFin());
           formato12BBusqueda.setMesInicio(command.getMesInicio());
-          System.out.println("MES INICIO CARGA NUEVO****"+command.getAnioInicio());
-          System.out.println("MES INICIO CARGA NUEVO****"+command.getMesInicio());
           formato12BBusqueda.setMesFin(command.getMesFin());
           formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
           formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
+          
+          System.out.println("ANIO INICIO CARGA NUEVO****"+command.getAnioInicio());
+          System.out.println("MES INICIO CARGA NUEVO****"+command.getMesInicio());
+        
 		
 		return "formato12BDetalle";
 	}
@@ -667,7 +680,8 @@ public class Formato12BGartController {
 							lenghtActividades=campo.getLongitud().intValue();
 						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_RECONOCER.trim())){
 						isAdd=true;
-							lenghtReconocer=campo.getLongitud().intValue();////costos
+							lenghtReconocer=campo.getLongitud().intValue();
+							//************************COSTOS*************************//
 						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_IMPRE.trim())){
 							isAdd=false;
 							lenghtCostoValesImp=campo.getLongitud().intValue();
@@ -716,7 +730,7 @@ public class Formato12BGartController {
 				//List<String> listaDetalleTxt= new ArrayList<String>();
 				String sCurrentLine;
 				
-				
+				List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
 			
 				while ((sCurrentLine = br.readLine()) != null) {
 					System.out.println("total::"+sCurrentLine.length());
@@ -739,6 +753,10 @@ public class Formato12BGartController {
 						String mesEjec=sCurrentLine.substring(posInicial, posInicial+lenghtMesEjec);
 						System.out.println("mesEjec ::"+mesEjec+"/"+posInicial);
 						posInicial=posInicial+lenghtMesEjec;
+						String idzon=sCurrentLine.substring(posInicial, posInicial+lenghtZona);
+						System.out.println("idzon ::"+idzon+"/"+posInicial);
+						posInicial=posInicial+lenghtZona;
+						
 						
 					String numValesImp=sCurrentLine.substring(posInicial,posInicial+ lenghtValesImp);
 						posInicial=posInicial+lenghtValesImp+lenghtCostoValesImp+lenghtTotalValesImp;
@@ -761,27 +779,131 @@ public class Formato12BGartController {
 						String totalreconocer=sCurrentLine.substring(posInicial, posInicial+lenghtReconocer);
 						
 						
-						System.out.println("codEm ::"+codEm);
-						System.out.println("anioPres ::"+anioPres);
-						System.out.println("mesPres ::"+mesPres);
+						System.out.println("codEm**LG ::"+codEm);
+						System.out.println("anioPres**LG ::"+anioPres);
+						System.out.println("mesPres**LG ::"+mesPres);
 						
-						System.out.println("anioEjec ::"+anioEjec);
-						System.out.println("mesEjec ::"+mesEjec);
-						System.out.println("numValesImp ::"+numValesImp);
-						System.out.println("numValesRepar ::"+numValesRepar);
-						System.out.println("numValesEntrDE ::"+numValesEntrDE);
-						System.out.println("numValesFisico ::"+numValesFisico);
-						System.out.println("numValesDigital ::"+numValesDigital);
-						System.out.println("numValeAtenciones ::"+numValeAtenciones);
-						System.out.println("numValeGestion ::"+numValeGestion);
-						System.out.println("numValeDesplazamiento ::"+numValeDesplazamiento);
-						System.out.println("numValeActividad ::"+numValeActividad);
-						System.out.println("totalreconocer ::"+totalreconocer);
+						System.out.println("anioEjec**LG ::"+anioEjec);
+						System.out.println("mesEjec**LG ::"+mesEjec);
+						System.out.println("Zona**LG ::"+idzon);
+						System.out.println("numValesImp**LG ::"+numValesImp);
+						System.out.println("numValesRepar**LG ::"+numValesRepar);
+						System.out.println("numValesEntrDE**LG ::"+numValesEntrDE);
+						System.out.println("numValesFisico**LG ::"+numValesFisico);
+						System.out.println("numValesDigital**LG ::"+numValesDigital);
+						System.out.println("numValeAtenciones**LG ::"+numValeAtenciones);
+						System.out.println("numValeGestion**LG ::"+numValeGestion);
+						System.out.println("numValeDesplazamiento**LG ::"+numValeDesplazamiento);
+						System.out.println("numValeActividad**LG ::"+numValeActividad);
+						System.out.println("totalreconocer**LG ::"+totalreconocer);
 					   
 					
-					
-					
+						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) && 
+								pk.getAnoPresentacion()== Integer.parseInt(anioPres) &&
+								pk.getMesPresentacion()==Integer.parseInt(mesPres)){
+							
+							 FiseFormato12BDPK pkDetalle=new FiseFormato12BDPK();
+							   FiseFormato12BD detalle=new FiseFormato12BD();
+							   pkDetalle.setCodEmpresa(codEm);
+							   pkDetalle.setAnoEjecucionGasto(Integer.parseInt(anioEjec));
+							   pkDetalle.setAnoPresentacion(Integer.parseInt(anioEjec));
+							   pkDetalle.setEtapa(pk.getEtapa());
+							   pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
+							   pkDetalle.setMesEjecucionGasto(Integer.parseInt(mesEjec));
+							   pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
+							   
+							   FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_RECONOCIDO);
+							  // formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
+								detalle.setNumeroValesImpreso(numValesImp.trim()!=null && numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
+								detalle.setCostoEstandarUnitValeImpre(fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
+								detalle.setCostoTotalImpresionVale(detalle.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(detalle.getNumeroValesImpreso()) ));
+								  
+								detalle.setNumeroValesRepartidosDomi(numValesRepar.trim()!=null && numValesRepar.trim().isEmpty()?Integer.parseInt(numValesRepar):0);
+								detalle.setCostoEstandarUnitValeRepar(fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
+								detalle.setCostoTotalRepartoValesDomi(detalle.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(detalle.getNumeroValesRepartidosDomi()) ));
+								  
+								detalle.setNumeroValesEntregadoDisEl(numValesEntrDE.trim()!=null && numValesEntrDE.trim().isEmpty()?Integer.parseInt(numValesEntrDE):0);
+								detalle.setCostoEstandarUnitValDisEl(fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
+								detalle.setCostoTotalEntregaValDisEl(detalle.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(detalle.getNumeroValesEntregadoDisEl()) ));
+								  
+								detalle.setNumeroValesFisicosCanjeados(numValesFisico.trim()!=null && numValesFisico.trim().isEmpty()?Integer.parseInt(numValesFisico):0);
+								detalle.setCostoEstandarUnitValFiCan(fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
+								detalle.setCostoTotalCanjeLiqValeFis(detalle.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(detalle.getNumeroValesFisicosCanjeados()) ));
+								  
+								detalle.setNumeroValesDigitalCanjeados(numValesDigital.trim()!=null && numValesDigital.trim().isEmpty()?Integer.parseInt(numValesDigital):0);
+								detalle.setCostoEstandarUnitValDgCan(fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
+								detalle.setCostoTotalCanjeLiqValeDig(detalle.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(detalle.getNumeroValesDigitalCanjeados()) ));
+								  
+								detalle.setNumeroAtenciones(numValeAtenciones.trim()!=null && numValeAtenciones.trim().isEmpty()?Integer.parseInt(numValeAtenciones):0);
+							    detalle.setCostoEstandarUnitAtencion(fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0));
+								detalle.setCostoTotalAtencionConsRecl(detalle.getCostoEstandarUnitAtencion().multiply(new BigDecimal(detalle.getNumeroAtenciones()) ));
+								  
+								  detalle.setTotalGestionAdministrativa(numValeGestion.trim()!=null && numValeGestion.trim().isEmpty()?new BigDecimal(numValeGestion):new BigDecimal(0) );
+								  detalle.setTotalDesplazamientoPersonal(numValeDesplazamiento.trim()!=null && numValeDesplazamiento.trim().isEmpty()?new BigDecimal(numValeDesplazamiento):new BigDecimal(0));
+								  detalle.setTotalActividadesExtraord(numValeActividad.trim()!=null && numValeActividad.trim().isEmpty()?new BigDecimal(numValeActividad):new BigDecimal(0));
+								  
+								  detalle.setTotalReconocer(totalreconocer.trim()!=null && totalreconocer.trim().isEmpty()?new BigDecimal(totalreconocer):new BigDecimal(0));
+							   
+							   detalle.setId(pkDetalle);
+							   lstDetalle.add(detalle);
+							   
+							   
+						}else{
+							
+							throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
+							
+						}
+						
 				}
+						if(lstDetalle!=null && !lstDetalle.isEmpty()){
+							 FiseFormato12BCPK pkCabecera=new FiseFormato12BCPK();
+							 FiseFormato12BC cabecera=new FiseFormato12BC();
+							 
+							 pkCabecera.setCodEmpresa(lstDetalle.get(0).getId().getCodEmpresa());
+							 pkCabecera.setAnoEjecucionGasto(lstDetalle.get(0).getId().getAnoEjecucionGasto());
+							 pkCabecera.setAnoPresentacion(lstDetalle.get(0).getId().getAnoPresentacion());
+							 pkCabecera.setEtapa(lstDetalle.get(0).getId().getEtapa());
+							 pkCabecera.setMesEjecucionGasto(lstDetalle.get(0).getId().getMesEjecucionGasto());
+							 pkCabecera.setMesPresentacion(lstDetalle.get(0).getId().getMesPresentacion());
+							 cabecera.setId(pkCabecera);
+							 cabecera.setNombreArchivoTexto(archivo.getTitle());
+							
+							 if(tipoOperacion.equalsIgnoreCase(FiseConstants.ADD+"")){
+								 cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+								 cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+								 cabecera.setFechaCreacion(new Date());
+								 
+								 cabecera=formatoService.saveFormatoCabecera(cabecera);
+								 
+								 for(FiseFormato12BD detalle:lstDetalle){
+									 detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+									 detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+									 detalle.setFechaCreacion(new Date());
+									 formatoService.saveFormatoDetalle(detalle);
+								 }
+								 
+							 }else if(tipoOperacion.equalsIgnoreCase(FiseConstants.UPDATE+"")){
+								 
+								 cabecera.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+								 cabecera.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+								 cabecera.setFechaActualizacion(new Date());
+								 
+                                 formatoService.updateFormatoCabecera(cabecera);
+								 
+								 for(FiseFormato12BD detalle:lstDetalle){
+									 detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+									 detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+									 detalle.setFechaActualizacion(new Date());
+									 formatoService.updateFormatoDetalle(detalle);
+								 }
+							 }
+							 
+						}
+						
+					  
+				
+				
+				
 				
 			} 
 			
@@ -892,7 +1014,7 @@ public class Formato12BGartController {
          formato12BBusqueda.setMesInicio(command.getMesInicio());
          System.out.println("MES INICIO CARGA ****"+command.getAnioInicio());
          System.out.println("MES INICIO CARGA ****"+command.getMesInicio());
-         System.out.println("EMORESA CARGADA CARGA ****"+command.getCodEmpresa());
+         System.out.println("EMORESA CARGADA CARGA ****"+command.getCodEmpresaBusqueda());
          formato12BBusqueda.setMesFin(command.getMesFin());
          formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
          formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
