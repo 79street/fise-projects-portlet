@@ -1998,7 +1998,7 @@ public class Formato12AGartController {
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL_12A;
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
 		   
 		    session.setAttribute("nombreReporte",nombreReporte);

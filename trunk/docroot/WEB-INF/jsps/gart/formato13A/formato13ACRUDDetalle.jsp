@@ -51,24 +51,32 @@ $(document).ready(function () {
 														<tr>
 															<td>Distribuidora Eléctrica:</td>
 															<td>
-															<form:input path="descEmpresa" readonly="true"/>
+															<form:input path="descEmpresa" disabled="true"/>
 															<form:hidden path="codEmpresa" />
 															</td>
 															<td><output class="net-titulo">Periodo a declarar</output></td>
 															<td>
-																<input type="text" value="${formato13AGartCommand.mesPresentacion}/${formato13AGartCommand.anioPresentacion } - ${formato13AGartCommand.etapa}" readonly="true" />
+																<input type="text" value="${formato13AGartCommand.mesPresentacion}/${formato13AGartCommand.anioPresentacion } - ${formato13AGartCommand.etapa}" disabled="true" />
 																<form:hidden path="peridoDeclaracion" />
 																<form:hidden path="anioPresentacion" />
 																<form:hidden path="mesPresentacion" />
 																<form:hidden path="etapa" />
+																
+																<form:hidden path="codDepartamentoHidden"  />	
+																<form:hidden path="descDepartamento"  />	
+																<form:hidden path="codProvinciaHidden"  />
+																<form:hidden path="descProvincia"  />
+																<form:hidden path="codDistritoHidden"  />	
+																<form:hidden path="descDistrito"  />
+																
 															</td>
 															<td><output class="net-titulo">Año Inicio Vigencia:</output></td>
 															<td>
-																<form:input path="anioInicioVigencia" readonly="${readonlyFlagPeriodo}" />
+																<form:input path="anioInicioVigencia" disabled="${readonlyFlagPeriodo}" />
 															</td>
 															<td><output class="net-titulo">Año fin Vigencia:</output></td>
 															<td>
-																<form:input path="anioFinVigencia" readonly="${readonlyFlagPeriodo}" />
+																<form:input path="anioFinVigencia" disabled="${readonlyFlagPeriodo}" />
 															</td>
 														</tr>
 													</table>
@@ -96,7 +104,7 @@ $(document).ready(function () {
 																		<tr> 
 																			<td width="40px">Año:</td> 
 																			<td>
-																				<form:input path="anioAlta" cssStyle="width:50px" maxlength="4" readonly="${readonlyEdit}"/>																			
+																				<form:input path="anioAlta" cssStyle="width:50px" maxlength="4" disabled="${readonlyEdit}"/>																			
 																			</td>
 									   										<td width="5px"></td>
 									   										<td width="40px">Mes:</td>
@@ -140,7 +148,7 @@ $(document).ready(function () {
 									   										<td width="5px"></td>
 									   										<td width="40px">Localidad:</td>
 									   										<td>
-									   											<form:input path="localidad" readonly="${readonlyEdit}"/>
+									   											<form:input path="localidad" disabled="${readonlyEdit}"/>
 									   										</td>
 									   									</tr>
 									   								</tbody></table>
@@ -168,16 +176,16 @@ $(document).ready(function () {
 																</thead>
 																<tbody>
 																	<tr>
-																		<td><form:input path="st1" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
-																		<td><form:input path="st2" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
-																		<td><form:input path="st3" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
-																		<td><form:input path="st4" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
-																		<td><form:input path="st5" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
-																		<td><form:input path="st6" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
-																		<td><form:input path="stser" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
-																		<td><form:input path="stesp" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="st1" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="${readonlyEdit}"/></td>
+																		<td><form:input path="st2" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="${readonlyEdit}"/></td>
+																		<td><form:input path="st3" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="${readonlyEdit}"/></td>
+																		<td><form:input path="st4" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="${readonlyEdit}"/></td>
+																		<td><form:input path="st5" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="${readonlyEdit}"/></td>
+																		<td><form:input path="st6" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="${readonlyEdit}"/></td>
+																		<td><form:input path="stser" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="${readonlyEdit}"/></td>
+																		<td><form:input path="stesp" cssClass="target" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="${readonlyEdit}"/></td>
 																		<%-- <td><form:input path="total" cssStyle="width:50px" maxlength="4" readonly="${readonly}"/></td> --%>
-																		<td><form:input path="total" cssStyle="width:50px; text-align: right;" maxlength="4" readonly="true"/></td>
+																		<td><form:input path="total" cssStyle="width:50px; text-align: right;" maxlength="4" disabled="true"/></td>
 																		<td>
 																			<form:select path="idZonaBenef" cssClass="select" cssStyle="width: 104px;" disabled="${readonly}">
 																					<form:option value="">-Seleccione-</form:option>
@@ -196,7 +204,7 @@ $(document).ready(function () {
 																<legend>Sede de atencion</legend> 
 																<table style="width: 100%;" border="0">
 																	<tr>
-																		<td><form:input path="nombreSede" readonly="${readonlyEdit}"/></td>
+																		<td><form:input path="nombreSede" disabled="${readonlyEdit}"/></td>
 																	</tr>
 																</table>
 															</fieldset>

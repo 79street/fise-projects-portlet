@@ -97,6 +97,15 @@ var formato13A= {
 	codDist:null,
 	
 	//detalleCRUD
+	
+	codDepartamentoHidden:null,
+	codProvinciaHidden:null,
+	codDistritoHidden:null,
+	
+	descDepa:null,
+	descProv:null,
+	descDist:null,
+	
 	codEmpresaDetalle:null,
 	anoPresentacionDetalle:null,
 	mesPresentacionDetalle:null,
@@ -377,6 +386,16 @@ var formato13A= {
 		this.codDepa=$("select[name='codDepartamento']");
 		this.codProv=$("select[name='codProvincia']");
 		this.codDist=$("select[name='codDistrito']");
+		
+		//
+		this.codDepartamentoHidden=$('#codDepartamentoHidden');
+		this.codProvinciaHidden=$('#codProvinciaHidden');
+		this.codDistritoHidden=$('#codDistritoHidden');
+		
+		this.descDepa=$('#descDepartamento');
+		this.descProv=$('#descProvincia');
+		this.descDist=$('#descDistrito');
+		
 		this.urlProvincias='<portlet:resourceURL id="provincias" />';
 		this.urlDistritos='<portlet:resourceURL id="distritos" />';
 		this.botonGuardarDetalle=$('#<portlet:namespace/>guardarDetalle');
@@ -429,6 +448,11 @@ var formato13A= {
 				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=0';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=0';
 			});
+			
+			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
+			formato13A.construirProvincia(formato13A.codProvinciaHidden.val(), formato13A.descProv.val());
+			formato13A.construirDistrito(formato13A.codDistritoHidden.val(), formato13A.descDist.val());
+			
 		</c:if>
 		
 		<c:if test="${crud =='READCREATEUPDATE'}">
@@ -437,19 +461,26 @@ var formato13A= {
 				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=0';
 			});
+			
+			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
+			formato13A.construirProvincia(formato13A.codProvinciaHidden.val(), formato13A.descProv.val());
+			formato13A.construirDistrito(formato13A.codDistritoHidden.val(), formato13A.descDist.val());
 		</c:if>
 		
 		<c:if test="${crud =='UPDATE'}">
 		
-		formato13A.botonGuardarDetalle.click(function(){
-			formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&idZonaBenef='+formato13A.idZonaBenefDetalle.val()).submit();
-		});
+			formato13A.botonGuardarDetalle.click(function(){
+				formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&idZonaBenef='+formato13A.idZonaBenefDetalle.val()).submit();
+			});
 		
 			botonRegresarDetalle.click(function(){
 				formato13A.blockUI();
 				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=1';
 			});
+			
+			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
+			formato13A.listarProvinciasEdit(formato13A.codDepartamentoHidden.val(),formato13A.codProvinciaHidden.val(),formato13A.codDistritoHidden.val());
 			
 		</c:if>
 		
@@ -816,6 +847,33 @@ var formato13A= {
 
 
 	},
+	listarProvinciasEdit : function (codDepartamento,provSelected,distSelected) {	
+		jQuery.ajax({			
+					url: formato13A.urlProvincias,
+					type: 'post',
+					dataType: 'json',
+					data:{
+						codDepartamento:codDepartamento
+					},
+					beforeSend:function(){
+						formato13A.blockUI();
+					},				
+					success: function(data) {	
+
+						dwr.util.removeAllOptions("codProvincia");
+						dwr.util.addOptions("codProvincia", data,"codigoItem","descripcionItem");
+						dwr.util.setValue("codProvincia", provSelected);
+						formato13A.limpiarDistritos();
+						
+						formato13A.listarDistritosEdit(provSelected, distSelected);
+						
+						formato13A.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato13A.unblockUI();
+					}
+			});
+	},
 	listarDistritos : function (codProvincia) {	
 		jQuery.ajax({			
 					url: formato13A.urlDistritos,
@@ -830,6 +888,32 @@ var formato13A= {
 					success: function(data) {					
 						dwr.util.removeAllOptions("codDistrito");
 						dwr.util.addOptions("codDistrito", data,"codigoItem","descripcionItem");
+						formato13A.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato13A.unblockUI();
+					}
+			});
+
+
+	},
+	listarDistritosEdit : function (codProvincia,distSelected) {	
+		jQuery.ajax({			
+					url: formato13A.urlDistritos,
+					type: 'post',
+					dataType: 'json',
+					data:{
+						codProvincia:codProvincia
+					},
+					beforeSend:function(){
+						formato13A.blockUI();
+					},				
+					success: function(data) {			
+
+						dwr.util.removeAllOptions("codDistrito");
+						dwr.util.addOptions("codDistrito", data,"codigoItem","descripcionItem");
+						dwr.util.setValue("codDistrito", distSelected);
+						
 						formato13A.unblockUI();
 					},error : function(){
 						alert("Error de conexión.");
@@ -1378,6 +1462,27 @@ var formato13A= {
 		        this.value = this.value.replace(/[^0-9]/g, '').substring(0,10);
 		    }
 		});	
+	},
+	//add
+	//departamentos provincias distritos
+	construirDepartamento : function(codDepartamento,descDepartamento){
+		dwr.util.removeAllOptions("codDepartamento");
+		var dataPeriodo = [{codigoItem:codDepartamento, descripcionItem:descDepartamento}];   
+   		dwr.util.addOptions("codDepartamento", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	construirProvincia : function(codProvincia,descProvincia){
+		dwr.util.removeAllOptions("codProvincia");
+		var codigo=''+codProvincia;
+		var descripcion=''+descProvincia;
+   		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+   		dwr.util.addOptions("codProvincia", dataPeriodo,"codigoItem","descripcionItem");
+	},
+	construirDistrito : function(codDistrito,descDistrito){
+		dwr.util.removeAllOptions("codDistrito");
+		var codigo=''+codDistrito;
+		var descripcion=''+descDistrito;
+   		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+   		dwr.util.addOptions("codDistrito", dataPeriodo,"codigoItem","descripcionItem");
 	},
 };
 
