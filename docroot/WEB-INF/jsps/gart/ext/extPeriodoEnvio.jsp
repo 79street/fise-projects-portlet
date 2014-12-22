@@ -255,15 +255,39 @@ var periodoEnvio= {
 		},
 		
 		//function para inicializar el formulario
-		inicializarFormulario : function(){	
-			periodoEnvio.f_secuencia.val('');
-			
-			periodoEnvio.f_codEmpresa.val('');
+		inicializarFormulario : function(){			
 			var f = new Date();
-			periodoEnvio.f_anoPres.val(f.getFullYear());
-			periodoEnvio.f_mesPres.val(f.getMonth() +1);
-			periodoEnvio.f_formato.val('F12A');
-			periodoEnvio.f_etapa.val('SOLICITUD');
+			periodoEnvio.f_secuencia.val('');
+			if(periodoEnvio.i_codEmpresaBusq.val()!=''){
+				periodoEnvio.f_codEmpresa.val(periodoEnvio.i_codEmpresaBusq.val());	
+			}else{
+				periodoEnvio.f_codEmpresa.val('');
+			}
+			
+			if(periodoEnvio.i_anioDesde.val()!=''){
+				periodoEnvio.f_anoPres.val(periodoEnvio.i_anioDesde.val());	
+			}else{
+				periodoEnvio.f_anoPres.val(f.getFullYear());
+			}
+			
+			if(periodoEnvio.i_mesDesde.val()!=''){
+				periodoEnvio.f_mesPres.val(periodoEnvio.i_mesDesde.val());
+			}else{
+				console.debug("mes actual :  "+f.getMonth());
+				periodoEnvio.f_mesPres.val(f.getMonth() +1);	
+			}
+			
+			if(periodoEnvio.i_formatoBusq.val()!=''){
+				periodoEnvio.f_formato.val(periodoEnvio.i_formatoBusq.val());
+			}else{
+				periodoEnvio.f_formato.val('F12A');
+			}
+			
+			if(periodoEnvio.i_etapaBusq.val()!=''){
+				periodoEnvio.f_etapa.val(periodoEnvio.i_etapaBusq.val());
+			}else{
+				periodoEnvio.f_etapa.val('SOLICITUD');
+			}		
 			periodoEnvio.f_estado.val('V');
 			periodoEnvio.f_desde.val('');
 			periodoEnvio.f_hasta.val('');
