@@ -1400,7 +1400,7 @@ public class Formato13AGartController {
 			String etapa = command.getEtapa();
 
 			String nombreReporte = request.getParameter("nombreReporte").trim();
-			String nombreArchivo = request.getParameter("nombreArchivo").trim();
+			//String nombreArchivo = request.getParameter("nombreArchivo").trim();
 
 			FiseFormato13ACPK pk = new FiseFormato13ACPK();
 			pk.setCodEmpresa(codEmpresa);
@@ -1468,7 +1468,7 @@ public class Formato13AGartController {
 
 				/** REPORTE FORMATO 13A */
 				nombreReporte = "formato13A";
-				nombreArchivo = nombreReporte;
+				//nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile = new File(session.getServletContext().getRealPath(directorio));
 				//List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
@@ -1494,7 +1494,7 @@ public class Formato13AGartController {
 				/** REPORTE OBSERVACIONES */
 				if (listaObservaciones != null && listaObservaciones.size() > 0) {
 					nombreReporte = "validacion13";
-					nombreArchivo = nombreReporte;
+					//nombreArchivo = nombreReporte;
 					directorio = "/reports/" + nombreReporte + ".jasper";
 					File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes2 = null;
@@ -1513,7 +1513,7 @@ public class Formato13AGartController {
 				}
 				/** REPORTE ACTA DE ENVIO */
 				nombreReporte = "actaEnvio";
-				nombreArchivo = nombreReporte;
+				//nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
 				byte[] bytes3 = null;
