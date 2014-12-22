@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actaEnvio" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="283"/>
+	<property name="ireport.y" value="379"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_INICIO_VIGENCIA" class="java.lang.Long"/>
@@ -22,6 +22,7 @@
 	<parameter name="UNCHECKED" class="java.lang.String"/>
 	<parameter name="CHECKED_CUMPLEPLAZO" class="java.lang.String"/>
 	<parameter name="CHECKED_OBSERVACION" class="java.lang.String"/>
+	<parameter name="ETAPA" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -289,7 +290,7 @@
 			<staticText>
 				<reportElement x="152" y="96" width="87" height="16"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Solicitud]]></text>
+				<text><![CDATA[$P{ETAPA}]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="30" y="96" width="120" height="16" backcolor="#FFFFFF"/>
