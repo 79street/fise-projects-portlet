@@ -2,12 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cumplimiento" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="42"/>
-	<property name="ireport.y" value="101"/>
+	<property name="ireport.y" value="100"/>
 	<subDataset name="dataset1"/>
 	<parameter name="DESC_MES_CUMPLIMIENTO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
-	<parameter name="DESC_MES_PRESENTACION" class="java.lang.Long"/>
+	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="DESC_ETAPA" class="java.lang.String"/>
 	<parameter name="CODIGO_EMPRESA" class="java.lang.String"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
@@ -127,7 +127,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[/]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="158" y="29" width="200" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>

@@ -1298,7 +1298,7 @@ public class Formato12CGartController {
 			String etapa = bean.getEtapa();
 
 			String nombreReporte = request.getParameter("nombreReporte").trim();
-			//String nombreArchivo = request.getParameter("nombreArchivo").trim();
+			String nombreArchivo = request.getParameter("nombreArchivo").trim();
 
 			FiseFormato12CCPK pk = new FiseFormato12CCPK();
 			pk.setCodEmpresa(codEmpresa);
@@ -1363,7 +1363,7 @@ public class Formato12CGartController {
 
 				/** REPORTE FORMATO 12C */
 				nombreReporte = "formato12C";
-				//nombreArchivo = nombreReporte;
+				nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile = new File(session.getServletContext().getRealPath(directorio));
 				byte[] bytes = null;
@@ -1385,7 +1385,7 @@ public class Formato12CGartController {
 				/** REPORTE OBSERVACIONES */
 				if (listaObservaciones != null && listaObservaciones.size() > 0) {
 					nombreReporte = "validacion12";
-					//nombreArchivo = nombreReporte;
+					nombreArchivo = nombreReporte;
 					directorio = "/reports/" + nombreReporte + ".jasper";
 					File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes2 = null;
@@ -1404,7 +1404,7 @@ public class Formato12CGartController {
 				}
 				/** REPORTE ACTA DE ENVIO */
 				nombreReporte = "gastoMensualIndividualCD";
-				//nombreArchivo = nombreReporte;
+				nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
 				byte[] bytes3 = null;
