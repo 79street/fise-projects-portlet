@@ -194,65 +194,38 @@
 			});
 			
 		}, 
-		validateInputAnioTxt : function(inicio,fin){
-			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
-	    		 formato12B.lblMessageInicial.html("El año debe contener 4 digitos");
-				 formato12B.dialogMessageGeneralInicial.dialog("open");
-	    		
-	    	 }else if(inicio.val().length>0){
-	    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
-	    			 
-	    			 formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
-					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
-	    		 }
-	    	 }else if(fin.val().length>0){
-	    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
-	    			
-	    			 formato12B.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
-					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
-	    		 }
-	    		 
-	    	 }
-			//var n=formato12B.validateInputAnio(inicio,fin);
-		},
+		
 		validateInputAnio : function(inicio,fin){//validateInputAnio
+			
+			
 			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 	    		 formato12B.lblMessageInicial.html("El año debe contener 4 digitos");
 				 formato12B.dialogMessageGeneralInicial.dialog("open");
 				 return false; 
 	    		
-	    	 }else if(inicio.val().length>0){
-	    		 if(parseFloat(fin.val().length>0?fin.val():'0')<parseFloat(inicio.val())){
-	    			
-	    			 formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
-					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
-					 return false; 
-	    		 }
 	    	 }else if(fin.val().length>0){
 	    		 if(parseFloat(inicio.val().length>0?inicio.val():'0')>parseFloat(fin.val())){
 	    			
-	    			 formato12B.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
+	    			 formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial ");
 					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
 					 return false; 
 	    		 }
 	    		 
 	    	 }
-		if(inicio.val().length>0 && fin.val().length>0){
-			
-			if(parseFloat(inicio.val())==parseFloat(fin.val())){
-				var mesinicio=$("#mesInicio").val();
-				var mesfin=$("#mesFin").val();
-			
-				if(mesfin<mesinicio){
-					 formato12B.lblMessageInicial.html("El mes final debe ser posterior al mes inicial");
-					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
-					 return false; 
-				}
-			}
-		}
-	
-       
-    	 return true; 
+		
+			 if(parseFloat(inicio.val().length>0?inicio.val():'0')==parseFloat(fin.val().length>0?fin.val():'0')){
+				 var mesinicio=$("#mesInicio").val();
+					var mesfin=$("#mesFin").val();
+				
+					if(parseFloat(mesfin)<parseFloat(mesinicio)){
+						 formato12B.lblMessageInicial.html("El mes final debe ser posterior al mes inicial");
+						 formato12B.dialogMessageGeneralInicial.dialog("open"); 
+						 return false; 
+					}
+	    		
+	    		
+	    	 }
+	  	 return true; 
      },
      buildGridsBusqueda : function () {	
 			formato12B.tablaBusqueda.jqGrid({
@@ -1151,7 +1124,7 @@
 			       if(std =='ABIERTO'){//1enviado 0=x enviar
 			    	  show=false;//no muestra modal
 			    	  formato12B.blockUI();
-					  location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec;
+					  location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec+'&'+formato12B.formBusqueda.serialize();
 			       }
 			}break;
 			case '3':{//eliminar
