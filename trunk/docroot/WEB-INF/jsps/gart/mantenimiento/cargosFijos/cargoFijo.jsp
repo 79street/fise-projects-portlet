@@ -279,7 +279,7 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Informe Sustento:</label>
 											   </td>
 											  <td>
-												 <form:input path="numDoc"  cssStyle="width: 50px; text-align: right;"/>
+												 <form:input path="numDoc"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)"/> 
 											  </td>
 											  
 											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Info.(dd/mm/aaaa):</label>
@@ -302,7 +302,7 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Recepción Info.:</label>
 											   </td>
 											  <td>
-												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;"/>
+												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)"/>
 											  </td>
 											
 											 <td><label style="font-size: 12px; font-weight: bold">IGV:</label>
@@ -342,7 +342,7 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Glosa:</label>
 											   </td>
 											  <td>
-												 <form:textarea path="gloza" cols="30" rows="4"/> 
+												 <form:textarea path="gloza" cols="30" rows="4" onkeypress="return soloLetras(event)"/> 
 											  </td>
 											  
 											 <td>

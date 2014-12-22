@@ -347,21 +347,21 @@ $(document).ready(function () {
 											     <label style="font-size: 12px; font-weight: bold">Año Ini. Vig.:</label>
 											 </td>
 											 <td>
-											    <form:input path="anoIniVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>									
+											    <form:input path="anoIniVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>									
 											 </td>
 											 
 											 <td>
 											     <label style="font-size: 12px; font-weight: bold">Año Fin Vig.:</label>
 											 </td>
 											 <td>
-											   <form:input path="anoFinVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>								
+											   <form:input path="anoFinVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>								
 											 </td>											 
 											 
 											 <td>
 											     <label style="font-size: 12px; font-weight: bold">Días a notificar antes de cierre:</label>
 											  </td>
 											  <td>											   
-											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2"/>											
+											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2" onblur="isNumeric(this)"/>											
 											  </td>	
 											  										 											 
 											</tr>																									  					
