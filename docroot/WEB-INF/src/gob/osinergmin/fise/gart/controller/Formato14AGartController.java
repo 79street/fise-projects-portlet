@@ -1618,319 +1618,331 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 			
 			String sCurrentLine;
 			is=uploadPortletRequest.getFileAsStream("archivoTxt");
-			int BUFFER_SIZE = 8192;
-			BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
-			List<String> listaDetalleTxt= new ArrayList<String>();
-			sCurrentLine = br.readLine();
-			while(sCurrentLine!=null){
-				cont++;
-				if( sCurrentLine.length()>0 ){
-					if( sCurrentLine.length() == longitudMaxima ){
-						listaDetalleTxt.add(sCurrentLine);
-					}else{
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2240);
-					}
-				}else{
-					cont++;
-					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2250);
-				}
-				sCurrentLine = br.readLine();
-				if( cont>3 ){
-					cont++;
-					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2260);
-					break;
-				}
-			}
 			
-			String key1,key2,key3,key4,key5="";//,key6="";
-			if( listaDetalleTxt.size()>0 ){
-				key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
-				key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-				key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
-				key4 = listaDetalleTxt.get(0).substring(posicionMesPresentacion, posicionAnioInicioVigencia).trim();
-				key5 = listaDetalleTxt.get(0).substring(posicionAnioInicioVigencia, posicionAnioFinVigencia).trim();
-				boolean process = true;
-				Set<String> zonaSet = new java.util.HashSet<String>();
-				for (String s : listaDetalleTxt) {
-					String codEmp = s.substring(0, posicionCodEmpresa).trim();
-					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
-					String anioIni = s.substring(posicionMesPresentacion, posicionAnioInicioVigencia) ;
-					String anioFin = s.substring(posicionAnioInicioVigencia, posicionAnioFinVigencia) ;
-					
-					String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
-					if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) && key4.equals(anioIni) && key5.equals(anioFin) &&
-							(FiseConstants.ZONABENEF_RURAL_COD_STRING.equals(zonaBenef) ||
-							FiseConstants.ZONABENEF_PROVINCIA_COD_STRING.equals(zonaBenef) ||
-							FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(zonaBenef) )
-							){
-						if( zonaSet.contains(zonaBenef) ){
-							process=false;
-							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2270);
-							break;
+			String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPresEdit), Long.parseLong(mesPresEdit), codEmpresaEdit, FiseConstants.TIPO_FORMATO_14A);
+			if( nombreIdeal.trim().equals(archivo.getTitle().trim()) ){
+				
+				int BUFFER_SIZE = 8192;
+				BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
+				List<String> listaDetalleTxt= new ArrayList<String>();
+				sCurrentLine = br.readLine();
+				while(sCurrentLine!=null){
+					cont++;
+					if( sCurrentLine.length()>0 ){
+						if( sCurrentLine.length() == longitudMaxima ){
+							listaDetalleTxt.add(sCurrentLine);
 						}else{
-							zonaSet.add(zonaBenef);
-							process=true;
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2240);
 						}
 					}else{
-						process=false;
 						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2280);
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2250);
+					}
+					sCurrentLine = br.readLine();
+					if( cont>3 ){
+						cont++;
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2260);
 						break;
 					}
 				}
-				if(process){
-					
-					Formato14ACBean formulario = new Formato14ACBean();
-					//nuevamente recorremos la lista para armar los objetos
-					formulario.setCodigoEmpresa(key1);
-					formulario.setAnioPresent(Long.parseLong(key2));
-					formulario.setMesPresent(Long.parseLong(key3));
-					formulario.setAnioInicioVigencia(Long.parseLong(key4));
-					formulario.setAnioFinVigencia(Long.parseLong(key5));
-
-					if( codEmpresaEdit.equals(formulario.getCodigoEmpresa()) &&
-							anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
-							Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
-							anioIniVigEdit.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&
-							anioFinVigEdit.equals(String.valueOf(formulario.getAnioFinVigencia())) 
-							){
+				
+				String key1,key2,key3,key4,key5="";//,key6="";
+				if( listaDetalleTxt.size()>0 ){
+					key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
+					key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+					key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
+					key4 = listaDetalleTxt.get(0).substring(posicionMesPresentacion, posicionAnioInicioVigencia).trim();
+					key5 = listaDetalleTxt.get(0).substring(posicionAnioInicioVigencia, posicionAnioFinVigencia).trim();
+					boolean process = true;
+					Set<String> zonaSet = new java.util.HashSet<String>();
+					for (String s : listaDetalleTxt) {
+						String codEmp = s.substring(0, posicionCodEmpresa).trim();
+						String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+						String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+						String anioIni = s.substring(posicionMesPresentacion, posicionAnioInicioVigencia) ;
+						String anioFin = s.substring(posicionAnioInicioVigencia, posicionAnioFinVigencia) ;
 						
-						//
-						for (String s : listaDetalleTxt) {
-							String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
-							
-							String impEsqInvit = s.substring(posicionZonaBenef, posicionImpEsqInvit).trim();
-							String impDeclJurada = s.substring(posicionImpEsqInvit, posicionImpDeclaJurada).trim();
-							String impFichaVerif = s.substring(posicionImpDeclaJurada, posicionImpFichaVerif).trim();
-							String repEsqInvit = s.substring(posicionImpFichaVerif, posicionRepEsqInvit).trim();
-							String verifInfo = s.substring(posicionRepEsqInvit, posicionVerifInfo).trim();
-							String elabArch = s.substring(posicionVerifInfo, posicionElabArchivo).trim();
-							String digitFicha = s.substring(posicionElabArchivo, posicionDigitFichas).trim();
-							String impVolantes = s.substring(posicionTotalEmpad, posicionImpVolantes).trim();
-							String impAfiches = s.substring(posicionImpVolantes, posicionImpAfiches).trim();
-							String repFolletos = s.substring(posicionImpAfiches, posicionRepFolletos).trim();
-							String spotPublicTv = s.substring(posicionRepFolletos, posicionSpotPublicTv).trim();
-							String spotPublicRad = s.substring(posicionSpotPublicTv, posicionSpotPublicRadio).trim();
-							String nroBenef = s.substring(posicionTotalDifusion, posicionNroBenef).trim();
-							String promConv = s.substring(posicionCostoUnitBenef, posicionPromConvenios).trim();
-							String regConv = s.substring(posicionPromConvenios, posicionRegFirmaConvenios).trim();
-							String impBander = s.substring(posicionRegFirmaConvenios, posicionImpEntBanderla).trim();
-							String nroAgentes = s.substring(posicionTotalCostoGestion, posicionNroAgentes).trim();
-							
-							//validaciones de consistencia
-							if( !FormatoUtil.validarCampoLongTxt(zonaBenef) ){
-								//el campo Zona benef no corresponde al tipo de dato correcto
+						String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
+						if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) && key4.equals(anioIni) && key5.equals(anioFin) &&
+								(FiseConstants.ZONABENEF_RURAL_COD_STRING.equals(zonaBenef) ||
+								FiseConstants.ZONABENEF_PROVINCIA_COD_STRING.equals(zonaBenef) ||
+								FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(zonaBenef) )
+								){
+							if( zonaSet.contains(zonaBenef) ){
+								process=false;
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2300);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2270);
+								break;
+							}else{
+								zonaSet.add(zonaBenef);
+								process=true;
 							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(impEsqInvit) ){
-								//el campo impEsqInvit no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2310);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(impDeclJurada) ){
-								//el campo impDeclJurada no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2320);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(impFichaVerif) ){
-								//el campo impFichaVerif no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2330);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(repEsqInvit) ){
-								//el campo repEsqInvit no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2340);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(verifInfo) ){
-								//el campo verifInfo no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2350);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(elabArch) ){
-								//el campo elabArch no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2360);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(digitFicha) ){
-								//el campo digitFicha no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2370);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(impVolantes) ){
-								//el campo impVolantes no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2380);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(impAfiches) ){
-								//el campo impAfiches no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2390);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(repFolletos) ){
-								//el campo repFolletos no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2400);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(spotPublicTv) ){
-								//el campo spotPublicTv no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(spotPublicRad) ){
-								//el campo spotPublicRad no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
-							}
-							if( !FormatoUtil.validarCampoLongTxt(nroBenef) ){
-								//el campo nroBenef no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2420);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(promConv) ){
-								//el campo promConv no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2430);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(regConv) ){
-								//el campo regConv no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2440);
-							}
-							if( !FormatoUtil.validarCampoBigDecimalTxt(impBander) ){
-								//el campo impBander no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2450);
-							}
-							if( !FormatoUtil.validarCampoLongTxt(nroAgentes) ){
-								//el campo nroAgentes no corresponde al tipo de dato correcto
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2460);
-							}
+						}else{
+							process=false;
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2280);
+							break;
+						}
+					}
+					if(process){
+						
+						Formato14ACBean formulario = new Formato14ACBean();
+						//nuevamente recorremos la lista para armar los objetos
+						formulario.setCodigoEmpresa(key1);
+						formulario.setAnioPresent(Long.parseLong(key2));
+						formulario.setMesPresent(Long.parseLong(key3));
+						formulario.setAnioInicioVigencia(Long.parseLong(key4));
+						formulario.setAnioFinVigencia(Long.parseLong(key5));
+
+						if( codEmpresaEdit.equals(formulario.getCodigoEmpresa()) &&
+								anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
+								Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
+								anioIniVigEdit.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&
+								anioFinVigEdit.equals(String.valueOf(formulario.getAnioFinVigencia())) 
+								){
 							
 							//
-							if( FiseConstants.BLANCO.equals(sMsg) ){
-								if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
-									formulario.setImprEsqInvitR(new BigDecimal(impEsqInvit));
-									formulario.setImprDeclaJuradaR(new BigDecimal(impDeclJurada));
-									formulario.setImprFichaVerifR(new BigDecimal(impFichaVerif));
-									formulario.setRepartoEsqInvitR(new BigDecimal(repEsqInvit));
-									formulario.setVerifInfoR(new BigDecimal(verifInfo));
-									formulario.setElabArchivoBenefR(new BigDecimal(elabArch));
-									formulario.setDigitFichaBenefR(new BigDecimal(digitFicha));
-									formulario.setImprVolantesR(new BigDecimal(impVolantes));
-									formulario.setImprAfichesR(new BigDecimal(impAfiches));
-									formulario.setRepFolletosR(new BigDecimal(repFolletos));
-									formulario.setSpotPublTvR(new BigDecimal(spotPublicTv));
-									formulario.setSpotPublRadioR(new BigDecimal(spotPublicRad));
-									formulario.setNroBenefEmpadR(Long.parseLong(nroBenef));
-									formulario.setPromConvAgentR(new BigDecimal(promConv));
-									formulario.setRegConvAgentR(new BigDecimal(regConv));
-									formulario.setImpEntrBandR(new BigDecimal(impBander));
-									formulario.setNroAgentR(Long.parseLong(nroAgentes));
-									
-								}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
-									formulario.setImprEsqInvitP(new BigDecimal(impEsqInvit));
-									formulario.setImprDeclaJuradaP(new BigDecimal(impDeclJurada));
-									formulario.setImprFichaVerifP(new BigDecimal(impFichaVerif));
-									formulario.setRepartoEsqInvitP(new BigDecimal(repEsqInvit));
-									formulario.setVerifInfoP(new BigDecimal(verifInfo));
-									formulario.setElabArchivoBenefP(new BigDecimal(elabArch));
-									formulario.setDigitFichaBenefP(new BigDecimal(digitFicha));
-									formulario.setImprVolantesP(new BigDecimal(impVolantes));
-									formulario.setImprAfichesP(new BigDecimal(impAfiches));
-									formulario.setRepFolletosP(new BigDecimal(repFolletos));
-									formulario.setSpotPublTvP(new BigDecimal(spotPublicTv));
-									formulario.setSpotPublRadioP(new BigDecimal(spotPublicRad));
-									formulario.setNroBenefEmpadP(Long.parseLong(nroBenef));
-									formulario.setPromConvAgentP(new BigDecimal(promConv));
-									formulario.setRegConvAgentP(new BigDecimal(regConv));
-									formulario.setImpEntrBandP(new BigDecimal(impBander));
-									formulario.setNroAgentP(Long.parseLong(nroAgentes));
-									
-								}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
-									if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
-										formulario.setImprEsqInvitL(new BigDecimal(impEsqInvit));
-										formulario.setImprDeclaJuradaL(new BigDecimal(impDeclJurada));
-										formulario.setImprFichaVerifL(new BigDecimal(impFichaVerif));
-										formulario.setRepartoEsqInvitL(new BigDecimal(repEsqInvit));
-										formulario.setVerifInfoL(new BigDecimal(verifInfo));
-										formulario.setElabArchivoBenefL(new BigDecimal(elabArch));
-										formulario.setDigitFichaBenefL(new BigDecimal(digitFicha));
-										formulario.setImprVolantesL(new BigDecimal(impVolantes));
-										formulario.setImprAfichesL(new BigDecimal(impAfiches));
-										formulario.setRepFolletosL(new BigDecimal(repFolletos));
-										formulario.setSpotPublTvL(new BigDecimal(spotPublicTv));
-										formulario.setSpotPublRadioL(new BigDecimal(spotPublicRad));
-										formulario.setNroBenefEmpadL(Long.parseLong(nroBenef));
-										formulario.setPromConvAgentL(new BigDecimal(promConv));
-										formulario.setRegConvAgentL(new BigDecimal(regConv));
-										formulario.setImpEntrBandL(new BigDecimal(impBander));
-										formulario.setNroAgentL(Long.parseLong(nroAgentes));
-									}else{
-										formulario.setImprEsqInvitL(new BigDecimal(0));
-										formulario.setImprDeclaJuradaL(new BigDecimal(0));
-										formulario.setImprFichaVerifL(new BigDecimal(0));
-										formulario.setRepartoEsqInvitL(new BigDecimal(0));
-										formulario.setVerifInfoL(new BigDecimal(0));
-										formulario.setElabArchivoBenefL(new BigDecimal(0));
-										formulario.setDigitFichaBenefL(new BigDecimal(0));
-										formulario.setImprVolantesL(new BigDecimal(0));
-										formulario.setImprAfichesL(new BigDecimal(0));
-										formulario.setRepFolletosL(new BigDecimal(0));
-										formulario.setSpotPublTvL(new BigDecimal(0));
-										formulario.setSpotPublRadioL(new BigDecimal(0));
-										formulario.setNroBenefEmpadL(0);
-										formulario.setPromConvAgentL(new BigDecimal(0));
-										formulario.setRegConvAgentL(new BigDecimal(0));
-										formulario.setImpEntrBandL(new BigDecimal(0));
-										formulario.setNroAgentL(0);
+							for (String s : listaDetalleTxt) {
+								String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
+								
+								String impEsqInvit = s.substring(posicionZonaBenef, posicionImpEsqInvit).trim();
+								String impDeclJurada = s.substring(posicionImpEsqInvit, posicionImpDeclaJurada).trim();
+								String impFichaVerif = s.substring(posicionImpDeclaJurada, posicionImpFichaVerif).trim();
+								String repEsqInvit = s.substring(posicionImpFichaVerif, posicionRepEsqInvit).trim();
+								String verifInfo = s.substring(posicionRepEsqInvit, posicionVerifInfo).trim();
+								String elabArch = s.substring(posicionVerifInfo, posicionElabArchivo).trim();
+								String digitFicha = s.substring(posicionElabArchivo, posicionDigitFichas).trim();
+								String impVolantes = s.substring(posicionTotalEmpad, posicionImpVolantes).trim();
+								String impAfiches = s.substring(posicionImpVolantes, posicionImpAfiches).trim();
+								String repFolletos = s.substring(posicionImpAfiches, posicionRepFolletos).trim();
+								String spotPublicTv = s.substring(posicionRepFolletos, posicionSpotPublicTv).trim();
+								String spotPublicRad = s.substring(posicionSpotPublicTv, posicionSpotPublicRadio).trim();
+								String nroBenef = s.substring(posicionTotalDifusion, posicionNroBenef).trim();
+								String promConv = s.substring(posicionCostoUnitBenef, posicionPromConvenios).trim();
+								String regConv = s.substring(posicionPromConvenios, posicionRegFirmaConvenios).trim();
+								String impBander = s.substring(posicionRegFirmaConvenios, posicionImpEntBanderla).trim();
+								String nroAgentes = s.substring(posicionTotalCostoGestion, posicionNroAgentes).trim();
+								
+								//validaciones de consistencia
+								if( !FormatoUtil.validarCampoLongTxt(zonaBenef) ){
+									//el campo Zona benef no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2300);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(impEsqInvit) ){
+									//el campo impEsqInvit no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2310);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(impDeclJurada) ){
+									//el campo impDeclJurada no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2320);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(impFichaVerif) ){
+									//el campo impFichaVerif no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2330);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(repEsqInvit) ){
+									//el campo repEsqInvit no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2340);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(verifInfo) ){
+									//el campo verifInfo no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2350);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(elabArch) ){
+									//el campo elabArch no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2360);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(digitFicha) ){
+									//el campo digitFicha no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2370);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(impVolantes) ){
+									//el campo impVolantes no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2380);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(impAfiches) ){
+									//el campo impAfiches no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2390);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(repFolletos) ){
+									//el campo repFolletos no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2400);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(spotPublicTv) ){
+									//el campo spotPublicTv no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(spotPublicRad) ){
+									//el campo spotPublicRad no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
+								}
+								if( !FormatoUtil.validarCampoLongTxt(nroBenef) ){
+									//el campo nroBenef no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2420);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(promConv) ){
+									//el campo promConv no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2430);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(regConv) ){
+									//el campo regConv no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2440);
+								}
+								if( !FormatoUtil.validarCampoBigDecimalTxt(impBander) ){
+									//el campo impBander no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2450);
+								}
+								if( !FormatoUtil.validarCampoLongTxt(nroAgentes) ){
+									//el campo nroAgentes no corresponde al tipo de dato correcto
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2460);
+								}
+								
+								//
+								if( FiseConstants.BLANCO.equals(sMsg) ){
+									if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
+										formulario.setImprEsqInvitR(new BigDecimal(impEsqInvit));
+										formulario.setImprDeclaJuradaR(new BigDecimal(impDeclJurada));
+										formulario.setImprFichaVerifR(new BigDecimal(impFichaVerif));
+										formulario.setRepartoEsqInvitR(new BigDecimal(repEsqInvit));
+										formulario.setVerifInfoR(new BigDecimal(verifInfo));
+										formulario.setElabArchivoBenefR(new BigDecimal(elabArch));
+										formulario.setDigitFichaBenefR(new BigDecimal(digitFicha));
+										formulario.setImprVolantesR(new BigDecimal(impVolantes));
+										formulario.setImprAfichesR(new BigDecimal(impAfiches));
+										formulario.setRepFolletosR(new BigDecimal(repFolletos));
+										formulario.setSpotPublTvR(new BigDecimal(spotPublicTv));
+										formulario.setSpotPublRadioR(new BigDecimal(spotPublicRad));
+										formulario.setNroBenefEmpadR(Long.parseLong(nroBenef));
+										formulario.setPromConvAgentR(new BigDecimal(promConv));
+										formulario.setRegConvAgentR(new BigDecimal(regConv));
+										formulario.setImpEntrBandR(new BigDecimal(impBander));
+										formulario.setNroAgentR(Long.parseLong(nroAgentes));
+										
+									}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
+										formulario.setImprEsqInvitP(new BigDecimal(impEsqInvit));
+										formulario.setImprDeclaJuradaP(new BigDecimal(impDeclJurada));
+										formulario.setImprFichaVerifP(new BigDecimal(impFichaVerif));
+										formulario.setRepartoEsqInvitP(new BigDecimal(repEsqInvit));
+										formulario.setVerifInfoP(new BigDecimal(verifInfo));
+										formulario.setElabArchivoBenefP(new BigDecimal(elabArch));
+										formulario.setDigitFichaBenefP(new BigDecimal(digitFicha));
+										formulario.setImprVolantesP(new BigDecimal(impVolantes));
+										formulario.setImprAfichesP(new BigDecimal(impAfiches));
+										formulario.setRepFolletosP(new BigDecimal(repFolletos));
+										formulario.setSpotPublTvP(new BigDecimal(spotPublicTv));
+										formulario.setSpotPublRadioP(new BigDecimal(spotPublicRad));
+										formulario.setNroBenefEmpadP(Long.parseLong(nroBenef));
+										formulario.setPromConvAgentP(new BigDecimal(promConv));
+										formulario.setRegConvAgentP(new BigDecimal(regConv));
+										formulario.setImpEntrBandP(new BigDecimal(impBander));
+										formulario.setNroAgentP(Long.parseLong(nroAgentes));
+										
+									}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
+										if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+											formulario.setImprEsqInvitL(new BigDecimal(impEsqInvit));
+											formulario.setImprDeclaJuradaL(new BigDecimal(impDeclJurada));
+											formulario.setImprFichaVerifL(new BigDecimal(impFichaVerif));
+											formulario.setRepartoEsqInvitL(new BigDecimal(repEsqInvit));
+											formulario.setVerifInfoL(new BigDecimal(verifInfo));
+											formulario.setElabArchivoBenefL(new BigDecimal(elabArch));
+											formulario.setDigitFichaBenefL(new BigDecimal(digitFicha));
+											formulario.setImprVolantesL(new BigDecimal(impVolantes));
+											formulario.setImprAfichesL(new BigDecimal(impAfiches));
+											formulario.setRepFolletosL(new BigDecimal(repFolletos));
+											formulario.setSpotPublTvL(new BigDecimal(spotPublicTv));
+											formulario.setSpotPublRadioL(new BigDecimal(spotPublicRad));
+											formulario.setNroBenefEmpadL(Long.parseLong(nroBenef));
+											formulario.setPromConvAgentL(new BigDecimal(promConv));
+											formulario.setRegConvAgentL(new BigDecimal(regConv));
+											formulario.setImpEntrBandL(new BigDecimal(impBander));
+											formulario.setNroAgentL(Long.parseLong(nroAgentes));
+										}else{
+											formulario.setImprEsqInvitL(new BigDecimal(0));
+											formulario.setImprDeclaJuradaL(new BigDecimal(0));
+											formulario.setImprFichaVerifL(new BigDecimal(0));
+											formulario.setRepartoEsqInvitL(new BigDecimal(0));
+											formulario.setVerifInfoL(new BigDecimal(0));
+											formulario.setElabArchivoBenefL(new BigDecimal(0));
+											formulario.setDigitFichaBenefL(new BigDecimal(0));
+											formulario.setImprVolantesL(new BigDecimal(0));
+											formulario.setImprAfichesL(new BigDecimal(0));
+											formulario.setRepFolletosL(new BigDecimal(0));
+											formulario.setSpotPublTvL(new BigDecimal(0));
+											formulario.setSpotPublRadioL(new BigDecimal(0));
+											formulario.setNroBenefEmpadL(0);
+											formulario.setPromConvAgentL(new BigDecimal(0));
+											formulario.setRegConvAgentL(new BigDecimal(0));
+											formulario.setImpEntrBandL(new BigDecimal(0));
+											formulario.setNroAgentL(0);
+										}
+										
+										
+										
 									}
-									
-									
-									
+								}
+								
+								
+							}
+							//
+							formulario.setUsuario(user.getLogin());
+							formulario.setTerminal(user.getLoginIP());
+							formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
+							formulario.setNombreArchivo(archivo.getTitle());
+							//
+							formulario.setEtapa(etapaEdit);
+							
+							if( FiseConstants.BLANCO.equals(sMsg) ){
+								if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
+									objeto = formato14Service.registrarFormato14AC(formulario);
+								}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
+									FiseFormato14AC formatoModif = new FiseFormato14AC();
+									FiseFormato14ACPK id = new FiseFormato14ACPK();
+									id.setCodEmpresa(formulario.getCodigoEmpresa());
+									id.setAnoPresentacion(formulario.getAnioPresent());
+									id.setMesPresentacion(formulario.getMesPresent());
+									id.setAnoInicioVigencia(formulario.getAnioInicioVigencia());
+									id.setAnoFinVigencia(formulario.getAnioFinVigencia());
+									id.setEtapa(formulario.getEtapa());
+									formatoModif = formato14Service.obtenerFormato14ACByPK(id);
+									objeto = formato14Service.modificarFormato14AC(formulario, formatoModif);
 								}
 							}
 							
-							
-						}
-						//
-						formulario.setUsuario(user.getLogin());
-						formulario.setTerminal(user.getLoginIP());
-						formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
-						formulario.setNombreArchivo(archivo.getTitle());
-						//
-						formulario.setEtapa(etapaEdit);
-						
-						if( FiseConstants.BLANCO.equals(sMsg) ){
-							if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
-								objeto = formato14Service.registrarFormato14AC(formulario);
-							}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
-								FiseFormato14AC formatoModif = new FiseFormato14AC();
-								FiseFormato14ACPK id = new FiseFormato14ACPK();
-								id.setCodEmpresa(formulario.getCodigoEmpresa());
-								id.setAnoPresentacion(formulario.getAnioPresent());
-								id.setMesPresentacion(formulario.getMesPresent());
-								id.setAnoInicioVigencia(formulario.getAnioInicioVigencia());
-								id.setAnoFinVigencia(formulario.getAnioFinVigencia());
-								id.setEtapa(formulario.getEtapa());
-								formatoModif = formato14Service.obtenerFormato14ACByPK(id);
-								objeto = formato14Service.modificarFormato14AC(formulario, formatoModif);
-							}
+						}else{
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2290);
 						}
 						
-					}else{
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2290);
 					}
-					
 				}
+				is.close();
+				
+			}else{
+				cont++;
+				sMsg = sMsg + "El nombre del archivo debe corresponder al periodo a declarar ";
+				throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
 			}
-			is.close();
+			
+			
 		}else{
 			throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_290));
 		}
@@ -2211,7 +2223,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    String etapa = "";
 	    
 	    String nombreReporte = request.getParameter("nombreReporte").trim();
-	    String nombreArchivo = request.getParameter("nombreArchivo").trim();
+	   // String nombreArchivo = request.getParameter("nombreArchivo").trim();
 	    //String tipoFormato = FiseConstants.TIPO_FORMATO_12A;
 	    //String tipoArchivo = request.getParameter("tipoArchivo").trim();
 
@@ -2303,7 +2315,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     	   
 	        /**REPORTE FORMATO 14A*/
 	       nombreReporte = "formato14A";
-	       nombreArchivo = nombreReporte;
+	       //nombreArchivo = nombreReporte;
 	       directorio =  "/reports/"+nombreReporte+".jasper";
 	       File reportFile = new File(session.getServletContext().getRealPath(directorio));
 	       byte[] bytes = null;
@@ -2323,7 +2335,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	       /**REPORTE OBSERVACIONES*/
 	       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
 	    	   nombreReporte = "validacion";
-	    	   nombreArchivo = nombreReporte;
+	    	   //nombreArchivo = nombreReporte;
 		       directorio =  "/reports/"+nombreReporte+".jasper";
 		       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
 	    	   byte[] bytes2 = null;
@@ -2344,7 +2356,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	       }
 	       /**REPORTE ACTA DE ENVIO*/
 	       nombreReporte = "actaEnvio";
-	       nombreArchivo = nombreReporte;
+	       //nombreArchivo = nombreReporte;
 	       directorio =  "/reports/"+nombreReporte+".jasper";
 	       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
 	       byte[] bytes3 = null;

@@ -1580,8 +1580,8 @@ public class Formato12AGartController {
 				String sCurrentLine;
 				is=uploadPortletRequest.getFileAsStream("archivoTxt");
 				
-				/******String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPresEdit), Long.parseLong(mesPresEdit), codEmpresaEdit, FiseConstants.TIPO_FORMATO_12A);
-				if( nombreIdeal.trim().equals(archivo.getTitle().trim()) ){*****/
+				String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPresEdit), Long.parseLong(mesPresEdit), codEmpresaEdit, FiseConstants.TIPO_FORMATO_12A);
+				if( nombreIdeal.trim().equals(archivo.getTitle().trim()) ){
 					
 					int BUFFER_SIZE = 8192;
 					BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
@@ -1784,13 +1784,13 @@ public class Formato12AGartController {
 					}
 					is.close();
 					
-				/****}else{
+				}else{
 					//--logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
 					cont++;
 					sMsg = sMsg + "El nombre del archivo debe corresponder al periodo a declarar ";
 					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
 				}
-				****/
+				
 				
 			}else{
 				throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_290));
@@ -2078,7 +2078,7 @@ public class Formato12AGartController {
 		    String etapa = "";
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
-		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
+		    //String nombreArchivo = request.getParameter("nombreArchivo").trim();
 		    //String tipoFormato = FiseConstants.TIPO_FORMATO_12A;
 		    //String tipoArchivo = request.getParameter("tipoArchivo").trim();
 
@@ -2170,7 +2170,7 @@ public class Formato12AGartController {
 	    	   
 		        /**REPORTE FORMATO 12A*/
 		       nombreReporte = "formato12A";
-		       nombreArchivo = nombreReporte;
+		       //nombreArchivo = nombreReporte;
 		       directorio =  "/reports/"+nombreReporte+".jasper";
 		       File reportFile = new File(session.getServletContext().getRealPath(directorio));
 		       byte[] bytes = null;
@@ -2189,7 +2189,7 @@ public class Formato12AGartController {
 		       /**REPORTE OBSERVACIONES*/
 		       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
 		    	   nombreReporte = "validacion";
-		    	   nombreArchivo = nombreReporte;
+		    	   //nombreArchivo = nombreReporte;
 			       directorio =  "/reports/"+nombreReporte+".jasper";
 			       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
 		    	   byte[] bytes2 = null;
@@ -2209,7 +2209,7 @@ public class Formato12AGartController {
 		       }
 		       /**REPORTE ACTA DE ENVIO*/
 		       nombreReporte = "gastoMensualIndividual";
-		       nombreArchivo = nombreReporte;
+		       //nombreArchivo = nombreReporte;
 		       directorio =  "/reports/"+nombreReporte+".jasper";
 		       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
 		       byte[] bytes3 = null;
