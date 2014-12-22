@@ -28,7 +28,7 @@
            <property name="cache" value="false" />  
            <property name="viewClass"  
                value="org.springframework.web.servlet.view.JstlView" />  
-           <property name="prefix" value="/WEB-INF/jsps/gart/" />  
+           <property name="prefix" value="/WEB-INF/jsps/gart/formato14B/" />  
            <property name="suffix" value=".jsp" />  
        </bean>  
  
