@@ -1524,7 +1524,7 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 			int posicionCodEmpresa = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_COD_EMPRESA);
 			int posicionAnioPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_PRESENTACION);
 			int posicionMesPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_MES_PRESENTACION);
-			//int posicionAnioInicioVigencia = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_INICIO_VIGENCIA);
+			int posicionAnioInicioVigencia = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_INICIO_VIGENCIA);
 			int posicionAnioFinVigencia = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_FIN_VIGENCIA);
 			int posicionZonaBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ZONA_BENEFICIARIO);
 			
@@ -1580,19 +1580,24 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 				}
 			}
 			
-			String key1,key2,key3="";//,key4,key5,key6="";
+			String key1,key2,key3,key4,key5="";//,key6="";
 			if( listaDetalleTxt.size()>0 ){
 				key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
 				key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
 				key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
+				key4 = listaDetalleTxt.get(0).substring(posicionMesPresentacion, posicionAnioInicioVigencia).trim();
+				key5 = listaDetalleTxt.get(0).substring(posicionAnioInicioVigencia, posicionAnioFinVigencia).trim();
 				boolean process = true;
 				Set<String> zonaSet = new java.util.HashSet<String>();
 				for (String s : listaDetalleTxt) {
 					String codEmp = s.substring(0, posicionCodEmpresa).trim();
 					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
 					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+					String anioIni = s.substring(posicionMesPresentacion, posicionAnioInicioVigencia) ;
+					String anioFin = s.substring(posicionAnioInicioVigencia, posicionAnioFinVigencia) ;
+					
 					String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
-					if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) &&
+					if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) && key4.equals(anioIni) && key5.equals(anioFin) &&
 							(FiseConstants.ZONABENEF_RURAL_COD_STRING.equals(zonaBenef) ||
 							FiseConstants.ZONABENEF_PROVINCIA_COD_STRING.equals(zonaBenef) ||
 							FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(zonaBenef) )
@@ -1620,14 +1625,14 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 					formulario.setCodigoEmpresa(key1);
 					formulario.setAnioPresent(Long.parseLong(key2));
 					formulario.setMesPresent(Long.parseLong(key3));
-					formulario.setAnioInicioVigencia(Long.parseLong(key2));
-					formulario.setAnioFinVigencia(Long.parseLong(key2));
+					formulario.setAnioInicioVigencia(Long.parseLong(key4));
+					formulario.setAnioFinVigencia(Long.parseLong(key5));
 
 					if( codEmpresaEdit.equals(formulario.getCodigoEmpresa()) &&
 							anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
 							Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
-							anioIniVigEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
-							anioFinVigEdit.equals(String.valueOf(formulario.getAnioPresent())) 
+							anioIniVigEdit.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&
+							anioFinVigEdit.equals(String.valueOf(formulario.getAnioFinVigencia())) 
 							){
 						
 						//
@@ -1833,8 +1838,8 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 								id.setCodEmpresa(formulario.getCodigoEmpresa());
 								id.setAnoPresentacion(formulario.getAnioPresent());
 								id.setMesPresentacion(formulario.getMesPresent());
-								id.setAnoInicioVigencia(formulario.getAnioPresent());
-								id.setAnoFinVigencia(formulario.getAnioPresent());
+								id.setAnoInicioVigencia(formulario.getAnioInicioVigencia());
+								id.setAnoFinVigencia(formulario.getAnioFinVigencia());
 								id.setEtapa(formulario.getEtapa());
 								formatoModif = formato14Service.obtenerFormato14BCByPK(id);
 								objeto = formato14Service.modificarFormato14BC(formulario, formatoModif);
@@ -2061,7 +2066,7 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	    }
         
 	    //add
-	    String codEmpresa = request.getParameter("codEmpresa").trim();
+	    String codEmpresa = request.getParameter("codEmpresa");
 	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
 	    String anoPresentacion = "";
 	    String mesPresentacion = "";
@@ -2085,7 +2090,7 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 		mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
 	   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 	  //add
-	   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(codEmpresa) );
+	   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4)) );
 	   	mapa.put(FiseConstants.PARAM_ETAPA, etapa);
 	   	
 	   	session.setAttribute("mapa", mapa);

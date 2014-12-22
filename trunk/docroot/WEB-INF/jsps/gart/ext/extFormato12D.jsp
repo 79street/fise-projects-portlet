@@ -11,6 +11,11 @@ var formato12D= {
 	
 	/**********INICIO**********/
 	
+	anioDesde:null,
+	mesDesde:null,
+	anioHasta:null,
+	mesHasta:null,
+	
 	tablaResultados:null,
 	paginadoResultados:null,
 	//url
@@ -195,6 +200,11 @@ var formato12D= {
 		this.urlDelete='<portlet:resourceURL id="deleteCabecera" />';
 		this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");
 		this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");
+		
+		this.anioDesde=$('#anioDesde');
+		this.mesDesde=$('#mesDesde');
+		this.anioHasta=$('#anioHasta');
+		this.mesHasta=$('#mesHasta');
 		
 		formato12D.initDialogs();
 		
@@ -638,7 +648,7 @@ var formato12D= {
 	buildGridsBusqueda : function () {	
 		formato12D.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Informaiòn','Estado','Visualizar','Editar','Anular','','',''],
+	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Informaicón','Estado','Visualizar','Editar','Anular','','',''],
 	       colModel: [
 				   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -730,7 +740,7 @@ var formato12D= {
 				shrinkToFit:true,
 				pager: formato12D.paginadoImplementacion,
 			    viewrecords: true,
-			   	caption: "Desplazamiento de Personal Implementación",
+			   	caption: "Actividades Extraordinarias de Implementación",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -831,7 +841,7 @@ var formato12D= {
 				shrinkToFit:true,
 				pager: formato12D.paginadoMensual,
 			    viewrecords: true,
-			   	caption: "Desplazamiento de Personal Mensual",
+			   	caption: "Actividades Extraordinarias Operativas",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -931,7 +941,7 @@ var formato12D= {
 				shrinkToFit:true,
 				pager: formato12D.paginadoImplementacionView,
 			    viewrecords: true,
-			   	caption: "Desplazamiento de Personal Implementación",
+			   	caption: "Actividades Extraordinarias de Implementación",
 			    sortorder: "asc",	   	    	   	  
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -1011,7 +1021,7 @@ var formato12D= {
 				shrinkToFit:true,
 				pager: formato12D.paginadoMensualView,
 			    viewrecords: true,
-			   	caption: "Desplazamiento de Personal Mensual",
+			   	caption: "Actividades Extraordinarias Operativas",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -1055,25 +1065,51 @@ var formato12D= {
 	/***BUSQUEDA Y CRUD***/
 	buscarFormatos : function () {	
 
-		jQuery.ajax({			
-					url: formato12D.urlBusqueda+'&'+formato12D.formBusqueda.serialize(),
-					type: 'post',
-					dataType: 'json',
-					beforeSend:function(){
-						formato12D.blockUI();
-					},				
-					success: function(gridData) {					
-						formato12D.tablaResultados.clearGridData(true);
-						formato12D.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
-						formato12D.tablaResultados[0].refreshIndex();
-						formato12D.unblockUI();
-					},error : function(){
-						alert("Error de conexión.");
-						formato12D.unblockUI();
-					}
+		if( formato12D.validarBusqueda() ){
+			jQuery.ajax({			
+				url: formato12D.urlBusqueda+'&'+formato12D.formBusqueda.serialize(),
+				type: 'post',
+				dataType: 'json',
+				beforeSend:function(){
+					formato12D.blockUI();
+				},				
+				success: function(gridData) {					
+					formato12D.tablaResultados.clearGridData(true);
+					formato12D.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+					formato12D.tablaResultados[0].refreshIndex();
+					formato12D.unblockUI();
+				},error : function(){
+					alert("Error de conexión.");
+					formato12D.unblockUI();
+				}
 			});
+		}
 
-
+	},
+	validarBusqueda : function(){
+		if(formato12D.anioDesde.val().length != '' ) {		  
+			  var numstr = trim(formato12D.anioDesde.val());
+			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+				  alert('Ingrese un año desde válido');
+				  formato12D.anioDesde.focus();
+				  return false;
+			  }
+		  }
+		  if(formato12D.anioHasta.val().length != '' ) {		  
+			  var numstr = trim(formato12D.anioHasta.val());
+			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+				  alert('Ingrese un año hasta válido');
+				  formato12D.anioHasta.focus();
+				  return false;
+			  }
+		  }
+		  if(formato12D.anioDesde.val().length != '' && formato12D.anioHasta.val().length != '' ) {
+			  if( parseFloat(formato12D.anioDesde.val()) > parseFloat(formato12D.anioHasta.val()) ){
+					alert('El año desde no puede exceder al año hasta');
+					return false;
+			  }
+		  }
+		 return true; 
 	},
 	<portlet:namespace/>loadPeriodo : function(valPeriodo){
 		jQuery.ajax({

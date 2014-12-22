@@ -33,6 +33,8 @@ public class Formato12AGartJSON {
 	private String mesHasta;
 	private String codEtapa;
 	
+	private boolean admin;
+	
 	private String codEdelnor;
 	private String codLuzSur;
 	//
@@ -358,6 +360,14 @@ public class Formato12AGartJSON {
 
 	public void setCodLuzSur(String codLuzSur) {
 		this.codLuzSur = codLuzSur;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 }

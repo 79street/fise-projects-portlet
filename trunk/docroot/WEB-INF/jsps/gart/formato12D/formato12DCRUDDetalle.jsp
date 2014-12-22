@@ -49,7 +49,7 @@ $(function() {
 									<table class="" border="0" width="100%">
 										<tr class="filete-bottom">
 											<td><output class="net-titulo">FORMATO FISE-12D: 
-												</output> Detalle de Gastos de Desplazamiento de Personal</td>
+												</output> Detalle de Gastos por Actividades Extraordinarias</td>
 										</tr>
 										<tr height="10px">
 											<td></td>

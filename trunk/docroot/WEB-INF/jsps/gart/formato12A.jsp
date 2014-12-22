@@ -871,5 +871,7 @@
 
 	<input type="hidden" id="codEdelnor" value="${model.codEdelnor}" />
 	<input type="hidden" id="codLuzSur" value="${model.codLuzSur}" />
+	
+	<input type="hidden" id="esAdmin" value="${model.admin}" />
 
 </form> 

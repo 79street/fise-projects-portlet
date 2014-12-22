@@ -11,6 +11,11 @@ var formato12C= {
 	
 	/**********INICIO**********/
 	
+	anioDesde:null,
+	mesDesde:null,
+	anioHasta:null,
+	mesHasta:null,
+	
 	tablaResultados:null,
 	paginadoResultados:null,
 	//url
@@ -207,6 +212,11 @@ var formato12C= {
 		this.urlDelete='<portlet:resourceURL id="deleteCabecera" />';
 		this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");
 		this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");
+		
+		this.anioDesde=$('#anioDesde');
+		this.mesDesde=$('#mesDesde');
+		this.anioHasta=$('#anioHasta');
+		this.mesHasta=$('#mesHasta');
 		
 		formato12C.initDialogs();
 		
@@ -794,7 +804,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoImplementacion,
 			    viewrecords: true,
-			   	caption: "Actividades Extraordinarias de Implementación",
+			   	caption: "Desplazamiento de Personal Implementación",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -896,7 +906,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoMensual,
 			    viewrecords: true,
-			   	caption: "Actividades Extraordinarias Operativas",
+			   	caption: "Desplazamiento de Personal Mensual",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -997,7 +1007,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoImplementacionView,
 			    viewrecords: true,
-			   	caption: "Actividades Extraordinarias de Implementación",
+			   	caption: "Desplazamiento de Personal Implementación",
 			    sortorder: "asc",	   	    	   	  
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -1078,7 +1088,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoMensualView,
 			    viewrecords: true,
-			   	caption: "Actividades Extraordinarias Operativas",
+			   	caption: "Desplazamiento de Personal Mensual",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
@@ -1122,25 +1132,51 @@ var formato12C= {
 	/***BUSQUEDA Y CRUD***/
 	buscarFormatos : function () {	
 
-		jQuery.ajax({			
-					url: formato12C.urlBusqueda+'&'+formato12C.formBusqueda.serialize(),
-					type: 'post',
-					dataType: 'json',
-					beforeSend:function(){
-						formato12C.blockUI();
-					},				
-					success: function(gridData) {					
-						formato12C.tablaResultados.clearGridData(true);
-						formato12C.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
-						formato12C.tablaResultados[0].refreshIndex();
-						formato12C.unblockUI();
-					},error : function(){
-						alert("Error de conexión.");
-						formato12C.unblockUI();
-					}
+		if( formato12C.validarBusqueda() ){
+			jQuery.ajax({			
+				url: formato12C.urlBusqueda+'&'+formato12C.formBusqueda.serialize(),
+				type: 'post',
+				dataType: 'json',
+				beforeSend:function(){
+					formato12C.blockUI();
+				},				
+				success: function(gridData) {					
+					formato12C.tablaResultados.clearGridData(true);
+					formato12C.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+					formato12C.tablaResultados[0].refreshIndex();
+					formato12C.unblockUI();
+				},error : function(){
+					alert("Error de conexión.");
+					formato12C.unblockUI();
+				}
 			});
+		}
 
-
+	},
+	validarBusqueda : function(){
+		if(formato12C.anioDesde.val().length != '' ) {		  
+			  var numstr = trim(formato12C.anioDesde.val());
+			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+				  alert('Ingrese un año desde válido');
+				  formato12C.anioDesde.focus();
+				  return false;
+			  }
+		  }
+		  if(formato12C.anioHasta.val().length != '' ) {		  
+			  var numstr = trim(formato12C.anioHasta.val());
+			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+				  alert('Ingrese un año hasta válido');
+				  formato12C.anioHasta.focus();
+				  return false;
+			  }
+		  }
+		  if(formato12C.anioDesde.val().length != '' && formato12C.anioHasta.val().length != '' ) {
+			  if( parseFloat(formato12C.anioDesde.val()) > parseFloat(formato12C.anioHasta.val()) ){
+					alert('El año desde no puede exceder al año hasta');
+					return false;
+			  }
+		  }
+		 return true; 
 	},
 	<portlet:namespace/>loadPeriodo : function(valPeriodo){
 		jQuery.ajax({

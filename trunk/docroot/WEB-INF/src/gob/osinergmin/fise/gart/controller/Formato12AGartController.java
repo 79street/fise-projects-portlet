@@ -231,6 +231,9 @@ public class Formato12AGartController {
 		obj.setCodEdelnor(FiseConstants.COD_EMPRESA_EDELNOR);
 		obj.setCodLuzSur(FiseConstants.COD_EMPRESA_LUZ_SUR);
 		
+		//admin
+		obj.setAdmin(fiseUtil.esAdministrador(renderRequest));
+		
 		model.addAttribute("model", obj);
 		
 		return "formato12A";
@@ -1576,206 +1579,219 @@ public class Formato12AGartController {
 				
 				String sCurrentLine;
 				is=uploadPortletRequest.getFileAsStream("archivoTxt");
-				int BUFFER_SIZE = 8192;
-				BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
-				List<String> listaDetalleTxt= new ArrayList<String>();
-				sCurrentLine = br.readLine();
-				while(sCurrentLine!=null){
-					cont++;
-					if( sCurrentLine.length()>0 ){
-						if( sCurrentLine.length() == longitudMaxima ){
-							listaDetalleTxt.add(sCurrentLine);
-						}else{
-							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_220)+FiseConstants.SALTO_LINEA;
-							cont++;
-							MensajeErrorBean error = new MensajeErrorBean();
-							error.setId(cont);
-							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_220));
-							listaError.add(error);
-						}
-					}else{
-						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_230)+FiseConstants.SALTO_LINEA;
-						cont++;
-						MensajeErrorBean error = new MensajeErrorBean();
-						error.setId(cont);
-						error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_230));
-						listaError.add(error);
-					}
-					sCurrentLine = br.readLine();
-					if( cont>3 ){
-						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_240)+FiseConstants.SALTO_LINEA;
-						cont++;
-						MensajeErrorBean error = new MensajeErrorBean();
-						error.setId(cont);
-						error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_240));
-						listaError.add(error);
-						break;
-					}
-				}
 				
-				String key1,key2,key3="";//,key4,key5,key6="";
-				if( listaDetalleTxt.size()>0 ){
-					key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
-					key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-					key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
-					//key4 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_MES_PRESENTACION, FiseConstants.POSICION_ANIO_EJECUCION) ;
-					//key5 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION) ;
-					//key6 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_MES_EJECUCION, FiseConstants.POSICION_ZONA_BENEFICIARIO) ;
-					boolean process = true;
-					Set<String> zonaSet = new java.util.HashSet<String>();
-					for (String s : listaDetalleTxt) {
-						String codEmp = s.substring(0, posicionCodEmpresa).trim();
-						String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-						String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
-						//String anioEje = s.substring(FiseConstants.POSICION_MES_PRESENTACION, FiseConstants.POSICION_ANIO_EJECUCION);
-						//String mesEje = s.substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION);
-						String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
-						if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) &&
-								(FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ||
-								FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ||
-								FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) )
-								){
-							if( zonaSet.contains(zonaBenef) ){
-								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_280)+FiseConstants.SALTO_LINEA;
-								process=false;
+				/******String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPresEdit), Long.parseLong(mesPresEdit), codEmpresaEdit, FiseConstants.TIPO_FORMATO_12A);
+				if( nombreIdeal.trim().equals(archivo.getTitle().trim()) ){*****/
+					
+					int BUFFER_SIZE = 8192;
+					BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
+					List<String> listaDetalleTxt= new ArrayList<String>();
+					sCurrentLine = br.readLine();
+					while(sCurrentLine!=null){
+						cont++;
+						if( sCurrentLine.length()>0 ){
+							if( sCurrentLine.length() == longitudMaxima ){
+								listaDetalleTxt.add(sCurrentLine);
+							}else{
+								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_220)+FiseConstants.SALTO_LINEA;
 								cont++;
 								MensajeErrorBean error = new MensajeErrorBean();
 								error.setId(cont);
-								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_280));
+								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_220));
 								listaError.add(error);
-								break;
-							}else{
-								zonaSet.add(zonaBenef);
-								process=true;
 							}
 						}else{
-							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
-							process=false;
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_230)+FiseConstants.SALTO_LINEA;
 							cont++;
 							MensajeErrorBean error = new MensajeErrorBean();
 							error.setId(cont);
-							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_230));
+							listaError.add(error);
+						}
+						sCurrentLine = br.readLine();
+						if( cont>3 ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_240)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_240));
 							listaError.add(error);
 							break;
 						}
 					}
-					if(process){
-						Formato12ACBean formulario = new Formato12ACBean();
-						//nuevamente recorremos la lista para armar los objetos
-						formulario.setCodigoEmpresa(key1);
-						formulario.setAnioPresent(Long.parseLong(key2));
-						formulario.setMesPresent(Long.parseLong(key3));
-						formulario.setAnioEjecuc(Long.parseLong(key2));
-						formulario.setMesEjecuc(Long.parseLong(key3));
-
-						if( codEmpresaEdit.equals(formulario.getCodigoEmpresa()) &&
-								anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
-								Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
-								anioEjecEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
-								Long.parseLong(mesEjecEdit)==formulario.getMesPresent() 
-								){
-							
-							//
-							for (String s : listaDetalleTxt) {
-								String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
-								String nroEmpad=s.substring(posicionZonaBenef, posicionNroEmpad).trim();
-								String nroAgent=s.substring(posicionTotalEmpad, posicionNroAgent).trim();
-								String desplazPersonal=s.substring(posicionTotalAgent, posicionDesplPersonal).trim();
-								String activExtraord=s.substring(posicionDesplPersonal, posicionActivExtraord).trim();
-								FiseFormato14AD detalle = formato14Service.obtenerFormato14ADVigente(key1, Long.parseLong(key2), Long.parseLong(zonaBenef));
-								if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
-									formulario.setNroEmpadR(Long.parseLong(nroEmpad));
-									formulario.setNroAgentR(Long.parseLong(nroAgent));
-									formulario.setDesplPersonalR(new BigDecimal(desplazPersonal));
-									formulario.setActivExtraordR(new BigDecimal(activExtraord));
-									if(detalle!=null){
-										formulario.setCostoUnitEmpadR(detalle.getCostoUnitarioEmpadronamiento());
-										formulario.setCostoUnitAgentR(detalle.getCostoUntitarioAgenteGlp());
-									}else{
-										formulario.setCostoUnitEmpadR(new BigDecimal(0.00));
-										formulario.setCostoUnitAgentR(new BigDecimal(0.00));
-									}
-								}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
-									formulario.setNroEmpadP(Long.parseLong(nroEmpad));
-									formulario.setNroAgentP(Long.parseLong(nroAgent));
-									formulario.setDesplPersonalP(new BigDecimal(desplazPersonal));
-									formulario.setActivExtraordP(new BigDecimal(activExtraord));
-									if(detalle!=null){
-										formulario.setCostoUnitEmpadP(detalle.getCostoUnitarioEmpadronamiento());
-										formulario.setCostoUnitAgentP(detalle.getCostoUntitarioAgenteGlp());
-									}else{
-										formulario.setCostoUnitEmpadP(new BigDecimal(0.00));
-										formulario.setCostoUnitAgentP(new BigDecimal(0.00));
-									}
-								}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
-									
-									if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
-										formulario.setNroEmpadL(Long.parseLong(nroEmpad));
-										formulario.setNroAgentL(Long.parseLong(nroAgent));
-										formulario.setDesplPersonalL(new BigDecimal(desplazPersonal));
-										formulario.setActivExtraordL(new BigDecimal(activExtraord));
-										if(detalle!=null){
-											formulario.setCostoUnitEmpadL(detalle.getCostoUnitarioEmpadronamiento());
-											formulario.setCostoUnitAgentL(detalle.getCostoUntitarioAgenteGlp());
-										}else{
-											formulario.setCostoUnitEmpadL(new BigDecimal(0.00));
-											formulario.setCostoUnitAgentL(new BigDecimal(0.00));
-										}
-									}else{
-										//aseguramos archivos en blanco
-										formulario.setNroEmpadL(0);
-										formulario.setNroAgentL(0);
-										formulario.setDesplPersonalL(new BigDecimal(0));
-										formulario.setActivExtraordL(new BigDecimal(0));
-										formulario.setCostoUnitEmpadL(new BigDecimal(0));
-										formulario.setCostoUnitAgentL(new BigDecimal(0));
-									}
-									
-									
+					
+					String key1,key2,key3="";//,key4,key5,key6="";
+					if( listaDetalleTxt.size()>0 ){
+						key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
+						key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+						key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
+						//key4 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_MES_PRESENTACION, FiseConstants.POSICION_ANIO_EJECUCION) ;
+						//key5 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION) ;
+						//key6 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_MES_EJECUCION, FiseConstants.POSICION_ZONA_BENEFICIARIO) ;
+						boolean process = true;
+						Set<String> zonaSet = new java.util.HashSet<String>();
+						for (String s : listaDetalleTxt) {
+							String codEmp = s.substring(0, posicionCodEmpresa).trim();
+							String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+							String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+							//String anioEje = s.substring(FiseConstants.POSICION_MES_PRESENTACION, FiseConstants.POSICION_ANIO_EJECUCION);
+							//String mesEje = s.substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION);
+							String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
+							if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) &&
+									(FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ||
+									FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ||
+									FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) )
+									){
+								if( zonaSet.contains(zonaBenef) ){
+									sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_280)+FiseConstants.SALTO_LINEA;
+									process=false;
+									cont++;
+									MensajeErrorBean error = new MensajeErrorBean();
+									error.setId(cont);
+									error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_280));
+									listaError.add(error);
+									break;
+								}else{
+									zonaSet.add(zonaBenef);
+									process=true;
 								}
+							}else{
+								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
+								process=false;
+								cont++;
+								MensajeErrorBean error = new MensajeErrorBean();
+								error.setId(cont);
+								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
+								listaError.add(error);
+								break;
 							}
-							//
-							formulario.setUsuario(user.getLogin());
-							formulario.setTerminal(user.getLoginIP());
-							formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
-							formulario.setNombreArchivo(archivo.getTitle());
-							
-							formulario.setEtapa(etapaEdit);
-							//
-							
-							if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
-								objeto = formatoService.registrarFormato12AC(formulario);
-							}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
-								FiseFormato12AC formatoModif = new FiseFormato12AC();
-								FiseFormato12ACPK id = new FiseFormato12ACPK();
-								id.setCodEmpresa(formulario.getCodigoEmpresa());
-								id.setAnoPresentacion(formulario.getAnioPresent());
-								id.setMesPresentacion(formulario.getMesPresent());
-								id.setAnoEjecucionGasto(formulario.getAnioPresent());
-								id.setMesEjecucionGasto(formulario.getMesPresent());
-								id.setEtapa(formulario.getEtapa());
-								formatoModif = formatoService.obtenerFormato12ACByPK(id);
-								objeto = formatoService.modificarFormato12AC(formulario, formatoModif);
+						}
+						if(process){
+							Formato12ACBean formulario = new Formato12ACBean();
+							//nuevamente recorremos la lista para armar los objetos
+							formulario.setCodigoEmpresa(key1);
+							formulario.setAnioPresent(Long.parseLong(key2));
+							formulario.setMesPresent(Long.parseLong(key3));
+							formulario.setAnioEjecuc(Long.parseLong(key2));
+							formulario.setMesEjecuc(Long.parseLong(key3));
+
+							if( codEmpresaEdit.equals(formulario.getCodigoEmpresa()) &&
+									anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
+									Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
+									anioEjecEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
+									Long.parseLong(mesEjecEdit)==formulario.getMesPresent() 
+									){
+								
+								//
+								for (String s : listaDetalleTxt) {
+									String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
+									String nroEmpad=s.substring(posicionZonaBenef, posicionNroEmpad).trim();
+									String nroAgent=s.substring(posicionTotalEmpad, posicionNroAgent).trim();
+									String desplazPersonal=s.substring(posicionTotalAgent, posicionDesplPersonal).trim();
+									String activExtraord=s.substring(posicionDesplPersonal, posicionActivExtraord).trim();
+									FiseFormato14AD detalle = formato14Service.obtenerFormato14ADVigente(key1, Long.parseLong(key2), Long.parseLong(zonaBenef));
+									if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
+										formulario.setNroEmpadR(Long.parseLong(nroEmpad));
+										formulario.setNroAgentR(Long.parseLong(nroAgent));
+										formulario.setDesplPersonalR(new BigDecimal(desplazPersonal));
+										formulario.setActivExtraordR(new BigDecimal(activExtraord));
+										if(detalle!=null){
+											formulario.setCostoUnitEmpadR(detalle.getCostoUnitarioEmpadronamiento());
+											formulario.setCostoUnitAgentR(detalle.getCostoUntitarioAgenteGlp());
+										}else{
+											formulario.setCostoUnitEmpadR(new BigDecimal(0.00));
+											formulario.setCostoUnitAgentR(new BigDecimal(0.00));
+										}
+									}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
+										formulario.setNroEmpadP(Long.parseLong(nroEmpad));
+										formulario.setNroAgentP(Long.parseLong(nroAgent));
+										formulario.setDesplPersonalP(new BigDecimal(desplazPersonal));
+										formulario.setActivExtraordP(new BigDecimal(activExtraord));
+										if(detalle!=null){
+											formulario.setCostoUnitEmpadP(detalle.getCostoUnitarioEmpadronamiento());
+											formulario.setCostoUnitAgentP(detalle.getCostoUntitarioAgenteGlp());
+										}else{
+											formulario.setCostoUnitEmpadP(new BigDecimal(0.00));
+											formulario.setCostoUnitAgentP(new BigDecimal(0.00));
+										}
+									}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
+										
+										if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+											formulario.setNroEmpadL(Long.parseLong(nroEmpad));
+											formulario.setNroAgentL(Long.parseLong(nroAgent));
+											formulario.setDesplPersonalL(new BigDecimal(desplazPersonal));
+											formulario.setActivExtraordL(new BigDecimal(activExtraord));
+											if(detalle!=null){
+												formulario.setCostoUnitEmpadL(detalle.getCostoUnitarioEmpadronamiento());
+												formulario.setCostoUnitAgentL(detalle.getCostoUntitarioAgenteGlp());
+											}else{
+												formulario.setCostoUnitEmpadL(new BigDecimal(0.00));
+												formulario.setCostoUnitAgentL(new BigDecimal(0.00));
+											}
+										}else{
+											//aseguramos archivos en blanco
+											formulario.setNroEmpadL(0);
+											formulario.setNroAgentL(0);
+											formulario.setDesplPersonalL(new BigDecimal(0));
+											formulario.setActivExtraordL(new BigDecimal(0));
+											formulario.setCostoUnitEmpadL(new BigDecimal(0));
+											formulario.setCostoUnitAgentL(new BigDecimal(0));
+										}
+										
+										
+									}
+								}
+								//
+								formulario.setUsuario(user.getLogin());
+								formulario.setTerminal(user.getLoginIP());
+								formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
+								formulario.setNombreArchivo(archivo.getTitle());
+								
+								formulario.setEtapa(etapaEdit);
+								//
+								
+								if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
+									objeto = formatoService.registrarFormato12AC(formulario);
+								}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
+									FiseFormato12AC formatoModif = new FiseFormato12AC();
+									FiseFormato12ACPK id = new FiseFormato12ACPK();
+									id.setCodEmpresa(formulario.getCodigoEmpresa());
+									id.setAnoPresentacion(formulario.getAnioPresent());
+									id.setMesPresentacion(formulario.getMesPresent());
+									id.setAnoEjecucionGasto(formulario.getAnioPresent());
+									id.setMesEjecucionGasto(formulario.getMesPresent());
+									id.setEtapa(formulario.getEtapa());
+									formatoModif = formatoService.obtenerFormato12ACByPK(id);
+									objeto = formatoService.modificarFormato12AC(formulario, formatoModif);
+								}
+							}else{
+								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_270)+FiseConstants.SALTO_LINEA;
+								cont++;
+								MensajeErrorBean error = new MensajeErrorBean();
+								error.setId(cont);
+								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_270));
+								listaError.add(error);
 							}
-						}else{
-							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_270)+FiseConstants.SALTO_LINEA;
+							
+						}/*else{
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_10)+FiseConstants.SALTO_LINEA;
 							cont++;
 							MensajeErrorBean error = new MensajeErrorBean();
 							error.setId(cont);
-							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_270));
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_10));
 							listaError.add(error);
-						}
-						
-					}/*else{
-						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_10)+FiseConstants.SALTO_LINEA;
-						cont++;
-						MensajeErrorBean error = new MensajeErrorBean();
-						error.setId(cont);
-						error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_10));
-						listaError.add(error);
-					}*/
+						}*/
+					}
+					is.close();
+					
+				/****}else{
+					//--logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					cont++;
+					sMsg = sMsg + "El nombre del archivo debe corresponder al periodo a declarar ";
+					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
 				}
-				is.close();
+				****/
+				
 			}else{
 				throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_290));
 			}
@@ -1995,8 +2011,8 @@ public class Formato12AGartController {
 		    }
 	        
 		  //add
-		    String codEmpresa = request.getParameter("codEmpresa").trim();
-		    String periodoEnvio = request.getParameter("periodoEnvio").trim();
+		    String codEmpresa = request.getParameter("codEmpresa");
+		    String periodoEnvio = request.getParameter("periodoEnvio");
 		    String anoPresentacion = "";
 		    String mesPresentacion = "";
 		    String etapa = "";
@@ -2005,7 +2021,7 @@ public class Formato12AGartController {
 		    	mesPresentacion = periodoEnvio.substring(4, 6);
 		    	etapa = periodoEnvio.substring(6,periodoEnvio.length());
 		    }
-		    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO14A);
+		    CfgTabla tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12A);
 	    	String descripcionFormato = "";
 	    	if( tabla!=null ){
 	    		descripcionFormato = tabla.getDescripcionTabla();
@@ -2019,7 +2035,7 @@ public class Formato12AGartController {
 			mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
 		   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 		  //add
-		   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(codEmpresa) );
+		   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4)));
 		   	mapa.put(FiseConstants.PARAM_ETAPA, etapa);
 		   	
 		   	session.setAttribute("mapa", mapa);
@@ -2052,7 +2068,7 @@ public class Formato12AGartController {
 		    String directorio = null;
 		    //OutputStream outputStream = response.getPortletOutputStream();
 		    
-		    String codEmpresa = request.getParameter("codEmpresa").trim();
+		    String codEmpresa = request.getParameter("codEmpresa");
 		    String periodoEnvio = request.getParameter("periodoEnvio").trim();
 		    String flagPeriodoEjecucion = request.getParameter("flagPeriodoEjecucion");
 		    String anoPresentacion = "";
@@ -2349,7 +2365,7 @@ public class Formato12AGartController {
 			if( tabla!=null ){
 				descripcionFormato = tabla.getDescripcionTabla();
 			}
-			String codEmpresa = request.getParameter("codEmpresa").trim();
+			String codEmpresa = request.getParameter("codEmpresa");
 			String periodoEnvio = request.getParameter("periodoEnvio").trim();
 			String anoPresentacion = "";
 			String mesPresentacion = "";
