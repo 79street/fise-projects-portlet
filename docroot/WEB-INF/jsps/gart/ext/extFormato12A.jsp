@@ -915,18 +915,28 @@ function buildGrids() {
 	}); 
 }
 function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa,flagOperacion){	
+	var admin = $("#esAdmin").val();
 	if(flagOperacion=='ABIERTO'){
-		var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-		$("#dialog-confirm-content").html(addhtml);		 
-		$("#dialog-confirm").dialog("open");
-		codEmpresa=cod_empresa;
-		ano_Presentacion=anoPresentacion;
-		mes_Presentacion=mesPresentacion;
-		ano_Ejecucion=anoEjecucion;
-		mes_Ejecucion=mesEjecucion;
-		codEtapa=etapa;
+		var process=true;
+		if( etapa=='RECONOCIDO' || !admin ){
+			process = false;
+		}
+		if(process){
+			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+			$("#dialog-confirm-content").html(addhtml);		 
+			$("#dialog-confirm").dialog("open");
+			codEmpresa=cod_empresa;
+			ano_Presentacion=anoPresentacion;
+			mes_Presentacion=mesPresentacion;
+			ano_Ejecucion=anoEjecucion;
+			mes_Ejecucion=mesEjecucion;
+			codEtapa=etapa;
+		}else{
+			alert(" No tiene autorización para realizar esta operación");
+		}
+		
 	}else if(flagOperacion=='CERRADO'){
-		alert(" No esta habilitado para realizar esta operacion");		
+		alert(" Está fuera de plazo");	
 	}else{
 		alert("El formato ya fue enviado a OSINERGMIN-GART");	
 	}
@@ -1036,56 +1046,67 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 	});	
 }
 function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa,flagOperacion){	
+	var admin = $("#esAdmin").val();
+	console.debug(admin);
 	if(flagOperacion=='ABIERTO'){
-		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
-		jQuery.ajax({
-				url: '<portlet:resourceURL id="crud" />',
-				type: 'post',
-				dataType: 'json',
-				data: {
-				   <portlet:namespace />tipo: "GET",
-				   <portlet:namespace />codEmpresa: codEmpresa,
-				   <portlet:namespace />anoPresentacion: anoPresentacion,
-				   <portlet:namespace />mesPresentacion: mesPresentacion,
-				   <portlet:namespace />anoEjecucion: anoEjecucion,
-				   <portlet:namespace />mesEjecucion: mesEjecucion,
-				   <portlet:namespace />etapa: etapa
-					},
-				success: function(data) {				
-					if (data.resultado == "OK"){
-						$("#Estado").val("UPDATE");
-						$("#etapaEdit").val(etapa);
-						//se deja el formulario activo
-						$("#div_formato").show();
-						$("#div_home").hide();
-						$("#<portlet:namespace/>divInformacion").show();
-						
-						dwr.util.removeAllOptions("s_periodoenvio_present");
-						dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
-						FillEditformato(data.formato);
-						
-						estiloEdicionRural();
-						estiloEdicionProvincia();
-						
-						if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
-							habilitarLima();										
-						}else{
-							deshabilitarLima();
+		var process=true;
+		if( etapa=='RECONOCIDO' || !admin ){
+			process = false;
+		}
+		if(process){
+			$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>' });
+			jQuery.ajax({
+					url: '<portlet:resourceURL id="crud" />',
+					type: 'post',
+					dataType: 'json',
+					data: {
+					   <portlet:namespace />tipo: "GET",
+					   <portlet:namespace />codEmpresa: codEmpresa,
+					   <portlet:namespace />anoPresentacion: anoPresentacion,
+					   <portlet:namespace />mesPresentacion: mesPresentacion,
+					   <portlet:namespace />anoEjecucion: anoEjecucion,
+					   <portlet:namespace />mesEjecucion: mesEjecucion,
+					   <portlet:namespace />etapa: etapa
+						},
+					success: function(data) {				
+						if (data.resultado == "OK"){
+							$("#Estado").val("UPDATE");
+							$("#etapaEdit").val(etapa);
+							//se deja el formulario activo
+							$("#div_formato").show();
+							$("#div_home").hide();
+							$("#<portlet:namespace/>divInformacion").show();
+							
+							dwr.util.removeAllOptions("s_periodoenvio_present");
+							dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
+							FillEditformato(data.formato);
+							
+							estiloEdicionRural();
+							estiloEdicionProvincia();
+							
+							if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+								habilitarLima();										
+							}else{
+								deshabilitarLima();
+							}
+							
+							initBlockUI();
 						}
-						
+						else{
+							alert("Error al recuperar los datos del registro seleccionado");
+							initBlockUI();
+						}
+					},error : function(){
+						alert("Error de conexión.");
 						initBlockUI();
 					}
-					else{
-						alert("Error al recuperar los datos del registro seleccionado");
-						initBlockUI();
-					}
-				},error : function(){
-					alert("Error de conexión.");
-					initBlockUI();
-				}
-		});	
+			});
+		}else{
+			alert(" No tiene autorización para realizar esta operación");
+		}
+			
 	}else if(flagOperacion=='CERRADO'){
-		alert(" No esta habilitado para realizar esta operacion");	
+		alert(" Está fuera de plazo");
 	}else{
 		alert("El formato ya fue enviado a OSINERGMIN-GART");	
 	}
