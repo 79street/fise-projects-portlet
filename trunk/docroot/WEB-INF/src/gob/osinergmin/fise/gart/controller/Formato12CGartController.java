@@ -1298,7 +1298,7 @@ public class Formato12CGartController {
 			String etapa = bean.getEtapa();
 
 			String nombreReporte = request.getParameter("nombreReporte").trim();
-			String nombreArchivo = request.getParameter("nombreArchivo").trim();
+			//String nombreArchivo = request.getParameter("nombreArchivo").trim();
 
 			FiseFormato12CCPK pk = new FiseFormato12CCPK();
 			pk.setCodEmpresa(codEmpresa);
@@ -1363,7 +1363,7 @@ public class Formato12CGartController {
 
 				/** REPORTE FORMATO 12C */
 				nombreReporte = "formato12C";
-				nombreArchivo = nombreReporte;
+				//nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile = new File(session.getServletContext().getRealPath(directorio));
 				byte[] bytes = null;
@@ -1385,7 +1385,7 @@ public class Formato12CGartController {
 				/** REPORTE OBSERVACIONES */
 				if (listaObservaciones != null && listaObservaciones.size() > 0) {
 					nombreReporte = "validacion12";
-					nombreArchivo = nombreReporte;
+					//nombreArchivo = nombreReporte;
 					directorio = "/reports/" + nombreReporte + ".jasper";
 					File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes2 = null;
@@ -1404,7 +1404,7 @@ public class Formato12CGartController {
 				}
 				/** REPORTE ACTA DE ENVIO */
 				nombreReporte = "gastoMensualIndividualCD";
-				nombreArchivo = nombreReporte;
+				//nombreArchivo = nombreReporte;
 				directorio = "/reports/" + nombreReporte + ".jasper";
 				File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
 				byte[] bytes3 = null;
@@ -2560,257 +2560,220 @@ public class Formato12CGartController {
 				
 				String sCurrentLine;
 				is=uploadPortletRequest.getFileAsStream("archivoTxt");
-				int BUFFER_SIZE = 8192;
-				BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
-				List<String> listaDetalleTxt= new ArrayList<String>();
-				sCurrentLine = br.readLine();
-				while(sCurrentLine!=null){
-					cont++;
-					if( sCurrentLine.length()>0 ){
-						if( sCurrentLine.length() == longitudMaxima ){
-							listaDetalleTxt.add(sCurrentLine);
-						}else{
-							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3434);
-						}
-					}else{
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3435);
-					}
-					sCurrentLine = br.readLine();
-					/*if( cont>3 ){
-						cont++;
-						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_240);
-						break;
-					}*/
-				}
 				
-				String key1,key2,key3,key4,key5="";//,key6="";
-				if( listaDetalleTxt.size()>0 ){
-					key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
-					key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-					key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
-					key4 = listaDetalleTxt.get(0).substring(posicionMesPresentacion, posicionAnioEjecucion).trim();
-					key5 = listaDetalleTxt.get(0).substring(posicionAnioEjecucion, posicionMesEjecucion).trim();
-					boolean process = true;
-					/*Set<String> etapaSet = new java.util.HashSet<String>();
-					for (String s : listaDetalleTxt) {
-						String codEmp = s.substring(0, posicionCodEmpresa).trim();
-						String anioP = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-						String mesP = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
-						String anioE = s.substring(posicionMesPresentacion, posicionAnioEjecucion).trim();
-						String mesE = s.substring(posicionAnioEjecucion, posicionMesEjecucion).trim();
-						String etapaEjec = s.substring(posicionMesEjecucion, posicionEtapaEjecucion).trim();
-						//--String nroItem = s.substring(posicionEtapaEjecucion, posicionItem).trim();
-						
-						if( key1.equals(codEmp) && key2.equals(anioP) && key3.equals(mesP) && key4.equals(anioE) && key5.equals(mesE) &&
-								(FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD_STRING.equals(etapaEjec) ||
-								FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD_STRING.equals(etapaEjec)  )
-								){
-							if( etapaSet.contains(etapaEjec) ){
-								process=false;
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_280);
-								break;
+				String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPres), Long.parseLong(mesPres), codEmpresa, FiseConstants.TIPO_FORMATO_12C);
+				if( nombreIdeal.trim().equals(archivo.getTitle().trim()) ){
+					
+					int BUFFER_SIZE = 8192;
+					BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
+					List<String> listaDetalleTxt= new ArrayList<String>();
+					sCurrentLine = br.readLine();
+					while(sCurrentLine!=null){
+						cont++;
+						if( sCurrentLine.length()>0 ){
+							if( sCurrentLine.length() == longitudMaxima ){
+								listaDetalleTxt.add(sCurrentLine);
 							}else{
-								etapaSet.add(etapaEjec);
-								process=true;
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3434);
 							}
 						}else{
-							process=false;
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
-							break;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3435);
 						}
-					}*/
-					if(process){
-						
-						List<Formato12CCBean> listaDetalle = new ArrayList<Formato12CCBean>();
-						
-						Formato12CCBean formulario = new Formato12CCBean();
-						//nuevamente recorremos la lista para armar los objetos
-						formulario.setCodigoEmpresa(key1);
-						formulario.setAnioPresentacion(Long.parseLong(key2));
-						formulario.setMesPresentacion(Long.parseLong(key3));
-						formulario.setAnioEjecucion(Long.parseLong(key4));
-						formulario.setMesEjecucion(Long.parseLong(key5));
-						
-						formulario.setEtapa(etapaEdit);
-
-						if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
-								anioPres.equals(String.valueOf(formulario.getAnioPresentacion())) &&
-								Long.parseLong(mesPres)==formulario.getMesPresentacion() 
-								//anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
-								//anioFinVigEdit.equals(String.valueOf(formulario.getAnioPresent())) 
-								){
+						sCurrentLine = br.readLine();
+						/*if( cont>3 ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_240);
+							break;
+						}*/
+					}
+					
+					String key1,key2,key3,key4,key5="";//,key6="";
+					if( listaDetalleTxt.size()>0 ){
+						key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
+						key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+						key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
+						key4 = listaDetalleTxt.get(0).substring(posicionMesPresentacion, posicionAnioEjecucion).trim();
+						key5 = listaDetalleTxt.get(0).substring(posicionAnioEjecucion, posicionMesEjecucion).trim();
+						boolean process = true;
+						/*Set<String> etapaSet = new java.util.HashSet<String>();
+						for (String s : listaDetalleTxt) {
+							String codEmp = s.substring(0, posicionCodEmpresa).trim();
+							String anioP = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+							String mesP = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+							String anioE = s.substring(posicionMesPresentacion, posicionAnioEjecucion).trim();
+							String mesE = s.substring(posicionAnioEjecucion, posicionMesEjecucion).trim();
+							String etapaEjec = s.substring(posicionMesEjecucion, posicionEtapaEjecucion).trim();
+							//--String nroItem = s.substring(posicionEtapaEjecucion, posicionItem).trim();
 							
-							//
-							for (String s : listaDetalleTxt) {
-								
-								Formato12CCBean detalleBean = new Formato12CCBean();
-								
-								detalleBean.setCodigoEmpresa(formulario.getCodigoEmpresa());
-								detalleBean.setAnioPresentacion(formulario.getAnioPresentacion());
-								detalleBean.setMesPresentacion(formulario.getMesPresentacion());
-								
-								//detalleBean.setEtapaEjecucion(FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD);
-								
-								detalleBean.setUsuario(user.getLogin());
-								detalleBean.setTerminal(user.getLoginIP());
-								detalleBean.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
-								detalleBean.setNombreArchivo(archivo.getTitle());
-								
-								detalleBean.setEtapa(etapaEdit);
-								
-								String etapaEjecucion = s.substring(posicionMesEjecucion, posicionEtapaEjecucion).trim();
-								
-								String anioEjecucion = s.substring(posicionMesPresentacion, posicionAnioEjecucion).trim();
-								String mesEjecucion = s.substring(posicionAnioEjecucion, posicionMesEjecucion).trim();
-								String codUbigeoOrigen = s.substring(posicionItem, posicionCodUbigeoOrigen).trim();
-								String localidadOrigen = s.substring(posicionCodUbigeoOrigen, posicionLocalidadOrigen).trim();
-								String codUbigeoDestino = s.substring(posicionLocalidadOrigen, posicionCodUbigeoDestino).trim();
-								String localidadDestino = s.substring(posicionCodUbigeoDestino, posicionLocalidadDestino).trim();
-								String zonaBenef = s.substring(posicionLocalidadDestino, posicionZonaBenef).trim();
-								String ctaContable = s.substring(posicionZonaBenef, posicionCtaContable).trim();
-								String actividad = s.substring(posicionCtaContable, posicionActividad).trim();
-								String tipoDocReferencia = s.substring(posicionActividad, posicionTipoDocReferencia).trim();
-								String rucEmpresa = s.substring(posicionTipoDocReferencia, posicionRUCEmpresa).trim();
-								String serieDocumento = s.substring(posicionRUCEmpresa, posicionSerieDocumento).trim();
-								String nroDocumento = s.substring(posicionSerieDocumento, posicionNroDocumento).trim();
-								String nroDias = s.substring(posicionNroDocumento, posicionNroDias).trim();
-								String alimentacion = s.substring(posicionNroDias, posicionAlimentacion).trim();
-								String alojamiento = s.substring(posicionAlimentacion, posicionAlojamiento).trim();
-								String movilidad = s.substring(posicionAlojamiento, posicionMovilidad).trim();
-								
-								//validaciones de consistencia
-								/*if( !FormatoUtil.validarCampoLongTxt(etapaEjecucion) ){
-									//el campo etapaEjecucion no corresponde al tipo de dato correcto
+							if( key1.equals(codEmp) && key2.equals(anioP) && key3.equals(mesP) && key4.equals(anioE) && key5.equals(mesE) &&
+									(FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD_STRING.equals(etapaEjec) ||
+									FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD_STRING.equals(etapaEjec)  )
+									){
+								if( etapaSet.contains(etapaEjec) ){
+									process=false;
 									cont++;
-									sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357));
-								}*/
-								if( !FormatoUtil.validarCampoLongTxt(anioEjecucion) ){
-									//el campo anioEjecucion no corresponde al tipo de dato correcto
-									cont++;
-									sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3440));
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_280);
+									break;
+								}else{
+									etapaSet.add(etapaEjec);
+									process=true;
 								}
-								if( !FormatoUtil.validarCampoLongTxt(mesEjecucion) ){
-									//el campo mesEjecucion no corresponde al tipo de dato correcto
-									cont++;
-									sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3442));
-								}
-								if( !FormatoUtil.validarCampoLongTxt(zonaBenef) ){
-									//el campo Zona benef no corresponde al tipo de dato correcto
-									cont++;
-									sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3454));
-								}
-								if( !FormatoUtil.validarCampoLongTxt(nroDias) ){
-									//el campo nroDias no corresponde al tipo de dato correcto
-									cont++;
-									sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3471));
-								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(alimentacion) ){
-									//el campo alimentacion no corresponde al tipo de dato correcto
-									cont++;
-									sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3473));
-								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(alojamiento) ){
-									//el campo alojamiento no corresponde al tipo de dato correcto
-									cont++;
-									sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3475));
-								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(movilidad) ){
-									//el campo movilidad no corresponde al tipo de dato correcto
-									cont++;
-									sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3477));
-								}
+							}else{
+								process=false;
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								break;
+							}
+						}*/
+						if(process){
+							
+							List<Formato12CCBean> listaDetalle = new ArrayList<Formato12CCBean>();
+							
+							Formato12CCBean formulario = new Formato12CCBean();
+							//nuevamente recorremos la lista para armar los objetos
+							formulario.setCodigoEmpresa(key1);
+							formulario.setAnioPresentacion(Long.parseLong(key2));
+							formulario.setMesPresentacion(Long.parseLong(key3));
+							formulario.setAnioEjecucion(Long.parseLong(key4));
+							formulario.setMesEjecucion(Long.parseLong(key5));
+							
+							formulario.setEtapa(etapaEdit);
+
+							if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+									anioPres.equals(String.valueOf(formulario.getAnioPresentacion())) &&
+									Long.parseLong(mesPres)==formulario.getMesPresentacion() 
+									//anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
+									//anioFinVigEdit.equals(String.valueOf(formulario.getAnioPresent())) 
+									){
 								
-								if( ( !FiseConstants.BLANCO.equals(anioEjecucion.trim()) && !FiseConstants.CERO.equals(anioEjecucion.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(mesEjecucion.trim()) && !FiseConstants.CERO.equals(mesEjecucion.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(etapaEjecucion.trim()) && !FiseConstants.CERO.equals(etapaEjecucion.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(codUbigeoOrigen.trim())  ) ||
-										( !FiseConstants.BLANCO.equals(localidadOrigen.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(codUbigeoDestino.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(localidadDestino.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(zonaBenef.trim()) && !FiseConstants.CERO.equals(zonaBenef.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(ctaContable.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(actividad.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(tipoDocReferencia.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(rucEmpresa.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(serieDocumento.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(nroDocumento.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(nroDias.trim()) && !FiseConstants.CERO.equals(nroDias.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(alimentacion.trim()) && !FiseConstants.CERO.equals(alimentacion.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(alojamiento.trim()) && !FiseConstants.CERO.equals(alojamiento.trim()) ) ||
-										( !FiseConstants.BLANCO.equals(movilidad.trim()) && !FiseConstants.CERO.equals(movilidad.trim()) ) 
-										
-										){
-								
-									if( !mapaUbigeo.containsKey(codUbigeoOrigen) ){
+								//
+								for (String s : listaDetalleTxt) {
+									
+									Formato12CCBean detalleBean = new Formato12CCBean();
+									
+									detalleBean.setCodigoEmpresa(formulario.getCodigoEmpresa());
+									detalleBean.setAnioPresentacion(formulario.getAnioPresentacion());
+									detalleBean.setMesPresentacion(formulario.getMesPresentacion());
+									
+									//detalleBean.setEtapaEjecucion(FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD);
+									
+									detalleBean.setUsuario(user.getLogin());
+									detalleBean.setTerminal(user.getLoginIP());
+									detalleBean.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
+									detalleBean.setNombreArchivo(archivo.getTitle());
+									
+									detalleBean.setEtapa(etapaEdit);
+									
+									String etapaEjecucion = s.substring(posicionMesEjecucion, posicionEtapaEjecucion).trim();
+									
+									String anioEjecucion = s.substring(posicionMesPresentacion, posicionAnioEjecucion).trim();
+									String mesEjecucion = s.substring(posicionAnioEjecucion, posicionMesEjecucion).trim();
+									String codUbigeoOrigen = s.substring(posicionItem, posicionCodUbigeoOrigen).trim();
+									String localidadOrigen = s.substring(posicionCodUbigeoOrigen, posicionLocalidadOrigen).trim();
+									String codUbigeoDestino = s.substring(posicionLocalidadOrigen, posicionCodUbigeoDestino).trim();
+									String localidadDestino = s.substring(posicionCodUbigeoDestino, posicionLocalidadDestino).trim();
+									String zonaBenef = s.substring(posicionLocalidadDestino, posicionZonaBenef).trim();
+									String ctaContable = s.substring(posicionZonaBenef, posicionCtaContable).trim();
+									String actividad = s.substring(posicionCtaContable, posicionActividad).trim();
+									String tipoDocReferencia = s.substring(posicionActividad, posicionTipoDocReferencia).trim();
+									String rucEmpresa = s.substring(posicionTipoDocReferencia, posicionRUCEmpresa).trim();
+									String serieDocumento = s.substring(posicionRUCEmpresa, posicionSerieDocumento).trim();
+									String nroDocumento = s.substring(posicionSerieDocumento, posicionNroDocumento).trim();
+									String nroDias = s.substring(posicionNroDocumento, posicionNroDias).trim();
+									String alimentacion = s.substring(posicionNroDias, posicionAlimentacion).trim();
+									String alojamiento = s.substring(posicionAlimentacion, posicionAlojamiento).trim();
+									String movilidad = s.substring(posicionAlojamiento, posicionMovilidad).trim();
+									
+									//validaciones de consistencia
+									/*if( !FormatoUtil.validarCampoLongTxt(etapaEjecucion) ){
+										//el campo etapaEjecucion no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3445));
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357));
+									}*/
+									if( !FormatoUtil.validarCampoLongTxt(anioEjecucion) ){
+										//el campo anioEjecucion no corresponde al tipo de dato correcto
+										cont++;
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3440));
 									}
-									if( !mapaUbigeo.containsKey(codUbigeoDestino) ){
+									if( !FormatoUtil.validarCampoLongTxt(mesEjecucion) ){
+										//el campo mesEjecucion no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3450));
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3442));
 									}
-									if( !mapaZonaBenef.containsKey(Long.parseLong(zonaBenef)) ){
+									if( !FormatoUtil.validarCampoLongTxt(zonaBenef) ){
+										//el campo Zona benef no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3455));
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3454));
 									}
-									if( !mapaTipoDocumento.containsKey(tipoDocReferencia) ){
+									if( !FormatoUtil.validarCampoLongTxt(nroDias) ){
+										//el campo nroDias no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3462));
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3471));
+									}
+									if( !FormatoUtil.validarCampoBigDecimalTxt(alimentacion) ){
+										//el campo alimentacion no corresponde al tipo de dato correcto
+										cont++;
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3473));
+									}
+									if( !FormatoUtil.validarCampoBigDecimalTxt(alojamiento) ){
+										//el campo alojamiento no corresponde al tipo de dato correcto
+										cont++;
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3475));
+									}
+									if( !FormatoUtil.validarCampoBigDecimalTxt(movilidad) ){
+										//el campo movilidad no corresponde al tipo de dato correcto
+										cont++;
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3477));
 									}
 									
-								}
-								
-								if( FiseConstants.BLANCO.equals(sMsg) &&
-										FiseConstants.BLANCO.equals(sMsg12C.toString()) 
-										){
+									if( ( !FiseConstants.BLANCO.equals(anioEjecucion.trim()) && !FiseConstants.CERO.equals(anioEjecucion.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(mesEjecucion.trim()) && !FiseConstants.CERO.equals(mesEjecucion.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(etapaEjecucion.trim()) && !FiseConstants.CERO.equals(etapaEjecucion.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(codUbigeoOrigen.trim())  ) ||
+											( !FiseConstants.BLANCO.equals(localidadOrigen.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(codUbigeoDestino.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(localidadDestino.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(zonaBenef.trim()) && !FiseConstants.CERO.equals(zonaBenef.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(ctaContable.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(actividad.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(tipoDocReferencia.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(rucEmpresa.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(serieDocumento.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(nroDocumento.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(nroDias.trim()) && !FiseConstants.CERO.equals(nroDias.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(alimentacion.trim()) && !FiseConstants.CERO.equals(alimentacion.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(alojamiento.trim()) && !FiseConstants.CERO.equals(alojamiento.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(movilidad.trim()) && !FiseConstants.CERO.equals(movilidad.trim()) ) 
+											
+											){
 									
-									if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
+										if( !mapaUbigeo.containsKey(codUbigeoOrigen) ){
+											cont++;
+											sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3445));
+										}
+										if( !mapaUbigeo.containsKey(codUbigeoDestino) ){
+											cont++;
+											sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3450));
+										}
+										if( !mapaZonaBenef.containsKey(Long.parseLong(zonaBenef)) ){
+											cont++;
+											sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3455));
+										}
+										if( !mapaTipoDocumento.containsKey(tipoDocReferencia) ){
+											cont++;
+											sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3462));
+										}
 										
-										detalleBean.setEtapaEjecucion(Long.parseLong(etapaEjecucion));
-										detalleBean.setAnioEjecucion(Long.parseLong(anioEjecucion));
-										detalleBean.setMesEjecucion(Long.parseLong(mesEjecucion));
-										detalleBean.setCodUbigeoOrigen(codUbigeoOrigen);
-										detalleBean.setLocalidadOrigen(localidadOrigen);
-										detalleBean.setCodUbigeoDestino(codUbigeoDestino);
-										detalleBean.setLocalidadDestino(localidadDestino);
-										detalleBean.setZonaBenef(Long.parseLong(zonaBenef));
-										detalleBean.setCodCuentaContable(ctaContable);
-										detalleBean.setActividad(actividad);
-										detalleBean.setTipoDocumento(tipoDocReferencia);
-										detalleBean.setRucEmpresa(rucEmpresa);
-										detalleBean.setSerieDocumento(serieDocumento);
-										detalleBean.setNroDocumento(nroDocumento);
-										detalleBean.setNroDias(Long.parseLong(nroDias));
-										detalleBean.setMontoAlimentacion(new BigDecimal(alimentacion));
-										detalleBean.setMontoAlojamiento(new BigDecimal(alojamiento));
-										detalleBean.setMontoMovilidad(new BigDecimal(movilidad));
+									}
+									
+									if( FiseConstants.BLANCO.equals(sMsg) &&
+											FiseConstants.BLANCO.equals(sMsg12C.toString()) 
+											){
 										
-									}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
-										detalleBean.setEtapaEjecucion(Long.parseLong(etapaEjecucion));
-										detalleBean.setAnioEjecucion(Long.parseLong(anioEjecucion));
-										detalleBean.setMesEjecucion(Long.parseLong(mesEjecucion));
-										detalleBean.setCodUbigeoOrigen(codUbigeoOrigen);
-										detalleBean.setLocalidadOrigen(localidadOrigen);
-										detalleBean.setCodUbigeoDestino(codUbigeoDestino);
-										detalleBean.setLocalidadDestino(localidadDestino);
-										detalleBean.setZonaBenef(Long.parseLong(zonaBenef));
-										detalleBean.setCodCuentaContable(ctaContable);
-										detalleBean.setActividad(actividad);
-										detalleBean.setTipoDocumento(tipoDocReferencia);
-										detalleBean.setRucEmpresa(rucEmpresa);
-										detalleBean.setSerieDocumento(serieDocumento);
-										detalleBean.setNroDocumento(nroDocumento);
-										detalleBean.setNroDias(Long.parseLong(nroDias));
-										detalleBean.setMontoAlimentacion(new BigDecimal(alimentacion));
-										detalleBean.setMontoAlojamiento(new BigDecimal(alojamiento));
-										detalleBean.setMontoMovilidad(new BigDecimal(movilidad));
-										
-									}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
-										if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+										if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
+											
 											detalleBean.setEtapaEjecucion(Long.parseLong(etapaEjecucion));
 											detalleBean.setAnioEjecucion(Long.parseLong(anioEjecucion));
 											detalleBean.setMesEjecucion(Long.parseLong(mesEjecucion));
@@ -2829,103 +2792,152 @@ public class Formato12CGartController {
 											detalleBean.setMontoAlimentacion(new BigDecimal(alimentacion));
 											detalleBean.setMontoAlojamiento(new BigDecimal(alojamiento));
 											detalleBean.setMontoMovilidad(new BigDecimal(movilidad));
-										}else{
-											detalleBean.setEtapaEjecucion(0L);
-											detalleBean.setAnioEjecucion(0L);
-											detalleBean.setMesEjecucion(0L);
-											detalleBean.setCodUbigeoOrigen("");
-											detalleBean.setLocalidadOrigen("");
-											detalleBean.setCodUbigeoDestino("");
-											detalleBean.setLocalidadDestino("");
-											detalleBean.setZonaBenef(0L);
-											detalleBean.setCodCuentaContable("");
-											detalleBean.setActividad("");
-											detalleBean.setTipoDocumento("");
-											detalleBean.setRucEmpresa("");
-											detalleBean.setSerieDocumento("");
-											detalleBean.setNroDocumento("");
-											detalleBean.setNroDias(0L);
-											detalleBean.setMontoAlimentacion(new BigDecimal(0));
-											detalleBean.setMontoAlojamiento(new BigDecimal(0));
-											detalleBean.setMontoMovilidad(new BigDecimal(0));
+											
+										}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
+											detalleBean.setEtapaEjecucion(Long.parseLong(etapaEjecucion));
+											detalleBean.setAnioEjecucion(Long.parseLong(anioEjecucion));
+											detalleBean.setMesEjecucion(Long.parseLong(mesEjecucion));
+											detalleBean.setCodUbigeoOrigen(codUbigeoOrigen);
+											detalleBean.setLocalidadOrigen(localidadOrigen);
+											detalleBean.setCodUbigeoDestino(codUbigeoDestino);
+											detalleBean.setLocalidadDestino(localidadDestino);
+											detalleBean.setZonaBenef(Long.parseLong(zonaBenef));
+											detalleBean.setCodCuentaContable(ctaContable);
+											detalleBean.setActividad(actividad);
+											detalleBean.setTipoDocumento(tipoDocReferencia);
+											detalleBean.setRucEmpresa(rucEmpresa);
+											detalleBean.setSerieDocumento(serieDocumento);
+											detalleBean.setNroDocumento(nroDocumento);
+											detalleBean.setNroDias(Long.parseLong(nroDias));
+											detalleBean.setMontoAlimentacion(new BigDecimal(alimentacion));
+											detalleBean.setMontoAlojamiento(new BigDecimal(alojamiento));
+											detalleBean.setMontoMovilidad(new BigDecimal(movilidad));
+											
+										}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
+											if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+												detalleBean.setEtapaEjecucion(Long.parseLong(etapaEjecucion));
+												detalleBean.setAnioEjecucion(Long.parseLong(anioEjecucion));
+												detalleBean.setMesEjecucion(Long.parseLong(mesEjecucion));
+												detalleBean.setCodUbigeoOrigen(codUbigeoOrigen);
+												detalleBean.setLocalidadOrigen(localidadOrigen);
+												detalleBean.setCodUbigeoDestino(codUbigeoDestino);
+												detalleBean.setLocalidadDestino(localidadDestino);
+												detalleBean.setZonaBenef(Long.parseLong(zonaBenef));
+												detalleBean.setCodCuentaContable(ctaContable);
+												detalleBean.setActividad(actividad);
+												detalleBean.setTipoDocumento(tipoDocReferencia);
+												detalleBean.setRucEmpresa(rucEmpresa);
+												detalleBean.setSerieDocumento(serieDocumento);
+												detalleBean.setNroDocumento(nroDocumento);
+												detalleBean.setNroDias(Long.parseLong(nroDias));
+												detalleBean.setMontoAlimentacion(new BigDecimal(alimentacion));
+												detalleBean.setMontoAlojamiento(new BigDecimal(alojamiento));
+												detalleBean.setMontoMovilidad(new BigDecimal(movilidad));
+											}else{
+												detalleBean.setEtapaEjecucion(0L);
+												detalleBean.setAnioEjecucion(0L);
+												detalleBean.setMesEjecucion(0L);
+												detalleBean.setCodUbigeoOrigen("");
+												detalleBean.setLocalidadOrigen("");
+												detalleBean.setCodUbigeoDestino("");
+												detalleBean.setLocalidadDestino("");
+												detalleBean.setZonaBenef(0L);
+												detalleBean.setCodCuentaContable("");
+												detalleBean.setActividad("");
+												detalleBean.setTipoDocumento("");
+												detalleBean.setRucEmpresa("");
+												detalleBean.setSerieDocumento("");
+												detalleBean.setNroDocumento("");
+												detalleBean.setNroDias(0L);
+												detalleBean.setMontoAlimentacion(new BigDecimal(0));
+												detalleBean.setMontoAlojamiento(new BigDecimal(0));
+												detalleBean.setMontoMovilidad(new BigDecimal(0));
+											}
+											
+											
+											
 										}
 										
-										
+										listaDetalle.add(detalleBean);
 										
 									}
 									
-									listaDetalle.add(detalleBean);
 									
 								}
 								
 								
-							}
-							
-							
-							if( FiseConstants.BLANCO.equals(sMsg) &&
-									FiseConstants.BLANCO.equals(sMsg12C.toString()) 
-									){
-								
-								
-								/*if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
-										anioPres.equals(String.valueOf(formulario.getAnioPresentacion())) &&
-										Long.parseLong(mesPres) == formulario.getMesPresentacion() 
-										){*/
-									//se hace la logica para que cuando sea nuevo se crea la cabecera para el primer detalle y luego sobre eso se agregan las demas
-									//para cuando es una edicion, se borran primero los detalles existentes de la cabecera y se cargan nuevamente todos los detalles
+								if( FiseConstants.BLANCO.equals(sMsg) &&
+										FiseConstants.BLANCO.equals(sMsg12C.toString()) 
+										){
 									
-									if( CRUD_CREATE.equals(tipoOperacion) ){
-										if( listaDetalle!=null && listaDetalle.size()>0 ){
-											FiseFormato12CC formatoNuevo = null;
-											for( int i=0; i<listaDetalle.size(); i++ ){
-												if( i==0 ){
-													formatoNuevo = formatoService.registrarFormato12CCregistrarFormato12CD(listaDetalle.get(i));
-													objeto = formatoNuevo;
-												}else{
-													if( formatoNuevo!=null ){
-														objeto = formatoService.modificarFormato12CCregistrarFormato12CD(listaDetalle.get(i), formatoNuevo);
+									
+									/*if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+											anioPres.equals(String.valueOf(formulario.getAnioPresentacion())) &&
+											Long.parseLong(mesPres) == formulario.getMesPresentacion() 
+											){*/
+										//se hace la logica para que cuando sea nuevo se crea la cabecera para el primer detalle y luego sobre eso se agregan las demas
+										//para cuando es una edicion, se borran primero los detalles existentes de la cabecera y se cargan nuevamente todos los detalles
+										
+										if( CRUD_CREATE.equals(tipoOperacion) ){
+											if( listaDetalle!=null && listaDetalle.size()>0 ){
+												FiseFormato12CC formatoNuevo = null;
+												for( int i=0; i<listaDetalle.size(); i++ ){
+													if( i==0 ){
+														formatoNuevo = formatoService.registrarFormato12CCregistrarFormato12CD(listaDetalle.get(i));
+														objeto = formatoNuevo;
+													}else{
+														if( formatoNuevo!=null ){
+															objeto = formatoService.modificarFormato12CCregistrarFormato12CD(listaDetalle.get(i), formatoNuevo);
+														}
 													}
+													
 												}
-												
+											}
+											
+										}else if( CRUD_UPDATE.equals(tipoOperacion) ){
+											FiseFormato12CC formatoModif = new FiseFormato12CC();
+											FiseFormato12CCPK id = new FiseFormato12CCPK();
+											id.setCodEmpresa(formulario.getCodigoEmpresa());
+											id.setAnoPresentacion(formulario.getAnioPresentacion());
+											id.setMesPresentacion(formulario.getMesPresentacion());
+											id.setEtapa(formulario.getEtapa());
+											formatoModif = formatoService.obtenerFormato12CCByPK(id);
+											
+											if( listaDetalle!=null && listaDetalle.size()>0 ){
+												//borramos todos los detalles
+												for (FiseFormato12CD formato12CD : formatoModif.getFiseFormato12CDs()) {
+													formatoService.eliminarFormato12CD(formato12CD);
+												}
+												//agregamos todos los detalles que se estan cargando
+												for (Formato12CCBean detalle : listaDetalle) {
+													objeto = formatoService.modificarFormato12CCregistrarFormato12CD(detalle, formatoModif);
+												}
 											}
 										}
-										
-									}else if( CRUD_UPDATE.equals(tipoOperacion) ){
-										FiseFormato12CC formatoModif = new FiseFormato12CC();
-										FiseFormato12CCPK id = new FiseFormato12CCPK();
-										id.setCodEmpresa(formulario.getCodigoEmpresa());
-										id.setAnoPresentacion(formulario.getAnioPresentacion());
-										id.setMesPresentacion(formulario.getMesPresentacion());
-										id.setEtapa(formulario.getEtapa());
-										formatoModif = formatoService.obtenerFormato12CCByPK(id);
-										
-										if( listaDetalle!=null && listaDetalle.size()>0 ){
-											//borramos todos los detalles
-											for (FiseFormato12CD formato12CD : formatoModif.getFiseFormato12CDs()) {
-												formatoService.eliminarFormato12CD(formato12CD);
-											}
-											//agregamos todos los detalles que se estan cargando
-											for (Formato12CCBean detalle : listaDetalle) {
-												objeto = formatoService.modificarFormato12CCregistrarFormato12CD(detalle, formatoModif);
-											}
-										}
-									}
-								/*}else{
-									cont++;
-									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_210);
-								}*/
+									/*}else{
+										cont++;
+										sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_210);
+									}*/
+									
+									
+								}
 								
-								
+							}else{
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3439);
 							}
 							
-						}else{
-							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3439);
 						}
-						
 					}
+					is.close();
+					
+				}else{
+					cont++;
+					sMsg = sMsg + "El nombre del archivo debe corresponder al periodo a declarar ";
+					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
 				}
-				is.close();
+				
+				
 			}else{
 				throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_290));
 			}

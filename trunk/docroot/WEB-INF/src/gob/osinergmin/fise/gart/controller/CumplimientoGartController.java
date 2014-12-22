@@ -7,6 +7,7 @@ import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.FormatoCumplimientoService;
+import gob.osinergmin.fise.util.FechaUtil;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class CumplimientoGartController {
 	
 	private List<FisePeriodoEnvio> listaPeriodo;
 	private Map<String, String> mapaEmpresa;
-	//private Map<Long,String> mapaMeses;
+	private Map<Long,String> mapaMeses;
 	
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse){
@@ -64,6 +65,8 @@ public class CumplimientoGartController {
 			mapaEmpresa.put(admEmpresa.getCodEmpresa(), admEmpresa.getDscCortaEmpresa());
 		}
 				
+		mapaMeses = FechaUtil.cargarMapaMeses();
+		
 		listaPeriodo = fisePeriodoEnvioGartService.listarFisePeriodoEnvioMesAnioEtapaCumplimiento();
 		model.addAttribute("listaPeriodo", listaPeriodo);
 	
@@ -106,7 +109,7 @@ public class CumplimientoGartController {
 		    
 		    Map<String, Object> mapa = new HashMap<String, Object>();
 		    mapa.put(FiseConstants.PARAM_ANO_CUMPLI, Long.parseLong(anio));
-		    mapa.put(FiseConstants.PARAM_MES_CUMPLI, Long.parseLong(mes));
+		    mapa.put(FiseConstants.PARAM_MES_CUMPLI, mapaMeses.get(Long.parseLong(mes)));
 		    mapa.put(FiseConstants.PARAM_ETAPA_CUMPLI, etapa);
 		    session.setAttribute("mapa", mapa);
 		    //System.out.println("jhdhdhdh"+lista);

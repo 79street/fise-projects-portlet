@@ -1519,7 +1519,7 @@ function <portlet:namespace/>mostrarReportePdf(){
 			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 			<portlet:namespace />etapa: $('#etapaEdit').val(),
 			<portlet:namespace />nombreReporte: 'formato12A',
-			<portlet:namespace />nombreArchivo: 'formato12A',
+			//<portlet:namespace />nombreArchivo: 'formato12A',
 			<portlet:namespace />tipoArchivo: '0'//PDF
 		},
 		success : function(gridData) {
@@ -1543,7 +1543,7 @@ function <portlet:namespace/>mostrarReporteExcel(){
 			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 			<portlet:namespace />etapa: $('#etapaEdit').val(),
 			<portlet:namespace />nombreReporte: 'formato12A',
-			<portlet:namespace />nombreArchivo: 'formato12A',
+			//<portlet:namespace />nombreArchivo: 'formato12A',
 			<portlet:namespace />tipoArchivo: '1'//XLS
 		},
 		success : function(gridData) {
@@ -1636,7 +1636,7 @@ function <portlet:namespace/>mostrarReporteValidacion(){
 			<portlet:namespace />codEmpresa: $('#s_empresa').val(),
 			<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
 			<portlet:namespace />nombreReporte: 'validacion',
-			<portlet:namespace />nombreArchivo: 'validacion',
+			//<portlet:namespace />nombreArchivo: 'validacion',
 			<portlet:namespace />tipoArchivo: '0'//PDF
 		},
 		success : function(gridData) {
@@ -1664,7 +1664,7 @@ function <portlet:namespace/>envioDefinitivo(){
 			<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
 			<portlet:namespace />nombreReporte: 'formato12A',
-			<portlet:namespace />nombreArchivo: 'formato12A',
+			//<portlet:namespace />nombreArchivo: 'formato12A',
 			<portlet:namespace />tipoArchivo: '0'//PDF
 		},
 		success : function(gridData) {

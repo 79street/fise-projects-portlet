@@ -1927,7 +1927,7 @@ var formato14B= {
 				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
 				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato14B',
-				<portlet:namespace />nombreArchivo: 'formato14B',
+				//<portlet:namespace />nombreArchivo: 'formato14B',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
@@ -1949,7 +1949,7 @@ var formato14B= {
 				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
 				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato14B',
-				<portlet:namespace />nombreArchivo: 'formato14B',
+				//<portlet:namespace />nombreArchivo: 'formato14B',
 				<portlet:namespace />tipoArchivo: '1'//XLS
 			},
 			success : function(gridData) {
@@ -1999,7 +1999,7 @@ var formato14B= {
 				<portlet:namespace />codEmpresa: formato14B.f_empresa.val(),
 				<portlet:namespace />periodoEnvio: formato14B.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion',
-				<portlet:namespace />nombreArchivo: 'validacion',
+				//<portlet:namespace />nombreArchivo: 'validacion',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
@@ -2026,7 +2026,7 @@ var formato14B= {
 				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
 				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato14B',
-				<portlet:namespace />nombreArchivo: 'formato14B',
+				//<portlet:namespace />nombreArchivo: 'formato14B',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
