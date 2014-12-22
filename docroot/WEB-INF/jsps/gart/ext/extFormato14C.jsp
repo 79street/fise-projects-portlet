@@ -644,7 +644,7 @@ var formato14C= {
 		},
 		//funcion para nuevo registro
 		<portlet:namespace/>nuevoFormato14C : function(){			
-			formato14C.inicializarFormulario();			
+			formato14C.inicializarFormulario();				
 			formato14C.divNuevo.show();
 			formato14C.divBuscar.hide();		
 			formato14C.flagCarga.val('0');				
@@ -1060,8 +1060,12 @@ var formato14C= {
 		},
 		
 		//function para inicializar el formulario
-		inicializarFormulario : function(){
-			formato14C.f_empresa.val('');
+		inicializarFormulario : function(){			
+			if(formato14C.i_codEmpresaBusq.val()!=''){
+				formato14C.f_empresa.val(formato14C.i_codEmpresaBusq.val());
+			}else{
+				formato14C.f_empresa.val('');
+			}			
 			formato14C.f_nombreSede.val('');
 			formato14C.divInformacion.hide();			
 			console.debug("flag periodo ejecucion al inicializar formulario:  "+formato14C.f_flagPeriodo.val());
@@ -2274,7 +2278,8 @@ var formato14C= {
 				alert('Seleccione una empresa'); 
 				formato14C.f_empresa.focus();
 			  	return false; 
-			}else if(formato14C.f_periodoEnvio.val().length == '' ) {		  
+			}else if(formato14C.f_periodoEnvio.val()==null || 
+					formato14C.f_periodoEnvio.val().length == '' ) {		  
 				alert('Debe ingresar periodo de presentacion');
 				formato14C.f_periodoEnvio.focus();
 				return false; 

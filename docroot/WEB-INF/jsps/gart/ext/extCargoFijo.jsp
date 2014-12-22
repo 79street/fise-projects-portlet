@@ -276,10 +276,25 @@ var fiseCargoFijo= {
 		
 		//function para inicializar el formulario
 		inicializarFormulario : function(){		
-			var f = new Date();
-			fiseCargoFijo.f_empresa.val('');			
-			fiseCargoFijo.f_anioRep.val(f.getFullYear());
-			fiseCargoFijo.f_mesRep.val('');		
+			var f = new Date();			
+			
+			if(fiseCargoFijo.i_codEmpresa.val()!=''){
+				fiseCargoFijo.f_empresa.val(fiseCargoFijo.i_codEmpresa.val());	
+			}else{
+				fiseCargoFijo.f_empresa.val('');	
+			}
+			
+			if(fiseCargoFijo.i_anioRep.val()!=''){
+				fiseCargoFijo.f_anioRep.val(fiseCargoFijo.i_anioRep.val());	
+			}else{
+				fiseCargoFijo.f_anioRep.val(f.getFullYear());	
+			}
+			
+			if(fiseCargoFijo.i_mesRep.val()!=''){
+				fiseCargoFijo.f_mesRep.val(fiseCargoFijo.i_mesRep.val());	
+			}else{
+				fiseCargoFijo.f_mesRep.val(f.getMonth() +1);	
+			}				
 			
 			fiseCargoFijo.f_numUsuBenef.val('0');
 			fiseCargoFijo.f_numUsuEmp.val('0');			
