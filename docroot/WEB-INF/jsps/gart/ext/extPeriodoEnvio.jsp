@@ -286,7 +286,7 @@ var periodoEnvio= {
 				 periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
 				 periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
 				 periodoEnvio.f_anoIniVigencia.val(f.getFullYear()+1);
-				 periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+2);				
+				 periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+3);				
 			 }
 		},		
 		
@@ -634,8 +634,8 @@ var periodoEnvio= {
 			}else{
 				periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
 			    periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
-			    periodoEnvio.f_anoIniVigencia.val(f.getFullYear());
-				periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+2);					
+			    periodoEnvio.f_anoIniVigencia.val(f.getFullYear()+1);
+				periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+3);					
 		   }
 		},
 		

@@ -11,18 +11,6 @@ $(document).ready(function () {
 	fiseCargoFijo.init();
 });
 
-$(function() {
-	$( ".datepicker" ).datepicker({
-	      changeDay: true,
-		changeMonth: true,
-	      changeYear: true,
-	      showOn: "button",
-	      buttonImage: "/net-theme/images/img-net/calendar.png",
-	      buttonImageOnly: true,
-	      yearRange: '-100:+0'
-	    });
-});
-
 </script>
            
            
@@ -175,7 +163,8 @@ $(function() {
 											    <td><label style="font-size: 12px; font-weight: bold">Distribuidora	Eléctrica:</label>
 												</td>
 											    <td>
-											       <form:select path="codEmpresa" cssClass="select" cssStyle="width: 200px;">
+											       <form:select path="codigoEmpresa" cssClass="select" cssStyle="width: 200px;">
+											         <form:option value="">-Seleccione-</form:option>
 													 <form:options items="${fiseCargoFijoBean.listaEmpresas}"
 																   itemLabel="dscEmpresa" itemValue="codEmpresa" />
 												  </form:select>
@@ -184,13 +173,14 @@ $(function() {
 											   <td><label style="font-size: 12px; font-weight: bold">Año Repo.:</label>
 											   </td>
 											   <td>
-												<form:input path="anioRep"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>
+												<form:input path="anioReporte"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											   </td>
 											   
 											   <td><label style="font-size: 12px; font-weight: bold">Mes Rep.:</label>
 											   </td>
 											   <td>
-												 <form:select path="mesRep" cssClass="select" cssStyle="width: 104px;">													
+												 <form:select path="mesReporte" cssClass="select" cssStyle="width: 104px;">	
+												    <form:option value="">-Seleccione-</form:option>												
 													<form:options items="${fiseCargoFijoBean.listaMes}"/>
 												 </form:select>
 											   </td>
@@ -257,7 +247,7 @@ $(function() {
 											  <td><label style="font-size: 12px; font-weight: bold">Número Agentes:</label>
 											   </td>
 											  <td>
-												 <form:input path="numAgen"  cssStyle="width: 50px; text-align: right;"/>
+												 <form:input path="numAgente"  cssStyle="width: 50px; text-align: right;"/>
 											  </td>
 											 
 											  <td><label style="font-size: 12px; font-weight: bold">Monto Transf. Canje:</label>
@@ -280,10 +270,10 @@ $(function() {
 											
 											<tr> 
 											
-											 <td><label style="font-size: 12px; font-weight: bold">Fecha Informe Sustento: (dd/mm/aaaa)</label>
+											 <td><label style="font-size: 12px; font-weight: bold">Fecha Informe Sustento:(dd/mm/aaaa)</label>
 											  </td>
 											  <td>											  										 
-											   <form:input path="fechaSustento" cssStyle="text-align: right;" cssClass="${flagEditar==true?'':'datepicker'}"/>								    												
+											   <form:input path="fechaSustento" cssStyle="text-align: right;"/>								    												
 											  </td>
 											
 											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Informe Sustento:</label>
@@ -292,10 +282,13 @@ $(function() {
 												 <form:input path="numDoc"  cssStyle="width: 50px; text-align: right;"/>
 											  </td>
 											  
-											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Info.: (dd/mm/aaaa)</label>
+											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Info.(dd/mm/aaaa):</label>
 											  </td>
-											  <td>											  										 
-											   <form:input path="fechaRecepcion" cssStyle="text-align: right;" cssClass="${flagEditar==true?'':'datepicker'}"/>								    												
+											  <td>				    
+											  
+											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" />
+												 							    												
+											  
 											  </td>		
 											  										 											 
 											</tr>
@@ -324,7 +317,7 @@ $(function() {
 											     <input type="radio"	name="aplicaIgv"
 												        id="rbtIgvSI" value="1" checked="true"/>SI
 												 &nbsp;&nbsp;&nbsp;													 
-												<input type="radio"	name="flagHabCostos"
+												<input type="radio"	name="aplicaIgv"
 												       id="rbtIgvNO" value="0" />NO																																
 											 </td>		
 											  										 											 
@@ -342,7 +335,7 @@ $(function() {
 											     <input type="radio"	name="estado"
 												        id="rbtActivo" value="1" checked="true"/>Activo
 												 &nbsp;&nbsp;&nbsp;													 
-												<input type="radio"	name="flagHabCostos"
+												<input type="radio"	name="estado"
 												       id="rbtInactivo" value="0" />Inactivo																																
 											 </td>	
 											
@@ -435,7 +428,8 @@ $(function() {
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>
-	</div>`	
+	</div>	
 	
-	
+ 
+	 
 </form:form>

@@ -5,7 +5,6 @@ package gob.osinergmin.fise.gart.controller;
 import gob.osinergmin.fise.bean.FiseCargoFijoBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
-import gob.osinergmin.fise.domain.FiseMcargofijo;
 import gob.osinergmin.fise.gart.service.FiseCargoFijoService;
 import gob.osinergmin.fise.util.FormatoUtil;
 
@@ -81,9 +80,8 @@ public class FiseCargoFijoController {
     		c.setListaMes(fiseUtil.getMapaMeses());
     		c.setAnioRepBusq(fiseUtil.obtenerNroAnioFechaActual());
     		
-    		model.addAttribute("model", c); 
+    		model.addAttribute("model", c);   		
     		
-    		model.addAttribute("flagEditar", "false");
     		
 		} catch (Exception e) {
 			logger.info("Ocurrio un errror al caragar la pagina cargos fijos"); 
@@ -120,31 +118,18 @@ public class FiseCargoFijoController {
   			logger.info("anio "+ anio);  
   			logger.info("mes "+ mes);  
  		   
-  			List<FiseMcargofijo> lista = fiseCargoFijoService.buscarFiseCargoFijo(codEmpresa,
+  			List<FiseCargoFijoBean> lista = fiseCargoFijoService.buscarFiseCargoFijo(codEmpresa,
   					anioRep ,mesRep );
   			
   			logger.info("tamaño de la lista cargo fijos   :"+lista.size());  
   			
-  			List<FiseMcargofijo> listaCargoExel = new ArrayList<FiseMcargofijo>();
+  			List<FiseCargoFijoBean> listaCargoExel = new ArrayList<FiseCargoFijoBean>();
   			
-  			for(FiseMcargofijo cargo : lista){  				
-  				cargo.setDescEmpresa(mapaEmpresa.get(cargo.getId().getEmpcod()));
-  				cargo.setDescMesPresentacion(fiseUtil.getMapaMeses().get(Long.valueOf(cargo.getId().getFmesrep()))); 
-  				cargo.setCodEmpresa(cargo.getId().getEmpcod());
-  				cargo.setAnioRep(cargo.getId().getFaniorep());
-  				cargo.setMesRep(cargo.getId().getFmesrep()); 
-  				if(1==cargo.getScficod()){ 
-  					cargo.setDescEstado("Activo");			
-  				}else{
-  					cargo.setDescEstado("Inactivo");			
-  				}
-  				
-  				if(1==cargo.getCfiapliigv()){ 
-  					cargo.setAplicaIgv("SI");			
-  				}else{
-  					cargo.setAplicaIgv("NO");			
-  				}
-  				logger.info("pasando todo ok en busqueda"); 
+  			
+  			for(FiseCargoFijoBean cargo : lista){ 	
+  				String codEmpreCompleta = FormatoUtil.rellenaDerecha(cargo.getCodigoEmpresa(), ' ', 4);
+  				cargo.setDesEmpresa(mapaEmpresa.get(codEmpreCompleta)); 
+  				cargo.setDesMesRep(fiseUtil.getMapaMeses().get(Long.valueOf(cargo.getMesReporte()))); 				
   				listaCargoExel.add(cargo);
   			}   			
   			
@@ -166,7 +151,7 @@ public class FiseCargoFijoController {
 		}
 	}
 	
-	private String toStringListJSON(List<FiseMcargofijo> lista) {
+	private String toStringListJSON(List<FiseCargoFijoBean> lista) {
 		Serializer serializer = new JsonSerializer();
 		Object result = serializer.serialize(lista);
 		String data = String.valueOf(result);
@@ -175,17 +160,26 @@ public class FiseCargoFijoController {
 	
 	
 	@ResourceMapping("grabarCargosFijos")
-	public void grabarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
+	public void grabarCargosFijos(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("fiseCargoFijoBean")FiseCargoFijoBean c) { 
 		JSONObject jsonObj = new JSONObject();
 		try {		
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);				
 			
-			logger.info("Entrando a grabar un registro"); 			
-			logger.info("codEmpresa:  "+ c.getCodEmpresa()); 
-			logger.info("anio:  "+ c.getAnioRep());		
-			logger.info("mes:  "+ c.getMesRep());
-				
+			logger.info("Entrando a grabar un registro"); 
+			
+			String mes = request.getParameter("codigoMes");
+			String anio = request.getParameter("anioRep");
+			String empresa = request.getParameter("codigoEmp");
+			c.setCodigoEmpresa(empresa);
+			c.setAnioReporte(anio);
+			c.setMesReporte(mes); 
+			
+			logger.info("codEmpresa:  "+ c.getCodigoEmpresa()); 
+			logger.info("anio:  "+ c.getAnioReporte());		
+			logger.info("mes:  "+ c.getMesReporte());
+			logger.info("numero de agentes:  "+ c.getNumAgente());
+		
 			c.setUsuario(themeDisplay.getUser().getLogin());
 			c.setTerminal(themeDisplay.getUser().getLoginIP());		
 			
@@ -214,7 +208,7 @@ public class FiseCargoFijoController {
 	
 	
 	@ResourceMapping("actualizarCargosFijos")
-	public void actualizarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
+	public void actualizarCargosFijos(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("fiseCargoFijoBean")FiseCargoFijoBean c) { 
 		JSONObject jsonObj = new JSONObject();
 		try {		
@@ -224,9 +218,18 @@ public class FiseCargoFijoController {
 			c.setTerminal(themeDisplay.getUser().getLoginIP());	
 			
 			logger.info("Entrando a actualizar un registro"); 	
-			logger.info("codEmpresa:  "+ c.getCodEmpresa()); 
-			logger.info("anio:  "+ c.getAnioRep());		
-			logger.info("mes:  "+ c.getMesRep());
+			
+			String mes = request.getParameter("codigoMes");
+			String anio = request.getParameter("anioRep");
+			String empresa = request.getParameter("codigoEmp");
+			c.setCodigoEmpresa(empresa);
+			c.setAnioReporte(anio);
+			c.setMesReporte(mes); 
+			
+			logger.info("codEmpresa:  "+ c.getCodigoEmpresa()); 
+			logger.info("anio:  "+ c.getAnioReporte());		
+			logger.info("mes:  "+ c.getMesReporte());
+			logger.info("numero de agentes:  "+ c.getNumAgente());
 			
 			String valor = fiseCargoFijoService.actualizarDatosFiseCargoFijo(c);
 			
@@ -249,25 +252,25 @@ public class FiseCargoFijoController {
 	
 	
 	@ResourceMapping("editarViewCargosFijos")
-	public void editarObservacion(ModelMap model,ResourceRequest request,ResourceResponse response,
+	public void editarCargosFijos(ModelMap model,ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("fiseCargoFijoBean")FiseCargoFijoBean c) { 		
 		try {	
 			String data;			
 			logger.info("entrando a editar o visualizar un registro");	
+					
+			String mes = request.getParameter("codigoMes");
+			String anio = request.getParameter("anioRep");
+			String empresa = request.getParameter("codigoEmp");
+			c.setCodigoEmpresa(empresa);
+			c.setAnioReporte(anio);
+			c.setMesReporte(mes); 
 			
-			logger.info("codEmpresa:  "+ c.getCodEmpresa()); 
-			logger.info("anio:  "+ c.getAnioRepBusq());		
-			logger.info("mes:  "+ c.getMesRep());
-			logger.info("flag editar:  "+ c.getFlagEditar());
+			logger.info("codEmpresa:  "+ c.getCodigoEmpresa()); 
+			logger.info("anio:  "+ c.getAnioReporte());		
+			logger.info("mes:  "+ c.getMesReporte());		
 			
-			c= fiseCargoFijoService.buscarFiseCargoFijoEditar(c.getCodEmpresa(), c.getAnioRepBusq(), c.getMesRep());
-			
-			if("E".equals(c.getFlagEditar())){ 
-				model.addAttribute("flagEditar", "false");	
-			}else{
-				model.addAttribute("flagEditar", "true");
-			}
-			
+			c= fiseCargoFijoService.buscarFiseCargoFijoEditar(c.getCodigoEmpresa(), c.getAnioReporte(), c.getMesReporte());
+			 
 			data = toStringJSON(c);						
 			response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
@@ -301,15 +304,21 @@ public class FiseCargoFijoController {
 			String usuario = themeDisplay.getUser().getLogin();
 			String terminal = themeDisplay.getUser().getLoginIP();	
 			
+			String mes = request.getParameter("codigoMes");
+			String anio = request.getParameter("anioRep");
+			String empresa = request.getParameter("codigoEmp");
+			c.setCodigoEmpresa(empresa);
+			c.setAnioReporte(anio);
+			c.setMesReporte(mes); 
 			
-			logger.info("codEmpresa:  "+ c.getCodEmpresa()); 
-			logger.info("anio:  "+ c.getAnioRep());		
-			logger.info("mes:  "+ c.getMesRep());
+			logger.info("codEmpresa:  "+ c.getCodigoEmpresa()); 
+			logger.info("anio:  "+ c.getAnioReporte());		
+			logger.info("mes:  "+ c.getMesReporte());
 			
 			logger.info("Enviando el formulario al service"); 
 			
-			String valor = fiseCargoFijoService.eliminarDatosFiseCargoFijo(c.getCodEmpresa(),
-					c.getAnioRep(), c.getMesRep(), usuario, terminal);
+			String valor = fiseCargoFijoService.eliminarDatosFiseCargoFijo(c.getCodigoEmpresa(),
+					c.getAnioReporte(), c.getMesReporte(), usuario, terminal);
 			
 			if(valor.equals("1")){ 
 				jsonObj.put("resultado", "OK");	   	
