@@ -1463,7 +1463,7 @@ var formato12D= {
 			dataType : 'json',
 			data : {
 				<portlet:namespace />nombreReporte: 'formato12D',
-				//<portlet:namespace />nombreArchivo: 'formato12D',
+				<portlet:namespace />nombreArchivo: 'formato12D',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
@@ -1483,7 +1483,7 @@ var formato12D= {
 			dataType : 'json',
 			data : {
 				<portlet:namespace />nombreReporte: 'formato12D',
-				//<portlet:namespace />nombreArchivo: 'formato12D',
+				<portlet:namespace />nombreArchivo: 'formato12D',
 				<portlet:namespace />tipoArchivo: '1'//XLS
 			},
 			success : function(gridData) {
@@ -1536,7 +1536,7 @@ var formato12D= {
 			data : {
 				//<portlet:namespace />periodoEnvio: formato12D.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion12',
-				//<portlet:namespace />nombreArchivo: 'validacion12',
+				<portlet:namespace />nombreArchivo: 'validacion12',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 				//anioInicioVigencia:formato12D.txtInicioVig.val(),
 				//anioFinVigencia:formato12D.txtFinVig.val() //PDF
@@ -1567,7 +1567,7 @@ var formato12D= {
 				//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
 				//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato12D',
-				//<portlet:namespace />nombreArchivo: 'formato12D',
+				<portlet:namespace />nombreArchivo: 'formato12D',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
