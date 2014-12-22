@@ -49,7 +49,7 @@ var fiseCargoFijo= {
 		i_mesRep:null,		
 		
 		//variables para nuevo registro
-		f_codEmpresa:null,
+		f_empresa:null,
 		f_anioRep:null,	
 		f_mesRep:null,			
 		f_numUsuBenef:null,
@@ -68,7 +68,10 @@ var fiseCargoFijo= {
 		f_estado:null,
 		f_igv:null,
 		f_aplicaIgv:null,
-		f_gloza:null,		
+		f_gloza:null,	
+		
+		f_fechaRecepcionEditar:null,	
+		f_flagVer:null,
 		
 		//grillas
 		tablaResultados:null,
@@ -116,21 +119,21 @@ var fiseCargoFijo= {
 			this.botonActualizar=$("#<portlet:namespace/>actualizarCargoFijo");		
 			
 			//variables de busqueda		
-			this.i_codEmpresa=$('#idBusq');
-			this.i_anioRep=$('#descripcionBusq');
-			this.i_mesRep=$('#descripcionBusq');
+			this.i_codEmpresa=$('#codEmpresaBusq');
+			this.i_anioRep=$('#anioRepBusq');
+			this.i_mesRep=$('#mesRepBusq');
 			
 			//VARIBALES PARA NUEVO REGISTRO		
-			this.f_codEmpresa=$('#codEmpresa');			
-			this.f_anioRep=$('#anioRep');
-			this.f_mesRep=$('#mesRep');			
+			this.f_empresa=$('#codigoEmpresa');			
+			this.f_anioRep=$('#anioReporte');
+			this.f_mesRep=$('#mesReporte');			
 			this.f_numUsuBenef=$('#numUsuBenef');
 			this.f_numUsuEmp=$('#numUsuEmp');			
 			this.f_numValDCan=$('#numValDCan');
 			this.f_numValDEmi=$('#numValDEmi');			
 			this.f_numValFCan=$('#numValFCan');
 			this.f_numValFEmi=$('#numValFEmi');			
-			this.f_numAgen=$('#numAgen');
+			this.f_numAgen=$('#numAgente');
 			this.f_montoMes=$('#montoMes');			
 			this.f_montoCanje=$('#montoCanje');
 			this.f_numDoc=$('#numDoc');			
@@ -141,6 +144,9 @@ var fiseCargoFijo= {
 			this.f_igv=$('#igv');
 			this.f_aplicaIgv=$('#aplicaIgv');			
 			this.f_gloza=$('#gloza');
+			
+			this.f_fechaRecepcionEditar=$('#fechaRecepcionEditar');
+			this.f_flagVer=$('#flagVer');
 			
 			//grillas			
 			this.tablaResultados=$("#<portlet:namespace/>grid_resultado_busqueda");
@@ -184,47 +190,47 @@ var fiseCargoFijo= {
 			   datatype: "local",
 		       colNames: ['Empresa','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físcios Emi.','N° Vales Físcios Canj.','N° Vales Digitales Emi.','N° Vales Digitales Canj.','Visualizar','Editar','Anular','',''],
 		       colModel: [
-                       { name: 'descEmpresa', index: 'descEmpresa', width: 50},
-					   { name: 'anioRep', index: 'anioRep', width: 20},	
-					   { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},
-					   { name: 'cfinumusuben', index: 'cfinumusuben', width: 30},		
-					   { name: 'cfinumusuemp', index: 'cfinumusuemp', width: 30},
-					   { name: 'cfinumvalfemi', index: 'cfinumvalfemi', width: 30},		
-					   { name: 'cfinumvalfcan', index: 'cfinumvalfcan', width: 30},
-					   { name: 'cfinumvaldemi', index: 'cfinumvaldemi', width: 30},	
-					   { name: 'cfinumvaldcan', index: 'cfinumvaldcan', width: 30},	
-		               { name: 'view', index: 'view', width: 20,align:'center' },
-		               { name: 'edit', index: 'edit', width: 20,align:'center' },
-		               { name: 'elim', index: 'elim', width: 20,align:'center' },
-		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
-		               { name: 'mesRep', index: 'mesRep', hidden: true}		                
-			   	    ],
-			   	 multiselect: false,
-					rowNum:10,
-				   	rowList:[10,20,50],
-					height: 200,
-				   	autowidth: true,
-					rownumbers: true,
-					shrinkToFit:true,
-					pager: fiseCargoFijo.paginadoResultados,
-				    viewrecords: true,
-				   	caption: "Cargos Fijos",
-				    sortorder: "asc",	   	    	   	   
-		       gridComplete: function(){
-		      		var ids = fiseCargoFijo.tablaResultados.jqGrid('getDataIDs');
-		      		for(var i=0;i < ids.length;i++){
-		      			var cl = ids[i];
-		      			var ret = fiseCargoFijo.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.codEmpresa+"','"+ret.anioRep+"','"+ret.mesRep+"');\" /></a> ";
-		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.codEmpresa+"','"+ret.anioRep+"','"+ret.mesRep+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codEmpresa+"','"+ret.anioRep+"','"+ret.mesRep+"');\" /></a> ";              			
-		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
-		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
-		      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
-		      		}
+						   { name: 'desEmpresa', index: 'desEmpresa', width: 50},
+			               { name: 'anioReporte', index: 'anioReporte', width: 30 },   
+			               { name: 'desMesRep', index: 'desMesRep', width: 30},
+			               { name: 'numUsuBenef', index: 'numUsuBenef', width: 30 },   
+			               { name: 'numUsuEmp', index: 'numUsuEmp', width: 30},
+			               { name: 'numValFEmi', index: 'numValFEmi', width: 50},
+			               { name: 'numValFCan', index: 'numValFCan', width: 50},
+			               { name: 'numValDEmi', index: 'numValFEmi', width: 50},
+			               { name: 'numValDCan', index: 'numValDCan', width: 50},
+			               { name: 'view', index: 'view', width: 20,align:'center' },
+			               { name: 'edit', index: 'edit', width: 20,align:'center' },
+			               { name: 'elim', index: 'elim', width: 20,align:'center' },		              
+			               { name: 'codigoEmpresa', index: 'codigoEmpresa', hidden: true},
+			               { name: 'mesReporte', index: 'mesReporte', hidden: true}			               
+				   	    ],
+				   	 multiselect: false,
+						rowNum:10,
+					   	rowList:[10,20,50],
+						height: 200,
+					   	autowidth: true,
+						rownumbers: true,
+						shrinkToFit:true,
+						pager: fiseCargoFijo.paginadoResultados,
+					    viewrecords: true,
+					   	caption: "Cargos Fijos",
+					    sortorder: "asc",	   	    	   	   
+			       gridComplete: function(){
+			      		var ids = fiseCargoFijo.tablaResultados.jqGrid('getDataIDs');
+			      		for(var i=0;i < ids.length;i++){
+			      			var cl = ids[i];
+			      			var ret = fiseCargoFijo.tablaResultados.jqGrid('getRowData',cl);           
+			      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
+			      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
+			      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";              			
+			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
+			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
+			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
+			      		}
 		      }
 		  	});
-			fiseCargoFijo.tablaResultados.jqGrid('navGrid',fiseCargoFijo.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});	
+			 fiseCargoFijo.tablaResultados.jqGrid('navGrid',fiseCargoFijo.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});	
 			 fiseCargoFijo.tablaResultados.jqGrid('navButtonAdd',fiseCargoFijo.paginadoResultados,{
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
@@ -260,7 +266,7 @@ var fiseCargoFijo= {
 			
 			fiseCargoFijo.inicializarFormulario();			
 			
-			fiseCargoFijo.verElementosEditar();
+			fiseCargoFijo.verElementosEditar();		
 			
 			fiseCargoFijo.habilitarCamposView();
 			
@@ -271,7 +277,7 @@ var fiseCargoFijo= {
 		//function para inicializar el formulario
 		inicializarFormulario : function(){		
 			var f = new Date();
-			fiseCargoFijo.f_codEmpresa.val('');			
+			fiseCargoFijo.f_empresa.val('');			
 			fiseCargoFijo.f_anioRep.val(f.getFullYear());
 			fiseCargoFijo.f_mesRep.val('');		
 			
@@ -291,7 +297,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.f_igv.val('0.00');			
 			fiseCargoFijo.f_gloza.val('');		
 			
-			fiseCargoFijo.f_codEmpresa.attr("disabled",false);
+			fiseCargoFijo.f_empresa.attr("disabled",false);
 			fiseCargoFijo.f_anioRep.attr("disabled",false);
 			fiseCargoFijo.f_mesRep.attr("disabled",false);
 			
@@ -300,14 +306,14 @@ var fiseCargoFijo= {
 		},		
 		//function para validar solo numeros enteros
 		soloNumerosEnteros : function(){		
-			fiseCargoFijo.f_anioRep.attr("onkeypress","return soloNumerosDecimales(event, 1, 'anioRep',4,0)");
+			fiseCargoFijo.f_anioRep.attr("onkeypress","return soloNumerosDecimales(event, 1, 'anioReporte',4,0)");
 			fiseCargoFijo.f_numUsuBenef.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuBenef',7,0)");
 			fiseCargoFijo.f_numUsuEmp.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuEmp',7,0)");			
 			fiseCargoFijo.f_numValDCan.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDCan',7,0)");
 			fiseCargoFijo.f_numValDEmi.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDEmi',7,0)");		
 			fiseCargoFijo.f_numValFCan.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFCan',7,0)");
 			fiseCargoFijo.f_numValFEmi.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFEmi',7,0)");			
-			fiseCargoFijo.f_numAgen.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numAgen',7,0)");
+			fiseCargoFijo.f_numAgen.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numAgente',7,0)");
 			fiseCargoFijo.f_numDoc.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numDoc',20,0)");			
 			fiseCargoFijo.f_numDocRecepcion.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numDocRecepcion',20,0)");		
 		},
@@ -317,28 +323,32 @@ var fiseCargoFijo= {
 			fiseCargoFijo.f_montoMes.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMes',7,2)");
 			fiseCargoFijo.f_montoCanje.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoCanje',7,2)");
 			fiseCargoFijo.f_igv.attr("onkeypress","return soloNumerosDecimales(event, 2, 'igv',1,2)");	
+			completarDecimal('montoMes',2);
+			completarDecimal('montoCanje',2);
+			completarDecimal('igv',2);
 		},	
 		
 		//Function para Visualizar los datos del formulario		
 		verCargoFijo : function(cod_Empresa, anio_Rep, mes_Rep){	
-			console.debug("entrando a ver ");			
+			 console.debug("entrando a ver "+cod_Empresa);
+			 console.debug("entrando a ver "+anio_Rep);
+			 console.debug("entrando a ver "+mes_Rep);		
 			$.blockUI({ message: fiseCargoFijo.mensajeObteniendoDatos});
 			jQuery.ajax({
 					url: fiseCargoFijo.urlEditarView+'&'+fiseCargoFijo.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {						  
-					      <portlet:namespace />codEmpresa: cod_Empresa,
-					      <portlet:namespace />anioRepBusq: anio_Rep,
-					      <portlet:namespace />mesRep: mes_Rep,
-					      <portlet:namespace />flagEditar: 'V'
+					      <portlet:namespace />codigoEmp: cod_Empresa,
+					      <portlet:namespace />anioRep: anio_Rep,
+					      <portlet:namespace />codigoMes: mes_Rep					      
 						},
 					success: function(data) {
 					    if (data != null){															
 					    	fiseCargoFijo.divNuevo.show();
 					    	fiseCargoFijo.divBuscar.hide();	
 					    	
-					    	fiseCargoFijo.llenarDatosEditar(data);
+					    	fiseCargoFijo.llenarDatosEditar(data);				    	   						
 					    	
 					    	fiseCargoFijo.ocultarElementosEditar();
 					    	
@@ -362,25 +372,25 @@ var fiseCargoFijo= {
 		
 		//Function para editar los datos del formulario
 		editarCargoFijo : function(cod_Empresa, anio_Rep, mes_Rep){	
-			    console.debug("entrando a editar ");		
+			    console.debug("entrando a editar "+cod_Empresa);
+			    console.debug("entrando a editar "+anio_Rep);
+			    console.debug("entrando a editar "+mes_Rep);
 				$.blockUI({ message: fiseCargoFijo.mensajeObteniendoDatos });			 
 				jQuery.ajax({
 						url: fiseCargoFijo.urlEditarView+'&'+fiseCargoFijo.formCommand.serialize(),
 						type: 'post',
 						dataType: 'json',
 						data: {							
-							 <portlet:namespace />codEmpresa: cod_Empresa,
-						     <portlet:namespace />anioRep: anio_Rep,
-						     <portlet:namespace />mesRep: mes_Rep,
-						     <portlet:namespace />flagEditar: 'E'
-						     
+							<portlet:namespace />codigoEmp: cod_Empresa,
+						    <portlet:namespace />anioRep: anio_Rep,
+						    <portlet:namespace />codigoMes: mes_Rep						     
 						},
 						success: function(data) {				
 							if (data != null){															
 								fiseCargoFijo.divNuevo.show();
 								fiseCargoFijo.divBuscar.hide();	
 								
-								fiseCargoFijo.llenarDatosEditar(data);
+								fiseCargoFijo.llenarDatosEditar(data);							
 								
 								fiseCargoFijo.ocultarElementosEditar();			
 								
@@ -403,16 +413,20 @@ var fiseCargoFijo= {
 		
 		//funcion  para llenar los campos para editar
 		llenarDatosEditar : function(bean){	
-			fiseCargoFijo.f_codEmpresa.val(bean.codEmpresa);			
-			fiseCargoFijo.f_anioRep.val(bean.anioRep);
-			fiseCargoFijo.f_mesRep.val(bean.mesRep);			
+			var codEmp = bean.codigoEmpresa.trim();
+			$('#codigoEmpresa').val(codEmp);
+        	$('#anioReporte').val(bean.anioReporte);
+        	$('#mesReporte').val(bean.mesReporte);
+			//fiseCargoFijo.f_empresa.val(bean.codEmpresa.trim());			
+			//fiseCargoFijo.f_anioRep.val(bean.anioReporte);
+			//fiseCargoFijo.f_mesRep.val(bean.mesReporte);			
 			fiseCargoFijo.f_numUsuBenef.val(bean.numUsuBenef);
 			fiseCargoFijo.f_numUsuEmp.val(bean.numUsuEmp);			
 			fiseCargoFijo.f_numValDCan.val(bean.numValDCan);
 			fiseCargoFijo.f_numValDEmi.val(bean.numValDEmi);			
 			fiseCargoFijo.f_numValFCan.val(bean.numValFCan);
 			fiseCargoFijo.f_numValFEmi.val(bean.numValFEmi);			
-			fiseCargoFijo.f_numAgen.val(bean.numAgen);
+			fiseCargoFijo.f_numAgen.val(bean.numAgente);
 			fiseCargoFijo.f_montoMes.val(bean.montoMes);			
 			fiseCargoFijo.f_montoCanje.val(bean.montoCanje);
 			fiseCargoFijo.f_numDoc.val(bean.numDoc);			
@@ -433,21 +447,23 @@ var fiseCargoFijo= {
 			}else{				
 				 document.getElementById('rbtIgvNO').checked = true;
 			}
+			fiseCargoFijo.soloNumerosEnteros();
+			fiseCargoFijo.soloNumerosDecimales();
 		},
 		
 		ocultarElementosEditar : function(){	
-			$('#codEmpresa').attr("disabled",true);
-			$('#anioRep').attr("disabled",true);
-			$('#mesRep').attr("disabled",true);	
+			$('#codigoEmpresa').attr("disabled",true);
+			$('#anioReporte').attr("disabled",true);
+			$('#mesReporte').attr("disabled",true);	
 			//estilo
-			$('#anioRep').removeClass("fise-editable");
+			$('#anioReporte').removeClass("fise-editable");
 		},
         verElementosEditar : function(){	
-        	$('#codEmpresa').attr("disabled",false);
-        	$('#anioRep').attr("disabled",false);
-        	$('#mesRep').attr("disabled",false);
+        	$('#codigoEmpresa').attr("disabled",false);
+        	$('#anioReporte').attr("disabled",false);
+        	$('#mesReporte').attr("disabled",false);
         	//estilo
-        	$('#anioRep').addClass("fise-editable");	
+        	$('#anioReporte').addClass("fise-editable");	
 		},
 		
 		deshabilitarCamposView : function(){			
@@ -465,7 +481,12 @@ var fiseCargoFijo= {
 			fiseCargoFijo.f_fechaSustento.attr("disabled",true);
 			fiseCargoFijo.f_fechaRecepcion.attr("disabled",true);
 			fiseCargoFijo.f_igv.attr("disabled",true);
-			fiseCargoFijo.f_gloza.attr("disabled",true);		
+			fiseCargoFijo.f_gloza.attr("disabled",true);
+			
+			$('#rbtIgvSI').attr("disabled",true);
+        	$('#rbtIgvNO').attr("disabled",true);
+        	$('#rbtActivo').attr("disabled",true);
+        	$('#rbtInactivo').attr("disabled",true);
 			
 			//ESTILOS
 			fiseCargoFijo.f_numUsuBenef.removeClass("fise-editable");
@@ -482,7 +503,10 @@ var fiseCargoFijo= {
 			fiseCargoFijo.f_fechaSustento.removeClass("fise-editable");		
 			fiseCargoFijo.f_fechaRecepcion.removeClass("fise-editable");
 			fiseCargoFijo.f_igv.removeClass("fise-editable");		
-			fiseCargoFijo.f_gloza.removeClass("fise-editable");		
+			fiseCargoFijo.f_gloza.removeClass("fise-editable");	
+			
+			fiseCargoFijo.f_fechaRecepcion.removeClass("datepicker");
+			
 		},
 		//Funcion para habilitar los campos que se desabilitan en la visualizacion opcion ver
 		habilitarCamposView : function(){				
@@ -500,7 +524,12 @@ var fiseCargoFijo= {
 			fiseCargoFijo.f_fechaSustento.removeAttr("disabled");
 			fiseCargoFijo.f_fechaRecepcion.removeAttr("disabled");
 			fiseCargoFijo.f_igv.removeAttr("disabled");
-			fiseCargoFijo.f_gloza.removeAttr("disabled");		
+			fiseCargoFijo.f_gloza.removeAttr("disabled");	
+			
+			$('#rbtIgvSI').removeAttr("disabled");
+        	$('#rbtIgvNO').removeAttr("disabled");
+        	$('#rbtActivo').removeAttr("disabled");
+        	$('#rbtInactivo').removeAttr("disabled");
 			
 			//ESTILOS
 			fiseCargoFijo.f_numUsuBenef.addClass("fise-editable");
@@ -512,12 +541,14 @@ var fiseCargoFijo= {
 			fiseCargoFijo.f_numAgen.addClass("fise-editable");
 			fiseCargoFijo.f_montoMes.addClass("fise-editable");		
 			fiseCargoFijo.f_montoCanje.addClass("fise-editable");
-			fiseCargoFijo.f_numDoc.addClass("fise-editable");		
-			fiseCargoFijo.f_numDocRecepcion.addClass("fise-editable");
-			fiseCargoFijo.f_fechaSustento.addClass("fise-editable");		
+			fiseCargoFijo.f_numDoc.addClass("fise-editable");	
 			fiseCargoFijo.f_fechaRecepcion.addClass("fise-editable");
+			fiseCargoFijo.f_numDocRecepcion.addClass("fise-editable");
+			fiseCargoFijo.f_fechaSustento.addClass("fise-editable");			
 			fiseCargoFijo.f_igv.addClass("fise-editable");		
-			fiseCargoFijo.f_gloza.addClass("fise-editable");		
+			fiseCargoFijo.f_gloza.addClass("fise-editable");
+			
+			fiseCargoFijo.f_fechaRecepcion.addClass("datepicker");
 		},
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
@@ -525,7 +556,8 @@ var fiseCargoFijo= {
 			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 			fiseCargoFijo.dialogConfirmContent.html(addhtml);
 			fiseCargoFijo.dialogConfirm.dialog("open");	
-			cod_empresa=codEmpresa;
+			console.debug("codigo empresa: "+codEmpresa);
+			cod_empresa = codEmpresa;
 			anio_rep = anioRep;
 			mes_rep = mesRep;
 		},
@@ -533,22 +565,23 @@ var fiseCargoFijo= {
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
 		eliminarCargoFijo : function(cod_empresa, anio_rep, mes_rep){
 			console.debug("entranado a eliminar ");
+			console.debug("codigo empresa: "+cod_empresa);
 			$.blockUI({ message: fiseCargoFijo.mensajeEliminando });
 			jQuery.ajax({
 				url: fiseCargoFijo.urlEliminar+'&'+fiseCargoFijo.formCommand.serialize(),
 				type: 'post',
 				dataType: 'json',
 				data: {				
-					 <portlet:namespace />codEmpresa: cod_empresa,
-				     <portlet:namespace />anioRep: anio_rep,
-				     <portlet:namespace />mesRep: mes_rep			  
+					<portlet:namespace />codigoEmp: cod_empresa,
+				    <portlet:namespace />anioRep: anio_rep,
+				    <portlet:namespace />codigoMes: mes_rep				     
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
 						var addhtml2='Registro eliminado con éxito';					
 						fiseCargoFijo.dialogMessageContent.html(addhtml2);
 						fiseCargoFijo.dialogMessage.dialog("open");
-						fiseCargoFijo.buscarCargosFijos();
+						fiseCargoFijo.botonBuscar.trigger('click');
 						fiseCargoFijo.initBlockUI();
 					}
 					else{
@@ -571,9 +604,9 @@ var fiseCargoFijo= {
 					type: 'post',
 					dataType: 'json',
 					data: {							
-						<portlet:namespace />codEmpresa: fiseCargoFijo.f_codEmpresa.val(),
+					    <portlet:namespace />codigoEmp: fiseCargoFijo.f_empresa.val(),
 					    <portlet:namespace />anioRep: fiseCargoFijo.f_anioRep.val(),
-					    <portlet:namespace />mesRep: fiseCargoFijo.f_mesRep.val()		
+					    <portlet:namespace />codigoMes: fiseCargoFijo.f_mesRep.val()
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -613,9 +646,9 @@ var fiseCargoFijo= {
 					type: 'post',
 					dataType: 'json',
 					data: {
-						<portlet:namespace />codEmpresa: fiseCargoFijo.f_codEmpresa.val(),
+						<portlet:namespace />codigoEmp: fiseCargoFijo.f_empresa.val(),
 					    <portlet:namespace />anioRep: fiseCargoFijo.f_anioRep.val(),
-					    <portlet:namespace />mesRep: fiseCargoFijo.f_mesRep.val()	 	
+					    <portlet:namespace />codigoMes: fiseCargoFijo.f_mesRep.val()	
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -638,9 +671,9 @@ var fiseCargoFijo= {
 		},
 		//funcion para validar ingreso de datos
 		validarFormulario : function() {		
-			if(fiseCargoFijo.f_codEmpresa.val().length == ''){
+			if(fiseCargoFijo.f_empresa.val().length == ''){
 				alert('Debe seleccionar una empresa.'); 
-				fiseCargoFijo.f_codEmpresa.focus();
+				fiseCargoFijo.f_empresa.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_anioRep.val().length == ''){
 				alert('Debe ingresar año de reporte.'); 
@@ -722,6 +755,7 @@ var fiseCargoFijo= {
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
+						console.debug("dialogo cod empresa "+cod_empresa);
 						fiseCargoFijo.eliminarCargoFijo(cod_empresa, anio_rep, mes_rep);
 						$( this ).dialog("close");
 					},
