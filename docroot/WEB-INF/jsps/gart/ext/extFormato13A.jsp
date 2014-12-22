@@ -957,7 +957,7 @@ var formato13A= {
 			dataType : 'json',
 			data : {
 				<portlet:namespace />nombreReporte: 'formato13A',
-				<portlet:namespace />nombreArchivo: 'formato13A',
+				//<portlet:namespace />nombreArchivo: 'formato13A',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
@@ -977,7 +977,7 @@ var formato13A= {
 			dataType : 'json',
 			data : {
 				<portlet:namespace />nombreReporte: 'formato13A',
-				<portlet:namespace />nombreArchivo: 'formato13A',
+				//<portlet:namespace />nombreArchivo: 'formato13A',
 				<portlet:namespace />tipoArchivo: '1'//XLS
 			},
 			success : function(gridData) {
@@ -1030,7 +1030,7 @@ var formato13A= {
 			data : {
 				//<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion13',
-				<portlet:namespace />nombreArchivo: 'validacion13',
+				//<portlet:namespace />nombreArchivo: 'validacion13',
 				<portlet:namespace />tipoArchivo: '0',
 				anioInicioVigencia:formato13A.txtInicioVig.val(),
 				anioFinVigencia:formato13A.txtFinVig.val() //PDF
@@ -1061,7 +1061,7 @@ var formato13A= {
 				//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
 				//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato13A',
-				<portlet:namespace />nombreArchivo: 'formato13A',
+				//<portlet:namespace />nombreArchivo: 'formato13A',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
