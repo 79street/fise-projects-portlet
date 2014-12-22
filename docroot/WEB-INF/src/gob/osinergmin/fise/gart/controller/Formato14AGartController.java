@@ -2223,7 +2223,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    String etapa = "";
 	    
 	    String nombreReporte = request.getParameter("nombreReporte").trim();
-	   // String nombreArchivo = request.getParameter("nombreArchivo").trim();
+	    String nombreArchivo = request.getParameter("nombreArchivo").trim();
 	    //String tipoFormato = FiseConstants.TIPO_FORMATO_12A;
 	    //String tipoArchivo = request.getParameter("tipoArchivo").trim();
 
@@ -2315,7 +2315,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
     	   
 	        /**REPORTE FORMATO 14A*/
 	       nombreReporte = "formato14A";
-	       //nombreArchivo = nombreReporte;
+	       nombreArchivo = nombreReporte;
 	       directorio =  "/reports/"+nombreReporte+".jasper";
 	       File reportFile = new File(session.getServletContext().getRealPath(directorio));
 	       byte[] bytes = null;
@@ -2335,7 +2335,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	       /**REPORTE OBSERVACIONES*/
 	       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
 	    	   nombreReporte = "validacion";
-	    	   //nombreArchivo = nombreReporte;
+	    	   nombreArchivo = nombreReporte;
 		       directorio =  "/reports/"+nombreReporte+".jasper";
 		       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
 	    	   byte[] bytes2 = null;
@@ -2356,7 +2356,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	       }
 	       /**REPORTE ACTA DE ENVIO*/
 	       nombreReporte = "actaEnvio";
-	       //nombreArchivo = nombreReporte;
+	       nombreArchivo = nombreReporte;
 	       directorio =  "/reports/"+nombreReporte+".jasper";
 	       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
 	       byte[] bytes3 = null;
