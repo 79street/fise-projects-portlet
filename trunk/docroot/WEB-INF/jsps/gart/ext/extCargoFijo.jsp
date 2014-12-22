@@ -181,14 +181,14 @@ var fiseCargoFijo= {
 		    
 		    //eventos por defecto	
 		    
-			//fiseCargoFijo.botonBuscar.trigger('click');
-			//fiseCargoFijo.initBlockUI();
+			fiseCargoFijo.botonBuscar.trigger('click');
+			fiseCargoFijo.initBlockUI();
 		},
 		//funcion para armar el modelo de la grilla para el resultado
 		buildGrids : function () {	
 			fiseCargoFijo.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físcios Emi.','N° Vales Físcios Canj.','N° Vales Digitales Emi.','N° Vales Digitales Canj.','Visualizar','Editar','Anular','',''],
+		       colNames: ['Empresa','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físicos Emi.','N° Vales Físicos Canj.','N° Vales Digitales Emi.','Estado','Visualizar','Editar','Anular','',''],
 		       colModel: [
 						   { name: 'desEmpresa', index: 'desEmpresa', width: 50},
 			               { name: 'anioReporte', index: 'anioReporte', width: 30 },   
@@ -198,7 +198,7 @@ var fiseCargoFijo= {
 			               { name: 'numValFEmi', index: 'numValFEmi', width: 50},
 			               { name: 'numValFCan', index: 'numValFCan', width: 50},
 			               { name: 'numValDEmi', index: 'numValFEmi', width: 50},
-			               { name: 'numValDCan', index: 'numValDCan', width: 50},
+			               { name: 'desEstado', index: 'desEstado', width: 50},
 			               { name: 'view', index: 'view', width: 20,align:'center' },
 			               { name: 'edit', index: 'edit', width: 20,align:'center' },
 			               { name: 'elim', index: 'elim', width: 20,align:'center' },		              
@@ -722,6 +722,16 @@ var fiseCargoFijo= {
 			}else if(fiseCargoFijo.f_igv.val().length == ''){
 				alert('Debe ingresar IGV.'); 
 				fiseCargoFijo.f_igv.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_fechaRecepcion.val().length != '' && 
+					!validaFechaDDMMAAAA(fiseCargoFijo.f_fechaRecepcion.val()) ){
+				alert('Debe ingresar una fecha de recepción válida');
+				fiseCargoFijo.f_fechaRecepcion.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_fechaSustento.val().length != '' && 
+					!validaFechaDDMMAAAA(fiseCargoFijo.f_fechaSustento.val())){
+				alert('Debe ingresar una fecha de sustento válida'); 
+				fiseCargoFijo.f_fechaSustento.focus();
 			  	return false; 
 			}else{
 				return true;
