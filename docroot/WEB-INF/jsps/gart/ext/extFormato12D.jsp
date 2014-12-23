@@ -131,6 +131,11 @@ var formato12D= {
 	tipoOperacion:null,
 	
 	/**********DETALLE CRUD**********/
+	
+	//valores constantes para edelnor y luz del sur
+	cod_empresa_edelnor:null,
+	cod_empresa_luz_sur:null,
+	//
 	msgTransaccionDetalle:null,
 	botonGuardarDetalle:null,
 	
@@ -476,6 +481,11 @@ var formato12D= {
 		this.anoEjecucionHiddenDetalle=$('#anoEjecucionHidden');
 		this.mesEjecucionHiddenDetalle=$('#mesEjecucionHidden');
 		this.etapaEjecucionHiddenDetalle=$('#etapaEjecucionHidden');
+		
+		//valores constantes para edelnor y luz del sur
+		this.cod_empresa_edelnor=$("#codEdelnor");
+		this.cod_empresa_luz_sur=$("#codLuzSur");
+		//
 		
 		//dialogs
 		this.dialogMessageDetalle=$("#<portlet:namespace/>dialog-message-detalle");
@@ -1906,23 +1916,23 @@ var formato12D= {
 		    return false;
 		}
 		if(formato12D.periodoEnvioDetalle.val().length == '' ) {		  
-			alert('Debe ingresar el periodo de presentacion');
+			alert('Debe ingresar el periodo de presentación');
 			formato12D.periodoEnvioDetalle.val().focus();
    			return false; 
  		}
 		if(formato12D.anoEjecucionDetalle.val().length == '' ) {		  
-		    alert('Debe ingresar el año de ejecucion');
+		    alert('Debe ingresar el año de ejecución');
 		    formato12D.anoEjecucionDetalle.focus();
 		    return false; 
 	  	}else{
 		  	var numstr = trim(formato12D.anoEjecucionDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  	alert('Ingrese un año de ejecucion válido');
+			  	alert('Ingrese un año de ejecución válido');
 			  	return false;
 		  	}
 	 	 }
 		if(formato12D.mesEjecucionDetalle.val().length == '' ) {		  
-		   alert('Debe seleccionar el mes de ejecucion');
+		   alert('Debe seleccionar el mes de ejecución');
 		   formato12D.mesEjecucionDetalle.focus();
 		   return false; 
 		}
@@ -1947,8 +1957,16 @@ var formato12D= {
 		}
 		if(formato12D.idZonaBenefDetalle.val().length == '' ) {		  
 		   alert('Debe seleccionar la Zona Beneficiario');
-		   formato12D.etapaEjecucionDetalle.focus();
+		   formato12D.idZonaBenefDetalle.focus();
 		   return false; 
+		}else{
+			if(formato12D.cod_empresa_edelnor.val()!=formato12D.codEmpresaDetalle.val() && formato12D.cod_empresa_luz_sur.val()!=formato12D.codEmpresaDetalle.val()){
+				if(formato12D.idZonaBenefDetalle.val() == 3 ) {//RURAL
+					alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
+					formato12D.idZonaBenefDetalle.focus();
+				   	return false;
+				}
+			}
 		}
 		//validamos si escogemos un tipo de documento
 		if(formato12D.tipoDocDetalle.val().length != '' ) {

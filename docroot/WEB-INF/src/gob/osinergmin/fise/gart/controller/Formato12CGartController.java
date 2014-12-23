@@ -824,6 +824,10 @@ public class Formato12CGartController {
 
 		model.addAttribute("crud", crud);
 		model.addAttribute("msg", msg);
+		
+		//valores constantes para las empresas edelnor y luz del sur
+		bean.setCodEdelnor(FiseConstants.COD_EMPRESA_EDELNOR);
+		bean.setCodLuzSur(FiseConstants.COD_EMPRESA_LUZ_SUR);
 
 		return "formato12CCRUDDetalle";
 	}

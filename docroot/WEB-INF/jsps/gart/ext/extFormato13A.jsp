@@ -97,6 +97,11 @@ var formato13A= {
 	codDist:null,
 	
 	//detalleCRUD
+	//valores constantes para edelnor y luz del sur
+	cod_empresa_edelnor:null,
+	cod_empresa_luz_sur:null,
+	//
+	
 	flagPeriodoDetalle:null,
 	
 	msgTransaccionDetalle:null,
@@ -117,6 +122,7 @@ var formato13A= {
 	anoIniVigenciaDetalle:null,
 	anoFinVigenciaDetalle:null,
 	anoAltaDetalle:null,
+	mesAltaDetalle:null,
 	localidadDetalle:null,
 	sedeDetalle:null,
 	
@@ -426,6 +432,7 @@ var formato13A= {
 		this.anoIniVigenciaDetalle=$('#anioInicioVigencia');
 		this.anoFinVigenciaDetalle=$('#anioFinVigencia');
 		this.anoAltaDetalle=$('#anioAlta');
+		this.mesAltaDetalle=$('#mesAlta');
 		this.localidadDetalle=$('#localidad');
 		this.sedeDetalle=$('#nombreSede');
 		
@@ -441,6 +448,11 @@ var formato13A= {
 		this.sttotalDetalle=$('#total');
 		//
 		this.idZonaBenefDetalle=$('#idZonaBenef');
+		
+		//valores constantes para edelnor y luz del sur
+		this.cod_empresa_edelnor=$("#codEdelnor");
+		this.cod_empresa_luz_sur=$("#codLuzSur");
+		//
 		
 		//dialogs
 		this.dialogMessageDetalle=$("#<portlet:namespace/>dialog-message-detalle");
@@ -462,7 +474,11 @@ var formato13A= {
 			});
 			
 			formato13A.botonGuardarDetalle.click(function(){
-				formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion).submit();
+				
+				if( formato13A.validarFormatoDetalle() ){
+					formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion).submit();
+				}
+				
 			});
 			
 			botonRegresarDetalle.click(function(){
@@ -525,7 +541,11 @@ var formato13A= {
 		<c:if test="${crud =='UPDATE'}">
 		
 			formato13A.botonGuardarDetalle.click(function(){
-				formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&idZonaBenef='+formato13A.idZonaBenefDetalle.val()).submit();
+				
+				if( formato13A.validarFormatoDetalle() ){
+					formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&idZonaBenef='+formato13A.idZonaBenefDetalle.val()).submit();
+				}
+				
 			});
 		
 			botonRegresarDetalle.click(function(){
@@ -1617,7 +1637,91 @@ var formato13A= {
 		formato13A.stserDetalle.removeClass("fise-editable");
 		formato13A.stespDetalle.removeClass("fise-editable");
 		formato13A.sedeDetalle.removeClass("fise-editable");
-	}
+	},
+	//
+	/***VALIDACIONES**/
+	validarFormatoDetalle : function(){
+		
+		if(formato13A.anoIniVigenciaDetalle.val().length == '' ) {		  
+		    alert('Debe ingresar el año inicio vigencia');
+		    formato13A.anoIniVigenciaDetalle.focus();
+		    return false; 
+	  	}else{
+		  	var numstr = trim(formato13A.anoIniVigenciaDetalle.val());
+		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+			  	alert('Ingrese un año inicio vigencia válido');
+			  	return false;
+		  	}
+	 	 }
+		if(formato13A.anoFinVigenciaDetalle.val().length == '' ) {		  
+		    alert('Debe ingresar el año fin vigencia');
+		    formato13A.anoFinVigenciaDetalle.focus();
+		    return false; 
+	  	}else{
+		  	var numstr = trim(formato13A.anoFinVigenciaDetalle.val());
+		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+			  	alert('Ingrese un año fin vigencia válido');
+			  	return false;
+		  	}
+	 	 }
+		//
+		if(formato13A.anoAltaDetalle.val().length == '' ) {		  
+		    alert('Debe ingresar el año alta');
+		    formato13A.anoAltaDetalle.focus();
+		    return false; 
+	  	}else{
+		  	var numstr = trim(formato13A.anoAltaDetalle.val());
+		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+			  	alert('Ingrese un año alta válido');
+			  	return false;
+		  	}
+	 	 }
+		//anio alta
+		if( parseFloat(formato13A.anoAltaDetalle.val()) < parseFloat(formato13A.anoPresentacionDetalle.val()) ){
+		alert('El año alta no puede ser menor al año presentación del periodo a declarar');
+		return false;
+		}
+		//mes alta
+		if( parseFloat(formato13A.mesAltaDetalle.val()) < parseFloat(formato13A.mesPresentacionDetalle.val()) ){
+		alert('El mes alta no puede ser menor al mes presentación del periodo a declarar');
+		return false;
+		}
+		//validamos ubigeo 
+		if(formato13A.codDepa.val().length != '' ) {
+			if(formato13A.codProv.val().length == '' ) {		  
+			   alert('Debe seleccionar la provincia');
+			   formato13A.codProv.focus();
+			   return false; 
+			}else{
+				if(formato13A.codDist.val().length == '' ) {		  
+				   alert('Debe seleccionar el distrito');
+				   formato13A.codDist.focus();
+				   return false; 
+				}
+			}
+		}else{
+			alert('Debe seleccionar el departamento');
+			formato13A.codDepa.focus();
+			return false;
+		}
+		
+		if(formato13A.idZonaBenefDetalle.val().length == '' ) {
+			alert('Debe seleccionar la Zona Beneficiario');
+		    formato13A.idZonaBenefDetalle.focus();
+		   	return false; 
+		}else{
+			if(formato13A.cod_empresa_edelnor.val()!=formato13A.codEmpresaDetalle.val() && formato13A.cod_empresa_luz_sur.val()!=formato13A.codEmpresaDetalle.val()){
+				if(formato13A.idZonaBenefDetalle.val() == 3 ) {//RURAL
+					alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
+				    formato13A.idZonaBenefDetalle.focus();
+				   	return false;
+				}
+			}
+		}
+		
+		//
+		return true; 
+	},
 };
 
 

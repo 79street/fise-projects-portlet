@@ -816,6 +816,10 @@ public class Formato13AGartController {
 
 		model.addAttribute("crud", crud);
 		model.addAttribute("msg", msg);
+		
+		//valores constantes para las empresas edelnor y luz del sur
+		command.setCodEdelnor(FiseConstants.COD_EMPRESA_EDELNOR);
+		command.setCodLuzSur(FiseConstants.COD_EMPRESA_LUZ_SUR);
 
 		return "formato13ACRUDDetalle";
 	}

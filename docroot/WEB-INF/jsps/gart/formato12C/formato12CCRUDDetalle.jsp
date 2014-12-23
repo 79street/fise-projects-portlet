@@ -388,4 +388,7 @@ $(document).ready(function () {
 		</p>	
 	</div>
 	
+	<form:input path="codEdelnor" cssStyle="display:none;" />	 
+	<form:input path="codLuzSur" cssStyle="display:none;" />
+	
 </form:form>
