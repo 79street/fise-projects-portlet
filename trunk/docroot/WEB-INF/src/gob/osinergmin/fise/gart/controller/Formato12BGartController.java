@@ -254,12 +254,12 @@ public class Formato12BGartController {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("codEmpresa", command.getCodEmpresa());
 					jsonObj.put("idZonaBenef", fise14D.getId().getIdZonaBenef());
-					jsonObj.put("costoUnitarioImpresionVales", fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():0);
-					jsonObj.put("costoUnitReprtoValeDomici", fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():0);
-					jsonObj.put("costoUnitEntregaValDisEl", fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():0);
-					jsonObj.put("costoUnitCanjeLiqValFisi", fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():0);
-					jsonObj.put("costoUnitCanjeValDigital", fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():0);
-					jsonObj.put("costoUnitarioPorAtencion", fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():0);
+					jsonObj.put("costoUnitarioImpresionVales", fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitReprtoValeDomici", fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitEntregaValDisEl", fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitCanjeLiqValFisi", fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitCanjeValDigital", fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitarioPorAtencion", fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion().setScale(2, BigDecimal.ROUND_DOWN):0);
 					
 					jsonArray.put(jsonObj);
 				}
@@ -409,7 +409,7 @@ public class Formato12BGartController {
 					FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 					lstErrores = readExcelFile(fileEntry, themeDisplay, cabeceraPk, tipoaccion, fiseUtil);
 				}else if(typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"")){
-					FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+					FileEntry fileEntry = fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 					lstErrores = readTxtFile(fileEntry, themeDisplay, cabeceraPk, tipoaccion, fiseUtil);
 			   }
 				
