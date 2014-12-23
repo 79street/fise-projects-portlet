@@ -1466,23 +1466,39 @@ var formato12C= {
 		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
    		dwr.util.addOptions("codDistritoDestino", dataPeriodo,"codigoItem","descripcionItem");
 	},
+	validarArchivoCarga : function() {		
+		if(formato12C.codEmpresa.val().length == '' ) { 	
+			alert('Seleccione una empresa para proceder con la carga de archivo'); 
+			formato12C.codEmpresa.focus();
+			return false; 
+		}
+		if(formato12C.periodoEnvio==null || formato12C.periodoEnvio.val().length == '' ) {		  
+			alert('Debe seleccionar el periodo a declarar');
+			formato12C.periodoEnvio.focus();
+			return false; 
+		}
+		return true; 
+	},
 	//
 	<portlet:namespace/>showUploadExcel : function(){
 		
-		if( formato12C.flagCarga.val()=='0' ){//proviene de archivos nuevos
-			formato12C.flagCarga.val('2');//para cargar archivos excel
-		}else if( formato12C.flagCarga.val()=='1' ){//proviene de archivos modificados
-			formato12C.flagCarga.val('3');//para cargar archivos excel
+		if (formato12C.validarArchivoCarga()){
+			if( formato12C.flagCarga.val()=='0' ){//proviene de archivos nuevos
+				formato12C.flagCarga.val('2');//para cargar archivos excel
+			}else if( formato12C.flagCarga.val()=='1' ){//proviene de archivos modificados
+				formato12C.flagCarga.val('3');//para cargar archivos excel
+			}
+			
+			formato12C.divOverlay.show();
+			formato12C.dialogCargaExcel.show();
+			formato12C.dialogCargaExcel.show();
+			formato12C.dialogCargaExcel.css({ 
+		        'left': ($(window).width() / 2 - formato12C.dialogCargaExcel.width() / 2) + 'px', 
+		        'top': ($(window).height()  - formato12C.dialogCargaExcel.height() ) + 'px'
+		    });
+			formato12C.iniciarMensajeExcel();
 		}
 		
-		formato12C.divOverlay.show();
-		formato12C.dialogCargaExcel.show();
-		formato12C.dialogCargaExcel.show();
-		formato12C.dialogCargaExcel.css({ 
-	        'left': ($(window).width() / 2 - formato12C.dialogCargaExcel.width() / 2) + 'px', 
-	        'top': ($(window).height()  - formato12C.dialogCargaExcel.height() ) + 'px'
-	    });
-		formato12C.iniciarMensajeExcel();
 	},
 	
 	closeDialogCargaExcel : function(){
@@ -1512,19 +1528,22 @@ var formato12C= {
 	
 	<portlet:namespace/>showUploadTxt : function(){
 		
-		if( formato12C.flagCarga.val()=='0' ){//proviene de un archivo nuevo
-			formato12C.flagCarga.val('4');//para cargar archivos texto
-		}else if( formato12C.flagCarga.val()=='1' ){//proviene de un archivo modificado
-			formato12C.flagCarga.val('5');//para archivos texto
+		if (formato12C.validarArchivoCarga()){
+			if( formato12C.flagCarga.val()=='0' ){//proviene de un archivo nuevo
+				formato12C.flagCarga.val('4');//para cargar archivos texto
+			}else if( formato12C.flagCarga.val()=='1' ){//proviene de un archivo modificado
+				formato12C.flagCarga.val('5');//para archivos texto
+			}
+			
+			formato12C.divOverlay.show();
+			formato12C.dialogCargaTexto.show();
+			formato12C.dialogCargaTexto.css({ 
+		        'left': ($(window).width() / 2 - formato12C.dialogCargaTexto.width() / 2) + 'px', 
+		        'top': ($(window).height()  - formato12C.dialogCargaTexto.height() ) + 'px'
+		    });
+			formato12C.iniciarMensajeTxt();
 		}
 		
-		formato12C.divOverlay.show();
-		formato12C.dialogCargaTexto.show();
-		formato12C.dialogCargaTexto.css({ 
-	        'left': ($(window).width() / 2 - formato12C.dialogCargaTexto.width() / 2) + 'px', 
-	        'top': ($(window).height()  - formato12C.dialogCargaTexto.height() ) + 'px'
-	    });
-		formato12C.iniciarMensajeTxt();
 	},
 	
 	closeDialogCargaTxt : function(){

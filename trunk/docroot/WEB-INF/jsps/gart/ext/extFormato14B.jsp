@@ -1821,8 +1821,8 @@ var formato14B= {
 			formato14B.f_empresa.focus();
 			return false; 
 		}
-		if(formato14B.f_periodoEnvio.val().length == '' ) {		  
-			alert('Debe ingresar el periodo de presentación');
+		if( formato14B.f_periodoEnvio==null || formato14B.f_periodoEnvio.val().length == '' ) {		  
+			alert('Debe seleccionar el periodo a declarar');
 			formato14B.f_periodoEnvio.focus();
 			return false; 
 		}

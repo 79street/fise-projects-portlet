@@ -1715,8 +1715,8 @@ var formato14A= {
 			formato14A.f_empresa.focus();
 			return false; 
 		}
-		if(formato14A.f_periodoEnvio.val().length == '' ) {		  
-			alert('Debe ingresar el periodo de presentación');
+		if(formato14A.f_periodoEnvio==null || formato14A.f_periodoEnvio.val().length == '' ) {		  
+			alert('Debe seleccionar el periodo a declarar');
 			formato14A.f_periodoEnvio.focus();
 			return false; 
 		}

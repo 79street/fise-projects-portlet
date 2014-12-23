@@ -204,7 +204,7 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">Localidad origen:</td>
 				   										<td>
-				   											<form:input path="localidadOrigen" disabled="${readonlyEdit}" maxlength="50" />
+				   											<form:input path="localidadOrigen" disabled="${readonlyEdit}" maxlength="50" onkeypress="return soloLetras(event);" />
 				   										</td>
 													</tr>
 													<tr>
@@ -238,7 +238,7 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">Localidad destino:</td>
 				   										<td>
-				   											<form:input path="localidadDestino" disabled="${readonlyEdit}" maxlength="50" />
+				   											<form:input path="localidadDestino" disabled="${readonlyEdit}" maxlength="50" onkeypress="return soloLetras(event);" />
 				   										</td>
 													</tr>
 													
@@ -254,12 +254,12 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">Cuenta contable:</td>
 				   										<td>
-				   											<form:input path="codCuentaContable" disabled="${readonlyEdit}" maxlength="30" />
+				   											<form:input path="codCuentaContable" disabled="${readonlyEdit}" maxlength="30" onkeypress="return soloLetras(event);" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Actividad:</td>
 				   										<td>
-				   											<form:input path="actividad" disabled="${readonlyEdit}" maxlength="250" />
+				   											<form:input path="actividad" disabled="${readonlyEdit}" maxlength="250" onkeypress="return soloLetras(event);" />
 				   										</td>
 				   										<td colspan="3"></td>
 													</tr>
@@ -276,17 +276,17 @@ $(document).ready(function () {
 				   										<td width="10px"></td>
 				   										<td width="120px">RUC empresa:</td>
 				   										<td>
-				   											<form:input path="rucEmpresa" disabled="${readonlyEdit}" maxlength="11" />
+				   											<form:input path="rucEmpresa" disabled="${readonlyEdit}" maxlength="11" onkeypress="return soloNumerosDecimales(event, 1, 'rucEmpresa',11,0)" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Serie doc. Referencia:</td>
 				   										<td>
-				   											<form:input path="serieDocumento" disabled="${readonlyEdit}" maxlength="6" />
+				   											<form:input path="serieDocumento" disabled="${readonlyEdit}" maxlength="6" onkeypress="return soloLetras(event);" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Nro. doc. Referencia:</td>
 				   										<td>
-				   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" />
+				   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" onkeypress="return soloNumerosDecimales(event, 1, 'nroDocumento',20,0)" />
 				   										</td>
 													</tr>
 													<tr>

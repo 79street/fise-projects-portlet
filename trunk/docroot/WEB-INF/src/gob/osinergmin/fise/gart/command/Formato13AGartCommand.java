@@ -65,6 +65,8 @@ public class Formato13AGartCommand {
 	private String codProvinciaHidden;
 	private String codDistritoHidden;
 	
+	private String codUbigeo;
+	
 
 	private List<FisePeriodoEnvio> listaPeriodo;
 	private boolean readOnly;
@@ -495,6 +497,14 @@ public class Formato13AGartCommand {
 
 	public void setCodDistritoHidden(String codDistritoHidden) {
 		this.codDistritoHidden = codDistritoHidden;
+	}
+
+	public String getCodUbigeo() {
+		return codUbigeo;
+	}
+
+	public void setCodUbigeo(String codUbigeo) {
+		this.codUbigeo = codUbigeo;
 	}
 
 	

@@ -634,7 +634,9 @@ public class Formato12CGartController {
 		bean.setListaTipoDocumento(fiseUtil.getMapTipoDocumento());
 		
 		bean.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
-		bean.setListaPeriodoEnvio(listaPeriodoEnvio);
+		
+		List<FisePeriodoEnvio> listaPeriodoEnvioN = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_12C);
+		bean.setListaPeriodoEnvio(listaPeriodoEnvioN);
 		
 		//add item
 		bean.setNroItemEtapa(Long.parseLong(nroItemEtapa));
@@ -643,7 +645,7 @@ public class Formato12CGartController {
 
 		// cargamos el ano y fin de vigencia
 		//----List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_13A);
-		for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
+		for (FisePeriodoEnvio periodo : listaPeriodoEnvioN) {
 			if (periodoDeclaracion.equals(periodo.getCodigoItem())) {
 				// verificamos el flag de periodo de ejecucion
 				if ("S".equals(periodo.getFlagPeriodoEjecucion())) {
