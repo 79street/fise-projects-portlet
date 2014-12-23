@@ -73,6 +73,8 @@ public class Formato13AGartCommand {
 	private boolean readonlyFlagPeriodo;
 	private boolean readonlyEdit;
 	
+	private String  codEdelnor;
+	private String  codLuzSur;
 	
 	private int tipoOperacion;
 	
@@ -505,6 +507,22 @@ public class Formato13AGartCommand {
 
 	public void setCodUbigeo(String codUbigeo) {
 		this.codUbigeo = codUbigeo;
+	}
+
+	public String getCodEdelnor() {
+		return codEdelnor;
+	}
+
+	public void setCodEdelnor(String codEdelnor) {
+		this.codEdelnor = codEdelnor;
+	}
+
+	public String getCodLuzSur() {
+		return codLuzSur;
+	}
+
+	public void setCodLuzSur(String codLuzSur) {
+		this.codLuzSur = codLuzSur;
 	}
 
 	
