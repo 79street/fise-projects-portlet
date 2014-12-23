@@ -418,6 +418,8 @@ public class Formato13AGartController {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 
+		String msg = "";
+		
 		String codEmpresa = command.getCodEmpresa();
 		String periodoDeclaracion = command.getPeridoDeclaracion();
 		String anioAlta = command.getAnioAlta();
@@ -445,6 +447,11 @@ public class Formato13AGartController {
 			etapa = periodoDeclaracion.substring(6);
 		}
 
+		//validamos el cod ubigeo
+		if( codUbigeo==null || FiseConstants.BLANCO.equals(codUbigeo) ){
+			codUbigeo = command.getCodDistritoHidden();
+		}
+		
 		logger.info("valores detalle " + codEmpresa);
 		logger.info("valores detalle" + periodoDeclaracion);
 		logger.info("valores anioAlta" + anioAlta);
@@ -534,23 +541,38 @@ public class Formato13AGartController {
 
 				}
 
+				msg = "OK";
+				
 			} catch (DataIntegrityViolationException dt) {
 				dt.printStackTrace();
-				response.setRenderParameter("msj", "Existe detalle ");
+				//--response.setRenderParameter("msj", "Existe detalle ");
+				msg = "ERROR1";
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.setRenderParameter("msj", "Ocurrio al guardar cambios");
+				//--response.setRenderParameter("msj", "Ocurrio al guardar cambios");
+				msg = "ERROR2";
 			}
 
-		} else {
-			// no se valida si es nulo la cabecera
-
+		}
+		
+		if( "OK".equals(msg) ){
+			response.setRenderParameter("crud", CRUD_UPDATE);
+		}else if( "ERROR1".equals(msg) || "ERROR2".equals(msg) ){
+			if( CRUD_CREATE.equals(crud) ){
+				response.setRenderParameter("crud", CRUD_CREATE);
+			}else if ( CRUD_UPDATE.equals(crud) ) {
+				response.setRenderParameter("crud", CRUD_UPDATE);
+			}
 		}
 
-		response.setRenderParameter("crud", CRUD_READ_CREATEUPDATE);
+		//response.setRenderParameter("crud", CRUD_READ_CREATEUPDATE);
 		response.setRenderParameter("action", "detalle");
+		
+		response.setRenderParameter("msg", msg);
+		
 		response.setRenderParameter("codEmpresa", codEmpresa);
 		response.setRenderParameter("periodoDeclaracion", periodoDeclaracion);
+		response.setRenderParameter("codUbigeo", codUbigeo);
 
 	}
 
@@ -559,6 +581,8 @@ public class Formato13AGartController {
 		String codEmpresa = command.getCodEmpresa();
 		//String periodoDeclaracion = command.getPeridoDeclaracion();
 		String periodoDeclaracion = command.getDescripcionPeriodoHidden();//se obtiene el valor del periodo guardado de el campo descripcionPeriodoHidden(valorPeriodoHidden), probar los demas flujos
+		
+		String msg = "";
 		
 		String anioPresentacion = "";
 		String mesPresentacion = "";
@@ -577,37 +601,36 @@ public class Formato13AGartController {
 		logger.info("Cabecera etapa:" + etapa);
 
 		// Registramos la cabecera
-		FiseFormato13ACPK pkCabecera = new FiseFormato13ACPK();
+		/*FiseFormato13ACPK pkCabecera = new FiseFormato13ACPK();
 		pkCabecera.setCodEmpresa(codEmpresa != "" ? FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4) : "");
 		pkCabecera.setAnoPresentacion(Long.parseLong(anioPresentacion));
 		pkCabecera.setMesPresentacion(Long.parseLong(mesPresentacion));
 		pkCabecera.setEtapa(etapa);
 
 		FiseFormato13AC cabecera = new FiseFormato13AC();
-		cabecera.setId(pkCabecera);
-
-		// Primero buscamos si existe una cabecera
-		FiseFormato13AC cab = formatoService.obtenerFormato13ACByPK(pkCabecera);
-
-		if (cab != null) {
-			// update
-
-		} else {
-			// create
-		}
+		cabecera.setId(pkCabecera);*/
 
 		response.setRenderParameter("crud", CRUD_CREATE);
 		response.setRenderParameter("action", "detalle");
+		
+		response.setRenderParameter("msg",msg);
+		
 		response.setRenderParameter("codEmpresa", codEmpresa);
 		response.setRenderParameter("periodoDeclaracion", periodoDeclaracion);
+		response.setRenderParameter("codUbigeo", FiseConstants.BLANCO);
 	}
 
 	@RequestMapping(params = "action=detalle")
-	public String detalle(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @RequestParam("crud") String crud, @RequestParam("codEmpresa") String codEmpresa, @RequestParam("periodoDeclaracion") String periodoDeclaracion, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+	public String detalle(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @RequestParam("crud") String crud, @RequestParam("msg") String msg,
+			@RequestParam("codEmpresa") String codEmpresa, 
+			@RequestParam("periodoDeclaracion") String periodoDeclaracion, 
+			@RequestParam("codUbigeo") String codUbigeo,
+			@ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 
 		logger.info("valores requestparameter" + crud);
 		logger.info("valores periodoDeclaracion" + periodoDeclaracion);
 		logger.info("valores codEmpresa" + codEmpresa);
+		logger.info("valores codUbigeo" + codUbigeo);
 
 		String anioPresentacion = "";
 		String mesPresentacion = "";
@@ -626,6 +649,8 @@ public class Formato13AGartController {
 		command.setAnioPresentacion(anioPresentacion);
 		command.setMesPresentacion(mesPresentacion);
 		command.setEtapa(etapa);
+		//add
+		command.setCodUbigeo(codUbigeo);
 
 		//
 		command.setListaMes(fiseUtil.getMapaMeses());
@@ -648,111 +673,134 @@ public class Formato13AGartController {
 				break;
 			}
 		}
+		
+		if( "OK".equals(msg) || "DONE".equals(msg) ){
+			//--
+			if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud) || CRUD_UPDATE.equals(crud)) {
 
-		if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud) || CRUD_UPDATE.equals(crud)) {
-
-			if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud)) {
-				// Es lectura
-				model.addAttribute("readonly", "true");
-				model.addAttribute("readonlyFlagPeriodo", "true");
-				model.addAttribute("readonlyEdit", "true");
-			} else if (CRUD_UPDATE.equals(crud)) {
-				model.addAttribute("readonly", "true");
-				model.addAttribute("readonlyEdit", "false");
-			}
-
-			logger.info("LECTURA DETALLE");
-			FiseFormato13AC cabecera = new FiseFormato13AC();
-			cabecera.setId(new FiseFormato13ACPK());
-			cabecera.getId().setCodEmpresa(codEmpresa != "" ? FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4) : "");
-			cabecera.getId().setAnoPresentacion(anioPresentacion != "" ? Long.parseLong(anioPresentacion) : 0);
-			cabecera.getId().setMesPresentacion(mesPresentacion != "" ? Long.parseLong(mesPresentacion) : 0);
-			cabecera.getId().setEtapa(etapa);
-
-			List<Formato13ADReportBean> detalle = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(cabecera);
-
-			logger.info("arreglo lista:" + detalle.size());
-			for (Formato13ADReportBean f : detalle) {
-
-				// comparamos la idZonaBenef que se esta seleccionando
-				if (command.getIdZonaBenef().equals(f.getIdZonaBenef().toString())) {
-					// seteamos la descripcion de la empresa
-					command.setAnioAlta(String.valueOf(f.getAnioAlta()));
-					command.setMesAlta(String.valueOf(f.getMesAlta()));
-					//
-					command.setAnioInicioVigencia(String.valueOf(f.getAnioInicioVigencia()));
-					command.setAnioFinVigencia(String.valueOf(f.getAnioFinVigencia()));
-
-					List<AdmUbigeo> listaDepartamentos = fiseUtil.listaDepartamentos();
-					
-					if( null!=f.getCodUbigeo() ){
-						String ubigeo = f.getCodUbigeo();
-						if (StringUtils.isNotBlank(ubigeo)) {
-							String codDepartamento = f.getCodUbigeo().substring(0, 2);
-							String codProvincia = f.getCodUbigeo().substring(0, 4);
-							String codDistrito = f.getCodUbigeo().substring(0, 6);
-							List<AdmUbigeo> provincias = fiseUtil.listaProvincias(codDepartamento);
-							List<AdmUbigeo> distritos = fiseUtil.listaDistritos(codProvincia);
-							
-							String descDepartamento = "";
-							String descProvincia = "";
-							String descDistrito = "";
-							
-							for (AdmUbigeo depto : listaDepartamentos) {
-								if( codDepartamento.concat("0000").equals(depto.getCodUbigeo().trim()) ){
-									descDepartamento = depto.getNomUbigeo();
-									break;
-								}
-							}
-							for (AdmUbigeo prov : provincias) {
-								if( codProvincia.concat("00").equals(prov.getCodUbigeo().trim()) ){
-									descProvincia = prov.getNomUbigeo();
-									break;
-								}
-							}
-							for (AdmUbigeo dist : distritos) {
-								if( codDistrito.equals(dist.getCodUbigeo().trim()) ){
-									descDistrito = dist.getNomUbigeo();
-									break;
-								}
-							}
-							
-							//seteamos los valores
-							command.setCodDepartamentoHidden(codDepartamento.concat("0000"));
-							command.setCodProvinciaHidden(codProvincia.concat("00"));
-							command.setCodDistritoHidden(codDistrito);
-							command.setDescDepartamento(descDepartamento);
-							command.setDescProvincia(descProvincia);
-							command.setDescDistrito(descDistrito);
-						}
-					}
-					
-					/*String ubigeo = f.getCodUbigeo();
-					if (StringUtils.isNotBlank(ubigeo)) {
-						command.setCodDepartamento(ubigeo.substring(0, 2).concat("0000"));
-						command.setCodProvincia(ubigeo.substring(0, 4).concat("00"));
-						command.setCodDistrito(ubigeo);
-					}*/
-
-					command.setLocalidad(f.getDescLocalidad());
-					command.setSt1(String.valueOf(f.getNroBenefPoteSecTipico1()));
-					command.setSt2(String.valueOf(f.getNroBenefPoteSecTipico2()));
-					command.setSt3(String.valueOf(f.getNroBenefPoteSecTipico3()));
-					command.setSt4(String.valueOf(f.getNroBenefPoteSecTipico4()));
-					command.setSt5(String.valueOf(f.getNroBenefPoteSecTipico5()));
-					command.setSt6(String.valueOf(f.getNroBenefPoteSecTipico6()));
-					command.setStser(String.valueOf(f.getNroBenefPoteSecTipico7()));
-					command.setStesp(String.valueOf(f.getNroBenefPoteSecTipico8()));
-					long total = f.getNroBenefPoteSecTipico1() + f.getNroBenefPoteSecTipico2() + f.getNroBenefPoteSecTipico3() + f.getNroBenefPoteSecTipico4() + f.getNroBenefPoteSecTipico5() + f.getNroBenefPoteSecTipico6() + f.getNroBenefPoteSecTipico7() + f.getNroBenefPoteSecTipico8();
-					command.setTotal(String.valueOf(total));
-					command.setIdZonaBenef(String.valueOf(f.getIdZonaBenef()));
-					command.setNombreSede(f.getNombreSedeAtiende());
+				if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud)) {
+					// Es lectura
+					model.addAttribute("readonly", "true");
+					model.addAttribute("readonlyFlagPeriodo", "true");
+					model.addAttribute("readonlyEdit", "true");
+				} else if (CRUD_UPDATE.equals(crud)) {
+					model.addAttribute("readonly", "true");
+					model.addAttribute("readonlyEdit", "false");
 				}
 
-			}
-		} else if (CRUD_CREATE.equals(crud)) {
-			model.addAttribute("readonlyEdit", "false");
+				logger.info("LECTURA DETALLE");
+				FiseFormato13AC cabecera = new FiseFormato13AC();
+				cabecera.setId(new FiseFormato13ACPK());
+				cabecera.getId().setCodEmpresa(codEmpresa != "" ? FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4) : "");
+				cabecera.getId().setAnoPresentacion(anioPresentacion != "" ? Long.parseLong(anioPresentacion) : 0);
+				cabecera.getId().setMesPresentacion(mesPresentacion != "" ? Long.parseLong(mesPresentacion) : 0);
+				cabecera.getId().setEtapa(etapa);
 
+				List<Formato13ADReportBean> detalle = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(cabecera);
+
+				logger.info("arreglo lista:" + detalle.size());
+				for (Formato13ADReportBean f : detalle) {
+
+					// comparamos la idZonaBenef que se esta seleccionando
+					if (	
+							//command.getCodEmpresa().trim().equals(f.getCodigoEmpresa().trim()) &&
+							//Long.parseLong(command.getAnioPresentacion()) == f.getAnioPresent() &&
+							//Long.parseLong(command.getMesPresentacion()) == f.getMesPresent() &&
+							//command.getEtapa().equals(f.getEtapa()) &&
+							command.getCodUbigeo().equals(f.getCodUbigeo()) &&
+							command.getIdZonaBenef().equals(f.getIdZonaBenef().toString())
+							) {
+						
+						// seteamos la descripcion de la empresa
+						command.setAnioAlta(String.valueOf(f.getAnioAlta()));
+						command.setMesAlta(String.valueOf(f.getMesAlta()));
+						//
+						command.setAnioInicioVigencia(String.valueOf(f.getAnioInicioVigencia()));
+						command.setAnioFinVigencia(String.valueOf(f.getAnioFinVigencia()));
+
+						List<AdmUbigeo> listaDepartamentos = fiseUtil.listaDepartamentos();
+						
+						if( null!=f.getCodUbigeo() ){
+							String ubigeo = f.getCodUbigeo();
+							if (StringUtils.isNotBlank(ubigeo)) {
+								String codDepartamento = f.getCodUbigeo().substring(0, 2);
+								String codProvincia = f.getCodUbigeo().substring(0, 4);
+								String codDistrito = f.getCodUbigeo().substring(0, 6);
+								List<AdmUbigeo> provincias = fiseUtil.listaProvincias(codDepartamento);
+								List<AdmUbigeo> distritos = fiseUtil.listaDistritos(codProvincia);
+								
+								String descDepartamento = "";
+								String descProvincia = "";
+								String descDistrito = "";
+								
+								for (AdmUbigeo depto : listaDepartamentos) {
+									if( codDepartamento.concat("0000").equals(depto.getCodUbigeo().trim()) ){
+										descDepartamento = depto.getNomUbigeo();
+										break;
+									}
+								}
+								for (AdmUbigeo prov : provincias) {
+									if( codProvincia.concat("00").equals(prov.getCodUbigeo().trim()) ){
+										descProvincia = prov.getNomUbigeo();
+										break;
+									}
+								}
+								for (AdmUbigeo dist : distritos) {
+									if( codDistrito.equals(dist.getCodUbigeo().trim()) ){
+										descDistrito = dist.getNomUbigeo();
+										break;
+									}
+								}
+								
+								//seteamos los valores
+								command.setCodDepartamentoHidden(codDepartamento.concat("0000"));
+								command.setCodProvinciaHidden(codProvincia.concat("00"));
+								command.setCodDistritoHidden(codDistrito);
+								command.setDescDepartamento(descDepartamento);
+								command.setDescProvincia(descProvincia);
+								command.setDescDistrito(descDistrito);
+							}
+						}
+						
+						/*String ubigeo = f.getCodUbigeo();
+						if (StringUtils.isNotBlank(ubigeo)) {
+							command.setCodDepartamento(ubigeo.substring(0, 2).concat("0000"));
+							command.setCodProvincia(ubigeo.substring(0, 4).concat("00"));
+							command.setCodDistrito(ubigeo);
+						}*/
+
+						command.setLocalidad(f.getDescLocalidad());
+						command.setSt1(String.valueOf(f.getNroBenefPoteSecTipico1()));
+						command.setSt2(String.valueOf(f.getNroBenefPoteSecTipico2()));
+						command.setSt3(String.valueOf(f.getNroBenefPoteSecTipico3()));
+						command.setSt4(String.valueOf(f.getNroBenefPoteSecTipico4()));
+						command.setSt5(String.valueOf(f.getNroBenefPoteSecTipico5()));
+						command.setSt6(String.valueOf(f.getNroBenefPoteSecTipico6()));
+						command.setStser(String.valueOf(f.getNroBenefPoteSecTipico7()));
+						command.setStesp(String.valueOf(f.getNroBenefPoteSecTipico8()));
+						long total = f.getNroBenefPoteSecTipico1() + f.getNroBenefPoteSecTipico2() + f.getNroBenefPoteSecTipico3() + f.getNroBenefPoteSecTipico4() + f.getNroBenefPoteSecTipico5() + f.getNroBenefPoteSecTipico6() + f.getNroBenefPoteSecTipico7() + f.getNroBenefPoteSecTipico8();
+						command.setTotal(String.valueOf(total));
+						command.setIdZonaBenef(String.valueOf(f.getIdZonaBenef()));
+						command.setNombreSede(f.getNombreSedeAtiende());
+					}
+
+				}
+			} else if (CRUD_CREATE.equals(crud)) {
+				model.addAttribute("readonlyEdit", "false");
+
+				command.setSt1(FiseConstants.CERO);
+				command.setSt2(FiseConstants.CERO);
+				command.setSt3(FiseConstants.CERO);
+				command.setSt4(FiseConstants.CERO);
+				command.setSt5(FiseConstants.CERO);
+				command.setSt6(FiseConstants.CERO);
+				command.setStser(FiseConstants.CERO);
+				command.setStesp(FiseConstants.CERO);
+				command.setTotal(FiseConstants.CERO);
+			}
+			//--
+		}else{
+			//viene del proceso nuevo
 			command.setSt1(FiseConstants.CERO);
 			command.setSt2(FiseConstants.CERO);
 			command.setSt3(FiseConstants.CERO);
@@ -764,7 +812,10 @@ public class Formato13AGartController {
 			command.setTotal(FiseConstants.CERO);
 		}
 
+		
+
 		model.addAttribute("crud", crud);
+		model.addAttribute("msg", msg);
 
 		return "formato13ACRUDDetalle";
 	}

@@ -208,7 +208,7 @@ $(function() {
 				   										<td width="10px"></td>
 				   										<td width="120px">Localidad:</td>
 				   										<td>
-				   											<form:input path="localidad" disabled="${readonlyEdit}" maxlength="50" />
+				   											<form:input path="localidad" disabled="${readonlyEdit}" maxlength="50" onkeypress="return soloLetras(event);" />
 				   										</td>
 													</tr>
 													
@@ -223,7 +223,7 @@ $(function() {
 				   										<td width="10px"></td>
 				   										<td width="120px">Cuenta contable:</td>
 				   										<td>
-				   											<form:input path="codCuentaContable" disabled="${readonlyEdit}" maxlength="30" />
+				   											<form:input path="codCuentaContable" disabled="${readonlyEdit}" maxlength="30" onkeypress="return soloLetras(event);"  />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Gasto:</td>
@@ -251,17 +251,17 @@ $(function() {
 				   										<td width="10px"></td>
 				   										<td width="120px">RUC empresa:</td>
 				   										<td>
-				   											<form:input path="rucEmpresa" disabled="${readonlyEdit}" maxlength="11" />
+				   											<form:input path="rucEmpresa" disabled="${readonlyEdit}" maxlength="11" onkeypress="return soloNumerosDecimales(event, 1, 'rucEmpresa',11,0)" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Serie doc. Referencia:</td>
 				   										<td>
-				   											<form:input path="serieDocumento" disabled="${readonlyEdit}" maxlength="6" />
+				   											<form:input path="serieDocumento" disabled="${readonlyEdit}" maxlength="6" onkeypress="return soloLetras(event);" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Nro. doc. Referencia:</td>
 				   										<td>
-				   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" />
+				   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" maxlength="20" onkeypress="return soloNumerosDecimales(event, 1, 'nroDocumento',20,0)" />
 				   										</td>
 													</tr>
 													<tr>
@@ -272,7 +272,7 @@ $(function() {
 				   										<td width="10px"></td>
 				   										<td width="120px">Nro. doc. autor.:</td>
 				   										<td>
-				   											<form:input path="nroDocAutorizacion" disabled="${readonlyEdit}" cssStyle="text-align: right;" maxlength="20" />
+				   											<form:input path="nroDocAutorizacion" disabled="${readonlyEdit}" cssStyle="text-align: right;" maxlength="20" onkeypress="return soloNumerosDecimales(event, 1, 'nroDocAutorizacion',20,0)" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Cantidad:</td>

@@ -712,8 +712,8 @@ function validarArchivoCarga() {
     document.getElementById('s_empresa').focus();
     return false; 
   }
-  if($('#s_periodoenvio_present').val().length == '' ) {		  
-	    alert('Debe ingresar el periodo de presentación');
+  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
+	    alert('Debe seleccionar el periodo a declarar');
 	    document.getElementById('s_periodoenvio_present').focus();
 	    return false; 
   }

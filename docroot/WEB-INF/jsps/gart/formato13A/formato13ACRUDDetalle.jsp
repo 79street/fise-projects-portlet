@@ -23,6 +23,8 @@ $(document).ready(function () {
 
 <form:form method="POST" modelAttribute="formato13AGartCommand">
 
+	<input type="hidden" id="msgTransaccionDetalle" name="msgTransaccionDetalle" value="${msg}" />
+
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
@@ -69,14 +71,15 @@ $(document).ready(function () {
 																<form:hidden path="codDistritoHidden"  />	
 																<form:hidden path="descDistrito"  />
 																
+																<input type="hidden" id="flagPeriodoEjecucion" value="${readonlyFlagPeriodo}" />
 															</td>
 															<td><output class="net-titulo">Año Inicio Vigencia:</output></td>
 															<td>
-																<form:input path="anioInicioVigencia" disabled="${readonlyFlagPeriodo}" />
+																<form:input path="anioInicioVigencia" disabled="${readonlyFlagPeriodo}" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'anioInicioVigencia',4,0)" />
 															</td>
-															<td><output class="net-titulo">Año fin Vigencia:</output></td>
+															<td><output class="net-titulo">Año Fin Vigencia:</output></td>
 															<td>
-																<form:input path="anioFinVigencia" disabled="${readonlyFlagPeriodo}" />
+																<form:input path="anioFinVigencia" disabled="${readonlyFlagPeriodo}" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'anioFinVigencia',4,0)" />
 															</td>
 														</tr>
 													</table>
@@ -104,7 +107,7 @@ $(document).ready(function () {
 																		<tr> 
 																			<td width="40px">Año:</td> 
 																			<td>
-																				<form:input path="anioAlta" cssStyle="width:50px" maxlength="4" disabled="${readonlyEdit}"/>																			
+																				<form:input path="anioAlta" cssStyle="width:50px" maxlength="4" disabled="${readonlyEdit}" onkeypress="return soloNumerosDecimales(event, 1, 'anioAlta',4,0)" />																			
 																			</td>
 									   										<td width="5px"></td>
 									   										<td width="40px">Mes:</td>
@@ -148,7 +151,7 @@ $(document).ready(function () {
 									   										<td width="5px"></td>
 									   										<td width="40px">Localidad:</td>
 									   										<td>
-									   											<form:input path="localidad" disabled="${readonlyEdit}"/>
+									   											<form:input path="localidad" disabled="${readonlyEdit}" maxlength="50" onkeypress="return soloLetras(event);" />
 									   										</td>
 									   									</tr>
 									   								</tbody></table>
@@ -204,7 +207,7 @@ $(document).ready(function () {
 																<legend>Sede de atencion</legend> 
 																<table style="width: 100%;" border="0">
 																	<tr>
-																		<td><form:input path="nombreSede" disabled="${readonlyEdit}"/></td>
+																		<td><form:input path="nombreSede" disabled="${readonlyEdit}" maxlength="60" onkeypress="return soloLetras(event);" /></td>
 																	</tr>
 																</table>
 															</fieldset>
@@ -270,4 +273,13 @@ $(document).ready(function () {
 			</div>
 		</div>
 	</div>
+	
+	<div id="<portlet:namespace/>dialog-message-detalle" title="Osinergmin">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="<portlet:namespace/>dialog-message-detalle-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
 </form:form>

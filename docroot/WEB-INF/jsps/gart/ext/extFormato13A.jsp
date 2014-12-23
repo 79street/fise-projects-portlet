@@ -97,6 +97,9 @@ var formato13A= {
 	codDist:null,
 	
 	//detalleCRUD
+	flagPeriodoDetalle:null,
+	
+	msgTransaccionDetalle:null,
 	
 	codDepartamentoHidden:null,
 	codProvinciaHidden:null,
@@ -110,6 +113,13 @@ var formato13A= {
 	anoPresentacionDetalle:null,
 	mesPresentacionDetalle:null,
 	etapaDetalle:null,
+	
+	anoIniVigenciaDetalle:null,
+	anoFinVigenciaDetalle:null,
+	anoAltaDetalle:null,
+	localidadDetalle:null,
+	sedeDetalle:null,
+	
 	//valores sector tipico
 	st1Detalle:null,
 	st2Detalle:null,
@@ -133,6 +143,9 @@ var formato13A= {
 	 dialogMessageGeneralInicial:null,
 	 txtAnioInicio:null,
 	 txtAnioFin:null,
+	 
+	 dialogMessageDetalle:null,
+	 dialogMessageDetalleContent:null,
 	 
 	init : function(urlNuevo,urlView,urlEdit){
 		
@@ -383,6 +396,10 @@ var formato13A= {
 	
 	initCRUDDetalle : function(operacion,urlGuardarDetalle,urlRegresarDetalle){
 		this.formDetalle=$("#formato13AGartCommand");
+		
+		this.flagPeriodoDetalle=$("#flagPeriodoEjecucion");
+		this.msgTransaccionDetalle=$("#msgTransaccionDetalle");
+		
 		this.codDepa=$("select[name='codDepartamento']");
 		this.codProv=$("select[name='codProvincia']");
 		this.codDist=$("select[name='codDistrito']");
@@ -405,6 +422,13 @@ var formato13A= {
 		this.anoPresentacionDetalle=$('#anioPresentacion');
 		this.mesPresentacionDetalle=$('#mesPresentacion');
 		this.etapaDetalle=$('#etapa');
+		
+		this.anoIniVigenciaDetalle=$('#anioInicioVigencia');
+		this.anoFinVigenciaDetalle=$('#anioFinVigencia');
+		this.anoAltaDetalle=$('#anioAlta');
+		this.localidadDetalle=$('#localidad');
+		this.sedeDetalle=$('#nombreSede');
+		
 		//valores de sector tipico
 		this.st1Detalle=$('#st1');
 		this.st2Detalle=$('#st2');
@@ -417,6 +441,12 @@ var formato13A= {
 		this.sttotalDetalle=$('#total');
 		//
 		this.idZonaBenefDetalle=$('#idZonaBenef');
+		
+		//dialogs
+		this.dialogMessageDetalle=$("#<portlet:namespace/>dialog-message-detalle");
+		this.dialogMessageDetalleContent=$("#<portlet:namespace/>dialog-message-detalle-content");
+		
+		formato13A.initDialogsCRUDDetalle();
 		
 		$('input.target[type=text]').on('change', function(){
 			formato13A.calculoTotal();
@@ -439,7 +469,25 @@ var formato13A= {
 				formato13A.blockUI();
 				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
 			});
-		
+			
+			formato13A.mostrarPeriodoEjecucion();
+			formato13A.estiloEdicionDetalle();
+			
+			//mostramos el mensaje de informacion
+			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
+				var addhtml='Datos guardados satisfactoriamente';
+				formato13A.dialogMessageDetalleContent.html(addhtml);
+				formato13A.dialogMessageDetalle.dialog("open");
+			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
+				var addhtml='Ya existe un registro para la empresa y periodo a declarar';
+				formato13A.dialogMessageDetalleContent.html(addhtml);
+				formato13A.dialogMessageDetalle.dialog("open");
+			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR2' ){
+				var addhtml='Se produjo un error al guardar el detalle';
+				formato13A.dialogMessageDetalleContent.html(addhtml);
+				formato13A.dialogMessageDetalle.dialog("open");
+			}
+
 		</c:if>
 		
 		<c:if test="${crud =='READ'}">
@@ -453,6 +501,9 @@ var formato13A= {
 			formato13A.construirProvincia(formato13A.codProvinciaHidden.val(), formato13A.descProv.val());
 			formato13A.construirDistrito(formato13A.codDistritoHidden.val(), formato13A.descDist.val());
 			
+			formato13A.quitarEstiloEdicionVigenciaDetalle();
+			formato13A.quitarEstiloEdicionDetalle();
+			
 		</c:if>
 		
 		<c:if test="${crud =='READCREATEUPDATE'}">
@@ -465,6 +516,10 @@ var formato13A= {
 			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
 			formato13A.construirProvincia(formato13A.codProvinciaHidden.val(), formato13A.descProv.val());
 			formato13A.construirDistrito(formato13A.codDistritoHidden.val(), formato13A.descDist.val());
+			
+			formato13A.quitarEstiloEdicionVigenciaDetalle();
+			formato13A.quitarEstiloEdicionDetalle();
+			
 		</c:if>
 		
 		<c:if test="${crud =='UPDATE'}">
@@ -481,6 +536,24 @@ var formato13A= {
 			
 			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
 			formato13A.listarProvinciasEdit(formato13A.codDepartamentoHidden.val(),formato13A.codProvinciaHidden.val(),formato13A.codDistritoHidden.val());
+			
+			formato13A.mostrarPeriodoEjecucion();
+			formato13A.estiloEdicionDetalle();
+			
+			//mostramos el mensaje de informacion
+			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
+				var addhtml='Datos guardados satisfactoriamente';
+				formato13A.dialogMessageDetalleContent.html(addhtml);
+				formato13A.dialogMessageDetalle.dialog("open");
+			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
+				var addhtml='Ya existe un registro para la empresa y periodo a declarar';
+				formato13A.dialogMessageDetalleContent.html(addhtml);
+				formato13A.dialogMessageDetalle.dialog("open");
+			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR2' ){
+				var addhtml='Se produjo un error al guardar el detalle';
+				formato13A.dialogMessageDetalleContent.html(addhtml);
+				formato13A.dialogMessageDetalle.dialog("open");
+			}
 			
 		</c:if>
 		
@@ -655,17 +728,21 @@ var formato13A= {
 		  	      			var urlView=Liferay.PortletURL.createRenderURL();
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READCREATEUPDATE");
+		  	      			urlView.setParameter("msg", "DONE");
 		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
 		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 		  	      			urlView.setParameter("idZonaBenef", ret.idZonaBenef);
+		  	      			urlView.setParameter("codUbigeo", ret.codUbigeo);
 		  	      			urlView.setPortletId(formato13A.portletID);
 		  	      			//EDIT
 		  	      			var urlEdit=Liferay.PortletURL.createRenderURL();
 					  	    urlEdit.setParameter("action", "detalle");
 					  	    urlEdit.setParameter("crud", "UPDATE");
+					  	  	urlEdit.setParameter("msg", "DONE");
 					  	    urlEdit.setParameter("codEmpresa", ret.codEmpresa);
 					  	    urlEdit.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 					  	  	urlEdit.setParameter("idZonaBenef", ret.idZonaBenef);
+					  	  	urlEdit.setParameter("codUbigeo", ret.codUbigeo);
 					  	  	urlEdit.setPortletId(formato13A.portletID);
 		  	      			
 		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
@@ -737,9 +814,11 @@ var formato13A= {
 		  	      		
 		  	      			urlView.setParameter("action", "detalle");
 		  	      			urlView.setParameter("crud", "READ");
+		  	      			urlView.setParameter("msg", "DONE");
 		  	      			urlView.setParameter("codEmpresa", ret.codEmpresa);
 		  	      			urlView.setParameter("periodoDeclaracion", ret.anoPresentacion+completarCerosIzq(ret.mesPresentacion,2)+ret.etapa);
 		  	      			urlView.setParameter("idZonaBenef", ret.idZonaBenef);
+		  	      			urlView.setParameter("codUbigeo", ret.codUbigeo);
 		  	      			urlView.setPortletId(formato13A.portletID);
 		  	      			
 		  	      			
@@ -1328,6 +1407,17 @@ var formato13A= {
 			}
 		});
 	},
+	initDialogsCRUDDetalle : function(){	
+		formato13A.dialogMessageDetalle.dialog({
+			modal: true,
+			autoOpen: false,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+	},
 	//otros
 	confirmarEliminarCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion){
 		var admin = '${esAdministrador}';
@@ -1484,6 +1574,50 @@ var formato13A= {
    		var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
    		dwr.util.addOptions("codDistrito", dataPeriodo,"codigoItem","descripcionItem");
 	},
+	mostrarPeriodoEjecucion : function(){
+		//if( formato12D.flagPeriodoDetalle.val()==true ){
+		if( formato13A.flagPeriodoDetalle.val()=='false' ){
+			formato13A.estiloEdicionVigenciaDetalle();
+		}else{  
+			formato13A.quitarEstiloEdicionVigenciaDetalle();
+		}
+	},
+	//estilos
+	estiloEdicionVigenciaDetalle : function(){
+		formato13A.anoIniVigenciaDetalle.addClass("fise-editable");
+		formato13A.anoFinVigenciaDetalle.addClass("fise-editable");
+	},
+	estiloEdicionDetalle : function(){
+		formato13A.anoAltaDetalle.addClass("fise-editable");
+		formato13A.localidadDetalle.addClass("fise-editable");
+		formato13A.st1Detalle.addClass("fise-editable");
+		formato13A.st2Detalle.addClass("fise-editable");
+		formato13A.st3Detalle.addClass("fise-editable");
+		formato13A.st4Detalle.addClass("fise-editable");
+		formato13A.st5Detalle.addClass("fise-editable");
+		formato13A.st6Detalle.addClass("fise-editable");
+		formato13A.stserDetalle.addClass("fise-editable");
+		formato13A.stespDetalle.addClass("fise-editable");
+		formato13A.sedeDetalle.addClass("fise-editable");
+	},
+	//quitar estilos
+	quitarEstiloEdicionVigenciaDetalle : function(){
+		formato13A.anoIniVigenciaDetalle.removeClass("fise-editable");
+		formato13A.anoFinVigenciaDetalle.removeClass("fise-editable");
+	},
+	quitarEstiloEdicionDetalle : function(){
+		formato13A.anoAltaDetalle.removeClass("fise-editable");
+		formato13A.localidadDetalle.removeClass("fise-editable");
+		formato13A.st1Detalle.removeClass("fise-editable");
+		formato13A.st2Detalle.removeClass("fise-editable");
+		formato13A.st3Detalle.removeClass("fise-editable");
+		formato13A.st4Detalle.removeClass("fise-editable");
+		formato13A.st5Detalle.removeClass("fise-editable");
+		formato13A.st6Detalle.removeClass("fise-editable");
+		formato13A.stserDetalle.removeClass("fise-editable");
+		formato13A.stespDetalle.removeClass("fise-editable");
+		formato13A.sedeDetalle.removeClass("fise-editable");
+	}
 };
 
 
