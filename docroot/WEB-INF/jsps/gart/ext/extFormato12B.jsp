@@ -1063,9 +1063,9 @@
 			
 			 
 			 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
-				 $("#"+idpor).val(parseFloat(value.length>0?value:'0')+parseFloat(valueProv.length>0?valueProv:'0')+parseFloat(valueLim.length>0?valueLim:'0')); 
+				 $("#"+idpor).val(parseFloat(value.length>0?value:'0.0')+parseFloat(valueProv.length>0?valueProv:'0.0')+parseFloat(valueLim.length>0?valueLim:'0.0')); 
 			 }else{
-				 $("#"+idpor).val(parseFloat(value.length>0?value:'0')+parseFloat(valueProv.length>0?valueProv:'0'));
+				 $("#"+idpor).val(parseFloat(value.length>0?value:'0.0')+parseFloat(valueProv.length>0?valueProv:'0.0'));
 			 }
 		
 			$("#"+idpor).val(parseFloat($("#"+idpor).val()).toFixed(2));
@@ -1080,7 +1080,14 @@
 		},
 		loadCostoTotatByInput:function (total,nro,costo,idhidden,idstandar,idtotal){
 			total.val((nro.val()!=null && nro.length>0)?(nro.val()*costo.val()):'0.00');
-			total.val(total.val().substring(0,total.val().indexOf('.')+3));
+			//alert(nro.val() +"*"+costo.val()+"=" +total.val());
+			
+			var indexpunto=total.val().indexOf('.');
+			
+			if(indexpunto > 0){
+				total.val(total.val().substring(0,indexpunto+3));	
+			}
+			
 			
 			$("#"+idhidden).val(total.val());
 			
@@ -1125,14 +1132,23 @@
 			    	  show=false;//no muestra modal
 			    	  formato12B.blockUI();
 					  location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec+'&'+formato12B.formBusqueda.serialize();
-			       }
+			       }//else if(flagOperacion=='CERRADO'){
+			    	  // msj=" Está fuera de plazo";
+					//}
 			}break;
 			case '3':{//eliminar
 				if(std=='ABIERTO'){//1enviado 0=x enviar
-				 show=true;
-			     msj='¿Está seguro que desea eliminar el registro seleccionado?';
-			     numModal=1;
-			    }
+					//if( etapa=='RECONOCIDO' || !admin ){
+					//	alert(" No tiene autorización para realizar esta operación");
+					//}else{
+						 show=true;
+					     msj='¿Está seguro que desea eliminar el registro seleccionado?';
+					     numModal=1;
+					//}
+				
+			    }//else if(flagOperacion=='CERRADO'){
+			    	// msj=" Está fuera de plazo";
+				//}
 			 }break;
 			}
 			
