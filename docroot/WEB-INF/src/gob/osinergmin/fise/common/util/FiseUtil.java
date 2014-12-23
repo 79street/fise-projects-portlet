@@ -230,6 +230,86 @@ public class FiseUtil {
 		session.setAttribute(FiseConstants.LISTA_FORMATO_EXCEL_EXPORT, lista);
 	}
 	
+	public FileEntry subirDocumentoTxt(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) throws FileMimeTypeException,Exception{
+
+		// TODO Auto-generated method stub
+		FileEntry fileEntry=null;
+		//--UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		System.out.println("subirDocumento::"+request+":::uploadPortletRequest::"+uploadPortletRequest);
+		try {
+			String[] mimeTypesXls = new String[]{"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
+			String[] mimeTypesTxt = new String[]{"text/plain"};
+			String[] mimeTypes = new String[]{};
+			long maxUploadFileSize =2097152;//bytes = 2MB
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(themeDisplay.getScopeGroupId(), 0, "FormatosDeclarados");
+			
+			if (dlFolder.getGroupId() != themeDisplay.getScopeGroupId()) {
+				throw new NoSuchFolderException();
+			}
+			 
+			String nameFileInput = null;
+			 if( FiseConstants.TIPOARCHIVO_TXT.equals(tipoArchivo) ){
+				System.out.println("tipo txt");
+				nameFileInput = "archivoExcel";
+				mimeTypes = mimeTypesTxt;
+			}else{
+				throw new Exception("Archivo de formato diferente");
+			}
+			
+			File file = uploadPortletRequest.getFile(nameFileInput);
+			String mimeType = uploadPortletRequest.getContentType(nameFileInput);
+			long size = uploadPortletRequest.getSize(nameFileInput);
+			String sourceFileName = uploadPortletRequest.getFileName(nameFileInput);
+
+			logger.info("MIME ARCHIVO:"+mimeType);
+			if (Arrays.binarySearch(mimeTypes, mimeType) < 0) {
+				System.out.println(mimeType);
+				throw new FileMimeTypeException(mimeType);
+			}
+			//solo para txt/verificar luego
+			//if( FiseConstants.TIPOARCHIVO_XLS.equals(tipoArchivo) ){
+				//String contenType=MimeTypesUtil.getContentType(file,nameFileInput);´
+				//String contenType=MimeTypesUtil.getContentType(file);
+				//logger.info("MIME CONTENT TYPE:"+contenType);
+				//if (Arrays.binarySearch(mimeTypes, contenType) < 0) {
+				//	throw new FileMimeTypeException(contenType);
+				//}
+			//}
+						 
+			logger.info("Size:"+size+" bytes");
+			logger.info("Max Size:"+maxUploadFileSize+" bytes");
+			
+			if(size>maxUploadFileSize){
+			 throw new FileSizeException(String.valueOf(maxUploadFileSize));
+			}
+			 
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+			String hoy=sdf.format(new Date());
+			long userId=themeDisplay.getUserId();
+			
+			long repositoryId=dlFolder.getRepositoryId();
+			long folderId=dlFolder.getFolderId();
+			//String ext =FileUtil.getExtension(sourceFileName);
+			//--String title = hoy+"-"+sourceFileName;
+			int secuencia = commonService.obtenerSecuencia();
+			String title = secuencia+FiseConstants.UNDERLINE+sourceFileName;
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), request);
+			try {
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(dlFolder.getGroupId(), folderId, sourceFileName);
+			} catch (NoSuchFileEntryException e) {
+				logger.info("el archivo no existe en el folder del repositorio");
+				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, "", "Subido el "+hoy, file, serviceContext);
+			}
+			DLAppLocalServiceUtil.updateFileEntry(fileEntry.getUserId(), fileEntry.getFileEntryId(),sourceFileName, mimeType, title, fileEntry.getDescription(), "Actualizo estado", true, file, serviceContext);
+			logger.info("Archivo subido:"+sourceFileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		 return fileEntry;
+		
+	}
+	
 	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) throws FileMimeTypeException,Exception{
 
 		// TODO Auto-generated method stub
