@@ -1238,80 +1238,133 @@
 		
 			formato12B.txtAnioEjec.prop("type","text");
 			formato12B.txtAnioEjecCommand.prop("type","hidden");
-			
-			//formato12B.txtMesEjecCommnad.prop("type","hidden");
-			//formato12B.txtMesEjec.prop("type","text");
 			formato12B.cmbMesEjecucion.prop('disabled', true);
 			
+		},
+		
+		validateSave :function(tipoOperacion){
+			var codemp=formato12B.cmbCodEmpresa.val();
 			
+			if(tipoOperacion=='1'){//edit
+				codemp=$("#codEmpresaHidden").val();
+			}
+			var countR=0;
+			var countP=0;
 			
+			if(formato12B.txtnroValesImpreso.val().length>0){countR++;}
+			if(formato12B.txtnroValesRepartidosDomi.val().length>0){countR++;}
+			if(formato12B.txtnroValesEntregadoDisEl.val().length>0){countR++;}
+			if(formato12B.txtnroValesFisicosCanjeados.val().length>0){countR++;}
+			if(formato12B.txtnroValesDigitalCanjeados.val().length>0){countR++;}
+			if(formato12B.txtnroAtenciones.val().length>0){countR++;}
+			if(formato12B.txtTotalGestionAdministrativa.val().length>0){countR++;}
+			if(formato12B.txtTotalDesplazamientoPersonal.val().length>0){countR++;}
+			if(formato12B.txtTotalActividadesExtraord.val().length>0){countR++;}
 			
+			if(formato12B.txtnroValesImpresoProv.val().length){countP++;}
+			if(formato12B.txtnroValesRepartidosDomiProv.val().length){countP++;}
+			if(formato12B.txtnroValesEntregadoDisElProv.val().length){countP++;}
+			if(formato12B.txtnroValesFisicosCanjeadosProv.val().length){countP++;}
+			if(formato12B.txtnroValesDigitalCanjeadosProv.val().length){countP++;}
+			if(formato12B.txtnroAtencionesProv.val().length){countP++;}
+			if(formato12B.txtTotalGestionAdministrativaProv.val().length){countP++;}
+			if(formato12B.txtTotalDesplazamientoPersonalProv.val().length){countP++;}
+			if(formato12B.txtTotalActividadesExtraordProv.val().length){countP++;}
 			
+			if(codemp == 'EDLN' || codemp == 'LDS'){
+				var countL=0;
+				if(formato12B.txtnroValesImpresoLim.val().length){countL++;}
+				if(formato12B.txtnroValesRepartidosDomiLim.val().length){countL++;}
+				if(formato12B.txtnroValesEntregadoDisElLim.val().length){countL++;}
+				if(formato12B.txtnroValesFisicosCanjeadosLim.val().length){countL++;}
+				if(formato12B.txtnroValesDigitalCanjeadosLim.val().length){countL++;}
+				if(formato12B.txtnroAtencionesLim.val().length){countL++;}
+				if(formato12B.txtTotalGestionAdministrativaLim.val().length){countL++;}
+				if(formato12B.txtTotalDesplazamientoPersonalLim.val().length){countL++;}
+				if(formato12B.txtTotalActividadesExtraordLim.val().length){countL++;}
+				
+				if(countR>0 && countP>0 && countL>0 ){
+					return true;
+				}
+			}else{
+				if(countR>0 && countP>0 ){
+					return true;
+				}
+				
+			}
+			
+			return false;
 		},
 		save : function(){	
 			var form = formato12B.formNewEdit.serialize();
-			jQuery.ajax({	
-				url: formato12B.urlSave,
-				cache : false,
-				async : false,
-				type: 'post',
-				data : form,
-				dataType : "json",
-				beforeSend:function(){
-					formato12B.blockUI();
-				},				
-				success: function(data) {
-					if(data!=null && data.length>0){
-						$.each(data, function (i, item) {
-							
-						   if(item.msg == "1"){
-								if(formato12B.tpOperacion.val()== '2'){
-									formato12B.tpOperacion.val('1');
+			if(formato12B.validateSave(formato12B.tpOperacion.val())){
+				jQuery.ajax({	
+					url: formato12B.urlSave,
+					cache : false,
+					async : false,
+					type: 'post',
+					data : form,
+					dataType : "json",
+					beforeSend:function(){
+						formato12B.blockUI();
+					},				
+					success: function(data) {
+						if(data!=null && data.length>0){
+							$.each(data, function (i, item) {
+								
+							   if(item.msg == "1"){
+									if(formato12B.tpOperacion.val()== '2'){
+										formato12B.tpOperacion.val('1');
+										
+										$("#codEmpresaHidden").val(item.codEmpresaHidden);
+										$("#peridoDeclaracionHidden").val(item.peridoDeclaracionHidden);
+										$("#outTxtGrupo").val(item.descGrupo);
+										$("#outTxtEstado").val(item.descEstado);
+										$("#txtDescGrup").val(item.descGrupo);
+										$("#txtDescEst").val(item.descEstado);
+										$("#anoEjecucionGasto").val(item.anoEjecucionGasto);
+										$("#mesEjecucionGasto").val(item.mesEjecucionGasto);
+										$("#mesPresentacion").val(item.mesPresentacion);
+										$("#anoPresentacion").val(item.anoPresentacion);
+										$("#etapa").val(item.etapa);
+										
+										formato12B.showCamposOculto();
+									}else{
+										formato12B.tpOperacion.val('1');
+									}
+									formato12B.lblMessage.html("Datos guardados satisfactoriamente");
+									formato12B.dialogMessageGeneral.dialog("open");
 									
-									$("#codEmpresaHidden").val(item.codEmpresaHidden);
-									$("#peridoDeclaracionHidden").val(item.peridoDeclaracionHidden);
-									$("#outTxtGrupo").val(item.descGrupo);
-									$("#outTxtEstado").val(item.descEstado);
-									$("#txtDescGrup").val(item.descGrupo);
-									$("#txtDescEst").val(item.descEstado);
-									$("#anoEjecucionGasto").val(item.anoEjecucionGasto);
-									$("#mesEjecucionGasto").val(item.mesEjecucionGasto);
-									$("#mesPresentacion").val(item.mesPresentacion);
-									$("#anoPresentacion").val(item.anoPresentacion);
-									$("#etapa").val(item.etapa);
+								}else if(item.msg == "-1"){
+									formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");
+									formato12B.dialogMessageGeneral.dialog("open");
 									
-									formato12B.showCamposOculto();
-								}else{
-									formato12B.tpOperacion.val('1');
+								}else if(item.msg == "-2"){
+									formato12B.lblMessage.html("Error al obtener usuario");
+									formato12B.dialogMessageGeneral.dialog("open");
+									
+								}else if(item.msg == "-3"){
+									formato12B.lblMessage.html("Error al obtener terminal");
+									formato12B.dialogMessageGeneral.dialog("open");
+									
+								}else if(item.msg == "-4"){
+									formato12B.lblMessage.html("Se produjo un error al guardar los datos");
+									formato12B.dialogMessageGeneral.dialog("open");
+									
 								}
-								formato12B.lblMessage.html("Datos guardados satisfactoriamente");
-								formato12B.dialogMessageGeneral.dialog("open");
-								
-							}else if(item.msg == "-1"){
-								formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");
-								formato12B.dialogMessageGeneral.dialog("open");
-								
-							}else if(item.msg == "-2"){
-								formato12B.lblMessage.html("Error al obtener usuario");
-								formato12B.dialogMessageGeneral.dialog("open");
-								
-							}else if(item.msg == "-3"){
-								formato12B.lblMessage.html("Error al obtener terminal");
-								formato12B.dialogMessageGeneral.dialog("open");
-								
-							}else if(item.msg == "-4"){
-								formato12B.lblMessage.html("Se produjo un error al guardar los datos");
-								formato12B.dialogMessageGeneral.dialog("open");
-								
-							}
-						});
+							});
+						}
+						formato12B.unblockUI();
+					},error : function(){
+						alert("Error de conexión.");
+						formato12B.unblockUI();
 					}
-					formato12B.unblockUI();
-				},error : function(){
-					alert("Error de conexión.");
-					formato12B.unblockUI();
-				}
-		});
+			});
+			}else{
+				formato12B.lblMessage.html("Debe al menos registrar un campo por zona beneficiaria");
+				formato12B.dialogMessageGeneral.dialog("open");
+			}
+			
 			
 		},
 		

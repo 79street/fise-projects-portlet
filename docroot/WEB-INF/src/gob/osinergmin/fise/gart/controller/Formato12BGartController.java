@@ -66,7 +66,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
@@ -797,10 +796,30 @@ public class Formato12BGartController {
 						System.out.println("numValeActividad**LG ::"+numValeActividad);
 						System.out.println("totalreconocer**LG ::"+totalreconocer);
 					   
-					
-						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) && 
-								pk.getAnoPresentacion()== Integer.parseInt(anioPres) &&
-								pk.getMesPresentacion()==Integer.parseInt(mesPres)){
+							 
+						validarCampos(anioPres, "Año de Presentación", 3, 0);//validar vacio
+						validarCampos(mesPres, "Mes de Presentación", 3, 0);//validar vacio
+						validarCampos(anioEjec, "Año de Ejecución", 3, 0);//validar vacio
+						validarCampos(mesEjec, "Mes de Ejecución", 3, 0);//validar vacio
+						validarCampos(anioPres, "Año de Presentacion", 1, 4);//validar tamaño
+						validarCampos(mesPres, "Mes de Presentación", 2, 0);//validar rango
+						validarCampos(anioEjec, "Año de Ejecución", 1, 4);//validar tamaño
+						validarCampos(mesEjec, "Mes de Ejecución", 2, 0);//validar rango
+						
+						validarCampos(numValesImp, "Número de vales Impreso", 4, 0);//number formart
+						validarCampos(numValesRepar, "Número de vales a Domicilio", 4, 0);//number formart
+						validarCampos(numValesEntrDE, "Número de vales de Distribuidora", 4, 0);//number formart
+						validarCampos(numValesFisico, "Número de vales Fisicos", 4, 0);//number formart
+						validarCampos(numValesDigital, "Número de vales Digitales", 4, 0);//number formart
+						validarCampos(numValeAtenciones, "Número Atenciones ", 4, 0);//number formart
+						validarCampos(numValeGestion, "Gestión administrativa", 5, 0);//number formart
+						validarCampos(numValeDesplazamiento, "Desplazamiento personal", 5, 0);//number formart
+						validarCampos(numValeActividad, "Actividades extraordinarias", 5, 0);//number formart
+						validarCampos(totalreconocer, "Total a reconocer", 5, 0);//number formart
+						
+					   
+					    
+						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)){
 							
 							 FiseFormato12BDPK pkDetalle=new FiseFormato12BDPK();
 							   FiseFormato12BD detalle=new FiseFormato12BD();
@@ -814,36 +833,38 @@ public class Formato12BGartController {
 							   
 							   FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_RECONOCIDO);
 							  // formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
-								detalle.setNumeroValesImpreso(numValesImp.trim()!=null && numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
+								detalle.setNumeroValesImpreso(numValesImp.trim()!=null && !numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
 								detalle.setCostoEstandarUnitValeImpre(fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
-								detalle.setCostoTotalImpresionVale(detalle.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(detalle.getNumeroValesImpreso()) ));
+								detalle.setCostoTotalImpresionVale(detalle.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(detalle.getNumeroValesImpreso())).setScale(2, BigDecimal.ROUND_DOWN));
 								  
-								detalle.setNumeroValesRepartidosDomi(numValesRepar.trim()!=null && numValesRepar.trim().isEmpty()?Integer.parseInt(numValesRepar):0);
+								detalle.setNumeroValesRepartidosDomi(numValesRepar.trim()!=null && !numValesRepar.trim().isEmpty()?Integer.parseInt(numValesRepar.trim()):0);
 								detalle.setCostoEstandarUnitValeRepar(fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
-								detalle.setCostoTotalRepartoValesDomi(detalle.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(detalle.getNumeroValesRepartidosDomi()) ));
+								detalle.setCostoTotalRepartoValesDomi(detalle.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(detalle.getNumeroValesRepartidosDomi())).setScale(2, BigDecimal.ROUND_DOWN));
 								  
-								detalle.setNumeroValesEntregadoDisEl(numValesEntrDE.trim()!=null && numValesEntrDE.trim().isEmpty()?Integer.parseInt(numValesEntrDE):0);
+								detalle.setNumeroValesEntregadoDisEl(numValesEntrDE.trim()!=null && !numValesEntrDE.trim().isEmpty()?Integer.parseInt(numValesEntrDE.trim()):0);
 								detalle.setCostoEstandarUnitValDisEl(fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
-								detalle.setCostoTotalEntregaValDisEl(detalle.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(detalle.getNumeroValesEntregadoDisEl()) ));
+								detalle.setCostoTotalEntregaValDisEl(detalle.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(detalle.getNumeroValesEntregadoDisEl()) ).setScale(2, BigDecimal.ROUND_DOWN));
 								  
-								detalle.setNumeroValesFisicosCanjeados(numValesFisico.trim()!=null && numValesFisico.trim().isEmpty()?Integer.parseInt(numValesFisico):0);
+								detalle.setNumeroValesFisicosCanjeados(numValesFisico.trim()!=null && !numValesFisico.trim().isEmpty()?Integer.parseInt(numValesFisico.trim()):0);
 								detalle.setCostoEstandarUnitValFiCan(fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
-								detalle.setCostoTotalCanjeLiqValeFis(detalle.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(detalle.getNumeroValesFisicosCanjeados()) ));
+								detalle.setCostoTotalCanjeLiqValeFis(detalle.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(detalle.getNumeroValesFisicosCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
 								  
-								detalle.setNumeroValesDigitalCanjeados(numValesDigital.trim()!=null && numValesDigital.trim().isEmpty()?Integer.parseInt(numValesDigital):0);
+								detalle.setNumeroValesDigitalCanjeados(numValesDigital.trim()!=null && !numValesDigital.trim().isEmpty()?Integer.parseInt(numValesDigital.trim()):0);
 								detalle.setCostoEstandarUnitValDgCan(fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
-								detalle.setCostoTotalCanjeLiqValeDig(detalle.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(detalle.getNumeroValesDigitalCanjeados()) ));
+								detalle.setCostoTotalCanjeLiqValeDig(detalle.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(detalle.getNumeroValesDigitalCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
 								  
-								detalle.setNumeroAtenciones(numValeAtenciones.trim()!=null && numValeAtenciones.trim().isEmpty()?Integer.parseInt(numValeAtenciones):0);
-							    detalle.setCostoEstandarUnitAtencion(fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0));
+								detalle.setNumeroAtenciones(numValeAtenciones.trim()!=null && !numValeAtenciones.trim().isEmpty()?Integer.parseInt(numValeAtenciones.trim()):0);
+							    detalle.setCostoEstandarUnitAtencion(fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0).setScale(2, BigDecimal.ROUND_DOWN));
 								detalle.setCostoTotalAtencionConsRecl(detalle.getCostoEstandarUnitAtencion().multiply(new BigDecimal(detalle.getNumeroAtenciones()) ));
 								  
-								  detalle.setTotalGestionAdministrativa(numValeGestion.trim()!=null && numValeGestion.trim().isEmpty()?new BigDecimal(numValeGestion):new BigDecimal(0) );
-								  detalle.setTotalDesplazamientoPersonal(numValeDesplazamiento.trim()!=null && numValeDesplazamiento.trim().isEmpty()?new BigDecimal(numValeDesplazamiento):new BigDecimal(0));
-								  detalle.setTotalActividadesExtraord(numValeActividad.trim()!=null && numValeActividad.trim().isEmpty()?new BigDecimal(numValeActividad):new BigDecimal(0));
+								  detalle.setTotalGestionAdministrativa(numValeGestion.trim()!=null && !numValeGestion.trim().isEmpty()?new BigDecimal(numValeGestion.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0) );
+								  detalle.setTotalDesplazamientoPersonal(numValeDesplazamiento.trim()!=null && !numValeDesplazamiento.trim().isEmpty()?new BigDecimal(numValeDesplazamiento.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+								  detalle.setTotalActividadesExtraord(numValeActividad.trim()!=null && !numValeActividad.trim().isEmpty()?new BigDecimal(numValeActividad.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 								  
-								  detalle.setTotalReconocer(totalreconocer.trim()!=null && totalreconocer.trim().isEmpty()?new BigDecimal(totalreconocer):new BigDecimal(0));
+								  detalle.setTotalReconocer(totalreconocer.trim()!=null && !totalreconocer.trim().isEmpty()?new BigDecimal(totalreconocer.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 							   
+								  
+								  
 							   detalle.setId(pkDetalle);
 							   lstDetalle.add(detalle);
 							   
@@ -867,6 +888,15 @@ public class Formato12BGartController {
 							 pkCabecera.setMesPresentacion(lstDetalle.get(0).getId().getMesPresentacion());
 							 cabecera.setId(pkCabecera);
 							 cabecera.setNombreArchivoTexto(archivo.getTitle());
+							 FiseGrupoInformacion grupoInfo = null;
+								long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion().longValue(), cabecera.getId().getMesPresentacion().longValue(),FiseConstants.MENSUAL.trim());
+								if (idGrupoInf != 0) {
+									grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
+									nameGrupo = grupoInfo.getDescripcion();
+								}
+								cabecera.setFiseGrupoInformacion(grupoInfo);
+							 
+							 
 							
 							 if(tipoOperacion.equalsIgnoreCase(FiseConstants.ADD+"")){
 								 cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
@@ -898,6 +928,8 @@ public class Formato12BGartController {
 								 }
 							 }
 							 
+						}else{
+							throw new Exception("Archivo vacio");
 						}
 						
 					  
@@ -923,6 +955,12 @@ public class Formato12BGartController {
 			msg.setDescripcion(ex.toString());
 			listaError.add(msg);
 			
+		}catch (NumberFormatException ex) {
+			MensajeErrorBean msg = new MensajeErrorBean();
+			msg.setId(cont);
+			msg.setDescripcion(ex.toString());
+			listaError.add(msg);
+
 		} catch (Exception ex) {
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
@@ -935,7 +973,36 @@ public class Formato12BGartController {
 	
 	}
 	
-	
+	private void validarCampos(String valor,String nameCampo,int tipo,int length)throws NumberFormatException,Exception{
+		
+		if(tipo == 1){//longitud d campo
+			if(valor.trim().length()<length){
+				throw new Exception("Formato no válido para el campo "+nameCampo);
+			}
+		}else if(tipo == 2){//rango mes
+			if(Integer.parseInt(valor.trim())==0 || Integer.parseInt(valor.trim())>12){
+				throw new Exception("Rango no válido para "+nameCampo);
+			}
+		}else if(tipo == 3){//campo vacio
+			if(valor.length()==0){
+				throw new Exception("El campo "+nameCampo+ "no acepta valores vacios");
+			}
+		}else if(tipo == 4){
+			try{
+				Integer.parseInt(valor.trim());
+			}catch(Exception e){
+				throw new NumberFormatException("Formato no válido para el campo "+nameCampo);
+			}
+			
+		}else if(tipo == 5){
+			try{
+				Double.parseDouble(valor.trim());
+			}catch(Exception e){
+				throw new NumberFormatException("Formato no válido para el campo "+nameCampo);
+			}
+			
+		}
+	}
 	
 	@RequestMapping(params = "action=viewFormato")
 	public String viewFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
