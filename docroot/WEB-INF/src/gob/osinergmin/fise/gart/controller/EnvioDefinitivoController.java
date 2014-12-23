@@ -899,8 +899,8 @@ public class EnvioDefinitivoController {
 	        		mapa.put("NRO_OBSERVACIONES", (listaObs13A!=null && !listaObs13A.isEmpty())?listaObs13A.size():0);
 	        		mapa.put("MSG_OBSERVACIONES", (listaObs13A!=null && !listaObs13A.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 	        		 //add para acta envio
-	        		mapa.put("ANO_INICIO_VIGENCIA", formato.getAnoInicioVigenciaDetalle());
-					mapa.put("ANO_FIN_VIGENCIA", formato.getAnoFinVigenciaDetalle());
+	        		mapa.put("ANO_INICIO_VIGENCIA",formato.getAnoInicioVigenciaDetalle());
+					mapa.put("ANO_FIN_VIGENCIA",formato.getAnoFinVigenciaDetalle());
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());	     		 
 	     		    mapa.put("ETAPA", formato.getId().getEtapa());
@@ -1184,7 +1184,7 @@ public class EnvioDefinitivoController {
   	  		        		formato12A.getId().getAnoPresentacion(), 
   	  		        		formato12A.getId().getMesPresentacion(), 
   	  		        		formato12A.getId().getEtapa(), 
-  	  		        		FechaUtil.fecha_DD_MM_YYYY(formato12A.getFechaEnvioDefinitivo()));
+  	  		        		FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
   	  		        if(cumplePlazo ){
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12A", dirCheckedImage);//dirUncheckedImage
   	  		        }else{
@@ -1220,7 +1220,7 @@ public class EnvioDefinitivoController {
   	  		                formato12B.getId().getAnoPresentacion().longValue(), 
   	  		                formato12B.getId().getMesPresentacion().longValue(), 
   	  		                formato12B.getId().getEtapa(), 
-  	  		        		FechaUtil.fecha_DD_MM_YYYY(formato12B.getFechaEnvioDefinitivo()));
+  	  		        		FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
   	  		        if(cumplePlazo ){
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12B", dirCheckedImage);
   	  		        }else{
@@ -1254,7 +1254,7 @@ public class EnvioDefinitivoController {
 	  		        		formato12C.getId().getAnoPresentacion(), 
 	  		        		formato12C.getId().getMesPresentacion(), 
 	  		        		formato12C.getId().getEtapa(), 
-	  		        		FechaUtil.fecha_DD_MM_YYYY(formato12C.getFechaEnvioDefinitivo()));
+	  		        		FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
   	  		        if(cumplePlazo ){
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12C", dirCheckedImage);
   	  		        }else{
@@ -1288,7 +1288,7 @@ public class EnvioDefinitivoController {
 	  		        		formato12D.getId().getAnoPresentacion(), 
 	  		        		formato12D.getId().getMesPresentacion(), 
 	  		        		formato12D.getId().getEtapa(), 
-	  		        		FechaUtil.fecha_DD_MM_YYYY(formato12D.getFechaEnvioDefinitivo()));
+	  		        		FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
   	  		        if(cumplePlazo ){
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12D", dirCheckedImage);
   	  		        }else{
@@ -1396,7 +1396,7 @@ public class EnvioDefinitivoController {
   	  		        		formato13A.getId().getAnoPresentacion(), 
   	  		        		formato13A.getId().getMesPresentacion(), 
   	  		        		formato13A.getId().getEtapa(), 
-  	  		        		FechaUtil.fecha_DD_MM_YYYY(formato13A.getFechaEnvioDefinitivo()));
+  	  		        		FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
   	  		        if(cumplePlazo ){
   	  		           logger.info("cumple plazo true 13A: "+cumplePlazo); 
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_13A", dirCheckedImage);
@@ -1434,7 +1434,7 @@ public class EnvioDefinitivoController {
   			        		formato14A.getId().getAnoPresentacion(), 
   			        		formato14A.getId().getMesPresentacion(), 
   			        		formato14A.getId().getEtapa(), 
-  			        		FechaUtil.fecha_DD_MM_YYYY(formato14A.getFechaEnvioDefinitivo()));
+  			        		FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
   			        if(cumplePlazo ){
   			        	logger.info("cumple plazo true 14A: "+cumplePlazo); 
   			        	mapa.put("CHECKED_CUMPLE_PLAZO_14A", dirCheckedImage);
@@ -1472,7 +1472,7 @@ public class EnvioDefinitivoController {
 			        		formato14B.getId().getAnoPresentacion(), 
 			        		formato14B.getId().getMesPresentacion(), 
 			        		formato14B.getId().getEtapa(), 
-			        		FechaUtil.fecha_DD_MM_YYYY(formato14B.getFechaEnvioDefinitivo()));
+			        		FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
 			        if(cumplePlazo ){
 			        	logger.info("cumple plazo true 14B: "+cumplePlazo); 
 			        	mapa.put("CHECKED_CUMPLE_PLAZO_14B", dirCheckedImage);
@@ -1510,7 +1510,7 @@ public class EnvioDefinitivoController {
  			        		formato14C.getId().getAnoPresentacion(), 
  			        		formato14C.getId().getMesPresentacion(), 
  			        		formato14C.getId().getEtapa(), 
- 			        		FechaUtil.fecha_DD_MM_YYYY(formato14C.getFechaEnvioDefinitivo()));
+ 			        		FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
  			        if(cumplePlazo ){
  			        	logger.info("cumple plazo true 14C: "+cumplePlazo); 
  			        	mapa.put("CHECKED_CUMPLE_PLAZO_14C", dirCheckedImage);
@@ -2097,7 +2097,7 @@ public class EnvioDefinitivoController {
   	  	  					if(listaArchivo!=null && listaArchivo.size()>0 && actaEnvio){		    	  
   	  	  						logger.info("Entrando a enviar email envio general."); 
   	  	  					    String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4);
-  	  	  						valorEmail = fiseUtil.enviarMailsAdjuntoEnvioGeneral(
+  	  	  						valorEmail =fiseUtil.enviarMailsAdjuntoEnvioGeneral(
   	  	  								request,
   	  	  								listaArchivo, 
   	  	  								mapaEmpresa.get(codEmpreCompleta),		    			  
