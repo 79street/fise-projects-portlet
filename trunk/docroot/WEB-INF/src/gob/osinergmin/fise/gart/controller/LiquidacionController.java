@@ -1246,8 +1246,8 @@ public class LiquidacionController {
 	        		mapa.put("NRO_OBSERVACIONES", (listaObs13A!=null && !listaObs13A.isEmpty())?listaObs13A.size():0);
 	        		mapa.put("MSG_OBSERVACIONES", (listaObs13A!=null && !listaObs13A.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 	        		 //add para acta envio
-	        		mapa.put("ANO_INICIO_VIGENCIA", formato.getAnoInicioVigenciaDetalle());
-					mapa.put("ANO_FIN_VIGENCIA", formato.getAnoFinVigenciaDetalle());
+	        		mapa.put("ANO_INICIO_VIGENCIA",formato.getAnoInicioVigenciaDetalle());
+					mapa.put("ANO_FIN_VIGENCIA",formato.getAnoFinVigenciaDetalle());
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());	     		 
 	     		    mapa.put("ETAPA", formato.getId().getEtapa());
