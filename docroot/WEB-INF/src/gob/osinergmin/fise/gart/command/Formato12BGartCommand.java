@@ -311,87 +311,6 @@ public class Formato12BGartCommand implements Serializable {
 		return lstReturn;
 	}
 
-	/*
-	 * public static Formato12BGartCommand toCommandDetalleOne(FiseFormato12BD
-	 * bean){ Formato12BGartCommand command=null; if(bean!=null){ command=new
-	 * Formato12BGartCommand();
-	 * 
-	 * command.setAnoEjecucionGasto(bean.getId().getAnoEjecucionGasto());
-	 * command.setAnoPresentacion(bean.getId().getAnoPresentacion());
-	 * command.setCodEmpresa(bean.getId().getCodEmpresa());
-	 * command.setEtapa(bean.getId().getEtapa());
-	 * command.setMesEjecucionGasto(bean.getId().getMesEjecucionGasto());
-	 * command.setMesPresentacion(bean.getId().getMesPresentacion());
-	 * command.setIdZonaBenef(bean.getId().getIdZonaBenef());
-	 * 
-	 * //command.setDescEstado(descEstado); //command.getDescGrupo();
-	 * 
-	 * command.setDescMes((bean.getId().getMesPresentacion()!=null &&
-	 * bean.getId(
-	 * ).getMesPresentacion()>0)?FiseUtil.descripcionMes(bean.getId().
-	 * getMesPresentacion()):"");
-	 * command.setDescMesEjec((bean.getId().getMesEjecucionGasto()!=null &&
-	 * bean.
-	 * getId().getMesEjecucionGasto()>0)?FiseUtil.descripcionMes(bean.getId(
-	 * ).getMesEjecucionGasto()):"");
-	 * 
-	 * 
-	 * command.setFechaActualizacion(bean.getFechaActualizacion());
-	 * command.setFechaCreacion(bean.getFechaCreacion());
-	 * command.setTerminalActualizacion(bean.getTerminalActualizacion());
-	 * command.setTerminalCreacion(bean.getTerminalCreacion());
-	 * command.setTotalReconocer(bean.getTotalReconocer());
-	 * command.setUsuarioActualizacion(bean.getUsuarioActualizacion());
-	 * command.setUsuarioCreacion(bean.getUsuarioCreacion());
-	 * 
-	 * 
-	 * command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion());
-	 * command
-	 * .setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan());
-	 * command
-	 * .setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl());
-	 * command
-	 * .setCostoEstandarUnitValeImpre(bean.getCostoEstandarUnitValeImpre());
-	 * command
-	 * .setCostoEstandarUnitValeRepar(bean.getCostoEstandarUnitValeRepar());
-	 * command
-	 * .setCostoEstandarUnitValFiCan(bean.getCostoEstandarUnitValFiCan());
-	 * 
-	 * command.setCostoTotalAtencionConsRecl(bean.getCostoTotalAtencionConsRecl()
-	 * );
-	 * command.setCostoTotalCanjeLiqValeDig(bean.getCostoTotalCanjeLiqValeDig(
-	 * ));
-	 * command.setCostoTotalCanjeLiqValeFis(bean.getCostoTotalCanjeLiqValeFis
-	 * ());
-	 * command.setCostoTotalEntregaValDisEl(bean.getCostoTotalEntregaValDisEl
-	 * ());
-	 * command.setCostoTotalImpresionVale(bean.getCostoTotalImpresionVale());
-	 * command
-	 * .setCostoTotalRepartoValesDomi(bean.getCostoTotalRepartoValesDomi());
-	 * 
-	 * command.setNumeroAtenciones(bean.getNumeroAtenciones());
-	 * command.setNumeroValesDigitalCanjeados
-	 * (bean.getNumeroValesDigitalCanjeados());
-	 * command.setNumeroValesEntregadoDisEl
-	 * (bean.getNumeroValesEntregadoDisEl());
-	 * command.setNumeroValesFisicosCanjeados
-	 * (bean.getNumeroValesFisicosCanjeados());
-	 * command.setNumeroValesImpreso(bean.getNumeroValesImpreso());
-	 * command.setNumeroValesRepartidosDomi
-	 * (bean.getNumeroValesRepartidosDomi());
-	 * 
-	 * command.setTotalActividadesExtraord(bean.getTotalActividadesExtraord());
-	 * command
-	 * .setTotalDesplazamientoPersonal(bean.getTotalDesplazamientoPersonal());
-	 * command
-	 * .setTotalGestionAdministrativa(bean.getTotalGestionAdministrativa());
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * } return command; }
-	 */
 
 	public static Formato12BGartCommand toCommandDetalle(List<FiseFormato12BD> lst, Formato12BGartCommand command) {
 
@@ -434,19 +353,19 @@ public class Formato12BGartCommand implements Serializable {
 					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_RURAL) {
 						// round(new BigDecimal("12.390"), 2, true);
 
-						command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion():new BigDecimal(0));
-						command.setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan():new BigDecimal(0));
-						command.setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl():new BigDecimal(0));
-						command.setCostoEstandarUnitValeImpre(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre():new BigDecimal(0));
-						command.setCostoEstandarUnitValeRepar(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar():new BigDecimal(0));
-						command.setCostoEstandarUnitValFiCan(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan():new BigDecimal(0));
+						command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValeImpre(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValeRepar(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValFiCan(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 
-						command.setCostoTotalAtencionConsRecl(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl():new BigDecimal(0));
-						command.setCostoTotalCanjeLiqValeDig(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig():new BigDecimal(0));
-						command.setCostoTotalCanjeLiqValeFis(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis():new BigDecimal(0));
-						command.setCostoTotalEntregaValDisEl(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl():new BigDecimal(0));
-						command.setCostoTotalImpresionVale(bean.getCostoTotalImpresionVale()!=null?bean.getCostoTotalImpresionVale():new BigDecimal(0));
-						command.setCostoTotalRepartoValesDomi(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi():new BigDecimal(0));
+						command.setCostoTotalAtencionConsRecl(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeDig(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeFis(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalEntregaValDisEl(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalImpresionVale(bean.getCostoTotalImpresionVale()!=null?bean.getCostoTotalImpresionVale().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalRepartoValesDomi(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 
 						command.setNumeroAtenciones(bean.getNumeroAtenciones());
 						command.setNumeroValesDigitalCanjeados(bean.getNumeroValesDigitalCanjeados());
@@ -455,41 +374,41 @@ public class Formato12BGartCommand implements Serializable {
 						command.setNumeroValesImpreso(bean.getNumeroValesImpreso());
 						command.setNumeroValesRepartidosDomi(bean.getNumeroValesRepartidosDomi());
 
-						command.setTotalActividadesExtraord(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord():new BigDecimal(0));
-						command.setTotalDesplazamientoPersonal(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal():new BigDecimal(0));
-						command.setTotalGestionAdministrativa(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa():new BigDecimal(0));
+						command.setTotalActividadesExtraord(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setTotalDesplazamientoPersonal(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setTotalGestionAdministrativa(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 
-						command.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_UP);
+					/*	command.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_DOWN);
 						command.getCostoTotalEntregaValDisEl().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalImpresionVale().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_UP);
+						command.getCostoTotalImpresionVale().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN);*/
 
 					}
 					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_PROVINCIA) {
-						command.setCostoEstandarUnitAtencionProv(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion():new BigDecimal(0));
-						command.setCostoEstandarUnitValDgCanProv(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan():new BigDecimal(0));
-						command.setCostoEstandarUnitValDisElProv(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl():new BigDecimal(0));
-						command.setCostoEstandarUnitValeImpreProv(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre():new BigDecimal(0));
-						command.setCostoEstandarUnitValeReparProv(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar():new BigDecimal(0));
-						command.setCostoEstandarUnitValFiCanProv(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan():new BigDecimal(0));
+						command.setCostoEstandarUnitAtencionProv(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValDgCanProv(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValDisElProv(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValeImpreProv(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValeReparProv(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValFiCanProv(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 
-						command.setCostoTotalAtencionConsReclProv(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl():new BigDecimal(0));
-						command.setCostoTotalCanjeLiqValeDigProv(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig():new BigDecimal(0));
-						command.setCostoTotalCanjeLiqValeFisProv(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis():new BigDecimal(0));
-						command.setCostoTotalEntregaValDisElProv(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl():new BigDecimal(0));
-						command.setCostoTotalImpresionValeProv(bean.getCostoTotalImpresionVale()!=null?bean.getCostoTotalImpresionVale():new BigDecimal(0));
-						command.setCostoTotalRepartoValesDomiProv(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi():new BigDecimal(0));
+						command.setCostoTotalAtencionConsReclProv(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeDigProv(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeFisProv(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalEntregaValDisElProv(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalImpresionValeProv(bean.getCostoTotalImpresionVale()!=null?bean.getCostoTotalImpresionVale().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalRepartoValesDomiProv(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 
 						command.setNumeroAtencionesProv(bean.getNumeroAtenciones());
 						command.setNumeroValesDigitalCanjeadosProv(bean.getNumeroValesDigitalCanjeados());
@@ -498,64 +417,64 @@ public class Formato12BGartCommand implements Serializable {
 						command.setNumeroValesImpresoProv(bean.getNumeroValesImpreso());
 						command.setNumeroValesRepartidosDomiProv(bean.getNumeroValesRepartidosDomi());
 
-						command.setTotalActividadesExtraordProv(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord():new BigDecimal(0));
-						command.setTotalDesplazamientoPersonalProv(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal():new BigDecimal(0));
-						command.setTotalGestionAdministrativaProv(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa():new BigDecimal(0));
+						command.setTotalActividadesExtraordProv(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setTotalDesplazamientoPersonalProv(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setTotalGestionAdministrativaProv(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 
-						command.getCostoEstandarUnitAtencionProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValDgCanProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValDisElProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValeImpreProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValeReparProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValFiCanProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalAtencionConsReclProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalCanjeLiqValeDigProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalCanjeLiqValeFisProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalEntregaValDisElProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalImpresionValeProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalRepartoValesDomiProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalActividadesExtraordProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalDesplazamientoPersonalProv().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalGestionAdministrativaProv().setScale(2, BigDecimal.ROUND_UP);
+					/*	command.getCostoEstandarUnitAtencionProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValDgCanProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValDisElProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValeImpreProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValeReparProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValFiCanProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalAtencionConsReclProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalCanjeLiqValeDigProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalCanjeLiqValeFisProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalEntregaValDisElProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalImpresionValeProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalRepartoValesDomiProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalActividadesExtraordProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalDesplazamientoPersonalProv().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalGestionAdministrativaProv().setScale(2, BigDecimal.ROUND_DOWN);*/
 
 					} if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_LIMA) {
-						command.setCostoEstandarUnitAtencionLim(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion():new BigDecimal(0));
-						command.setCostoEstandarUnitValDgCanLim(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan():new BigDecimal(0));
-						command.setCostoEstandarUnitValDisElLim(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl():new BigDecimal(0));
-						command.setCostoEstandarUnitValeImpreLim(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre():new BigDecimal(0));
-						command.setCostoEstandarUnitValeReparLim(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar():new BigDecimal(0));
-						command.setCostoEstandarUnitValFiCanLim(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan():new BigDecimal(0));
-						command.setCostoTotalAtencionConsReclLim(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl():new BigDecimal(0));
-						command.setCostoTotalCanjeLiqValeDigLim(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig():new BigDecimal(0));
-						command.setCostoTotalCanjeLiqValeFisLim(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis():new BigDecimal(0));
-						command.setCostoTotalEntregaValDisElLim(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl():new BigDecimal(0));
+						command.setCostoEstandarUnitAtencionLim(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValDgCanLim(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValDisElLim(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValeImpreLim(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValeReparLim(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoEstandarUnitValFiCanLim(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalAtencionConsReclLim(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeDigLim(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalCanjeLiqValeFisLim(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setCostoTotalEntregaValDisElLim(bean.getCostoTotalEntregaValDisEl()!=null?bean.getCostoTotalEntregaValDisEl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoTotalImpresionValeLim(bean.getCostoTotalImpresionVale()!=null?bean.getCostoTotalImpresionVale():new BigDecimal(0));
-						command.setCostoTotalRepartoValesDomiLim(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi():new BigDecimal(0));
+						command.setCostoTotalRepartoValesDomiLim(bean.getCostoTotalRepartoValesDomi()!=null?bean.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setNumeroAtencionesLim(bean.getNumeroAtenciones());
 						command.setNumeroValesDigitalCanjeadosLim(bean.getNumeroValesDigitalCanjeados());
 						command.setNumeroValesEntregadoDisElLim(bean.getNumeroValesEntregadoDisEl());
 						command.setNumeroValesFisicosCanjeadosLim(bean.getNumeroValesFisicosCanjeados());
 						command.setNumeroValesImpresoLim(bean.getNumeroValesImpreso());
 						command.setNumeroValesRepartidosDomiLim(bean.getNumeroValesRepartidosDomi());
-						command.setTotalActividadesExtraordLim(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord():new BigDecimal(0));
-						command.setTotalDesplazamientoPersonalLim(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal():new BigDecimal(0));
-						command.setTotalGestionAdministrativaLim(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa():new BigDecimal(0));
+						command.setTotalActividadesExtraordLim(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setTotalDesplazamientoPersonalLim(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						command.setTotalGestionAdministrativaLim(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 
-						command.getCostoEstandarUnitAtencionLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValDgCanLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValDisElLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValeImpreLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValeReparLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoEstandarUnitValFiCanLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalAtencionConsReclLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalCanjeLiqValeDigLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalCanjeLiqValeFisLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalEntregaValDisElLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalImpresionValeLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalRepartoValesDomiLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalActividadesExtraordLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalDesplazamientoPersonalLim().setScale(2, BigDecimal.ROUND_UP);
-						command.getTotalGestionAdministrativaLim().setScale(2, BigDecimal.ROUND_UP);
+						/*command.getCostoEstandarUnitAtencionLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValDgCanLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValDisElLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValeImpreLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValeReparLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoEstandarUnitValFiCanLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalAtencionConsReclLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalCanjeLiqValeDigLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalCanjeLiqValeFisLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalEntregaValDisElLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalImpresionValeLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getCostoTotalRepartoValesDomiLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalActividadesExtraordLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalDesplazamientoPersonalLim().setScale(2, BigDecimal.ROUND_DOWN);
+						command.getTotalGestionAdministrativaLim().setScale(2, BigDecimal.ROUND_DOWN);*/
 					}
 				}
 
@@ -606,19 +525,19 @@ public class Formato12BGartCommand implements Serializable {
 
 				if (nro == 0) {
 
-					bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencion());
-					bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCan());
-					bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisEl());
-					bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpre());
-					bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeRepar());
-					bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCan());
+					bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_DOWN));
 
-					bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsRecl());
-					bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDig());
-					bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFis());
-					bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisEl());
-					bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionVale());
-					bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomi());
+					bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisEl().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionVale().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_DOWN));
 
 					bean.setNumeroAtenciones(command.getNumeroAtenciones());
 					bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeados());
@@ -627,26 +546,26 @@ public class Formato12BGartCommand implements Serializable {
 					bean.setNumeroValesImpreso(command.getNumeroValesImpreso());
 					bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomi());
 
-					bean.setTotalActividadesExtraord(command.getTotalActividadesExtraord());
-					bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonal());
-					bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativa());
+					bean.setTotalActividadesExtraord(command.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN));
 					pk.setIdZonaBenef(FiseConstants.ZONA_RURAL);
 
 				} else if (nro == 1) {
 					// provincial
-					bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionProv());
-					bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanProv());
-					bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElProv());
-					bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpreProv());
-					bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeReparProv());
-					bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCanProv());
+					bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpreProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeReparProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCanProv().setScale(2, BigDecimal.ROUND_DOWN));
 
-					bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsReclProv());
-					bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDigProv());
-					bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFisProv());
-					bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisElProv());
-					bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionValeProv());
-					bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomiProv());
+					bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsReclProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDigProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFisProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisElProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionValeProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomiProv().setScale(2, BigDecimal.ROUND_DOWN));
 
 					bean.setNumeroAtenciones(command.getNumeroAtencionesProv());
 					bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeadosProv());
@@ -655,28 +574,28 @@ public class Formato12BGartCommand implements Serializable {
 					bean.setNumeroValesImpreso(command.getNumeroValesImpresoProv());
 					bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomiProv());
 
-					bean.setTotalActividadesExtraord(command.getTotalActividadesExtraordProv());
-					bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonalProv());
-					bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativaProv());
+					bean.setTotalActividadesExtraord(command.getTotalActividadesExtraordProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonalProv().setScale(2, BigDecimal.ROUND_DOWN));
+					bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativaProv().setScale(2, BigDecimal.ROUND_DOWN));
 					pk.setIdZonaBenef(FiseConstants.ZONA_PROVINCIA);
 
 				} else if (nro == 2) {
 					if (command.getCodEmpresa().trim().equalsIgnoreCase("EDLN") || command.getCodEmpresa().trim().equalsIgnoreCase("LDS") ) {
                        
 						// lima
-						bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionLim());
-						bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanLim());
-						bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElLim());
-						bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpreLim());
-						bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeReparLim());
-						bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCanLim());
+						bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoEstandarUnitValeImpre(command.getCostoEstandarUnitValeImpreLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoEstandarUnitValeRepar(command.getCostoEstandarUnitValeReparLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoEstandarUnitValFiCan(command.getCostoEstandarUnitValFiCanLim().setScale(2, BigDecimal.ROUND_DOWN));
 
-						bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsReclLim());
-						bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDigLim());
-						bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFisLim());
-						bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisElLim());
-						bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionValeLim());
-						bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomiLim());
+						bean.setCostoTotalAtencionConsRecl(command.getCostoTotalAtencionConsReclLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoTotalCanjeLiqValeDig(command.getCostoTotalCanjeLiqValeDigLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoTotalCanjeLiqValeFis(command.getCostoTotalCanjeLiqValeFisLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoTotalEntregaValDisEl(command.getCostoTotalEntregaValDisElLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoTotalImpresionVale(command.getCostoTotalImpresionValeLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setCostoTotalRepartoValesDomi(command.getCostoTotalRepartoValesDomiLim().setScale(2, BigDecimal.ROUND_DOWN));
 
 						bean.setNumeroAtenciones(command.getNumeroAtencionesLim());
 						bean.setNumeroValesDigitalCanjeados(command.getNumeroValesDigitalCanjeadosLim());
@@ -685,9 +604,9 @@ public class Formato12BGartCommand implements Serializable {
 						bean.setNumeroValesImpreso(command.getNumeroValesImpresoLim());
 						bean.setNumeroValesRepartidosDomi(command.getNumeroValesRepartidosDomiLim());
 
-						bean.setTotalActividadesExtraord(command.getTotalActividadesExtraordLim());
-						bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonalLim());
-						bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativaLim());
+						bean.setTotalActividadesExtraord(command.getTotalActividadesExtraordLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setTotalDesplazamientoPersonal(command.getTotalDesplazamientoPersonalLim().setScale(2, BigDecimal.ROUND_DOWN));
+						bean.setTotalGestionAdministrativa(command.getTotalGestionAdministrativaLim().setScale(2, BigDecimal.ROUND_DOWN));
 						pk.setIdZonaBenef(FiseConstants.ZONA_LIMA);
 
 					}else{
