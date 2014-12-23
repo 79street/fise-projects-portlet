@@ -1665,12 +1665,8 @@ var formato13A= {
 		  	}
 	 	 }
 		//
-		if(formato13A.anoAltaDetalle.val().length == '' ) {		  
-		    alert('Debe ingresar el año alta');
-		    formato13A.anoAltaDetalle.focus();
-		    return false; 
-	  	}else{
-		  	var numstr = trim(formato13A.anoAltaDetalle.val());
+		if(formato13A.anoAltaDetalle.val().length != '' ) {		  
+		   	var numstr = trim(formato13A.anoAltaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  	alert('Ingrese un año alta válido');
 			  	return false;
