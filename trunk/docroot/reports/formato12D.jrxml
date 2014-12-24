@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato12D" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="22"/>
+	<property name="ireport.x" value="480"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -153,7 +153,7 @@ $F{etapaEjecucionReport}.intValue()==1)?
 			</staticText>
 			<textField pattern="dd/MM/yyyy h.mm a">
 				<reportElement x="619" y="10" width="162" height="16"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
@@ -164,7 +164,7 @@ $F{etapaEjecucionReport}.intValue()==1)?
 			</image>
 			<staticText>
 				<reportElement x="522" y="10" width="93" height="16"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Fecha de emisión:]]></text>
@@ -188,10 +188,10 @@ $F{etapaEjecucionReport}.intValue()==1)?
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[Año / Mes:]]></text>
+				<text><![CDATA[Año / Mes Declarado:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="185" y="117" width="425" height="15"/>
+				<reportElement x="190" y="117" width="308" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -205,8 +205,8 @@ $F{etapaEjecucionReport}.intValue()==1)?
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="179" y="117" width="5" height="15"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="179" y="117" width="10" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[/]]></text>

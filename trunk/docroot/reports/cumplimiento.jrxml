@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cumplimiento" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="42"/>
-	<property name="ireport.y" value="100"/>
+	<property name="ireport.y" value="99"/>
 	<subDataset name="dataset1"/>
 	<parameter name="DESC_MES_CUMPLIMIENTO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
@@ -95,40 +95,40 @@
 	<pageHeader>
 		<band height="85" splitType="Stretch">
 			<staticText>
-				<reportElement x="44" y="29" width="65" height="20" forecolor="#000000"/>
+				<reportElement x="44" y="29" width="115" height="20" forecolor="#000000"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[Año / Mes: ]]></text>
+				<text><![CDATA[Año / Mes declarado: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="44" y="56" width="65" height="20" forecolor="#000000"/>
+				<reportElement x="44" y="56" width="115" height="20" forecolor="#000000"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[Etapa:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="111" y="56" width="247" height="20"/>
+				<reportElement x="162" y="56" width="246" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_ETAPA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="111" y="29" width="30" height="20"/>
+				<reportElement x="162" y="29" width="30" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="144" y="29" width="10" height="20"/>
+				<reportElement x="195" y="29" width="10" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[/]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="158" y="29" width="200" height="20"/>
+				<reportElement x="208" y="29" width="200" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14A" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="994"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="ANO_EJECUCION" class="java.lang.Long"/>
@@ -79,6 +79,8 @@
 	<parameter name="IMP_DCL_JUR_P" class="java.math.BigDecimal"/>
 	<parameter name="IMP_DCL_JUR_L" class="java.math.BigDecimal"/>
 	<parameter name="IMG" class="java.lang.String"/>
+	<parameter name="ANO_INICIO_VIGENCIA" class="java.lang.Long"/>
+	<parameter name="ANO_FIN_VIGENCIA" class="java.lang.Long"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -111,17 +113,17 @@
 		<band height="703" splitType="Stretch">
 			<staticText>
 				<reportElement x="5" y="10" width="101" height="15" forecolor="#000000"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Distribuidora Eléctrica]]></text>
+				<text><![CDATA[Distribuidora Eléctrica:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="5" y="27" width="101" height="15" forecolor="#000000"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Año / Mes]]></text>
+				<text><![CDATA[Año / Mes Declarado:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="426" y="116" width="60" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
@@ -161,21 +163,21 @@ Lima]]></text>
 				<text><![CDATA[Actividades]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="111" y="10" width="271" height="15"/>
+				<reportElement x="111" y="10" width="191" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="111" y="28" width="54" height="15"/>
+				<reportElement x="111" y="28" width="30" height="15"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="184" y="28" width="198" height="15"/>
+				<reportElement x="158" y="28" width="144" height="15"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -843,34 +845,34 @@ de luz del beneficiarios]]></text>
 			</textField>
 			<staticText>
 				<reportElement x="5" y="45" width="101" height="15" forecolor="#000000"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Rubro:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="5" y="61" width="101" height="15" forecolor="#000000"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Frecuencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="611" width="539" height="17"/>
+				<reportElement x="10" y="629" width="539" height="17"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Los costos propuestos deben ser sustentado ampliamente en anexos, adjuntos al informes]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="111" y="45" width="271" height="15" forecolor="#000000"/>
+				<reportElement x="111" y="45" width="191" height="15" forecolor="#000000"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Costo Estándar]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="111" y="61" width="271" height="15" forecolor="#000000"/>
+				<reportElement x="111" y="61" width="191" height="15" forecolor="#000000"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -1051,10 +1053,34 @@ de luz del beneficiarios]]></text>
 				<text><![CDATA[Nombre y Firma del Representante Legal de la Empresa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="168" y="28" width="10" height="15"/>
+				<reportElement x="144" y="28" width="10" height="15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[/]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="316" y="28" width="101" height="15" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Año Inicio de Vigencia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="45" width="101" height="15" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Año Fin de Vigencia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="420" y="28" width="129" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_INICIO_VIGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="45" width="129" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_FIN_VIGENCIA}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
