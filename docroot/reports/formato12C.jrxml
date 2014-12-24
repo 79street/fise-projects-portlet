@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Formato12CA3" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="305"/>
-	<property name="ireport.y" value="464"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
@@ -224,9 +224,9 @@ $F{etapaEjecucionReport}.intValue()==1)?
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="65" width="1139" height="20" forecolor="#006699"/>
+				<reportElement x="10" y="65" width="1139" height="25" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="16" isBold="true"/>
+					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FORMATO FISE-12C:  Detalle de Gastos de Desplazamiento de Personal]]></text>
 			</staticText>
