@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="validacion13" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="53"/>
-	<property name="ireport.y" value="468"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="99"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="NOMBRE_FORMATO" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -112,99 +112,99 @@
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="138" y="229" width="415" height="16"/>
+				<reportElement x="121" y="222" width="202" height="16"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{USUARIO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="229" width="120" height="16"/>
+				<reportElement x="6" y="222" width="112" height="16"/>
 				<textElement/>
 				<text><![CDATA[Usuario	:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="248" width="120" height="16"/>
+				<reportElement x="6" y="241" width="112" height="16"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Fecha	:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="151" width="120" height="16"/>
+				<reportElement x="6" y="164" width="112" height="16"/>
 				<textElement/>
 				<text><![CDATA[Formato:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="187" y="170" width="366" height="16"/>
+				<reportElement x="166" y="183" width="157" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="138" y="170" width="30" height="16"/>
+				<reportElement x="121" y="183" width="30" height="16"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="170" width="120" height="16"/>
+				<reportElement x="6" y="183" width="112" height="16"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Año y Mes:]]></text>
+				<text><![CDATA[Año y Mes Declarado:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="138" y="248" width="415" height="16"/>
+				<reportElement x="121" y="241" width="202" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="138" y="151" width="415" height="16"/>
+				<reportElement x="121" y="164" width="427" height="16"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NOMBRE_FORMATO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="170" y="170" width="15" height="16"/>
+				<reportElement x="153" y="183" width="10" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[/]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="132" width="120" height="16"/>
+				<reportElement x="6" y="145" width="112" height="16"/>
 				<textElement/>
 				<text><![CDATA[Distribuidora Eléctrica:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="138" y="132" width="415" height="16"/>
+				<reportElement x="121" y="145" width="202" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="189" width="120" height="16"/>
+				<reportElement x="6" y="202" width="112" height="16"/>
 				<textElement/>
 				<text><![CDATA[Etapa:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="138" y="189" width="415" height="16"/>
+				<reportElement x="122" y="202" width="201" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{ETAPA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="209" width="127" height="16"/>
+				<reportElement x="333" y="183" width="104" height="16"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Año Inicio y Fin de Vigencia:]]></text>
+				<text><![CDATA[Año Inicio de Vigencia:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="138" y="209" width="30" height="16"/>
+				<reportElement x="440" y="183" width="108" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{ANO_INICIO_VIGENCIA}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="170" y="209" width="15" height="16"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[-]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="187" y="209" width="30" height="16"/>
+				<reportElement x="440" y="202" width="108" height="16"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{ANO_FIN_VIGENCIA}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="333" y="202" width="104" height="16"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Año Fin de Vigencia:]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
