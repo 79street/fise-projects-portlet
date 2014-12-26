@@ -20,6 +20,10 @@ var liquidacionVar= {
 		dialogObservacion12:null,
 		dialogObservacion13:null,
 		
+		dialogConfirmEstablecer:null,
+		dialogConfirmEstablecerContent:null,
+		dialogConfirmLiquidar:null,
+		dialogConfirmLiquidarContent:null,
 		
 		
 		//mensajes		
@@ -83,6 +87,11 @@ var liquidacionVar= {
 			this.dialogObservacion12=$("#<portlet:namespace/>dialog-form-observacion12");
 			this.dialogObservacion13=$("#<portlet:namespace/>dialog-form-observacion13");
 			
+			this.dialogConfirmEstablecer=$("#<portlet:namespace/>dialog-confirm-establecer");
+			this.dialogConfirmEstablecerContent=$("#<portlet:namespace/>dialog-confirm-content-establecer");
+			this.dialogConfirmLiquidar=$("#<portlet:namespace/>dialog-confirm-liquidar");
+			this.dialogConfirmLiquidarContent=$("#<portlet:namespace/>dialog-confirm-content-liquidar");
+			
 			
 			//mensajes						
 			this.mensajeEliminar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
@@ -139,11 +148,13 @@ var liquidacionVar= {
 			
 			
 			liquidacionVar.botonGenerarEtapa.click(function() {			
-				liquidacionVar.preparaLiquidacionFormatos();
+				liquidacionVar.confirmarEstablecer();
+				//liquidacionVar.preparaLiquidacionFormatos();
 			});
 			
-			liquidacionVar.botonLiquidar.click(function() {			
-				liquidacionVar.liquidarFormatos();
+			liquidacionVar.botonLiquidar.click(function() {	
+				liquidacionVar.confirmarLiquidar();
+				//liquidacionVar.liquidarFormatos();
 			});
 			
 			
@@ -152,34 +163,40 @@ var liquidacionVar= {
 		    
 			liquidacionVar.i_tipoBienal.change(function(){
 				liquidacionVar.<portlet:namespace/>loadGrupoInformacion();
+				liquidacionVar.botonGenerarEtapa.val("Establecer costos estándares");
+				liquidacionVar.botonLiquidar.val("Aprobar costos estándares");
 			});
 			
 			liquidacionVar.i_tipoMensual.change(function(){
 				liquidacionVar.<portlet:namespace/>loadGrupoInformacion();
+				liquidacionVar.botonGenerarEtapa.val("Establecer gastos operativos");
+				liquidacionVar.botonLiquidar.val("Liquidar gastos operativos");
 			});
 		    
 		    //eventos por defecto	
 		    
 			//liquidacionVar.botonBuscar.trigger('click');
 			//liquidacionVar.initBlockUI();
+			liquidacionVar.i_tipoMensual.trigger('change');
+			
 		},
 		//funcion para armar el modelo de la grilla para el resultado
 		buildGrids : function () {	
 			liquidacionVar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa.','Formato.','Etapa Ori.','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Reco.','Liquidado','Ver','Ver Obs.','Excluir','','','',''],
+		       colNames: ['Dist. Eléctrica','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
 					   { name: 'etapa', index: 'etapa', width: 30,align:'center'},	  	           
-		               { name: 'anioPres', index: 'anioPres', width: 20,align:'center' },  
+		               { name: 'anioPres', index: 'anioPres', width: 30,align:'center' },  
 		               { name: 'desMes', index: 'desMes', width: 30,align:'center'},
-		               { name: 'anioEjec', index: 'anioEjec', width: 20,align:'center' },   
+		               { name: 'anioEjec', index: 'anioEjec', width: 30,align:'center' },   
 		               { name: 'desMesEje', index: 'desMesEje', width: 30,align:'center'},
-		               { name: 'anioIniVig', index: 'anioIniVig', width: 20,align:'center' },   
-		               { name: 'anioFinVig', index: 'anioFinVig', width: 20,align:'center'},
-		               { name: 'etapaReconocido', index: 'etapaReconocido', width: 30,align:'center' },  
-		               { name: 'liquidado', index: 'liquidado', width: 20,align:'center' }, 		              
+		               { name: 'anioIniVig', index: 'anioIniVig', width: 30,align:'center' },   
+		               { name: 'anioFinVig', index: 'anioFinVig', width: 30,align:'center'},
+		               { name: 'etapaReconocido', index: 'etapaReconocido', width: 40,align:'center' },  
+		               { name: 'liquidado', index: 'liquidado', width: 40,align:'center' }, 		              
 		               { name: 'verF', index: 'verF', width: 20,align:'center' },
 		               { name: 'verObs', index: 'verObs', width: 20,align:'center' },	 
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
@@ -197,7 +214,7 @@ var liquidacionVar= {
 					shrinkToFit:true,
 					pager: liquidacionVar.paginadoResultados,
 				    viewrecords: true,
-				   	caption: "Liquidación",
+				   	caption: "Datos para Aprobación Bienal / Liquidación Mensual",
 				    sortorder: "asc",	   	    	   	   
 		            gridComplete: function(){
 		      		var ids = liquidacionVar.tablaResultados.jqGrid('getDataIDs');
@@ -237,20 +254,7 @@ var liquidacionVar= {
 			    sortorder: "asc"
 		  	});
 		    liquidacionVar.tablaObservacion.jqGrid('navGrid',liquidacionVar.paginadoObservacion,{add:false,edit:false,del:false,search: false,refresh: false});	
-		   <%--  liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
-			       caption:"Exportar a Excel",
-			       buttonicon: "ui-icon-bookmark",
-			       onClickButton : function () {
-			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
-			       } 
-			}); 
-		    liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
-			       caption:"Exportar a Pdf",
-			       buttonicon: "ui-icon-bookmark",
-			       onClickButton : function () {
-			    	   liquidacionVar.<portlet:namespace/>mostrarReporteObservaciones();
-			       } 
-			}); --%>
+		   
 		},
 		
 		//Modelo de la grilla para mostrar Observaciones para los formatos 12C y 12D
@@ -275,20 +279,7 @@ var liquidacionVar= {
 			    sortorder: "asc"
 		  	});
 		    liquidacionVar.tablaObservacion12.jqGrid('navGrid',liquidacionVar.paginadoObservacion12,{add:false,edit:false,del:false,search: false,refresh: false});	
-		   <%--  liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
-			       caption:"Exportar a Excel",
-			       buttonicon: "ui-icon-bookmark",
-			       onClickButton : function () {
-			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
-			       } 
-			}); 
-		    liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
-			       caption:"Exportar a Pdf",
-			       buttonicon: "ui-icon-bookmark",
-			       onClickButton : function () {
-			    	   liquidacionVar.<portlet:namespace/>mostrarReporteObservaciones();
-			       } 
-			}); --%>
+		   
 		},
 		
 		//Modelo de la grilla para mostrar Observaciones para los formatos 13A
@@ -313,20 +304,7 @@ var liquidacionVar= {
 			    sortorder: "asc"
 		  	});
 		    liquidacionVar.tablaObservacion13.jqGrid('navGrid',liquidacionVar.paginadoObservacion13,{add:false,edit:false,del:false,search: false,refresh: false});	
-		   <%--  liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
-			       caption:"Exportar a Excel",
-			       buttonicon: "ui-icon-bookmark",
-			       onClickButton : function () {
-			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
-			       } 
-			}); 
-		    liquidacionVar.tablaObservacion.jqGrid('navButtonAdd',liquidacionVar.paginadoObservacion,{
-			       caption:"Exportar a Pdf",
-			       buttonicon: "ui-icon-bookmark",
-			       onClickButton : function () {
-			    	   liquidacionVar.<portlet:namespace/>mostrarReporteObservaciones();
-			       } 
-			}); --%>
+
 		},
 		
 		//funcion para buscar
@@ -481,13 +459,46 @@ var liquidacionVar= {
 		confirmarEliminar : function(correlativo,liquidado){
 			console.debug("entranado a eliminar");
 			if(liquidado=='NO'){
-				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				var addhtml='¿Está seguro que desea excluir el registro seleccionado?';
 				liquidacionVar.dialogConfirmContent.html(addhtml);
 				liquidacionVar.dialogConfirm.dialog("open");
 				id_Correlativo=correlativo;				
 			}else{
-				alert("No se puede eliminar ya esta liquidado");	
+				var msg;
+				if( liquidacionVar.i_tipoMensual.prop('checked')){
+					msg = 'liquidado';
+				}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+					msg = 'aprobado';
+				}
+				var addhtml2='No se puede excluir, ya está '+msg;
+				liquidacionVar.dialogMessageContent.html(addhtml2);
+				liquidacionVar.dialogMessage.dialog("open");	
 			}	
+		},
+		//
+		confirmarEstablecer : function(){
+			console.debug("entranado a establecer");
+			var msg;
+			if( liquidacionVar.i_tipoMensual.prop('checked')){
+				msg = 'gastos operativos';
+			}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+				msg = 'costos estándares';
+			}
+			var addhtml='¿Está seguro que desea establecer los '+msg+'?';
+			liquidacionVar.dialogConfirmEstablecerContent.html(addhtml);
+			liquidacionVar.dialogConfirmEstablecer.dialog("open");
+		},
+		confirmarLiquidar : function(){
+			console.debug("entranado a liquidar");
+			var msg;
+			if( liquidacionVar.i_tipoMensual.prop('checked')){
+				msg = 'liquidar los gastos operativos';
+			}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+				msg = 'aprobar los costos estándares';
+			}
+			var addhtml='¿Está seguro que desea '+msg+'?';
+			liquidacionVar.dialogConfirmLiquidarContent.html(addhtml);
+			liquidacionVar.dialogConfirmLiquidar.dialog("open");	
 		},
 		/**Function para  eliminar despues de la confirmacion*/
 		eliminarFormato : function(id_Correlativo){
@@ -502,13 +513,13 @@ var liquidacionVar= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Registro eliminado con éxito';				
+						var addhtml2='Registro excluido con éxito. Ese registro no será considerado para la aprobación de los costos estándares o la liquidación de los gastos operativos según sea el caso.';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');
 						liquidacionVar.initBlockUI();						
 					}else{
-						alert("Error al eliminar el registro");
+						alert("Error al excluir el registro");
 						liquidacionVar.initBlockUI();
 					}					
 				},error : function(){
@@ -527,7 +538,13 @@ var liquidacionVar= {
 				dataType: 'json',				
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='La preparación de liquidación fue correcta';				
+						var msgFinal;
+						if( liquidacionVar.i_tipoMensual.prop('checked')){
+							msgFinal = 'gastos operativos';
+						}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+							msgFinal = 'costos estándares';
+						}
+						var addhtml2='El establecimiento de los '+msgFinal+' fue satisfactorio';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');
@@ -552,7 +569,13 @@ var liquidacionVar= {
 				dataType: 'json',				
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='La liquidación se realizó con éxito';				
+						var msgFinal;
+						if( liquidacionVar.i_tipoMensual.prop('checked')){
+							msgFinal = 'liquidación de los gastos operativos';
+						}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+							msgFinal = 'aprobación de los costos estándares';
+						}
+						var addhtml2='La '+msgFinal+' se realizó satisfactoriamente';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');
@@ -591,6 +614,39 @@ var liquidacionVar= {
 					}
 				}
 			});
+			
+			//
+			liquidacionVar.dialogConfirmEstablecer.dialog({
+				modal: true,
+				height: 200,
+				width: 400,			
+				autoOpen: false,
+				buttons: {
+					"Si": function() {
+						liquidacionVar.preparaLiquidacionFormatos();
+						$( this ).dialog("close");
+					},
+					"No": function() {				
+						$( this ).dialog("close");
+					}
+				}
+			});
+			liquidacionVar.dialogConfirmLiquidar.dialog({
+				modal: true,
+				height: 200,
+				width: 400,			
+				autoOpen: false,
+				buttons: {
+					"Si": function() {
+						liquidacionVar.liquidarFormatos();
+						$( this ).dialog("close");
+					},
+					"No": function() {				
+						$( this ).dialog("close");
+					}
+				}
+			});
+			//
 			
 			liquidacionVar.dialogMessage.dialog({
 				modal: true,

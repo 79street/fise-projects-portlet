@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14C" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="720"/>
+	<property name="ireport.y" value="411"/>
 	<parameter name="NUMBENEF_EMPAD_CANT_R" class="java.lang.Long"/>
 	<parameter name="COSTO_COORD_CANT_R" class="java.lang.Long"/>
 	<parameter name="COSTO_SUP_CANT_R" class="java.lang.Long"/>
@@ -355,21 +355,21 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="417" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CI_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="313" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CD_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="469" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="7" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="7" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_SUMA_R}]]></textFieldExpression>
 			</textField>
@@ -571,7 +571,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="261" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_R}]]></textFieldExpression>
 			</textField>
@@ -613,7 +613,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="521" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_P}]]></textFieldExpression>
 			</textField>
@@ -648,7 +648,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="573" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CD_P}]]></textFieldExpression>
 			</textField>
@@ -683,7 +683,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="677" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CI_P}]]></textFieldExpression>
 			</textField>
@@ -718,7 +718,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="729" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="7" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="7" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_SUMA_P}]]></textFieldExpression>
 			</textField>
@@ -760,7 +760,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="781" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_L}]]></textFieldExpression>
 			</textField>
@@ -795,7 +795,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="833" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CD_L}]]></textFieldExpression>
 			</textField>
@@ -830,7 +830,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="937" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_CI_L}]]></textFieldExpression>
 			</textField>
@@ -851,7 +851,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="991" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="7" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="7" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTOTOTAL_GESTPER_SUMA_L}]]></textFieldExpression>
 			</textField>
@@ -893,7 +893,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="1042" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{SUMACOSTOTOTAL_GESTPER_CANT_T}]]></textFieldExpression>
 			</textField>
@@ -949,7 +949,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="1094" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="7" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="7" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{SUMACOSTOTOTAL_GESTPER_COSTO_T}]]></textFieldExpression>
 			</textField>
@@ -1061,7 +1061,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="365" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_CI_R}]]></textFieldExpression>
 			</textField>
@@ -1117,7 +1117,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="625" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_CI_P}]]></textFieldExpression>
 			</textField>
@@ -1166,7 +1166,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="884" y="319" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTOTOTAL_GESTPER_CANT_CI_L}]]></textFieldExpression>
 			</textField>

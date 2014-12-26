@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato12B" language="groovy" pageWidth="595" pageHeight="843" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="183"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="MES_PRESENTACION" class="java.lang.String"/>
@@ -240,7 +240,7 @@
 			<staticText>
 				<reportElement x="27" y="42" width="242" height="13"/>
 				<textElement>
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Costo Total Impresión de Vales   (1.1) x (1.2)]]></text>
 			</staticText>
@@ -275,7 +275,7 @@
 			<staticText>
 				<reportElement mode="Transparent" x="27" y="104" width="242" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
-					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[2.3 Costo Total Reparto de Vales a domicilio   (2.1) x (2.2)]]></text>
 			</staticText>
@@ -309,7 +309,7 @@
 			<staticText>
 				<reportElement mode="Transparent" x="27" y="164" width="242" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
-					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Costo Total Entrega de Vales en la Distribuidora Eléctrica  (3.1) x (3.2)]]></text>
 			</staticText>
@@ -344,7 +344,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="464" y="42" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_IMP_L}]]></textFieldExpression>
 			</textField>
@@ -379,21 +379,21 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="280" y="104" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_REPAR_DOMIC_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="372" y="104" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_REPAR_DOMIC_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="464" y="104" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_REPAR_DOMIC_L}]]></textFieldExpression>
 			</textField>
@@ -442,21 +442,21 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="280" y="164" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{COSTO_TOTAL_VAL_ENTREG_EDE_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="372" y="164" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_ENTREG_EDE_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="464" y="164" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_ENTREG_EDE_L}]]></textFieldExpression>
 			</textField>
@@ -477,7 +477,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="372" y="42" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_IMP_P}]]></textFieldExpression>
 			</textField>
@@ -498,7 +498,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="280" y="42" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_IMP_R}]]></textFieldExpression>
 			</textField>
@@ -578,14 +578,14 @@
 			<staticText>
 				<reportElement x="269" y="42" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="269" y="104" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
@@ -606,7 +606,7 @@
 			<staticText>
 				<reportElement x="270" y="164" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
@@ -634,7 +634,7 @@
 			<staticText>
 				<reportElement mode="Transparent" x="27" y="278" width="242" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
-					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Costo Total Canje y Liquidación de Vales Digitales   (5.1) x (5.2)]]></text>
 			</staticText>
@@ -655,7 +655,7 @@
 			<staticText>
 				<reportElement mode="Transparent" x="27" y="334" width="242" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
-					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Costo Total Atención de Consultas y/o Reclamos   (6.1) x (6.2)]]></text>
 			</staticText>
@@ -697,7 +697,7 @@
 			<staticText>
 				<reportElement mode="Transparent" x="27" y="220" width="242" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
-					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Costo Total Canje y Liquidación de Vales Físicos   (4.1) x (4.2)]]></text>
 			</staticText>
@@ -714,21 +714,21 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="280" y="220" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_FISIC_CANJ_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="372" y="220" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_FISIC_CANJ_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="464" y="220" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_FISIC_CANJ_L}]]></textFieldExpression>
 			</textField>
@@ -819,7 +819,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="280" y="278" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_DIGIT_CANJ_R}]]></textFieldExpression>
 			</textField>
@@ -840,7 +840,7 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="280" y="334" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_ATENCIONES_R}]]></textFieldExpression>
 			</textField>
@@ -882,7 +882,7 @@
 			<staticText>
 				<reportElement x="269" y="220" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
@@ -955,28 +955,28 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="372" y="334" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_ATENCIONES_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="464" y="334" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_ATENCIONES_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="372" y="278" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_DIGIT_CANJ_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="464" y="278" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_VAL_DIGIT_CANJ_L}]]></textFieldExpression>
 			</textField>
@@ -997,7 +997,7 @@
 			<staticText>
 				<reportElement x="269" y="278" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
@@ -1025,7 +1025,7 @@
 			<staticText>
 				<reportElement x="269" y="334" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>

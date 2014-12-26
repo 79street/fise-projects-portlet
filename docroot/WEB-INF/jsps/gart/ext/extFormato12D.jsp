@@ -1900,8 +1900,17 @@ var formato12D= {
 		});
 	},
 	confirmarEditCabecera : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,flagOperacion,grupoInfo,estado){
+		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
-			location.href=formato12D.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descGrupoInformacion='+grupoInfo+'&descEstado='+estado+'&tipo=1';
+			var process=true;
+			if( etapa=='RECONOCIDO' || !admin ){
+				process = false;
+			}
+			if(process){
+				location.href=formato12D.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descGrupoInformacion='+grupoInfo+'&descEstado='+estado+'&tipo=1';
+			}}else{
+				alert(" No tiene autorización para realizar esta operación");
+			}
 		}else if(flagOperacion=='CERRADO'){
 			alert(" No esta habilitado para realizar esta operacion");		
 		}else{

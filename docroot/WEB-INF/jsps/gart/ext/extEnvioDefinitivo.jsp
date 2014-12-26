@@ -440,7 +440,7 @@ var envioDefinitivoGlobal= {
 				modal: true,
 				autoOpen: false,
 				buttons: {
-					'Acta': function() {
+					'Ver Acta': function() {
 						envioDefinitivoGlobal.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 						$( this ).dialog("close");							   
 					},

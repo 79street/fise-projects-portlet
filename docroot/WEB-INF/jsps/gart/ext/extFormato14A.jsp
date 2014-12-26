@@ -1318,7 +1318,7 @@ var formato14A= {
 		if(flagOperacion=='ABIERTO'){
 			//control para tipo de usuario
 			var process=true;
-			if( etapa=='RECONOCIDO' || !admin ){
+			if( etapa=='ESTABLECIDO' || !admin ){
 				process = false;
 			}
 			if(process){
@@ -1544,7 +1544,7 @@ var formato14A= {
 		if(flagOperacion=='ABIERTO'){
 			//control para tipo de usuario
 			var process=true;
-			if( etapa=='RECONOCIDO' || !admin ){
+			if( etapa=='ESTABLECIDO' || !admin ){
 				process = false;
 			}
 			if(process){

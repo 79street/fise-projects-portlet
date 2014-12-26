@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14A" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="994"/>
+	<property name="ireport.x" value="109"/>
+	<property name="ireport.y" value="1008"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="ANO_EJECUCION" class="java.lang.Long"/>
@@ -643,21 +643,21 @@ de luz del beneficiarios]]></text>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="426" y="466" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="363" y="466" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_EMPAD_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="489" y="466" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_EMPAD_L}]]></textFieldExpression>
 			</textField>
@@ -818,7 +818,7 @@ de luz del beneficiarios]]></text>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="489" y="592" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_AGENTE_L}]]></textFieldExpression>
 			</textField>
@@ -832,14 +832,14 @@ de luz del beneficiarios]]></text>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="426" y="592" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_AGENTE_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="363" y="592" width="60" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="false"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CTO_UNT_AGENTE_R}]]></textFieldExpression>
 			</textField>
@@ -989,7 +989,7 @@ de luz del beneficiarios]]></text>
 			<staticText>
 				<reportElement x="343" y="466" width="17" height="15"/>
 				<textElement>
-					<font size="9" isBold="false"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
@@ -1031,7 +1031,7 @@ de luz del beneficiarios]]></text>
 			<staticText>
 				<reportElement x="343" y="592" width="17" height="15"/>
 				<textElement>
-					<font size="9" isBold="false"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
