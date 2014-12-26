@@ -1908,7 +1908,7 @@ var formato12D= {
 			}
 			if(process){
 				location.href=formato12D.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descGrupoInformacion='+grupoInfo+'&descEstado='+estado+'&tipo=1';
-			}}else{
+			}else{
 				alert(" No tiene autorización para realizar esta operación");
 			}
 		}else if(flagOperacion=='CERRADO'){
