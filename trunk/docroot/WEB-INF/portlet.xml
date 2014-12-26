@@ -502,7 +502,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>LIQUIDACION</title>
+			<title>APROBACIÓN BIENAL / LIQUIDACIÓN MENSUAL </title>
 			<short-title>GartLiquidacion</short-title>
 			<keywords>GartLiquidacion</keywords>
 		</portlet-info>

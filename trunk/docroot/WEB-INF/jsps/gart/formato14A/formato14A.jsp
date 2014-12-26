@@ -115,7 +115,7 @@ $(document).ready(function () {
 													<form:option value="SOLICITUD">SOLICITUD</form:option>
 													<form:option value="LEV.OBS">LEV.OBS</form:option>
 													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
-													<form:option value="RECONOCIDO">RECONOCIDO</form:option>
+													<form:option value="ESTABLECIDO">ESTABLECIDO</form:option>
 												</form:select>
 											</td>
 										</tr>
@@ -412,12 +412,12 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															1.1.1.4 Reparto de esquela de invitación, en forma conjunta con el recibo
+															1.1.1.4 Reparto de esquela de invitación, en forma conjunta con 
 															<br/>
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															de luz del Potencial Beneficiario
+															el recibo de luz del Potencial Beneficiario
 															</td>
 														<td align="center">
 															<form:input path="repartoEsqInvitR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
@@ -515,12 +515,12 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															1.1.2.3 Reparto de folletos a los Potenciales Beneficiarios, con el recibo 
+															1.1.2.3 Reparto de folletos a los Potenciales Beneficiarios, con  
 															<br/>
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-															de luz del beneficiario
+															el recibo de luz del beneficiario
 															</td>
 														<td align="center">
 															<form:input path="repFolletosR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
@@ -902,7 +902,7 @@ $(document).ready(function () {
 	</div>
 	
 	
-	<div id="<portlet:namespace/>dialog-message" title="Osinergmin">
+	<div id="<portlet:namespace/>dialog-message" title="Fise Formato 14A">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>

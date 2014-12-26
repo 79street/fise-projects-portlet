@@ -985,8 +985,10 @@ public class NotificacionController {
 	    		if( tabla!=null ){
 		    		descripcionFormato = tabla.getDescripcionTabla();
 		    	}
-	    		mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, anioIniVig!=null?anioIniVig:"");
-				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, anioFinVig!=null?anioFinVig:"");
+	    		/*mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, anioIniVig!=null?anioIniVig:"");
+				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, anioFinVig!=null?anioFinVig:"");*/
+	    		mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (anioIniVig!=null && !anioIniVig.equals("---")) ?Long.parseLong(anioIniVig):0);
+				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVig!=null && !anioFinVig.equals("---"))?Long.parseLong(anioFinVig):0);
 	    		
 			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(formato)){ 
 				
@@ -1308,8 +1310,10 @@ public class NotificacionController {
   	  								!listaObservaciones.isEmpty())?listaObservaciones.size():0);
   	  						mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(not.getCodEmpresa()));
   	  						mapa.put(FiseConstants.PARAM_ETAPA, not.getEtapa()); 
-  	  						mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, not.getAnioIniVig()!=null?not.getAnioIniVig():"");
-  	  						mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, not.getAnioFinVig()!=null?not.getAnioFinVig():"");
+  	  						/*mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, not.getAnioIniVig()!=null?not.getAnioIniVig():"");
+  	  						mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, not.getAnioFinVig()!=null?not.getAnioFinVig():"");*/
+  	  						mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (not.getAnioIniVig()!=null && !not.getAnioIniVig().equals("---"))?Long.parseLong(not.getAnioIniVig()):0);
+	  						mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (not.getAnioFinVig()!=null && !not.getAnioFinVig().equals("---"))?Long.parseLong(not.getAnioFinVig()):0);
 
   							File reportFile13A = new File(session.getServletContext().getRealPath(directorio));
   	  	 		    	    byte[] bytes13A = null;

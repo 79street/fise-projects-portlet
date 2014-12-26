@@ -244,7 +244,7 @@ public class Formato12BGartController {
 				command.setMesPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(4, 6)));
 				command.setEtapa(command.getPeridoDeclaracion().substring(6, command.getPeridoDeclaracion().length()));
 			}
-			List<FiseFormato14BD> lstfise14D=fiseUtil.getLstCostoUnitario(command.getCodEmpresa(), command.getAnoPresentacion(),null, null, FiseConstants.ETAPA_RECONOCIDO);
+			List<FiseFormato14BD> lstfise14D=fiseUtil.getLstCostoUnitario(command.getCodEmpresa(), command.getAnoPresentacion(),null, null, FiseConstants.ETAPA_ESTABLECIDO);
 			//List<FiseFormato14BD> lstfise14D=fiseUtil.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion().longValue(),command.getIdZonaBenef().longValue());
 			
 			
@@ -831,7 +831,7 @@ public class Formato12BGartController {
 							   pkDetalle.setMesEjecucionGasto(Integer.parseInt(mesEjec));
 							   pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
 							   
-							   FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_RECONOCIDO);
+							   FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_ESTABLECIDO);
 							  // formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
 								detalle.setNumeroValesImpreso(numValesImp.trim()!=null && !numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
 								detalle.setCostoEstandarUnitValeImpre(fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));

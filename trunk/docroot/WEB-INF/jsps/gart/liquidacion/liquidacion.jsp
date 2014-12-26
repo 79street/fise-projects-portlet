@@ -73,7 +73,7 @@ $(document).ready(function () {
 											<td colspan="2"></td>
 										</tr>
 										<tr>										
-											<td><output>Empresa:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td>
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">												
 													<form:option value="TODO">-Todos-</form:option>
@@ -116,12 +116,12 @@ $(document).ready(function () {
 										<td align="right">	
 										    <input type="button" class="net-button-small"
 											      id="<portlet:namespace/>btnGenerarEtapa"
-											      name="<portlet:namespace/>btnGenerarEtapa" value="Generar Etapa Reconocido" />										
+											      name="<portlet:namespace/>btnGenerarEtapa" value="" />										
 										</td>
 										<td align="center">											
 										   <input type="button" class="net-button-small"
 											      id="<portlet:namespace/>btnLiquidar"
-											      name="<portlet:namespace/>btnLiquidar" value="Liquidar Etapa Reconocido" />											
+											      name="<portlet:namespace/>btnLiquidar" value="" />											
 										</td>										
 									</tr>
 								</table>
@@ -175,7 +175,7 @@ $(document).ready(function () {
 
    <!-- DIVS PARA MENSAJES -->
    
-   	<div id="<portlet:namespace/>dialog-message-liquidacion" title="Osinergmin">
+   	<div id="<portlet:namespace/>dialog-message-liquidacion" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>
@@ -183,13 +183,27 @@ $(document).ready(function () {
 		</p>	
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-confirm-eliminar" title="Confirmar acci&oacute;n">
+	<div id="<portlet:namespace/>dialog-confirm-eliminar" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="<portlet:namespace/>dialog-confirm-content-eliminar">¿Está seguro?</label>
 		</p>
-	</div>`
+	</div>
 	
+	<!--  -->
+	<div id="<portlet:namespace/>dialog-confirm-establecer" title="Mensaje de Confirmaci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-content-establecer">¿Está seguro?</label>
+		</p>
+	</div>
+	
+	<div id="<portlet:namespace/>dialog-confirm-liquidar" title="Mensaje de Confirmaci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-confirm-content-liquidar">¿Está seguro?</label>
+		</p>
+	</div>
 		
 	
 </form:form>
