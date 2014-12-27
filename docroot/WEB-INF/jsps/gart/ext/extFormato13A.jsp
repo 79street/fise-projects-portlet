@@ -149,7 +149,10 @@ var formato13A= {
 	 dialogMessageGeneralInicial:null,
 	 txtAnioInicio:null,
 	 txtAnioFin:null,
-	 
+	 dialogMessageGeneral:null,
+     lblMessage:null,
+     
+     
 	 dialogMessageDetalle:null,
 	 dialogMessageDetalleContent:null,
 	 
@@ -314,12 +317,17 @@ var formato13A= {
 		this.mensajeEliminandoDetalle='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
 		this.urlDeleteDetalle='<portlet:resourceURL id="deleteDetalle" />';
 		
+		 this.dialogMessageGeneral=$("#dialogMessageGeneral");
+         this.lblMessage=$("#lblMessage");
+         
+        
 		
 		formato13A.initDialogsCRUD();
 		
 		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
 		formato13A.btnCargarFormatoExcel.click(function() {formato13A.<portlet:namespace/>cargarFormatoExcel();});
 		formato13A.btnTxt.click(function() {formato13A.<portlet:namespace/>showUploadTxt();});
+		formato13A.btnCargarFormatoTexto.click(function() {formato13A.<portlet:namespace/>cargarFormatoTxt();});
 		
 		formato13A.btnGuardarCabecera.click(function(){formato13A.savecabecera();});
 		
@@ -330,6 +338,7 @@ var formato13A= {
 		this.buildGridsObservacion();
 		
 	
+		
 		
 		if(operacion=='CREATE'){
 			formato13A.tipoOperacion=operacion;
@@ -891,7 +900,6 @@ var formato13A= {
 	<portlet:namespace/>showUploadExcel : function(){
 		formato13A.divOverlay.show();
 		formato13A.dialogCargaExcel.show();
-		formato13A.dialogCargaExcel.show();
 		formato13A.dialogCargaExcel.css({ 
 	        'left': ($(window).width() / 2 - formato13A.dialogCargaExcel.width() / 2) + 'px', 
 	        'top': ($(window).height()  - formato13A.dialogCargaExcel.height() ) + 'px'
@@ -904,7 +912,34 @@ var formato13A= {
 	},
 	
 	<portlet:namespace/>cargarFormatoExcel : function(){
-		formato13A.formNuevo.submit();
+		var nameFile=$("#archivoExcel").val();
+		var isSubmit=true;
+		
+		$("#msjUploadFile").html("");
+		if(typeof (nameFile) == "undefined" || nameFile.length==0){
+			
+			isSubmit=false;
+			$("#msjUploadFile").html("Debe seleccionar un archivo");
+		}else{
+			var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);
+			
+			
+				if(extension == 'xls' || extension == 'xlsx'){
+					isSubmit=true;
+				}else{
+					isSubmit=false;
+					$("#msjUploadFile").html("Archivo invalido");
+				}
+				
+			
+			
+		}
+		
+		if(isSubmit){
+			formato13A.formNuevo.submit();
+		}
+		
+		
 	},
 	
 	<portlet:namespace/>showUploadTxt : function(){
@@ -921,6 +956,35 @@ var formato13A= {
 		formato13A.divOverlay.hide();   
 	},
 
+	<portlet:namespace/>cargarFormatoTxt : function(){
+		var nameFile=$("#archivoTxt").val();
+		var isSubmit=true;
+		
+		$("#msjUploadFiletxt").html("");
+		if(typeof (nameFile) == "undefined" || nameFile.length==0){
+			
+			isSubmit=false;
+			$("#msjUploadFiletxt").html("Debe seleccionar un archivo");
+		}else{
+			var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);
+			
+			if(extension == 'txt' ){
+				isSubmit=true;
+			}else{
+				isSubmit=false;
+				$("#msjUploadFiletxt").html("Archivo invalido");
+			}
+				
+			
+			
+		}
+		
+		if(isSubmit){
+			formato13A.formNuevo.submit();
+		}
+		
+		
+	},
 	
 	listarProvincias : function (codDepartamento) {	
 		jQuery.ajax({			
@@ -1061,16 +1125,26 @@ var formato13A= {
 					formato13A.showCamposOculto();
 					formato13A.botonAnadirFormato.css("display","block");
 					formato13A.btnGuardarCabecera.css("display","none");
-					alert("Se registro correctamente");
+					
+					formato13A.dialogMessageGeneral.dialog("open");
+					
 					formato13A.buscarDetalles();
 				}else if(data == '-1'){
-					alert('El formato ya existe para esa empresa para ese periodo');
+					formato12B.lblMessage.html("El formato ya existe para esa empresa para ese periodo");
+					formato12B.dialogMessageGeneral.dialog("open");
+					
 				}else if(data == '-2'){
-					alert('Error al obtener usuario');
+					formato12B.lblMessage.html("Error al obtener usuario");
+					formato12B.dialogMessageGeneral.dialog("open");
+					
 				}else if(data == '-3'){
-					alert('Error al obtener terminal');
+					formato12B.lblMessage.html("Error al obtener terminal");
+					formato12B.dialogMessageGeneral.dialog("open");
+				
 				}else if(data == '-4'){
-					alert('Error al registrar');
+					formato12B.lblMessage.html("Error al registrar");
+					formato12B.dialogMessageGeneral.dialog("open");
+					
 				}
 				
 				
@@ -1423,6 +1497,19 @@ var formato13A= {
 			buttons: {
 				Cerrar: function() {
 					$(this).dialog("close");
+				}
+			}
+		});
+		
+		
+		formato13A.dialogMessageGeneral.dialog({
+			modal: true,
+			height: 120,
+			width: 400,
+			autoOpen: false,
+			buttons: {
+				Cerrar: function() {
+					$( this ).dialog("close");
 				}
 			}
 		});
