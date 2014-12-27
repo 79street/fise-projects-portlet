@@ -20,13 +20,12 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				var error = '${error}';
-				if (error.length > 0) {
-				    alert(error);
-				}
-				
 				formato13A.initCRUD('${crud}', '${urlAnadirFormato}','${urlRegresarBusqueda}');
-
+                var error = '${error}';
+				if (error.length > 0) {
+				    formato12B.lblMessage.html(error);
+					formato12B.dialogMessageGeneral.dialog("open");
+				}
 			});
 </script>
 
@@ -318,6 +317,12 @@
 										<td><input type="file" id="archivoExcel"
 											name="archivoExcel" /></td>
 									</tr>
+									<tr>
+						<td height="10px;"></td>
+					</tr>
+					<tr>
+						<td colspan="3"><span id="msjUploadFile" style="color: red;"></span></td>
+					</tr>
 								</table>
 							</fieldset>
 
@@ -347,7 +352,7 @@
 						class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 						<span class="ui-dialog-title"
 							id="ui-dialog-title-dialog-form-carga"> Cargar archivo
-							excel </span> <a href="#" class="ui-dialog-titlebar-close ui-corner-all"
+							txt </span> <a href="#" class="ui-dialog-titlebar-close ui-corner-all"
 							role="button" onclick="formato13A.closeDialogCargaTxt();"> <span
 							class="ui-icon ui-icon-closethick">close</span>
 						</a>
@@ -365,6 +370,12 @@
 									<td>Archivo:</td>
 									<td><input type="file" id="archivoTxt" name="archivoTxt" /></td>
 								</tr>
+								<tr>
+						<td height="10px;"></td>
+					</tr>
+					<tr>
+						<td colspan="3"><span id="msjUploadFiletxt" style="color: red;"></span></td>
+					</tr>
 							</table>
 						</fieldset>
 
@@ -376,7 +387,7 @@
 						<div class="ui-dialog-buttonset">
 							<input type="button" class="net-button-small"
 								name="<portlet:namespace/>cargarFormatoTxt"
-								id="<portlet:namespace/>cargarFormatoTxtl" value="Cargar" /> <input
+								id="<portlet:namespace/>cargarFormatoTxt" value="Cargar" /> <input
 								type="button" class="net-button-small"
 								name="<portlet:namespace/>cerrarFormatoTxt"
 								id="<portlet:namespace/>cerrarFormatoTxt" value="Cerrar"
@@ -436,5 +447,14 @@
 				grabados exit&oacute;samente.</label>
 		</p>
 	</div>
+	
+	<div id="dialogMessageGeneral" title="Aviso">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span>
+			<label id="lblMessage">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
 
 </form:form>
