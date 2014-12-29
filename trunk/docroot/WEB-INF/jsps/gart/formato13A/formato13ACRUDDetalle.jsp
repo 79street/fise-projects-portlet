@@ -204,7 +204,7 @@ $(document).ready(function () {
 													<tr>
 														<td colspan="4">
 															<fieldset class="net-frame-border" >
-																<legend>Sede de atencion</legend> 
+																<legend>Sede de atención</legend> 
 																<table style="width: 100%;" border="0">
 																	<tr>
 																		<td><form:input path="nombreSede" disabled="${readonlyEdit}" maxlength="60" onkeypress="return soloLetras(event);" /></td>
@@ -274,7 +274,7 @@ $(document).ready(function () {
 		</div>
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-message-detalle" title="Osinergmin">
+	<div id="<portlet:namespace/>dialog-message-detalle" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>

@@ -55,7 +55,7 @@
 															<tr>
 																<td><output class="net-titulo" id="lblGrupo"
 																		style="font-size: 12px; font-weight: bold;">Grupo
-																		de Informacion</output></td>
+																		de Información</output></td>
 																<td style="text-align: center;">
 																	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 																	
@@ -146,10 +146,10 @@
 																<table>
 																	<tr>
 																		<td colspan="5"><output class="net-titulo">Periodo
-																				de ejecucion</output></td>
+																				de ejecución</output></td>
 																	</tr>
 																	<tr>
-																		<td width="110px">Año Ejecucion:</td>
+																		<td width="110px">Año de ejecución:</td>
 																		<td><form:input path="anoEjecucionGasto"
 																				style="width: 50px" maxlength="4" /> <input
 																			id="txtanoEjecucionGasto" type="hidden"
@@ -157,7 +157,7 @@
 																			style="width: 50px" maxlength="4" readonly="readonly" />
 																		</td>
 																		<td width="10px"></td>
-																		<td width="110px">Mes Ejecucion:</td>
+																		<td width="110px">Mes de ejecución:</td>
 																		<td><!--<form:input path="mesEjecucionGasto" style="width: 50px" maxlength="4" /> -->
 																			<form:select path="mesEjecucionGasto" id="cmbMesEjecucion" cssClass="select" cssStyle="width: 104px;" disabled="false">
 													                          <form:options items="${formato12BGartCommand.listaMes}" />
@@ -245,7 +245,7 @@
 										<td colspan="4" height="3px"></td>
 									</tr>
 									<tr>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Costo Estandár
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Costo Estándar
 											Unitario</td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValeImpre" /> <input
@@ -331,7 +331,7 @@
 										<td colspan="4" height="3px"></td>
 									</tr>
 									<tr>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Costo Estandar
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Costo Estándar
 											Unitario</td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValeRepar" /> <input
@@ -507,7 +507,7 @@
 										<td colspan="4" height="3px"></td>
 									</tr>
 									<tr>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2 Costo Estandar
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2 Costo Estándar
 											Unitario</td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValFiCan" /> <input
@@ -594,7 +594,7 @@
 										<td colspan="4" height="3px"></td>
 									</tr>
 									<tr>
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2 Costo Estandar
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2 Costo Estándar
 											Unitario</td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValDgCan" /> <input
@@ -797,7 +797,7 @@
 										<td colspan="4" height="10px"></td>
 									</tr>
 									<tr style="padding-top: 10px:">
-										<td>10. Importe a reconocer a la Distribuidora Electrica</td>
+										<td>10. Importe a reconocer a la Distribuidora Eléctrica</td>
 										<td align="center">Total</td>
 										<td align="center"></td>
 										<td align="center"></td>
@@ -807,7 +807,7 @@
 										<td colspan="4" height="5px"></td>
 									</tr>
 									<tr style="padding-top: 10px:">
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Impresion de Vales (1.3)</td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Impresión de Vales (1.3)</td>
 										<td align="center"><form:input  path="porImpresionVales" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"></td>
 										<td align="center"></td>
@@ -827,7 +827,7 @@
 										<td colspan="4" height="5px"></td>
 									</tr>
 									<tr style="padding-top: 10px:">
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Entrega de Vales en la Distribuidora Electrica (3.3)</td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Entrega de Vales en la Distribuidora Eléctrica (3.3)</td>
 										<td align="center"><form:input  path="porEntregaValesDE" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"></td>
 										<td align="center"></td>
@@ -837,7 +837,7 @@
 										<td colspan="4" height="5px"></td>
 									</tr>
 									<tr style="padding-top: 10px:">
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Canje y Liquidación de Vales Fisicos (4.3)</td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Canje y Liquidación de Vales Físicos (4.3)</td>
 										<td align="center"><form:input  path="porValesFisicos" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"></td>
 										<td align="center"></td>
@@ -857,7 +857,7 @@
 										<td colspan="4" height="5px"></td>
 									</tr>
 									<tr style="padding-top: 10px:">
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Atencion de Soluciones,Consultas y Reclamos (6.3)</td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Atención de Soluciones,Consultas y Reclamos (6.3)</td>
 										<td align="center"><form:input  path="porAtencionReclamos" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"></td>
 										<td align="center"></td>
@@ -867,7 +867,7 @@
 										<td colspan="4" height="5px"></td>
 									</tr>
 									<tr style="padding-top: 10px:">
-										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Gestion Administrativa (7)</td>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Por Gestión Administrativa (7)</td>
 										<td align="center"><form:input  path="porGestionAdm" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"></td>
 										<td align="center"></td>
@@ -1070,12 +1070,12 @@
 	</div>
 	
 	
-	<div id="dialogConfirmEnvio" title="Confirmar acci&oacute;n">
+	<div id="dialogConfirmEnvio" title="Mensaje de Confirmaci&oacute;n">
 		<p> <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span> 
 		<label id="lblConfirmEnvioContent">¿Está seguro?</label>
 		</p>
 	</div>
-	<div id="dialogMessageReport" title="Osinergmin">
+	<div id="dialogMessageReport" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>
@@ -1083,7 +1083,7 @@
 		</p>	
 	</div>
 	
-	<div id="dialogMessageGeneral" title="Aviso">
+	<div id="dialogMessageGeneral" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>

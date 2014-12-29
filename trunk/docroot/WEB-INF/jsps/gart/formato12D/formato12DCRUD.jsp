@@ -461,7 +461,7 @@ $(document).ready(function () {
 	</div>
 
 	<div id="<portlet:namespace/>dialog-confirm-envio"
-		title="Confirmar acci&oacute;n">
+		title="Mensaje de Confirmaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-alert"
 				style="float: left; margin: 0 7px 20px 0;"></span> <label
@@ -471,7 +471,7 @@ $(document).ready(function () {
 	</div>
 	
 	<div id="<portlet:namespace/>dialog-confirm-detalle"
-		title="Confirmar acci&oacute;n">
+		title="Mensaje de Confirmaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-alert"
 				style="float: left; margin: 0 7px 20px 0;"></span> <label
@@ -481,7 +481,7 @@ $(document).ready(function () {
 	</div>
 	
 
-	<div id="<portlet:namespace/>dialog-message-report" title="Osinergmin">
+	<div id="<portlet:namespace/>dialog-message-report" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check"
 				style="float: left; margin: 0 7px 50px 0;"> </span> <label
@@ -490,7 +490,7 @@ $(document).ready(function () {
 		</p>
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-message" title="Osinergmin">
+	<div id="<portlet:namespace/>dialog-message" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>

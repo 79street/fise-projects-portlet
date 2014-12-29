@@ -573,29 +573,29 @@ function validarBusqueda() {
 	
 function validarFormulario() {		
 	  if($('#s_empresa').val().length == '' ) { 	
-	    alert('Seleccione una empresa'); 
+	    alert('Seleccione una Distribuidora Eléctrica'); 
 	    document.getElementById('s_empresa').focus();
 	    return false; 
 	  }
 	  if($('#s_periodoenvio_present').val().length == '' ) {		  
-		    alert('Debe ingresar el periodo de presentacion');
+		    alert('Debe ingresar el periodo a declarar');
 		    document.getElementById('s_periodoenvio_present').focus();
 		    return false; 
 	  }
 	  if( $('#flagPeriodoEjecucion').val()=='S' ){
 		  if($('#i_anioejecuc').val().length == '' ) {		  
-			    alert('Debe ingresar el año de ejecucion');
+			    alert('Debe ingresar el año de ejecución');
 			    document.getElementById('i_anioejecuc').focus();
 			    return false; 
 		  }else{
 			  var numstr = trim($('#i_anioejecuc').val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-				  alert('Ingrese un año de ejecucion válido');
+				  alert('Ingrese un año de ejecución válido');
 				  return false;
 			  }
 		  }
 		  if($('#s_mes_ejecuc').val().length == '' ) {		  
-			    alert('Debe ingresar el mes de ejecucion');
+			    alert('Debe ingresar el mes de ejecución');
 			    document.getElementById('s_mes_ejecuc').focus();
 			    return false; 
 		  }
@@ -612,7 +612,7 @@ function validarFormulario() {
 		    return false; 
 	  }*/
 	  if($('#i_nroAgentGlp_r').val().length == '' ) {		  
-		    alert('Debe ingresar el numero de agentes para Rural');
+		    alert('Debe ingresar el número de agentes para Rural');
 		    document.getElementById('i_nroAgentGlp_r').focus();
 		    return false; 
 	  }
@@ -643,7 +643,7 @@ function validarFormulario() {
 		    return false; 
 	  }*/
 	  if($('#i_nroAgentGlp_p').val().length == '' ) {		  
-		    alert('Debe ingresar el numero de agentes para Provincia');
+		    alert('Debe ingresar el número de agentes para Provincia');
 		    document.getElementById('i_nroAgentGlp_p').focus();
 		    return false; 
 	  }
@@ -674,7 +674,7 @@ function validarFormulario() {
 		    return false; 
 	  }*/
 	  if($('#i_nroAgentGlp_l').val().length == '' ) {		  
-		    alert('Debe ingresar el numero de agentes para Lima');
+		    alert('Debe ingresar el número de agentes para Lima');
 		    document.getElementById('i_nroAgentGlp_l').focus();
 		    return false; 
 	  }
@@ -708,7 +708,7 @@ function validarFormulario() {
 	}
 function validarArchivoCarga() {		
   if($('#s_empresa').val().length == '' ) { 	
-    alert('Seleccione una empresa para proceder con la carga de archivo'); 
+    alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
     document.getElementById('s_empresa').focus();
     return false; 
   }
@@ -862,7 +862,7 @@ function <portlet:namespace/>buscar() {
 function buildGrids() {	
 	jQuery("#grid_formato").jqGrid({
 		datatype: "local",
-       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ejec.','Mes Ejec.','Grupo de Información','Estado','Visualizar','Editar','Anular','','','','',''],
+       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','','',''],
        colModel: [
 				{ name: 'descEmpresa', index: 'descEmpresa', width: 70},
                { name: 'anoPresentacion', index: 'anoPresentacion', width: 30,align:'right' },   
@@ -889,7 +889,7 @@ function buildGrids() {
 			shrinkToFit:true,
 			pager: '#pager_formato',
 		    viewrecords: true,
-		   	caption: "Formatos",
+		   	caption: "Resultado(s) de la búsqueda",
 		    sortorder: "asc",	   	    	   	   
        gridComplete: function(){
       		var ids = jQuery("#grid_formato").jqGrid('getDataIDs');

@@ -378,7 +378,7 @@ var formato14B= {
 	buildGrids : function () {	
 		formato14B.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo de Información','Estado','Visualizar','Editar','Anular','','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ini. Vig.','Año Fin Vig.','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -404,7 +404,7 @@ var formato14B= {
 				shrinkToFit:true,
 				pager: formato14B.paginadoResultados,
 			    viewrecords: true,
-			   	caption: "Formatos",
+			   	caption: "Resultado(s) de la búsqueda",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	      		var ids = formato14B.tablaResultados.jqGrid('getDataIDs');
@@ -1702,12 +1702,12 @@ var formato14B= {
 	},
 	validarFormulario : function() {		
 		if(formato14B.f_empresa.val().length == '' ) { 	
-			alert('Seleccione una empresa'); 
+			alert('Seleccione una Distribuidora Eléctrica'); 
 			formato14B.f_empresa.focus();
 		  	return false; 
 		}
 		if(formato14B.f_periodoEnvio.val().length == '' ) {		  
-			alert('Debe ingresar el periodo de presentacion');
+			alert('Debe ingresar el periodo a declarar');
 			formato14B.f_periodoEnvio.focus();
 			return false; 
 		}
@@ -1817,7 +1817,7 @@ var formato14B= {
 	},
 	validarArchivoCarga : function() {		
 		if(formato14B.f_empresa.val().length == '' ) { 	
-			alert('Seleccione una empresa para proceder con la carga de archivo'); 
+			alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
 			formato14B.f_empresa.focus();
 			return false; 
 		}

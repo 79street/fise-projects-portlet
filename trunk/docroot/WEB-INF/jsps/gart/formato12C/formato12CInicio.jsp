@@ -52,7 +52,7 @@ $(document).ready(function () {
 											<td colspan="8"></td>
 										</tr>
 										<tr>
-											<td><output>Empresa:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td colspan="7">
 												<form:select path="codEmpresaB" cssClass="select" cssStyle="width: 375px;">
 													<c:if test="${esAdministrador}">
@@ -67,11 +67,11 @@ $(document).ready(function () {
 										</tr>
 										<tr>
 											<td>
-												<output>Desde año:</output></td>
+												<output>Desde Año Decl.:</output></td>
 											<td>
 												<form:input path="anioDesde" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'anioDesde',4,0)" />
 											</td>
-											<td><output>Mes:</output></td>
+											<td><output>Mes Decl.:</output></td>
 											<td>
 												<form:select path="mesDesde" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="">-Seleccione-</form:option>
@@ -80,11 +80,11 @@ $(document).ready(function () {
 												
 											</td>
 											<td>
-												<output>Hasta año:</output></td>
+												<output>Hasta Año Decl.:</output></td>
 											<td>
 												<form:input path="anioHasta" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'anioHasta',4,0)" />
 											</td>
-											<td><output>Mes:</output></td>
+											<td><output>Mes Decl.:</output></td>
 											<td>
 												<form:select path="mesHasta" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="">-Seleccione-</form:option>
@@ -176,7 +176,7 @@ $(document).ready(function () {
 	</div>
 
 	
-	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
+	<div id="<portlet:namespace/>dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
