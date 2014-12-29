@@ -47,7 +47,7 @@ $(document).ready(function () {
 											<td colspan="8"></td>
 										</tr>
 										<tr>
-											<td><output>Empresa:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td colspan="7">
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">
 
@@ -62,11 +62,11 @@ $(document).ready(function () {
 											<td colspan="8"></td>
 										</tr>
 										<tr>
-											<td><output>Desde año:</output></td>
+											<td><output>Desde Año Decl.:</output></td>
 											<td>
 												<form:input path="anioDesde" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this);"/>
 											</td>
-											<td><output>Mes:</output></td>
+											<td><output>Mes Decl.:</output></td>
 											<td>
 												<form:select path="mesDesde" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="">-Seleccione-</form:option>
@@ -74,11 +74,11 @@ $(document).ready(function () {
 												</form:select>
 												
 											</td>
-											<td><output>Hasta año:</output></td>
+											<td><output>Hasta Año Decl.:</output></td>
 											<td>
 												<form:input path="anioHasta" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this);"/>
 											</td>
-											<td><output>Mes:</output></td>
+											<td><output>Mes Decl.:</output></td>
 											<td>
 												<form:select path="mesHasta" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="">-Seleccione-</form:option>
@@ -228,7 +228,7 @@ $(document).ready(function () {
 													  </td>	  
 													  </tr>	
 													  <tr>
-													   <td> <label style="font-size: 12px; font-weight:bold">Mes,Año y Etapa de Presentación:</label></td>
+													   <td> <label style="font-size: 12px; font-weight:bold">Periodo Declarado:</label></td>
 													   <td colspan="2">
 													     <form:select path="periodoEnvio" cssClass="select" cssStyle="width: 200px;">
 															<c:forEach items="${listaPeriodoEnvio}" var="periodo">

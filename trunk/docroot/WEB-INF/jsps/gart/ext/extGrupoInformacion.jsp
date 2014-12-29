@@ -148,7 +148,7 @@ var fiseGrupoInformacion= {
 		buildGrids : function () {	
 			fiseGrupoInformacion.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Grupo Inf.','Descripción','Año Pres.','Mes Pres.','Estado','Periodicidad','Visualizar','Editar','Anular'],
+		       colNames: ['Id Grupo Inf.','Descripción','Año Decl.','Mes Decl.','Estado','Periodicidad','Visualizar','Editar','Anular'],
 		       colModel: [
                        { name: 'idGrupoInformacion', index: 'idGrupoInformacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},	
@@ -169,7 +169,7 @@ var fiseGrupoInformacion= {
 					shrinkToFit:true,
 					pager: fiseGrupoInformacion.paginadoResultados,
 				    viewrecords: true,
-				   	caption: "Observaciones",
+				   	caption: "Resultado(s) de la búsqueda",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = fiseGrupoInformacion.tablaResultados.jqGrid('getDataIDs');

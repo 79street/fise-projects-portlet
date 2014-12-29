@@ -188,7 +188,7 @@ var fiseCargoFijo= {
 		buildGrids : function () {	
 			fiseCargoFijo.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físicos Emi.','N° Vales Físicos Canj.','N° Vales Digitales Emi.','Estado','Visualizar','Editar','Anular','',''],
+		       colNames: ['Dist. Eléct.','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físicos Emi.','N° Vales Físicos Canj.','N° Vales Digitales Emi.','Estado','Visualizar','Editar','Anular','',''],
 		       colModel: [
 						   { name: 'desEmpresa', index: 'desEmpresa', width: 50},
 			               { name: 'anioReporte', index: 'anioReporte', width: 30 },   
@@ -214,7 +214,7 @@ var fiseCargoFijo= {
 						shrinkToFit:true,
 						pager: fiseCargoFijo.paginadoResultados,
 					    viewrecords: true,
-					   	caption: "Cargos Fijos",
+					   	caption: "Resultado(s) de la búsqueda",
 					    sortorder: "asc",	   	    	   	   
 			       gridComplete: function(){
 			      		var ids = fiseCargoFijo.tablaResultados.jqGrid('getDataIDs');

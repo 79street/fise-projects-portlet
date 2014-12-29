@@ -47,7 +47,7 @@ $(document).ready(function () {
 											<td colspan="4"></td>
 										</tr>
 										<tr>
-											<td><output>Empresa:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td>
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">
 
@@ -76,12 +76,12 @@ $(document).ready(function () {
 											<td colspan="4"></td>
 										</tr>
 										<tr>
-											<td><output>Año:</output></td>
+											<td><output>Año Decl.:</output></td>
 											<td>
 												<form:input path="anioPresBusq" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											</td>
 											
-											<td><output>Mes:</output></td>
+											<td><output>Mes Decl.:</output></td>
 											<td>
 												<form:select path="mesPresBusq" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="">-Seleccione-</form:option>

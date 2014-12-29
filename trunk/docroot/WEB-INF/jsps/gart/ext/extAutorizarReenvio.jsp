@@ -92,7 +92,7 @@ var autorizarReenvio= {
 		buildGrids : function () {	
 			autorizarReenvio.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa.','Formato.','Año Pres.','Mes Pres.','Etapa','Estado','Aut.Reenvio','','','','','',''],
+		       colNames: ['Dist. Eléct.','Formato.','Año Decl.','Mes Decl.','Etapa','Estado','Aut.Reenvio','','','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 80},					   
 					   { name: 'formato', index: 'formato', width: 30},
@@ -118,7 +118,7 @@ var autorizarReenvio= {
 					shrinkToFit:true,
 					pager: autorizarReenvio.paginadoResultados,
 				    viewrecords: true,
-				   	caption: "Autorizar Reenvio",
+				   	caption: "Resultado(s) de la búsqueda",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = autorizarReenvio.tablaResultados.jqGrid('getDataIDs');

@@ -50,7 +50,7 @@ $(document).ready(function () {
 										</tr>
 										
 										<tr>
-											<td><output>Empresa:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td colspan="3">
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">
 
@@ -67,12 +67,12 @@ $(document).ready(function () {
 										</tr>
 										
 										<tr>
-											<td><output>Año:</output></td>											
+											<td><output>Año Repo.:</output></td>											
 											<td>
 												<form:input path="anioRepBusq" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											</td>
 											
-											<td><output>Mes:</output></td>
+											<td><output>Mes Repo.:</output></td>
 											<td>
 												<form:select path="mesRepBusq" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="">-Seleccione-</form:option>
@@ -118,14 +118,15 @@ $(document).ready(function () {
 									<tr>
 										<td></td>
 										<td></td>
-										<td></td>										
-										<td align="right" width="90px">
+										<td align="center" width="90px">
 											<div id="d_opc_crear">
 												<input type="button" class="net-button-small"
 													id="<portlet:namespace/>btnNuevoCargoFijo"
 													name="<portlet:namespace/>btnNuevoCargoFijo" value="Nuevo" />
 											</div>
-										</td>										
+										</td>	
+										<td></td>										
+																			
 									</tr>
 								</table>
 							</td>
@@ -176,7 +177,7 @@ $(document).ready(function () {
 												<form:input path="anioReporte"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											   </td>
 											   
-											   <td><label style="font-size: 12px; font-weight: bold">Mes Rep.:</label>
+											   <td><label style="font-size: 12px; font-weight: bold">Mes Repo.:</label>
 											   </td>
 											   <td>
 												 <form:select path="mesReporte" cssClass="select" cssStyle="width: 104px;">	

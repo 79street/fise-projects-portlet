@@ -162,7 +162,7 @@ var fiseObservacion= {
 					shrinkToFit:true,
 					pager: fiseObservacion.paginadoResultados,
 				    viewrecords: true,
-				   	caption: "Observaciones",
+				   	caption: "Resultado(s) de la búsqueda",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = fiseObservacion.tablaResultados.jqGrid('getDataIDs');
@@ -434,8 +434,8 @@ var fiseObservacion= {
 				alert('Debe ingresar descripción.'); 
 				fiseObservacion.f_descripcion.focus();
 			  	return false; 
-			}else if(fiseObservacion.f_descripcion.val().length > 100){
-				alert('La  descripción acepta como máximo 100 caracteres.'); 
+			}else if(fiseObservacion.f_descripcion.val().length > 499){
+				alert('La  descripción acepta como máximo 500 caracteres.'); 
 				fiseObservacion.f_descripcion.focus();
 			  	return false; 
 			}else{
