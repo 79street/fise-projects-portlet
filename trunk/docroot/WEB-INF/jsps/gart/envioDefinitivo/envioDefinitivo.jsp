@@ -47,7 +47,7 @@ $(document).ready(function () {
 											<td colspan="4"></td>
 										</tr>
 										<tr>
-											<td><output>Empresa:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td>
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">												
 													<form:options items="${envioDefinitivoBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
