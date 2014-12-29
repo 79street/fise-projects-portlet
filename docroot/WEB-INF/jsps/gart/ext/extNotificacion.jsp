@@ -84,7 +84,7 @@ var notificarValidar= {
 			
 			
 			//mensajes						
-			this.mensajeNotificar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Realizando Notificacion </h3>';			
+			this.mensajeNotificar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Notificacion </h3>';			
 			this.mensajeProcesando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Datos </h3>';
 			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
 			
@@ -529,7 +529,7 @@ var notificarValidar= {
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarNotificacion : function(codEmpresa,anioPres,mesPres,anioEjec,mesEjec,anioIniVig,anioFinVig,codetapa,codformato){	
-				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				var addhtml='¿Está seguro que desea excluir el registro seleccionado?';
 				notificarValidar.dialogConfirmContentEliminar.html(addhtml);
 				notificarValidar.dialogConfirmEliminar.dialog("open");			
 				cod_Empresa=codEmpresa;
@@ -563,7 +563,7 @@ var notificarValidar= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro eliminado con éxito';					
+						var addhtml2='Registro excluido con éxito';					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessageEliminar.dialog("open");
 						notificarValidar.buscarNotificacion();
