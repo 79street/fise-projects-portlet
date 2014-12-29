@@ -687,7 +687,7 @@ var fiseCargoFijo= {
 		//funcion para validar ingreso de datos
 		validarFormulario : function() {		
 			if(fiseCargoFijo.f_empresa.val().length == ''){
-				alert('Debe seleccionar una empresa.'); 
+				alert('Debe seleccionar una Distribuidora Eléctrica.'); 
 				fiseCargoFijo.f_empresa.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_anioRep.val().length == ''){
