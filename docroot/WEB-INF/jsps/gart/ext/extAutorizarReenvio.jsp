@@ -155,7 +155,7 @@ var autorizarReenvio= {
 		/**Function para confirmar si quiere autorizar el reenvio*/
 		confirmarAutorizarReenvio : function(codEmpresa,anioPres,mesPres,anioEjec,mesEjec,anioIniVig,anioFinVig,etapa,formato){
 			console.debug("entranado a confirmar reenvio:  "+codEmpresa);
-			var addhtml='¿Está seguro que desea autorizar reenvio del registro seleccionado?';
+			var addhtml='¿Está seguro que desea autorizar el reenvio del registro seleccionado?';
 			autorizarReenvio.dialogConfirmContent.html(addhtml);
 			autorizarReenvio.dialogConfirm.dialog("open");				
 			cod_Empresa=codEmpresa;

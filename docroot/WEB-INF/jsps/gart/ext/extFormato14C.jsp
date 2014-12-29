@@ -2213,7 +2213,7 @@ var formato14C= {
 							$('#<portlet:namespace/>envioDefinitivoF14C').css('display','block');
 							
 						}else if(data.resultado == "Duplicado"){				
-							var addhtml2='El periodo de ejecucion ya esta regsitrado.';
+							var addhtml2='El periodo de ejecución ya se encuentra regsitrado.';
 							formato14C.dialogMessageContent.html(addhtml2);
 							formato14C.dialogMessage.dialog("open");						
 							formato14C.initBlockUI();
@@ -2280,7 +2280,7 @@ var formato14C= {
 			  	return false; 
 			}else if(formato14C.f_periodoEnvio.val()==null || 
 					formato14C.f_periodoEnvio.val().length == '' ) {		  
-				alert('Debe ingresar periodo de presentacion');
+				alert('Debe ingresar periodo de presentación');
 				formato14C.f_periodoEnvio.focus();
 				return false; 
 			}else if(flagPeriodo=='S' && anioInicio.length == ''){				 
@@ -2292,23 +2292,23 @@ var formato14C= {
 				$('#anoFinVigencia').focus();
 				return false; 		
 		    }else if(flagPeriodo=='S' && !validarAnioInicioVig(anioInicio)){				 
-				alert('Debe ingresar el año de inicio de vigencia valido');
+				alert('Debe ingresar el año de inicio de vigencia válido');
 				anioInicio.focus();
 				return false; 				
 			}else if(flagPeriodo=='S' && !validarAnioFinVig(anioFin)){				 
-				alert('Debe ingresar el año de fin de vigencia valido');
+				alert('Debe ingresar el año de fin de vigencia válido');
 				anioFin.focus();
 				return false; 		
 		    }else if(formato14C.f_numRural.val().length == '' ) {		  
-				alert('Debe ingresar el numero de beneficiarios de la zona rural');
+				alert('Debe ingresar el número de beneficiarios de la zona rural');
 				formato14C.f_numRural.focus();
 				return false; 
 			}else if(formato14C.f_numUrbProv.val().length == '' ) {		  
-				alert('Debe ingresar el numero de beneficiarios de la zona urbana-provincias');
+				alert('Debe ingresar el número de beneficiarios de la zona urbana-provincias');
 				formato14C.f_numUrbProv.focus();
 				return false; 
 			}else if(formato14C.f_numUrbLima.val().length == '' ) {		  
-				alert('Debe ingresar el numero de beneficiarios de la zona urbana-lima');
+				alert('Debe ingresar el número de beneficiarios de la zona urbana-lima');
 				formato14C.f_numUrbLima.focus();
 				return false; 
 			}else if(formato14C.f_costoPromRural.val().length == '' ) {		  
@@ -2894,7 +2894,7 @@ var formato14C= {
 						formato14C.tablaObservacion[0].refreshIndex();
 						formato14C.initBlockUI();
 					}else{
-						alert("Error al realizar la validacion");
+						alert("Error al realizar la validación");
 						formato14C.initBlockUI();	
 					}
 				},error : function(){

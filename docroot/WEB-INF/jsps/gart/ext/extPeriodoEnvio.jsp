@@ -572,11 +572,15 @@ var periodoEnvio= {
 				periodoEnvio.f_codEmpresa.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_anoPres.val().length == ''){
-				alert('Debe ingresar año de presentacion'); 
+				alert('Debe ingresar año de presentación'); 
+				periodoEnvio.f_anoPres.focus();
+			  	return false; 
+			}else if(periodoEnvio.f_anoPres.val().length != 4){
+				alert('Debe ingresar año de presentación válido'); 
 				periodoEnvio.f_anoPres.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_mesPres.val().length == ''){
-				alert('Debe seleccionar mes de presentacion'); 
+				alert('Debe seleccionar mes de presentación'); 
 				periodoEnvio.f_mesPres.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_formato.val().length == ''){
@@ -596,7 +600,7 @@ var periodoEnvio= {
 				periodoEnvio.f_desde.focus();
 			  	return false; 
 			}else if(!validaFechaDDMMAAAA(periodoEnvio.f_desde.val())){
-				alert('Debe ingresar una fecha desde valida'); 
+				alert('Debe ingresar una fecha desde válida'); 
 				periodoEnvio.f_desde.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_hasta.val().length == ''){
@@ -604,16 +608,16 @@ var periodoEnvio= {
 				periodoEnvio.f_hasta.focus();
 			  	return false; 
 			}else if(!validaFechaDDMMAAAA(periodoEnvio.f_hasta.val())){
-				alert('Debe ingresar una fecha hasta valida'); 
+				alert('Debe ingresar una fecha hasta válida'); 
 				periodoEnvio.f_desde.focus();
 			  	return false; 
 			}else if(!periodoEnvio.f_fechaAmpl.val().length == '' && 
 					!validaFechaDDMMAAAA(periodoEnvio.f_fechaAmpl.val())){
-				alert('Debe ingresar fecha ampliacion valida'); 
+				alert('Debe ingresar fecha ampliacion válida'); 
 				periodoEnvio.f_fechaAmpl.focus();
 			  	return false; 			
 			}else if(periodoEnvio.f_dias.val().length == ''){
-				alert('Debe ingresar el numero de dias de notificacion antes del cierre'); 
+				alert('Debe ingresar el número de dias de notificación antes del cierre'); 
 				periodoEnvio.f_dias.focus();
 			  	return false; 
 			}else if(periodoEnvio.verificarFormato(form)==true){
@@ -621,8 +625,16 @@ var periodoEnvio= {
 					alert('Debe ingresar el año de inicio de vigencia'); 
 					periodoEnvio.f_anoIniVigencia.focus();
 				  	return false; 
+				}else if(periodoEnvio.f_anoIniVigencia.val().length != 4){
+					alert('Debe ingresar el año de inicio de vigencia válido'); 
+					periodoEnvio.f_anoIniVigencia.focus();
+				  	return false; 
 				}else if(periodoEnvio.f_anoFinVigencia.val().length == ''){
 					alert('Debe ingresar el año fin de vigencia'); 
+					periodoEnvio.f_anoFinVigencia.focus();
+				  	return false; 
+				}else if(periodoEnvio.f_anoFinVigencia.val().length != 4){
+					alert('Debe ingresar el año fin de vigencia válido'); 
 					periodoEnvio.f_anoFinVigencia.focus();
 				  	return false; 
 				}else{

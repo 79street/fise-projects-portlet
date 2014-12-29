@@ -50,6 +50,8 @@ var fiseGrupoInformacion= {
 		f_descripcion:null,	
 		f_estado :null,
 		f_tipo :null,
+		f_anoPres:null,
+		f_mesPres:null,
 		
 		//grillas
 		tablaResultados:null,
@@ -103,6 +105,8 @@ var fiseGrupoInformacion= {
 			this.f_descripcion=$('#descripcion');
 			this.f_estado=$('#estado');
 			this.f_tipo=$('#tipo');
+			this.f_anoPres=$('#anioPres');	
+			this.f_mesPres=$("#mesPres");
 			
 			
 			//grillas			
@@ -144,10 +148,12 @@ var fiseGrupoInformacion= {
 		buildGrids : function () {	
 			fiseGrupoInformacion.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Grupo Inf.','Descripción','Estado','Periodicidad','Visualizar','Editar','Anular'],
+		       colNames: ['Id Grupo Inf.','Descripción','Año Pres.','Mes Pres.','Estado','Periodicidad','Visualizar','Editar','Anular'],
 		       colModel: [
                        { name: 'idGrupoInformacion', index: 'idGrupoInformacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},	
+					   { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
+		               { name: 'descMesPresentacion', index: 'descMesPresentacion', width: 30},	   
 					   { name: 'descEstado', index: 'descEstado', width: 20,align:'center'},
 					   { name: 'tipo', index: 'tipo', width: 20},
 		               { name: 'view', index: 'view', width: 20,align:'center' },
@@ -207,11 +213,21 @@ var fiseGrupoInformacion= {
 				});			
 		},		
 		//funcion para nuevo registro
-		<portlet:namespace/>nuevoGrupoInformacion : function(){				
+		<portlet:namespace/>nuevoGrupoInformacion : function(){	
+			
+			var f = new Date();
+			
 			fiseGrupoInformacion.f_idGrupoInf.val('');
-			fiseGrupoInformacion.f_descripcion.val('');	    	
+			fiseGrupoInformacion.f_descripcion.val('');	  
+			
+			fiseGrupoInformacion.f_anoPres.val(f.getFullYear());
+			
+			fiseGrupoInformacion.f_mesPres.val(f.getMonth() +1);	
 			     	
         	fiseGrupoInformacion.f_descripcion.removeAttr("disabled");
+        	fiseGrupoInformacion.f_anoPres.removeAttr("disabled");
+        	fiseGrupoInformacion.f_mesPres.removeAttr("disabled");
+        	
         	$('#rbtMensual').removeAttr("disabled");
         	$('#rbtBienal').removeAttr("disabled");
         	$('#rbtActivo').removeAttr("disabled");
@@ -248,6 +264,8 @@ var fiseGrupoInformacion= {
 					    	fiseGrupoInformacion.initBlockUI();   			
 										        	
 				        	fiseGrupoInformacion.f_descripcion.attr("disabled",true);
+				        	fiseGrupoInformacion.f_anoPres.attr("disabled",true);
+				        	fiseGrupoInformacion.f_mesPres.attr("disabled",true);
 				        	$('#rbtMensual').attr("disabled",true);
 				        	$('#rbtBienal').attr("disabled",true);        	
 				        	$('#rbtActivo').attr("disabled",true);
@@ -290,6 +308,8 @@ var fiseGrupoInformacion= {
 								fiseGrupoInformacion.initBlockUI();										
 									        	
 								fiseGrupoInformacion.f_descripcion.removeAttr("disabled");
+								fiseGrupoInformacion.f_anoPres.removeAttr("disabled");
+								fiseGrupoInformacion.f_mesPres.removeAttr("disabled");
 					        	$('#rbtMensual').removeAttr("disabled");
 					        	$('#rbtBienal').removeAttr("disabled");
 					        	$('#rbtActivo').removeAttr("disabled");
@@ -314,6 +334,8 @@ var fiseGrupoInformacion= {
 		llenarDatosEditar : function(bean){			
 			fiseGrupoInformacion.f_idGrupoInf.val(bean.idGrupoInf);
 			fiseGrupoInformacion.f_descripcion.val(bean.descripcion); 
+			fiseGrupoInformacion.f_anoPres.val(bean.anioPres);
+			fiseGrupoInformacion.f_mesPres.val(bean.mesPres);
 			
 			console.debug("Valor de tipo..:  "+bean.tipo);
 			if(bean.tipo=='MENSUAL'){	
@@ -457,6 +479,18 @@ var fiseGrupoInformacion= {
 			}else if(fiseGrupoInformacion.f_descripcion.val().length > 100){
 				alert('La  descripción acepta como máximo 100 caracteres.'); 
 				fiseGrupoInformacion.f_descripcion.focus();
+			  	return false; 
+			}else if(fiseGrupoInformacion.f_anoPres.val().length == ''){
+				alert('Debe ingresar año de presentación'); 
+				fiseGrupoInformacion.f_anoPres.focus();
+			  	return false; 
+			}else if(fiseGrupoInformacion.f_anoPres.val().length != 4){
+				alert('Debe ingresar año de presentación válido'); 
+				fiseGrupoInformacion.f_anoPres.focus();
+			  	return false; 
+			}else if(fiseGrupoInformacion.f_mesPres.val().length == ''){
+				alert('Debe seleccionar mes de presentación'); 
+				fiseGrupoInformacion.f_mesPres.focus();
 			  	return false; 
 			}else{
 				return true;
