@@ -148,7 +148,7 @@ var fiseGrupoInformacion= {
 		buildGrids : function () {	
 			fiseGrupoInformacion.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Grupo Inf.','Descripción','Año Decl.','Mes Decl.','Estado','Periodicidad','Visualizar','Editar','Anular'],
+		       colNames: ['Id Grupo Inf.','Descripción','Año Decl.','Mes Decl.','Estado','Periodicidad','Visualizar','Editar','Desactivar'],
 		       colModel: [
                        { name: 'idGrupoInformacion', index: 'idGrupoInformacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},	
@@ -362,7 +362,7 @@ var fiseGrupoInformacion= {
 				alert("Su estado es Inactivo no se puede Eliminar"); 	
 			}else{
 				console.debug("entranado a eliminar confirmar:  "+idGrupoInf);
-				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+				var addhtml='¿Está seguro que desea desactivar el Grupo de Información seleccionado?';
 				fiseGrupoInformacion.dialogConfirmContent.html(addhtml);
 				fiseGrupoInformacion.dialogConfirm.dialog("open");	
 				id_GrupoInf=idGrupoInf;
@@ -382,14 +382,14 @@ var fiseGrupoInformacion= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro eliminado con éxito';					
+						var addhtml2='Grupo de Información desactivado con éxito';					
 						fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 						fiseGrupoInformacion.dialogMessage.dialog("open");
 						fiseGrupoInformacion.buscarGrupoInformacion();
 						fiseGrupoInformacion.initBlockUI();
 					}
 					else{
-						alert("Error al eliminar el registro");
+						alert("Error al desactivar el Grupo de Información");
 						fiseGrupoInformacion.initBlockUI();
 					}
 				},error : function(){
@@ -412,7 +412,7 @@ var fiseGrupoInformacion= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos guardados satisfactoriamente';							
+							var addhtml2='El Grupo de Información se guardó satisfactoriamente';							
 							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 							fiseGrupoInformacion.dialogMessage.dialog("open");							
 							fiseGrupoInformacion.initBlockUI();						
@@ -451,7 +451,7 @@ var fiseGrupoInformacion= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos actualizados satisfactoriamente';
+							var addhtml2='El Grupo de Información se actualizó satisfactoriamente';
 							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 							fiseGrupoInformacion.dialogMessage.dialog("open");						
 							fiseGrupoInformacion.initBlockUI();								
@@ -481,15 +481,15 @@ var fiseGrupoInformacion= {
 				fiseGrupoInformacion.f_descripcion.focus();
 			  	return false; 
 			}else if(fiseGrupoInformacion.f_anoPres.val().length == ''){
-				alert('Debe ingresar año de presentación'); 
+				alert('Debe ingresar año a declarar'); 
 				fiseGrupoInformacion.f_anoPres.focus();
 			  	return false; 
 			}else if(fiseGrupoInformacion.f_anoPres.val().length != 4){
-				alert('Debe ingresar año de presentación válido'); 
+				alert('Debe ingresar año a declarar válido'); 
 				fiseGrupoInformacion.f_anoPres.focus();
 			  	return false; 
 			}else if(fiseGrupoInformacion.f_mesPres.val().length == ''){
-				alert('Debe seleccionar mes de presentación'); 
+				alert('Debe seleccionar mes a declarar'); 
 				fiseGrupoInformacion.f_mesPres.focus();
 			  	return false; 
 			}else{

@@ -568,19 +568,19 @@ var periodoEnvio= {
 			var form = periodoEnvio.f_formato.val();
 			console.debug("id formato al validar formulario: "+form);
 			if(periodoEnvio.f_codEmpresa.val().length == ''){
-				alert('Seleccione una empresa'); 
+				alert('Seleccione una Distribuidora Eléctrica.'); 
 				periodoEnvio.f_codEmpresa.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_anoPres.val().length == ''){
-				alert('Debe ingresar año de presentación'); 
+				alert('Debe ingresar año a declarar'); 
 				periodoEnvio.f_anoPres.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_anoPres.val().length != 4){
-				alert('Debe ingresar año de presentación válido'); 
+				alert('Debe ingresar año a declarar válido'); 
 				periodoEnvio.f_anoPres.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_mesPres.val().length == ''){
-				alert('Debe seleccionar mes de presentación'); 
+				alert('Debe seleccionar mes a declarar'); 
 				periodoEnvio.f_mesPres.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_formato.val().length == ''){

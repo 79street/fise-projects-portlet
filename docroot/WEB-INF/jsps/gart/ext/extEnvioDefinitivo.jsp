@@ -68,7 +68,7 @@ var envioDefinitivoGlobal= {
 			
 			
 			//mensajes						
-			this.mensajeEnvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Realizando Envio Definitivo </h3>';			
+			this.mensajeEnvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Envio Definitivo </h3>';			
 			this.mensajeReporte='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo el Reporte </h3>';
 			
 			//urls

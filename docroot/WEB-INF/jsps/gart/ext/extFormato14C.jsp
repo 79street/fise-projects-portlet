@@ -2275,12 +2275,12 @@ var formato14C= {
 			var anioFin = $('#anoFinVigencia').val();
 			console.debug("flag periodo al validar:  "+flagPeriodo);
 			if(formato14C.f_empresa.val().length == '' ) { 	
-				alert('Seleccione una empresa'); 
+				alert('Seleccione una Distribuidora Eléctrica.'); 
 				formato14C.f_empresa.focus();
 			  	return false; 
 			}else if(formato14C.f_periodoEnvio.val()==null || 
 					formato14C.f_periodoEnvio.val().length == '' ) {		  
-				alert('Debe ingresar periodo de presentación');
+				alert('Debe ingresar periodo a declarar');
 				formato14C.f_periodoEnvio.focus();
 				return false; 
 			}else if(flagPeriodo=='S' && anioInicio.length == ''){				 

@@ -106,6 +106,7 @@ $(document).ready(function () {
 													<form:option value="LEV.OBS">LEV.OBS</form:option>
 													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
 													<form:option value="RECONOCIDO">RECONOCIDO</form:option>
+													<form:option value="ESTABLECIDO">ESTABLECIDO</form:option>
 												</form:select>
 											</td>
 											<td><output>Habilitado Envio:</output></td>
