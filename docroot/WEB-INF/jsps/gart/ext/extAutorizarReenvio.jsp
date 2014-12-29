@@ -52,7 +52,7 @@ var autorizarReenvio= {
 			
 			
 			//mensajes						
-			this.mensajeReenvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Autorizando Reenvio </h3>';			
+			this.mensajeReenvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Reenvio </h3>';			
 			
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="busquedaReenvio" />';					
@@ -189,7 +189,7 @@ var autorizarReenvio= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro reenviado con exito';					
+						var addhtml2='El Registro se reenvió con exito';					
 						autorizarReenvio.dialogMessageContent.html(addhtml2);
 					    autorizarReenvio.dialogMessage.dialog("open");						
 						autorizarReenvio.buscarAutorizarReenvio();

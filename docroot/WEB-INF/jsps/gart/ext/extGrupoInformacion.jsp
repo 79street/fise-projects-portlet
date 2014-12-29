@@ -78,7 +78,7 @@ var fiseGrupoInformacion= {
 			//mensajes			
 			this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
 			this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
-			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
+			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Desactivando </h3>';
 			this.mensajeGuardando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>';
 			this.mensajeActualizando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Actualizando Datos </h3>';
 			
@@ -359,7 +359,7 @@ var fiseGrupoInformacion= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarGrupoInformacion : function(idGrupoInf,desEstado){
 			if(desEstado=='Inactivo'){
-				alert("Su estado es Inactivo no se puede Eliminar"); 	
+				alert("Su estado es Inactivo no se puede desactivar"); 	
 			}else{
 				console.debug("entranado a eliminar confirmar:  "+idGrupoInf);
 				var addhtml='¿Está seguro que desea desactivar el Grupo de Información seleccionado?';
@@ -424,7 +424,7 @@ var fiseGrupoInformacion= {
 							$('#<portlet:namespace/>actualizarGrupoInf').css('display','block');
 							
 						}else{				
-							var addhtml2='Se produjo un error al guardar los datos.';
+							var addhtml2='Se produjo un error al guardar el Grupo de Información .';
 							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 							fiseGrupoInformacion.dialogMessage.dialog("open");						
 							fiseGrupoInformacion.initBlockUI();
@@ -456,7 +456,7 @@ var fiseGrupoInformacion= {
 							fiseGrupoInformacion.dialogMessage.dialog("open");						
 							fiseGrupoInformacion.initBlockUI();								
 						}else{				
-							var addhtml2='Se produjo un error al actualizar los datos.';
+							var addhtml2='Se produjo un error al actualizar el Grupo de Información .';
 							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 							fiseGrupoInformacion.dialogMessage.dialog("open");						
 							fiseGrupoInformacion.initBlockUI();

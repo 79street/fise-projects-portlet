@@ -568,7 +568,7 @@ var fiseCargoFijo= {
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarCargoFijo : function(codEmpresa, anioRep, mesRep){			
-			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+			var addhtml='¿Está seguro que desea eliminar el Cargo Fijo seleccionado?';
 			fiseCargoFijo.dialogConfirmContent.html(addhtml);
 			fiseCargoFijo.dialogConfirm.dialog("open");	
 			console.debug("codigo empresa: "+codEmpresa);
@@ -593,14 +593,14 @@ var fiseCargoFijo= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro eliminado con éxito';					
+						var addhtml2='El Cargo Fijo fue eliminado con éxito';					
 						fiseCargoFijo.dialogMessageContent.html(addhtml2);
 						fiseCargoFijo.dialogMessage.dialog("open");
 						fiseCargoFijo.botonBuscar.trigger('click');
 						fiseCargoFijo.initBlockUI();
 					}
 					else{
-						alert("Error al eliminar el registro");
+						alert("Error al eliminar el registro de Cargo Fijo");
 						fiseCargoFijo.initBlockUI();
 					}
 				},error : function(){
@@ -625,7 +625,7 @@ var fiseCargoFijo= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos guardados satisfactoriamente';
+							var addhtml2='El Cargo Fijo se guardó satisfactoriamente';
 							
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");							
@@ -634,12 +634,12 @@ var fiseCargoFijo= {
 							$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');				
 							
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar los datos.';
+							var addhtml2='Se produjo un error al guardar el Cargo Fijo.';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtml2='Ya existe registrado un cargo fijo con la misma empresa, año y mes';
+							var addhtml2='Ya existe registrado un Cargo Fijo con la misma Dist.Eléct, Año y Mes';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();
@@ -667,12 +667,12 @@ var fiseCargoFijo= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos actualizados satisfactoriamente';
+							var addhtml2='El Cargo Fijo se actualizó satisfactoriamente';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();								
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar los datos.';
+							var addhtml2='Se produjo un error al actualizar el Cargo Fijo.';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();

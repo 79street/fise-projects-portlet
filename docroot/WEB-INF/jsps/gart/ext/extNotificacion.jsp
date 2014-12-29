@@ -86,7 +86,7 @@ var notificarValidar= {
 			//mensajes						
 			this.mensajeNotificar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Notificacion </h3>';			
 			this.mensajeProcesando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Datos </h3>';
-			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
+			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Excluyendo </h3>';
 			
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="busquedaNotificacion" />';					

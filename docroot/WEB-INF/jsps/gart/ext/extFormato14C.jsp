@@ -609,27 +609,27 @@ var formato14C= {
 		validarBusqueda : function(){			
 			if(formato14C.i_anioDesde.val().length != '' || formato14C.i_anioHasta.val().length != '') {		  
 				if(formato14C.i_anioDesde.val().length == ''){					 
-				     alert('Por favor, Ingrese un año desde');
+				     alert('Por favor, Ingrese un año declarado desde');
 				     formato14C.i_anioDesde.focus();
 				     return false;		
 				} else if(formato14C.i_anioHasta.val().length == '' ) {
-				     alert('Por favor, Ingrese un año hasta');
+				     alert('Por favor, Ingrese un año declarado hasta');
 					 formato14C.i_anioHasta.focus();
 					 return false;
 				}else if (isNaN(trim(formato14C.i_anioDesde.val())) || 
 						formato14C.i_anioDesde.val().length<4 || 
 						parseFloat(trim(formato14C.i_anioDesde.val()))<1900){
-				     alert('Ingrese un año desde válido');
+				     alert('Ingrese un año declarado desde válido');
 				     formato14C.i_anioDesde.focus();
 				     return false;		
 				}else if (isNaN(trim(formato14C.i_anioHasta.val())) || 
 						formato14C.i_anioDesde.val().length<4 || 
 						parseFloat(trim(formato14C.i_anioHasta.val()))<1900){
-				     alert('Ingrese un año hasta válido');
+				     alert('Ingrese un año declarado hasta válido');
 				     formato14C.i_anioHasta.focus();
 				     return false;					 
 			   }else if(parseFloat(formato14C.i_anioDesde.val()) > parseFloat(formato14C.i_anioHasta.val()) ){
-				    alert('El año desde no puede exceder al año hasta');
+				    alert('El año declarado desde no puede exceder al año declarado hasta');
 				    return false;					 
 			  }else{
 				  return true;
@@ -763,7 +763,7 @@ var formato14C= {
 							}
 					});			
 				}else{
-					alert(" No tiene autorización para realizar esta operación");
+					alert("No tiene autorización para realizar esta operación");
 				}				
 			}else if(flagOperacion=='CERRADO'){
 				alert(" Está fuera de plazo");
@@ -925,7 +925,7 @@ var formato14C= {
 					process = false;
 				}
 				if(process){
-					var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+					var addhtml='¿Está seguro que desea eliminar el Formato 14C seleccionado?';
 					formato14C.dialogConfirmContent.html(addhtml);
 					formato14C.dialogConfirm.dialog("open");
 					cod_Empresa=codEmpresa;
@@ -935,7 +935,7 @@ var formato14C= {
 					ano_Fin_Vigencia=anoFinVigencia;
 					cod_Etapa=etapa;	
 				}else{
-					alert(" No tiene autorización para realizar esta operación");	
+					alert("No tiene autorización para realizar esta operación");	
 				}			
 			}else if(flagOperacion=='CERRADO'){
 				alert(" Está fuera de plazo");
@@ -960,14 +960,14 @@ var formato14C= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro eliminado con éxito';					
+						var addhtml2='El Formato 14C se eliminó con éxito';					
 						formato14C.dialogMessageContent.html(addhtml2);
 						formato14C.dialogMessage.dialog("open");
 						formato14C.buscarF14C();
 						formato14C.initBlockUI();
 					}
 					else{
-						alert("Error al eliminar el registro");
+						alert("Error al eliminar el Formato 14C");
 						formato14C.initBlockUI();
 					}
 				},error : function(){
@@ -2202,7 +2202,7 @@ var formato14C= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos guardados satisfactoriamente';
+							var addhtml2='El Formato 14C se guardó satisfactoriamente';
 							formato14C.dialogMessageContent.html(addhtml2);
 							formato14C.dialogMessage.dialog("open");							
 							formato14C.initBlockUI();							
@@ -2213,12 +2213,12 @@ var formato14C= {
 							$('#<portlet:namespace/>envioDefinitivoF14C').css('display','block');
 							
 						}else if(data.resultado == "Duplicado"){				
-							var addhtml2='El periodo de ejecución ya se encuentra regsitrado.';
+							var addhtml2='El periodo declarado ya se encuentra regsitrado.';
 							formato14C.dialogMessageContent.html(addhtml2);
 							formato14C.dialogMessage.dialog("open");						
 							formato14C.initBlockUI();
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar los datos.';
+							var addhtml2='Se produjo un error al guardar el Formato 14C.';
 							formato14C.dialogMessageContent.html(addhtml2);
 							formato14C.dialogMessage.dialog("open");						
 							formato14C.initBlockUI();
@@ -2248,7 +2248,7 @@ var formato14C= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos actualizados satisfactoriamente';
+							var addhtml2='El Formato 14C se actualizó satisfactoriamente';
 							formato14C.dialogMessageContent.html(addhtml2);
 							formato14C.dialogMessage.dialog("open");						
 							formato14C.initBlockUI();
@@ -2256,7 +2256,7 @@ var formato14C= {
 							//formato14C.divNuevo.hide();
 							//formato14C.divBuscar.show();		
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar los datos.';
+							var addhtml2='Se produjo un error al actualizar el Formato 14C.';
 							formato14C.dialogMessageContent.html(addhtml2);
 							formato14C.dialogMessage.dialog("open");						
 							formato14C.initBlockUI();
@@ -2920,7 +2920,7 @@ var formato14C= {
 					if(gridData!=null){
 						formato14C.verReporteF14C();	
 					}else{
-						alert("Error al mostrar el reporte");
+						alert("Error al mostrar el reporte del Formato 14C");
 						formato14C.initBlockUI();
 					}
 					
@@ -2953,7 +2953,7 @@ var formato14C= {
 		},
 		//funcion para confirmar envio denifitivo
 		confirmarEnvioDefinitivoF14C : function(){	
-			var addhtml='¿Está seguro que desea realizar el envío definitivo?';
+			var addhtml='¿Está seguro que desea realizar el envío definitivo del Formato 14C?';
 			formato14C.dialogConfirmEnvioContent.html(addhtml);
 			formato14C.dialogConfirmEnvio.dialog("open");
 		},
@@ -2974,7 +2974,7 @@ var formato14C= {
 				},
 				success : function(gridData) {
 					if(gridData!=null){
-						var addhtml='Se realizó el envío satisfactoriamente';					
+						var addhtml='El Formato 14C se envió satisfactoriamente';					
 						formato14C.dialogMessageContent.html(addhtml);
 						formato14C.dialogMessageReport.dialog("open");
 						formato14C.initBlockUI();	
@@ -2982,7 +2982,7 @@ var formato14C= {
 					   // formato14C.divBuscar.show();
 					   // formato14C.botonBuscar.trigger('click');
 					}else{
-						alert("Error al realizar el envio definitivo");
+						alert("Error al realizar el envio definitivo del Formato 14C");
 						formato14C.initBlockUI();
 					}					
 				},error : function(){
@@ -3010,7 +3010,7 @@ var formato14C= {
 					if(gridData!=null){
 						formato14C.verReporteF14C();	
 					}else{
-						alert("Error al mostrar el reporte");
+						alert("Error al mostrar el reporte del  Formato 14C");
 						formato14C.initBlockUI();	
 					}					
 				},error : function(){
@@ -3038,7 +3038,7 @@ var formato14C= {
 					if(gridData!=null){
 						formato14C.verReporteF14C();	
 					}else{
-						alert("Error al mostrar el reporte");
+						alert("Error al mostrar el reporte del Formato 14C");
 						formato14C.initBlockUI();		
 					}					
 				},error : function(){
@@ -3071,7 +3071,7 @@ var formato14C= {
 			}
 			if(formato14C.f_periodoEnvio.val()==null || 
 					formato14C.f_periodoEnvio.val().length == '' ) {		  
-				alert('Debe ingresar el periodo de presentación');
+				alert('Debe ingresar el periodo a declarar');
 				formato14C.f_periodoEnvio.focus();
 				return false; 
 			}

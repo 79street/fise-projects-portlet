@@ -362,7 +362,7 @@ var fiseObservacion= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos guardados satisfactoriamente';
+							var addhtml2='La Observación se guardó satisfactoriamente';
 							
 							fiseObservacion.dialogMessageContent.html(addhtml2);
 							fiseObservacion.dialogMessage.dialog("open");							
@@ -375,12 +375,12 @@ var fiseObservacion= {
 							$('#<portlet:namespace/>actualizarfiseObservacion').css('display','block');
 							
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar los datos.';
+							var addhtml2='Se produjo un error al guardar la Observación.';
 							fiseObservacion.dialogMessageContent.html(addhtml2);
 							fiseObservacion.dialogMessage.dialog("open");						
 							fiseObservacion.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtml2='Ya existe registrado una observación con este Id';
+							var addhtml2='Ya existe registrado una Observación con este Id';
 							fiseObservacion.dialogMessageContent.html(addhtml2);
 							fiseObservacion.dialogMessage.dialog("open");						
 							fiseObservacion.initBlockUI();
@@ -406,12 +406,12 @@ var fiseObservacion= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos actualizados satisfactoriamente';
+							var addhtml2='La Observación se actualizó satisfactoriamente';
 							fiseObservacion.dialogMessageContent.html(addhtml2);
 							fiseObservacion.dialogMessage.dialog("open");						
 							fiseObservacion.initBlockUI();								
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar los datos.';
+							var addhtml2='Se produjo un error al actualizar la Observación.';
 							fiseObservacion.dialogMessageContent.html(addhtml2);
 							fiseObservacion.dialogMessage.dialog("open");						
 							fiseObservacion.initBlockUI();

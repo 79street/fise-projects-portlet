@@ -449,7 +449,7 @@ var periodoEnvio= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarPeriodoEnvio : function(secuencia){
 			console.debug("entranado a eliminar confirmar:  "+secuencia);
-			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+			var addhtml='¿Está seguro que desea eliminar el Control de Remisión seleccionado?';
 			periodoEnvio.dialogConfirmContent.html(addhtml);
 			periodoEnvio.dialogConfirm.dialog("open");	
 			cod_secuencia=secuencia;
@@ -467,14 +467,14 @@ var periodoEnvio= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro eliminado con éxito';					
+						var addhtml2='El Control de Remisión fue eliminado con éxito';					
 						periodoEnvio.dialogMessageContent.html(addhtml2);
 						periodoEnvio.dialogMessage.dialog("open");
 						periodoEnvio.buscarPeriodoEnvio();
 						periodoEnvio.initBlockUI();
 					}
 					else{
-						alert("Error al eliminar el registro");
+						alert("Error al eliminar el registro de Control de Remisión");
 						periodoEnvio.initBlockUI();
 					}
 				},error : function(){
@@ -498,7 +498,7 @@ var periodoEnvio= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos guardados satisfactoriamente';
+							var addhtml2='El Control de Remisión se guardó satisfactoriamente';
 							periodoEnvio.dialogMessageContent.html(addhtml2);
 							periodoEnvio.dialogMessage.dialog("open");							
 							periodoEnvio.initBlockUI();	
@@ -515,7 +515,7 @@ var periodoEnvio= {
 							alert('La fecha desde no debe ser mayor a la fecha hasta.'); 
 							periodoEnvio.f_desde.focus();	
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar los datos.';
+							var addhtml2='Se produjo un error al guardar el Control de Remisión.';
 							periodoEnvio.dialogMessageContent.html(addhtml2);
 							periodoEnvio.dialogMessage.dialog("open");						
 							periodoEnvio.initBlockUI();
@@ -543,15 +543,15 @@ var periodoEnvio= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='Datos actualizados satisfactoriamente';
+							var addhtml2='El Control de Remisión se actualizó satisfactoriamente';
 							periodoEnvio.dialogMessageContent.html(addhtml2);
 							periodoEnvio.dialogMessage.dialog("open");						
 							periodoEnvio.initBlockUI();								
 						}else if(data.resultado == "Mayor"){				
-							alert('La fecha hasta no debe ser mayor a la fecha de ampliacion.'); 
+							alert('La fecha hasta no debe ser mayor a la fecha de ampliación.'); 
 							periodoEnvio.f_fechaAmpl.focus();	
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar los datos.';
+							var addhtml2='Se produjo un error al actualizar el Control de Remisión.';
 							periodoEnvio.dialogMessageContent.html(addhtml2);
 							periodoEnvio.dialogMessage.dialog("open");						
 							periodoEnvio.initBlockUI();
