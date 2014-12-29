@@ -213,7 +213,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Año Pres.:</label>
 											   </td>
 											   <td>
-												<form:input path="anioPres"  cssStyle="width: 50px; text-align: right;" maxlength="4"/>
+												<form:input path="anioPres"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>
 											   </td>
 											   
 											   <td><label style="font-size: 12px; font-weight: bold">Mes Pres.:</label>

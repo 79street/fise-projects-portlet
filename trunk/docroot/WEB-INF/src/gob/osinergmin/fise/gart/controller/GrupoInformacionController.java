@@ -3,10 +3,12 @@ package gob.osinergmin.fise.gart.controller;
 
 
 import gob.osinergmin.fise.bean.GrupoInformacionBean;
+import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
@@ -40,8 +42,11 @@ public class GrupoInformacionController {
 	
 	@Autowired
 	@Qualifier("fiseGrupoInformacionGartServiceImpl")
-	FiseGrupoInformacionGartService grupoInformacionService;
+	private FiseGrupoInformacionGartService grupoInformacionService;
 
+	@Autowired
+	@Qualifier("fiseUtil")
+	private FiseUtil fiseUtil;
 		
 	
 	@ModelAttribute("grupoInformacionBean")
@@ -55,6 +60,7 @@ public class GrupoInformacionController {
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,
 			     @ModelAttribute("grupoInformacionBean")GrupoInformacionBean g){
         try {	
+        	g.setListaMes(fiseUtil.getMapaMeses());
         	g.setIdGrupoInf(""); 
     		g.setDescripcion("");   		
     		model.addAttribute("model", g);    		
@@ -81,15 +87,23 @@ public class GrupoInformacionController {
   			logger.info("estado "+ estado);  		
  		   
   			List<FiseGrupoInformacion> listaGrupoInf = grupoInformacionService.buscarGrupoInformacion(descripcion,
-  					tipo, Integer.valueOf(estado)); 	 			
-  			logger.info("tamaño de la lista grupo informacion   :"+listaGrupoInf.size());   			 			
-  			  			
-  			/*fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_PERIODO_ENVIO, 
-  					"PERIODOS DE ENVIO", //title
-  					"PERIODO", //nombre hoja
-  					listaPeridoEnvioExportExel);*/
+  					tipo, Integer.valueOf(estado));  			
   			
-  			data = toStringListJSON(listaGrupoInf);  		
+  			logger.info("tamaño de la lista grupo informacion   :"+listaGrupoInf.size()); 
+  			
+  			List<FiseGrupoInformacion> listaExel = new ArrayList<FiseGrupoInformacion>();
+  			
+  			for(FiseGrupoInformacion inf : listaGrupoInf){
+  				inf.setDescMesPresentacion(fiseUtil.getMapaMeses().get(Long.valueOf(inf.getMesPresentacion()))); 
+  				listaExel.add(inf);
+  			}
+  			
+  			/*fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_PERIODO_ENVIO, 
+  					"GRUPO INFORMACIÓN", //title
+  					"GRUPO_INFORMACION", //nombre hoja
+  					listaExel);*/
+  			
+  			data = toStringListJSON(listaExel);  		
   			logger.info("arreglo json:"+data);
   			PrintWriter pw = response.getWriter();
   			pw.write(data);
@@ -120,6 +134,8 @@ public class GrupoInformacionController {
 			logger.info("Descripcion:  "+ g.getDescripcion());
 			logger.info("tipo:  "+ g.getTipo());
 			logger.info("estado:  "+ g.getEstado());
+			logger.info("mes pres:  "+ g.getMesPres());
+			logger.info("anio pres:  "+ g.getAnioPres());
 			
 			g.setUsuario(themeDisplay.getUser().getLogin());
 			g.setTerminal(themeDisplay.getUser().getLoginIP());		
@@ -161,6 +177,8 @@ public class GrupoInformacionController {
 			logger.info("Descripcion:  "+ g.getDescripcion());
 			logger.info("tipo:  "+ g.getTipo());
 			logger.info("estado:  "+ g.getEstado());
+			logger.info("mes pres:  "+ g.getMesPres());
+			logger.info("anio pres:  "+ g.getAnioPres());
 			
 			String valor = grupoInformacionService.actualizarDatosGrupoInf(g);
 			logger.info("valor de la transaccion al actualizar:  "+valor); 

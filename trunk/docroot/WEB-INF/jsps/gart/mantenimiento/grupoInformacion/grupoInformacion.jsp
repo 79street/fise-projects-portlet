@@ -198,6 +198,27 @@ $(document).ready(function () {
 												       id="rbtInactivo" value="0"/>Inactivo	 	 
 											   </td>										   								   
 										     </tr>
+										     <tr height="10px">
+											   <td colspan="4"></td> 
+										     </tr>
+										     
+										     <tr>
+										       <td><label style="font-size: 12px; font-weight: bold">Año Pres.:</label>
+											   </td>
+											   <td>
+												<form:input path="anioPres"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>
+											   </td>
+											   
+											   <td><label style="font-size: 12px; font-weight: bold">Mes Pres.:</label>
+											   </td>
+											   <td>
+												 <form:select path="mesPres" cssClass="select" cssStyle="width: 104px;">
+													<form:option value="">-Seleccione-</form:option>
+													<form:options items="${grupoInformacionBean.listaMes}"/>
+												 </form:select>
+											   </td>										     
+										     </tr>
+										     
 										     						
 										  </table>								 								
 										 </td>

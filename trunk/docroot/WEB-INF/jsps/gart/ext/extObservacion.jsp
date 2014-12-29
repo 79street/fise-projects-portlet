@@ -380,7 +380,7 @@ var fiseObservacion= {
 							fiseObservacion.dialogMessage.dialog("open");						
 							fiseObservacion.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtml2='Ya existe registrado una observacion con este Id';
+							var addhtml2='Ya existe registrado una observación con este Id';
 							fiseObservacion.dialogMessageContent.html(addhtml2);
 							fiseObservacion.dialogMessage.dialog("open");						
 							fiseObservacion.initBlockUI();
