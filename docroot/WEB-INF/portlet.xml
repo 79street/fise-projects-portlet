@@ -273,7 +273,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>PERIODO DE ENVÍO</title>
+			<title>CONTROL DE REMISIÓN</title>
 			<short-title>GartPeriodoEnvio</short-title>
 			<keywords>GartPeriodoEnvio</keywords>
 		</portlet-info>
@@ -535,7 +535,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>CARGOS FIJOS</title>
+			<title>DATOS DEL PROYECTO FISE</title>
 			<short-title>GartCargoFijo</short-title>
 			<keywords>GartCargoFijo</keywords>
 		</portlet-info>
