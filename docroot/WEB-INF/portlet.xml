@@ -273,7 +273,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>PERIODO DE ENVIO</title>
+			<title>PERIODO DE ENVÍO</title>
 			<short-title>GartPeriodoEnvio</short-title>
 			<keywords>GartPeriodoEnvio</keywords>
 		</portlet-info>
@@ -403,7 +403,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>VALIDACION Y NOTIFICACION</title>
+			<title>VALIDACIÓN Y NOTIFICACIÓN</title>
 			<short-title>GartNotificacion</short-title>
 			<keywords>GartNotificacion</keywords>
 		</portlet-info>
@@ -436,7 +436,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>GRUPO INFORMACION</title>
+			<title>GRUPO INFORMACIÓN</title>
 			<short-title>GartGrupoInformacion</short-title>
 			<keywords>GartGrupoInformacion</keywords>
 		</portlet-info>
@@ -469,7 +469,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>ENVIO GENERAL</title>
+			<title>ENVÍO GENERAL</title>
 			<short-title>GartEnvioDefinitivo</short-title>
 			<keywords>GartEnvioDefinitivo</keywords>
 		</portlet-info>
