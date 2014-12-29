@@ -348,7 +348,7 @@ var envioDefinitivoGlobal= {
 		/**Function para confirmar si quiere realizar el envio definitivo.*/
 		confirmarEnvioDefinitivo : function(){
 			console.debug("entranado a confirmar envio");
-			var addhtml='¿Está seguro que desea realizar el envio general?';
+			var addhtml='¿Está seguro que desea realizar el envio general de los Formatos mostrados?';
 			envioDefinitivoGlobal.dialogConfirmContent.html(addhtml);
 			envioDefinitivoGlobal.dialogConfirm.dialog("open");
 		},
@@ -368,7 +368,7 @@ var envioDefinitivoGlobal= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Se realizó el envio general con éxito'; 					
+						var addhtml2='El envio general se realizó con éxito'; 					
 						envioDefinitivoGlobal.dialogMessageContent.html(addhtml2);
 						envioDefinitivoGlobal.dialogMessage.dialog("open");					
 						envioDefinitivoGlobal.initBlockUI();
@@ -377,7 +377,7 @@ var envioDefinitivoGlobal= {
 						alert("Este grupo ya ha sido enviado.");
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "NO_DATOS"){
-						alert("No existe ninguna lista pra realizar el envio general");
+						alert("No existe ninguna lista pra realizar el envio general, vuelva a realizar la búsqueda");
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "EMAIL"){
 						alert(data.mensaje);
@@ -386,7 +386,7 @@ var envioDefinitivoGlobal= {
 						alert(data.mensaje);
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "ERROR"){
-						alert("Error al realizar el envio general");
+						alert("Error al realizar el envio general de los formatos mostrados");
 						envioDefinitivoGlobal.initBlockUI();
 					}
 				},error : function(){

@@ -144,7 +144,7 @@ $(document).ready(function () {
 
    <!-- DIVS PARA MENSAJES -->
    
-   	<div id="<portlet:namespace/>dialog-message-reenvio" title="Osinergmin">
+   	<div id="<portlet:namespace/>dialog-message-reenvio" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>
@@ -152,7 +152,7 @@ $(document).ready(function () {
 		</p>	
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
+	<div id="<portlet:namespace/>dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
