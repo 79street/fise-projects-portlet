@@ -191,7 +191,7 @@ $(document).ready(function () {
 								<fieldset class="">	                               
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
-											<td><output class="net-titulo">FISE PERIODO ENVÍO</output>
+											<td><output class="net-titulo">DETALLE DE CONTROL DE REMISIÓN</output>
 											</td>
 										</tr>
 										<tr height="10px">

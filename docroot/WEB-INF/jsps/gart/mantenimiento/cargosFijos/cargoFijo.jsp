@@ -150,7 +150,7 @@ $(document).ready(function () {
 								<fieldset class="">	                               
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
-											<td><output class="net-titulo">FISE CARGO FIJO</output>
+											<td><output class="net-titulo">DETALLE DE DATOS DEL PROYECTO FISE</output>
 											</td>
 										</tr>
 										<tr height="10px">

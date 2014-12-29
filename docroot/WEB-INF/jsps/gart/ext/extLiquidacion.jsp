@@ -214,7 +214,7 @@ var liquidacionVar= {
 					shrinkToFit:true,
 					pager: liquidacionVar.paginadoResultados,
 				    viewrecords: true,
-				   	caption: "Resultado(s) de la búsqueda",
+				   	caption: "Datos para Aprobación Bienal / Liquidación Mensual",
 				    sortorder: "asc",	   	    	   	   
 		            gridComplete: function(){
 		      		var ids = liquidacionVar.tablaResultados.jqGrid('getDataIDs');
