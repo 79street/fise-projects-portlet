@@ -86,7 +86,7 @@
 											</tr>
 											<tr>
 												<td>
-													<output>Empresa:</output>
+													<output>Distribuidora Eléctrica:</output>
 												</td>
 												<td colspan="7">
 													<select id="s_empresa_b" name="s_empresa_b" style="width:375px;" class="select"  >
@@ -102,13 +102,13 @@
 											</tr>
 											<tr>
 												<td>
-													<output>Desde año:</output>
+													<output>Desde Año Decl.:</output>
 												</td>
 												<td>
 													<input type="text" name="i_anio_d" id="i_anio_d" style="width:50px;text-align:right;" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'i_anio_d',4,0)"   >
 												</td>
 												<td>
-													<output>Mes:</output>
+													<output>Mes Decl.:</output>
 												</td>
 												<td>
 													<select id="s_mes_d" name="s_mes_d"  class="select" style="width:104px;" >
@@ -119,13 +119,13 @@
 													</select>
 												</td>
 												<td>
-													<output>Hasta año:</output>
+													<output>Hasta Año Decl.:</output>
 												</td>
 												<td>
 													<input type="text" name="i_anio_h" id="i_anio_h" style="width:50px;text-align:right;" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'i_anio_h',4,0)"  >
 												</td>
 												<td>
-													<output>Mes:</output>
+													<output>Mes Decl.:</output>
 												</td>
 												<td>
 													<select id="s_mes_h" name="s_mes_h" class="select" style="width:104px;" >
@@ -835,7 +835,7 @@
 		</div>
 
 
-	<div id="dialog-message" title="Osinergmin">
+	<div id="dialog-message" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>
@@ -844,21 +844,21 @@
 	</div>
 	
 	
-	<div id="dialog-confirm" title="Confirmar acci&oacute;n">
+	<div id="dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="dialog-confirm-content">¿Está seguro?</label>
 		</p>
 	</div>
 	
-	<div id="dialog-confirm-envio" title="Confirmar acci&oacute;n">
+	<div id="dialog-confirm-envio" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="dialog-confirm-envio-content">¿Está seguro?</label>
 		</p>
 	</div>
 	
-	<div id="dialog-message-report" title="Osinergmin">
+	<div id="dialog-message-report" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>

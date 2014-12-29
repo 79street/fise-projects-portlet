@@ -1096,7 +1096,7 @@ public class Formato13AGartController {
 		response.setRenderParameter("codEmpresaHidden", command.getCodEmpresaHidden());
 		response.setRenderParameter("descripcionPeriodoHidden", command.getDescripcionPeriodoHidden());
 		
-		response.setRenderParameter("descGrupoInformacion", nameGrupo);
+		response.setRenderParameter("descGrupoInformacion", nameGrupo!=null?nameGrupo:"");
 		response.setRenderParameter("descestado", nameEstado);
 		
 		response.setRenderParameter("anioInicioVigencia", inicioVigencia);

@@ -381,7 +381,7 @@ var formato14A= {
 	buildGrids : function () {	
 		formato14A.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo de Información','Estado','Visualizar','Editar','Anular','','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ini. Vig.','Año Fin Vig.','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -407,7 +407,7 @@ var formato14A= {
 				shrinkToFit:true,
 				pager: formato14A.paginadoResultados,
 			    viewrecords: true,
-			   	caption: "Formatos",
+			   	caption: "Resultado(s) de la búsqueda",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	      		var ids = formato14A.tablaResultados.jqGrid('getDataIDs');
@@ -1641,12 +1641,12 @@ var formato14A= {
 	},
 	validarFormulario : function() {		
 		if(formato14A.f_empresa.val().length == '' ) { 	
-			alert('Seleccione una empresa'); 
+			alert('Seleccione una Distribuidora Eléctrica'); 
 			formato14A.f_empresa.focus();
 		  	return false; 
 		}
 		if(formato14A.f_periodoEnvio.val().length == '' ) {		  
-			alert('Debe ingresar el periodo de presentacion');
+			alert('Debe ingresar el periodo de presentación');
 			formato14A.f_periodoEnvio.focus();
 			return false; 
 		}
@@ -1681,7 +1681,7 @@ var formato14A= {
 			return false; 
 		}
 		if(formato14A.f_nroAgentR.val().length == '' ) {		  
-			alert('Debe ingresar el numero de agentes para Rural');
+			alert('Debe ingresar el número de agentes para Rural');
 			formato14A.f_nroAgentR.focus();
 			return false; 
 		}
@@ -1692,7 +1692,7 @@ var formato14A= {
 			return false; 
 		}
 		if(formato14A.f_nroAgentP.val().length == '' ) {		  
-			alert('Debe ingresar el numero de agentes para Provincia');
+			alert('Debe ingresar el número de agentes para Provincia');
 			formato14A.f_nroAgentP.focus();
 			return false; 
 		}
@@ -1703,7 +1703,7 @@ var formato14A= {
 			return false; 
 		}
 		if(formato14A.f_nroAgentL.val().length == '' ) {		  
-			alert('Debe ingresar el numero de agentes para Lima');
+			alert('Debe ingresar el número de agentes para Lima');
 			formato14A.f_nroAgentL.focus();
 			return false; 
 		}
@@ -1711,7 +1711,7 @@ var formato14A= {
 	},
 	validarArchivoCarga : function() {		
 		if(formato14A.f_empresa.val().length == '' ) { 	
-			alert('Seleccione una empresa para proceder con la carga de archivo'); 
+			alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
 			formato14A.f_empresa.focus();
 			return false; 
 		}

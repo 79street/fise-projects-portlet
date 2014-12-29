@@ -380,7 +380,7 @@ $(document).ready(function () {
 		</div>
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-message-detalle" title="Osinergmin">
+	<div id="<portlet:namespace/>dialog-message-detalle" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>

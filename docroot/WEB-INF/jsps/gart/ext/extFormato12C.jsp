@@ -721,7 +721,7 @@ var formato12C= {
 	buildGridsBusqueda : function () {	
 		formato12C.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Informaiòn','Estado','Visualizar','Editar','Anular','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','',''],
 	       colModel: [
 				   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -745,7 +745,7 @@ var formato12C= {
 				shrinkToFit:true,
 				pager: formato12C.paginadoResultados,
 			    viewrecords: true,
-			   	caption: "Formatos",
+			   	caption: "Resultado(s) de la búsqueda",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	      		var ids = formato12C.tablaResultados.jqGrid('getDataIDs');
@@ -775,7 +775,7 @@ var formato12C= {
 	buildGridsImplementacion : function () {	
 		formato12C.tablaImplementacion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Eliminar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -877,7 +877,7 @@ var formato12C= {
 	buildGridsMensual : function () {	
 		formato12C.tablaMensual.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Anular','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Eliminar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -980,7 +980,7 @@ var formato12C= {
 	buildGridsImplementacionView : function () {	
 		formato12C.tablaImplementacionView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -1061,7 +1061,7 @@ var formato12C= {
 	buildGridsMensualView : function () {	
 		formato12C.tablaMensualView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo Origen','Localidad Origen','Cod. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -1478,7 +1478,7 @@ var formato12C= {
 	},
 	validarArchivoCarga : function() {		
 		if(formato12C.codEmpresa.val().length == '' ) { 	
-			alert('Seleccione una empresa para proceder con la carga de archivo'); 
+			alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
 			formato12C.codEmpresa.focus();
 			return false; 
 		}
@@ -2066,7 +2066,7 @@ var formato12C= {
 	/***VALIDACIONES**/
 	validarFormatoDetalle : function(){
 		if( formato12C.codEmpresaDetalle.val().length=='' ){
-			alert('Seleccione una empresa'); 
+			alert('Seleccione una Distribuidora Eléctrica'); 
 			formato12C.codEmpresaDetalle.val().focus();
 		    return false;
 		}

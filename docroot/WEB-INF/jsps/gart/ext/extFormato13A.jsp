@@ -202,7 +202,7 @@ var formato13A= {
 	},
 	validateInputAnioTxt : function(inicio,fin){
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
-			 formato13A.lblMessageInicial.html("El año debe contener 4 digitos");
+			 formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 formato13A.dialogMessageGeneralInicial.dialog("open");
    		
    	 }else if(inicio.val().length>0){
@@ -221,7 +221,7 @@ var formato13A= {
 	},
 	validateInputAnio : function(inicio,fin){//validateInputAnio
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
-			 formato13A.lblMessageInicial.html("El año debe contener 4 digitos");
+			 formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 formato13A.dialogMessageGeneralInicial.dialog("open");
 			 return false; 
    		
@@ -504,7 +504,7 @@ var formato13A= {
 				formato13A.dialogMessageDetalleContent.html(addhtml);
 				formato13A.dialogMessageDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
-				var addhtml='Ya existe un registro para la empresa y periodo a declarar';
+				var addhtml='Ya existe un registro para la Distribuidora Eléctrica y periodo a declarar';
 				formato13A.dialogMessageDetalleContent.html(addhtml);
 				formato13A.dialogMessageDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR2' ){
@@ -595,7 +595,7 @@ var formato13A= {
 	buildGridsBusqueda : function () {	
 		formato13A.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Informaiòn','Estado','Visualizar','Editar','Anular','','','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -621,7 +621,7 @@ var formato13A= {
 				shrinkToFit:true,
 				pager: formato13A.paginadoResultados,
 			    viewrecords: true,
-			   	caption: "Formatos",
+			   	caption: "Resultado(s) de la búsqueda",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	      		var ids = formato13A.tablaResultados.jqGrid('getDataIDs');
@@ -710,7 +710,7 @@ var formato13A= {
 	buildGridsDeclaracion : function () {	
 		formato13A.tablaDeclaracion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','Editar','Anular','','','','',''],
+	       colNames: ['Año / Mes Alta','Cód. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','Editar','Eliminar','','','','',''],
 	       colModel: [
 					{ name: 'descAnioMesAlta', index: 'descAnioMesAlta', width: 70},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
@@ -798,7 +798,7 @@ var formato13A= {
 	buildGridsDeclaracionView : function () {	
 		formato13A.tablaDeclaracionView.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año / Mes Alta','Cod. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','','','','',''],
+	       colNames: ['Año / Mes Alta','Cód. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','','','','',''],
 	       colModel: [
 					{ name: 'descAnioMesAlta', index: 'descAnioMesAlta', width: 70},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
@@ -928,7 +928,7 @@ var formato13A= {
 					isSubmit=true;
 				}else{
 					isSubmit=false;
-					$("#msjUploadFile").html("Archivo invalido");
+					$("#msjUploadFile").html("Archivo inválido");
 				}
 				
 			
@@ -972,7 +972,7 @@ var formato13A= {
 				isSubmit=true;
 			}else{
 				isSubmit=false;
-				$("#msjUploadFiletxt").html("Archivo invalido");
+				$("#msjUploadFiletxt").html("Archivo inválido");
 			}
 				
 			
@@ -1130,7 +1130,7 @@ var formato13A= {
 					
 					formato13A.buscarDetalles();
 				}else if(data == '-1'){
-					formato12B.lblMessage.html("El formato ya existe para esa empresa para ese periodo");
+					formato12B.lblMessage.html("El formato ya existe para esa Distribuidora Eléctrica para ese periodo");
 					formato12B.dialogMessageGeneral.dialog("open");
 					
 				}else if(data == '-2'){
@@ -1159,7 +1159,7 @@ var formato13A= {
 	
 	showconfirmacion:function(msj,valor){
 	
-	$("#estado_proceso").html("Esta seguro de eliminar formato");
+	$("#estado_proceso").html("Está seguro de eliminar formato");
 		formato13A.dlgConfirmacion.dialog({ 
 	     	title:"Confirmacion",
 	     	height: 200,

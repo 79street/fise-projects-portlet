@@ -419,7 +419,7 @@
 	</div>
 
 	<div id="<portlet:namespace/>dialog-confirm-envio"
-		title="Confirmar acci&oacute;n">
+		title="Mensaje de Confirmaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-alert"
 				style="float: left; margin: 0 7px 20px 0;"></span> <label
@@ -429,7 +429,7 @@
 	</div>
 	
 	<div id="<portlet:namespace/>dialog-confirm-detalle"
-		title="Confirmar acci&oacute;n">
+		title="Mensaje de Confirmaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-alert"
 				style="float: left; margin: 0 7px 20px 0;"></span> <label
@@ -439,7 +439,7 @@
 	</div>
 	
 
-	<div id="<portlet:namespace/>dialog-message-report" title="Osinergmin">
+	<div id="<portlet:namespace/>dialog-message-report" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check"
 				style="float: left; margin: 0 7px 50px 0;"> </span> <label
@@ -448,7 +448,7 @@
 		</p>
 	</div>
 	
-	<div id="dialogMessageGeneral" title="Aviso">
+	<div id="dialogMessageGeneral" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>

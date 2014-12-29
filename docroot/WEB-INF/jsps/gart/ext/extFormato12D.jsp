@@ -658,7 +658,7 @@ var formato12D= {
 	buildGridsBusqueda : function () {	
 		formato12D.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Informaicón','Estado','Visualizar','Editar','Anular','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Informaición','Estado','Visualizar','Editar','Eliminar','','',''],
 	       colModel: [
 				   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -682,7 +682,7 @@ var formato12D= {
 				shrinkToFit:true,
 				pager: formato12D.paginadoResultados,
 			    viewrecords: true,
-			   	caption: "Formatos",
+			   	caption: "Resultado(s) de la búsqueda",
 			    sortorder: "asc",	   	    	   	   
 	       gridComplete: function(){
 	      		var ids = formato12D.tablaResultados.jqGrid('getDataIDs');
@@ -712,7 +712,7 @@ var formato12D= {
 	buildGridsImplementacion : function () {	
 		formato12D.tablaImplementacion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','Editar','Anular','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','Editar','Eliminar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -813,7 +813,7 @@ var formato12D= {
 	buildGridsMensual : function () {	
 		formato12D.tablaMensual.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','Editar','Anular','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','Editar','Eliminar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -915,7 +915,7 @@ var formato12D= {
 	buildGridsImplementacionView : function () {	
 		formato12D.tablaImplementacionView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -995,7 +995,7 @@ var formato12D= {
 	buildGridsMensualView : function () {	
 		formato12D.tablaMensualView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cod. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -1343,7 +1343,7 @@ var formato12D= {
 	},
 	validarArchivoCarga : function() {		
 		if(formato12D.codEmpresa.val().length == '' ) { 	
-			alert('Seleccione una empresa para proceder con la carga de archivo'); 
+			alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
 			formato12D.codEmpresa.focus();
 			return false; 
 		}
@@ -1912,7 +1912,7 @@ var formato12D= {
 				alert(" No tiene autorización para realizar esta operación");
 			}
 		}else if(flagOperacion=='CERRADO'){
-			alert(" No esta habilitado para realizar esta operacion");		
+			alert(" Está fuera de plazo");		
 		}else{
 			alert("El formato ya fue enviado a OSINERGMIN-GART");	
 		}
@@ -1920,7 +1920,7 @@ var formato12D= {
 	/***VALIDACIONES**/
 	validarFormatoDetalle : function(){
 		if( formato12D.codEmpresaDetalle.val().length=='' ){
-			alert('Seleccione una empresa'); 
+			alert('Seleccione una Distribuidora Eléctrica'); 
 			formato12D.codEmpresaDetalle.val().focus();
 		    return false;
 		}

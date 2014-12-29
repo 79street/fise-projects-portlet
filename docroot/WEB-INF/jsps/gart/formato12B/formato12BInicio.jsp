@@ -39,7 +39,7 @@ $(document).ready(function () {
 											<td colspan="8"></td>
 										</tr>
 										<tr>
-											<td><output>Empresa:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td colspan="7">
 												<form:select path="codEmpresaBusqueda" cssClass="select" cssStyle="width: 375px;">
 
@@ -54,12 +54,12 @@ $(document).ready(function () {
 											<td colspan="8"></td>
 										</tr>
 										<tr>
-											<td><output>Desde año:</output></td>
+											<td><output>Desde Año Decl.:</output></td>
 											<td>
 												<form:input path="anioInicio" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" 
 												 onkeypress="formato12B.validateInputTextNumber('anioInicio')"/>
 											</td>
-											<td><output>Mes:</output></td>
+											<td><output>Mes Decl.:</output></td>
 											<td>
 												<form:select path="mesInicio" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="">-Seleccione-</form:option>
@@ -67,12 +67,12 @@ $(document).ready(function () {
 												</form:select>
 												
 											</td>
-											<td><output>Hasta año:</output></td>
+											<td><output>Hasta Año Decl.:</output></td>
 											<td>
 												<form:input path="anioFin" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" 
 												onkeypress="formato12B.validateInputTextNumber('anioFin')" />
 											</td>
-											<td><output>Mes:</output></td>
+											<td><output>Mes Decl.:</output></td>
 											<td>
 												<form:select path="mesFin" cssClass="select" cssStyle="width: 104px;">
 													<form:option value="">-Seleccione-</form:option>
@@ -156,7 +156,7 @@ $(document).ready(function () {
 		</div>
 	</div>
 	<div id="dlgConfirmacion"></div>
-	<div id="dialogMessageGeneralInicio" title="Aviso">
+	<div id="dialogMessageGeneralInicio" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>

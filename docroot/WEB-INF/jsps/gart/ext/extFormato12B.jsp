@@ -199,7 +199,7 @@
 			
 			
 			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
-	    		 formato12B.lblMessageInicial.html("El año debe contener 4 digitos");
+	    		 formato12B.lblMessageInicial.html("El año debe contener 4 dígitos");
 				 formato12B.dialogMessageGeneralInicial.dialog("open");
 				 return false; 
 	    		
@@ -230,7 +230,7 @@
      buildGridsBusqueda : function () {	
 			formato12B.tablaBusqueda.jqGrid({
 				   datatype: "local",
-			       colNames: ['Empresa','Año Pres.','Mes Pres.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Anular','','','','','','',''],
+			       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','','','','',''],
 			       colModel: [
 							{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 			               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -258,7 +258,7 @@
 						shrinkToFit:true,
 						pager: formato12B.paginadoBusqueda,
 					    viewrecords: true,
-					   	caption: "Formatos",
+					   	caption: "Resultado(s) de la búsqueda",
 					    sortorder: "asc",	   	    	   	   
 			       gridComplete: function(){
 			      		var ids = formato12B.tablaBusqueda.jqGrid('getDataIDs');
@@ -1227,7 +1227,7 @@
 						isSubmit=true;
 					}else{
 						isSubmit=false;
-						$("#msjUploadFile").html("Archivo invalido");
+						$("#msjUploadFile").html("Archivo inválido");
 					}
 					
 				}else if(tipoFile == '2'){
@@ -1235,7 +1235,7 @@
 						isSubmit=true;
 					}else{
 						isSubmit=false;
-						$("#msjUploadFile").html("Archivo invalido");
+						$("#msjUploadFile").html("Archivo inváido");
 					}
 				}
 			}
