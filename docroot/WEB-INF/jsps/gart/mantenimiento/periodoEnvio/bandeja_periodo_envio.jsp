@@ -47,7 +47,7 @@ $(document).ready(function () {
 											<td colspan="8"></td>
 										</tr>
 										<tr>
-											<td><output>Empresa:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td colspan="6">
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">
 
@@ -62,13 +62,13 @@ $(document).ready(function () {
 											<td colspan="8"></td>
 										</tr>
 										<tr>
-											<td><output>Año y Mes de Presentación:</output></td>
+											<td><output>Año/Mes Declarado:</output></td>
 											<td>
 												<form:input path="anioDesde" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											</td>
 											<td><output>Mes:</output></td>
 											<td>
-												<form:select path="mesDesde" cssClass="select" cssStyle="width: 104px;">
+												<form:select path="mesDesde" cssClass="select" cssStyle="width: 110px;">
 													<form:option value="">-Seleccione-</form:option>
 													<form:options items="${periodoEnvioBean.listaMes}"/>
 												</form:select>
@@ -89,7 +89,7 @@ $(document).ready(function () {
 											</td>
 											<td><output>Estado:</output></td>
 											<td>
-												<form:select path="estadoBusq" cssClass="select" cssStyle="width: 80px;">
+												<form:select path="estadoBusq" cssClass="select" cssStyle="width: 100px;">
 													<form:option value="V">Vigente</form:option>
 													<form:option value="A">Anulado</form:option>													
 												</form:select>
@@ -110,7 +110,7 @@ $(document).ready(function () {
 											</td>
 											<td><output>Habilitado Envio:</output></td>
 											<td colspan="4">
-												<form:select path="flagEnvioBusq" cssClass="select" cssStyle="width: 100px;">
+												<form:select path="flagEnvioBusq" cssClass="select" cssStyle="width: 110px;">
 													<form:option value="0">Todos</form:option>
 													<form:option value="1">SI</form:option>
 													<form:option value="2">NO</form:option>													
@@ -191,7 +191,7 @@ $(document).ready(function () {
 								<fieldset class="">	                               
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
-											<td><output class="net-titulo">FISE PERIODO ENVIO</output>
+											<td><output class="net-titulo">FISE PERIODO ENVÍO</output>
 											</td>
 										</tr>
 										<tr height="10px">
@@ -210,13 +210,13 @@ $(document).ready(function () {
 												  </form:select>
 											   </td>
 											   
-											   <td><label style="font-size: 12px; font-weight: bold">Año Pres.:</label>
+											   <td><label style="font-size: 12px; font-weight: bold">Año Decl.:</label>
 											   </td>
 											   <td>
 												<form:input path="anioPres"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>
 											   </td>
 											   
-											   <td><label style="font-size: 12px; font-weight: bold">Mes Pres.:</label>
+											   <td><label style="font-size: 12px; font-weight: bold">Mes Decl.:</label>
 											   </td>
 											   <td>
 												 <form:select path="mesPres" cssClass="select" cssStyle="width: 104px;">
@@ -299,7 +299,7 @@ $(document).ready(function () {
 										     </tr>
 																						
 											<tr>
-											 <td><label style="font-size: 12px; font-weight: bold">Envio con Obs:</label>
+											 <td><label style="font-size: 12px; font-weight: bold">Envío con Obs:</label>
 											 </td>
 											 <td>											 
 											     <input type="radio"	name="flagEnvioObs"

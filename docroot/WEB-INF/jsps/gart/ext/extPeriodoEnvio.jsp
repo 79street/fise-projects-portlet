@@ -174,7 +174,7 @@ var periodoEnvio= {
 		buildGrids : function () {	
 			periodoEnvio.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Secuencia','Empresa.','Formato.','Año Pres.','Mes Pres.','Estado','Visualizar','Editar','Anular'],
+		       colNames: ['Secuencia','Dist. Eléct.','Formato.','Año Decl.','Mes Decl.','Estado','Visualizar','Editar','Anular'],
 		       colModel: [
                        { name: 'secuencia', index: 'secuencia', width: 20},
 					   { name: 'descEmpresa', index: 'descEmpresa', width: 80},
@@ -196,7 +196,7 @@ var periodoEnvio= {
 					shrinkToFit:true,
 					pager: periodoEnvio.paginadoResultados,
 				    viewrecords: true,
-				   	caption: "Peridos de Envio",
+				   	caption: "Resultado(s) de la búsqueda",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = periodoEnvio.tablaResultados.jqGrid('getDataIDs');

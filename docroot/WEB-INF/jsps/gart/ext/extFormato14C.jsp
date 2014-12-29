@@ -439,7 +439,7 @@ var formato14C= {
 		buildGrids : function () {	
 			formato14C.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Empresa','Año Pres.','Mes Pres.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Estado','Visualizar','Editar','Anular','','','',''],
+		       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Estado','Visualizar','Editar','Anular','','','',''],
 		       colModel: [
 					   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
 		               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -466,7 +466,7 @@ var formato14C= {
 					shrinkToFit:true,
 					pager: formato14C.paginadoResultados,
 				    viewrecords: true,
-				   	caption: "Formatos",
+				   	caption: "Resultado(s) de la búsqueda",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = formato14C.tablaResultados.jqGrid('getDataIDs');

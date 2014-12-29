@@ -203,13 +203,13 @@ $(document).ready(function () {
 										     </tr>
 										     
 										     <tr>
-										       <td><label style="font-size: 12px; font-weight: bold">Año Pres.:</label>
+										       <td><label style="font-size: 12px; font-weight: bold">Año Decl.:</label>
 											   </td>
 											   <td>
 												<form:input path="anioPres"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>
 											   </td>
 											   
-											   <td><label style="font-size: 12px; font-weight: bold">Mes Pres.:</label>
+											   <td><label style="font-size: 12px; font-weight: bold">Mes Decl.:</label>
 											   </td>
 											   <td>
 												 <form:select path="mesPres" cssClass="select" cssStyle="width: 104px;">

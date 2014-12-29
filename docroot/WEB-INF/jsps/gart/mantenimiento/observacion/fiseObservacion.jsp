@@ -140,13 +140,13 @@ $(document).ready(function () {
 									     <td>											
 										   <table style="width: 100%;" border="0">
 											  <tr>											  
-											    <td><label style="font-size: 12px; font-weight: bold">Id Observacion:</label>
+											    <td><label style="font-size: 12px; font-weight: bold">Id Observación:</label>
 												</td>
 											    <td>
 											      <form:input path="id" size="10"/> 
 											   </td>
 											   
-											   <td><label style="font-size: 12px; font-weight: bold">Descripcion:</label>
+											   <td><label style="font-size: 12px; font-weight: bold">Descripción:</label>
 											   </td>
 											   <td>
 												 <form:textarea path="descripcion" cols="30" rows="4" onkeypress="return soloLetras(event)"/>  
