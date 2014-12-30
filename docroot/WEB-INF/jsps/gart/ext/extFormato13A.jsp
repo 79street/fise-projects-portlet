@@ -217,7 +217,7 @@ var formato13A= {
    		 }
    		 
    	 }
-		//var n=formato12B.validateInputAnio(inicio,fin);
+		//var n=formato13A.validateInputAnio(inicio,fin);
 	},
 	validateInputAnio : function(inicio,fin){//validateInputAnio
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
@@ -1130,20 +1130,20 @@ var formato13A= {
 					
 					formato13A.buscarDetalles();
 				}else if(data == '-1'){
-					formato12B.lblMessage.html("El formato ya existe para esa Distribuidora Eléctrica para ese periodo");
-					formato12B.dialogMessageGeneral.dialog("open");
+					formato13A.lblMessage.html("El formato ya existe para esa Distribuidora Eléctrica para ese periodo");
+					formato13A.dialogMessageGeneral.dialog("open");
 					
 				}else if(data == '-2'){
-					formato12B.lblMessage.html("Error al obtener usuario");
-					formato12B.dialogMessageGeneral.dialog("open");
+					formato13A.lblMessage.html("Error al obtener usuario");
+					formato13A.dialogMessageGeneral.dialog("open");
 					
 				}else if(data == '-3'){
-					formato12B.lblMessage.html("Error al obtener terminal");
-					formato12B.dialogMessageGeneral.dialog("open");
+					formato13A.lblMessage.html("Error al obtener terminal");
+					formato13A.dialogMessageGeneral.dialog("open");
 				
 				}else if(data == '-4'){
-					formato12B.lblMessage.html("Error al registrar");
-					formato12B.dialogMessageGeneral.dialog("open");
+					formato13A.lblMessage.html("Error al registrar");
+					formato13A.dialogMessageGeneral.dialog("open");
 					
 				}
 				
