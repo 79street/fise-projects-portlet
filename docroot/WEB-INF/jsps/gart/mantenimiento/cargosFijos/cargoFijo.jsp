@@ -116,15 +116,15 @@ $(document).ready(function () {
 							<td>
 								<table style="width: 100%;" border="0">
 									<tr>
-										<td></td>
-										<td></td>
-										<td align="center" width="90px">
+										<td></td>										
+										<td align="right" width="90px">
 											<div id="d_opc_crear">
 												<input type="button" class="net-button-small"
 													id="<portlet:namespace/>btnNuevoCargoFijo"
 													name="<portlet:namespace/>btnNuevoCargoFijo" value="Nuevo" />
 											</div>
 										</td>	
+										<td></td>
 										<td></td>										
 																			
 									</tr>

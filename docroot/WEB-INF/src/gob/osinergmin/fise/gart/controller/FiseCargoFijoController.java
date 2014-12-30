@@ -134,8 +134,8 @@ public class FiseCargoFijoController {
   			}   			
   			
   		    fiseUtil.configuracionExportarExcel(session, FiseConstants.CARGO_FIJO_EXPORT_EXEL, 
-  					"CARGOS FIJOS", //title
-  					"CARGO FIJO", //nombre hoja
+  					"DATOS DEL PROYECTO FISE", //title
+  					"DATOS_PROYECTO_FISE", //nombre hoja
   					listaCargoExel);
   			
   			data = toStringListJSON(listaCargoExel);  		
@@ -179,6 +179,9 @@ public class FiseCargoFijoController {
 			logger.info("anio:  "+ c.getAnioReporte());		
 			logger.info("mes:  "+ c.getMesReporte());
 			logger.info("numero de agentes:  "+ c.getNumAgente());
+			
+			logger.info("fecha de documento:  "+ c.getFechaRecepcion());
+			logger.info("fecha de sustento:  "+ c.getFechaSustento());
 		
 			c.setUsuario(themeDisplay.getUser().getLogin());
 			c.setTerminal(themeDisplay.getUser().getLoginIP());		
@@ -230,6 +233,9 @@ public class FiseCargoFijoController {
 			logger.info("anio:  "+ c.getAnioReporte());		
 			logger.info("mes:  "+ c.getMesReporte());
 			logger.info("numero de agentes:  "+ c.getNumAgente());
+			
+			logger.info("fecha de documento:  "+ c.getFechaRecepcion());
+			logger.info("fecha de sustento:  "+ c.getFechaSustento());
 			
 			String valor = fiseCargoFijoService.actualizarDatosFiseCargoFijo(c);
 			
