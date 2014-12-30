@@ -193,102 +193,204 @@ $(document).ready(function () {
 										     </tr>
 										     
 										     <tr>
-											   <td><label style="font-size: 12px; font-weight: bold">Número Usu. Benef.:</label>
-											   </td>
-											   <td>
-												 <form:input path="numUsuBenef"  cssStyle="width: 50px; text-align: right;"/>
-											   </td>
-											   
-											   <td><label style="font-size: 12px; font-weight: bold">Número Usu. Emp.:</label>
-											   </td>
-											   <td>
-												 <form:input path="numUsuEmp"  cssStyle="width: 50px; text-align: right;"/>
-											   </td>
-											   
-											   <td><label style="font-size: 12px; font-weight: bold">Número Vales Físcos Emi.:</label>
-											   </td>
-											   <td>
-												 <form:input path="numValFEmi"  cssStyle="width: 50px; text-align: right;"/>
-											   </td>
-											   
-											</tr>
-											
-											<tr height="10px">
+										       <td></td>
+										       <td><label style="font-size: 12px; font-weight: bold">Rural</label></td>
+										       <td><label style="font-size: 12px; font-weight: bold">Urb. Provincias</label></td>
+										       <td><label style="font-size: 12px; font-weight: bold">Urb. Lima</label></td>
+										       <td></td>
+										       <td></td>
+										     </tr>								     
+										     
+										     <tr height="10px">
 										      <td colspan="6"></td> 
 										     </tr>
-										     									
-											<tr>
-											
-											  <td><label style="font-size: 12px; font-weight: bold">Número Vales Físcos Canj.:</label>
-											   </td>
-											  <td>
-												 <form:input path="numValFCan"  cssStyle="width: 50px; text-align: right;"/>
+										     
+										     <tr>
+										      <td><label style="font-size: 12px; font-weight: bold">Número Usu. Benef.:</label></td>
+										      <td>
+												 <form:input path="numUsuBenefR"  cssStyle="width: 50px; text-align: right;"/>
 											  </td>
-											
-											 <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Emi.:</label>
-											   </td>
 											  <td>
-												 <form:input path="numValDEmi"  cssStyle="width: 50px; text-align: right;"/>
+												 <form:input path="numUsuBenefP"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numUsuBenefL"  cssStyle="width: 50px; text-align: right;"/>
 											  </td>
 											  
-											 <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Canj.:</label>
-											   </td>
-											  <td>
-												 <form:input path="numValDCan"  cssStyle="width: 50px; text-align: right;"/>
-											  </td>
-											  								
-											</tr>
-											
-											 <tr height="10px">
+											  <td></td>
+										      <td></td>							  
+											  
+										     </tr>								     
+										     
+										     <tr height="10px">
 										      <td colspan="6"></td> 
 										     </tr>
-																						
-											<tr>
-											
-											  <td><label style="font-size: 12px; font-weight: bold">Número Agentes:</label>
-											   </td>
-											  <td>
-												 <form:input path="numAgente"  cssStyle="width: 50px; text-align: right;"/>
+										     
+										     <tr>
+										      <td><label style="font-size: 12px; font-weight: bold">Número Usu. Emp.:</label></td>
+										      <td>
+												 <form:input path="numUsuEmpR"  cssStyle="width: 50px; text-align: right;"/>
 											  </td>
-											 
+											  <td>
+												 <form:input path="numUsuEmpP"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numUsuEmpL"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  
+											  <td></td>
+										      <td></td>							  
+											  
+										     </tr>		
+										     
+										     <tr height="10px">
+										      <td colspan="6"></td> 
+										     </tr>
+										     
+										     <tr>
+										      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físcos Emi.:</label></td>
+										      <td>
+												 <form:input path="numValFEmiR"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numValFEmiP"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numValFEmiL"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  
+											  <td></td>
+										      <td></td>							  
+											  
+										     </tr>	
+										     
+										     <tr height="10px">
+										      <td colspan="6"></td> 
+										     </tr>
+										     
+										     <tr>
+										      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Emi.:</label></td>
+										      <td>
+												 <form:input path="numValDEmiR"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numValDEmiP"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numValDEmiL"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  
+											  <td></td>
+										      <td></td>							  
+											  
+										     </tr>	
+										     
+										     <tr height="10px">
+										      <td colspan="6"></td> 
+										     </tr>
+										     
+										     <tr>
+										      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físcos Canj.:</label></td>
+										      <td>
+												 <form:input path="numValFCanR"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numValFCanP"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numValFCanL"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  
+											  <td></td>
+										      <td></td>							  
+											  
+										     </tr>	
+										     
+										     <tr height="10px">
+										      <td colspan="6"></td> 
+										     </tr>
+										     
+										     <tr>
+										      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Canj.:</label></td>
+										      <td>
+												 <form:input path="numValDCanR"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numValDCanP"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numValDCanL"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  
+											  <td></td>
+										      <td></td>							  
+											  
+										     </tr>
+										     
+										     <tr height="10px">
+										      <td colspan="6"></td> 
+										     </tr>
+										     
+										     <tr>
+										      <td><label style="font-size: 12px; font-weight: bold">Número Agentes:</label></td>
+										      <td>
+												 <form:input path="numAgenteR"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numAgenteP"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="numAgenteL"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  
+											  <td></td>
+										      <td></td>							  
+											  
+										     </tr>	
+										     
+										     <tr height="10px">
+										      <td colspan="6"></td> 
+										     </tr>
+										     
+										     <tr>
+										      <td><label style="font-size: 12px; font-weight: bold">Monto Fijo Mes:</label></td>
+										      <td>
+												 <form:input path="montoMesR"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="montoMesP"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  <td>
+												 <form:input path="montoMesL"  cssStyle="width: 50px; text-align: right;"/>
+											  </td>
+											  
+											  <td></td>
+										      <td></td>							  
+											  
+										     </tr>			     
+										     
+										     <tr height="10px">
+										      <td colspan="6"></td> 
+										     </tr>										
+											
+											<tr> 
+											
 											  <td><label style="font-size: 12px; font-weight: bold">Monto Transf. Canje:</label>
 											   </td>
 											  <td>
 												 <form:input path="montoCanje"  cssStyle="width: 50px; text-align: right;"/>
 											  </td>
-											  
-											  <td><label style="font-size: 12px; font-weight: bold">Monto Fijo Mes:</label>
-											   </td>
-											  <td>
-												 <form:input path="montoMes"  cssStyle="width: 50px; text-align: right;"/>
-											  </td>						
-											 
-											</tr>
-											
-											 <tr height="10px">
-										      <td colspan="6"></td> 
-										     </tr>
-											
-											<tr> 
 											
 											 <td><label style="font-size: 12px; font-weight: bold">Fecha Informe Sustento:(dd/mm/aaaa)</label>
 											  </td>
 											  <td>											  										 
 											   <form:input path="fechaSustento" cssStyle="text-align: right;"/>								    												
-											  </td>
-											
-											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Informe Sustento:</label>
-											   </td>
-											  <td>
-												 <form:input path="numDoc"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)"/> 
-											  </td>
+											  </td>										 
 											  
 											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Info.(dd/mm/aaaa):</label>
 											  </td>
-											  <td>				    
-											  
-											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" />
-												 							    												
+											  <td>									  
+											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" />			 							    												
 											  
 											  </td>		
 											  										 											 
@@ -305,22 +407,18 @@ $(document).ready(function () {
 											  <td>
 												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)"/>
 											  </td>
+											  
+											  <td><label style="font-size: 12px; font-weight: bold">Número Doc. Informe Sustento:</label>
+											   </td>
+											  <td>
+												 <form:input path="numDoc"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)"/> 
+											  </td>
 											
 											 <td><label style="font-size: 12px; font-weight: bold">IGV:</label>
 											   </td>
 											  <td>
 												 <form:input path="igv"  cssStyle="width: 50px; text-align: right;"/>
-											  </td>
-											  
-											 <td><label style="font-size: 12px; font-weight: bold">Aplica IGV:</label>
-											 </td>
-											 <td>												     
-											     <input type="radio"	name="aplicaIgv"
-												        id="rbtIgvSI" value="1" checked="true"/>SI
-												 &nbsp;&nbsp;&nbsp;													 
-												<input type="radio"	name="aplicaIgv"
-												       id="rbtIgvNO" value="0" />NO																																
-											 </td>		
+											  </td>										 
 											  										 											 
 											</tr>	
 											
@@ -329,6 +427,16 @@ $(document).ready(function () {
 										     </tr>
 											
 											<tr> 
+											
+											<td><label style="font-size: 12px; font-weight: bold">Aplica IGV:</label>
+											 </td>
+											 <td>												     
+											     <input type="radio"	name="aplicaIgv"
+												        id="rbtIgvSI" value="1" checked="true"/>SI
+												 &nbsp;&nbsp;&nbsp;													 
+												<input type="radio"	name="aplicaIgv"
+												       id="rbtIgvNO" value="0" />NO																																
+											 </td>		
 											
 											 <td><label style="font-size: 12px; font-weight: bold">Estado:</label>
 											 </td>
@@ -344,12 +452,7 @@ $(document).ready(function () {
 											   </td>
 											  <td>
 												 <form:textarea path="gloza" cols="30" rows="4" onkeypress="return soloLetras(event)"/> 
-											  </td>
-											  
-											 <td>
-											 </td>
-											 <td>									 																														
-											 </td>		
+											  </td>										 	
 											  										 											 
 											</tr>	
 											

@@ -177,8 +177,7 @@ public class FiseCargoFijoController {
 			
 			logger.info("codEmpresa:  "+ c.getCodigoEmpresa()); 
 			logger.info("anio:  "+ c.getAnioReporte());		
-			logger.info("mes:  "+ c.getMesReporte());
-			logger.info("numero de agentes:  "+ c.getNumAgente());
+			logger.info("mes:  "+ c.getMesReporte());			
 			
 			logger.info("fecha de documento:  "+ c.getFechaRecepcion());
 			logger.info("fecha de sustento:  "+ c.getFechaSustento());
@@ -231,8 +230,7 @@ public class FiseCargoFijoController {
 			
 			logger.info("codEmpresa:  "+ c.getCodigoEmpresa()); 
 			logger.info("anio:  "+ c.getAnioReporte());		
-			logger.info("mes:  "+ c.getMesReporte());
-			logger.info("numero de agentes:  "+ c.getNumAgente());
+			logger.info("mes:  "+ c.getMesReporte());			
 			
 			logger.info("fecha de documento:  "+ c.getFechaRecepcion());
 			logger.info("fecha de sustento:  "+ c.getFechaSustento());

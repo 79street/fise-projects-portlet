@@ -52,14 +52,14 @@ var fiseCargoFijo= {
 		f_empresa:null,
 		f_anioRep:null,	
 		f_mesRep:null,			
-		f_numUsuBenef:null,
-		f_numUsuEmp:null,
-		f_numValDCan:null,
-		f_numValDEmi:null,
-		f_numValFCan:null,
-		f_numValFEmi:null,
-		f_numAgen:null,		
-		f_montoMes:null,
+		f_numUsuBenefR:null, f_numUsuBenefP:null, f_numUsuBenefL:null,
+		f_numUsuEmpR:null, f_numUsuEmpP:null, f_numUsuEmpL:null,
+		f_numValDCanR:null, f_numValDCanP:null, f_numValDCanL:null,
+		f_numValDEmiR:null, f_numValDEmiP:null, f_numValDEmiL:null,
+		f_numValFCanR:null, f_numValFCanP:null, f_numValFCanL:null,
+		f_numValFEmiR:null, f_numValFEmiP:null, f_numValFEmiL:null,
+		f_numAgenR:null,	f_numAgenP:null,	f_numAgenL:null,		
+		f_montoMesR:null, f_montoMesP:null, f_montoMesL:null,
 		f_montoCanje:null,		
 		f_numDoc:null,
 		f_numDocRecepcion:null,
@@ -126,15 +126,40 @@ var fiseCargoFijo= {
 			//VARIBALES PARA NUEVO REGISTRO		
 			this.f_empresa=$('#codigoEmpresa');			
 			this.f_anioRep=$('#anioReporte');
-			this.f_mesRep=$('#mesReporte');			
-			this.f_numUsuBenef=$('#numUsuBenef');
-			this.f_numUsuEmp=$('#numUsuEmp');			
-			this.f_numValDCan=$('#numValDCan');
-			this.f_numValDEmi=$('#numValDEmi');			
-			this.f_numValFCan=$('#numValFCan');
-			this.f_numValFEmi=$('#numValFEmi');			
-			this.f_numAgen=$('#numAgente');
-			this.f_montoMes=$('#montoMes');			
+			this.f_mesRep=$('#mesReporte');	
+			
+			this.f_numUsuBenefR=$('#numUsuBenefR');
+			this.f_numUsuBenefP=$('#numUsuBenefP');
+			this.f_numUsuBenefL=$('#numUsuBenefL');
+			
+			this.f_numUsuEmpR=$('#numUsuEmpR');
+			this.f_numUsuEmpP=$('#numUsuEmpP');
+			this.f_numUsuEmpL=$('#numUsuEmpL');
+			
+			this.f_numValDCanR=$('#numValDCanR');
+			this.f_numValDCanP=$('#numValDCanP');
+			this.f_numValDCanL=$('#numValDCanL');
+			
+			this.f_numValDEmiR=$('#numValDEmiR');
+			this.f_numValDEmiP=$('#numValDEmiP');
+			this.f_numValDEmiL=$('#numValDEmiL');
+			
+			this.f_numValFCanR=$('#numValFCanR');
+			this.f_numValFCanP=$('#numValFCanP');
+			this.f_numValFCanL=$('#numValFCanL');
+			
+			this.f_numValFEmiR=$('#numValFEmiR');
+			this.f_numValFEmiP=$('#numValFEmiP');
+			this.f_numValFEmiL=$('#numValFEmiL');
+			
+			this.f_numAgenR=$('#numAgenteR');
+			this.f_numAgenP=$('#numAgenteP');
+			this.f_numAgenL=$('#numAgenteL');
+			
+			this.f_montoMesR=$('#montoMesR');	
+			this.f_montoMesP=$('#montoMesP');
+			this.f_montoMesL=$('#montoMesL');
+			
 			this.f_montoCanje=$('#montoCanje');
 			this.f_numDoc=$('#numDoc');			
 			this.f_numDocRecepcion=$('#numDocRecepcion');
@@ -193,11 +218,11 @@ var fiseCargoFijo= {
 						   { name: 'desEmpresa', index: 'desEmpresa', width: 50},
 			               { name: 'anioReporte', index: 'anioReporte', width: 30 },   
 			               { name: 'desMesRep', index: 'desMesRep', width: 30},
-			               { name: 'numUsuBenef', index: 'numUsuBenef', width: 30 },   
-			               { name: 'numUsuEmp', index: 'numUsuEmp', width: 30},
-			               { name: 'numValFEmi', index: 'numValFEmi', width: 50},
-			               { name: 'numValFCan', index: 'numValFCan', width: 50},
-			               { name: 'numValDEmi', index: 'numValFEmi', width: 50},
+			               { name: 'numUsuBenefR', index: 'numUsuBenefR', width: 30 },   
+			               { name: 'numUsuEmpR', index: 'numUsuEmpR', width: 30},
+			               { name: 'numValFEmiR', index: 'numValFEmiR', width: 50},
+			               { name: 'numValFCanR', index: 'numValFCanR', width: 50},
+			               { name: 'numValDEmiR', index: 'numValFEmiR', width: 50},
 			               { name: 'desEstado', index: 'desEstado', width: 50},
 			               { name: 'view', index: 'view', width: 20,align:'center' },
 			               { name: 'edit', index: 'edit', width: 20,align:'center' },
@@ -296,14 +321,38 @@ var fiseCargoFijo= {
 				fiseCargoFijo.f_mesRep.val(f.getMonth() +1);	
 			}				
 			
-			fiseCargoFijo.f_numUsuBenef.val('0');
-			fiseCargoFijo.f_numUsuEmp.val('0');			
-			fiseCargoFijo.f_numValDCan.val('0');
-			fiseCargoFijo.f_numValDEmi.val('0');			
-			fiseCargoFijo.f_numValFCan.val('0');
-			fiseCargoFijo.f_numValFEmi.val('0');			
-			fiseCargoFijo.f_numAgen.val('0');
-			fiseCargoFijo.f_montoMes.val('0.00');			
+			fiseCargoFijo.f_numUsuBenefR.val('0');
+			fiseCargoFijo.f_numUsuBenefP.val('0');
+			fiseCargoFijo.f_numUsuBenefL.val('0');
+			
+			fiseCargoFijo.f_numUsuEmpR.val('0');	
+			fiseCargoFijo.f_numUsuEmpP.val('0');	
+			fiseCargoFijo.f_numUsuEmpL.val('0');	
+			
+			fiseCargoFijo.f_numValDCanR.val('0');
+			fiseCargoFijo.f_numValDCanP.val('0');
+			fiseCargoFijo.f_numValDCanL.val('0');
+			
+			fiseCargoFijo.f_numValDEmiR.val('0');
+			fiseCargoFijo.f_numValDEmiP.val('0');
+			fiseCargoFijo.f_numValDEmiL.val('0');
+			
+			fiseCargoFijo.f_numValFCanR.val('0');
+			fiseCargoFijo.f_numValFCanP.val('0');
+			fiseCargoFijo.f_numValFCanL.val('0');
+			
+			fiseCargoFijo.f_numValFEmiR.val('0');
+			fiseCargoFijo.f_numValFEmiP.val('0');
+			fiseCargoFijo.f_numValFEmiL.val('0');
+			
+			fiseCargoFijo.f_numAgenR.val('0');
+			fiseCargoFijo.f_numAgenP.val('0');
+			fiseCargoFijo.f_numAgenL.val('0');
+			
+			fiseCargoFijo.f_montoMesR.val('0.00');
+			fiseCargoFijo.f_montoMesP.val('0.00');
+			fiseCargoFijo.f_montoMesL.val('0.00');
+			
 			fiseCargoFijo.f_montoCanje.val('0.00');
 			fiseCargoFijo.f_numDoc.val('');			
 			fiseCargoFijo.f_numDocRecepcion.val('');
@@ -322,23 +371,50 @@ var fiseCargoFijo= {
 		//function para validar solo numeros enteros
 		soloNumerosEnteros : function(){		
 			fiseCargoFijo.f_anioRep.attr("onkeypress","return soloNumerosDecimales(event, 1, 'anioReporte',4,0)");
-			fiseCargoFijo.f_numUsuBenef.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuBenef',7,0)");
-			fiseCargoFijo.f_numUsuEmp.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuEmp',7,0)");			
-			fiseCargoFijo.f_numValDCan.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDCan',7,0)");
-			fiseCargoFijo.f_numValDEmi.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDEmi',7,0)");		
-			fiseCargoFijo.f_numValFCan.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFCan',7,0)");
-			fiseCargoFijo.f_numValFEmi.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFEmi',7,0)");			
-			fiseCargoFijo.f_numAgen.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numAgente',7,0)");
+			
+			fiseCargoFijo.f_numUsuBenefR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuBenefR',7,0)");
+			fiseCargoFijo.f_numUsuBenefP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuBenefP',7,0)");
+			fiseCargoFijo.f_numUsuBenefL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuBenefL',7,0)");
+			
+			fiseCargoFijo.f_numUsuEmpR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuEmpR',7,0)");	
+			fiseCargoFijo.f_numUsuEmpP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuEmpP',7,0)");	
+			fiseCargoFijo.f_numUsuEmpL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUsuEmpL',7,0)");	
+			
+			fiseCargoFijo.f_numValDCanR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDCanR',7,0)");
+			fiseCargoFijo.f_numValDCanP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDCanP',7,0)");
+			fiseCargoFijo.f_numValDCanL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDCanL',7,0)");
+			
+			fiseCargoFijo.f_numValDEmiR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDEmiR',7,0)");
+			fiseCargoFijo.f_numValDEmiP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDEmiP',7,0)");
+			fiseCargoFijo.f_numValDEmiL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValDEmiL',7,0)");
+			
+			fiseCargoFijo.f_numValFCanR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFCanR',7,0)");
+			fiseCargoFijo.f_numValFCanP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFCanP',7,0)");
+			fiseCargoFijo.f_numValFCanL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFCanL',7,0)");
+			
+			fiseCargoFijo.f_numValFEmiR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFEmiR',7,0)");
+			fiseCargoFijo.f_numValFEmiP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFEmiP',7,0)");
+			fiseCargoFijo.f_numValFEmiL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numValFEmiL',7,0)");
+			
+			fiseCargoFijo.f_numAgenR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numAgenteR',7,0)");
+			fiseCargoFijo.f_numAgenP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numAgenteP',7,0)");
+			fiseCargoFijo.f_numAgenL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numAgenteL',7,0)");
+			
 			fiseCargoFijo.f_numDoc.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numDoc',20,0)");			
 			fiseCargoFijo.f_numDocRecepcion.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numDocRecepcion',20,0)");		
 		},
 		
 		//function para validar solo numeros decimales
 		soloNumerosDecimales : function(){			
-			fiseCargoFijo.f_montoMes.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMes',7,2)");
+			fiseCargoFijo.f_montoMesR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMesR',7,2)");
+			fiseCargoFijo.f_montoMesP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMesP',7,2)");
+			fiseCargoFijo.f_montoMesL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMesL',7,2)");
+			
 			fiseCargoFijo.f_montoCanje.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoCanje',7,2)");
 			fiseCargoFijo.f_igv.attr("onkeypress","return soloNumerosDecimales(event, 2, 'igv',1,2)");	
-			completarDecimal('montoMes',2);
+			completarDecimal('montoMesR',2);
+			completarDecimal('montoMesP',2);
+			completarDecimal('montoMesL',2);
 			completarDecimal('montoCanje',2);
 			completarDecimal('igv',2);
 		},	
@@ -432,17 +508,39 @@ var fiseCargoFijo= {
 			$('#codigoEmpresa').val(codEmp);
         	$('#anioReporte').val(bean.anioReporte);
         	$('#mesReporte').val(bean.mesReporte);
-			//fiseCargoFijo.f_empresa.val(bean.codEmpresa.trim());			
-			//fiseCargoFijo.f_anioRep.val(bean.anioReporte);
-			//fiseCargoFijo.f_mesRep.val(bean.mesReporte);			
-			fiseCargoFijo.f_numUsuBenef.val(bean.numUsuBenef);
-			fiseCargoFijo.f_numUsuEmp.val(bean.numUsuEmp);			
-			fiseCargoFijo.f_numValDCan.val(bean.numValDCan);
-			fiseCargoFijo.f_numValDEmi.val(bean.numValDEmi);			
-			fiseCargoFijo.f_numValFCan.val(bean.numValFCan);
-			fiseCargoFijo.f_numValFEmi.val(bean.numValFEmi);			
-			fiseCargoFijo.f_numAgen.val(bean.numAgente);
-			fiseCargoFijo.f_montoMes.val(bean.montoMes);			
+					
+			fiseCargoFijo.f_numUsuBenefR.val(bean.numUsuBenefR);
+			fiseCargoFijo.f_numUsuBenefP.val(bean.numUsuBenefP);
+			fiseCargoFijo.f_numUsuBenefL.val(bean.numUsuBenefL);
+			
+			fiseCargoFijo.f_numUsuEmpR.val(bean.numUsuEmpR);	
+			fiseCargoFijo.f_numUsuEmpP.val(bean.numUsuEmpP);	
+			fiseCargoFijo.f_numUsuEmpL.val(bean.numUsuEmpL);	
+			
+			fiseCargoFijo.f_numValDCanR.val(bean.numValDCanR);
+			fiseCargoFijo.f_numValDCanP.val(bean.numValDCanP);
+			fiseCargoFijo.f_numValDCanL.val(bean.numValDCanL);
+			
+			fiseCargoFijo.f_numValDEmiR.val(bean.numValDEmiR);
+			fiseCargoFijo.f_numValDEmiP.val(bean.numValDEmiP);
+			fiseCargoFijo.f_numValDEmiL.val(bean.numValDEmiL);
+			
+			fiseCargoFijo.f_numValFCanR.val(bean.numValFCanR);
+			fiseCargoFijo.f_numValFCanP.val(bean.numValFCanP);
+			fiseCargoFijo.f_numValFCanL.val(bean.numValFCanL);
+			
+			fiseCargoFijo.f_numValFEmiR.val(bean.numValFEmiR);
+			fiseCargoFijo.f_numValFEmiP.val(bean.numValFEmiP);
+			fiseCargoFijo.f_numValFEmiL.val(bean.numValFEmiL);
+			
+			fiseCargoFijo.f_numAgenR.val(bean.numAgenteR);
+			fiseCargoFijo.f_numAgenP.val(bean.numAgenteP);
+			fiseCargoFijo.f_numAgenL.val(bean.numAgenteL);
+			
+			fiseCargoFijo.f_montoMesR.val(bean.montoMesR);	
+			fiseCargoFijo.f_montoMesP.val(bean.montoMesP);
+			fiseCargoFijo.f_montoMesL.val(bean.montoMesL);
+			
 			fiseCargoFijo.f_montoCanje.val(bean.montoCanje);
 			fiseCargoFijo.f_numDoc.val(bean.numDoc);			
 			fiseCargoFijo.f_numDocRecepcion.val(bean.numDocRecepcion);
@@ -482,14 +580,38 @@ var fiseCargoFijo= {
 		},
 		
 		deshabilitarCamposView : function(){			
-			fiseCargoFijo.f_numUsuBenef.attr("disabled",true);
-			fiseCargoFijo.f_numUsuEmp.attr("disabled",true);
-			fiseCargoFijo.f_numValDCan.attr("disabled",true);
-			fiseCargoFijo.f_numValDEmi.attr("disabled",true);
-			fiseCargoFijo.f_numValFCan.attr("disabled",true);
-			fiseCargoFijo.f_numValFEmi.attr("disabled",true);
-			fiseCargoFijo.f_numAgen.attr("disabled",true);
-			fiseCargoFijo.f_montoMes.attr("disabled",true);
+			fiseCargoFijo.f_numUsuBenefR.attr("disabled",true);
+			fiseCargoFijo.f_numUsuBenefP.attr("disabled",true);
+			fiseCargoFijo.f_numUsuBenefL.attr("disabled",true);
+			
+			fiseCargoFijo.f_numUsuEmpR.attr("disabled",true);
+			fiseCargoFijo.f_numUsuEmpP.attr("disabled",true);
+			fiseCargoFijo.f_numUsuEmpL.attr("disabled",true);
+			
+			fiseCargoFijo.f_numValDCanR.attr("disabled",true);
+			fiseCargoFijo.f_numValDCanP.attr("disabled",true);
+			fiseCargoFijo.f_numValDCanL.attr("disabled",true);
+			
+			fiseCargoFijo.f_numValDEmiR.attr("disabled",true);
+			fiseCargoFijo.f_numValDEmiP.attr("disabled",true);
+			fiseCargoFijo.f_numValDEmiL.attr("disabled",true);
+			
+			fiseCargoFijo.f_numValFCanR.attr("disabled",true);
+			fiseCargoFijo.f_numValFCanP.attr("disabled",true);
+			fiseCargoFijo.f_numValFCanL.attr("disabled",true);
+			
+			fiseCargoFijo.f_numValFEmiR.attr("disabled",true);
+			fiseCargoFijo.f_numValFEmiP.attr("disabled",true);
+			fiseCargoFijo.f_numValFEmiL.attr("disabled",true);
+			
+			fiseCargoFijo.f_numAgenR.attr("disabled",true);
+			fiseCargoFijo.f_numAgenP.attr("disabled",true);
+			fiseCargoFijo.f_numAgenL.attr("disabled",true);
+			
+			fiseCargoFijo.f_montoMesR.attr("disabled",true);
+			fiseCargoFijo.f_montoMesP.attr("disabled",true);
+			fiseCargoFijo.f_montoMesL.attr("disabled",true);
+			
 			fiseCargoFijo.f_montoCanje.attr("disabled",true);
 			fiseCargoFijo.f_numDoc.attr("disabled",true);
 			fiseCargoFijo.f_numDocRecepcion.attr("disabled",true);
@@ -504,14 +626,38 @@ var fiseCargoFijo= {
         	$('#rbtInactivo').attr("disabled",true);
 			
 			//ESTILOS
-			fiseCargoFijo.f_numUsuBenef.removeClass("fise-editable");
-			fiseCargoFijo.f_numUsuEmp.removeClass("fise-editable");	
-			fiseCargoFijo.f_numValDCan.removeClass("fise-editable");
-			fiseCargoFijo.f_numValDEmi.removeClass("fise-editable");		
-			fiseCargoFijo.f_numValFCan.removeClass("fise-editable");
-			fiseCargoFijo.f_numValFEmi.removeClass("fise-editable");				
-			fiseCargoFijo.f_numAgen.removeClass("fise-editable");
-			fiseCargoFijo.f_montoMes.removeClass("fise-editable");		
+			fiseCargoFijo.f_numUsuBenefR.removeClass("fise-editable");
+			fiseCargoFijo.f_numUsuBenefP.removeClass("fise-editable");
+			fiseCargoFijo.f_numUsuBenefL.removeClass("fise-editable");
+			
+			fiseCargoFijo.f_numUsuEmpR.removeClass("fise-editable");
+			fiseCargoFijo.f_numUsuEmpP.removeClass("fise-editable");	
+			fiseCargoFijo.f_numUsuEmpL.removeClass("fise-editable");	
+			
+			fiseCargoFijo.f_numValDCanR.removeClass("fise-editable");
+			fiseCargoFijo.f_numValDCanP.removeClass("fise-editable");
+			fiseCargoFijo.f_numValDCanL.removeClass("fise-editable");
+			
+			fiseCargoFijo.f_numValDEmiR.removeClass("fise-editable");
+			fiseCargoFijo.f_numValDEmiP.removeClass("fise-editable");
+			fiseCargoFijo.f_numValDEmiL.removeClass("fise-editable");
+			
+			fiseCargoFijo.f_numValFCanR.removeClass("fise-editable");
+			fiseCargoFijo.f_numValFCanP.removeClass("fise-editable");
+			fiseCargoFijo.f_numValFCanL.removeClass("fise-editable");
+			
+			fiseCargoFijo.f_numValFEmiR.removeClass("fise-editable");
+			fiseCargoFijo.f_numValFEmiP.removeClass("fise-editable");
+			fiseCargoFijo.f_numValFEmiL.removeClass("fise-editable");
+			
+			fiseCargoFijo.f_numAgenR.removeClass("fise-editable");
+			fiseCargoFijo.f_numAgenP.removeClass("fise-editable");
+			fiseCargoFijo.f_numAgenL.removeClass("fise-editable");
+			
+			fiseCargoFijo.f_montoMesR.removeClass("fise-editable");
+			fiseCargoFijo.f_montoMesP.removeClass("fise-editable");
+			fiseCargoFijo.f_montoMesL.removeClass("fise-editable");
+			
 			fiseCargoFijo.f_montoCanje.removeClass("fise-editable");
 			fiseCargoFijo.f_numDoc.removeClass("fise-editable");		
 			fiseCargoFijo.f_numDocRecepcion.removeClass("fise-editable");
@@ -524,15 +670,39 @@ var fiseCargoFijo= {
 			
 		},
 		//Funcion para habilitar los campos que se desabilitan en la visualizacion opcion ver
-		habilitarCamposView : function(){				
-			fiseCargoFijo.f_numUsuBenef.removeAttr("disabled");
-			fiseCargoFijo.f_numUsuEmp.removeAttr("disabled");
-			fiseCargoFijo.f_numValDCan.removeAttr("disabled");
-			fiseCargoFijo.f_numValDEmi.removeAttr("disabled");
-			fiseCargoFijo.f_numValFCan.removeAttr("disabled");
-			fiseCargoFijo.f_numValFEmi.removeAttr("disabled");
-			fiseCargoFijo.f_numAgen.removeAttr("disabled");
-			fiseCargoFijo.f_montoMes.removeAttr("disabled");
+		habilitarCamposView : function(){			
+			fiseCargoFijo.f_numUsuBenefR.removeAttr("disabled");
+			fiseCargoFijo.f_numUsuBenefP.removeAttr("disabled");
+			fiseCargoFijo.f_numUsuBenefL.removeAttr("disabled");
+			
+			fiseCargoFijo.f_numUsuEmpR.removeAttr("disabled");
+			fiseCargoFijo.f_numUsuEmpP.removeAttr("disabled");
+			fiseCargoFijo.f_numUsuEmpL.removeAttr("disabled");
+			
+			fiseCargoFijo.f_numValDCanR.removeAttr("disabled");
+			fiseCargoFijo.f_numValDCanP.removeAttr("disabled");
+			fiseCargoFijo.f_numValDCanL.removeAttr("disabled");
+			
+			fiseCargoFijo.f_numValDEmiR.removeAttr("disabled");
+			fiseCargoFijo.f_numValDEmiP.removeAttr("disabled");
+			fiseCargoFijo.f_numValDEmiL.removeAttr("disabled");
+			
+			fiseCargoFijo.f_numValFCanR.removeAttr("disabled");
+			fiseCargoFijo.f_numValFCanP.removeAttr("disabled");
+			fiseCargoFijo.f_numValFCanL.removeAttr("disabled");
+			
+			fiseCargoFijo.f_numValFEmiR.removeAttr("disabled");
+			fiseCargoFijo.f_numValFEmiP.removeAttr("disabled");
+			fiseCargoFijo.f_numValFEmiL.removeAttr("disabled");
+			
+			fiseCargoFijo.f_numAgenR.removeAttr("disabled");
+			fiseCargoFijo.f_numAgenP.removeAttr("disabled");
+			fiseCargoFijo.f_numAgenL.removeAttr("disabled");
+			
+			fiseCargoFijo.f_montoMesR.removeAttr("disabled");
+			fiseCargoFijo.f_montoMesP.removeAttr("disabled");
+			fiseCargoFijo.f_montoMesL.removeAttr("disabled");		
+			
 			fiseCargoFijo.f_montoCanje.removeAttr("disabled");
 			fiseCargoFijo.f_numDoc.removeAttr("disabled");
 			fiseCargoFijo.f_numDocRecepcion.removeAttr("disabled");
@@ -546,15 +716,39 @@ var fiseCargoFijo= {
         	$('#rbtActivo').removeAttr("disabled");
         	$('#rbtInactivo').removeAttr("disabled");
 			
-			//ESTILOS
-			fiseCargoFijo.f_numUsuBenef.addClass("fise-editable");
-			fiseCargoFijo.f_numUsuEmp.addClass("fise-editable");	
-			fiseCargoFijo.f_numValDCan.addClass("fise-editable");
-			fiseCargoFijo.f_numValDEmi.addClass("fise-editable");		
-			fiseCargoFijo.f_numValFCan.addClass("fise-editable");
-			fiseCargoFijo.f_numValFEmi.addClass("fise-editable");				
-			fiseCargoFijo.f_numAgen.addClass("fise-editable");
-			fiseCargoFijo.f_montoMes.addClass("fise-editable");		
+			//ESTILOS			
+			fiseCargoFijo.f_numUsuBenefR.addClass("fise-editable");
+			fiseCargoFijo.f_numUsuBenefP.addClass("fise-editable");
+			fiseCargoFijo.f_numUsuBenefL.addClass("fise-editable");
+			
+			fiseCargoFijo.f_numUsuEmpR.addClass("fise-editable");
+			fiseCargoFijo.f_numUsuEmpP.addClass("fise-editable");	
+			fiseCargoFijo.f_numUsuEmpL.addClass("fise-editable");
+			
+			fiseCargoFijo.f_numValDCanR.addClass("fise-editable");
+			fiseCargoFijo.f_numValDCanP.addClass("fise-editable");
+			fiseCargoFijo.f_numValDCanL.addClass("fise-editable");
+			
+			fiseCargoFijo.f_numValDEmiR.addClass("fise-editable");
+			fiseCargoFijo.f_numValDEmiP.addClass("fise-editable");
+			fiseCargoFijo.f_numValDEmiL.addClass("fise-editable");
+			
+			fiseCargoFijo.f_numValFCanR.addClass("fise-editable");
+			fiseCargoFijo.f_numValFCanP.addClass("fise-editable");
+			fiseCargoFijo.f_numValFCanL.addClass("fise-editable");
+			
+			fiseCargoFijo.f_numValFEmiR.addClass("fise-editable");
+			fiseCargoFijo.f_numValFEmiP.addClass("fise-editable");
+			fiseCargoFijo.f_numValFEmiL.addClass("fise-editable");
+			
+			fiseCargoFijo.f_numAgenR.addClass("fise-editable");
+			fiseCargoFijo.f_numAgenP.addClass("fise-editable");
+			fiseCargoFijo.f_numAgenL.addClass("fise-editable");
+			
+			fiseCargoFijo.f_montoMesR.addClass("fise-editable");
+			fiseCargoFijo.f_montoMesP.addClass("fise-editable");
+			fiseCargoFijo.f_montoMesL.addClass("fise-editable");			
+			
 			fiseCargoFijo.f_montoCanje.addClass("fise-editable");
 			fiseCargoFijo.f_numDoc.addClass("fise-editable");	
 			fiseCargoFijo.f_fechaRecepcion.addClass("fise-editable");
@@ -698,37 +892,101 @@ var fiseCargoFijo= {
 				alert('Debe seleccionar un mes de reporte.'); 
 				fiseCargoFijo.f_mesRep.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numUsuBenef.val().length == ''){
-				alert('Debe ingresar número de usuarios beneficiados.'); 
-				fiseCargoFijo.f_numUsuBenef.focus();
+			}else if(fiseCargoFijo.f_numUsuBenefR.val().length == ''){
+				alert('Debe ingresar número de usuarios beneficiados Rural.'); 
+				fiseCargoFijo.f_numUsuBenefR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numUsuEmp.val().length == ''){
-				alert('Debe ingresar número de usuarios empadronados.'); 
-				fiseCargoFijo.f_numUsuEmp.focus();
+			}else if(fiseCargoFijo.f_numUsuBenefP.val().length == ''){
+				alert('Debe ingresar número de usuarios beneficiados Urb. Provincias.'); 
+				fiseCargoFijo.f_numUsuBenefP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValDCan.val().length == ''){
-				alert('Debe ingresar número de vales digitales canjeados.'); 
-				fiseCargoFijo.f_numValDCan.focus();
+			}else if(fiseCargoFijo.f_numUsuBenefL.val().length == ''){
+				alert('Debe ingresar número de usuarios beneficiados Urb. Lima.'); 
+				fiseCargoFijo.f_numUsuBenefL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValDEmi.val().length == ''){
-				alert('Debe ingresar número de vales digitales emitidos.'); 
-				fiseCargoFijo.f_numValDEmi.focus();
+			}else if(fiseCargoFijo.f_numUsuEmpR.val().length == ''){
+				alert('Debe ingresar número de usuarios empadronados Rural.'); 
+				fiseCargoFijo.f_numUsuEmpR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValFCan.val().length == ''){
-				alert('Debe ingresar número de vales físicos canjeados.'); 
-				fiseCargoFijo.f_numValFCan.focus();
+			}else if(fiseCargoFijo.f_numUsuEmpP.val().length == ''){
+				alert('Debe ingresar número de usuarios empadronados Urb. Provincias.'); 
+				fiseCargoFijo.f_numUsuEmpP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValFEmi.val().length == ''){
-				alert('Debe ingresar número de vales físicos emitidos.'); 
-				fiseCargoFijo.f_numValFEmi.focus();
+			}else if(fiseCargoFijo.f_numUsuEmpL.val().length == ''){
+				alert('Debe ingresar número de usuarios empadronados Urb. Lima.'); 
+				fiseCargoFijo.f_numUsuEmpL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numAgen.val().length == ''){
-				alert('Debe ingresar número de agentes.'); 
-				fiseCargoFijo.f_numAgen.focus();
+			}else if(fiseCargoFijo.f_numValFEmiR.val().length == ''){
+				alert('Debe ingresar número de vales físicos emitidos Rural.'); 
+				fiseCargoFijo.f_numValFEmiR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_montoMes.val().length == ''){
-				alert('Debe ingresar monto de cargo fijo al mes.'); 
-				fiseCargoFijo.f_montoMes.focus();
+			}else if(fiseCargoFijo.f_numValFEmiP.val().length == ''){
+				alert('Debe ingresar número de vales físicos emitidos Urb. Provincias.'); 
+				fiseCargoFijo.f_numValFEmiP.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValFEmiL.val().length == ''){
+				alert('Debe ingresar número de vales físicos emitidos Urb. Lima.'); 
+				fiseCargoFijo.f_numValFEmiL.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValDEmiR.val().length == ''){
+				alert('Debe ingresar número de vales digitales emitidos Rural.'); 
+				fiseCargoFijo.f_numValDEmiR.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValDEmiP.val().length == ''){
+				alert('Debe ingresar número de vales digitales emitidos Urb. Provincias.'); 
+				fiseCargoFijo.f_numValDEmiP.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValDEmiL.val().length == ''){
+				alert('Debe ingresar número de vales digitales emitidos Urb. Lima.'); 
+				fiseCargoFijo.f_numValDEmiL.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValFCanR.val().length == ''){
+				alert('Debe ingresar número de vales físicos canjeados Rural.'); 
+				fiseCargoFijo.f_numValFCanR.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValFCanP.val().length == ''){
+				alert('Debe ingresar número de vales físicos canjeados Urb. Provincias.'); 
+				fiseCargoFijo.f_numValFCanP.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValFCanL.val().length == ''){
+				alert('Debe ingresar número de vales físicos canjeados Urb. Lima.'); 
+				fiseCargoFijo.f_numValFCanL.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValDCanR.val().length == ''){
+				alert('Debe ingresar número de vales digitales canjeados Rural.'); 
+				fiseCargoFijo.f_numValDCanR.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValDCanP.val().length == ''){
+				alert('Debe ingresar número de vales digitales canjeados Urb. Provincias.'); 
+				fiseCargoFijo.f_numValDCanP.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numValDCanL.val().length == ''){
+				alert('Debe ingresar número de vales digitales canjeados Urb. Lima.'); 
+				fiseCargoFijo.f_numValDCanL.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numAgenR.val().length == ''){
+				alert('Debe ingresar número de agentes Rural.'); 
+				fiseCargoFijo.f_numAgenR.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numAgenP.val().length == ''){
+				alert('Debe ingresar número de agentes Urb. Provincias.'); 
+				fiseCargoFijo.f_numAgenP.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_numAgenL.val().length == ''){
+				alert('Debe ingresar número de agentes Urb. Lima.'); 
+				fiseCargoFijo.f_numAgenL.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_montoMesR.val().length == ''){
+				alert('Debe ingresar monto de cargo fijo al mes Rural.'); 
+				fiseCargoFijo.f_montoMesR.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_montoMesP.val().length == ''){
+				alert('Debe ingresar monto de cargo fijo al mes Urb. Provincias.'); 
+				fiseCargoFijo.f_montoMesP.focus();
+			  	return false; 
+			}else if(fiseCargoFijo.f_montoMesL.val().length == ''){
+				alert('Debe ingresar monto de cargo fijo al mes Urb. Lima.'); 
+				fiseCargoFijo.f_montoMesL.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_montoCanje.val().length == ''){
 				alert('Debe ingresar monto transferido por canje.'); 
