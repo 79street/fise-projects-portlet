@@ -99,7 +99,7 @@ $(document).ready(function () {
 											</td>
 											<td style="aling:right"><input name="<portlet:namespace/>btnProcesarNotificacion"
 												id="<portlet:namespace/>btnProcesarNotificacion" type="button"
-												class="net-button-small" value="Procesar" style="aling:center" />
+												class="net-button-small" value="Procesar Validaci&oacute;n" style="aling:center" />
 											</td>
 										</tr>
 									</table>
