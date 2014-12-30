@@ -143,14 +143,14 @@
 	<pageHeader>
 		<band height="615" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="119" y="52" width="30" height="15"/>
+				<reportElement x="119" y="52" width="21" height="15"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="163" y="52" width="265" height="15"/>
+				<reportElement x="147" y="52" width="281" height="15"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -1193,26 +1193,34 @@
 			</staticText>
 			<staticText>
 				<reportElement x="575" y="52" width="122" height="15"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[Año Inicio de Vigencia:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="575" y="69" width="122" height="15"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[Año Fin de Vigencia:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="700" y="52" width="130" height="15"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_INICIO_VIGENCIA}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="700" y="69" width="130" height="15"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_FIN_VIGENCIA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="151" y="52" width="10" height="15"/>
+				<reportElement x="141" y="52" width="5" height="15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
