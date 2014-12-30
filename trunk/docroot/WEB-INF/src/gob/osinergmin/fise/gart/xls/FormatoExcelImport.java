@@ -12,6 +12,7 @@ import gob.osinergmin.fise.domain.FiseFormato13ADPK;
 
 
 import gob.osinergmin.fise.domain.FiseFormato14BD;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -190,6 +191,9 @@ public class FormatoExcelImport {
 					if(cellUbigeo.getCellType() == HSSFCell.CELL_TYPE_STRING && cellUbigeo.getCellType() != HSSFCell.CELL_TYPE_BLANK){
 						pk.setCodUbigeo(cellUbigeo.toString());
 						System.out.println("ubgeo  ==>"+pk.getCodUbigeo());
+					}else if( cellUbigeo.getCellType() == HSSFCell.CELL_TYPE_NUMERIC){
+						String valor = "" + cellUbigeo.getNumericCellValue();
+						pk.setCodUbigeo(FormatoUtil.eliminaDecimales(valor));
 					}else{
 						throw new Exception("ubigeo no valido en fila nro : C"+(r+1));
 					}
@@ -200,11 +204,20 @@ public class FormatoExcelImport {
 						System.out.println("localidad nombre  ==>"+fise13.getDescripcionLocalidad());
 					}
 					
-					try{
-						pk.setIdZonaBenef((long)Double.parseDouble(cellBeneficiario.toString()));
-					}catch(NumberFormatException n){
-						throw new Exception("Zona de beneficiarios no valido en fila nro :"+(r+1));
+					
+					/**CORREGIR ESTA VALIDACION**/
+					if( cellBeneficiario.getCellType() == HSSFCell.CELL_TYPE_NUMERIC){
+						pk.setIdZonaBenef(new Double(cellBeneficiario.getNumericCellValue()).longValue());
+						System.out.println("zona beneficiario  ==>"+pk.getIdZonaBenef());
+					}else{
+						try{
+							pk.setIdZonaBenef((long)Double.parseDouble(cellBeneficiario.toString()));
+						}catch(NumberFormatException n){
+							throw new Exception("Zona de beneficiarios no valido en fila nro :"+(r+1));
+						}
 					}
+					
+					
 					
 					
 					

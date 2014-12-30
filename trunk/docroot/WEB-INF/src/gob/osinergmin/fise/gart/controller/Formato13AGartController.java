@@ -1097,10 +1097,10 @@ public class Formato13AGartController {
 		response.setRenderParameter("descripcionPeriodoHidden", command.getDescripcionPeriodoHidden());
 		
 		response.setRenderParameter("descGrupoInformacion", nameGrupo!=null?nameGrupo:"");
-		response.setRenderParameter("descestado", nameEstado);
+		response.setRenderParameter("descestado", nameEstado!=null?nameEstado:"");
 		
-		response.setRenderParameter("anioInicioVigencia", inicioVigencia);
-		response.setRenderParameter("anioFinVigencia", finVigencia);
+		response.setRenderParameter("anioInicioVigencia", inicioVigencia!=null?inicioVigencia:"");
+		response.setRenderParameter("anioFinVigencia", finVigencia!=null?finVigencia:"");
 		
 		
 		
@@ -1672,7 +1672,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 				// setamos los valores en el bean
 				bean = formatoService.estructurarFormato13ABeanByFiseFormato13AC(formato);
 				bean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
-				
+				bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 				//
 				// cargamos la lista a enviar
 				List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
@@ -2373,4 +2373,59 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 		}
 	}
 
+	//add
+	public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato, List<FiseFormato13AD> listaDetalle){
+	
+	Date hoy = FechaUtil.obtenerFechaActual();
+	try{
+		formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+		formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+		formato.setFechaActualizacion(hoy);
+		formato.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+		formato.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+		formato.setFechaCreacion(hoy);
+		//verificar si es necesario realizar esta validacion
+		//boolean existe = false;
+		//existe = formatoService.existeFormato14AC(formato);
+		//if(existe){
+		//	throw new Exception("Ya existe un registro con la misma clave.");
+		//}else{
+			formatoService.savecabecera(formato);
+		//}
+		//add
+		for (FiseFormato13AD detalle : listaDetalle) {
+			formatoService.savedetalle(detalle);
+		}
+		if( listaDetalle != null && listaDetalle.size()>0 ){
+			formato.setFiseFormato13ADs(listaDetalle);
+		}
+	
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+}
+
+public void modificarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato){
+	
+	Date hoy = FechaUtil.obtenerFechaActual();
+	try{
+		formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+		formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+		formato.setFechaActualizacion(hoy);
+		
+		formatoService.updatecabecera(formato);
+		
+		if( formato.getFiseFormato13ADs() != null && formato.getFiseFormato13ADs().size()>0 ){
+			for (FiseFormato13AD detalle : formato.getFiseFormato13ADs()) {
+				formatoService.updatedetalle(detalle);
+			}
+		}
+	
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+}
+	
 }

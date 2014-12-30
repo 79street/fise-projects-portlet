@@ -127,7 +127,7 @@
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="104" y="17" width="30" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
