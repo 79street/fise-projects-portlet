@@ -23,8 +23,8 @@
 				formato13A.initCRUD('${crud}', '${urlAnadirFormato}','${urlRegresarBusqueda}');
                 var error = '${error}';
 				if (error.length > 0) {
-				    formato12B.lblMessage.html(error);
-					formato12B.dialogMessageGeneral.dialog("open");
+					formato13A.lblMessage.html(error);
+					formato13A.dialogMessageGeneral.dialog("open");
 				}
 			});
 </script>
