@@ -261,7 +261,7 @@ $(function() {
 				   										<td width="10px"></td>
 				   										<td width="120px">Nro. doc. Referencia:</td>
 				   										<td>
-				   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" maxlength="20" onkeypress="return soloNumerosDecimales(event, 1, 'nroDocumento',20,0)" />
+				   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" onkeypress="return soloNumerosDecimales(event, 1, 'nroDocumento',20,0)" />
 				   										</td>
 													</tr>
 													<tr>
