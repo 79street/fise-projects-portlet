@@ -1801,72 +1801,136 @@ public class FormatoExcelExport {
 		a3.setCellStyle(headerCellStyle);
 		
 		HSSFCell a4 = segundaFila.createCell(4);
-		a4.setCellValue(new HSSFRichTextString("N° Usu. Benef."));
-		a4.setCellStyle(headerCellStyle);	
+		a4.setCellValue(new HSSFRichTextString("N° Usu. Benef. Rural"));
+		a4.setCellStyle(headerCellStyle);
 		
 		HSSFCell a5 = segundaFila.createCell(5);
-		a5.setCellValue(new HSSFRichTextString("N° Usu. Empad."));
+		a5.setCellValue(new HSSFRichTextString("N° Usu. Benef. Urb. Provincias"));
 		a5.setCellStyle(headerCellStyle);	
 		
 		HSSFCell a6 = segundaFila.createCell(6);
-		a6.setCellValue(new HSSFRichTextString("N° Vales Físicos Emit."));
+		a6.setCellValue(new HSSFRichTextString("N° Usu. Benef. Urb. Lima"));
 		a6.setCellStyle(headerCellStyle);	
 		
 		HSSFCell a7 = segundaFila.createCell(7);
-		a7.setCellValue(new HSSFRichTextString("N° Vales Digitales Emit."));
-		a7.setCellStyle(headerCellStyle);	
+		a7.setCellValue(new HSSFRichTextString("N° Usu. Empad. Rural"));
+		a7.setCellStyle(headerCellStyle);
 		
 		HSSFCell a8 = segundaFila.createCell(8);
-		a8.setCellValue(new HSSFRichTextString("N° Vales Físicos Cang."));
-		a8.setCellStyle(headerCellStyle);
+		a8.setCellValue(new HSSFRichTextString("N° Usu. Empad. Urb. Provincias"));
+		a8.setCellStyle(headerCellStyle);	
 		
 		HSSFCell a9 = segundaFila.createCell(9);
-		a9.setCellValue(new HSSFRichTextString("N° Vales Digitales Cang."));
-		a9.setCellStyle(headerCellStyle);
+		a9.setCellValue(new HSSFRichTextString("N° Usu. Empad. Urb. Lima"));
+		a9.setCellStyle(headerCellStyle);	
 		
 		HSSFCell a10 = segundaFila.createCell(10);
-		a10.setCellValue(new HSSFRichTextString("N° Agentes"));
+		a10.setCellValue(new HSSFRichTextString("N° Vales Físicos Emit. Rural"));
 		a10.setCellStyle(headerCellStyle);
 		
 		HSSFCell a11 = segundaFila.createCell(11);
-		a11.setCellValue(new HSSFRichTextString("Monto Transf. Cange"));
+		a11.setCellValue(new HSSFRichTextString("N° Vales Físicos Emit. Urb. Provincias"));
 		a11.setCellStyle(headerCellStyle);
 		
 		HSSFCell a12 = segundaFila.createCell(12);
-		a12.setCellValue(new HSSFRichTextString("Monto Cargo F. Mes"));
+		a12.setCellValue(new HSSFRichTextString("N° Vales Físicos Emit. Urb. Lima"));
 		a12.setCellStyle(headerCellStyle);
 		
 		HSSFCell a13 = segundaFila.createCell(13);
-		a13.setCellValue(new HSSFRichTextString("Fecha Informe de Sust."));
+		a13.setCellValue(new HSSFRichTextString("N° Vales Digitales Emit. Rural"));
 		a13.setCellStyle(headerCellStyle);
 		
 		HSSFCell a14 = segundaFila.createCell(14);
-		a14.setCellValue(new HSSFRichTextString("N° Doc. de Sust."));
-		a14.setCellStyle(headerCellStyle);
+		a14.setCellValue(new HSSFRichTextString("N° Vales Digitales Emit. Urb. Provincias"));
+		a14.setCellStyle(headerCellStyle);	
 		
 		HSSFCell a15 = segundaFila.createCell(15);
-		a15.setCellValue(new HSSFRichTextString("Estado"));
-		a15.setCellStyle(headerCellStyle);
+		a15.setCellValue(new HSSFRichTextString("N° Vales Digitales Emit. Urb. Lima"));
+		a15.setCellStyle(headerCellStyle);	
 		
 		HSSFCell a16 = segundaFila.createCell(16);
-		a16.setCellValue(new HSSFRichTextString("Fecha Recepción Inf."));
+		a16.setCellValue(new HSSFRichTextString("N° Vales Físicos Cang. Rural"));
 		a16.setCellStyle(headerCellStyle);
 		
 		HSSFCell a17 = segundaFila.createCell(17);
-		a17.setCellValue(new HSSFRichTextString("N° Doc. Recepción Inf."));
+		a17.setCellValue(new HSSFRichTextString("N° Vales Físicos Cang. Urb. Provincias"));
 		a17.setCellStyle(headerCellStyle);
 		
 		HSSFCell a18 = segundaFila.createCell(18);
-		a18.setCellValue(new HSSFRichTextString("IGV"));
+		a18.setCellValue(new HSSFRichTextString("N° Vales Físicos Cang. Urb. Lima"));
 		a18.setCellStyle(headerCellStyle);
 		
 		HSSFCell a19 = segundaFila.createCell(19);
-		a19.setCellValue(new HSSFRichTextString("Aplica IGV"));
+		a19.setCellValue(new HSSFRichTextString("N° Vales Digitales Cang. Rural"));
 		a19.setCellStyle(headerCellStyle);
 		
 		HSSFCell a20 = segundaFila.createCell(20);
-		a20.setCellValue(new HSSFRichTextString("Glosa"));
+		a20.setCellValue(new HSSFRichTextString("N° Vales Digitales Cang. Urb. Provincias"));
 		a20.setCellStyle(headerCellStyle);
+		
+		HSSFCell a21 = segundaFila.createCell(21);
+		a21.setCellValue(new HSSFRichTextString("N° Vales Digitales Cang. Urb. Lima"));
+		a21.setCellStyle(headerCellStyle);
+		
+		HSSFCell a22 = segundaFila.createCell(22);
+		a22.setCellValue(new HSSFRichTextString("N° Agentes Rural"));
+		a22.setCellStyle(headerCellStyle);
+		
+		HSSFCell a23 = segundaFila.createCell(23);
+		a23.setCellValue(new HSSFRichTextString("N° Agentes Urb. Provincias"));
+		a23.setCellStyle(headerCellStyle);
+		
+		HSSFCell a24 = segundaFila.createCell(24);
+		a24.setCellValue(new HSSFRichTextString("N° Agentes Urb. Lima"));
+		a24.setCellStyle(headerCellStyle);
+		
+		HSSFCell a25 = segundaFila.createCell(25);
+		a25.setCellValue(new HSSFRichTextString("Monto Cargo F. Mes Rural"));
+		a25.setCellStyle(headerCellStyle);
+		
+		HSSFCell a26 = segundaFila.createCell(26);
+		a26.setCellValue(new HSSFRichTextString("Monto Cargo F. Mes Urb. Provincias"));
+		a26.setCellStyle(headerCellStyle);
+		
+		HSSFCell a27 = segundaFila.createCell(27);
+		a27.setCellValue(new HSSFRichTextString("Monto Cargo F. Mes Urb. Lima"));
+		a27.setCellStyle(headerCellStyle);		
+		
+		HSSFCell a28 = segundaFila.createCell(28);
+		a28.setCellValue(new HSSFRichTextString("Monto Transf. Cange"));
+		a28.setCellStyle(headerCellStyle);
+		
+		HSSFCell a29 = segundaFila.createCell(29);
+		a29.setCellValue(new HSSFRichTextString("Fecha Informe de Sust."));
+		a29.setCellStyle(headerCellStyle);
+		
+		HSSFCell a30 = segundaFila.createCell(30);
+		a30.setCellValue(new HSSFRichTextString("N° Doc. de Sust."));
+		a30.setCellStyle(headerCellStyle);
+		
+		HSSFCell a31 = segundaFila.createCell(31);
+		a31.setCellValue(new HSSFRichTextString("Estado"));
+		a31.setCellStyle(headerCellStyle);
+		
+		HSSFCell a32 = segundaFila.createCell(32);
+		a32.setCellValue(new HSSFRichTextString("Fecha Recepción Inf."));
+		a32.setCellStyle(headerCellStyle);
+		
+		HSSFCell a33 = segundaFila.createCell(33);
+		a33.setCellValue(new HSSFRichTextString("N° Doc. Recepción Inf."));
+		a33.setCellStyle(headerCellStyle);
+		
+		HSSFCell a34 = segundaFila.createCell(34);
+		a34.setCellValue(new HSSFRichTextString("IGV"));
+		a34.setCellStyle(headerCellStyle);
+		
+		HSSFCell a35 = segundaFila.createCell(35);
+		a35.setCellValue(new HSSFRichTextString("Aplica IGV"));
+		a35.setCellStyle(headerCellStyle);
+		
+		HSSFCell a36 = segundaFila.createCell(36);
+		a36.setCellValue(new HSSFRichTextString("Glosa"));
+		a36.setCellStyle(headerCellStyle);
 		
 
 		if(listaCargosFijos!=null && listaCargosFijos.size()>0 ){
@@ -1884,58 +1948,106 @@ public class FormatoExcelExport {
 				ax2.setCellStyle(dateCellStyle);
 				HSSFCell ax3 = fila.createCell(3);
 				ax3.setCellValue(new HSSFRichTextString(""+cargo.getDesMesRep()));
-				ax3.setCellStyle(dateCellStyle);
+				ax3.setCellStyle(dateCellStyle);				
 				HSSFCell ax4 = fila.createCell(4);
 				ax4.setCellValue(new HSSFRichTextString(""+cargo.getNumUsuBenefR()));
-				ax4.setCellStyle(dateCellStyle);
+				ax4.setCellStyle(dateCellStyle);				
 				HSSFCell ax5 = fila.createCell(5);
-				ax5.setCellValue(new HSSFRichTextString(""+cargo.getNumUsuEmpR()));
-				ax5.setCellStyle(dateCellStyle);
+				ax5.setCellValue(new HSSFRichTextString(""+cargo.getNumUsuBenefP()));
+				ax5.setCellStyle(dateCellStyle);				
 				HSSFCell ax6 = fila.createCell(6);
-				ax6.setCellValue(new HSSFRichTextString(""+cargo.getNumValFEmiR()));
-				ax6.setCellStyle(dateCellStyle);
+				ax6.setCellValue(new HSSFRichTextString(""+cargo.getNumUsuBenefL()));
+				ax6.setCellStyle(dateCellStyle);				
 				HSSFCell ax7 = fila.createCell(7);
-				ax7.setCellValue(new HSSFRichTextString(""+cargo.getNumValDEmiR()));
+				ax7.setCellValue(new HSSFRichTextString(""+cargo.getNumUsuEmpR()));
 				ax7.setCellStyle(dateCellStyle);				
 				HSSFCell ax8 = fila.createCell(8);
-				ax8.setCellValue(new HSSFRichTextString(""+cargo.getNumValFCanR()));
-				ax8.setCellStyle(dateCellStyle);
+				ax8.setCellValue(new HSSFRichTextString(""+cargo.getNumUsuEmpP()));
+				ax8.setCellStyle(dateCellStyle);				
 				HSSFCell ax9 = fila.createCell(9);
-				ax9.setCellValue(new HSSFRichTextString(""+cargo.getNumValDCanR()));
-				ax9.setCellStyle(dateCellStyle);
+				ax9.setCellValue(new HSSFRichTextString(""+cargo.getNumUsuEmpL()));
+				ax9.setCellStyle(dateCellStyle);				
 				HSSFCell ax10 = fila.createCell(10);
-				ax10.setCellValue(new HSSFRichTextString(""+cargo.getNumAgenteR()));
-				ax10.setCellStyle(dateCellStyle);
+				ax10.setCellValue(new HSSFRichTextString(""+cargo.getNumValFEmiR()));
+				ax10.setCellStyle(dateCellStyle);				
 				HSSFCell ax11 = fila.createCell(11);
-				ax11.setCellValue(new HSSFRichTextString(""+cargo.getMontoCanje()));
-				ax11.setCellStyle(dateCellStyle);
+				ax11.setCellValue(new HSSFRichTextString(""+cargo.getNumValFEmiP()));
+				ax11.setCellStyle(dateCellStyle);				
 				HSSFCell ax12 = fila.createCell(12);
-				ax12.setCellValue(new HSSFRichTextString(""+cargo.getMontoMesR()));
-				ax12.setCellStyle(dateCellStyle);
+				ax12.setCellValue(new HSSFRichTextString(""+cargo.getNumValFEmiL()));
+				ax12.setCellStyle(dateCellStyle);				
 				HSSFCell ax13 = fila.createCell(13);
-				ax13.setCellValue(new HSSFRichTextString(cargo.getFechaSustento()));
-				ax13.setCellStyle(dateCellStyle);
+				ax13.setCellValue(new HSSFRichTextString(""+cargo.getNumValDEmiR()));
+				ax13.setCellStyle(dateCellStyle);				
 				HSSFCell ax14 = fila.createCell(14);
-				ax14.setCellValue(new HSSFRichTextString(cargo.getNumDoc()));
-				ax14.setCellStyle(dateCellStyle);
+				ax14.setCellValue(new HSSFRichTextString(""+cargo.getNumValDEmiP()));
+				ax14.setCellStyle(dateCellStyle);				
 				HSSFCell ax15 = fila.createCell(15);
-				ax15.setCellValue(new HSSFRichTextString(cargo.getDesEstado()));
-				ax15.setCellStyle(dateCellStyle);	
+				ax15.setCellValue(new HSSFRichTextString(""+cargo.getNumValDEmiL()));
+				ax15.setCellStyle(dateCellStyle);				
 				HSSFCell ax16 = fila.createCell(16);
-				ax16.setCellValue(new HSSFRichTextString(cargo.getFechaRecepcion()));
-				ax16.setCellStyle(dateCellStyle);	
+				ax16.setCellValue(new HSSFRichTextString(""+cargo.getNumValFCanR()));
+				ax16.setCellStyle(dateCellStyle);				
 				HSSFCell ax17 = fila.createCell(17);
-				ax17.setCellValue(new HSSFRichTextString(cargo.getNumDocRecepcion()));
-				ax17.setCellStyle(dateCellStyle);	
+				ax17.setCellValue(new HSSFRichTextString(""+cargo.getNumValFCanP()));
+				ax17.setCellStyle(dateCellStyle);				
 				HSSFCell ax18 = fila.createCell(18);
-				ax18.setCellValue(new HSSFRichTextString(cargo.getIgv()));
-				ax18.setCellStyle(dateCellStyle);	
+				ax18.setCellValue(new HSSFRichTextString(""+cargo.getNumValFCanL()));
+				ax18.setCellStyle(dateCellStyle);				
 				HSSFCell ax19 = fila.createCell(19);
-				ax19.setCellValue(new HSSFRichTextString(cargo.getAplicaIgv()));
-				ax19.setCellStyle(dateCellStyle);	
+				ax19.setCellValue(new HSSFRichTextString(""+cargo.getNumValDCanR()));
+				ax19.setCellStyle(dateCellStyle);				
 				HSSFCell ax20 = fila.createCell(20);
-				ax20.setCellValue(new HSSFRichTextString(cargo.getGloza()));
-				ax20.setCellStyle(dateCellStyle);	
+				ax20.setCellValue(new HSSFRichTextString(""+cargo.getNumValDCanP()));
+				ax20.setCellStyle(dateCellStyle);				
+				HSSFCell ax21 = fila.createCell(21);
+				ax21.setCellValue(new HSSFRichTextString(""+cargo.getNumValDCanL()));
+				ax21.setCellStyle(dateCellStyle);				
+				HSSFCell ax22 = fila.createCell(22);
+				ax22.setCellValue(new HSSFRichTextString(""+cargo.getNumAgenteR()));
+				ax22.setCellStyle(dateCellStyle);				
+				HSSFCell ax23 = fila.createCell(23);
+				ax23.setCellValue(new HSSFRichTextString(""+cargo.getNumAgenteP()));
+				ax23.setCellStyle(dateCellStyle);				
+				HSSFCell ax24 = fila.createCell(24);
+				ax24.setCellValue(new HSSFRichTextString(""+cargo.getNumAgenteL()));
+				ax24.setCellStyle(dateCellStyle);				
+				HSSFCell ax25 = fila.createCell(25);
+				ax25.setCellValue(new HSSFRichTextString(""+cargo.getMontoMesR()));
+				ax25.setCellStyle(dateCellStyle);				
+				HSSFCell ax26 = fila.createCell(26);
+				ax26.setCellValue(new HSSFRichTextString(""+cargo.getMontoMesP()));
+				ax26.setCellStyle(dateCellStyle);				
+				HSSFCell ax27 = fila.createCell(27);
+				ax27.setCellValue(new HSSFRichTextString(""+cargo.getMontoMesL()));
+				ax27.setCellStyle(dateCellStyle);			
+				HSSFCell ax28 = fila.createCell(28);
+				ax28.setCellValue(new HSSFRichTextString(""+cargo.getMontoCanje()));
+				ax28.setCellStyle(dateCellStyle);			
+				HSSFCell ax29 = fila.createCell(29);
+				ax29.setCellValue(new HSSFRichTextString(cargo.getFechaSustento()));
+				ax29.setCellStyle(dateCellStyle);
+				HSSFCell ax30 = fila.createCell(30);
+				ax30.setCellValue(new HSSFRichTextString(cargo.getNumDoc()));
+				ax30.setCellStyle(dateCellStyle);
+				HSSFCell ax31 = fila.createCell(31);
+				ax31.setCellValue(new HSSFRichTextString(cargo.getDesEstado()));
+				ax31.setCellStyle(dateCellStyle);	
+				HSSFCell ax32 = fila.createCell(32);
+				ax32.setCellValue(new HSSFRichTextString(cargo.getFechaRecepcion()));
+				ax32.setCellStyle(dateCellStyle);	
+				HSSFCell ax33 = fila.createCell(33);
+				ax33.setCellValue(new HSSFRichTextString(cargo.getNumDocRecepcion()));
+				ax33.setCellStyle(dateCellStyle);	
+				HSSFCell ax34 = fila.createCell(34);
+				ax34.setCellValue(new HSSFRichTextString(cargo.getIgv()));
+				ax34.setCellStyle(dateCellStyle);	
+				HSSFCell ax35 = fila.createCell(35);
+				ax35.setCellValue(new HSSFRichTextString(cargo.getAplicaIgv()));
+				ax35.setCellStyle(dateCellStyle);	
+				HSSFCell ax36 = fila.createCell(36);
+				ax36.setCellValue(new HSSFRichTextString(cargo.getGloza()));
+				ax36.setCellStyle(dateCellStyle);	
 			}
 		}
 		/**
@@ -1960,7 +2072,23 @@ public class FormatoExcelExport {
 		_xlsSheet.autoSizeColumn((short) 17);
 		_xlsSheet.autoSizeColumn((short) 18);
 		_xlsSheet.autoSizeColumn((short) 19);
-		_xlsSheet.autoSizeColumn((short) 20);
+		_xlsSheet.autoSizeColumn((short) 20);		
+		_xlsSheet.autoSizeColumn((short) 21);
+		_xlsSheet.autoSizeColumn((short) 22);
+		_xlsSheet.autoSizeColumn((short) 23);	
+		_xlsSheet.autoSizeColumn((short) 24);
+		_xlsSheet.autoSizeColumn((short) 25);
+		_xlsSheet.autoSizeColumn((short) 26);
+		_xlsSheet.autoSizeColumn((short) 27);
+		_xlsSheet.autoSizeColumn((short) 28);		
+		_xlsSheet.autoSizeColumn((short) 29);
+		_xlsSheet.autoSizeColumn((short) 30);
+		_xlsSheet.autoSizeColumn((short) 31);		
+		_xlsSheet.autoSizeColumn((short) 32);		
+		_xlsSheet.autoSizeColumn((short) 33);
+		_xlsSheet.autoSizeColumn((short) 34);
+		_xlsSheet.autoSizeColumn((short) 35);
+		_xlsSheet.autoSizeColumn((short) 36);
 		
 		return _xlsSheet;
 	}
