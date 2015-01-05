@@ -205,7 +205,7 @@ var fiseCargoFijo= {
 		    fiseCargoFijo.initDialogs();
 		    
 		    //eventos por defecto	
-		    
+		    fiseCargoFijo.inicializarMesReportado();
 			fiseCargoFijo.botonBuscar.trigger('click');
 			fiseCargoFijo.initBlockUI();
 		},
@@ -213,16 +213,15 @@ var fiseCargoFijo= {
 		buildGrids : function () {	
 			fiseCargoFijo.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Año Repo.','Mes Repo.','N° Usu. Benef.','N° Usu. Emp.','N° Vales Físicos Emi.','N° Vales Físicos Canj.','N° Vales Digitales Emi.','Estado','Visualizar','Editar','Anular','',''],
+		       colNames: ['Dist. Eléct.','Año Repo.','Mes Repo.','Monto Cargo Fijo Rural','Monto Cargo Fijo Urb. Provincias','Monto Cargo Fijo Urb. Lima','Glosa','Estado','Visualizar','Editar','Anular','',''],
 		       colModel: [
 						   { name: 'desEmpresa', index: 'desEmpresa', width: 50},
 			               { name: 'anioReporte', index: 'anioReporte', width: 30 },   
 			               { name: 'desMesRep', index: 'desMesRep', width: 30},
-			               { name: 'numUsuBenefR', index: 'numUsuBenefR', width: 30 },   
-			               { name: 'numUsuEmpR', index: 'numUsuEmpR', width: 30},
-			               { name: 'numValFEmiR', index: 'numValFEmiR', width: 50},
-			               { name: 'numValFCanR', index: 'numValFCanR', width: 50},
-			               { name: 'numValDEmiR', index: 'numValFEmiR', width: 50},
+			               { name: 'montoMesR', index: 'montoMesR', width: 30 },   
+			               { name: 'montoMesP', index: 'montoMesP', width: 30},
+			               { name: 'montoMesL', index: 'montoMesL', width: 50},
+			               { name: 'gloza', index: 'gloza', width: 60},			              
 			               { name: 'desEstado', index: 'desEstado', width: 50},
 			               { name: 'view', index: 'view', width: 20,align:'center' },
 			               { name: 'edit', index: 'edit', width: 20,align:'center' },
@@ -248,7 +247,7 @@ var fiseCargoFijo= {
 			      			var ret = fiseCargoFijo.tablaResultados.jqGrid('getRowData',cl);           
 			      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
 			      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
-			      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";              			
+			      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"','"+ret.desEstado+"');\" /></a> ";              			
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -281,6 +280,19 @@ var fiseCargoFijo= {
 							fiseCargoFijo.initBlockUI();
 					}
 				});			
+		},
+		//funcion para inicializar el formulario de busqueda con el mes anterior al actual
+		inicializarMesReportado : function(){	
+			var f = new Date();			
+			console.debug("mes actual :  "+f.getMonth()+1);
+			console.debug("anio actual :  "+f.getFullYear());
+			if(f.getMonth()+1 == 01){
+				fiseCargoFijo.i_mesRep.val(12);	
+				fiseCargoFijo.i_anioRep.val(f.getFullYear()-1);
+			}else{
+				fiseCargoFijo.i_mesRep.val(f.getMonth() - 1);
+				fiseCargoFijo.i_anioRep.val(f.getFullYear());
+			}			
 		},	
 		
 		//funcion para nuevo registro
@@ -761,14 +773,20 @@ var fiseCargoFijo= {
 		},
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
-		confirmarEliminarCargoFijo : function(codEmpresa, anioRep, mesRep){			
-			var addhtml='¿Está seguro que desea eliminar el Dato del Proyecto Fise seleccionado?';
-			fiseCargoFijo.dialogConfirmContent.html(addhtml);
-			fiseCargoFijo.dialogConfirm.dialog("open");	
-			console.debug("codigo empresa: "+codEmpresa);
-			cod_empresa = codEmpresa;
-			anio_rep = anioRep;
-			mes_rep = mesRep;
+		confirmarEliminarCargoFijo : function(codEmpresa, anioRep, mesRep,estado){	
+			if(estado=='Inactivo'){
+				var addhtml='El registro del Proyecto FISE ya se encuentra Inactivo.';
+				fiseCargoFijo.dialogMessageContent.html(addhtml);
+				fiseCargoFijo.dialogMessage.dialog("open");
+			}else{
+				var addhtml='¿Está seguro que desea inactivar el registro del Proyecto FISE seleccionado?';
+				fiseCargoFijo.dialogConfirmContent.html(addhtml);
+				fiseCargoFijo.dialogConfirm.dialog("open");	
+				console.debug("codigo empresa: "+codEmpresa);
+				cod_empresa = codEmpresa;
+				anio_rep = anioRep;
+				mes_rep = mesRep;	
+			}			
 		},
 		
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
@@ -787,7 +805,7 @@ var fiseCargoFijo= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='El Dato del Proyecto Fise fue eliminado con éxito';					
+						var addhtml2='El regsitro del Proyecto FISE fue inactivado satisfactoriamente.';					
 						fiseCargoFijo.dialogMessageContent.html(addhtml2);
 						fiseCargoFijo.dialogMessage.dialog("open");
 						fiseCargoFijo.botonBuscar.trigger('click');
@@ -819,7 +837,7 @@ var fiseCargoFijo= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El Dato del Proyecto Fise se guardó satisfactoriamente';
+							var addhtml2='El registro del Proyecto FISE se guardó satisfactoriamente';
 							
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");							
@@ -828,12 +846,12 @@ var fiseCargoFijo= {
 							$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');				
 							
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar el Dato del Proyecto Fise.';
+							var addhtml2='Se produjo un error al guardar el registro del Proyecto FISE.';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtml2='Ya existe registrado un Dato del Proyecto Fise con la misma Dist.Eléct, Año y Mes';
+							var addhtml2='Ya existe registrado un registro del Proyecto FISE con la misma Dist.Eléct, Año y Mes';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();
@@ -861,12 +879,12 @@ var fiseCargoFijo= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El Dato del Proyecto Fise se actualizó satisfactoriamente';
+							var addhtml2='El registro del Proyecto FISE se actualizó satisfactoriamente';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();								
 						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar el Dato del Proyecto Fise.';
+							var addhtml2='Se produjo un error al actualizar el registro del Proyecto FISE.';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();
@@ -885,11 +903,11 @@ var fiseCargoFijo= {
 				fiseCargoFijo.f_empresa.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_anioRep.val().length == ''){
-				alert('Debe ingresar año de reporte.'); 
+				alert('Debe ingresar año reportado.'); 
 				fiseCargoFijo.f_anioRep.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_mesRep.val().length == ''){
-				alert('Debe seleccionar un mes de reporte.'); 
+				alert('Debe seleccionar un mes reportado.'); 
 				fiseCargoFijo.f_mesRep.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_numUsuBenefR.val().length == ''){
