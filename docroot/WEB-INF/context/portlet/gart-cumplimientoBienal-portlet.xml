@@ -17,7 +17,7 @@
             class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">  
             <property name="portletModeMap">  
                 <map>  
-                    <entry key="view" value-ref="cumplimientoGartController" />
+                    <entry key="view" value-ref="cumplimientoBienalGartController" />
                </map>  
            </property>  
        </bean>  
@@ -28,7 +28,7 @@
            <property name="cache" value="false" />  
            <property name="viewClass"  
                value="org.springframework.web.servlet.view.JstlView" />  
-           <property name="prefix" value="/WEB-INF/jsps/gart/cumplimiento/mensual/" />  
+           <property name="prefix" value="/WEB-INF/jsps/gart/cumplimiento/bienal/" />  
            <property name="suffix" value=".jsp" />  
        </bean>  
  

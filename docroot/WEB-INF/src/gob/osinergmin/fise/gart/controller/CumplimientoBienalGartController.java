@@ -32,11 +32,11 @@ import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.liferay.portal.util.PortalUtil;
 
-@Controller("cumplimientoGartController")
+@Controller("cumplimientoBienalGartController")
 @RequestMapping("VIEW")
-public class CumplimientoGartController {
+public class CumplimientoBienalGartController {
 	
-	Logger logger = Logger.getLogger(CumplimientoGartController.class);
+	Logger logger = Logger.getLogger(CumplimientoBienalGartController.class);
 	
 	@Autowired
 	AdmEmpresaGartService admEmpresaService;
@@ -67,10 +67,10 @@ public class CumplimientoGartController {
 				
 		mapaMeses = FechaUtil.cargarMapaMeses();
 		
-		listaPeriodo = fisePeriodoEnvioGartService.listarFisePeriodoEnvioMesAnioEtapaCumplimiento(FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION);
+		listaPeriodo = fisePeriodoEnvioGartService.listarFisePeriodoEnvioMesAnioEtapaCumplimiento(FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
 		model.addAttribute("listaPeriodo", listaPeriodo);
 	
-		return "cumplimiento";
+		return "cumplimientoBienal";
 	}
 
 	@ResourceMapping("reporte")
@@ -87,7 +87,7 @@ public class CumplimientoGartController {
 		    session.setAttribute("tipoFormato", FiseConstants.TIPO_FORMATO_CUMPLIMIENTO);
 		    session.setAttribute("tipoArchivo", tipoArchivo);
 		    //cambiar de acuerdo al reporte que estan probando
-		   String nombre = "cumplimiento";
+		   String nombre = "cumplimientoBienal";
 		    session.setAttribute("nombreArchivo", nombre);
 		    session.setAttribute("nombreReporte", nombre);
 		    

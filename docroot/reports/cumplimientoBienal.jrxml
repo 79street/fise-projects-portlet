@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cumplimiento" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="157"/>
-	<property name="ireport.y" value="193"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cumplimientoBienal" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="115"/>
+	<property name="ireport.y" value="282"/>
 	<subDataset name="dataset1"/>
 	<parameter name="DESC_MES_CUMPLIMIENTO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
@@ -74,7 +74,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Estado de cumplimiento de envío de información Mensual]]></text>
+				<text><![CDATA[Estado de cumplimiento de envío de información Bienal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="537" y="5" width="93" height="16"/>
@@ -159,31 +159,31 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[F12A]]></text>
+				<text><![CDATA[F13A]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="513" y="32" width="60" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[F12B]]></text>
+				<text><![CDATA[F14A]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="574" y="32" width="60" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[F12C]]></text>
+				<text><![CDATA[F14B]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="635" y="32" width="60" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="635" y="32" width="61" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[F12D]]></text>
+				<text><![CDATA[F14C]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="452" y="11" width="243" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="452" y="11" width="244" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
@@ -204,24 +204,24 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descipcionCortaEmpresa}]]></textFieldExpression>
 			</textField>
 			<textField>
+				<reportElement x="452" y="1" width="60" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{format13A}=="S")?"X":""]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="513" y="1" width="60" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{format12B}=="S")?"X":""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{format14A}=="S")?"X":""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="574" y="1" width="60" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{format12C}=="S")?"X":""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{format14B}=="S")?"X":""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="635" y="1" width="60" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{format12D}=="S")?"X":""]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="452" y="2" width="60" height="19"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{format12A}=="S")?"X":""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{format14C}=="S")?"X":""]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="71" y="23" width="623" height="1" forecolor="#006699"/>
@@ -236,16 +236,16 @@
 				<reportElement x="451" y="0" width="1" height="24" forecolor="#006699"/>
 			</line>
 			<line>
-				<reportElement x="512" y="0" width="1" height="24" forecolor="#006699"/>
+				<reportElement x="634" y="0" width="1" height="24" forecolor="#006699"/>
 			</line>
 			<line>
 				<reportElement x="573" y="0" width="1" height="24" forecolor="#006699"/>
 			</line>
 			<line>
-				<reportElement x="694" y="0" width="1" height="24" forecolor="#006699"/>
+				<reportElement x="512" y="0" width="1" height="24" forecolor="#006699"/>
 			</line>
 			<line>
-				<reportElement x="634" y="0" width="1" height="24" forecolor="#006699"/>
+				<reportElement x="695" y="0" width="1" height="24" forecolor="#006699"/>
 			</line>
 		</band>
 	</detail>

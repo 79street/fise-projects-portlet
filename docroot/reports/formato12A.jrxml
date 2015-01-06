@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato12A" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.24184264611831"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="102"/>
+	<property name="ireport.y" value="116"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
@@ -70,14 +70,14 @@
 	<pageHeader>
 		<band height="520" splitType="Stretch">
 			<staticText>
-				<reportElement x="3" y="40" width="142" height="16"/>
+				<reportElement x="3" y="40" width="140" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Año / Mes Declarado:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="56" width="142" height="16"/>
+				<reportElement x="3" y="56" width="140" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -233,14 +233,14 @@ Provincias]]></text>
 				<text><![CDATA[Por empadronamiento  (1.3)]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="146" y="24" width="406" height="16"/>
+				<reportElement x="145" y="24" width="406" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="146" y="40" width="21" height="16"/>
+				<reportElement x="145" y="40" width="22" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -251,7 +251,7 @@ Provincias]]></text>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[ $P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="338" y="216" width="70" height="16"/>
@@ -463,7 +463,7 @@ Provincias]]></text>
 				<reportElement x="3" y="390" width="549" height="1" forecolor="#006699"/>
 			</line>
 			<staticText>
-				<reportElement x="3" y="24" width="142" height="16"/>
+				<reportElement x="3" y="24" width="140" height="16"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -479,21 +479,21 @@ Provincias]]></text>
 				<reportElement x="3" y="269" width="549" height="1" forecolor="#006699"/>
 			</line>
 			<staticText>
-				<reportElement x="3" y="72" width="142" height="16"/>
+				<reportElement x="3" y="72" width="140" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Frecuencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="146" y="56" width="406" height="16"/>
+				<reportElement x="145" y="56" width="406" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Inicio del programa / Incorporación nueva localidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="146" y="72" width="406" height="16"/>
+				<reportElement x="145" y="72" width="406" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
