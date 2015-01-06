@@ -89,7 +89,7 @@ function verReporte(){
 					<table style="width: 100%;" border="0">
 						<tr>
 							<td>
-								<output class="net-titulo">REPORTE DE CUMPLIMIENTO</output>
+								<output class="net-titulo">Reporte de Cumplimiento Mensual</output>
 							</td>
 						</tr>
 						<tr height="10px">
