@@ -13,6 +13,7 @@
 		<portlet id="gartFormato14C"/>
 		<portlet id="gartPeriodoEnvio"/>
 		<portlet id="gartCumplimiento"/>
+		<portlet id="gartCumplimientoBienal"/>
 		<portlet id="gartObservacion"/>
 		<portlet id="gartAutorizarReenvio"/>
 		<portlet id="gartNotificacion"/>

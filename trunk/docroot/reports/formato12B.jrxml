@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato12B" language="groovy" pageWidth="595" pageHeight="843" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="3"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -139,7 +139,7 @@
 				<text><![CDATA[Año / Mes Declarado:]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="146" y="13" width="21" height="12"/>
+				<reportElement x="145" y="13" width="22" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -150,10 +150,10 @@
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[ $P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="146" y="26" width="317" height="12"/>
+				<reportElement x="145" y="26" width="317" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -167,7 +167,7 @@
 				<text><![CDATA[Frecuencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="146" y="39" width="317" height="12"/>
+				<reportElement x="145" y="39" width="317" height="12"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -181,7 +181,7 @@
 				<text><![CDATA[/]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="146" y="0" width="317" height="12" isPrintInFirstWholeBand="true"/>
+				<reportElement x="145" y="0" width="317" height="12" isPrintInFirstWholeBand="true"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
