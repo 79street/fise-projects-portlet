@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato12B" language="groovy" pageWidth="595" pageHeight="843" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="3"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="624"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="MES_PRESENTACION" class="java.lang.String"/>
@@ -150,7 +150,7 @@
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[ $P{DESC_MES_PRESENTACION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="145" y="26" width="317" height="12"/>
@@ -735,42 +735,42 @@
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="280" y="376" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ACTIV_EXTRAORD_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="372" y="376" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ACTIV_EXTRAORD_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="464" y="376" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ACTIV_EXTRAORD_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="280" y="362" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DESPL_PERSONAL_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="372" y="362" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DESPL_PERSONAL_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="464" y="362" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DESPL_PERSONAL_L}]]></textFieldExpression>
 			</textField>
@@ -847,7 +847,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="280" y="348" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{GESTION_ADM_R}]]></textFieldExpression>
 			</textField>
@@ -983,14 +983,14 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="372" y="348" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{GESTION_ADM_P}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="464" y="348" width="91" height="13"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{GESTION_ADM_L}]]></textFieldExpression>
 			</textField>
@@ -1049,7 +1049,7 @@
 			<staticText>
 				<reportElement x="269" y="348" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
@@ -1077,7 +1077,7 @@
 			<staticText>
 				<reportElement x="269" y="362" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
@@ -1112,7 +1112,7 @@
 			<staticText>
 				<reportElement x="270" y="376" width="10" height="13"/>
 				<textElement>
-					<font size="8" isBold="false"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
