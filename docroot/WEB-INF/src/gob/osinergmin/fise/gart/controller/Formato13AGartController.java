@@ -859,7 +859,7 @@ public class Formato13AGartController {
 		}else{
 			//viene del proceso nuevo
 			
-			if( "".equals(msg) || "DONE".equals(msg) ){
+			if( "".equals(msg) ){
 				command.setSt1(FiseConstants.CERO);
 				command.setSt2(FiseConstants.CERO);
 				command.setSt3(FiseConstants.CERO);
