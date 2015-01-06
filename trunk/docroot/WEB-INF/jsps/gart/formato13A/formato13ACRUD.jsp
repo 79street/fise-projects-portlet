@@ -218,22 +218,24 @@
 																						value="Acta de envío" /></td>
 																				</c:if>
 
+																				
+
+
 																				<td width="17%" align="center"><input
 																					style="display: none;" type="button"
-																					class="net-button-small"
-																					id="<portlet:namespace/>anadirFormato"
-																					name="<portlet:namespace/>anadirFormato"
-																					value="Añadir" /></td>
-
-
-																				<td width="17%" align="center"><input
-																					style="display: block;" type="button"
 																					class="net-button-small"
 																					id="<portlet:namespace/>guardarFormato"
 																					name="<portlet:namespace/>guardarFormato"
 																					value="Guardar" /></td>
 
 																				<c:if test="${not readonly}">
+
+																					<td width="17%" align="center"><input
+																						type="button"
+																						class="net-button-small"
+																						id="<portlet:namespace/>anadirFormato"
+																						name="<portlet:namespace/>anadirFormato"
+																						value="Añadir" /></td>
 
 
 																					<td width="17%" align="center"><input

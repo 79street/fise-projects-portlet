@@ -81,6 +81,9 @@ public class Formato13AGartCommand {
 	private String descGrupoInformacion;
 	private String descestado;
 	
+	private String anoInicioVigenciaHidden;
+	private String anoFinVigenciaHidden;
+	
 	public List<AdmEmpresa> getListaEmpresas() {
 		return listaEmpresas;
 	}
@@ -523,6 +526,22 @@ public class Formato13AGartCommand {
 
 	public void setCodLuzSur(String codLuzSur) {
 		this.codLuzSur = codLuzSur;
+	}
+
+	public String getAnoInicioVigenciaHidden() {
+		return anoInicioVigenciaHidden;
+	}
+
+	public void setAnoInicioVigenciaHidden(String anoInicioVigenciaHidden) {
+		this.anoInicioVigenciaHidden = anoInicioVigenciaHidden;
+	}
+
+	public String getAnoFinVigenciaHidden() {
+		return anoFinVigenciaHidden;
+	}
+
+	public void setAnoFinVigenciaHidden(String anoFinVigenciaHidden) {
+		this.anoFinVigenciaHidden = anoFinVigenciaHidden;
 	}
 
 	

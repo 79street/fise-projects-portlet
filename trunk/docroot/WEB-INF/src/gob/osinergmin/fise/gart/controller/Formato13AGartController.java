@@ -9,13 +9,11 @@ import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.AdmUbigeo;
 import gob.osinergmin.fise.domain.CfgCampo;
 import gob.osinergmin.fise.domain.CfgTabla;
-
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13ACPK;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
 import gob.osinergmin.fise.domain.FiseFormato13ADOb;
 import gob.osinergmin.fise.domain.FiseFormato13ADPK;
-
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.command.Formato13AGartCommand;
@@ -39,7 +37,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -500,22 +497,32 @@ public class Formato13AGartController {
 
 				if (CRUD_CREATE.equals(crud)) {
 					// create
-					FiseFormato13AC formato13 = new FiseFormato13AC();
-					formato13.setId(pkCabecera);
-					List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
-					// se agregará varaiables de sector tipico para cada tipo de
-					// grupo beneficiario
+					
+					boolean existe = false;
+					
+					existe = formatoService.existeFormatoDetalleSectorTipico(cabecera, command.getCodDistrito(), Long.parseLong(command.getIdZonaBenef()));
+					if(existe){
+						msg = "ERROR1";
+					}else{
+						List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
+						// se agregará varaiables de sector tipico para cada tipo de
+						// grupo beneficiario
 
-					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
-					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
-					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
-					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, listaDetalle);
-					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, listaDetalle);
-					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
-					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
-					agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
+						agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
+						agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
+						agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
+						agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, listaDetalle);
+						agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, listaDetalle);
+						agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
+						agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
+						agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
 
-					agregarFormato13Detalle(listaDetalle);
+						agregarFormato13Detalle(listaDetalle);
+						
+						msg = "OK";
+					}
+
+					
 				} else if (CRUD_UPDATE.equals(crud)) {
 					// update
 
@@ -545,10 +552,12 @@ public class Formato13AGartController {
 						}
 						modificarFormato13Detalle(cab.getFiseFormato13ADs());
 					}
+					
+					msg = "OK";
 
 				}
 
-				msg = "OK";
+				
 				
 			} catch (DataIntegrityViolationException dt) {
 				dt.printStackTrace();
@@ -560,6 +569,32 @@ public class Formato13AGartController {
 				msg = "ERROR2";
 			}
 
+		}else{
+			//formato nuevo
+			
+			boolean existe = false;
+			
+			existe = formatoService.existeFormatoDetalleSectorTipico(cabecera, command.getCodDistrito(), Long.parseLong(command.getIdZonaBenef()));
+			if(existe){
+				msg = "ERROR1";
+			}else{
+				List<FiseFormato13AD> listaDetalle = new ArrayList<FiseFormato13AD>();
+
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_2_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_3_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_4_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_5_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_6_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_SER_COD, command, listaDetalle);
+				agregarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_ESP_COD, command, listaDetalle);
+
+				agregarFormato13(themeDisplay, cabecera, listaDetalle);
+				
+				msg = "OK";
+			}
+
+			
 		}
 		
 		if( "OK".equals(msg) ){
@@ -586,10 +621,17 @@ public class Formato13AGartController {
 	@ActionMapping(params = "action=nuevoDetalle")
 	public void nuevoDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 		String codEmpresa = command.getCodEmpresa();
-		//String periodoDeclaracion = command.getPeridoDeclaracion();
-		String periodoDeclaracion = command.getDescripcionPeriodoHidden();//se obtiene el valor del periodo guardado de el campo descripcionPeriodoHidden(valorPeriodoHidden), probar los demas flujos
+		String periodoDeclaracion = command.getPeridoDeclaracion();
+		//String periodoDeclaracion = command.getDescripcionPeriodoHidden();//se obtiene el valor del periodo guardado de el campo descripcionPeriodoHidden(valorPeriodoHidden), probar los demas flujos
 		
 		String msg = "";
+		
+		if( codEmpresa==null ){
+			codEmpresa = command.getCodEmpresaHidden();
+		}
+		if( periodoDeclaracion==null ){
+			periodoDeclaracion = command.getDescripcionPeriodoHidden();
+		}
 		
 		String anioPresentacion = "";
 		String mesPresentacion = "";
@@ -658,6 +700,10 @@ public class Formato13AGartController {
 		command.setEtapa(etapa);
 		//add
 		command.setCodUbigeo(codUbigeo);
+		//guardamos el ubigeo escogido
+		command.setCodDepartamentoHidden(command.getCodDepartamento());
+		command.setCodProvinciaHidden(command.getCodProvincia());
+		command.setCodDistritoHidden(command.getCodDistrito());
 
 		//
 		command.setListaMes(fiseUtil.getMapaMeses());
@@ -671,6 +717,10 @@ public class Formato13AGartController {
 			if (periodoDeclaracion.equals(periodo.getCodigoItem())) {
 				command.setAnioInicioVigencia(periodo.getAnioInicioVig());
 				command.setAnioFinVigencia(periodo.getAnioFinVig());
+				//add hidden
+				command.setAnoInicioVigenciaHidden(periodo.getAnioInicioVig());
+				command.setAnoFinVigenciaHidden(periodo.getAnioFinVig());
+				
 				// verificamos el flag de periodo de ejecucion
 				if ("S".equals(periodo.getFlagPeriodoEjecucion())) {
 					model.addAttribute("readonlyFlagPeriodo", "false");
@@ -808,15 +858,20 @@ public class Formato13AGartController {
 			//--
 		}else{
 			//viene del proceso nuevo
-			command.setSt1(FiseConstants.CERO);
-			command.setSt2(FiseConstants.CERO);
-			command.setSt3(FiseConstants.CERO);
-			command.setSt4(FiseConstants.CERO);
-			command.setSt5(FiseConstants.CERO);
-			command.setSt6(FiseConstants.CERO);
-			command.setStser(FiseConstants.CERO);
-			command.setStesp(FiseConstants.CERO);
-			command.setTotal(FiseConstants.CERO);
+			
+			if( "".equals(msg) || "DONE".equals(msg) ){
+				command.setSt1(FiseConstants.CERO);
+				command.setSt2(FiseConstants.CERO);
+				command.setSt3(FiseConstants.CERO);
+				command.setSt4(FiseConstants.CERO);
+				command.setSt5(FiseConstants.CERO);
+				command.setSt6(FiseConstants.CERO);
+				command.setStser(FiseConstants.CERO);
+				command.setStesp(FiseConstants.CERO);
+				command.setTotal(FiseConstants.CERO);
+			}
+			
+			
 		}
 
 		
@@ -1619,6 +1674,19 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 				command.setTipoOperacion(FiseConstants.UPDATE);
 
 			}
+			
+			//add anio inicio fin vigencia
+			if( command.getAnioInicioVigencia() == null ){
+				command.setAnioInicioVigencia(command.getAnoInicioVigenciaHidden());
+			}else{
+				command.setAnoInicioVigenciaHidden(command.getAnioInicioVigencia());
+			}
+			if( command.getAnioFinVigencia() == null ){
+				command.setAnioFinVigencia(command.getAnoFinVigenciaHidden());
+			}else{
+				command.setAnoFinVigenciaHidden(command.getAnioFinVigencia());
+			}
+			
 
 			model.addAttribute("formato13AGartCommand", command);
 
@@ -2237,6 +2305,13 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 		Date hoy = FechaUtil.obtenerFechaActual();
 
 		try {
+			
+			if( command.getAnioInicioVigencia()==null || command.getAnioInicioVigencia().equals(new Long(0)) ){
+				command.setAnioInicioVigencia(command.getAnoInicioVigenciaHidden());
+			}
+			if( command.getAnioFinVigencia()==null || command.getAnioFinVigencia().equals(new Long(0)) ){
+				command.setAnioFinVigencia(command.getAnoFinVigenciaHidden());
+			}
 
 			FiseFormato13AD detalle = new FiseFormato13AD();
 			FiseFormato13ADPK pk = new FiseFormato13ADPK();
@@ -2294,6 +2369,14 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 		Date hoy = FechaUtil.obtenerFechaActual();
 
 		try {
+			
+			if( command.getAnioInicioVigencia()==null || command.getAnioInicioVigencia().equals(new Long(0)) ){
+				command.setAnioInicioVigencia(command.getAnoInicioVigenciaHidden());
+			}
+			if( command.getAnioFinVigencia()==null || command.getAnioFinVigencia().equals(new Long(0)) ){
+				command.setAnioFinVigencia(command.getAnoFinVigenciaHidden());
+			}
+			
 			// verificar que campos son editables en la vista de modificacion
 			detalle.setAnoAlta(Long.parseLong(command.getAnioAlta()));
 			detalle.setMesAlta(Long.parseLong(command.getMesAlta()));
@@ -2384,14 +2467,12 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 		formato.setUsuarioCreacion(themeDisplay.getUser().getLogin());
 		formato.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
 		formato.setFechaCreacion(hoy);
-		//verificar si es necesario realizar esta validacion
-		//boolean existe = false;
-		//existe = formatoService.existeFormato14AC(formato);
-		//if(existe){
-		//	throw new Exception("Ya existe un registro con la misma clave.");
-		//}else{
+		
+		boolean existe = false;
+		existe = formatoService.existeFormato13AC(formato);
+		if(!existe){
 			formatoService.savecabecera(formato);
-		//}
+		}
 		//add
 		for (FiseFormato13AD detalle : listaDetalle) {
 			formatoService.savedetalle(detalle);
