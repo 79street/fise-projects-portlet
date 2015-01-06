@@ -350,7 +350,8 @@ var formato13A= {
 
 			formato13A.botonAnadirFormato.click(function(){
 				formato13A.blockUI();
-				formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
+				//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
+				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 
@@ -376,8 +377,8 @@ var formato13A= {
 			});
 			
 			
-			formato13A.botonAnadirFormato.css("display","none");
-			formato13A.btnGuardarCabecera.css("display","none");
+			//formato13A.botonAnadirFormato.css("display","none");
+			//formato13A.btnGuardarCabecera.css("display","none");
 			
 		
 			
@@ -385,14 +386,15 @@ var formato13A= {
 			
 			formato13A.showCamposOculto();
 			formato13A.buscarDetalles();
-			formato13A.botonAnadirFormato.css("display","block");
-			formato13A.btnGuardarCabecera.css("display","none");
+			//formato13A.botonAnadirFormato.css("display","block");
+			//formato13A.btnGuardarCabecera.css("display","none");
 			
 
             formato13A.botonAnadirFormato.click(function(){
 
 				formato13A.blockUI();
-				formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
+				//--formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
+				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 			formato13A.botonRegresarBusqueda.click(function(){
@@ -495,8 +497,15 @@ var formato13A= {
 				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
 			});
 			
+			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
+			formato13A.listarProvinciasEdit(formato13A.codDepartamentoHidden.val(),formato13A.codProvinciaHidden.val(),formato13A.codDistritoHidden.val());
+			
+			formato13A.soloNumerosEnteros();
+			
 			formato13A.mostrarPeriodoEjecucion();
 			formato13A.estiloEdicionDetalle();
+			
+			formato13A.calculoTotal();
 			
 			//mostramos el mensaje de informacion
 			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
@@ -565,6 +574,8 @@ var formato13A= {
 			
 			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
 			formato13A.listarProvinciasEdit(formato13A.codDepartamentoHidden.val(),formato13A.codProvinciaHidden.val(),formato13A.codDistritoHidden.val());
+			
+			formato13A.soloNumerosEnteros();
 			
 			formato13A.mostrarPeriodoEjecucion();
 			formato13A.estiloEdicionDetalle();
@@ -1123,8 +1134,8 @@ var formato13A= {
 					formato13A.codEmpresa.attr("disabled", true);
 					formato13A.peridoDeclaracion.attr("disabled", true);
 					formato13A.showCamposOculto();
-					formato13A.botonAnadirFormato.css("display","block");
-					formato13A.btnGuardarCabecera.css("display","none");
+					//formato13A.botonAnadirFormato.css("display","block");
+					//formato13A.btnGuardarCabecera.css("display","none");
 					
 					formato13A.dialogMessageGeneral.dialog("open");
 					
@@ -1759,16 +1770,22 @@ var formato13A= {
 			  	return false;
 		  	}
 	 	 }
+		//periodo de alta
+		if( parseFloat(formato13A.anoAltaDetalle.val())*100 + parseFloat(formato13A.mesAltaDetalle.val()) > parseFloat(formato13A.anoPresentacionDetalle.val())*100 + parseFloat(formato13A.mesPresentacionDetalle.val()) ){
+			alert('El periodo de alta no puede ser mayor al periodo a declarar');
+			return false;
+		}
+		
 		//anio alta
-		if( parseFloat(formato13A.anoAltaDetalle.val()) < parseFloat(formato13A.anoPresentacionDetalle.val()) ){
+		/*if( parseFloat(formato13A.anoAltaDetalle.val()) < parseFloat(formato13A.anoPresentacionDetalle.val()) ){
 		alert('El año alta no puede ser menor al año presentación del periodo a declarar');
 		return false;
-		}
+		}*/
 		//mes alta
-		if( parseFloat(formato13A.mesAltaDetalle.val()) < parseFloat(formato13A.mesPresentacionDetalle.val()) ){
+		/*if( parseFloat(formato13A.mesAltaDetalle.val()) < parseFloat(formato13A.mesPresentacionDetalle.val()) ){
 		alert('El mes alta no puede ser menor al mes presentación del periodo a declarar');
 		return false;
-		}
+		}*/
 		//validamos ubigeo 
 		if(formato13A.codDepa.val().length != '' ) {
 			if(formato13A.codProv.val().length == '' ) {		  
@@ -1794,7 +1811,7 @@ var formato13A= {
 		   	return false; 
 		}else{
 			if(formato13A.cod_empresa_edelnor.val()!=formato13A.codEmpresaDetalle.val() && formato13A.cod_empresa_luz_sur.val()!=formato13A.codEmpresaDetalle.val()){
-				if(formato13A.idZonaBenefDetalle.val() == 3 ) {//RURAL
+				if(formato13A.idZonaBenefDetalle.val() == 3 ) {//LIMA
 					alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
 				    formato13A.idZonaBenefDetalle.focus();
 				   	return false;
@@ -1805,6 +1822,16 @@ var formato13A= {
 		//
 		return true; 
 	},
+	soloNumerosEnteros : function(){
+		formato13A.st1Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st1',6,0)");
+		formato13A.st2Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st2',6,0)");
+		formato13A.st3Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st3',6,0)");
+		formato13A.st4Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st4',6,0)");
+		formato13A.st5Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st5',6,0)");
+		formato13A.st6Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st6',6,0)");
+		formato13A.stserDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'stser',6,0)");
+		formato13A.stespDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'stesp',6,0)");
+	}
 };
 
 

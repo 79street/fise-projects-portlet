@@ -116,6 +116,10 @@ $(document).ready(function () {
 																					<form:option value="">-Seleccione-</form:option>
 																					<form:options items="${formato13AGartCommand.listaMes}"/>
 																				</form:select>
+																				
+																				<form:hidden path="anoInicioVigenciaHidden"  />
+																				<form:hidden path="anoFinVigenciaHidden"   />
+
 									   										</td>
 									   									</tr>
 									   								</tbody></table>
