@@ -1016,12 +1016,12 @@ var fiseCargoFijo= {
 			  	return false; 
 			}else if(fiseCargoFijo.f_fechaRecepcion.val().length != '' && 
 					!validaFechaDDMMAAAA(fiseCargoFijo.f_fechaRecepcion.val()) ){
-				alert('Debe ingresar una fecha de recepción válida');
+				alert('Debe ingresar una fecha de recepción de la información válida');
 				fiseCargoFijo.f_fechaRecepcion.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_fechaSustento.val().length != '' && 
 					!validaFechaDDMMAAAA(fiseCargoFijo.f_fechaSustento.val())){
-				alert('Debe ingresar una fecha de sustento válida'); 
+				alert('Debe ingresar una fecha de informe de sustento válida'); 
 				fiseCargoFijo.f_fechaSustento.focus();
 			  	return false; 
 			}else{

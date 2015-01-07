@@ -176,7 +176,7 @@ $(document).ready(function () {
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
 											<td><output class="net-titulo">FORMATO FISE-14C:
-												</output>COSTOS ESTÁNDARES DE IMPLEMENTACIÓN
+												</output>COSTOS DE GESTIÓN
 											</td>
 										</tr>
 										<tr height="10px">
@@ -255,7 +255,7 @@ $(document).ready(function () {
 																			<td colspan="5"><label style="font-size: 12px; font-weight:bold">Periodo de Vigencia</label></td>
 																		</tr>
 																		<tr>
-																			<td width="110px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
+																			<td width="115px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
 																			<td style="text-align: center;">
 																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" onblur="isNumeric(this);" />
 																			</td>
@@ -448,7 +448,7 @@ $(document).ready(function () {
 												</tr>
 												<tr>
 													<td colspan="2">
-													 <label style="font-size: 12px; font-weight:bold">2 Costo por Gestion del Personal</label>
+													 <label style="font-size: 12px; font-weight:bold">2 Costo por Gestión del Personal</label>
 													</td>
 													<!-- RURAL -->
 													<td style="text-align:center;display:none" colspan="5"></td> 
@@ -566,7 +566,7 @@ $(document).ready(function () {
 												</tr>
 												<tr>
 													<td colspan="2">
-													 <label style="margin-left: 0.5cm;font-weight:bold">2.5  Costo Total por Gestion de Personal (2.1)+(2.2)+(2.3)+(2.4)</label>
+													 <label style="margin-left: 0.5cm;font-weight:bold">2.5  Costo Total por Gestión de Personal (2.1)+(2.2)+(2.3)+(2.4)</label>
 													</td>
 													<!-- RURAL -->
 													<td style="text-align:center"><form:input id="canDRGP" path="canDRGP" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td> 
@@ -592,7 +592,7 @@ $(document).ready(function () {
 												</tr>
 												<tr>
 													<td colspan="2"> 
-													 <label style="font-size: 12px; font-weight:bold">3  Costo promedio mensual por utiles y materiales de oficina</label>
+													 <label style="font-size: 12px; font-weight:bold">3  Costo promedio mensual por útiles y materiales de oficina</label>
 													</td>
 													<!-- RURAL -->
 													<td style="text-align:center"></td>

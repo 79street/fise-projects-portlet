@@ -22,8 +22,8 @@ $(document).ready(function () {
 		<div id="d_filtro">
 			<div id="div_contenido" >
 			
-			  <!-- DIV PARA BUSQUEDA  -->	
-			
+			    <!-- DIV PARA BUSQUEDA  -->
+			  			
 				<div id="<portlet:namespace/>div_buscar" class="net-frame-listado">
 				
 			     <table style="width: 100%;" border="0">
@@ -132,7 +132,230 @@ $(document).ready(function () {
 						</tr>					
 					</table>			
 				</div>								
-				<!-- FIN DE DIV  PARA BUSQUEDA -->					
+				
+				<!-- FIN DE DIV  PARA BUSQUEDA -->	
+				
+				
+				 <!-- DIV PARA BUSQUEDA MOTIVOS DE LIQUIDACION  -->	
+			
+				<div id="<portlet:namespace/>div_buscar_motivo" class="net-frame-listado" style="display: none;">
+				
+			     <table style="width: 100%;" border="0">
+						<tr>
+							<td>
+								<!-- <output class="net-titulo">Situación actual de la declaración de Gastos</output> -->
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						<tr>
+							<td class="filete">
+								<fieldset class="">
+									<table class="" style="width: 100%;" border="0">
+										<tr>
+											<td colspan="6"><output class="net-titulo">Detalle de la Liquidación</output>
+											</td>
+										</tr>
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										<tr>
+											<td><label style="font-size: 12px; font-weight:bold">Distribuidora Eléctrica:</label>
+											</td>
+											<td>											  
+											  <output id="empresaMotivo"></output>									  
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Formato:</label></td>
+											<td>
+											  <output id="formatoMotivo"></output>	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Etapa Origen:</label></td>
+											<td>
+											  <output id="etapaOrigenMotivo"></output>	
+											</td>
+											
+										</tr>										
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										
+										<tr>
+											<td><label style="font-size: 12px; font-weight:bold">Año Declarado:</label></td>
+											<td>											 	
+											  <output id="anioMotivo"></output> 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Mes Declarado:</label></td>
+											<td>
+											  <output id="mesMotivo"></output> 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Año Ejecución:</label></td>
+											<td>
+											  <output id="anioEjecMotivo"></output> 	
+											</td>
+											
+										</tr>
+										
+																			
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										
+										<tr>
+											<td><label style="font-size: 12px; font-weight:bold">Mes Ejecución:</label></td>
+											<td>											 	
+											  <output id="mesEjecMotivo"></output> 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
+											<td>
+											  <output id="anioInicioVigMotivo"></output> 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
+											<td>
+											  <output id="anioFinVigMotivo"></output> 	
+											</td>
+											
+										</tr>		
+																				
+									</table>
+								</fieldset>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<table id="<portlet:namespace/>grid_resultado_busqueda_motivos" style="width:100%"> 
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_busqueda_motivos"></div>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<table style="width: 100%;" border="0">
+									<tr>										
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td align="right" width="90px">
+											<div id="d_opc_crear_motivo">
+												<input type="button" class="net-button-small"
+													id="<portlet:namespace/>btnNuevoMotivo"
+													name="<portlet:namespace/>btnNuevoMotivo" value="Agregar" />
+											</div>
+										</td>
+										<td align="right" width="90px">	
+										    <div id="d_opc_regresar_liquidacion">
+												<input type="button" class="net-button-small"
+													id="<portlet:namespace/>btnRegresarLiquidacion"
+													name="<portlet:namespace/>btnRegresarLiquidacion" value="Regresar" />
+											</div>										
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+					</table>			
+				</div>
+								
+				<!-- FIN DE DIV  PARA BUSQUEDA MOTIVOS DE LIQUIDACION-->	
+				
+				<!-- DIV PARA NUEVO REGISTRO DEL MOTIVO DE LA LIQUIDACION -->	
+				
+				<div id="<portlet:namespace/>div_nuevo_motivo" class="net-frame-border" style="display: none;">			
+					
+					<table border="0" width="100%">
+						<tr>
+							<td>
+								<fieldset class="">
+	
+									<table class="" border="0" width="100%">
+									   <tr class="filete-bottom">
+											<td><output class="net-titulo">MOTIVO LIQUIDACIÓN</output>
+											</td>
+										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>					
+										<tr>
+									     <td>											
+										   <table style="width: 100%;" border="0">
+											  <tr>										   
+											   <td><label style="font-size: 12px; font-weight: bold">Descripción:</label>
+											   </td>
+											   <td>
+												 <form:textarea path="descMotivo" cols="30" rows="4" onkeypress="return soloLetras(event)"/>  
+											   </td>								   
+										     </tr>						
+										  </table>								 								
+										 </td>
+										</tr>																										
+										<tr height="10px" class="filete-bottom">
+										  <td></td> 
+										</tr>																																														
+										<tr class="filete-top">
+										<tr height="10px">
+										   <td></td> 
+										</tr>	
+										<tr>
+										  <td>
+											<table style="width: 100%">
+											  <tr>												
+												 <td>
+												  <table style="width: 100%">
+												    <tr>													  
+													 <td width="17%" align="center">													  
+														  <input type="button" class="net-button-small" id="<portlet:namespace/>actualizarMotivoLiq"
+															   name="<portlet:namespace/>actualizarMotivoLiq" value="Actualizar" style="display: none;"/>
+																												
+														<input type="button" class="net-button-small" id="<portlet:namespace/>guardarMotivoLiq"
+															   name="<portlet:namespace/>guardarMotivoLiq" value="Grabar" />									   
+													 </td>													
+													 <td width="17%" align="center">
+														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarMotivoLiq" 
+															  name="<portlet:namespace/>regresarMotivoLiq" value="Regresar" />
+													 </td>
+												 </tr>
+											  </table>
+											</td>
+											</tr>
+									    </table> 
+										</td>
+										</tr>
+										<tr height="10px" class="filete-bottom">
+											<td></td>
+										</tr>
+										<tr height="10px">
+										 <td></td>
+										</tr>							
+									</table>	
+								</fieldset>
+							</td>
+						</tr>
+						<tr>
+						 <td></td>
+						</tr>
+					</table>	
+				</div>				
+				
+				<!-- FIN DIV PARA NUEVO REGISTRO -->	
+				
+				
+								
             </div>
        </div>       
    </div>
@@ -205,5 +428,9 @@ $(document).ready(function () {
 		</p>
 	</div>
 		
+		
+		<!-- HIDENN -->
+	<form:input path="itemMotivo" cssStyle="display:none;" />
+	<form:input path="coMotivo" cssStyle="display:none;" />		
 	
 </form:form>

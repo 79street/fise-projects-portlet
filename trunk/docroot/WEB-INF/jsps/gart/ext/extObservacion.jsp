@@ -117,7 +117,7 @@ var fiseObservacion= {
 				fiseObservacion.buscarfiseObservacion();
 			});			
 			
-			 fiseObservacion.botonNuevo.click(function() {
+			fiseObservacion.botonNuevo.click(function() {
 				fiseObservacion.<portlet:namespace/>nuevofiseObservacion();
 		    });
 			

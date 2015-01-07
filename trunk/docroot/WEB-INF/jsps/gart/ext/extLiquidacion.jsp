@@ -10,6 +10,12 @@ var liquidacionVar= {
 	    //decalaracion de los elementos del html	
 		formCommand : null,	
 		
+		//divs
+		divBuscarLiq:null,	
+		divBuscarMotivo:null,	
+		divNuevoMotivo:null,	
+		
+		
 		//dialogos	
 		dialogMessage:null,
 		dialogMessageContent:null,
@@ -25,12 +31,20 @@ var liquidacionVar= {
 		dialogConfirmLiquidar:null,
 		dialogConfirmLiquidarContent:null,
 		
+		dialogConfirmMotivo:null,//para eliminar
+		dialogConfirmContentMotivo:null,//para mostrar la confirmacion de eliminar
+		
 		
 		//mensajes		
 		mensajeEliminar:null,
 		mensajePrepara:null,
 		mensajeLiquidar:null,
 		mensajeReporte:null,
+		
+		mensajeObteniendoDatos:null,
+		mensajeEliminando:null,
+		mensajeGuardando:null,	
+		mensajeActualizando:null,
 		
 		//urls
 		urlBusqueda: null,	    
@@ -44,10 +58,24 @@ var liquidacionVar= {
 		//urlEnvioDefinitivo:null,
 		//urlReporteEnvioDefinitivo:null,
 		
+		/***para motivos de la liquidacion**/
+		urlBusquedaMotivo: null,	    
+	    urlGrabarMotivo:null,	    
+	    urlEliminarMotivo:null,
+	    urlEditarMotivo:null,
+	    urlActualizarMotivo:null,
+		
+		
 		//botones		
 		botonBuscar:null,		
 		botonGenerarEtapa:null,
 		botonLiquidar:null,
+		botonRegresarLiqui:null,	
+		/***para motivos de la liquidacion**/	
+		botonNuevoMotivo:null,	
+		botonRegresarMotivo:null,		
+		botonGrabarMotivo:null,
+		botonActualizarMotivo:null,	
 		
 		//varibales de busqueda
 		i_codEmpresaBusq:null,
@@ -57,6 +85,12 @@ var liquidacionVar= {
 		
 		//variables 
 		f_empresa:null,
+		
+		/***para motivos de la liquidacion**/
+		f_codCorrelativo:null,
+		f_codItem:null,
+		f_descMotivo:null,
+		
 		
 		//grillas
 		tablaResultados:null,
@@ -71,10 +105,18 @@ var liquidacionVar= {
 		tablaObservacion13:null,	
 		paginadoObservacion13:null,
 		
+		/***para motivos de la liquidacion**/
+		tablaResultadosMotivo:null,
+		paginadoResultadosMotivo:null,
 		
 		init : function() {
 			
 			this.formCommand=$('#liquidacionBean');	
+			
+			//divs
+			this.divBuscarLiq=$("#<portlet:namespace/>div_buscar");
+			this.divBuscarMotivo=$("#<portlet:namespace/>div_buscar_motivo");
+			this.divNuevoMotivo=$("#<portlet:namespace/>div_nuevo_motivo");
 			
 			
 			//dialogos
@@ -92,12 +134,19 @@ var liquidacionVar= {
 			this.dialogConfirmLiquidar=$("#<portlet:namespace/>dialog-confirm-liquidar");
 			this.dialogConfirmLiquidarContent=$("#<portlet:namespace/>dialog-confirm-content-liquidar");
 			
+			this.dialogConfirmMotivo=$("#<portlet:namespace/>dialog-confirm-eliminar");//para elimar
+			this.dialogConfirmContentMotivo=$("#<portlet:namespace/>dialog-confirm-content-eliminar");//para eliminar
 			
 			//mensajes						
 			this.mensajeEliminar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
 			this.mensajePrepara='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Generando Liq. </h3>';
 			this.mensajeLiquidar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Liquidando </h3>';
 			this.mensajeReporte='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo el Reporte </h3>';
+			
+			this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
+			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
+			this.mensajeGuardando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>';
+			this.mensajeActualizando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Actualizando Datos </h3>';
 			
 			
 			//urls
@@ -112,16 +161,34 @@ var liquidacionVar= {
 			//this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionNotificacion" />';
 			//this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivo" />';
 			
+			this.urlBusquedaMotivo='<portlet:resourceURL id="busquedaMotivosLiquidacion" />';					
+			this.urlGrabarMotivo='<portlet:resourceURL id="grabarMotivoLiquidacion" />';
+			this.urlEliminarMotivo='<portlet:resourceURL id="eliminarMotivoLiquidacion" />';			
+			this.urlEditarMotivo='<portlet:resourceURL id="editarMotivoLiquidacion" />';
+			this.urlActualizarMotivo='<portlet:resourceURL id="actualizarMotivoLiquidacion" />';
+			
+			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarLiquidacion");		
 			this.botonGenerarEtapa=$("#<portlet:namespace/>btnGenerarEtapa");
-			this.botonLiquidar=$("#<portlet:namespace/>btnLiquidar");
+			this.botonLiquidar=$("#<portlet:namespace/>btnLiquidar");			
+			
+			this.botonRegresarLiqui=$("#<portlet:namespace/>btnRegresarLiquidacion");	
+			this.botonNuevoMotivo=$("#<portlet:namespace/>btnNuevoMotivo");		
+			this.botonRegresarMotivo=$("#<portlet:namespace/>regresarMotivoLiq");		
+			this.botonGrabarMotivo=$("#<portlet:namespace/>guardarMotivoLiq");
+			this.botonActualizarMotivo=$("#<portlet:namespace/>actualizarMotivoLiq");
+			
 			
 			//variables de busqueda
 			this.i_codEmpresaBusq=$('#codEmpresaBusq');
 			this.i_grupoInfBusq=$('#grupoInfBusq');				
 			this.i_tipoBienal=$('#rbtBienal');
 			this.i_tipoMensual=$('#rbtMensual');
+			
+			this.f_descMotivo=$('#descMotivo');
+			this.f_codItem=$('#itemMotivo');
+			this.f_codCorrelativo=$('#coMotivo');			
 			
 			//grillas			
 			this.tablaResultados=$("#<portlet:namespace/>grid_resultado_busqueda");
@@ -140,6 +207,11 @@ var liquidacionVar= {
 			this.paginadoObservacion13='#<portlet:namespace/>pager_observacion13';		
 			this.buildGridsObservacion13();
 			
+			//grillas para motivo de la liquidacion					
+			this.tablaResultadosMotivo=$("#<portlet:namespace/>grid_resultado_busqueda_motivos");
+			this.paginadoResultadosMotivo='#<portlet:namespace/>paginador_resultado_busqueda_motivos';
+			this.buildGridsMotivos();	//cargar el modelo de la grilla	
+			
 			
 			//llamado a la funciones de cada boton
 			liquidacionVar.botonBuscar.click(function() {			
@@ -157,19 +229,41 @@ var liquidacionVar= {
 				//liquidacionVar.liquidarFormatos();
 			});
 			
+			liquidacionVar.botonRegresarLiqui.click(function() {
+				liquidacionVar.<portlet:namespace/>regresarLiquidacion();
+		    });			
+			
+			//para motivos de liquidacion	
+			
+			liquidacionVar.botonNuevoMotivo.click(function() {
+				liquidacionVar.<portlet:namespace/>nuevoMotivo();
+		    });
+			
+			liquidacionVar.botonGrabarMotivo.click(function() {
+				liquidacionVar.<portlet:namespace/>guardarMotivo();
+			});
+			
+			liquidacionVar.botonActualizarMotivo.click(function() {
+				liquidacionVar.<portlet:namespace/>actualizarMotivo();
+			});			
+			
+			liquidacionVar.botonRegresarMotivo.click(function() {
+				liquidacionVar.<portlet:namespace/>regresarMotivos();
+		    });			
+			
 			
 			liquidacionVar.initDialogs();
 		    
 		    
 			liquidacionVar.i_tipoBienal.change(function(){
 				liquidacionVar.<portlet:namespace/>loadGrupoInformacion();
-				liquidacionVar.botonGenerarEtapa.val("Establecer costos estándares");
+				liquidacionVar.botonGenerarEtapa.val("Procesar costos estándares");
 				liquidacionVar.botonLiquidar.val("Aprobar costos estándares");
 			});
 			
 			liquidacionVar.i_tipoMensual.change(function(){
 				liquidacionVar.<portlet:namespace/>loadGrupoInformacion();
-				liquidacionVar.botonGenerarEtapa.val("Establecer gastos operativos");
+				liquidacionVar.botonGenerarEtapa.val("Procesar gastos operativos");
 				liquidacionVar.botonLiquidar.val("Liquidar gastos operativos");
 			});
 		    
@@ -184,7 +278,7 @@ var liquidacionVar= {
 		buildGrids : function () {	
 			liquidacionVar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','','','',''],
+		       colNames: ['Dist. Eléct.','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','Mostrar No Recono/Aprob.','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
@@ -199,7 +293,8 @@ var liquidacionVar= {
 		               { name: 'liquidado', index: 'liquidado', width: 40,align:'center' }, 		              
 		               { name: 'verF', index: 'verF', width: 20,align:'center' },
 		               { name: 'verObs', index: 'verObs', width: 20,align:'center' },	 
-		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
+		               { name: 'elim', index: 'elim', width: 20,align:'center' },
+		               { name: 'mostrar', index: 'mostrar', width: 50,align:'center' },	
 		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 		               { name: 'mesPres', index: 'mesPres', hidden: true},             
 		               { name: 'mesEjec', index: 'mesEjec', hidden: true},
@@ -224,9 +319,11 @@ var liquidacionVar= {
 		      			verF = "<a href='#'><img border='0' title='Ver Formato' src='/net-theme/images/img-net/file.png' align='center' onclick=\"liquidacionVar.mostrarReporteFormatos('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			verObs = "<a href='#'><img border='0' title='Ver Obs.' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"liquidacionVar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"liquidacionVar.confirmarEliminar('"+ret.correlativo+"','"+ret.liquidado+"');\" /></a> ";
+		      			mostrar = "<a href='#'><img border='0' title='Mostrar No Reconocido/Aprobado' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
 		      			liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verF:verF});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verObs:verObs});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
+		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{mostrar:mostrar});
 		      		}
 		      } 
 		  	});
@@ -305,7 +402,47 @@ var liquidacionVar= {
 		  	});
 		    liquidacionVar.tablaObservacion13.jqGrid('navGrid',liquidacionVar.paginadoObservacion13,{add:false,edit:false,del:false,search: false,refresh: false});	
 
+		},		
+		
+		//funcion para armar el modelo de la grilla para el resultado de los motivos de  la liquidacion
+		buildGridsMotivos : function () {	
+			liquidacionVar.tablaResultadosMotivo.jqGrid({
+			   datatype: "local",
+		       colNames: ['Item','Descripción','Estado','Editar','Eliminar',''],
+		       colModel: [
+                       { name: 'itemMotivo', index: 'itemMotivo', width: 20},				   
+					   { name: 'descMotivo', index: 'descMotivo', width: 80},
+					   { name: 'estadoMotivo', index: 'estadoMotivo', width: 30},	  	           
+		               { name: 'edit', index: 'edit', width: 20,align:'center' },		                
+		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
+		               { name: 'coMotivo', index: 'coMotivo', hidden: true}	               
+			   	    ],
+			   	 multiselect: false,
+					rowNum:10,
+				   	rowList:[10,20,50],
+				   	height: 'auto',
+				   	autowidth: true,
+					rownumbers: true,
+					shrinkToFit:true,
+					pager: liquidacionVar.paginadoResultadosMotivo,
+				    viewrecords: true,
+				   	caption: "Resultado(s) de la búsqueda",
+				    sortorder: "asc",	   	    	   	   
+		            gridComplete: function(){
+		      		var ids = liquidacionVar.tablaResultadosMotivo.jqGrid('getDataIDs');
+		      		for(var i=0;i < ids.length;i++){
+		      			var cl = ids[i];
+		      			var ret = liquidacionVar.tablaResultadosMotivo.jqGrid('getRowData',cl);	        			
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png' align='center' onclick=\"liquidacionVar.editarMotivo('"+ret.itemMotivo+"','"+ret.coMotivo+"');\" /></a> ";
+		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"liquidacionVar.confirmarEliminarMotivo('"+ret.itemMotivo+"','"+ret.coMotivo+"');\" /></a> ";
+		      			liquidacionVar.tablaResultadosMotivo.jqGrid('setRowData',ids[i],{edit:edit});		      		   
+		      		    liquidacionVar.tablaResultadosMotivo.jqGrid('setRowData',ids[i],{elim:elim});
+		      		}
+		      } 
+		  	});
+			liquidacionVar.tablaResultadosMotivo.jqGrid('navGrid',liquidacionVar.paginadoResultadosMotivo,{add:false,edit:false,del:false,search: false,refresh: false});				
 		},
+		
 		
 		//funcion para buscar
 		buscarLiquidacion : function (flag) {	
@@ -596,6 +733,246 @@ var liquidacionVar= {
 			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
 		}, 
 		
+		//funcion para buscar motivos de la liquidacion
+		buscarMotivos : function (cod_correlativo) {	
+			console.debug("entranado a buscar motivos");
+			liquidacionVar.blockUI();
+			jQuery.ajax({			
+					url: liquidacionVar.urlBusquedaMotivo+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data : {
+						   <portlet:namespace />correlativo: cod_correlativo						  
+					},
+					success: function(gridData) {					
+						liquidacionVar.tablaResultadosMotivo.clearGridData(true);
+						liquidacionVar.tablaResultadosMotivo.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+						liquidacionVar.tablaResultadosMotivo[0].refreshIndex();
+						liquidacionVar.initBlockUI();
+					},error : function(){
+							alert("Error de conexión.");
+							liquidacionVar.initBlockUI();
+					}
+				});			
+		},		
+		//funcion  para mostrar detalle de los motivos y la grilla de la busqueda
+		mostrarNoReconocido : function(cod_correlativo,empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,anio_inicio,anio_fin,etapa_origen,formato,reconocido,liquidado){	
+			if((reconocido=='RECONOCIDO' || reconocido=='ESTABLECIDO') && liquidado=='SI'){
+				$('#empresaMotivo').val(empresa);
+				$('#anioMotivo').val(anio_pres);
+				$('#mesMotivo').val(mes_pres);
+				$('#anioEjecMotivo').val(anio_ejec);
+				$('#mesEjecMotivo').val(mes_ejec);
+				$('#anioInicioVigMotivo').val(anio_inicio);
+				$('#anioFinVigMotivo').val(anio_fin);
+				$('#etapaOrigenMotivo').val(etapa_origen);
+				$('#formatoMotivo').val(formato);	
+				
+				$('#coMotivo').val(cod_correlativo);//para el nuevo registro de motivo		
+				
+				liquidacionVar.divBuscarMotivo.show();
+				liquidacionVar.divBuscarLiq.hide();		
+				liquidacionVar.buscarMotivos(cod_correlativo);	
+			}else{
+				var addhtml2='No esta liquidado.';				
+				liquidacionVar.dialogMessageContent.html(addhtml2);
+				liquidacionVar.dialogMessage.dialog("open");
+			}		
+		},
+		
+		//funcion para nuevo registro de motivo
+		<portlet:namespace/>nuevoMotivo : function(){
+			console.debug("boton nuevo registro motivo:  ");		
+			liquidacionVar.divNuevoMotivo.show();
+			liquidacionVar.divBuscarLiq.hide();	
+			liquidacionVar.divBuscarMotivo.hide();
+		    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
+			$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');			
+		},	
+		
+		//Funcion para Grabar nuevo registro de motivo de liquidacion
+		<portlet:namespace/>guardarMotivo: function(){
+			if (liquidacionVar.validarFormulario()){
+				$.blockUI({ message: liquidacionVar.mensajeGuardando});
+				 jQuery.ajax({
+					 url: liquidacionVar.urlGrabarMotivo+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data: {						  
+						  <portlet:namespace />coMotivo: liquidacionVar.f_codCorrelativo.val(), 
+						  <portlet:namespace />descMotivo: liquidacionVar.f_descMotivo.val()
+						},
+					    success: function(data) {			
+						if (data.resultado == "OK"){				
+							var addhtml2='El motivo de la liquidación se guardó satisfactoriamente';							
+							liquidacionVar.dialogMessageContent.html(addhtml2);
+							liquidacionVar.dialogMessage.dialog("open");							
+							liquidacionVar.initBlockUI();												
+							
+							$('#<portlet:namespace/>guardarMotivoLiq').css('display','none');
+							$('#<portlet:namespace/>actualizarMotivoLiq').css('display','block');
+							
+						}else{				
+							var addhtml2='Se produjo un error al guardar el motivo de la liquidación.';
+							liquidacionVar.dialogMessageContent.html(addhtml2);
+							liquidacionVar.dialogMessage.dialog("open");						
+							liquidacionVar.initBlockUI();
+						}
+					},error : function(){
+						alert("Error de conexión.");
+						liquidacionVar.initBlockUI();
+					}
+				});			
+			}
+		},
+		
+		//Funcion para actualizar un registro
+		<portlet:namespace/>actualizarMotivo : function(){
+			if (liquidacionVar.validarFormulario()){
+				$.blockUI({ message: liquidacionVar.mensajeActualizando});
+				 jQuery.ajax({
+					 url: liquidacionVar.urlActualizarMotivo+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data: {
+						<portlet:namespace />itemMotivo: liquidacionVar.f_codItem.val(),
+						<portlet:namespace />coMotivo: liquidacionVar.f_codCorrelativo.val(),
+						<portlet:namespace />descMotivo: liquidacionVar.f_descMotivo.val()
+						},
+					success: function(data) {			
+						if (data.resultado == "OK"){				
+							var addhtml2='El motivo de la liquidación se actualizó satisfactoriamente';
+							liquidacionVar.dialogMessageContent.html(addhtml2);
+							liquidacionVar.dialogMessage.dialog("open");						
+							liquidacionVar.initBlockUI();								
+						}else if(data.resultado == "Error"){				
+							var addhtml2='Se produjo un error al actualizar el motivo de la liquidación.';
+							liquidacionVar.dialogMessageContent.html(addhtml2);
+							liquidacionVar.dialogMessage.dialog("open");						
+							liquidacionVar.initBlockUI();
+						}
+					},error : function(){
+						alert("Error de conexión.");
+						liquidacionVar.initBlockUI();
+					}
+				});						
+			}
+		},
+		
+		//funcion para validar ingreso de datos del motivo de liquidacion
+		validarFormulario : function() {
+			console.debug("tamaño de descripcion:  "+liquidacionVar.f_descMotivo.val().length);
+			if(liquidacionVar.f_descMotivo.val().length == ''){
+				alert('Debe ingresar una descripción del motivo.'); 
+				liquidacionVar.f_descMotivo.focus();
+			  	return false; 
+			}else if(liquidacionVar.f_descMotivo.val().length > 499){
+				alert('La descripción no debe exceder a los 500 caracteres.'); 
+				liquidacionVar.f_descMotivo.focus();
+			  	return false; 
+			}else{
+				return true;
+			}		
+		},	
+		
+		//Function para editar los datos del motivo de la liquidacion
+		editarMotivo : function(cod_item,cod_correlativo){	
+			    console.debug("entrando a editar "+cod_item);		
+				$.blockUI({ message: liquidacionVar.mensajeObteniendoDatos});			 
+				jQuery.ajax({
+						url: liquidacionVar.urlEditarMotivo+'&'+liquidacionVar.formCommand.serialize(),
+						type: 'post',
+						dataType: 'json',
+						data: {							
+							<portlet:namespace />itemMotivoEdit:cod_item,
+							<portlet:namespace />correlativoEdit:cod_correlativo					   				  
+						},
+						success: function(data) {				
+							if (data != null){										
+								liquidacionVar.divNuevoMotivo.show();
+								liquidacionVar.divBuscarLiq.hide();	
+								liquidacionVar.divBuscarMotivo.hide();
+								
+								liquidacionVar.llenarDatosEditar(data);								
+								liquidacionVar.initBlockUI();	
+								
+							    $('#<portlet:namespace/>guardarMotivoLiq').css('display','none');
+								$('#<portlet:namespace/>actualizarMotivoLiq').css('display','block');																			
+					         }
+							else{
+								alert("Error al recuperar los datos del registro seleccionado");
+								liquidacionVar.initBlockUI();
+							}
+						},error : function(){
+							alert("Error de conexión.");
+							liquidacionVar.initBlockUI();
+						}
+				});		
+		},
+		
+		//funcion  para llenar los campos para editar
+		llenarDatosEditar : function(bean){		
+			liquidacionVar.f_descMotivo.val(bean.descMotivo); 
+			$('#itemMotivo').val(bean.itemMotivo);
+			$('#coMotivo').val(bean.coMotivo);
+		},
+		
+		/**Function para confirmar si quiere eliminar el registro o no*/
+		confirmarEliminarMotivo : function(cod_item,cod_correlativo){
+			console.debug("entranado a eliminar confirmar:  "+cod_item);
+			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
+			liquidacionVar.dialogConfirmContentMotivo.html(addhtml);
+			liquidacionVar.dialogConfirmMotivo.dialog("open");	
+			codItem=cod_item;
+			codCorrelativo=cod_correlativo;
+		},
+		/**Function para  eliminar el registro una vez hecho la confirmacion*/
+		eliminarMotivo : function(codItem,codCorrelativo){
+			console.debug("entranado a eliminar:  "+codItem);
+			$.blockUI({ message: liquidacionVar.mensajeEliminando });
+			jQuery.ajax({
+				url: liquidacionVar.urlEliminarMotivo+'&'+liquidacionVar.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data: {				
+					   <portlet:namespace />itemMotivoEdit: codItem,
+					   <portlet:namespace />correlativoEdit: codCorrelativo				  
+					},
+				success: function(data) {
+					if (data.resultado == "OK"){
+						var addhtml2='El registro fue eliminado satisfactoriamente';					
+						liquidacionVar.dialogMessageContent.html(addhtml2);
+						liquidacionVar.dialogMessage.dialog("open");
+						liquidacionVar.buscarMotivos('');
+						liquidacionVar.initBlockUI();
+					}
+					else{
+						alert("Error al eliminar el registro");
+						liquidacionVar.initBlockUI();
+					}
+				},error : function(){
+					alert("Error de conexión.");
+					liquidacionVar.initBlockUI();
+				}
+			});
+		},
+		
+		//funcion para regresar a liquidacion
+		<portlet:namespace/>regresarLiquidacion : function(){			
+			liquidacionVar.divBuscarMotivo.hide();
+			liquidacionVar.divBuscarLiq.show();
+					
+			//liquidacionVar.botonBuscar.trigger('click');
+		},
+		
+		//funcion para regresar a detalle de motivos
+		<portlet:namespace/>regresarMotivos : function(){			
+			liquidacionVar.divNuevoMotivo.hide();
+			liquidacionVar.divBuscarLiq.hide();	
+			liquidacionVar.divBuscarMotivo.show();
+			liquidacionVar.buscarMotivos('');
+		},
+		
 		//DIALOGOS
 		initDialogs : function(){		
 			//dialogo para eliminar
@@ -690,6 +1067,22 @@ var liquidacionVar= {
 						}
 					}
 				}); 
+			 
+			 liquidacionVar.dialogConfirmMotivo.dialog({
+					modal: true,
+					height: 200,
+					width: 400,			
+					autoOpen: false,
+					buttons: {
+						"Si": function() {
+							liquidacionVar.eliminarMotivo(codItem,codCorrelativo);
+							$( this ).dialog("close");
+						},
+						"No": function() {				
+							$( this ).dialog("close");
+						}
+					}
+				});
 			
 		}, /***fin de inicializar los dialogos**/	
 		
