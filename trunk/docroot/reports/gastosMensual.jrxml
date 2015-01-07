@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gastosMensual" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.331000000000013"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="68"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String"/>
 	<parameter name="UNCHECKED12A" class="java.lang.String"/>
@@ -445,82 +445,114 @@
 			</textField>
 			<textField>
 				<reportElement x="28" y="215" width="93" height="13"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FFIRMADO12A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="28" y="233" width="93" height="13"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEPLAZO12A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="28" y="249" width="93" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOBS12A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="28" y="273" width="93" height="17"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOTROS12A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="162" y="214" width="98" height="14"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FFIRMADO12B}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="162" y="231" width="98" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEPLAZO12B}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="162" y="251" width="98" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOBS12B}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="162" y="277" width="98" height="13"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOTROS12B}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="303" y="215" width="97" height="14"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FFIRMADO12C}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="303" y="232" width="97" height="14"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEPLAZO12C}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="303" y="249" width="97" height="13"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOBS12C}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="303" y="277" width="97" height="14"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOTROS12C}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="438" y="217" width="92" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FFIRMADO12D}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="438" y="233" width="92" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEPLAZO12D}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="438" y="251" width="92" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOBS12D}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="438" y="281" width="92" height="13"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOTROS12D}]]></textFieldExpression>
 			</textField>
 			<textField>
