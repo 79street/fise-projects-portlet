@@ -163,26 +163,12 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="108" y="16" width="22" height="12"/>
+				<reportElement x="108" y="16" width="284" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$P{ANO_PRESENTACION}+" / "+$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="137" y="16" width="255" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[ $P{DESC_MES_PRESENTACION}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="131" y="16" width="5" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[/]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="108" y="30" width="284" height="12"/>
 				<textElement>

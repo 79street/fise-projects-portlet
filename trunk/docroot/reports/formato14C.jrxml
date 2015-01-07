@@ -143,18 +143,11 @@
 	<pageHeader>
 		<band height="615" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="119" y="52" width="21" height="15"/>
+				<reportElement x="119" y="52" width="309" height="15"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_PRESENTACION}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="143" y="52" width="285" height="15"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$P{ANO_PRESENTACION}+" / "+$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="4" y="52" width="110" height="15"/>
@@ -1219,13 +1212,6 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_FIN_VIGENCIA}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="139" y="52" width="5" height="15"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[/]]></text>
-			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
