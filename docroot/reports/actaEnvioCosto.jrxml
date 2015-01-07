@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acactaEnvioCosto" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.6105100000000019"/>
-	<property name="ireport.x" value="88"/>
-	<property name="ireport.y" value="179"/>
+	<property name="ireport.zoom" value="1.3310000000000015"/>
+	<property name="ireport.x" value="18"/>
+	<property name="ireport.y" value="184"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String"/>
@@ -503,52 +503,72 @@
 			</textField>
 			<textField>
 				<reportElement x="52" y="222" width="95" height="13"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FFIRMADO13A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="52" y="239" width="95" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FSUSTENTO13A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="51" y="255" width="96" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEPLAZO13A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="52" y="273" width="95" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOBS13A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="52" y="291" width="95" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOTROS13A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="175" y="220" width="98" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FFIRMADO14A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="174" y="239" width="99" height="14"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FSUSTENTO14A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="175" y="255" width="98" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEPLAZO14A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="175" y="274" width="98" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOBS14A}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="175" y="291" width="98" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOTROS14A}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -560,27 +580,37 @@
 			</textField>
 			<textField>
 				<reportElement x="303" y="220" width="95" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FFIRMADO14B}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="305" y="238" width="93" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FSUSTENTO14B}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="305" y="255" width="93" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEPLAZO14B}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="305" y="273" width="93" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOBS14B}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="305" y="291" width="93" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOTROS14B}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -592,27 +622,37 @@
 			</textField>
 			<textField>
 				<reportElement x="429" y="220" width="94" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FFIRMADO14C}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="429" y="239" width="94" height="14"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FSUSTENTO14C}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="429" y="256" width="94" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEPLAZO14C}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="430" y="274" width="92" height="15"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOBS14C}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="430" y="291" width="93" height="16"/>
-				<textElement/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NAMEOTROS14C}]]></textFieldExpression>
 			</textField>
 		</band>
