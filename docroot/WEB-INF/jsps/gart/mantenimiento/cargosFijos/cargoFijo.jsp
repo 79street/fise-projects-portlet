@@ -208,7 +208,7 @@ $(document).ready(function () {
 											      </tr>
 											     
 											      <tr>
-											        <td><label style="font-size: 12px; font-weight: bold">Número Usu. Benef.:</label></td>
+											        <td><label style="font-size: 12px; font-weight: bold">Número Usu. Beneficiarios:</label></td>
 											        <td>
 													 <form:input path="numUsuBenefR"  cssStyle="width: 50px; text-align: right;"/>
 												    </td>
@@ -225,7 +225,7 @@ $(document).ready(function () {
 											     </tr>
 											     
 											     <tr>
-											      <td><label style="font-size: 12px; font-weight: bold">Número Usu. Emp.:</label></td>
+											      <td><label style="font-size: 12px; font-weight: bold">Número Usu. Empadronados:</label></td>
 											      <td>
 													 <form:input path="numUsuEmpR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
@@ -242,7 +242,7 @@ $(document).ready(function () {
 											     </tr>
 											     
 											     <tr>
-											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físcos Emi.:</label></td>
+											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físicos Emitidos:</label></td>
 											      <td>
 													 <form:input path="numValFEmiR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
@@ -260,7 +260,7 @@ $(document).ready(function () {
 											     </tr>
 											     
 											     <tr>
-											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Emi.:</label></td>
+											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Emitidos:</label></td>
 											      <td>
 													 <form:input path="numValDEmiR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
@@ -278,7 +278,7 @@ $(document).ready(function () {
 											     </tr>
 											     
 											     <tr>
-											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físcos Canj.:</label></td>
+											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físicos Canjeados:</label></td>
 											      <td>
 													 <form:input path="numValFCanR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
@@ -296,7 +296,7 @@ $(document).ready(function () {
 											     </tr>
 											     
 											     <tr>
-											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Canj.:</label></td>
+											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Canjeados:</label></td>
 											      <td>
 													 <form:input path="numValDCanR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
@@ -332,7 +332,7 @@ $(document).ready(function () {
 											     </tr>
 											     
 											     <tr>
-											      <td><label style="font-size: 12px; font-weight: bold">Monto Fijo Mes:</label></td>
+											      <td><label style="font-size: 12px; font-weight: bold">Cargo Fijo del Mes:</label></td>
 											      <td>
 													 <form:input path="montoMesR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
@@ -355,7 +355,7 @@ $(document).ready(function () {
 											
 											<tr> 
 											
-											  <td><label style="font-size: 12px; font-weight: bold">Monto Transf. Canje:</label>
+											  <td><label style="font-size: 12px; font-weight: bold">Monto Transferido x Canje:</label>
 											   </td>
 											  <td>
 												 <form:input path="montoCanje"  cssStyle="width: 50px; text-align: right;"/>
@@ -367,7 +367,7 @@ $(document).ready(function () {
 											   <form:input path="fechaSustento" cssStyle="text-align: right;"/>								    												
 											  </td>										 
 											  
-											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Info.(dd/mm/aaaa):</label>
+											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Información.(dd/mm/aaaa):</label>
 											  </td>
 											  <td>									  
 											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" />			 							    												
@@ -382,7 +382,7 @@ $(document).ready(function () {
 											
 											<tr> 
 											
-											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Recepción Info.:</label>
+											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Recepción Informe.:</label>
 											   </td>
 											  <td>
 												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)"/>

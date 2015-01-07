@@ -1194,8 +1194,12 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirUncheckedImage);
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirCheckedImage);
-  	  		        }     		 
-  	  		        formatos = formatos+" FISE 12A ";
+  	  		        }  	  
+  	  		        if(FormatoUtil.isNotBlank(formatos)){ 
+  	  		           formatos = formatos+", FISE 12A ";
+  	  		        }else{
+  	  		           formatos = formatos+" FISE 12A ";
+  	  		        }  	  		       
   	  		        mapa.put("NAMEF12A", "FISE 12A"); 	     		  
   	  		        mapa.put("UNCHECKED12A", dirUncheckedImage);     		  
   	  		        mapa.put("FFIRMADO12A", "Formato Firmado(3)");  			  
@@ -1230,8 +1234,12 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirUncheckedImage);
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirCheckedImage);
-  	  		        }     		 
-  	  		        formatos = formatos+" FISE 12B ";
+  	  		        }  
+  	  		        if(FormatoUtil.isNotBlank(formatos)){ 
+  	  		    	     formatos = formatos+", FISE 12B ";
+	  		        }else{
+	  		        	formatos = formatos+" FISE 12B ";
+	  		        } 	  		        
   	  		        mapa.put("NAMEF12B", "FISE 12B"); 	     		  
   	  		        mapa.put("UNCHECKED12B", dirUncheckedImage);     		  
   	  		        mapa.put("FFIRMADO12B", "Formato Firmado(3)");  			  
@@ -1264,8 +1272,12 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirUncheckedImage);
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirCheckedImage);
-  	  		        }     		 
-  	  		        formatos = formatos+" FISE 12C ";
+  	  		        } 
+	  	  		    if(FormatoUtil.isNotBlank(formatos)){ 
+	  	  		         formatos = formatos+", FISE 12C ";
+	 		        }else{
+	 		        	 formatos = formatos+" FISE 12C ";
+	 		        }   	  		       
   	  		        mapa.put("NAMEF12C", "FISE 12C"); 	     		  
   	  		        mapa.put("UNCHECKED12C", dirUncheckedImage);     		  
   	  		        mapa.put("FFIRMADO12C", "Formato Firmado(3)");  			  
@@ -1298,8 +1310,12 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirUncheckedImage);
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirCheckedImage);
-  	  		        }     		 
-  	  		        formatos = formatos+" FISE 12D ";
+  	  		        }
+	  	  		    if(FormatoUtil.isNotBlank(formatos)){ 
+	  	  		         formatos = formatos+", FISE 12D ";
+			        }else{
+			        	 formatos = formatos+" FISE 12D ";
+			        } 	  		       
   	  		        mapa.put("NAMEF12D", "FISE 12D"); 	     		  
   	  		        mapa.put("UNCHECKED12D", dirUncheckedImage);     		  
   	  		        mapa.put("FFIRMADO12D", "Formato Firmado(3)");  			  
@@ -1407,14 +1423,18 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirUncheckedImage);
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirCheckedImage);
-  	  		        }     		 
-  	  		        formatos = formatos+" FISE 13A ";
+  	  		        }
+	  	  		    if(FormatoUtil.isNotBlank(formatos)){ 
+	  	  		        formatos = formatos+", FISE 13A ";
+			        }else{
+			        	formatos = formatos+" FISE 13A ";
+			        }  	  		        
   	  		        mapa.put("NAMEF13A", "FISE 13A"); 	     		  
   	  		        mapa.put("UNCHECKED13A", dirUncheckedImage);     		  
   	  		        mapa.put("FFIRMADO13A", "Formato Firmado(1)");
   	  		        mapa.put("FSUSTENTO13A", "Presenta Sustentos(1)");  	  		        
   	  		        mapa.put("NAMEPLAZO13A", "Cumple Plazos");  			  
-  	  		        mapa.put("NAMEOBS13A", "Sin Observaciones");  			  
+  	  		        mapa.put("NAMEOBS13A", "Con Observaciones");  			  
   	  		        mapa.put("CHECKED13A",dirCheckedImage);  			  
   	  		        mapa.put("NAMEOTROS13A", "Otros: ___________");  
   	  		       
@@ -1445,14 +1465,18 @@ public class EnvioDefinitivoController {
   			        	mapa.put("CHECKED_OBSERVACION_14A", dirUncheckedImage);
   			        }else{
   			        	mapa.put("CHECKED_OBSERVACION_14A", dirCheckedImage);
-  			        }     		 
-  			        formatos = formatos+" FISE 14A ";
+  			        } 
+  			        if(FormatoUtil.isNotBlank(formatos)){ 
+  			        	formatos = formatos+", FISE 14A ";
+			        }else{
+			        	formatos = formatos+" FISE 14A ";
+			        } 	 			        
   			        mapa.put("NAMEF14A", "FISE 14A"); 	     		  
   			        mapa.put("UNCHECKED14A", dirUncheckedImage);     		  
   			        mapa.put("FFIRMADO14A", "Formato Firmado(1)");
   			        mapa.put("FSUSTENTO14A", "Presenta Sustentos(1)");  	  		        
   			        mapa.put("NAMEPLAZO14A", "Cumple Plazos");  			  
-  			        mapa.put("NAMEOBS14A", "Sin Observaciones");  			  
+  			        mapa.put("NAMEOBS14A", "Con Observaciones");  			  
   			        mapa.put("CHECKED14A",dirCheckedImage);  			  
   			        mapa.put("NAMEOTROS14A", "Otros: ___________"); 
   			       
@@ -1483,14 +1507,18 @@ public class EnvioDefinitivoController {
 			        	mapa.put("CHECKED_OBSERVACION_14B", dirUncheckedImage);
 			        }else{
 			        	mapa.put("CHECKED_OBSERVACION_14B", dirCheckedImage);
-			        }     		 
-			        formatos = formatos+" FISE 14B ";
+			        }  
+			        if(FormatoUtil.isNotBlank(formatos)){ 
+			        	formatos = formatos+", FISE 14B ";
+			        }else{
+			        	formatos = formatos+" FISE 14B ";
+			        } 			        
 			        mapa.put("NAMEF14B", "FISE 14B"); 	     		  
 			        mapa.put("UNCHECKED14B", dirUncheckedImage);     		  
 			        mapa.put("FFIRMADO14B", "Formato Firmado(1)");
 			        mapa.put("FSUSTENTO14B", "Presenta Sustentos(1)");  	  		        
 			        mapa.put("NAMEPLAZO14B", "Cumple Plazos");  			  
-			        mapa.put("NAMEOBS14B", "Sin Observaciones");  			  
+			        mapa.put("NAMEOBS14B", "Con Observaciones");  			  
 			        mapa.put("CHECKED14B",dirCheckedImage);  			  
 			        mapa.put("NAMEOTROS14B", "Otros: ___________");
   			       
@@ -1521,14 +1549,18 @@ public class EnvioDefinitivoController {
  			        	mapa.put("CHECKED_OBSERVACION_14C", dirUncheckedImage);
  			        }else{
  			        	mapa.put("CHECKED_OBSERVACION_14C", dirCheckedImage);
- 			        }     		 
- 			        formatos = formatos+" FISE 14C ";
+ 			        } 
+ 			        if(FormatoUtil.isNotBlank(formatos)){ 
+ 			        	 formatos = formatos+", FISE 14C ";
+			        }else{
+			        	 formatos = formatos+" FISE 14C ";
+			        } 			       
  			        mapa.put("NAMEF14C", "FISE 14C"); 	     		  
  			        mapa.put("UNCHECKED14C", dirUncheckedImage);     		  
  			        mapa.put("FFIRMADO14C", "Formato Firmado(1)");
  			        mapa.put("FSUSTENTO14C", "Presenta Sustentos(1)");  	  		        
  			        mapa.put("NAMEPLAZO14C", "Cumple Plazos");  			  
- 			        mapa.put("NAMEOBS14C", "Sin Observaciones");  			  
+ 			        mapa.put("NAMEOBS14C", "Con Observaciones");  			  
  			        mapa.put("CHECKED14C",dirCheckedImage);  			  
  			        mapa.put("NAMEOTROS14C", "Otros: ___________");
   					

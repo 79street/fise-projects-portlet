@@ -22,6 +22,13 @@ var notificarValidar= {
 		dialogObservacion12:null,
 		dialogObservacion13:null,
 		
+		dialogValidacion:null,
+		dialogValidacionContent:null,
+		dialogError:null,
+		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
+		
 		//mensajes		
 		mensajeNotificar:null,
 		mensajeProcesando:null,
@@ -81,7 +88,12 @@ var notificarValidar= {
 			this.dialogConfirmContentEliminar=$("#<portlet:namespace/>dialog-confirm-content");//para notificar
 			this.dialogMessageEliminar=$("#<portlet:namespace/>dialog-message-notificacion");
 			
-			
+			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
+			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
+			this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");		
 			
 			//mensajes						
 			this.mensajeNotificar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Notificacion </h3>';			
@@ -383,11 +395,15 @@ var notificarValidar= {
 							notificarValidar.botonBuscar.trigger('click');
 							notificarValidar.initBlockUI();					
 					    }else if(data.resultado == 'NINGUNO'){
-					    	alert("No existe ningún registro para procesar los datos");
+					    	var addhtmNinguno='No existe ningún registro para procesar los datos';					
+							notificarValidar.dialogInfoContent.html(addhtmNinguno);
+							notificarValidar.dialogInfo.dialog("open");					    	
 					    	notificarValidar.botonBuscar.trigger('click');
 							notificarValidar.initBlockUI();	
 					    }else{
-							alert("Error al procesar los datos");
+					    	var addhtmError='Error al procesar los datos';					
+							notificarValidar.dialogErrorContent.html(addhtmError);
+							notificarValidar.dialogError.dialog("open");								
 							notificarValidar.initBlockUI();
 						}
 					},error : function(){
@@ -439,7 +455,9 @@ var notificarValidar= {
 							notificarValidar.initBlockUI();	
 						}				
 					}else{
-						alert("Error al realizar la validación");
+						var addhtmError='Error al realizar la validación.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");						
 						notificarValidar.initBlockUI();	
 					}
 				},error : function(){
@@ -464,7 +482,9 @@ var notificarValidar= {
 					if(gridData!=null){
 						notificarValidar.verReporteObservaciones();	
 					}else{
-						alert("Error al mostrar el reporte");
+						var addhtmError='Error al mostrar el reporte';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");						
 						notificarValidar.initBlockUI();
 					}
 					
@@ -507,17 +527,25 @@ var notificarValidar= {
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessage.dialog("open");					
 						notificarValidar.initBlockUI();
-					}else if(data.resultado == "NO_DATOS"){
-						alert("No existe ninguna lista pra realizar la notificación");
+					}else if(data.resultado == "NO_DATOS"){						
+						var addhtmInfo='No existe ninguna lista pra realizar la notificación';					
+						notificarValidar.dialogInfoContent.html(addhtmInfo);
+						notificarValidar.dialogInfo.dialog("open");						
 						notificarValidar.initBlockUI();	
 					}else if(data.resultado == "EMAIL"){
-						alert(data.Correo);
+						var addhtmEmail=data.Correo;					
+						notificarValidar.dialogInfoContent.html(addhtmEmail);
+						notificarValidar.dialogInfo.dialog("open");							
 						notificarValidar.initBlockUI();	
 					}else if(data.resultado == "Mensaje"){
-						alert("Error al realizar el cambio de etapa");
+						var addhtmError='Error al realizar el cambio de etapa.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");					
 						notificarValidar.initBlockUI();	
 					}else if(data.resultado == "ERROR"){
-						alert("Error al realizar la notificación");
+						var addhtmError='Error al realizar la notificación.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");					
 						notificarValidar.initBlockUI();
 					}
 				},error : function(){
@@ -570,7 +598,9 @@ var notificarValidar= {
 						notificarValidar.initBlockUI();
 					}
 					else{
-						alert("Error al eliminar el registro");
+						var addhtmError='Error al eliminar el registro seleccionado';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");						
 						notificarValidar.initBlockUI();
 					}
 				},error : function(){
@@ -668,6 +698,36 @@ var notificarValidar= {
 					}
 				}
 			}); 
+			
+			notificarValidar.dialogValidacion.dialog({
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			notificarValidar.dialogError.dialog({
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			notificarValidar.dialogInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					OK: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
 			
 		}, /***fin de inicializar los dialogos**/	
 		

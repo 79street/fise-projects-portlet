@@ -185,6 +185,8 @@ $(document).ready(function () {
 
    <!-- DIVS PARA MENSAJES -->
    
+    <!-- DIALOGO PARA INFORMACION -->
+   
    	<div id="<portlet:namespace/>dialog-message-notificacion" title="Mensaje de Informaci&oacute;n">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
@@ -192,6 +194,8 @@ $(document).ready(function () {
 			<label id="<portlet:namespace/>dialog-message-content-notificacion">Datos notificados exit&oacute;samente.</label>
 		</p>	
 	</div>
+	
+	<!-- DIALOGO PARA CONFIRMACION -->
 	
 	<div id="<portlet:namespace/>dialog-confirm_notificacion" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
@@ -205,6 +209,33 @@ $(document).ready(function () {
 		<p>	
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
+		</p>
+	</div>`	
+	
+	<!-- DIALOGO PARA ALERTAR DE VALIDACION -->
+	
+	<div id="<portlet:namespace/>dialog-alert" title="Mensaje de Validaci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
+		</p>
+	</div>`	
+	
+	<!-- DIALOGO PARA ERRORES -->
+	
+	<div id="<portlet:namespace/>dialog-error" title="Mensaje de Error">
+		<p>	
+			<span class="ui-icon ui-icon-circle-close" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-error-content">Error..</label>
+		</p>
+	</div>`	
+	
+	<!-- DIALOGO PARA INFORMAR UN MENSAJE -->
+	
+	<div id="<portlet:namespace/>dialog-info" title="Mensaje de Informaci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-info-content">Info..</label>
 		</p>
 	</div>`	
 		

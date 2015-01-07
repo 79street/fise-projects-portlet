@@ -243,7 +243,7 @@ public class LiquidacionController {
   			List<LiquidacionBean> lista =liquidacionService.listarLiquidaciones(codEmpresa, 
   					idGrupo, usuario, terminal,flagBusq);		
   			
-  			logger.info("tamaño de la lista envio Defin..   :"+lista.size());
+  			logger.info("tamaño de la lista liquidacion..   :"+lista.size());
   			
   			List<LiquidacionBean> listaLiqui = new ArrayList<LiquidacionBean>();
   			
@@ -1458,6 +1458,174 @@ public class LiquidacionController {
 		return mapa;
 	}
 	
+	
+	/*********Para motivos de la liquidacion***********/
+	
+	@ResourceMapping("busquedaMotivosLiquidacion")
+  	public void busquedaMotivos(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("liquidacionBean")LiquidacionBean l){
+		
+		try{
+			response.setContentType("application/json");
+			
+			long correlativo = 0;	 		
+			long item = 0;
+			if(FormatoUtil.isNotBlank(l.getCorrelativo())){ 
+				correlativo = Long.valueOf(l.getCorrelativo());
+			}		
+					    
+			String data ="";			
+			logger.info("codigo empresa "+ correlativo);  			
+  			logger.info("id Grupo inf "+ item);    			
+  			
+  			List<LiquidacionBean> lista =liquidacionService.buscarDatosLiquidacionesMotivosNo(correlativo, item);	
+  			
+  			data = toStringListJSON(lista);
+  			logger.info("arreglo json motivos lisata:"+data);
+  			PrintWriter pw = response.getWriter();
+  			pw.write(data);
+  			pw.flush();
+  			pw.close();   			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}	
+	
+	
+	@ResourceMapping("grabarMotivoLiquidacion")
+	public void grabarMotivoLiq(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("liquidacionBean")LiquidacionBean l) { 
+		JSONObject jsonObj = new JSONObject();
+		try {		
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);				
+			
+			logger.info("Entrando a grabar un registro"); 			
+			logger.info("correlativo:  "+ l.getCoMotivo()); 
+			logger.info("item:  "+ l.getDescMotivo());  			
+			
+			l.setUsuario(themeDisplay.getUser().getLogin());
+			l.setTerminal(themeDisplay.getUser().getLoginIP());		
+			
+			logger.info("Enviando el formulario al service");		
+			
+			String valor = liquidacionService.insertarDatosLiquidacionesMotivosNo(l);
+			logger.info("valor de la transaccion al insertar:  "+valor); 
+			if(valor.equals("1")){ 
+				jsonObj.put("resultado", "OK");				
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();				
+		} catch (Exception e) {
+			e.printStackTrace();				
+			logger.error("Error al guardar los datos en motivos de la liquidacion: "+e.getMessage());
+		} 	
+	}	
+	
+	
+	@ResourceMapping("actualizarMotivoLiquidacion")
+	public void actualizarMotivoLiq(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("liquidacionBean")LiquidacionBean l) { 
+		JSONObject jsonObj = new JSONObject();
+		try {		
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
+			
+			l.setUsuario(themeDisplay.getUser().getLogin());
+			l.setTerminal(themeDisplay.getUser().getLoginIP());	
+			
+			logger.info("Entrando a actualizar un registro"); 	
+			logger.info("correlativo:  "+ l.getCoMotivo()); 
+			logger.info("item:  "+ l.getItemMotivo());   
+			
+			String valor = liquidacionService.actualizarDatosLiquidacionesMotivosNo(l);
+			logger.info("valor de la transaccion al actualizar:  "+valor); 
+			if(!valor.equals("0")){ 
+				jsonObj.put("resultado", "OK");				
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();				
+		} catch (Exception e) {
+			e.printStackTrace();				
+			logger.error("Error al actualizar los datos del motivo de la liquidacion: "+e.getMessage());
+		} 	
+	}
+	
+	
+	@ResourceMapping("editarMotivoLiquidacion")
+	public void editarMotivoLiq(ModelMap model,ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("liquidacionBean")LiquidacionBean l) { 		
+		try {	
+			String data ="";	
+			long correlativo = l.getCorrelativoEdit()==null? 0 :Long.valueOf(l.getCorrelativoEdit());	 		
+			long item = l.getItemMotivoEdit()==null ? 0 : Long.valueOf(l.getItemMotivoEdit()); 
+			
+			logger.info("Entrando a editar un registro del motivo de liquidacion"); 
+			logger.info("correlativo:  "+ correlativo); 
+			logger.info("item:  "+ item);   	
+			
+			l= liquidacionService.obtenerDatosLiquidacionesMotivosNo(correlativo, item);
+			
+			data = toStringJSON(l);						
+			response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(data);
+		    pw.flush();
+		    pw.close();		
+			logger.info("DATA CONVERTER JSON:  "+data); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	private String toStringJSON(LiquidacionBean l) {
+		Serializer serializer = new JsonSerializer();
+		Object result = serializer.serialize(l);
+		String data = String.valueOf(result);
+		return data;
+	}
+	
+	@ResourceMapping("eliminarMotivoLiquidacion")
+	public void eliminarMotivoLiq(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("liquidacionBean")LiquidacionBean l) { 	
+		
+		JSONObject jsonObj = new JSONObject();
+		try {	
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
+			l.setUsuario(themeDisplay.getUser().getLogin());
+			l.setTerminal(themeDisplay.getUser().getLoginIP());	
+			
+			logger.info("Entrando a eliminar un registro del motivo de liquidacion"); 			
+			logger.info("correlativo:  "+ l.getCorrelativoEdit()); 
+			logger.info("item:  "+ l.getItemMotivoEdit());   
+			
+			logger.info("Enviando el formulario al service"); 
+			
+			String valor = liquidacionService.eliminarDatosLiquidacionesMotivosNo(l);
+			if(valor.equals("1")){ 
+				jsonObj.put("resultado", "OK");	   	
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();				
+		} catch (Exception e) {
+			e.printStackTrace();				
+			logger.error("Error al eliminar los datos del motivo de la liquidacion: "+e.getMessage());
+		} 	
+	}		
 	
 	
 }
