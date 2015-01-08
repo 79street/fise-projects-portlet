@@ -175,6 +175,8 @@ $(document).ready(function () {
 		</p>
 	</div>`
 	
-		
+	
+	<!-- HIDENN -->
+	<form:input path="flagExiteData" cssStyle="display:none;" />	
 	
 </form:form>

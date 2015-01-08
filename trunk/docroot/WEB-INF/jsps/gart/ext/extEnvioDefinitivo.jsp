@@ -46,6 +46,7 @@ var envioDefinitivoGlobal= {
 		
 		//variables 
 		f_empresa:null,
+		f_flagExisteData:null,
 		
 		//grillas
 		tablaResultados:null,
@@ -68,7 +69,7 @@ var envioDefinitivoGlobal= {
 			
 			
 			//mensajes						
-			this.mensajeEnvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Envio Definitivo </h3>';			
+			this.mensajeEnvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Envío General Definitivo </h3>';			
 			this.mensajeReporte='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo el Reporte </h3>';
 			
 			//urls
@@ -91,6 +92,8 @@ var envioDefinitivoGlobal= {
 			this.i_etapaBusq=$('#etapaBusq');	
 			this.i_tipoBienal=$('#rbtBienal');
 			this.i_tipoMensual=$('#rbtMensual');
+			
+			this.f_flagExisteData=$('#flagExiteData');		
 			
 			//grillas			
 			this.tablaResultados=$("#<portlet:namespace/>grid_resultado_busqueda");
@@ -136,7 +139,7 @@ var envioDefinitivoGlobal= {
 		buildGrids : function () {	
 			envioDefinitivoGlobal.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Formato.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa','Estado','Ver','','',''],
+		       colNames: ['Dist. Eléct.','Formato','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa','Estado','Ver','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
@@ -229,6 +232,10 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 						envioDefinitivoGlobal.tablaResultados[0].refreshIndex();
 						envioDefinitivoGlobal.initBlockUI();
+						console.debug("resultado de la busqueda: "+gridData);
+						if(gridData!=''){
+							envioDefinitivoGlobal.f_flagExisteData.val('SI');	
+						}						
 					},error : function(){
 							alert("Error de conexión.");
 							envioDefinitivoGlobal.initBlockUI();
@@ -347,10 +354,15 @@ var envioDefinitivoGlobal= {
 					
 		/**Function para confirmar si quiere realizar el envio definitivo.*/
 		confirmarEnvioDefinitivo : function(){
-			console.debug("entranado a confirmar envio");
-			var addhtml='¿Está seguro que desea realizar el envio general de los Formatos mostrados?';
-			envioDefinitivoGlobal.dialogConfirmContent.html(addhtml);
-			envioDefinitivoGlobal.dialogConfirm.dialog("open");
+			console.debug("entranado a confirmar envio: "+envioDefinitivoGlobal.f_flagExisteData.val());			
+			if(envioDefinitivoGlobal.f_flagExisteData.val()=='SI'){
+				var addhtml='¿Está seguro que desea realizar el Envío General Definitivo de los Formatos presentados en el Resultado(s) de la búsqueda?';
+				envioDefinitivoGlobal.dialogConfirmContent.html(addhtml);
+				envioDefinitivoGlobal.dialogConfirm.dialog("open");	
+			}else{
+				alert("No existe información para los criterios de búsqueda seleccionados. Realice una nueva búsqueda.");
+				envioDefinitivoGlobal.initBlockUI();	
+			}			
 		},
 		/**Function para  envio definitivo una vez hecha la confirmacion*/
 		procesarEnvioDefinitivo : function(){
@@ -375,18 +387,22 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 					}else if(data.resultado == "ENVIADO"){
 						alert("Este grupo ya ha sido enviado.");
-						envioDefinitivoGlobal.initBlockUI();	
+						envioDefinitivoGlobal.initBlockUI();
+						envioDefinitivoGlobal.botonBuscar.trigger('click');
 					}else if(data.resultado == "NO_DATOS"){
 						alert("No existe ninguna lista pra realizar el envio general, vuelva a realizar la búsqueda");
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "EMAIL"){
 						alert(data.mensaje);
+						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "CERRADO"){
 						alert(data.mensaje);
+						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "ERROR"){
 						alert("Error al realizar el envio general de los formatos mostrados");
+						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();
 					}
 				},error : function(){

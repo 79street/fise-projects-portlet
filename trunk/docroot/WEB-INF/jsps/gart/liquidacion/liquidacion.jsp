@@ -24,7 +24,7 @@ $(document).ready(function () {
 			
 			    <!-- DIV PARA BUSQUEDA  -->
 			  			
-				<div id="<portlet:namespace/>div_buscar" class="net-frame-listado">
+				<div id="<portlet:namespace/>div_buscar" class="net-frame-listado" >
 				
 			     <table style="width: 100%;" border="0">
 						<tr>
@@ -133,12 +133,16 @@ $(document).ready(function () {
 					</table>			
 				</div>								
 				
-				<!-- FIN DE DIV  PARA BUSQUEDA -->	
-				
-				
-				 <!-- DIV PARA BUSQUEDA MOTIVOS DE LIQUIDACION  -->	
+				<!-- FIN DE DIV  PARA BUSQUEDA -->			
+								
+            </div>
+       </div>       
+</div>
+   
+   
+                <!-- DIV PARA BUSQUEDA MOTIVOS DE LIQUIDACION  -->	
 			
-				<div id="<portlet:namespace/>div_buscar_motivo" class="net-frame-listado" style="display: none;">
+				<div id="<portlet:namespace/>div_buscar_motivo" class="net-frame-border" style="display: none;">
 				
 			     <table style="width: 100%;" border="0">
 						<tr>
@@ -232,9 +236,11 @@ $(document).ready(function () {
 						</tr>
 						<tr>
 							<td>
-								<table id="<portlet:namespace/>grid_resultado_busqueda_motivos" style="width:100%"> 
+							  <fieldset class="net-frame-border">
+								<table id="<portlet:namespace/>grid_resultado_busqueda_motivos"> 
 								</table>
 								<div id="<portlet:namespace/>paginador_resultado_busqueda_motivos"></div>
+						      </fieldset>
 							</td>
 						</tr>
 						<tr height="10px">
@@ -298,7 +304,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Descripción:</label>
 											   </td>
 											   <td>
-												 <form:textarea path="descMotivo" cols="30" rows="4" onkeypress="return soloLetras(event)"/>  
+												 <form:textarea path="descMotivo" cols="65" rows="4" onkeypress="return soloLetras(event)"/>  
 											   </td>								   
 										     </tr>						
 										  </table>								 								
@@ -352,13 +358,8 @@ $(document).ready(function () {
 					</table>	
 				</div>				
 				
-				<!-- FIN DIV PARA NUEVO REGISTRO -->	
-				
-				
-								
-            </div>
-       </div>       
-   </div>
+				<!-- FIN DIV PARA NUEVO REGISTRO -->			
+
    
    
      <!-- DIALOGO PARA MOSTRAR OBSERVACIONES -->	

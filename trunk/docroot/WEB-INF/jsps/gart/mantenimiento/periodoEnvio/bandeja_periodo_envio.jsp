@@ -251,11 +251,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Etapa:</label>
 											   </td>
 											   <td>
-												<form:select path="etapa" cssClass="select" cssStyle="width: 140px;">
-													<form:option value="SOLICITUD">SOLICITUD</form:option>
-													<form:option value="LEV.OBS">LEV.OBS</form:option>
-													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
-													<form:option value="RECONOCIDO">RECONOCIDO</form:option>
+												<form:select path="etapa" cssClass="select" cssStyle="width: 140px;">																																								
 												</form:select>
 											   </td>
 											   
