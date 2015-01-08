@@ -946,7 +946,7 @@ var liquidacionVar= {
 						var addhtml2='El registro fue eliminado satisfactoriamente';					
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
-						liquidacionVar.buscarMotivos('');
+						liquidacionVar.buscarMotivos(codCorrelativo);
 						liquidacionVar.initBlockUI();
 					}
 					else{
@@ -973,7 +973,7 @@ var liquidacionVar= {
 			liquidacionVar.divNuevoMotivo.hide();
 			liquidacionVar.divBuscarLiq.hide();	
 			liquidacionVar.divBuscarMotivo.show();
-			liquidacionVar.buscarMotivos('');
+			liquidacionVar.buscarMotivos($('#coMotivo').val());
 		},
 		
 		//DIALOGOS
