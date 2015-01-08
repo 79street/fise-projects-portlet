@@ -21,5 +21,6 @@
 		<portlet id="gartEnvioDefinitivo"/>
 		<portlet id="gartLiquidacion"/>
 		<portlet id="gartCargoFijo"/>
+		<portlet id="gartResumenCostos"/>
 	</category>
 </display>
