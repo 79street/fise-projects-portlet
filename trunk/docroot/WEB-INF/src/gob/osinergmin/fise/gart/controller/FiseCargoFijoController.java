@@ -239,9 +239,9 @@ public class FiseCargoFijoController {
 			
 			logger.info("valor de la transaccion al actualizar:  "+valor); 
 			if(!valor.equals("0")){ 
-				jsonObj.put("resultado", "OK");				
+				jsonObj.put("resultado", "OK");		//OK		
 			}else{
-				jsonObj.put("resultado", "Error");	
+				jsonObj.put("resultado", "Error");	//Error
 			}
 			response.setContentType("application/json");
 			PrintWriter pw = response.getWriter();
