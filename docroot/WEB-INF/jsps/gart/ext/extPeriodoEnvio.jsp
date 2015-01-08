@@ -12,8 +12,7 @@ var periodoEnvio= {
 
 		//divs
 		divBuscar:null,	
-		divNuevo:null,			
-		
+		divNuevo:null,		
 		
 		//dialogos	
 		dialogMessage:null,//para guardar y actualizar
@@ -56,6 +55,7 @@ var periodoEnvio= {
 		f_hasta:null,f_dias:null,f_flagEnvioObs:null,f_flagAnoMes:null,	f_flagCosto:null,
 		f_anoIniVigencia:null,f_anoFinVigencia:null,
 		f_secuencia:null,f_fechaAmpl:null,
+	
 		//grillas
 		tablaResultados:null,
 		paginadoResultados:null,	
@@ -126,8 +126,7 @@ var periodoEnvio= {
 			this.f_flagAnoMes=$('#flagAnioMesEjec');	
 			this.f_flagCosto=$('#flagHabCostos');
 			this.f_anoIniVigencia=$('#anoIniVigencia');	
-			this.f_anoFinVigencia=$('#anoFinVigencia');
-			
+			this.f_anoFinVigencia=$('#anoFinVigencia');			
 			
 			//grillas			
 			this.tablaResultados=$("#<portlet:namespace/>grid_resultado_busqueda");
@@ -162,11 +161,12 @@ var periodoEnvio= {
 		    periodoEnvio.f_formato.change(function(){
 		    	periodoEnvio.<portlet:namespace/>mostrarAnioVigencia();
 			});
-		    
+		        
 		    
 		    periodoEnvio.initDialogs();
 		    
-		    //eventos por defecto		   
+		    //eventos por defecto		    
+		    
 			periodoEnvio.botonBuscar.trigger('click');
 			periodoEnvio.initBlockUI();
 		},
@@ -248,7 +248,7 @@ var periodoEnvio= {
 			periodoEnvio.divBuscar.hide();		
 						
 			console.debug("boton nuevo registro:  ");
-			
+			periodoEnvio.f_formato.trigger('change');
 			$('#<portlet:namespace/>guardarPeriodoEnvio').css('display','block');
 			$('#<portlet:namespace/>actualizarPeriodoEnvio').css('display','none');
 			
@@ -666,12 +666,18 @@ var periodoEnvio= {
 				periodoEnvio.f_anoIniVigencia.val('');
 			    periodoEnvio.f_anoFinVigencia.val('');
 				periodoEnvio.f_anoIniVigencia.attr("disabled",true);
-				periodoEnvio.f_anoFinVigencia.attr("disabled",true);
+				periodoEnvio.f_anoFinVigencia.attr("disabled",true);				
+				dwr.util.removeAllOptions("etapa");				
+				var dataEtapa = ['SOLICITUD', 'LEV.OBS', 'RECONSIDERACION', 'RECONOCIDO'];			
+				dwr.util.addOptions("etapa", dataEtapa);
 			}else{
 				periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
 			    periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
 			    periodoEnvio.f_anoIniVigencia.val(f.getFullYear()+1);
-				periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+3);					
+				periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+3);				
+				dwr.util.removeAllOptions("etapa");				
+				var dataEtapa = ['SOLICITUD', 'LEV.OBS', 'RECONSIDERACION', 'ESTABLECIDO'];			
+				dwr.util.addOptions("etapa", dataEtapa);
 		   }
 		},
 		

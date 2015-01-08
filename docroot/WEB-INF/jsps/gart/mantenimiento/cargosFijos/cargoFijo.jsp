@@ -197,9 +197,9 @@ $(document).ready(function () {
 										         <table style="width: 50%;" border="0">
 										          <tr>
 										           <td></td>
-										           <td width="148px"><label style="font-size: 12px; font-weight: bold">Rural</label></td>
-											       <td><label style="font-size: 12px; font-weight: bold">Urb. Provincias</label></td>
-											       <td><label style="font-size: 12px; font-weight: bold">Urb. Lima</label></td>
+										           <td width="130px" align="center"><label style="font-size: 12px; font-weight: bold">Rural</label></td>
+											       <td width="130px" align="center"><label style="font-size: 12px; font-weight: bold">Urbano Provincias</label></td>
+											       <td width="130px" align="center"><label style="font-size: 12px; font-weight: bold">Urbano Lima</label></td>
 											       								          
 										          </tr>	
 										          
@@ -208,14 +208,14 @@ $(document).ready(function () {
 											      </tr>
 											     
 											      <tr>
-											        <td><label style="font-size: 12px; font-weight: bold">Número Usu. Beneficiarios:</label></td>
-											        <td>
+											        <td><label style="font-size: 12px; font-weight: bold">Número Usuarios Beneficiarios:</label></td>
+											        <td align="center">
 													 <form:input path="numUsuBenefR"  cssStyle="width: 50px; text-align: right;"/>
 												    </td>
-												    <td>
+												    <td align="center">
 													 <form:input path="numUsuBenefP"  cssStyle="width: 50px; text-align: right;"/>
 												    </td>
-												    <td>
+												    <td align="center">
 													 <form:input path="numUsuBenefL"  cssStyle="width: 50px; text-align: right;"/>
 												    </td>											  
 											     </tr>								     
@@ -225,14 +225,14 @@ $(document).ready(function () {
 											     </tr>
 											     
 											     <tr>
-											      <td><label style="font-size: 12px; font-weight: bold">Número Usu. Empadronados:</label></td>
-											      <td>
+											      <td><label style="font-size: 12px; font-weight: bold">Número Usuarios Empadronados:</label></td>
+											      <td align="center">
 													 <form:input path="numUsuEmpR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numUsuEmpP"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numUsuEmpL"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>												  											  
 											     </tr>		
@@ -243,13 +243,13 @@ $(document).ready(function () {
 											     
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físicos Emitidos:</label></td>
-											      <td>
+											      <td align="center">
 													 <form:input path="numValFEmiR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numValFEmiP"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numValFEmiL"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>		 						  
 												  
@@ -261,13 +261,13 @@ $(document).ready(function () {
 											     
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Emitidos:</label></td>
-											      <td>
+											      <td align="center">
 													 <form:input path="numValDEmiR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numValDEmiP"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numValDEmiL"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
 												  												 
@@ -279,13 +279,13 @@ $(document).ready(function () {
 											     
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físicos Canjeados:</label></td>
-											      <td>
+											      <td align="center">
 													 <form:input path="numValFCanR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numValFCanP"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numValFCanL"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
 												 					  
@@ -297,13 +297,13 @@ $(document).ready(function () {
 											     
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Canjeados:</label></td>
-											      <td>
+											      <td align="center">
 													 <form:input path="numValDCanR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numValDCanP"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numValDCanL"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>		 					  
 												  
@@ -315,13 +315,13 @@ $(document).ready(function () {
 											     
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Agentes:</label></td>
-											      <td>
-													 <form:input path="numAgenteR"  cssStyle="width: 50px; text-align: right;"/>
+											      <td align="center">
+													 <form:input path="numAgenteR"  cssStyle="width: 50px; text-align: right;" />
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numAgenteP"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="numAgenteL"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>									 						  
 												  
@@ -333,13 +333,13 @@ $(document).ready(function () {
 											     
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Cargo Fijo del Mes:</label></td>
-											      <td>
+											      <td align="center">
 													 <form:input path="montoMesR"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="montoMesP"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>
-												  <td>
+												  <td align="center">
 													 <form:input path="montoMesL"  cssStyle="width: 50px; text-align: right;"/>
 												  </td>								  			 					  
 												  
@@ -364,13 +364,13 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Fecha Informe Sustento:(dd/mm/aaaa)</label>
 											  </td>
 											  <td>											  										 
-											   <form:input path="fechaSustento" cssStyle="text-align: right;"/>								    												
+											   <form:input path="fechaSustento" cssStyle="text-align: right;" size="7"/>								    												
 											  </td>										 
 											  
 											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Información.(dd/mm/aaaa):</label>
 											  </td>
 											  <td>									  
-											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" />			 							    												
+											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" size="7" />			 							    												
 											  
 											  </td>		
 											  										 											 
@@ -385,19 +385,19 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Recepción Informe.:</label>
 											   </td>
 											  <td>
-												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)"/>
+												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)" maxlength="13"/>
 											  </td>
 											  
 											  <td><label style="font-size: 12px; font-weight: bold">Número Doc. Informe Sustento:</label>
 											   </td>
 											  <td>
-												 <form:input path="numDoc"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)"/> 
+												 <form:input path="numDoc"  cssStyle="width: 60px; text-align: right;"  onblur="isNumeric(this)" maxlength="13"/> 
 											  </td>
 											
 											 <td><label style="font-size: 12px; font-weight: bold">IGV:</label>
 											   </td>
 											  <td>
-												 <form:input path="igv"  cssStyle="width: 50px; text-align: right;"/>
+												 <form:input path="igv"  cssStyle="width: 60px; text-align: right;"/>
 											  </td>										 
 											  										 											 
 											</tr>	
@@ -513,6 +513,33 @@ $(document).ready(function () {
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>
 	</div>	
+	
+	<!-- DIALOGO PARA ALERTAR DE VALIDACION -->
+	
+	<div id="<portlet:namespace/>dialog-alert" title="Mensaje de Alerta">
+		<p>	
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
+		</p>
+	</div>`	
+	
+	<!-- DIALOGO PARA ERRORES -->
+	
+	<div id="<portlet:namespace/>dialog-error" title="Mensaje de Error">
+		<p>	
+			<span class="ui-icon ui-icon-circle-close" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-error-content">Error..</label>
+		</p>
+	</div>`	
+	
+	<!-- DIALOGO PARA INFORMAR UN MENSAJE -->
+	
+	<div id="<portlet:namespace/>dialog-info" title="Mensaje de Informaci&oacute;n">
+		<p>	
+			<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-info-content">Info..</label>
+		</p>
+	</div>`	
 	
  
 	 

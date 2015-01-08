@@ -406,13 +406,14 @@ var liquidacionVar= {
 		
 		//funcion para armar el modelo de la grilla para el resultado de los motivos de  la liquidacion
 		buildGridsMotivos : function () {	
+			var ancho = liquidacionVar.divBuscarLiq.width();
 			liquidacionVar.tablaResultadosMotivo.jqGrid({
 			   datatype: "local",
 		       colNames: ['Item','Descripción','Estado','Editar','Eliminar',''],
 		       colModel: [
-                       { name: 'itemMotivo', index: 'itemMotivo', width: 20},				   
-					   { name: 'descMotivo', index: 'descMotivo', width: 80},
-					   { name: 'estadoMotivo', index: 'estadoMotivo', width: 30},	  	           
+                       { name: 'itemMotivo', index: 'itemMotivo', width: 50,align:'center'},				   
+					   { name: 'descMotivo', index: 'descMotivo', width: 300},
+					   { name: 'estadoMotivo', index: 'estadoMotivo', width: 50,align:'center'},	  	           
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },		                
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
 		               { name: 'coMotivo', index: 'coMotivo', hidden: true}	               
@@ -421,9 +422,10 @@ var liquidacionVar= {
 					rowNum:10,
 				   	rowList:[10,20,50],
 				   	height: 'auto',
-				   	autowidth: true,
+				   //	autowidth: true,
 					rownumbers: true,
-					shrinkToFit:true,
+					//shrinkToFit:true,
+					width:ancho ,
 					pager: liquidacionVar.paginadoResultadosMotivo,
 				    viewrecords: true,
 				   	caption: "Resultado(s) de la búsqueda",
@@ -786,6 +788,7 @@ var liquidacionVar= {
 			liquidacionVar.divNuevoMotivo.show();
 			liquidacionVar.divBuscarLiq.hide();	
 			liquidacionVar.divBuscarMotivo.hide();
+			liquidacionVar.f_descMotivo.val('');
 		    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
 			$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');			
 		},	

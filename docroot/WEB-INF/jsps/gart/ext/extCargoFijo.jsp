@@ -21,6 +21,14 @@ var fiseCargoFijo= {
 		dialogConfirm:null,//para eliminar registro
 		dialogConfirmContent:null,//para mostrar la confirmacion al eliminar el registro
 		
+		dialogValidacion:null,
+		dialogValidacionContent:null,
+		dialogError:null,
+		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
+		
+		
 		//mensajes
 		mensajeCargando:null,
 		mensajeObteniendoDatos:null,
@@ -94,6 +102,12 @@ var fiseCargoFijo= {
 			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");//para eliminar
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");//para eliminar
 			
+			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
+			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
+            this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");
 			
 			//mensajes			
 			this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
@@ -213,16 +227,16 @@ var fiseCargoFijo= {
 		buildGrids : function () {	
 			fiseCargoFijo.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Año Repo.','Mes Repo.','Monto Cargo Fijo Rural','Monto Cargo Fijo Urb. Provincias','Monto Cargo Fijo Urb. Lima','Glosa','Estado','Visualizar','Editar','Anular','',''],
+		       colNames: ['Dist. Eléct.','Año Reportado','Mes Reportado','Monto Cargo Fijo Rural','Monto Cargo Fijo Urbano Provincias','Monto Cargo Fijo Urbano Lima','Glosa','Estado','Visualizar','Editar','Anular','',''],
 		       colModel: [
 						   { name: 'desEmpresa', index: 'desEmpresa', width: 50},
-			               { name: 'anioReporte', index: 'anioReporte', width: 30 },   
-			               { name: 'desMesRep', index: 'desMesRep', width: 30},
-			               { name: 'montoMesR', index: 'montoMesR', width: 30 },   
-			               { name: 'montoMesP', index: 'montoMesP', width: 30},
-			               { name: 'montoMesL', index: 'montoMesL', width: 50},
+			               { name: 'anioReporte', index: 'anioReporte', width: 40 },   
+			               { name: 'desMesRep', index: 'desMesRep', width: 40},
+			               { name: 'montoMesR', index: 'montoMesR', width: 40 },   
+			               { name: 'montoMesP', index: 'montoMesP', width: 40},
+			               { name: 'montoMesL', index: 'montoMesL', width: 40},
 			               { name: 'gloza', index: 'gloza', width: 60},			              
-			               { name: 'desEstado', index: 'desEstado', width: 50},
+			               { name: 'desEstado', index: 'desEstado', width: 20,align:'center'},
 			               { name: 'view', index: 'view', width: 20,align:'center' },
 			               { name: 'edit', index: 'edit', width: 20,align:'center' },
 			               { name: 'elim', index: 'elim', width: 20,align:'center' },		              
@@ -247,7 +261,7 @@ var fiseCargoFijo= {
 			      			var ret = fiseCargoFijo.tablaResultados.jqGrid('getRowData',cl);           
 			      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
 			      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
-			      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"','"+ret.desEstado+"');\" /></a> ";              			
+			      			elim = "<a href='#'><img border='0' title='' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"','"+ret.desEstado+"');\" /></a> ";              			
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -462,8 +476,10 @@ var fiseCargoFijo= {
 					    	$('#<portlet:namespace/>guardarCargoFijo').css('display','none');
 							$('#<portlet:namespace/>actualizarCargoFijo').css('display','none');		    					    							
 				        }						
-						else{
-							alert("Error al visualizar los datos del registro seleccionado");
+						else{							
+							var addhtmError='Error al visualizar los datos del registro seleccionado';					
+							fiseCargoFijo.dialogErrorContent.html(addhtmError);
+							fiseCargoFijo.dialogError.dialog("open");	
 							fiseCargoFijo.initBlockUI();
 						}
 					},error : function(){
@@ -503,8 +519,10 @@ var fiseCargoFijo= {
 								$('#<portlet:namespace/>guardarCargoFijo').css('display','none');
 								$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');													
 					         }
-							else{
-								alert("Error al recuperar los datos del registro seleccionado");
+							else{								
+								var addhtmError='Error al recuperar los datos del registro seleccionado';					
+								fiseCargoFijo.dialogErrorContent.html(addhtmError);
+								fiseCargoFijo.dialogError.dialog("open");	
 								fiseCargoFijo.initBlockUI();
 							}
 						},error : function(){
@@ -775,11 +793,11 @@ var fiseCargoFijo= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarCargoFijo : function(codEmpresa, anioRep, mesRep,estado){	
 			if(estado=='Inactivo'){
-				var addhtml='El registro del Proyecto FISE ya se encuentra Inactivo.';
-				fiseCargoFijo.dialogMessageContent.html(addhtml);
-				fiseCargoFijo.dialogMessage.dialog("open");
+				var addhtml='El registro de Datos del Proyecto FISE seleccionado ya se encuentra Inactivo.';
+				fiseCargoFijo.dialogInfoContent.html(addhtml);
+				fiseCargoFijo.dialogInfo.dialog("open");
 			}else{
-				var addhtml='¿Está seguro que desea inactivar el registro del Proyecto FISE seleccionado?';
+				var addhtml='¿Está seguro que desea cambiar el estado del registro seleccionado a Inactivo?';
 				fiseCargoFijo.dialogConfirmContent.html(addhtml);
 				fiseCargoFijo.dialogConfirm.dialog("open");	
 				console.debug("codigo empresa: "+codEmpresa);
@@ -805,14 +823,16 @@ var fiseCargoFijo= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='El regsitro del Proyecto FISE fue inactivado satisfactoriamente.';					
+						var addhtml2='El registro de Datos del Proyecto FISE fue inactivado satisfactoriamente.';					
 						fiseCargoFijo.dialogMessageContent.html(addhtml2);
 						fiseCargoFijo.dialogMessage.dialog("open");
 						fiseCargoFijo.botonBuscar.trigger('click');
 						fiseCargoFijo.initBlockUI();
 					}
-					else{
-						alert("Error al eliminar el Dato del Proyecto Fise");
+					else{					
+						var addhtmError='Error al eliminar el registro de Datos del Proyecto FISE';					
+						fiseCargoFijo.dialogErrorContent.html(addhtmError);
+						fiseCargoFijo.dialogError.dialog("open");
 						fiseCargoFijo.initBlockUI();
 					}
 				},error : function(){
@@ -837,23 +857,21 @@ var fiseCargoFijo= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El registro del Proyecto FISE se guardó satisfactoriamente';
-							
+							var addhtml2='El registro de Datos del Proyecto FISE se guardó satisfactoriamente';							
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");							
 							fiseCargoFijo.initBlockUI();
 							$('#<portlet:namespace/>guardarCargoFijo').css('display','none');
-							$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');				
-							
-						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar el registro del Proyecto FISE.';
-							fiseCargoFijo.dialogMessageContent.html(addhtml2);
-							fiseCargoFijo.dialogMessage.dialog("open");						
+							$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');							
+						}else if(data.resultado == "Error"){							
+							var addhtmError='Se produjo un error al guardar el registro de Datos del Proyecto FISE.';					
+							fiseCargoFijo.dialogErrorContent.html(addhtmError);
+							fiseCargoFijo.dialogError.dialog("open");					
 							fiseCargoFijo.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtml2='Ya existe registrado un registro del Proyecto FISE con la misma Dist.Eléct, Año y Mes';
-							fiseCargoFijo.dialogMessageContent.html(addhtml2);
-							fiseCargoFijo.dialogMessage.dialog("open");						
+							var addhtml2='Ya existe registrado un registro de Datos del Proyecto FISE con la misma Dist.Eléct, Año y Mes';
+							fiseCargoFijo.dialogInfoContent.html(addhtml2);
+							fiseCargoFijo.dialogInfo.dialog("open");						
 							fiseCargoFijo.initBlockUI();
 						}
 					},error : function(){
@@ -879,14 +897,14 @@ var fiseCargoFijo= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El registro del Proyecto FISE se actualizó satisfactoriamente';
+							var addhtml2='El registro de Datos del Proyecto FISE se actualizó satisfactoriamente';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();								
-						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar el registro del Proyecto FISE.';
-							fiseCargoFijo.dialogMessageContent.html(addhtml2);
-							fiseCargoFijo.dialogMessage.dialog("open");						
+						}else if(data.resultado == "Error"){						
+							var addhtmError='Se produjo un error al actualizar el registro de Datos del Proyecto FISE.';					
+							fiseCargoFijo.dialogErrorContent.html(addhtmError);
+							fiseCargoFijo.dialogError.dialog("open");						
 							fiseCargoFijo.initBlockUI();
 						}
 					},error : function(){
@@ -898,130 +916,192 @@ var fiseCargoFijo= {
 		},
 		//funcion para validar ingreso de datos
 		validarFormulario : function() {		
-			if(fiseCargoFijo.f_empresa.val().length == ''){
-				alert('Debe seleccionar una Distribuidora Eléctrica.'); 
+			if(fiseCargoFijo.f_empresa.val().length == ''){				
+				var addhtmVali='Debe seleccionar una Distribuidora Eléctrica.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_empresa.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_anioRep.val().length == ''){
-				alert('Debe ingresar año reportado.'); 
+			}else if(fiseCargoFijo.f_anioRep.val().length == ''){				
+				var addhtmVali='Debe ingresar año reportado.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_anioRep.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_mesRep.val().length == ''){
-				alert('Debe seleccionar un mes reportado.'); 
+			}else if(fiseCargoFijo.f_mesRep.val().length == ''){				
+				var addhtmVali='Debe seleccionar un mes reportado.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_mesRep.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numUsuBenefR.val().length == ''){
-				alert('Debe ingresar número de usuarios beneficiados Rural.'); 
+			}else if(fiseCargoFijo.f_numUsuBenefR.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Usuarios Beneficiarios Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuBenefR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numUsuBenefP.val().length == ''){
-				alert('Debe ingresar número de usuarios beneficiados Urb. Provincias.'); 
+			}else if(fiseCargoFijo.f_numUsuBenefP.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Usuarios Beneficiarios Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuBenefP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numUsuBenefL.val().length == ''){
-				alert('Debe ingresar número de usuarios beneficiados Urb. Lima.'); 
+			}else if(fiseCargoFijo.f_numUsuBenefL.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Usuarios Beneficiarios Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuBenefL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numUsuEmpR.val().length == ''){
-				alert('Debe ingresar número de usuarios empadronados Rural.'); 
+			}else if(fiseCargoFijo.f_numUsuEmpR.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Usuarios Empadronados Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuEmpR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numUsuEmpP.val().length == ''){
-				alert('Debe ingresar número de usuarios empadronados Urb. Provincias.'); 
+			}else if(fiseCargoFijo.f_numUsuEmpP.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Usuarios Empadronados Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuEmpP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numUsuEmpL.val().length == ''){
-				alert('Debe ingresar número de usuarios empadronados Urb. Lima.'); 
+			}else if(fiseCargoFijo.f_numUsuEmpL.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Usuarios Empadronados Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuEmpL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValFEmiR.val().length == ''){
-				alert('Debe ingresar número de vales físicos emitidos Rural.'); 
+			}else if(fiseCargoFijo.f_numValFEmiR.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Emitidos Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFEmiR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValFEmiP.val().length == ''){
-				alert('Debe ingresar número de vales físicos emitidos Urb. Provincias.'); 
+			}else if(fiseCargoFijo.f_numValFEmiP.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Emitidos Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFEmiP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValFEmiL.val().length == ''){
-				alert('Debe ingresar número de vales físicos emitidos Urb. Lima.'); 
+			}else if(fiseCargoFijo.f_numValFEmiL.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Emitidos Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFEmiL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValDEmiR.val().length == ''){
-				alert('Debe ingresar número de vales digitales emitidos Rural.'); 
+			}else if(fiseCargoFijo.f_numValDEmiR.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Emitidos Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDEmiR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValDEmiP.val().length == ''){
-				alert('Debe ingresar número de vales digitales emitidos Urb. Provincias.'); 
+			}else if(fiseCargoFijo.f_numValDEmiP.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Emitidos Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDEmiP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValDEmiL.val().length == ''){
-				alert('Debe ingresar número de vales digitales emitidos Urb. Lima.'); 
+			}else if(fiseCargoFijo.f_numValDEmiL.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Emitidos Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDEmiL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValFCanR.val().length == ''){
-				alert('Debe ingresar número de vales físicos canjeados Rural.'); 
+			}else if(fiseCargoFijo.f_numValFCanR.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Canjeados Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFCanR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValFCanP.val().length == ''){
-				alert('Debe ingresar número de vales físicos canjeados Urb. Provincias.'); 
+			}else if(fiseCargoFijo.f_numValFCanP.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Canjeados Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFCanP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValFCanL.val().length == ''){
-				alert('Debe ingresar número de vales físicos canjeados Urb. Lima.'); 
+			}else if(fiseCargoFijo.f_numValFCanL.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Canjeados Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFCanL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValDCanR.val().length == ''){
-				alert('Debe ingresar número de vales digitales canjeados Rural.'); 
+			}else if(fiseCargoFijo.f_numValDCanR.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Canjeados Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDCanR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValDCanP.val().length == ''){
-				alert('Debe ingresar número de vales digitales canjeados Urb. Provincias.'); 
+			}else if(fiseCargoFijo.f_numValDCanP.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Canjeados Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDCanP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numValDCanL.val().length == ''){
-				alert('Debe ingresar número de vales digitales canjeados Urb. Lima.'); 
+			}else if(fiseCargoFijo.f_numValDCanL.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Canjeados Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDCanL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numAgenR.val().length == ''){
-				alert('Debe ingresar número de agentes Rural.'); 
+			}else if(fiseCargoFijo.f_numAgenR.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Agentes Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numAgenR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numAgenP.val().length == ''){
-				alert('Debe ingresar número de agentes Urb. Provincias.'); 
+			}else if(fiseCargoFijo.f_numAgenP.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Agentes Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numAgenP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_numAgenL.val().length == ''){
-				alert('Debe ingresar número de agentes Urb. Lima.'); 
+			}else if(fiseCargoFijo.f_numAgenL.val().length == ''){				
+				var addhtmVali='Debe ingresar Número de Agentes Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numAgenL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_montoMesR.val().length == ''){
-				alert('Debe ingresar monto de cargo fijo al mes Rural.'); 
+			}else if(fiseCargoFijo.f_montoMesR.val().length == ''){				
+				var addhtmVali='Debe ingresar Cargo Fijo del Mes Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_montoMesR.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_montoMesP.val().length == ''){
-				alert('Debe ingresar monto de cargo fijo al mes Urb. Provincias.'); 
+			}else if(fiseCargoFijo.f_montoMesP.val().length == ''){				
+				var addhtmVali='Debe ingresar Cargo Fijo del Mes Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_montoMesP.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_montoMesL.val().length == ''){
-				alert('Debe ingresar monto de cargo fijo al mes Urb. Lima.'); 
+			}else if(fiseCargoFijo.f_montoMesL.val().length == ''){				
+				var addhtmVali='Debe ingresar Cargo Fijo del Mes Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_montoMesL.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_montoCanje.val().length == ''){
-				alert('Debe ingresar monto transferido por canje.'); 
+			}else if(fiseCargoFijo.f_montoCanje.val().length == ''){				
+				var addhtmVali='Debe ingresar Monto Transferido por Canje.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_montoCanje.focus();
 			  	return false; 
-			}else if(fiseCargoFijo.f_igv.val().length == ''){
-				alert('Debe ingresar IGV.'); 
+			}else if(fiseCargoFijo.f_igv.val().length == ''){				
+				var addhtmVali='Debe ingresar IGV.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_igv.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_fechaRecepcion.val().length != '' && 
-					!validaFechaDDMMAAAA(fiseCargoFijo.f_fechaRecepcion.val()) ){
-				alert('Debe ingresar una fecha de recepción de la información válida');
+					!validaFechaDDMMAAAA(fiseCargoFijo.f_fechaRecepcion.val()) ){				
+				var addhtmVali='Debe ingresar una Fecha de Recepción de la Información válida';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_fechaRecepcion.focus();
 			  	return false; 
 			}else if(fiseCargoFijo.f_fechaSustento.val().length != '' && 
-					!validaFechaDDMMAAAA(fiseCargoFijo.f_fechaSustento.val())){
-				alert('Debe ingresar una fecha de informe de sustento válida'); 
+					!validaFechaDDMMAAAA(fiseCargoFijo.f_fechaSustento.val())){				
+				var addhtmVali='Debe ingresar una Fecha de Informe de Sustento válida';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_fechaSustento.focus();
 			  	return false; 
 			}else{
@@ -1064,7 +1144,37 @@ var fiseCargoFijo= {
 						$( this ).dialog("close");
 					}
 				}
-			});		
+			});
+			
+			fiseCargoFijo.dialogValidacion.dialog({
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			fiseCargoFijo.dialogError.dialog({
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			fiseCargoFijo.dialogInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					OK: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
 			
 		}, /***fin de inicializar los dialogos**/	
 		
