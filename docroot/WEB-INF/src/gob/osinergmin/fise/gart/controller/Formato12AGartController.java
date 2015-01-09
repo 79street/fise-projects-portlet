@@ -2161,10 +2161,10 @@ public class Formato12AGartController {
 					   mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
 				   }
 				   if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-					   mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-				   }else{
-					   mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
-				   }
+						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+					}else{
+						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
+					}
 				   mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
 	    	      }
 	    	   
@@ -2423,9 +2423,9 @@ public class Formato12AGartController {
 					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
 				}
 				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-				}else{
 					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 				}
 				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(formato.getId().getCodEmpresa()));
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());

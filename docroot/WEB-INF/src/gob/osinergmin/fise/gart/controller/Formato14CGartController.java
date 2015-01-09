@@ -899,6 +899,9 @@ public class Formato14CGartController {
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();	    
+		    
+		    String anioInicioVigencia = request.getParameter("anioIniVigencia");
+			String anioFinVigencia = request.getParameter("anioFinVigencia");
 		   
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
@@ -935,6 +938,9 @@ public class Formato14CGartController {
 		   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 		   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(f.getCodEmpresa().length()==3?f.getCodEmpresa()+" ": f.getCodEmpresa()));
 		   	mapa.put(FiseConstants.PARAM_ETAPA, f.getEtapa());  	 	
+		   	
+		   	mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (anioInicioVigencia!=null && !anioInicioVigencia.equals("")) ?Long.parseLong(anioInicioVigencia):0);
+			mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVigencia!=null && !anioFinVigencia.equals(""))?Long.parseLong(anioFinVigencia):0);
 		   	
 		   	session.setAttribute("mapa", mapa);		   
 		   	
@@ -1037,11 +1043,11 @@ public class Formato14CGartController {
 	     	   	   }else{
 	     			   mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
 	     	   	   }
-	     		   if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-	     			   mapa.put("CHECKED_OBSERVACION", dirUncheckedImage);
-	     		   }else{
-	     			   mapa.put("CHECKED_OBSERVACION", dirCheckedImage);
-	     		   }
+	     		  if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+					}else{
+						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
+					}
 	     		   mapa.put("ETAPA", formato.getId().getEtapa());
 	 			}
 	        	Formato14Generic formato14Generic = new Formato14Generic(formato);
@@ -4198,9 +4204,9 @@ public class Formato14CGartController {
 					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
 				}
 				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-				}else{
 					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 				}
 				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(formato.getId().getCodEmpresa()));
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());

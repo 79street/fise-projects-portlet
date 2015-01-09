@@ -1002,9 +1002,12 @@ public class NotificacionController {
 		    		descripcionFormato = tabla.getDescripcionTabla();
 		    	}	
 	    		
+	    		mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (anioIniVig!=null && !anioIniVig.equals("---")) ?Long.parseLong(anioIniVig):0);
+				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVig!=null && !anioFinVig.equals("---"))?Long.parseLong(anioFinVig):0);
+	    		
 			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(formato)){
 				
-				session.setAttribute("nombreReporte","validacion");//nombre del jasper
+				session.setAttribute("nombreReporte","validacion14");//nombre del jasper
 	    		session.setAttribute("nombreArchivo","validacion");//nombre para mostrar el reporte
 	    		session.setAttribute("tipoFormato",FiseConstants.TIPO_FORMATO_VAL);
 	    		session.setAttribute("tipoArchivo","0"); //PDF   
@@ -1014,9 +1017,12 @@ public class NotificacionController {
 		    		descripcionFormato = tabla.getDescripcionTabla();
 		    	}
 	    		
+	    		mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (anioIniVig!=null && !anioIniVig.equals("---")) ?Long.parseLong(anioIniVig):0);
+				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVig!=null && !anioFinVig.equals("---"))?Long.parseLong(anioFinVig):0);
+	    		
 			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(formato)){ 
 				
-				session.setAttribute("nombreReporte","validacion");//nombre del jasper
+				session.setAttribute("nombreReporte","validacion14");//nombre del jasper
 	    		session.setAttribute("nombreArchivo","validacion");//nombre para mostrar el reporte
 	    		session.setAttribute("tipoFormato",FiseConstants.TIPO_FORMATO_VAL);
 	    		session.setAttribute("tipoArchivo","0"); //PDF   
@@ -1025,6 +1031,9 @@ public class NotificacionController {
 	    		if( tabla!=null ){
 		    		descripcionFormato = tabla.getDescripcionTabla();
 		    	}
+	    		
+	    		mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (anioIniVig!=null && !anioIniVig.equals("---")) ?Long.parseLong(anioIniVig):0);
+				mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVig!=null && !anioFinVig.equals("---"))?Long.parseLong(anioFinVig):0);
 	    		
 			} 	    	
 		   	mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, Long.parseLong(anioPres));

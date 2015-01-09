@@ -1359,10 +1359,10 @@ public class Formato12CGartController {
 					} else {
 						mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
 					}
-					if (listaObservaciones != null && !listaObservaciones.isEmpty()) {
-						mapa.put("CHECKED_OBSERVACION", dirUncheckedImage);
-					} else {
-						mapa.put("CHECKED_OBSERVACION", dirCheckedImage);
+					if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+					}else{
+						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 					}
 					mapa.put("ETAPA", formato.getId().getEtapa());
 				}
@@ -1559,9 +1559,9 @@ public class Formato12CGartController {
 					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
 				}
 				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-				}else{
 					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 				}
 				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());

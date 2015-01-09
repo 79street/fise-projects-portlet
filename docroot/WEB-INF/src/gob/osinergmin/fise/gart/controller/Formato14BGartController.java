@@ -2067,6 +2067,9 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	    String nombreArchivo = request.getParameter("nombreArchivo").trim();
 	    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
 	    String tipoArchivo = request.getParameter("tipoArchivo").trim();
+	    
+	    String anioInicioVigencia = request.getParameter("anioInicioVigencia");
+		String anioFinVigencia = request.getParameter("anioFinVigencia");
 	   
 	    session.setAttribute("nombreReporte",nombreReporte);
 	    session.setAttribute("nombreArchivo",nombreArchivo);
@@ -2101,6 +2104,9 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	   	mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
 		mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
 	   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+	   	
+	   	mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (anioInicioVigencia!=null && !anioInicioVigencia.equals("")) ?Long.parseLong(anioInicioVigencia):0);
+		mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVigencia!=null && !anioFinVigencia.equals(""))?Long.parseLong(anioFinVigencia):0);
 	  //add
 	   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4)) );
 	   	mapa.put(FiseConstants.PARAM_ETAPA, etapa);
@@ -2230,9 +2236,9 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
 				}
 				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-				}else{
 					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 				}
 				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
     	   }
@@ -2445,9 +2451,9 @@ public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse resp
 					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
 				}
 				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-				}else{
 					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 				}
 				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(formato.getId().getCodEmpresa()));
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());

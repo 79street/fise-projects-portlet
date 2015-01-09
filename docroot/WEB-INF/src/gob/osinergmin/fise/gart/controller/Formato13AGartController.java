@@ -1907,8 +1907,8 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			mapa.put("USUARIO", themeDisplay.getUser().getLogin());
 			mapa.put("NOMBRE_FORMATO", descripcionFormato);
 			mapa.put("NRO_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
-			mapa.put("ANO_INICIO_VIGENCIA", anioInicioVigencia!=null?anioInicioVigencia:"");//anioInicioVigencia!=null?anioInicioVigencia:""
-			mapa.put("ANO_FIN_VIGENCIA", anioFinVigencia!=null?anioFinVigencia:"");//-anioFinVigencia!=null?anioFinVigencia:""
+			mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (anioInicioVigencia!=null && !anioInicioVigencia.equals("")) ?Long.parseLong(anioInicioVigencia):0);
+			mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVigencia!=null && !anioFinVigencia.equals(""))?Long.parseLong(anioFinVigencia):0);
 			// add
 			mapa.put("DESC_EMPRESA", fiseUtil.getMapaEmpresa().get(codEmpresa));
 			mapa.put("ETAPA", etapa);
@@ -2006,10 +2006,10 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 					} else {
 						mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
 					}
-					if (listaObservaciones != null && !listaObservaciones.isEmpty()) {
-						mapa.put("CHECKED_OBSERVACION", dirUncheckedImage);
-					} else {
-						mapa.put("CHECKED_OBSERVACION", dirCheckedImage);
+					if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+					}else{
+						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 					}
 					mapa.put("ETAPA", formato.getId().getEtapa());
 				}
@@ -2294,9 +2294,9 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirUncheckedImage);
 				}
 				if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-				}else{
 					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+				}else{
+					mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 				}
 				mapa.put(FiseConstants.PARAM_DESC_EMPRESA, fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
 				mapa.put(FiseConstants.PARAM_ANO_PRESENTACION, formato.getId().getAnoPresentacion());

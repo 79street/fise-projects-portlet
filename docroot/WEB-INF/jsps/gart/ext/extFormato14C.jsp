@@ -2912,9 +2912,11 @@ var formato14C= {
 				data : {
 					<portlet:namespace />codEmpresa: formato14C.f_empresa.val(),
 					<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),					
-					<portlet:namespace />nombreReporte: 'validacion',
-					<portlet:namespace />nombreArchivo: 'validacion',
-					<portlet:namespace />tipoArchivo: '0'//PDF
+					<portlet:namespace />nombreReporte: 'validacion14',
+					<portlet:namespace />nombreArchivo: 'validacion14',
+					<portlet:namespace />tipoArchivo: '0',
+					<portlet:namespace />anoIniVigencia: $('#anoIniVigencia').val(),
+					<portlet:namespace />anoFinVigencia: $('#anoFinVigencia').val() //PDF
 				},
 				success : function(gridData) {
 					if(gridData!=null){
