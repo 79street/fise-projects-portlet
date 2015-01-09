@@ -71,6 +71,13 @@ var formato13A= {
 	txtInicioVig:null,
 	txtFinVig:null,
 	
+	labelEstado:null,
+	labelGrupoInfo:null,
+	estado:null,
+	grupoInfo:null,
+	
+	divInformacion:null,
+	
 	btnExcel:null,
 	dialogCargaExcel:null,
 	btnCargarFormatoExcel:null,
@@ -254,6 +261,8 @@ var formato13A= {
 		this.tablaDeclaracion=$("#<portlet:namespace/>grid_formato_declaracion");
 		this.paginadoDeclaracion='#<portlet:namespace/>pager_formato_declaracion';
 
+		this.divInformacion=$("#<portlet:namespace/>divInformacion");
+		
 		this.emailConfigured='<%=PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER)%>';
 		
 		//add
@@ -280,6 +289,10 @@ var formato13A= {
 		this.txtInicioVig = $('#txtinicioVig');
 		this.txtFinVig = $('#txtfinVig');
 		
+		this.estado=$('#descestado');
+		this.grupoInfo=$('#descGrupoInformacion');
+		this.labelEstado=$('#o_descestado');
+		this.labelGrupoInfo=$('#o_descGrupoInformacion');
 		
 		this.btnExcel=$('#<portlet:namespace/>showDialogUploadExcel');
 		this.dialogCargaExcel=$("#<portlet:namespace/>dialog-form-cargaExcel");
@@ -354,7 +367,8 @@ var formato13A= {
 				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
 			});
 			
-
+			formato13A.divInformacion.hide();
+			
 			formato13A.botonRegresarBusqueda.click(function(){
 				formato13A.blockUI();
 				location.href=urlRegresarBusqueda;
@@ -376,6 +390,9 @@ var formato13A= {
 				location.href=urlRegresarBusqueda;
 			});
 			
+			formato13A.divInformacion.show();
+			formato13A.labelEstado.val(formato13A.estado.val());
+			formato13A.labelGrupoInfo.val(formato13A.grupoInfo.val());
 			
 			//formato13A.botonAnadirFormato.css("display","none");
 			//formato13A.btnGuardarCabecera.css("display","none");
@@ -402,6 +419,10 @@ var formato13A= {
 				location.href=urlRegresarBusqueda;
 			});
 			
+			formato13A.divInformacion.show();
+			formato13A.labelEstado.val(formato13A.estado.val());
+			formato13A.labelGrupoInfo.val(formato13A.grupoInfo.val());
+			
 			//validacion y envio definitivo
 			formato13A.botonValidacion.click(function() {formato13A.<portlet:namespace/>validacionFormato();});
 			formato13A.botonEnvioDefinitivo.click(function() {formato13A.confirmarEnvioDefinitivo();});
@@ -411,7 +432,7 @@ var formato13A= {
 		
 	},
 	
-	initCRUDDetalle : function(operacion,urlGuardarDetalle,urlRegresarDetalle){
+	initCRUDDetalle : function(operacion,urlGuardarDetalle,urlRegresarDetalle,urlRegresarNuevo){
 		this.formDetalle=$("#formato13AGartCommand");
 		
 		this.flagPeriodoDetalle=$("#flagPeriodoEjecucion");
@@ -494,7 +515,8 @@ var formato13A= {
 			
 			botonRegresarDetalle.click(function(){
 				formato13A.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+				//--location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+				location.href=urlRegresarNuevo+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val();
 			});
 			
 			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
@@ -1398,7 +1420,8 @@ var formato13A= {
 		});
 	},
 	<portlet:namespace/>mostrarReporteActaEnvio : function(){
-		if(formato13A.txtEstado.val()=='Enviado'){
+		if(formato13A.labelEstado.val()=='Enviado'){
+		//if(formato13A.txtEstado.val()=='Enviado'){
 			var form = formato13A.formNuevo;
 			form.removeAttr('enctype');
 			jQuery.ajax({

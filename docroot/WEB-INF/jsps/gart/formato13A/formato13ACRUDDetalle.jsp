@@ -7,8 +7,11 @@
 </portlet:actionURL>
 
 <portlet:renderURL var="urlRegresarDetalle">
-<%-- 	<portlet:param name="action" value="nuevo"/> --%>
 	  <portlet:param name="action" value="view"/>
+</portlet:renderURL>
+
+<portlet:renderURL var="urlRegresarNuevo">
+	<portlet:param name="action" value="nuevo"/>
 </portlet:renderURL>
 
 <script type="text/javascript">
@@ -17,7 +20,7 @@ $(document).ready(function () {
 	if (msj.length > 0) {
 	    alert(msj);
 	}
-	formato13A.initCRUDDetalle('${crud}','${urlGuardarDetalle}','${urlRegresarDetalle}');
+	formato13A.initCRUDDetalle('${crud}','${urlGuardarDetalle}','${urlRegresarDetalle}','${urlRegresarNuevo}');
 });
 </script>
 

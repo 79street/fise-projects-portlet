@@ -8,13 +8,16 @@
 </portlet:actionURL>
 
 <portlet:renderURL var="urlRegresarDetalle">
-<%-- 	<portlet:param name="action" value="nuevo"/> --%>
 	  <portlet:param name="action" value="viewedit"/>
+</portlet:renderURL>
+
+<portlet:renderURL var="urlRegresarNuevo">
+	<portlet:param name="action" value="nuevo"/>
 </portlet:renderURL>
 
 <script type="text/javascript">
 $(document).ready(function () {	
-	formato12D.initCRUDDetalle('${crud}','${urlGuardarDetalle}','${urlRegresarDetalle}');
+	formato12D.initCRUDDetalle('${crud}','${urlGuardarDetalle}','${urlRegresarDetalle}','${urlRegresarNuevo}');
 });
 $(function() {
 	$( ".datepicker" ).datepicker({

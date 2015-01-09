@@ -37,6 +37,9 @@
 	<form:input path="codEmpresaHidden" type="hidden" />
 	<form:input path="descripcionPeriodoHidden" type="hidden" />
    
+    <form:hidden path="descGrupoInformacion" />
+	<form:hidden path="descestado" />
+   
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
 			<div id="div_contenido">
@@ -54,6 +57,37 @@
 										<tr class="filete-bottom">
 											<td><output class="net-titulo">FORMATO
 													FISE-13A: </output> Remisión de Gastos Operativos - Implementación</td>
+										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>
+										<tr>
+										  <td>
+											<div id="<portlet:namespace/>divInformacion">
+												<fieldset class="net-frame-border">
+												  <table>
+													 <tr> 
+														<td>
+														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
+														</td>														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="o_descGrupoInformacion" ></output>
+													   </td>
+													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+													   <td>
+														  <label style="font-size: 12px; font-weight:bold">Estado:</label>
+														</td>
+														
+														<td style="text-align: center;">
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														  <output id="o_descestado"></output>														 
+													    </td>
+													 </tr>													
+												</table>
+											   </fieldset>
+										     </div>										
+										  </td>
 										</tr>
 										<tr height="10px">
 											<td></td>
@@ -90,8 +124,12 @@
 																<table>
 																	<tr>
 																		<td colspan="5" ><output class="net-titulo">Periodo a declarar</output></td>
-																		<td colspan="5" style="padding-left: 20px;"><output class="net-titulo" style="display: none;" id="lblGrupo">Grupo de Informacion</output></td>
-																		<td colspan="5" style="padding-left: 20px;"><output class="net-titulo" style="display: none;" id="lblEstado">Estado</output></td>
+																		<td colspan="5" style="padding-left: 20px;">
+																			<!-- <output class="net-titulo" style="display: none;" id="lblGrupo">Grupo de Informacion</output> -->
+																		</td>
+																		<td colspan="5" style="padding-left: 20px;">
+																			<!-- <output class="net-titulo" style="display: none;" id="lblEstado">Estado</output> -->
+																		</td>
 																	</tr>
 																	<tr>
 																		<td colspan="5">
@@ -106,8 +144,12 @@
 																			</form:select> 
 																			<form:input path="descripcionPeriodo" id="txtperiodo" type="text" style="display: none; border-radius: 7px;"  disabled="${formato13AGartCommand.readOnly}" />
 																		 </td>
-																		 <td colspan="5" style="padding-left: 15px;"><form:input path="descGrupoInformacion" id="txtgrupo" type="text" style="display: none;border-radius: 7px;"  disabled="${formato13AGartCommand.readOnly}" /></td>
-																		 <td colspan="5" style="padding-left: 15px;"><form:input path="descestado" id="txtestado" type="text" style="display: none;border-radius: 7px;"  disabled="${formato13AGartCommand.readOnly}" /></td>
+																		 <td colspan="5" style="padding-left: 15px;">
+																		 	<%-- <form:input path="descGrupoInformacion" id="txtgrupo" type="text" style="display: none;border-radius: 7px;"  disabled="${formato13AGartCommand.readOnly}" /> --%>
+																		 </td>
+																		 <td colspan="5" style="padding-left: 15px;">
+																		 	<%-- <form:input path="descestado" id="txtestado" type="text" style="display: none;border-radius: 7px;"  disabled="${formato13AGartCommand.readOnly}" /> --%>
+																		 </td>
 																	</tr>
 																</table>
 															</fieldset>

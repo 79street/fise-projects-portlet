@@ -902,7 +902,7 @@
 					 }
 					
 					 
-					formato12B.lblMessage.html("Para el registro de la información tener en cuenta que el periodo seleccionado no tiene informacion de costos unitarios en el formato 14B");
+					formato12B.lblMessage.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declara seleccionado");
 					formato12B.dialogMessageGeneral.dialog("open");
 			}
 			formato12B.loadCostoTotal(formato12B.cmbCodEmpresa.val());
