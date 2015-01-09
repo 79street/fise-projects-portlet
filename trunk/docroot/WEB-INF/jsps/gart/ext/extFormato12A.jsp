@@ -1394,6 +1394,13 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				dwr.util.setValue("i_costoUnitAgent_p", data.costoAgentP);
 				dwr.util.setValue("i_costoUnitEmpad_l", data.costoEmpL);
 				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);*/
+				
+				if( data.costoEmpR == '0' && data.costoAgentR == '0' && data.costoEmpP == '0' && data.costoAgentP == '0' && data.costoEmpL == '0' && data.costoAgentL == '0' ){
+					var addhtml2='No existe costos estándares establecidos en el Formato 14A para la Distribuidora Eléctrica y Periodo a declarar seleccionado';					
+					$("#dialog-message-content").html(addhtml2);
+					$("#dialog-message").dialog( "open" );	
+				}
+				
 				//
 				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
 				recargarPeriodoEjecucion();

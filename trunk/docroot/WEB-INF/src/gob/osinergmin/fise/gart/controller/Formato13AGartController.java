@@ -244,6 +244,12 @@ public class Formato13AGartController {
 		System.out.println("aqui en nuevoFormato");
 
 		String codEmpresa = renderRequest.getParameter("codEmpresa");
+		//add
+		String anioPresentacion = renderRequest.getParameter("anioPresentacion");
+		String mesPresentacion = renderRequest.getParameter("mesPresentacion");
+		String etapa = renderRequest.getParameter("etapa");
+		
+		
 		String periodo = renderRequest.getParameter("periodoDeclaracion");
 		String read = renderRequest.getParameter("readonly");
 		String tipoOperacion = renderRequest.getParameter("tipoOperacion");
@@ -273,6 +279,8 @@ public class Formato13AGartController {
 		}
 		if (periodo != null) {
 			command.setPeridoDeclaracion(periodo);
+		}else{
+			command.setPeridoDeclaracion(anioPresentacion+FormatoUtil.rellenaIzquierda(mesPresentacion, '0', 2)+etapa);
 		}
 		if (descPeriodo != null) {
 			command.setDescripcionPeriodo(descPeriodo);
@@ -1659,8 +1667,8 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			command.setCodEmpresaHidden(command.getCodEmpresa());
 			command.setDescripcionPeriodoHidden(command.getPeridoDeclaracion());
 			
-			command.setDescGrupoInformacion(desgrupo!=null?desgrupo:"");
-			command.setDescestado(destd!=null?destd:"");
+			//---command.setDescGrupoInformacion(desgrupo!=null?desgrupo:"");
+			//---command.setDescestado(destd!=null?destd:"");
 
 			System.out.println("setPeridoDeclaracion::>" + command.getPeridoDeclaracion());
 			if (tipo != null && tipo.equalsIgnoreCase(String.valueOf(FiseConstants.VIEW))) {
@@ -1676,7 +1684,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			}
 			
 			//add anio inicio fin vigencia
-			if( command.getAnioInicioVigencia() == null ){
+			/*if( command.getAnioInicioVigencia() == null ){
 				command.setAnioInicioVigencia(command.getAnoInicioVigenciaHidden());
 			}else{
 				command.setAnoInicioVigenciaHidden(command.getAnioInicioVigencia());
@@ -1685,8 +1693,43 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 				command.setAnioFinVigencia(command.getAnoFinVigenciaHidden());
 			}else{
 				command.setAnoFinVigenciaHidden(command.getAnioFinVigencia());
-			}
+			}*/
 			
+			//obtenemos el formato solo para mostrar el grupo de informacion y el estado
+			FiseFormato13ACPK pk = new FiseFormato13ACPK();
+			pk.setCodEmpresa(codEmp);
+			pk.setAnoPresentacion((anio!=null&&!anio.equals(FiseConstants.BLANCO))?Long.parseLong(anio):0);
+			pk.setMesPresentacion((mes!=null&&!mes.equals(FiseConstants.BLANCO))?Long.parseLong(mes):0);
+			pk.setEtapa(etapa);
+			FiseFormato13AC f = formatoService.obtenerFormato13ACByPK(pk);
+			if(f != null){
+				if(f.getFiseGrupoInformacion()!=null && f.getFiseGrupoInformacion().getDescripcion()!=null){
+					f.setDescGrupoInformacion(f.getFiseGrupoInformacion().getDescripcion());
+				}else{
+					f.setDescGrupoInformacion(FiseConstants.BLANCO);
+				}
+				if(f.getFechaEnvioDefinitivo()!=null){
+					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+				}else{
+					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+				}
+				//ponemos los valores de decripciones
+				if(desgrupo == null ){
+					command.setDescGrupoInformacion(f.getDescGrupoInformacion());
+				}else{
+					command.setDescGrupoInformacion(desgrupo!=null?desgrupo:"");
+				}
+				if(destd == null){
+					command.setDescestado(f.getDescEstado());
+				}else{
+					command.setDescestado(destd!=null?destd:"");
+				}
+				//seteamos el ano inicio y fin de vigencia
+				command.setAnioInicioVigencia(""+f.getAnoInicioVigenciaDetalle());
+				command.setAnoInicioVigenciaHidden(""+f.getAnoInicioVigenciaDetalle());
+				command.setAnioFinVigencia(""+f.getAnoFinVigenciaDetalle());
+				command.setAnoFinVigenciaHidden(""+f.getAnoFinVigenciaDetalle());
+			}
 
 			model.addAttribute("formato13AGartCommand", command);
 

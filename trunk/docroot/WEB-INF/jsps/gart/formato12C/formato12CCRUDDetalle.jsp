@@ -8,13 +8,16 @@
 </portlet:actionURL>
 
 <portlet:renderURL var="urlRegresarDetalle">
-<%-- 	<portlet:param name="action" value="nuevo"/> --%>
-	  <portlet:param name="action" value="viewedit"/>
+	<portlet:param name="action" value="viewedit"/>
+</portlet:renderURL>
+
+<portlet:renderURL var="urlRegresarNuevo">
+	<portlet:param name="action" value="nuevo"/>
 </portlet:renderURL>
 
 <script type="text/javascript">
 $(document).ready(function () {	
-	formato12C.initCRUDDetalle('${crud}','${urlGuardarDetalle}','${urlRegresarDetalle}');
+	formato12C.initCRUDDetalle('${crud}','${urlGuardarDetalle}','${urlRegresarDetalle}','${urlRegresarNuevo}');
 });
 </script>
 
