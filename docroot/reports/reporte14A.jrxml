@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2396694214876076"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IMG" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="desEmpresa" class="java.lang.String">
+		<fieldDescription><![CDATA[desEmpresa]]></fieldDescription>
+	</field>
+	<field name="empAprobadoL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[empAprobadoL]]></fieldDescription>
+	</field>
+	<field name="empAprobadoP" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[empAprobadoP]]></fieldDescription>
+	</field>
+	<field name="empAprobadoR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[empAprobadoR]]></fieldDescription>
+	</field>
+	<field name="empSolicitadoL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[empSolicitadoL]]></fieldDescription>
+	</field>
+	<field name="empSolicitadoP" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[empSolicitadoP]]></fieldDescription>
+	</field>
+	<field name="empSolicitadoR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[empSolicitadoR]]></fieldDescription>
+	</field>
+	<field name="glpAprobadoL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[glpAprobadoL]]></fieldDescription>
+	</field>
+	<field name="glpAprobadoP" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[glpAprobadoP]]></fieldDescription>
+	</field>
+	<field name="glpAprobadoR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[glpAprobadoR]]></fieldDescription>
+	</field>
+	<field name="glpSolicitadoL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[glpSolicitadoL]]></fieldDescription>
+	</field>
+	<field name="glpSolicitadoP" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[glpSolicitadoP]]></fieldDescription>
+	</field>
+	<field name="glpSolicitadoR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[glpSolicitadoR]]></fieldDescription>
+	</field>
+	<field name="periodo" class="java.lang.String">
+		<fieldDescription><![CDATA[periodo]]></fieldDescription>
+	</field>
+	<variable name="sumESoliR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{empSolicitadoR}]]></variableExpression>
+	</variable>
+	<variable name="sumESoliP" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{empSolicitadoP}]]></variableExpression>
+	</variable>
+	<variable name="sumESoliL" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{empSolicitadoL}]]></variableExpression>
+	</variable>
+	<variable name="sumEAprobR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{empAprobadoR}]]></variableExpression>
+	</variable>
+	<variable name="sumEAprobP" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{empAprobadoP}]]></variableExpression>
+	</variable>
+	<variable name="sumEAprobL" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{empAprobadoL}]]></variableExpression>
+	</variable>
+	<variable name="sumGSoliR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{glpSolicitadoR}]]></variableExpression>
+	</variable>
+	<variable name="sumGSoliP" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{glpSolicitadoP}]]></variableExpression>
+	</variable>
+	<variable name="sumGSoliL" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{glpSolicitadoL}]]></variableExpression>
+	</variable>
+	<variable name="sumGAprobR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{glpAprobadoR}]]></variableExpression>
+	</variable>
+	<variable name="sumGAprobP" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{glpAprobadoP}]]></variableExpression>
+	</variable>
+	<variable name="sumGAprobL" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{glpAprobadoL}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="103" splitType="Stretch">
+			<staticText>
+				<reportElement x="548" y="25" width="93" height="16"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement x="645" y="25" width="150" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="72" width="802" height="20" forecolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMATO 14A: RESUMEN DE COSTOS ESTÁNDARE DE IMPLEMENTACIÓN]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="11" y="4" width="280" height="60"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="128" y="3" width="82" height="67" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Periodo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="213" y="3" width="289" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Empadronamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="3" width="121" height="67" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Distribuidora Eléctrica ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="213" y="26" width="94" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Rural]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="213" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Solicitado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="262" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="310" y="26" width="94" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Urbano Provincias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="310" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Solicitado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="359" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="457" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="408" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Solicitado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="408" y="26" width="94" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Urbano Lima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="749" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="651" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="700" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Solicitado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="700" y="26" width="94" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Urbano Lima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="505" y="3" width="289" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Red de Agentes GLP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="505" y="26" width="94" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Rural]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="505" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Solicitado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="602" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Solicitado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="554" y="49" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="602" y="26" width="94" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Urbano Provincias]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="0" width="121" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{desEmpresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="0" width="82" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{periodo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="213" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empSolicitadoR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="262" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empAprobadoR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="310" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empSolicitadoP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="359" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empAprobadoP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="408" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empSolicitadoL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="457" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empAprobadoL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="505" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpSolicitadoR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="554" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpAprobadoR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="602" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpSolicitadoP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="651" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpAprobadoP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="700" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpSolicitadoL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="749" y="0" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpAprobadoL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="603" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="652" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="555" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="311" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="360" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="263" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="458" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="506" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="701" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="750" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="409" y="1" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="213" y="1" width="46" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="128" y="1" width="82" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL S/.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="2" splitType="Stretch"/>
+	</summary>
+</jasperReport>
