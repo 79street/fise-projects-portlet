@@ -77,7 +77,7 @@ $(document).ready(function () {
 											<td><output>Distribuidora Eléctrica:</output></td>
 											<td>
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">												
-													<form:option value="TODO">-Todos-</form:option>
+													<form:option value="TODOS">-Todos-</form:option>
 													<form:options items="${resumenCostoBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 												</form:select>
 											</td>

@@ -155,7 +155,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){
-							alert("No existe ningún dato para este reporte.");
+							alert("No existe ningún dato para los criterios seleccionados.");
 							resumenCosto.initBlockUI();
 						}else{
 							alert("Error al mostrar el reporte del resumen de costos de F14A");

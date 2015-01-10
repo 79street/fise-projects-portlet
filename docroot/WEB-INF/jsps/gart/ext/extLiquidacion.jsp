@@ -35,6 +35,15 @@ var liquidacionVar= {
 		dialogConfirmContentMotivo:null,//para mostrar la confirmacion de eliminar
 		
 		
+		dialogValidacion:null,
+		dialogValidacionContent:null,
+		dialogError:null,
+		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
+		
+		
+		
 		//mensajes		
 		mensajeEliminar:null,
 		mensajePrepara:null,
@@ -136,6 +145,13 @@ var liquidacionVar= {
 			
 			this.dialogConfirmMotivo=$("#<portlet:namespace/>dialog-confirm-eliminar");//para elimar
 			this.dialogConfirmContentMotivo=$("#<portlet:namespace/>dialog-confirm-content-eliminar");//para eliminar
+			
+			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
+			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
+            this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");				
 			
 			//mensajes						
 			this.mensajeEliminar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
@@ -278,7 +294,7 @@ var liquidacionVar= {
 		buildGrids : function () {	
 			liquidacionVar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','Mostrar No Recono/Aprob.','','','',''],
+		       colNames: ['Dist. Eléct.','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','Motivo No Reconoc./Aprob.','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
@@ -294,7 +310,7 @@ var liquidacionVar= {
 		               { name: 'verF', index: 'verF', width: 20,align:'center' },
 		               { name: 'verObs', index: 'verObs', width: 20,align:'center' },	 
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },
-		               { name: 'mostrar', index: 'mostrar', width: 50,align:'center' },	
+		               { name: 'mostrar', index: 'mostrar', width: 60,align:'center' },	
 		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 		               { name: 'mesPres', index: 'mesPres', hidden: true},             
 		               { name: 'mesEjec', index: 'mesEjec', hidden: true},
@@ -319,7 +335,7 @@ var liquidacionVar= {
 		      			verF = "<a href='#'><img border='0' title='Ver Formato' src='/net-theme/images/img-net/file.png' align='center' onclick=\"liquidacionVar.mostrarReporteFormatos('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			verObs = "<a href='#'><img border='0' title='Ver Obs.' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"liquidacionVar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"liquidacionVar.confirmarEliminar('"+ret.correlativo+"','"+ret.liquidado+"');\" /></a> ";
-		      			mostrar = "<a href='#'><img border='0' title='Mostrar No Reconocido/Aprobado' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
+		      			mostrar = "<a href='#'><img border='0' title='Motivo de no Reconocimiento/Aprobación' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
 		      			liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verF:verF});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verObs:verObs});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -409,11 +425,10 @@ var liquidacionVar= {
 			var ancho = liquidacionVar.divBuscarLiq.width();
 			liquidacionVar.tablaResultadosMotivo.jqGrid({
 			   datatype: "local",
-		       colNames: ['Item','Descripción','Estado','Editar','Eliminar',''],
+		       colNames: ['Item','Descripción','Editar','Eliminar',''],
 		       colModel: [
                        { name: 'itemMotivo', index: 'itemMotivo', width: 50,align:'center'},				   
-					   { name: 'descMotivo', index: 'descMotivo', width: 300},
-					   { name: 'estadoMotivo', index: 'estadoMotivo', width: 50,align:'center'},	  	           
+					   { name: 'descMotivo', index: 'descMotivo', width: 300},					  	  	           
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },		                
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
 		               { name: 'coMotivo', index: 'coMotivo', hidden: true}	               
@@ -429,7 +444,7 @@ var liquidacionVar= {
 					pager: liquidacionVar.paginadoResultadosMotivo,
 				    viewrecords: true,
 				   	caption: "Resultado(s) de la búsqueda",
-				    sortorder: "asc",	   	    	   	   
+				    sortorder: "desc",	   	    	   	   
 		            gridComplete: function(){
 		      		var ids = liquidacionVar.tablaResultadosMotivo.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
@@ -525,8 +540,10 @@ var liquidacionVar= {
 							liquidacionVar.tablaObservacion[0].refreshIndex();
 							liquidacionVar.initBlockUI();	
 						}						
-					}else{
-						alert("Error al ver las observaciones");
+					}else{						
+						var addhtmError='Error al ver las observaciones del registro seleccionado.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");	
 						liquidacionVar.initBlockUI();	
 					}
 				},error : function(){
@@ -583,8 +600,10 @@ var liquidacionVar= {
 					if(data.resultado=='OK'){
 						liquidacionVar.verReporteFormato();	
 						liquidacionVar.initBlockUI();
-					}else{
-						alert("Error al mostrar el reporte del formato");
+					}else{						
+						var addhtmError='Error al mostrar el reporte del formato seleccionado.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
 						liquidacionVar.initBlockUI();
 					}
 				},error : function(){
@@ -610,8 +629,8 @@ var liquidacionVar= {
 					msg = 'aprobado';
 				}
 				var addhtml2='No se puede excluir, ya está '+msg;
-				liquidacionVar.dialogMessageContent.html(addhtml2);
-				liquidacionVar.dialogMessage.dialog("open");	
+				liquidacionVar.dialogInfoContent.html(addhtml2);
+				liquidacionVar.dialogInfo.dialog("open");	
 			}	
 		},
 		//
@@ -658,7 +677,9 @@ var liquidacionVar= {
 						liquidacionVar.buscarLiquidacion('B');
 						liquidacionVar.initBlockUI();						
 					}else{
-						alert("Error al excluir el registro");
+						var addhtmError='Error al excluir el registro seleccionado.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");						
 						liquidacionVar.initBlockUI();
 					}					
 				},error : function(){
@@ -688,8 +709,10 @@ var liquidacionVar= {
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');
 						liquidacionVar.initBlockUI();						
-					}else{
-						alert("Error al preparar para realizar la liquidación");
+					}else{						
+						var addhtmError='Error al preparar para realizar la liquidación';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");	
 						liquidacionVar.initBlockUI();
 					}					
 				},error : function(){
@@ -717,10 +740,12 @@ var liquidacionVar= {
 						var addhtml2='La '+msgFinal+' se realizó satisfactoriamente';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
-						liquidacionVar.buscarLiquidacion('B');
+						liquidacionVar.buscarLiquidacion('B');//valor que se envia al controler en la busqueda
 						liquidacionVar.initBlockUI();						
-					}else{
-						alert("Error al realizar la liquidación");
+					}else{						
+						var addhtmError='Error al realizar la liquidación';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");	
 						liquidacionVar.initBlockUI();
 					}					
 				},error : function(){
@@ -776,9 +801,9 @@ var liquidacionVar= {
 				liquidacionVar.divBuscarLiq.hide();		
 				liquidacionVar.buscarMotivos(cod_correlativo);	
 			}else{
-				var addhtml2='No esta liquidado.';				
-				liquidacionVar.dialogMessageContent.html(addhtml2);
-				liquidacionVar.dialogMessage.dialog("open");
+				var addhtml2='El registro seleccionado no se encuentra Aprobado/Liquidado.';				
+				liquidacionVar.dialogInfoContent.html(addhtml2);
+				liquidacionVar.dialogInfo.dialog("open");
 			}		
 		},
 		
@@ -807,7 +832,7 @@ var liquidacionVar= {
 						},
 					    success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El motivo de la liquidación se guardó satisfactoriamente';							
+							var addhtml2='El motivo de la Aprobación/Liquidación se guardó satisfactoriamente';							
 							liquidacionVar.dialogMessageContent.html(addhtml2);
 							liquidacionVar.dialogMessage.dialog("open");							
 							liquidacionVar.initBlockUI();												
@@ -815,10 +840,10 @@ var liquidacionVar= {
 							$('#<portlet:namespace/>guardarMotivoLiq').css('display','none');
 							$('#<portlet:namespace/>actualizarMotivoLiq').css('display','block');
 							
-						}else{				
-							var addhtml2='Se produjo un error al guardar el motivo de la liquidación.';
-							liquidacionVar.dialogMessageContent.html(addhtml2);
-							liquidacionVar.dialogMessage.dialog("open");						
+						}else{								
+							var addhtmError='Se produjo un error al guardar el motivo de la Aprobación/Liquidación.';					
+							liquidacionVar.dialogErrorContent.html(addhtmError);
+							liquidacionVar.dialogError.dialog("open");						
 							liquidacionVar.initBlockUI();
 						}
 					},error : function(){
@@ -844,14 +869,14 @@ var liquidacionVar= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El motivo de la liquidación se actualizó satisfactoriamente';
+							var addhtml2='El motivo de la Aprobación/Liquidación se actualizó satisfactoriamente';
 							liquidacionVar.dialogMessageContent.html(addhtml2);
 							liquidacionVar.dialogMessage.dialog("open");						
 							liquidacionVar.initBlockUI();								
-						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar el motivo de la liquidación.';
-							liquidacionVar.dialogMessageContent.html(addhtml2);
-							liquidacionVar.dialogMessage.dialog("open");						
+						}else if(data.resultado == "Error"){						
+							var addhtmError='Se produjo un error al actualizar el motivo de la Aprobación/Liquidación.';					
+							liquidacionVar.dialogErrorContent.html(addhtmError);
+							liquidacionVar.dialogError.dialog("open");						
 							liquidacionVar.initBlockUI();
 						}
 					},error : function(){
@@ -865,12 +890,16 @@ var liquidacionVar= {
 		//funcion para validar ingreso de datos del motivo de liquidacion
 		validarFormulario : function() {
 			console.debug("tamaño de descripcion:  "+liquidacionVar.f_descMotivo.val().length);
-			if(liquidacionVar.f_descMotivo.val().length == ''){
-				alert('Debe ingresar una descripción del motivo.'); 
+			if(liquidacionVar.f_descMotivo.val().length == ''){			
+				var addhtmAlert='Debe ingresar una descripción del motivo.';					
+				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
+				liquidacionVar.dialogValidacion.dialog("open");		
 				liquidacionVar.f_descMotivo.focus();
 			  	return false; 
-			}else if(liquidacionVar.f_descMotivo.val().length > 499){
-				alert('La descripción no debe exceder a los 500 caracteres.'); 
+			}else if(liquidacionVar.f_descMotivo.val().length > 499){				
+				var addhtmAlert='La descripción no debe exceder a los 500 caracteres.';					
+				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
+				liquidacionVar.dialogValidacion.dialog("open");	
 				liquidacionVar.f_descMotivo.focus();
 			  	return false; 
 			}else{
@@ -902,8 +931,10 @@ var liquidacionVar= {
 							    $('#<portlet:namespace/>guardarMotivoLiq').css('display','none');
 								$('#<portlet:namespace/>actualizarMotivoLiq').css('display','block');																			
 					         }
-							else{
-								alert("Error al recuperar los datos del registro seleccionado");
+							else{								
+								var addhtmError='Error al recuperar los datos del registro seleccionado';					
+								liquidacionVar.dialogErrorContent.html(addhtmError);
+								liquidacionVar.dialogError.dialog("open");	
 								liquidacionVar.initBlockUI();
 							}
 						},error : function(){
@@ -949,8 +980,10 @@ var liquidacionVar= {
 						liquidacionVar.buscarMotivos(codCorrelativo);
 						liquidacionVar.initBlockUI();
 					}
-					else{
-						alert("Error al eliminar el registro");
+					else{						
+						var addhtmError='Error al eliminar el registro seleccionado.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
 						liquidacionVar.initBlockUI();
 					}
 				},error : function(){
@@ -1082,6 +1115,37 @@ var liquidacionVar= {
 							$( this ).dialog("close");
 						},
 						"No": function() {				
+							$( this ).dialog("close");
+						}
+					}
+				});
+			 
+			 liquidacionVar.dialogValidacion.dialog({
+					modal: true,
+					autoOpen: false,
+					width:500,
+					buttons: {
+						Aceptar: function() {
+							$( this ).dialog("close");
+						}
+					}
+				});
+				
+			 liquidacionVar.dialogError.dialog({
+					modal: true,
+					autoOpen: false,
+					buttons: {
+						Aceptar: function() {
+							$( this ).dialog("close");
+						}
+					}
+				});
+				
+			 liquidacionVar.dialogInfo.dialog({
+					modal: true,
+					autoOpen: false,
+					buttons: {
+						OK: function() {
 							$( this ).dialog("close");
 						}
 					}

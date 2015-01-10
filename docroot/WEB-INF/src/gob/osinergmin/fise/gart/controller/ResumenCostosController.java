@@ -5,11 +5,11 @@ import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
+import gob.osinergmin.fise.gart.service.ResumenCostosService;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +56,10 @@ public class ResumenCostosController {
 	private FiseGrupoInformacionGartService fiseGrupoInformacionService;
 	
 	
-	//private Map<String, String> mapaEmpresa;	
+	@Autowired
+	@Qualifier("resumenCostosServiceImpl")
+	private ResumenCostosService resumenCostosService;
+	
 	
 	
 	@ModelAttribute("resumenCostoBean")
@@ -130,8 +133,12 @@ public class ResumenCostosController {
 			
 			logger.info("Entrando a ver reporte de resumen costos F14A");
 			
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
 			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
-			logger.info("grupo inf:  "+r.getGrupoInfBusq());
+			logger.info("grupo inf:  "+idGrupoInf);
 			logger.info("periocidad:  "+r.getOptionFormato());
 			
 		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
@@ -150,25 +157,7 @@ public class ResumenCostosController {
 		    String nombreReporte = "reporte14A";   		    	
 		    String directorio = "/reports/" + nombreReporte + ".jasper";
 		    
-		    listaF14A = new ArrayList<ResumenCostoBean>();	
-		    ResumenCostoBean bean = new ResumenCostoBean();
-		    
-		    bean.setDesEmpresa("LUZ DEL SUR");
-		    bean.setPeriodo("ENERO - 2015");
-		    bean.setEmpAprobadoR(new BigDecimal(12.50)); 
-		    bean.setEmpAprobadoP(new BigDecimal(11.63)); 		    
-		    bean.setEmpAprobadoL(new BigDecimal(13.55));  
-		    bean.setEmpSolicitadoR(new BigDecimal(14.52)); 
-		    bean.setEmpSolicitadoP(new BigDecimal(19.35)); 
-		    bean.setEmpSolicitadoL(new BigDecimal(18.25)); 
-		    bean.setGlpAprobadoR(new BigDecimal(12.50)); 
-		    bean.setGlpAprobadoP(new BigDecimal(11.63)); 		    
-		    bean.setGlpAprobadoL(new BigDecimal(13.55));  
-		    bean.setGlpSolicitadoR(new BigDecimal(14.52)); 
-		    bean.setGlpSolicitadoP(new BigDecimal(19.35)); 
-		    bean.setGlpSolicitadoL(new BigDecimal(18.25)); 
-		    listaF14A.add(bean);
-		    listaF14A.add(bean);
+		    listaF14A = resumenCostosService.buscarResumenCostoF14A(r.getCodEmpresaBusq(), idGrupoInf);	    
 		    
 		    if(listaF14A!=null && listaF14A.size()>0){
 		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));
@@ -213,9 +202,15 @@ public class ResumenCostosController {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
 			
-			logger.info("Entrando a ver reporte de resumen de costos de F12A"); 	
+			logger.info("Entrando a ver reporte de resumen de costos de F12A"); 
+			
+
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
 			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
-			logger.info("grupo inf:  "+r.getGrupoInfBusq());
+			logger.info("grupo inf:  "+idGrupoInf);			
 			logger.info("periocidad:  "+r.getOptionFormato());		    
 		   		    
             String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
@@ -235,18 +230,7 @@ public class ResumenCostosController {
 		    String nombreReporte = "reporte12A_12B";   		    	
 		    String directorio = "/reports/" + nombreReporte + ".jasper";
 		    
-		    listaF12A = new ArrayList<ResumenCostoBean>();	
-		    ResumenCostoBean bean = new ResumenCostoBean();
-		    
-		    bean.setDesEmpresa("LUZ DEL SUR");
-		    bean.setPeriodo("ENERO - 2015");
-		    bean.setSolicitadoR(new BigDecimal(12.50)); 
-		    bean.setSolicitadoP(new BigDecimal(11.63)); 		    
-		    bean.setSolicitadoL(new BigDecimal(13.55));  
-		    bean.setAprobadoR(new BigDecimal(14.52)); 
-		    bean.setAprobadoP(new BigDecimal(19.35)); 
-		    bean.setAprobadoL(new BigDecimal(18.25));		   
-		    listaF12A.add(bean);	    
+		    listaF12A = resumenCostosService.buscarResumenCostoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12A");     
 		    
 		    if(listaF12A!=null && listaF12A.size()>0){
 		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));
@@ -291,8 +275,14 @@ public class ResumenCostosController {
 	        HttpSession session = httpRequest.getSession();		    
 		    
 			logger.info("Entrando a ver reporte de resumen de costos de F12B"); 	
+			
+			
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
 			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
-			logger.info("grupo inf:  "+r.getGrupoInfBusq());
+			logger.info("grupo inf:  "+idGrupoInf);		
 			logger.info("periocidad:  "+r.getOptionFormato());		    
 		   		    
             String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
@@ -312,18 +302,7 @@ public class ResumenCostosController {
 		    String nombreReporte = "reporte12A_12B";   		    	
 		    String directorio = "/reports/" + nombreReporte + ".jasper";
 		    
-		    listaF12B = new ArrayList<ResumenCostoBean>();	
-		    ResumenCostoBean bean = new ResumenCostoBean();
-		    
-		    bean.setDesEmpresa("LUZ DEL SUR");
-		    bean.setPeriodo("ENERO - 2015");
-		    bean.setSolicitadoR(new BigDecimal(12.50)); 
-		    bean.setSolicitadoP(new BigDecimal(11.63)); 		    
-		    bean.setSolicitadoL(new BigDecimal(13.55));  
-		    bean.setAprobadoR(new BigDecimal(14.52)); 
-		    bean.setAprobadoP(new BigDecimal(19.35)); 
-		    bean.setAprobadoL(new BigDecimal(18.25));		   
-		    listaF12B.add(bean);	    
+		    listaF12B = resumenCostosService.buscarResumenCostoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12B"); 
 		    
 		    if(listaF12B!=null && listaF12B.size()>0){
 		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));

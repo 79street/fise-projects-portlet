@@ -396,7 +396,11 @@ var periodoEnvio= {
 			periodoEnvio.f_anoPres.val(bean.anioPres);
 			periodoEnvio.f_mesPres.val(bean.mesPres);
 			periodoEnvio.f_formato.val(bean.formato);
-			periodoEnvio.f_etapa.val(bean.etapa);
+			//periodoEnvio.f_etapa.val(bean.etapa);
+			dwr.util.removeAllOptions("etapa");				
+			var dataEtapa = [bean.etapa];			
+			dwr.util.addOptions("etapa", dataEtapa);
+			
 			periodoEnvio.f_estado.val(bean.estado);
 			periodoEnvio.f_desde.val(bean.desde);
 			periodoEnvio.f_hasta.val(bean.hasta);
