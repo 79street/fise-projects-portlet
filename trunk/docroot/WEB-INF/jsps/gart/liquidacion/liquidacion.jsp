@@ -158,25 +158,26 @@ $(document).ready(function () {
 								<fieldset class="">
 									<table class="" style="width: 100%;" border="0">
 										<tr>
-											<td colspan="6"><output class="net-titulo">Detalle de la Liquidación</output>
+											<td colspan="6"><output class="net-titulo" style="font-size: 14px;font-weight:bold"> 
+											Motivos de no Reconocimiento/Aprobación</output>
 											</td>
 										</tr>
 										<tr height="10px">
 											<td colspan="6"></td>
 										</tr>
 										<tr>
-											<td><label style="font-size: 12px; font-weight:bold">Distribuidora Eléctrica:</label>
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Distribuidora Eléctrica:</label>
 											</td>
 											<td>											  
 											  <output id="empresaMotivo"></output>									  
 											</td>
 											
-											<td><label style="font-size: 12px; font-weight:bold">Formato:</label></td>
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Formato:</label></td>
 											<td>
 											  <output id="formatoMotivo"></output>	
 											</td>
 											
-											<td><label style="font-size: 12px; font-weight:bold">Etapa Origen:</label></td>
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Etapa Origen:</label></td>
 											<td>
 											  <output id="etapaOrigenMotivo"></output>	
 											</td>
@@ -428,6 +429,33 @@ $(document).ready(function () {
 			<label id="<portlet:namespace/>dialog-confirm-content-liquidar">¿Está seguro?</label>
 		</p>
 	</div>
+	
+	<!-- DIALOGO PARA ALERTAR DE VALIDACION -->
+	
+	<div id="<portlet:namespace/>dialog-alert" title="Mensaje de Error">
+		<p>						
+			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
+		</p>
+	</div>`	
+	
+	<!-- DIALOGO PARA ERRORES -->
+	
+	<div id="<portlet:namespace/>dialog-error" title="Mensaje de Error">
+		<p>	
+			<span class="ui-icon ui-icon-circle-close" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-error-content">Error..</label>
+		</p>
+	</div>`	
+	
+	<!-- DIALOGO PARA INFORMAR UN MENSAJE -->
+	
+	<div id="<portlet:namespace/>dialog-info" title="Mensaje de Error">
+		<p>	
+			<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 20px 0;"></span>
+			<label id="<portlet:namespace/>dialog-info-content">Error..</label>
+		</p>
+	</div>`	
 		
 		
 		<!-- HIDENN -->
