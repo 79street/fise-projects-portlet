@@ -192,8 +192,8 @@ $(document).ready(function () {
 														  <label style="font-size: 12px; font-weight:bold">Grupo de Información:</label>
 														</td>														
 														<td style="text-align: center;">
-														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="grupoInformacion" ></output>
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														  
+														  <input id="grupoInformacion" readonly="readonly" style="border:none; background:#efefef;">
 													   </td>
 													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													   <td>
@@ -201,8 +201,8 @@ $(document).ready(function () {
 														</td>
 														
 														<td style="text-align: center;">
-														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="estado"></output>														 
+														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														  
+														  <input id="estado" readonly="readonly" style="border:none; background:#efefef;">													 
 													    </td>
 													 </tr>													
 												</table>

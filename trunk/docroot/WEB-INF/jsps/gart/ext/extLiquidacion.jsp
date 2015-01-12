@@ -335,7 +335,7 @@ var liquidacionVar= {
 		      			verF = "<a href='#'><img border='0' title='Ver Formato' src='/net-theme/images/img-net/file.png' align='center' onclick=\"liquidacionVar.mostrarReporteFormatos('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			verObs = "<a href='#'><img border='0' title='Ver Obs.' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"liquidacionVar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"liquidacionVar.confirmarEliminar('"+ret.correlativo+"','"+ret.liquidado+"');\" /></a> ";
-		      			mostrar = "<a href='#'><img border='0' title='Motivo de no Reconocimiento/Aprobación' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
+		      			mostrar = "<a href='#'><img border='0' title='Motivo de no Reconocimiento/Aprobación' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapaReconocido+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
 		      			liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verF:verF});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verObs:verObs});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -545,7 +545,7 @@ var liquidacionVar= {
 							liquidacionVar.initBlockUI();	
 						}						
 					}else{						
-						var addhtmError='Error al ver las observaciones del registro seleccionado.';					
+						var addhtmError='Error al Ver las Observaciones del registro seleccionado.';					
 						liquidacionVar.dialogErrorContent.html(addhtmError);
 						liquidacionVar.dialogError.dialog("open");	
 						liquidacionVar.initBlockUI();	
@@ -607,7 +607,7 @@ var liquidacionVar= {
 						liquidacionVar.verReporteFormato();	
 						liquidacionVar.initBlockUI();
 					}else{						
-						var addhtmError='Error al mostrar el reporte del formato seleccionado.';					
+						var addhtmError='Error al Ver el Reporte del formato seleccionado.';					
 						liquidacionVar.dialogErrorContent.html(addhtmError);
 						liquidacionVar.dialogError.dialog("open");
 						liquidacionVar.initBlockUI();
@@ -679,7 +679,7 @@ var liquidacionVar= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Registro excluido con éxito. Ese registro no será considerado para la aprobación de los costos estándares o la liquidación de los gastos operativos según sea el caso.';				
+						var addhtml2='Registro excluido satisfactoriamente. Ese registro no será considerado para la aprobación de los costos estándares o la liquidación de los gastos operativos según sea el caso.';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');
@@ -720,7 +720,7 @@ var liquidacionVar= {
 						liquidacionVar.buscarLiquidacion('B');
 						liquidacionVar.initBlockUI();						
 					}else{						
-						var addhtmError='Error al preparar para realizar la liquidación';					
+						var addhtmError='Error al Procesar '+msgFinal+' para realizar la liquidación';					
 						liquidacionVar.dialogErrorContent.html(addhtmError);
 						liquidacionVar.dialogError.dialog("open");	
 						liquidacionVar.initBlockUI();
@@ -755,7 +755,7 @@ var liquidacionVar= {
 						liquidacionVar.buscarLiquidacion('B');//valor que se envia al controler en la busqueda
 						liquidacionVar.initBlockUI();						
 					}else{						
-						var addhtmError='Error al realizar la liquidación';					
+						var addhtmError='Error al realizar la '+msgFinal+' ';					
 						liquidacionVar.dialogErrorContent.html(addhtmError);
 						liquidacionVar.dialogError.dialog("open");	
 						liquidacionVar.initBlockUI();
@@ -799,7 +799,7 @@ var liquidacionVar= {
 				});			
 		},		
 		//funcion  para mostrar detalle de los motivos y la grilla de la busqueda
-		mostrarNoReconocido : function(cod_correlativo,empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,anio_inicio,anio_fin,etapa_origen,formato,reconocido,liquidado){	
+		mostrarNoReconocido : function(cod_correlativo,empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,anio_inicio,anio_fin,etapa_final,formato,reconocido,liquidado){	
 			if((reconocido=='RECONOCIDO' || reconocido=='ESTABLECIDO') && liquidado=='SI'){
 				$('#empresaMotivo').val(empresa);
 				$('#anioMotivo').val(anio_pres);
@@ -808,7 +808,7 @@ var liquidacionVar= {
 				$('#mesEjecMotivo').val(mes_ejec);
 				$('#anioInicioVigMotivo').val(anio_inicio);
 				$('#anioFinVigMotivo').val(anio_fin);
-				$('#etapaOrigenMotivo').val(etapa_origen);
+				$('#etapaFinalMotivo').val(etapa_final);
 				$('#formatoMotivo').val(formato);	
 				
 				$('#coMotivo').val(cod_correlativo);//para el nuevo registro de motivo		
@@ -848,7 +848,7 @@ var liquidacionVar= {
 						},
 					    success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El motivo de la Aprobación/Liquidación se guardó satisfactoriamente';							
+							var addhtml2='El Motivo de la Aprobación/Liquidación se guardó satisfactoriamente';							
 							liquidacionVar.dialogMessageContent.html(addhtml2);
 							liquidacionVar.dialogMessage.dialog("open");							
 							liquidacionVar.initBlockUI();												
@@ -857,7 +857,7 @@ var liquidacionVar= {
 							$('#<portlet:namespace/>actualizarMotivoLiq').css('display','block');
 							
 						}else{								
-							var addhtmError='Se produjo un error al guardar el motivo de la Aprobación/Liquidación.';					
+							var addhtmError='Se produjo un error al guardar el Motivo de la Aprobación/Liquidación.';					
 							liquidacionVar.dialogErrorContent.html(addhtmError);
 							liquidacionVar.dialogError.dialog("open");						
 							liquidacionVar.initBlockUI();
@@ -887,12 +887,12 @@ var liquidacionVar= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El motivo de la Aprobación/Liquidación se actualizó satisfactoriamente';
+							var addhtml2='El Motivo de la Aprobación/Liquidación se actualizó satisfactoriamente';
 							liquidacionVar.dialogMessageContent.html(addhtml2);
 							liquidacionVar.dialogMessage.dialog("open");						
 							liquidacionVar.initBlockUI();								
 						}else if(data.resultado == "Error"){						
-							var addhtmError='Se produjo un error al actualizar el motivo de la Aprobación/Liquidación.';					
+							var addhtmError='Se produjo un error al actualizar el Motivo de la Aprobación/Liquidación.';					
 							liquidacionVar.dialogErrorContent.html(addhtmError);
 							liquidacionVar.dialogError.dialog("open");						
 							liquidacionVar.initBlockUI();
@@ -911,13 +911,13 @@ var liquidacionVar= {
 		validarFormulario : function() {
 			console.debug("tamaño de descripcion:  "+liquidacionVar.f_descMotivo.val().length);
 			if(liquidacionVar.f_descMotivo.val().length == ''){			
-				var addhtmAlert='Debe ingresar una descripción del motivo.';					
+				var addhtmAlert='Debe ingresar una Descripción del Motivo.';					
 				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
 				liquidacionVar.dialogValidacion.dialog("open");		
 				liquidacionVar.f_descMotivo.focus();
 			  	return false; 
 			}else if(liquidacionVar.f_descMotivo.val().length > 499){				
-				var addhtmAlert='La descripción no debe exceder a los 500 caracteres.';					
+				var addhtmAlert='La Descripción del Motivo no debe exceder a los 500 caracteres.';					
 				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
 				liquidacionVar.dialogValidacion.dialog("open");	
 				liquidacionVar.f_descMotivo.focus();
@@ -952,7 +952,7 @@ var liquidacionVar= {
 								$('#<portlet:namespace/>actualizarMotivoLiq').css('display','block');																			
 					         }
 							else{								
-								var addhtmError='Error al recuperar los datos del registro seleccionado';					
+								var addhtmError='Error al obtener los datos del registro seleccionado';					
 								liquidacionVar.dialogErrorContent.html(addhtmError);
 								liquidacionVar.dialogError.dialog("open");	
 								liquidacionVar.initBlockUI();
