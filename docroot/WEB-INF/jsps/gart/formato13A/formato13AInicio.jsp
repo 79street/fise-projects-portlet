@@ -181,8 +181,9 @@ $(document).ready(function () {
 	</div>
 	<div id="dialogMessageGeneralInicio" title="Mensaje de &Eacute;xito">
 		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
-			</span>
+			<<!-- span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span> -->
+			<img src="fise-projects-portlet/images/success.png" style="float:left; margin:0 25px 10px 0;">
 			<label id="lblMessageInicio">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>

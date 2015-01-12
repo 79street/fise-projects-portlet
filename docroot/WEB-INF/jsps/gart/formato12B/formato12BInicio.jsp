@@ -56,8 +56,7 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Desde Año Decl.:</output></td>
 											<td>
-												<form:input path="anioInicio" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" 
-												 onkeypress="formato12B.validateInputTextNumber('anioInicio')"/>
+												<form:input path="anioInicio" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" />
 											</td>
 											<td><output>Mes Decl.:</output></td>
 											<td>
@@ -69,8 +68,7 @@ $(document).ready(function () {
 											</td>
 											<td><output>Hasta Año Decl.:</output></td>
 											<td>
-												<form:input path="anioFin" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" 
-												onkeypress="formato12B.validateInputTextNumber('anioFin')" />
+												<form:input path="anioFin" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" />
 											</td>
 											<td><output>Mes Decl.:</output></td>
 											<td>
@@ -158,10 +156,41 @@ $(document).ready(function () {
 	<div id="dlgConfirmacion"></div>
 	<div id="dialogMessageGeneralInicio" title="Mensaje de Informaci&oacute;n">
 		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
-			</span>
+			<!-- <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			</span> -->
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:0 25px 10px 0;">
 			<label id="lblMessageInicio">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
+	
+	<!--  -->
+	<div id="<portlet:namespace/>dialog-message-confirm" title="Mensaje de Confirmaci&oacute;n">
+		<p>
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-message-confirm-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
+	<div id="<portlet:namespace/>dialog-message-info" title="Mensaje de Informaci&oacute;n">
+		<p>
+			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-message-info-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
+	<div id="<portlet:namespace/>dialog-message-warning" title="Mensaje de Advertencia">
+		<p>
+			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-message-warning-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
+	<div id="<portlet:namespace/>dialog-message-error" title="Mensaje de Error">
+		<p>
+			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-message-error-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	<!--  -->
 	
 </form:form>
