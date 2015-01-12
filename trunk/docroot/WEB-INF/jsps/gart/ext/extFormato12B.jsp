@@ -1157,38 +1157,53 @@
 		},
 		showConfirmacion : function (emp,mes,anio,etapa,desmes,stdEnvio,std,mesEjec,desmesEjec,anioEjec,tipo) {	
 			//alert(emp+"/"+mes+"/"+anio+"/"+etapa+"/"+desmes+"/"+stdEnvio+"/"+std+"/"+mesEjec+"/"+desmesEjec+"/"+anioEjec+"/"+tipo);
+			var admin = '${esAdministrador}';
+			var process = true;
 			var show=true;
 			var numModal=2;//modsl aviso
 			var msj='El formato ya fue enviado a OSINERGMIN-GART';
 			switch(tipo) {
-			case '0':{//vista
-				show=false;
-				formato12B.blockUI();
-				location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec+'&'+formato12B.formBusqueda.serialize();
-			}break;
-			case '1':{//edit
-			       if(std =='ABIERTO'){//1enviado 0=x enviar
-			    	  show=false;//no muestra modal
-			    	  formato12B.blockUI();
-					  location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec+'&'+formato12B.formBusqueda.serialize();
-			       }//else if(flagOperacion=='CERRADO'){
-			    	  // msj=" Está fuera de plazo";
-					//}
-			}break;
-			case '3':{//eliminar
-				if(std=='ABIERTO'){//1enviado 0=x enviar
-					//if( etapa=='RECONOCIDO' || !admin ){
-					//	alert(" No tiene autorización para realizar esta operación");
-					//}else{
-						 show=true;
-					     msj='¿Está seguro que desea eliminar el registro seleccionado?';
-					     numModal=1;
-					//}
-				
-			    }//else if(flagOperacion=='CERRADO'){
-			    	// msj=" Está fuera de plazo";
-				//}
-			 }break;
+				case '0':{//vista
+					show=false;
+					formato12B.blockUI();
+					location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec+'&'+formato12B.formBusqueda.serialize();
+				}break;
+				case '1':{//edit
+					if(std =='ABIERTO'){//1enviado 0=x enviar
+						if( etapa=='RECONOCIDO' || !admin ){
+							process = false;
+						}
+						if(process){
+							show=false;//no muestra modal
+							formato12B.blockUI();
+							location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec+'&'+formato12B.formBusqueda.serialize();
+						}else{
+							show=false;
+					   		msj=" No tiene autorización para realizar esta operación";
+						}
+					 }else if(flagOperacion=='CERRADO'){
+						show=false;
+						msj=" Está fuera de plazo";
+					 }
+				}break;
+				case '3':{//eliminar
+					if(std=='ABIERTO'){//1enviado 0=x enviar
+						if( etapa=='RECONOCIDO' || !admin ){
+							process = false;
+						}
+						if(process){
+							show=true;
+							msj='¿Está seguro que desea eliminar el registro seleccionado?';
+							numModal=1;
+						}else{
+							show=false;
+					   		msj=" No tiene autorización para realizar esta operación";
+						}
+				    }else if(flagOperacion=='CERRADO'){
+				    	show=false;
+				    	msj=" Está fuera de plazo";
+					}
+				 }break;
 			}
 			
             if(show){
