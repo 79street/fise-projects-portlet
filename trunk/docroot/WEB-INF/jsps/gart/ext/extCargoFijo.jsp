@@ -290,8 +290,10 @@ var fiseCargoFijo= {
 							fiseCargoFijo.tablaResultados[0].refreshIndex();
 							fiseCargoFijo.initBlockUI();
 					},error : function(){
-							alert("Error de conexión.");
-							fiseCargoFijo.initBlockUI();
+						var addhtmError='Error de conexión.';					
+						fiseCargoFijo.dialogErrorContent.html(addhtmError);
+						fiseCargoFijo.dialogError.dialog("open");
+						fiseCargoFijo.initBlockUI();
 					}
 				});			
 		},
@@ -477,13 +479,15 @@ var fiseCargoFijo= {
 							$('#<portlet:namespace/>actualizarCargoFijo').css('display','none');		    					    							
 				        }						
 						else{							
-							var addhtmError='Error al visualizar los datos del registro seleccionado';					
+							var addhtmError='Error al visualizar los datos del registro seleccionado.';					
 							fiseCargoFijo.dialogErrorContent.html(addhtmError);
 							fiseCargoFijo.dialogError.dialog("open");	
 							fiseCargoFijo.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseCargoFijo.dialogErrorContent.html(addhtmError);
+						fiseCargoFijo.dialogError.dialog("open");
 						fiseCargoFijo.initBlockUI();
 					}
 			});	
@@ -520,13 +524,15 @@ var fiseCargoFijo= {
 								$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');													
 					         }
 							else{								
-								var addhtmError='Error al recuperar los datos del registro seleccionado';					
+								var addhtmError='Error al recuperar los datos del registro seleccionado.';					
 								fiseCargoFijo.dialogErrorContent.html(addhtmError);
 								fiseCargoFijo.dialogError.dialog("open");	
 								fiseCargoFijo.initBlockUI();
 							}
 						},error : function(){
-							alert("Error de conexión.");
+							var addhtmError='Error de conexión.';					
+							fiseCargoFijo.dialogErrorContent.html(addhtmError);
+							fiseCargoFijo.dialogError.dialog("open");
 							fiseCargoFijo.initBlockUI();
 						}
 				});		
@@ -830,13 +836,15 @@ var fiseCargoFijo= {
 						fiseCargoFijo.initBlockUI();
 					}
 					else{					
-						var addhtmError='Error al eliminar el registro de Datos del Proyecto FISE';					
+						var addhtmError='Error al eliminar el registro de Datos del Proyecto FISE.';					
 						fiseCargoFijo.dialogErrorContent.html(addhtmError);
 						fiseCargoFijo.dialogError.dialog("open");
 						fiseCargoFijo.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					fiseCargoFijo.dialogErrorContent.html(addhtmError);
+					fiseCargoFijo.dialogError.dialog("open");
 					fiseCargoFijo.initBlockUI();
 				}
 			});
@@ -857,7 +865,7 @@ var fiseCargoFijo= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El registro de Datos del Proyecto FISE se guardó satisfactoriamente';							
+							var addhtml2='El registro de Datos del Proyecto FISE se guardó satisfactoriamente.';							
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");							
 							fiseCargoFijo.initBlockUI();
@@ -869,13 +877,15 @@ var fiseCargoFijo= {
 							fiseCargoFijo.dialogError.dialog("open");					
 							fiseCargoFijo.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtml2='Ya existe registrado un registro de Datos del Proyecto FISE con la misma Dist.Eléct, Año y Mes';
+							var addhtml2='Ya existe registrado un registro de Datos del Proyecto FISE con la misma Dist.Eléct, Año y Mes.';
 							fiseCargoFijo.dialogInfoContent.html(addhtml2);
 							fiseCargoFijo.dialogInfo.dialog("open");						
 							fiseCargoFijo.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseCargoFijo.dialogErrorContent.html(addhtmError);
+						fiseCargoFijo.dialogError.dialog("open");
 						fiseCargoFijo.initBlockUI();
 					}
 				});			
@@ -897,7 +907,7 @@ var fiseCargoFijo= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El registro de Datos del Proyecto FISE se actualizó satisfactoriamente';
+							var addhtml2='El registro de Datos del Proyecto FISE se actualizó satisfactoriamente.';
 							fiseCargoFijo.dialogMessageContent.html(addhtml2);
 							fiseCargoFijo.dialogMessage.dialog("open");						
 							fiseCargoFijo.initBlockUI();								
@@ -908,7 +918,9 @@ var fiseCargoFijo= {
 							fiseCargoFijo.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseCargoFijo.dialogErrorContent.html(addhtmError);
+						fiseCargoFijo.dialogError.dialog("open");
 						fiseCargoFijo.initBlockUI();
 					}
 				});						
@@ -1132,7 +1144,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1149,6 +1161,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,	
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -1159,6 +1172,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,	
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -1169,6 +1183,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,	
 				buttons: {
 					OK: function() {
 						$( this ).dialog("close");

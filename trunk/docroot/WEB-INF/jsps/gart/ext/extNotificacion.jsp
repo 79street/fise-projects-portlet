@@ -355,8 +355,10 @@ var notificarValidar= {
 						notificarValidar.tablaResultados[0].refreshIndex();
 						notificarValidar.initBlockUI();
 					},error : function(){
-							alert("Error de conexión.");
-							notificarValidar.initBlockUI();
+						var addhtmError='Error de conexión.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");
+						notificarValidar.initBlockUI();
 					}
 				});			
 		},			
@@ -371,7 +373,9 @@ var notificarValidar= {
 						dwr.util.removeAllOptions("grupoInfBusq");
 						dwr.util.addOptions("grupoInfBusq", data,"codigoItem","descripcionItem");														
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");
 						notificarValidar.initBlockUI();
 					}
 			});
@@ -407,7 +411,9 @@ var notificarValidar= {
 							notificarValidar.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");
 						notificarValidar.initBlockUI();
 					}
 				});			
@@ -461,7 +467,9 @@ var notificarValidar= {
 						notificarValidar.initBlockUI();	
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					notificarValidar.dialogErrorContent.html(addhtmError);
+					notificarValidar.dialogError.dialog("open");
 					notificarValidar.initBlockUI();
 				}
 			});
@@ -489,7 +497,9 @@ var notificarValidar= {
 					}
 					
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					notificarValidar.dialogErrorContent.html(addhtmError);
+					notificarValidar.dialogError.dialog("open");
 					notificarValidar.initBlockUI();
 				}
 			});
@@ -549,7 +559,9 @@ var notificarValidar= {
 						notificarValidar.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					notificarValidar.dialogErrorContent.html(addhtmError);
+					notificarValidar.dialogError.dialog("open");
 					notificarValidar.initBlockUI();
 				}
 			});
@@ -604,7 +616,9 @@ var notificarValidar= {
 						notificarValidar.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					notificarValidar.dialogErrorContent.html(addhtmError);
+					notificarValidar.dialogError.dialog("open");
 					notificarValidar.initBlockUI();
 				}
 			});
@@ -616,7 +630,7 @@ var notificarValidar= {
 			notificarValidar.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -633,7 +647,7 @@ var notificarValidar= {
 			notificarValidar.dialogConfirmEliminar.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -649,6 +663,7 @@ var notificarValidar= {
 			notificarValidar.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -659,6 +674,7 @@ var notificarValidar= {
 			notificarValidar.dialogMessageEliminar.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -702,6 +718,7 @@ var notificarValidar= {
 			notificarValidar.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -712,6 +729,7 @@ var notificarValidar= {
 			notificarValidar.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -722,6 +740,7 @@ var notificarValidar= {
 			notificarValidar.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,
 				buttons: {
 					OK: function() {
 						$( this ).dialog("close");

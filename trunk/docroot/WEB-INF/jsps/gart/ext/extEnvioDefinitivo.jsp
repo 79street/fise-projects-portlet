@@ -17,6 +17,12 @@ var envioDefinitivoGlobal= {
 		dialogConfirmContent:null,//para mostrar la confirmacion del envio		
 		//dialogObservacion:null,
 		
+		dialogValidacion:null,
+		dialogValidacionContent:null,
+		dialogError:null,
+		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
 		
 		
 		//mensajes		
@@ -67,6 +73,12 @@ var envioDefinitivoGlobal= {
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content_envio");//para notificar
 			//this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");		
 			
+			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
+			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
+            this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");
 			
 			//mensajes						
 			this.mensajeEnvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Envío General Definitivo </h3>';			
@@ -237,8 +249,10 @@ var envioDefinitivoGlobal= {
 							envioDefinitivoGlobal.f_flagExisteData.val('SI');	
 						}						
 					},error : function(){
-							alert("Error de conexión.");
-							envioDefinitivoGlobal.initBlockUI();
+						var addhtmError='Error de conexión.';					
+						envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
+						envioDefinitivoGlobal.dialogError.dialog("open");
+						envioDefinitivoGlobal.initBlockUI();
 					}
 				});			
 		},			
@@ -253,7 +267,9 @@ var envioDefinitivoGlobal= {
 						dwr.util.removeAllOptions("grupoInfBusq");
 						dwr.util.addOptions("grupoInfBusq", data,"codigoItem","descripcionItem");														
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
+						envioDefinitivoGlobal.dialogError.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();
 					}
 			});
@@ -281,12 +297,16 @@ var envioDefinitivoGlobal= {
 					if(data.resultado=='OK'){
 						envioDefinitivoGlobal.verReporteEnvio();	
 						envioDefinitivoGlobal.initBlockUI();
-					}else{
-						alert("Error al mostrar el reporte del formato");
+					}else{						
+						var addhtmError='Error al mostrar el reporte del registro seleccionado.';					
+						envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
+						envioDefinitivoGlobal.dialogError.dialog("open");	
 						envioDefinitivoGlobal.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
+					envioDefinitivoGlobal.dialogError.dialog("open");
 					envioDefinitivoGlobal.initBlockUI();
 				}
 			});
@@ -359,8 +379,10 @@ var envioDefinitivoGlobal= {
 				var addhtml='¿Está seguro que desea realizar el Envío General Definitivo de los Formatos presentados en el Resultado(s) de la búsqueda?';
 				envioDefinitivoGlobal.dialogConfirmContent.html(addhtml);
 				envioDefinitivoGlobal.dialogConfirm.dialog("open");	
-			}else{
-				alert("No existe información para los criterios de búsqueda seleccionados. Realice una nueva búsqueda.");
+			}else{			
+				var addhtmInfo='No existe información para los criterios de búsqueda seleccionados. Realice una nueva búsqueda.';					
+				envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
+				envioDefinitivoGlobal.dialogInfo.dialog("open");		
 				envioDefinitivoGlobal.initBlockUI();	
 			}			
 		},
@@ -385,28 +407,40 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.dialogMessage.dialog("open");					
 						envioDefinitivoGlobal.initBlockUI();
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
-					}else if(data.resultado == "ENVIADO"){
-						alert("Este grupo ya ha sido enviado.");
+					}else if(data.resultado == "ENVIADO"){						
+						var addhtmInfo='Este grupo ya ha sido enviado.';					
+						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
+						envioDefinitivoGlobal.dialogInfo.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
-					}else if(data.resultado == "NO_DATOS"){
-						alert("No existe ninguna lista pra realizar el envio general, vuelva a realizar la búsqueda");
+					}else if(data.resultado == "NO_DATOS"){						
+						var addhtmInfo='No existe ninguna lista pra realizar el envio general, vuelva a realizar la búsqueda.';					
+						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
+						envioDefinitivoGlobal.dialogInfo.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();	
-					}else if(data.resultado == "EMAIL"){
-						alert(data.mensaje);
+					}else if(data.resultado == "EMAIL"){						
+						var addhtmEmail=data.mensaje;					
+						envioDefinitivoGlobal.dialogInfoContent.html(addhtmEmail);
+						envioDefinitivoGlobal.dialogInfo.dialog("open");		
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "CERRADO"){
-						alert(data.mensaje);
+						var addhtmInfo=data.mensaje;					
+						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
+						envioDefinitivoGlobal.dialogInfo.dialog("open");	
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();	
-					}else if(data.resultado == "ERROR"){
-						alert("Error al realizar el envio general de los formatos mostrados");
+					}else if(data.resultado == "ERROR"){						
+						var addhtmError='Error al realizar el envio general de los formatos mostrados.';					
+						envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
+						envioDefinitivoGlobal.dialogError.dialog("open");	
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
+					envioDefinitivoGlobal.dialogError.dialog("open");
 					envioDefinitivoGlobal.initBlockUI();
 				}
 			});
@@ -423,7 +457,9 @@ var envioDefinitivoGlobal= {
 				success : function(gridData) {
 					envioDefinitivoGlobal.verReporteEnvio();
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
+					envioDefinitivoGlobal.dialogError.dialog("open");
 					envioDefinitivoGlobal.initBlockUI();
 				}
 			});
@@ -439,7 +475,7 @@ var envioDefinitivoGlobal= {
 			envioDefinitivoGlobal.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -455,6 +491,7 @@ var envioDefinitivoGlobal= {
 			envioDefinitivoGlobal.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,
 				buttons: {
 					'Ver Acta': function() {
 						envioDefinitivoGlobal.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -464,7 +501,40 @@ var envioDefinitivoGlobal= {
 						$( this ).dialog("close");
 					}
 				}
-			});		
+			});	
+			
+			envioDefinitivoGlobal.dialogValidacion.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			envioDefinitivoGlobal.dialogError.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			envioDefinitivoGlobal.dialogInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					OK: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
 			
 			/* envioDefinitivoGlobal.dialogObservacion.dialog({
 				modal: true,

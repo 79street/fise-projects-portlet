@@ -21,6 +21,15 @@ var fiseGrupoInformacion= {
 		dialogConfirm:null,//para eliminar registro
 		dialogConfirmContent:null,//para mostrar la confirmacion al eliminar el registro
 		
+		
+		dialogValidacion:null,
+		dialogValidacionContent:null,
+		dialogError:null,
+		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
+		
+		
 		//mensajes
 		mensajeCargando:null,
 		mensajeObteniendoDatos:null,
@@ -74,6 +83,12 @@ var fiseGrupoInformacion= {
 			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");//para eliminar
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");//para eliminar
 			
+			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
+			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
+            this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");		
 			
 			//mensajes			
 			this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
@@ -207,8 +222,10 @@ var fiseGrupoInformacion= {
 							fiseGrupoInformacion.tablaResultados[0].refreshIndex();
 							fiseGrupoInformacion.initBlockUI();
 					},error : function(){
-							alert("Error de conexión.");
-							fiseGrupoInformacion.initBlockUI();
+						var addhtmError='Error de conexión.';					
+						fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+						fiseGrupoInformacion.dialogError.dialog("open");
+						fiseGrupoInformacion.initBlockUI();
 					}
 				});			
 		},		
@@ -276,12 +293,16 @@ var fiseGrupoInformacion= {
 					    	$('#<portlet:namespace/>actualizarGrupoInf').css('display','none');
 					    							
 				        }						
-						else{
-							alert("Error al visualizar los datos del registro seleccionado");
+						else{						
+							var addhtmError='Error al visualizar los datos del registro seleccionado.';					
+							fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+							fiseGrupoInformacion.dialogError.dialog("open");	
 							fiseGrupoInformacion.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+						fiseGrupoInformacion.dialogError.dialog("open");
 						fiseGrupoInformacion.initBlockUI();
 					}
 			});	
@@ -319,12 +340,16 @@ var fiseGrupoInformacion= {
 								$('#<portlet:namespace/>actualizarGrupoInf').css('display','block');	
 															
 					         }
-							else{
-								alert("Error al recuperar los datos del registro seleccionado");
+							else{								
+								var addhtmError='Error al recuperar los datos del registro seleccionado.';					
+								fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+								fiseGrupoInformacion.dialogError.dialog("open");	
 								fiseGrupoInformacion.initBlockUI();
 							}
 						},error : function(){
-							alert("Error de conexión.");
+							var addhtmError='Error de conexión.';					
+							fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+							fiseGrupoInformacion.dialogError.dialog("open");
 							fiseGrupoInformacion.initBlockUI();
 						}
 				});		
@@ -358,11 +383,13 @@ var fiseGrupoInformacion= {
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarGrupoInformacion : function(idGrupoInf,desEstado){
-			if(desEstado=='Inactivo'){
-				alert("Su estado es Inactivo no se puede desactivar"); 	
+			if(desEstado=='Inactivo'){			
+				var addhtml2='Su estado es Inactivo no se puede desactivar.';					
+				fiseGrupoInformacion.dialogInfoContent.html(addhtml2);
+				fiseGrupoInformacion.dialogInfo.dialog("open");
 			}else{
 				console.debug("entranado a eliminar confirmar:  "+idGrupoInf);
-				var addhtml='¿Está seguro que desea desactivar el Grupo de Información seleccionado?';
+				var addhtml='¿Está seguro que desea desactivar el Grupo de Información seleccionado.?';
 				fiseGrupoInformacion.dialogConfirmContent.html(addhtml);
 				fiseGrupoInformacion.dialogConfirm.dialog("open");	
 				id_GrupoInf=idGrupoInf;
@@ -382,18 +409,22 @@ var fiseGrupoInformacion= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Grupo de Información desactivado con éxito';					
+						var addhtml2='Grupo de Información desactivado con éxito.';					
 						fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 						fiseGrupoInformacion.dialogMessage.dialog("open");
 						fiseGrupoInformacion.buscarGrupoInformacion();
 						fiseGrupoInformacion.initBlockUI();
 					}
-					else{
-						alert("Error al desactivar el Grupo de Información");
+					else{						
+						var addhtmError='Error al desactivar el Grupo de Información.';					
+						fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+						fiseGrupoInformacion.dialogError.dialog("open");	
 						fiseGrupoInformacion.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+					fiseGrupoInformacion.dialogError.dialog("open");
 					fiseGrupoInformacion.initBlockUI();
 				}
 			});
@@ -412,7 +443,7 @@ var fiseGrupoInformacion= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El Grupo de Información se guardó satisfactoriamente';							
+							var addhtml2='El Grupo de Información se guardó satisfactoriamente.';							
 							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 							fiseGrupoInformacion.dialogMessage.dialog("open");							
 							fiseGrupoInformacion.initBlockUI();						
@@ -423,14 +454,16 @@ var fiseGrupoInformacion= {
 							$('#<portlet:namespace/>guardarGrupoInf').css('display','none');
 							$('#<portlet:namespace/>actualizarGrupoInf').css('display','block');
 							
-						}else{				
-							var addhtml2='Se produjo un error al guardar el Grupo de Información .';
-							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
-							fiseGrupoInformacion.dialogMessage.dialog("open");						
+						}else{								
+							var addhtmError='Se produjo un error al guardar el Grupo de Información.';					
+							fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+							fiseGrupoInformacion.dialogError.dialog("open");											
 							fiseGrupoInformacion.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+						fiseGrupoInformacion.dialogError.dialog("open");
 						fiseGrupoInformacion.initBlockUI();
 					}
 				});			
@@ -451,18 +484,20 @@ var fiseGrupoInformacion= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El Grupo de Información se actualizó satisfactoriamente';
+							var addhtml2='El Grupo de Información se actualizó satisfactoriamente.';
 							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 							fiseGrupoInformacion.dialogMessage.dialog("open");						
 							fiseGrupoInformacion.initBlockUI();								
-						}else{				
-							var addhtml2='Se produjo un error al actualizar el Grupo de Información .';
-							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
-							fiseGrupoInformacion.dialogMessage.dialog("open");						
+						}else{						
+							var addhtmError='Se produjo un error al actualizar el Grupo de Información.';					
+							fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+							fiseGrupoInformacion.dialogError.dialog("open");						
 							fiseGrupoInformacion.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
+						fiseGrupoInformacion.dialogError.dialog("open");
 						fiseGrupoInformacion.initBlockUI();
 					}
 				});						
@@ -472,24 +507,34 @@ var fiseGrupoInformacion= {
 		//funcion para validar ingreso de datos
 		validarFormulario : function() {
 			console.debug("tamaño de descripcion:  "+fiseGrupoInformacion.f_descripcion.val().length);
-			if(fiseGrupoInformacion.f_descripcion.val().length == ''){
-				alert('Debe ingresar descripción.'); 
+			if(fiseGrupoInformacion.f_descripcion.val().length == ''){				
+				var addhtmAlert='Debe ingresar descripción.';					
+				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
+				fiseGrupoInformacion.dialogValidacion.dialog("open");
 				fiseGrupoInformacion.f_descripcion.focus();
 			  	return false; 
-			}else if(fiseGrupoInformacion.f_descripcion.val().length > 100){
-				alert('La  descripción acepta como máximo 100 caracteres.'); 
+			}else if(fiseGrupoInformacion.f_descripcion.val().length > 100){				
+				var addhtmAlert='La  descripción acepta como máximo 100 caracteres.';					
+				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
+				fiseGrupoInformacion.dialogValidacion.dialog("open");
 				fiseGrupoInformacion.f_descripcion.focus();
 			  	return false; 
-			}else if(fiseGrupoInformacion.f_anoPres.val().length == ''){
-				alert('Debe ingresar año a declarar'); 
+			}else if(fiseGrupoInformacion.f_anoPres.val().length == ''){				
+				var addhtmAlert='Debe ingresar año a declarar.';					
+				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
+				fiseGrupoInformacion.dialogValidacion.dialog("open");
 				fiseGrupoInformacion.f_anoPres.focus();
 			  	return false; 
-			}else if(fiseGrupoInformacion.f_anoPres.val().length != 4){
-				alert('Debe ingresar año a declarar válido'); 
+			}else if(fiseGrupoInformacion.f_anoPres.val().length != 4){				
+				var addhtmAlert='Debe ingresar año a declarar válido.';					
+				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
+				fiseGrupoInformacion.dialogValidacion.dialog("open");
 				fiseGrupoInformacion.f_anoPres.focus();
 			  	return false; 
-			}else if(fiseGrupoInformacion.f_mesPres.val().length == ''){
-				alert('Debe seleccionar mes a declarar'); 
+			}else if(fiseGrupoInformacion.f_mesPres.val().length == ''){				
+				var addhtmAlert='Debe seleccionar mes a declarar.';					
+				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
+				fiseGrupoInformacion.dialogValidacion.dialog("open");
 				fiseGrupoInformacion.f_mesPres.focus();
 			  	return false; 
 			}else{
@@ -509,6 +554,7 @@ var fiseGrupoInformacion= {
 			fiseGrupoInformacion.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,	
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -519,7 +565,7 @@ var fiseGrupoInformacion= {
 			fiseGrupoInformacion.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -530,7 +576,40 @@ var fiseGrupoInformacion= {
 						$( this ).dialog("close");
 					}
 				}
-			});		
+			});	
+			
+			fiseGrupoInformacion.dialogValidacion.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			fiseGrupoInformacion.dialogError.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			fiseGrupoInformacion.dialogInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					OK: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
 			
 		}, /***fin de inicializar los dialogos**/	
 		
