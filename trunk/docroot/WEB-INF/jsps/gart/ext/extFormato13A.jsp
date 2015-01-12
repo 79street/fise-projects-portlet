@@ -38,6 +38,12 @@ var formato13A= {
 	urlReporteActaEnvio:null,
 	//
 	
+	//addd
+	dialogMessageInfo:null,
+	dialogMessageInfoContent:null,
+	dialogMessageWarning:null,
+	dialogMessageWarningContent:null,
+	
 	botonReportePdf:null,
 	botonReporteExcel:null,
 	//add
@@ -97,6 +103,14 @@ var formato13A= {
 	dialogConfirmDetalleContent:null,
 	dialogConfirm:null,
 	dialogConfirmContent:null,
+	
+	//addd
+	dialogMessageInfoCrud:null,
+	dialogMessageInfoCrudContent:null,
+	dialogMessageWarningCrud:null,
+	dialogMessageWarningCrudContent:null,
+	dialogMessageErrorCrud:null,
+	dialogMessageErrorCrudContent:null,
 	//
 
 	codDepa:null,
@@ -163,6 +177,12 @@ var formato13A= {
 	 dialogMessageDetalle:null,
 	 dialogMessageDetalleContent:null,
 	 
+	//addd
+	dialogMessageWarningDetalle:null,
+	dialogMessageWarningDetalleContent:null,
+	dialogMessageErrorDetalle:null,
+	dialogMessageErrorDetalleContent:null,
+	 
 	init : function(urlNuevo,urlView,urlEdit){
 		
 		this.tablaResultados=$("#<portlet:namespace/>grid_formato");
@@ -188,6 +208,11 @@ var formato13A= {
 		this.txtAnioInicio=$("#anioInicio");
 		this.txtAnioFin=$("#anioFin");
 		
+		this.dialogMessageInfo=$("#<portlet:namespace/>dialog-message-info");
+		this.dialogMessageInfoContent=$("#<portlet:namespace/>dialog-message-info-content");
+		this.dialogMessageWarning=$("#<portlet:namespace/>dialog-message-warning");
+		this.dialogMessageWarningContent=$("#<portlet:namespace/>dialog-message-warning-content");
+		
 		
 		formato13A.initDialogs();
 		
@@ -209,18 +234,24 @@ var formato13A= {
 	},
 	validateInputAnioTxt : function(inicio,fin){
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
-			 formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
-			 formato13A.dialogMessageGeneralInicial.dialog("open");
+			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
+			 //formato13A.dialogMessageGeneralInicial.dialog("open");
+			 formato13A.dialogMessageWarningContent.html("El año debe contener 4 dígitos");
+			 formato13A.dialogMessageWarning.dialog("open");
    		
    	 }else if(inicio.val().length>0){
    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
-   			formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
-   			formato13A.dialogMessageGeneralInicial.dialog("open"); 
+   			//formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
+   			//formato13A.dialogMessageGeneralInicial.dialog("open");
+   			formato13A.dialogMessageWarningContent.html("El año final debe ser mayor o igual al inicial");
+			formato13A.dialogMessageWarning.dialog("open");
    		 }
    	 }else if(fin.val().length>0){
    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
-   			formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
-   			formato13A.dialogMessageGeneralInicial.dialog("open"); 
+   			//formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
+   			//formato13A.dialogMessageGeneralInicial.dialog("open");
+   			formato13A.dialogMessageWarningContent.html("El año inicial debe ser menor o igual al final");
+			formato13A.dialogMessageWarning.dialog("open");
    		 }
    		 
    	 }
@@ -228,22 +259,28 @@ var formato13A= {
 	},
 	validateInputAnio : function(inicio,fin){//validateInputAnio
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
-			 formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
-			 formato13A.dialogMessageGeneralInicial.dialog("open");
+			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
+			 //formato13A.dialogMessageGeneralInicial.dialog("open");
+			 formato13A.dialogMessageWarningContent.html("El año debe contener 4 dígitos");
+			 formato13A.dialogMessageWarning.dialog("open");
 			 return false; 
    		
    	 }else if(inicio.val().length>0){
    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
    			 fin.focus();
-   			formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
-   			formato13A.dialogMessageGeneralInicial.dialog("open"); 
+   			//formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
+   			//formato13A.dialogMessageGeneralInicial.dialog("open"); 
+   			formato13A.dialogMessageWarningContent.html("El año final debe ser mayor o igual al inicial");
+			formato13A.dialogMessageWarning.dialog("open");
 				 return false; 
    		 }
    	 }else if(fin.val().length>0){
    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
    			 inicio.focus();
-   			formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
-   			formato13A.dialogMessageGeneralInicial.dialog("open"); 
+   			//formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
+   			//formato13A.dialogMessageGeneralInicial.dialog("open"); 
+   			formato13A.dialogMessageWarningContent.html("El año inicial debe ser menor o igual al final");
+			formato13A.dialogMessageWarning.dialog("open");
 				 return false; 
    		 }
    		 
@@ -333,7 +370,12 @@ var formato13A= {
 		 this.dialogMessageGeneral=$("#dialogMessageGeneral");
          this.lblMessage=$("#lblMessage");
          
-        
+         this.dialogMessageInfoCrud=$("#<portlet:namespace/>dialog-message-info-crud");
+ 		this.dialogMessageInfoCrudContent=$("#<portlet:namespace/>dialog-message-info-content-crud");
+ 		this.dialogMessageWarningCrud=$("#<portlet:namespace/>dialog-message-warning-crud");
+ 		this.dialogMessageWarningCrudContent=$("#<portlet:namespace/>dialog-message-warning-content-crud");
+ 		this.dialogMessageErrorCrud=$("#<portlet:namespace/>dialog-message-error-crud");
+ 		this.dialogMessageErrorCrudContent=$("#<portlet:namespace/>dialog-message-error-content-crud");
 		
 		formato13A.initDialogsCRUD();
 		
@@ -490,6 +532,11 @@ var formato13A= {
 		this.dialogMessageDetalle=$("#<portlet:namespace/>dialog-message-detalle");
 		this.dialogMessageDetalleContent=$("#<portlet:namespace/>dialog-message-detalle-content");
 		
+		this.dialogMessageWarningDetalle=$("#<portlet:namespace/>dialog-message-warning-detalle");
+		this.dialogMessageWarningDetalleContent=$("#<portlet:namespace/>dialog-message-warning-content-detalle");
+		this.dialogMessageErrorDetalle=$("#<portlet:namespace/>dialog-message-error-detalle");
+		this.dialogMessageErrorDetalleContent=$("#<portlet:namespace/>dialog-message-error-content-detalle");
+		
 		formato13A.initDialogsCRUDDetalle();
 		
 		$('input.target[type=text]').on('change', function(){
@@ -536,12 +583,12 @@ var formato13A= {
 				formato13A.dialogMessageDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
 				var addhtml='Ya existe un registro para la Distribuidora Eléctrica y periodo a declarar';
-				formato13A.dialogMessageDetalleContent.html(addhtml);
-				formato13A.dialogMessageDetalle.dialog("open");
+				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
+				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR2' ){
 				var addhtml='Se produjo un error al guardar el detalle';
-				formato13A.dialogMessageDetalleContent.html(addhtml);
-				formato13A.dialogMessageDetalle.dialog("open");
+				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
+				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}
 
 		</c:if>
@@ -609,12 +656,12 @@ var formato13A= {
 				formato13A.dialogMessageDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
 				var addhtml='Ya existe un registro para la empresa y periodo a declarar';
-				formato13A.dialogMessageDetalleContent.html(addhtml);
-				formato13A.dialogMessageDetalle.dialog("open");
+				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
+				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR2' ){
 				var addhtml='Se produjo un error al guardar el detalle';
-				formato13A.dialogMessageDetalleContent.html(addhtml);
-				formato13A.dialogMessageDetalle.dialog("open");
+				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
+				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}
 			
 		</c:if>
@@ -1443,15 +1490,17 @@ var formato13A= {
 				}
 			});
 		}else{
-			alert("Primero debe realizar el envío definitivo");
+			//alert("Primero debe realizar el envío definitivo");
+			formato13A.dialogMessageInfoCrudContent.html("Primero debe realizar el envío definitivo");
+			formato13A.dialogMessageInfoCrud.dialog("open");
 		}
 	},
 	//inicializar dialogs
 	initDialogs : function(){	
 		formato13A.dialogMessageGeneralInicial.dialog({
 			modal: true,
-			height: 120,
-			width: 400,
+			height: 200,
+			width: 500,
 			autoOpen: false,
 			buttons: {
 				Cerrar: function() {
@@ -1462,7 +1511,7 @@ var formato13A= {
 		formato13A.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
-			width: 400,			
+			width: 500,
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1474,10 +1523,32 @@ var formato13A= {
 				}
 			}
 		});
+		//addd
+		formato13A.dialogMessageInfo.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato13A.dialogMessageWarning.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
 	},
 	initDialogsCRUD : function(){	
 		formato13A.dialogMessageReport.dialog({
 			modal: true,
+			width: 500,
 			autoOpen: false,
 			buttons: {
 				'Ver Acta': function() {
@@ -1497,7 +1568,7 @@ var formato13A= {
 		formato13A.dialogConfirmEnvio.dialog({
 			modal: true,
 			height: 200,
-			width: 400,			
+			width: 500,		
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1512,7 +1583,7 @@ var formato13A= {
 		formato13A.dialogConfirmDetalle.dialog({
 			modal: true,
 			height: 200,
-			width: 400,			
+			width: 500,		
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1538,11 +1609,42 @@ var formato13A= {
 		
 		formato13A.dialogMessageGeneral.dialog({
 			modal: true,
-			height: 120,
-			width: 400,
+			height: 200,
+			width: 500,
 			autoOpen: false,
 			buttons: {
 				Cerrar: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		//addd
+		formato13A.dialogMessageInfoCrud.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato13A.dialogMessageWarningCrud.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato13A.dialogMessageErrorCrud.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
 					$( this ).dialog("close");
 				}
 			}
@@ -1552,6 +1654,28 @@ var formato13A= {
 		formato13A.dialogMessageDetalle.dialog({
 			modal: true,
 			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		//addd
+		formato13A.dialogMessageWarningDetalle.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato13A.dialogMessageErrorDetalle.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1576,12 +1700,18 @@ var formato13A= {
 				mes_Presentacion_cabecera=mesPresentacion;
 				cod_Etapa_cabecera=etapa;
 			}else{
-				alert(" No tiene autorización para realizar esta operación");
+				//alert(" No tiene autorización para realizar esta operación");
+				formato13A.dialogMessageInfoContent.html("No tiene autorización para realizar esta operación");
+				formato13A.dialogMessageInfo.dialog("open");
 			}
 		}else if(flagOperacion=='CERRADO'){
-			alert(" Está fuera de plazo");
+			//alert(" Está fuera de plazo");
+			formato13A.dialogMessageInfoContent.html("Está fuera de plazo");
+			formato13A.dialogMessageInfo.dialog("open");
 		}else{
-			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+			//alert("El formato ya fue enviado a OSINERGMIN-GART");
+			formato13A.dialogMessageInfoContent.html("El formato ya fue enviado a OSINERGMIN-GART");
+			formato13A.dialogMessageInfo.dialog("open");
 		}
 	},
 	confirmarEliminarDetalle : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,codUbigeo,idZonaBenef){
@@ -1616,7 +1746,9 @@ var formato13A= {
 					formato13A.unblockUI();
 				}
 				else{
-					alert("Error al eliminar el registro");
+					//alert("Error al eliminar el registro");
+					formato13A.dialogMessageErrorCrudContent.html("Error al eliminar el registro");
+					formato13A.dialogMessageErrorCrud.dialog("open");
 					formato13A.unblockUI();
 				}
 			},error : function(){
@@ -1647,7 +1779,9 @@ var formato13A= {
 					formato13A.unblockUI();
 				}
 				else{
-					alert("Error al eliminar el registro");
+					//alert("Error al eliminar el registro");
+					formato13A.dialogMessageErrorCrudContent.html("Error al eliminar el registro");
+					formato13A.dialogMessageErrorCrud.dialog("open");
 					formato13A.unblockUI();
 				}
 			},error : function(){
@@ -1667,13 +1801,19 @@ var formato13A= {
 			if(process){
 				location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descripcionPeriodo='+descripcionPeriodo+'&descGrupoInformacion='+descGrupo+'&descestado='+descEstado+'&anioInicioVigencia='+anioInicioVigencia+'&anioFinVigencia='+anioFinVigencia+'&tipo=1';	
 			}else{
-				alert(" No tiene autorización para realizar esta operación");
+				//alert(" No tiene autorización para realizar esta operación");
+				formato13A.dialogMessageInfoContent.html("No tiene autorización para realizar esta operación");
+				formato13A.dialogMessageInfo.dialog("open");
 			}
 			
 		}else if(flagOperacion=='CERRADO'){
-			alert(" Está fuera de plazo");
+			//alert(" Está fuera de plazo");
+			formato13A.dialogMessageInfoContent.html("Está fuera de plazo");
+			formato13A.dialogMessageInfo.dialog("open");
 		}else{
-			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+			//alert("El formato ya fue enviado a OSINERGMIN-GART");
+			formato13A.dialogMessageInfoContent.html("El formato ya fue enviado a OSINERGMIN-GART");
+			formato13A.dialogMessageInfo.dialog("open");
 		}
 	},
 	showCamposOculto: function(){
@@ -1764,24 +1904,32 @@ var formato13A= {
 	validarFormatoDetalle : function(){
 		
 		if(formato13A.anoIniVigenciaDetalle.val().length == '' ) {		  
-		    alert('Debe ingresar el año inicio vigencia');
+		    //alert('Debe ingresar el año inicio vigencia');
+		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el año inicio vigencia");
+			formato13A.dialogMessageWarningDetalle.dialog("open");
 		    formato13A.anoIniVigenciaDetalle.focus();
 		    return false; 
 	  	}else{
 		  	var numstr = trim(formato13A.anoIniVigenciaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  	alert('Ingrese un año inicio vigencia válido');
+			  	//alert('Ingrese un año inicio vigencia válido');
+			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un año inicio vigencia válido");
+				formato13A.dialogMessageWarningDetalle.dialog("open");
 			  	return false;
 		  	}
 	 	 }
 		if(formato13A.anoFinVigenciaDetalle.val().length == '' ) {		  
-		    alert('Debe ingresar el año fin vigencia');
+		    //alert('Debe ingresar el año fin vigencia');
+		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el año fin vigencia");
+			formato13A.dialogMessageWarningDetalle.dialog("open");
 		    formato13A.anoFinVigenciaDetalle.focus();
 		    return false; 
 	  	}else{
 		  	var numstr = trim(formato13A.anoFinVigenciaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  	alert('Ingrese un año fin vigencia válido');
+			  	//alert('Ingrese un año fin vigencia válido');
+			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un año fin vigencia válido");
+				formato13A.dialogMessageWarningDetalle.dialog("open");
 			  	return false;
 		  	}
 	 	 }
@@ -1789,13 +1937,17 @@ var formato13A= {
 		if(formato13A.anoAltaDetalle.val().length != '' ) {		  
 		   	var numstr = trim(formato13A.anoAltaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  	alert('Ingrese un año alta válido');
+			  	//alert('Ingrese un año alta válido');
+			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un año alta válido");
+				formato13A.dialogMessageWarningDetalle.dialog("open");
 			  	return false;
 		  	}
 	 	 }
 		//periodo de alta
 		if( parseFloat(formato13A.anoAltaDetalle.val())*100 + parseFloat(formato13A.mesAltaDetalle.val()) > parseFloat(formato13A.anoPresentacionDetalle.val())*100 + parseFloat(formato13A.mesPresentacionDetalle.val()) ){
-			alert('El periodo de alta no puede ser mayor al periodo a declarar');
+			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
+			formato13A.dialogMessageWarningDetalleContent.html("El periodo de alta no puede ser mayor al periodo a declarar");
+			formato13A.dialogMessageWarningDetalle.dialog("open");
 			return false;
 		}
 		
@@ -1812,30 +1964,40 @@ var formato13A= {
 		//validamos ubigeo 
 		if(formato13A.codDepa.val().length != '' ) {
 			if(formato13A.codProv.val().length == '' ) {		  
-			   alert('Debe seleccionar la provincia');
+			   //alert('Debe seleccionar la provincia');
+			   formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar la provincia");
+				formato13A.dialogMessageWarningDetalle.dialog("open");
 			   formato13A.codProv.focus();
 			   return false; 
 			}else{
 				if(formato13A.codDist.val().length == '' ) {		  
-				   alert('Debe seleccionar el distrito');
+				   //alert('Debe seleccionar el distrito');
+				   formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar el distrito");
+					formato13A.dialogMessageWarningDetalle.dialog("open");
 				   formato13A.codDist.focus();
 				   return false; 
 				}
 			}
 		}else{
-			alert('Debe seleccionar el departamento');
+			//alert('Debe seleccionar el departamento');
+			formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar el departamento");
+			formato13A.dialogMessageWarningDetalle.dialog("open");
 			formato13A.codDepa.focus();
 			return false;
 		}
 		
 		if(formato13A.idZonaBenefDetalle.val().length == '' ) {
-			alert('Debe seleccionar la Zona Beneficiario');
+			//alert('Debe seleccionar la Zona Beneficiario');
+			formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar la Zona Beneficiario");
+			formato13A.dialogMessageWarningDetalle.dialog("open");
 		    formato13A.idZonaBenefDetalle.focus();
 		   	return false; 
 		}else{
 			if(formato13A.cod_empresa_edelnor.val()!=formato13A.codEmpresaDetalle.val() && formato13A.cod_empresa_luz_sur.val()!=formato13A.codEmpresaDetalle.val()){
 				if(formato13A.idZonaBenefDetalle.val() == 3 ) {//LIMA
-					alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
+					//alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
+					formato13A.dialogMessageWarningDetalleContent.html("No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica");
+					formato13A.dialogMessageWarningDetalle.dialog("open");
 				    formato13A.idZonaBenefDetalle.focus();
 				   	return false;
 				}

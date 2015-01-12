@@ -178,9 +178,26 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
-			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
+			<img src="fise-projects-portlet/images/confirm.png" style="float:left; margin:0 25px 10px 0;">
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>
 	</div>
+	
+	<!--  -->
+	<div id="<portlet:namespace/>dialog-message-info" title="Mensaje de Informaci&oacute;n">
+		<p>
+			<img src="fise-projects-portlet/images/info.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="dialog-message-info-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
+	<div id="<portlet:namespace/>dialog-message-warning" title="Mensaje de Advertencia">
+		<p>
+			<img src="fise-projects-portlet/images/warning.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="dialog-message-warning-content">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	<!--  -->
 	
 </form:form>

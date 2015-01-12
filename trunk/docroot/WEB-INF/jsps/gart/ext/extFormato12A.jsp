@@ -542,7 +542,9 @@ function validarBusqueda() {
 	  if($('#i_anio_d').val().length != '' ) {		  
 		  var numstr = trim($('#i_anio_d').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  alert('Ingrese un año desde válido');
+			  //alert('Ingrese un año desde válido');
+			  $("#dialog-message-warning-content").html('Ingrese un año desde válido');
+			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_anio_d').focus();
 			  return false;
 		  }
@@ -550,20 +552,26 @@ function validarBusqueda() {
 	  if($('#i_anio_h').val().length != '' ) {		  
 		  var numstr = trim($('#i_anio_h').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  alert('Ingrese un año hasta válido');
+			  //alert('Ingrese un año hasta válido');
+			  $("#dialog-message-warning-content").html('Ingrese un año hasta válido');
+			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_anio_h').focus();
 			  return false;
 		  }
 	  }
 	  if($('#i_anio_d').val().length != '' && $('#i_anio_h').val().length != '' ) {
 		  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){
-				alert('El año desde no puede exceder al año hasta');
+				//alert('El año desde no puede exceder al año hasta');
+				$("#dialog-message-warning-content").html('El año desde no puede exceder al año hasta');
+				$("#dialog-message-warning").dialog( "open" );	
 				return false;
 		  }
 	  }
 	  
 	  if($('#s_etapa').val().length == '' ) { 	    
-		    alert('Seleccione una etapa');
+		    //alert('Seleccione una etapa');
+		    $("#dialog-message-warning-content").html('Seleccione una etapa');
+			$("#dialog-message-warning").dialog( "open" );	
 		    document.getElementById('s_etapa').focus();
 		    return false; 
 	  }
@@ -573,36 +581,48 @@ function validarBusqueda() {
 	
 function validarFormulario() {		
 	  if($('#s_empresa').val().length == '' ) { 	
-	    alert('Seleccione una Distribuidora Eléctrica'); 
+	    //alert('Seleccione una Distribuidora Eléctrica'); 
+	    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica');
+		$("#dialog-message-warning").dialog( "open" );
 	    document.getElementById('s_empresa').focus();
 	    return false; 
 	  }
 	  if($('#s_periodoenvio_present').val().length == '' ) {		  
-		    alert('Debe ingresar el periodo a declarar');
+		    //alert('Debe ingresar el periodo a declarar');
+		    $("#dialog-message-warning-content").html('Debe ingresar el periodo a declarar');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('s_periodoenvio_present').focus();
 		    return false; 
 	  }
 	  if( $('#flagPeriodoEjecucion').val()=='S' ){
 		  if($('#i_anioejecuc').val().length == '' ) {		  
-			    alert('Debe ingresar el año de ejecución');
+			    //alert('Debe ingresar el año de ejecución');
+			    $("#dialog-message-warning-content").html('Debe ingresar el año de ejecución');
+				$("#dialog-message-warning").dialog( "open" );
 			    document.getElementById('i_anioejecuc').focus();
 			    return false; 
 		  }else{
 			  var numstr = trim($('#i_anioejecuc').val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-				  alert('Ingrese un año de ejecución válido');
+				  //alert('Ingrese un año de ejecución válido');
+				  $("#dialog-message-warning-content").html('Ingrese un año de ejecución válido');
+				  $("#dialog-message-warning").dialog( "open" );
 				  return false;
 			  }
 		  }
 		  if($('#s_mes_ejecuc').val().length == '' ) {		  
-			    alert('Debe ingresar el mes de ejecución');
+			    //alert('Debe ingresar el mes de ejecución');
+			    $("#dialog-message-warning-content").html('Debe ingresar el mes de ejecución');
+				$("#dialog-message-warning").dialog( "open" );
 			    document.getElementById('s_mes_ejecuc').focus();
 			    return false; 
 		  }
 	  }
 	  //valores de formulario
 	  if($('#i_nroEmpad_r').val().length == '' ) {		  
-		    alert('Debe ingresar el número de empadronados para Rural');
+		    //alert('Debe ingresar el número de empadronados para Rural');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para Rural');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_r').focus();
 		    return false; 
 	  }
@@ -612,7 +632,9 @@ function validarFormulario() {
 		    return false; 
 	  }*/
 	  if($('#i_nroAgentGlp_r').val().length == '' ) {		  
-		    alert('Debe ingresar el número de agentes para Rural');
+		    //alert('Debe ingresar el número de agentes para Rural');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para Rural');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_r').focus();
 		    return false; 
 	  }
@@ -633,7 +655,9 @@ function validarFormulario() {
 	  }*/
 	  ////////////////////
 	  if($('#i_nroEmpad_p').val().length == '' ) {		  
-		    alert('Debe ingresar el número de empadronados para Provincia');
+		    //alert('Debe ingresar el número de empadronados para Provincia');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para Provincia');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_p').focus();
 		    return false; 
 	  }
@@ -643,7 +667,9 @@ function validarFormulario() {
 		    return false; 
 	  }*/
 	  if($('#i_nroAgentGlp_p').val().length == '' ) {		  
-		    alert('Debe ingresar el número de agentes para Provincia');
+		    //alert('Debe ingresar el número de agentes para Provincia');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para Provincia');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_p').focus();
 		    return false; 
 	  }
@@ -664,7 +690,9 @@ function validarFormulario() {
 	  }*/
 	  ///////////
 	  if($('#i_nroEmpad_l').val().length == '' ) {		  
-		    alert('Debe ingresar el número de empadronados para Lima');
+		    //alert('Debe ingresar el número de empadronados para Lima');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para Lima');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_l').focus();
 		    return false; 
 	  }
@@ -674,7 +702,9 @@ function validarFormulario() {
 		    return false; 
 	  }*/
 	  if($('#i_nroAgentGlp_l').val().length == '' ) {		  
-		    alert('Debe ingresar el número de agentes para Lima');
+		    //alert('Debe ingresar el número de agentes para Lima');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para Lima');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_l').focus();
 		    return false; 
 	  }
@@ -698,7 +728,9 @@ function validarFormulario() {
 	  //validar que todos sean diferentes de cero
 	   if($('#i_nroEmpad_r').val() == '0' && $('#i_nroAgentGlp_r').val() == '0' && $('#i_nroEmpad_p').val() == '0' && 
 			   $('#i_nroAgentGlp_p').val() == '0' && $('#i_nroEmpad_l').val() == '0' && $('#i_nroAgentGlp_l').val() == '0'  ) {		  
-		    alert('Debe ingresar al menos un valor en el nro. de empadronados o nro. de agentes autorizados para el grupo de beneficiario');
+		    //alert('Debe ingresar al menos un valor en el nro. de empadronados o nro. de agentes autorizados para el grupo de beneficiario');
+		    $("#dialog-message-warning-content").html('Debe ingresar al menos un valor en el nro. de empadronados o nro. de agentes autorizados para el grupo de beneficiario');
+			$("#dialog-message-warning").dialog( "open" );
 		    //document.getElementById('i_nroEmpad_r').focus();
 		    return false; 
 	  }
@@ -708,12 +740,16 @@ function validarFormulario() {
 	}
 function validarArchivoCarga() {		
   if($('#s_empresa').val().length == '' ) { 	
-    alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo');
+	$("#dialog-message-warning").dialog( "open" );
     document.getElementById('s_empresa').focus();
     return false; 
   }
   if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
-	    alert('Debe seleccionar el periodo a declarar');
+	    //alert('Debe seleccionar el periodo a declarar');
+	    $("#dialog-message-warning-content").html('Debe seleccionar el periodo a declarar');
+		$("#dialog-message-warning").dialog( "open" );
 	    document.getElementById('s_periodoenvio_present').focus();
 	    return false; 
   }
@@ -727,6 +763,7 @@ function initBlockUI(){
 function initDialogs(){	
 	$( "#dialog-message" ).dialog({
 		modal: true,
+		width: 500,	
 		autoOpen: false,
 		buttons: {
 			Ok: function() {
@@ -737,6 +774,7 @@ function initDialogs(){
 	$( "#dialog-message-report" ).dialog({
 		modal: true,
 		autoOpen: false,
+		width: 500,
 		buttons: {
 			'Ver Acta': function() {
 				<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -761,7 +799,7 @@ function initDialogs(){
 	$("#dialog-confirm").dialog({
 		modal: true,
 		height: 200,
-		width: 400,			
+		width: 500,		
 		autoOpen: false,
 		buttons: {
 			"Si": function() {
@@ -776,7 +814,7 @@ function initDialogs(){
 	$("#dialog-confirm-envio").dialog({
 		modal: true,
 		height: 200,
-		width: 400,			
+		width: 500,		
 		autoOpen: false,
 		buttons: {
 			"Si": function() {
@@ -824,6 +862,37 @@ function initDialogs(){
 		autoOpen: false,
 		buttons: {
 			Cerrar: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	/////addd messages
+	$( "#dialog-message-info" ).dialog({
+		modal: true,
+		width: 500,	
+		autoOpen: false,
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	$( "#dialog-message-warning" ).dialog({
+		modal: true,
+		width: 500,	
+		autoOpen: false,
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	$( "#dialog-message-error" ).dialog({
+		modal: true,
+		width: 500,	
+		autoOpen: false,
+		buttons: {
+			Ok: function() {
 				$( this ).dialog( "close" );
 			}
 		}
@@ -932,13 +1001,19 @@ function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecuc
 			mes_Ejecucion=mesEjecucion;
 			codEtapa=etapa;
 		}else{
-			alert(" No tiene autorización para realizar esta operación");
+			//alert(" No tiene autorización para realizar esta operación");
+			$("#dialog-message-info-content").html('No tiene autorización para realizar esta operación');
+			$("#dialog-message-info").dialog( "open" );
 		}
 		
 	}else if(flagOperacion=='CERRADO'){
-		alert(" Está fuera de plazo");	
+		//alert(" Está fuera de plazo");	
+		$("#dialog-message-info-content").html('Está fuera de plazo');
+		$("#dialog-message-info").dialog( "open" );
 	}else{
-		alert("El formato ya fue enviado a OSINERGMIN-GART");	
+		//alert("El formato ya fue enviado a OSINERGMIN-GART");	
+		$("#dialog-message-info-content").html('El formato ya fue enviado a OSINERGMIN-GART');
+		$("#dialog-message-info").dialog( "open" );
 	}
 }
 function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecucion,mes_Ejecucion,codEtapa){			
@@ -965,7 +1040,9 @@ function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecuc
 				initBlockUI();
 			}
 			else{
-				alert("Error al eliminar el registro");
+				//alert("Error al eliminar el registro");
+				$("#dialog-message-error-content").html('Error al eliminar el registro');
+				$("#dialog-message-error").dialog( "open" );
 				initBlockUI();
 			}
 		},error : function(){
@@ -1036,7 +1113,9 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 					initBlockUI();
 				}
 				else{
-					alert("Error al recuperar los datos del registro seleccionado");
+					//alert("Error al recuperar los datos del registro seleccionado");
+					$("#dialog-message-error-content").html('Error al recuperar los datos del registro seleccionado');
+					$("#dialog-message-error").dialog( "open" );
 					initBlockUI();
 				}
 			},error : function(){
@@ -1093,7 +1172,9 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 							initBlockUI();
 						}
 						else{
-							alert("Error al recuperar los datos del registro seleccionado");
+							//alert("Error al recuperar los datos del registro seleccionado");
+							$("#dialog-message-error-content").html('Error al recuperar los datos del registro seleccionado');
+							$("#dialog-message-error").dialog( "open" );
 							initBlockUI();
 						}
 					},error : function(){
@@ -1102,13 +1183,19 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 					}
 			});
 		}else{
-			alert(" No tiene autorización para realizar esta operación");
+			//alert(" No tiene autorización para realizar esta operación");
+			$("#dialog-message-info-content").html('No tiene autorización para realizar esta operación');
+			$("#dialog-message-info").dialog( "open" );
 		}
 			
 	}else if(flagOperacion=='CERRADO'){
-		alert(" Está fuera de plazo");
+		//alert(" Está fuera de plazo");
+		$("#dialog-message-info-content").html('Está fuera de plazo');
+		$("#dialog-message-info").dialog( "open" );
 	}else{
-		alert("El formato ya fue enviado a OSINERGMIN-GART");	
+		//alert("El formato ya fue enviado a OSINERGMIN-GART");	
+		$("#dialog-message-info-content").html('El formato ya fue enviado a OSINERGMIN-GART');
+		$("#dialog-message-info").dialog( "open" );
 	}
 }
 function FillEditformato(row){
@@ -1277,8 +1364,8 @@ function <portlet:namespace/>guardarFormato(){
 				}
 				else if(data.resultado == "Error"){				
 					var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
-					$("#dialog-message-content").html(addhtml2);
-					$("#dialog-message").dialog( "open" );
+					$("#dialog-message-error-content").html(addhtml2);
+					$("#dialog-message-error").dialog( "open" );
 					//<portlet:namespace/>filtrar();
 					mostrarUltimoFormato();
 					initBlockUI();
@@ -1397,8 +1484,8 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				
 				if( data.costoEmpR == '0' && data.costoAgentR == '0' && data.costoEmpP == '0' && data.costoAgentP == '0' && data.costoEmpL == '0' && data.costoAgentL == '0' ){
 					var addhtml2='No existe costos estándares establecidos en el Formato 14A para la Distribuidora Eléctrica y Periodo a declarar seleccionado';					
-					$("#dialog-message-content").html(addhtml2);
-					$("#dialog-message").dialog( "open" );	
+					$("#dialog-message-info-content").html(addhtml2);
+					$("#dialog-message-info").dialog( "open" );	
 				}
 				
 				//
@@ -1731,7 +1818,9 @@ function <portlet:namespace/>mostrarReporteActaEnvio(){
 			}
 		});
 	}else{
-		alert("Primero debe realizar el envío definitivo");
+		//alert("Primero debe realizar el envío definitivo");
+		$("#dialog-message-info-content").html('Primero debe realizar el envío definitivo');
+		$("#dialog-message-info").dialog( "open" );
 	}
 }
 //funcion para desabiliar campos lima
