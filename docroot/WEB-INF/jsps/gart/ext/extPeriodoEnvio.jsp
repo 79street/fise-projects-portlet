@@ -20,6 +20,13 @@ var periodoEnvio= {
 		dialogConfirm:null,//para eliminar registro
 		dialogConfirmContent:null,//para mostrar la confirmacion al eliminar el registro
 		
+		dialogValidacion:null,
+		dialogValidacionContent:null,
+		dialogError:null,
+		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
+		
 		//mensajes
 		mensajeCargando:null,
 		mensajeObteniendoDatos:null,
@@ -77,6 +84,12 @@ var periodoEnvio= {
 			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");//para eliminar
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");//para eliminar
 			
+			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
+			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
+            this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");	
 			
 			//mensajes			
 			this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
@@ -233,8 +246,10 @@ var periodoEnvio= {
 							periodoEnvio.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 							periodoEnvio.tablaResultados[0].refreshIndex();
 							periodoEnvio.initBlockUI();
-					},error : function(){
-							alert("Error de conexión.");
+					},error : function(){							
+							var addhtmError='Error de conexión.';					
+							periodoEnvio.dialogErrorContent.html(addhtmError);
+							periodoEnvio.dialogError.dialog("open");	
 							periodoEnvio.initBlockUI();
 					}
 				});			
@@ -341,12 +356,16 @@ var periodoEnvio= {
 					    	$('#<portlet:namespace/>actualizarPeriodoEnvio').css('display','none');
 					    							
 				        }						
-						else{
-							alert("Error al visualizar los datos del registro seleccionado");
+						else{							
+							var addhtmError='Error al visualizar los datos del registro seleccionado.';					
+							periodoEnvio.dialogErrorContent.html(addhtmError);
+							periodoEnvio.dialogError.dialog("open");	
 							periodoEnvio.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						periodoEnvio.dialogErrorContent.html(addhtmError);
+						periodoEnvio.dialogError.dialog("open");
 						periodoEnvio.initBlockUI();
 					}
 			});	
@@ -379,12 +398,16 @@ var periodoEnvio= {
 								$('#<portlet:namespace/>actualizarPeriodoEnvio').css('display','block');	
 								//ESTILOS								
 					         }
-							else{
-								alert("Error al recuperar los datos del registro seleccionado");
+							else{								
+								var addhtmError='Error al recuperar los datos del registro seleccionado.';					
+								periodoEnvio.dialogErrorContent.html(addhtmError);
+								periodoEnvio.dialogError.dialog("open");
 								periodoEnvio.initBlockUI();
 							}
 						},error : function(){
-							alert("Error de conexión.");
+							var addhtmError='Error de conexión.';					
+							periodoEnvio.dialogErrorContent.html(addhtmError);
+							periodoEnvio.dialogError.dialog("open");
 							periodoEnvio.initBlockUI();
 						}
 				});		
@@ -453,7 +476,7 @@ var periodoEnvio= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarPeriodoEnvio : function(secuencia){
 			console.debug("entranado a eliminar confirmar:  "+secuencia);
-			var addhtml='¿Está seguro que desea eliminar el Control de Remisión seleccionado?';
+			var addhtml='¿Está seguro que desea eliminar el Control de Remisión seleccionado.?';
 			periodoEnvio.dialogConfirmContent.html(addhtml);
 			periodoEnvio.dialogConfirm.dialog("open");	
 			cod_secuencia=secuencia;
@@ -477,12 +500,16 @@ var periodoEnvio= {
 						periodoEnvio.buscarPeriodoEnvio();
 						periodoEnvio.initBlockUI();
 					}
-					else{
-						alert("Error al eliminar el registro de Control de Remisión");
+					else{						
+						var addhtmError='Error al eliminar el registro de Control de Remisión.';					
+						periodoEnvio.dialogErrorContent.html(addhtmError);
+						periodoEnvio.dialogError.dialog("open");	
 						periodoEnvio.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					periodoEnvio.dialogErrorContent.html(addhtmError);
+					periodoEnvio.dialogError.dialog("open");
 					periodoEnvio.initBlockUI();
 				}
 			});
@@ -512,20 +539,26 @@ var periodoEnvio= {
 							periodoEnvio.deshabilitarCamposEditar();							
 							$('#<portlet:namespace/>guardarPeriodoEnvio').css('display','none');
 							$('#<portlet:namespace/>actualizarPeriodoEnvio').css('display','block');
-						}else if(data.resultado == "Mayor"){				
-							alert('La fecha hasta no debe ser mayor a la fecha de ampliacion.'); 
+						}else if(data.resultado == "Mayor"){							
+							var addhtmInfo='La fecha hasta no debe ser mayor a la fecha de ampliacion.';					
+							periodoEnvio.dialogInfoContent.html(addhtmInfo);
+							periodoEnvio.dialogInfo.dialog("open");
 							periodoEnvio.f_fechaAmpl.focus();	
-						}else if(data.resultado == "FECHA"){				
-							alert('La fecha desde no debe ser mayor a la fecha hasta.'); 
+						}else if(data.resultado == "FECHA"){						
+							var addhtmInfo='La fecha desde no debe ser mayor a la fecha hasta.';					
+							periodoEnvio.dialogInfoContent.html(addhtmInfo);
+							periodoEnvio.dialogInfo.dialog("open");	
 							periodoEnvio.f_desde.focus();	
-						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar el Control de Remisión.';
-							periodoEnvio.dialogMessageContent.html(addhtml2);
-							periodoEnvio.dialogMessage.dialog("open");						
+						}else if(data.resultado == "Error"){						
+							var addhtmError='Se produjo un error al guardar el Control de Remisión.';					
+							periodoEnvio.dialogErrorContent.html(addhtmError);
+							periodoEnvio.dialogError.dialog("open");												
 							periodoEnvio.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						periodoEnvio.dialogErrorContent.html(addhtmError);
+						periodoEnvio.dialogError.dialog("open");
 						periodoEnvio.initBlockUI();
 					}
 				});			
@@ -552,16 +585,20 @@ var periodoEnvio= {
 							periodoEnvio.dialogMessage.dialog("open");						
 							periodoEnvio.initBlockUI();								
 						}else if(data.resultado == "Mayor"){				
-							alert('La fecha hasta no debe ser mayor a la fecha de ampliación.'); 
+							var addhtmInfo='La fecha hasta no debe ser mayor a la fecha de ampliacion.';					
+							periodoEnvio.dialogInfoContent.html(addhtmInfo);
+							periodoEnvio.dialogInfo.dialog("open");
 							periodoEnvio.f_fechaAmpl.focus();	
-						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar el Control de Remisión.';
-							periodoEnvio.dialogMessageContent.html(addhtml2);
-							periodoEnvio.dialogMessage.dialog("open");						
+						}else if(data.resultado == "Error"){							
+							var addhtmError='Se produjo un error al actualizar el Control de Remisión.';					
+							periodoEnvio.dialogErrorContent.html(addhtmError);
+							periodoEnvio.dialogError.dialog("open");
 							periodoEnvio.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						periodoEnvio.dialogErrorContent.html(addhtmError);
+						periodoEnvio.dialogError.dialog("open");
 						periodoEnvio.initBlockUI();
 					}
 				});						
@@ -571,74 +608,108 @@ var periodoEnvio= {
 		validarFormulario : function() {
 			var form = periodoEnvio.f_formato.val();
 			console.debug("id formato al validar formulario: "+form);
-			if(periodoEnvio.f_codEmpresa.val().length == ''){
-				alert('Seleccione una Distribuidora Eléctrica.'); 
+			if(periodoEnvio.f_codEmpresa.val().length == ''){				
+				var addhtmAlert='Seleccione una Distribuidora Eléctrica.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_codEmpresa.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_anoPres.val().length == ''){
-				alert('Debe ingresar año a declarar'); 
+			}else if(periodoEnvio.f_anoPres.val().length == ''){				
+				var addhtmAlert='Debe ingresar año a declarar.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_anoPres.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_anoPres.val().length != 4){
-				alert('Debe ingresar año a declarar válido'); 
+			}else if(periodoEnvio.f_anoPres.val().length != 4){				
+				var addhtmAlert='Debe ingresar año a declarar válido.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_anoPres.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_mesPres.val().length == ''){
-				alert('Debe seleccionar mes a declarar'); 
+			}else if(periodoEnvio.f_mesPres.val().length == ''){				
+				var addhtmAlert='Debe seleccionar mes a declarar.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_mesPres.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_formato.val().length == ''){
-				alert('Debe seleccionar un formato'); 
+			}else if(periodoEnvio.f_formato.val().length == ''){				
+				var addhtmAlert='Debe seleccionar un formato.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_formato.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_etapa.val().length == ''){
-				alert('Debe seleccionar una etapa'); 
+			}else if(periodoEnvio.f_etapa.val().length == ''){				
+				var addhtmAlert='Debe seleccionar una etapa.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_etapa.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_estado.val().length == ''){
-				alert('Debe seleccionar un estado'); 
+			}else if(periodoEnvio.f_estado.val().length == ''){				
+				var addhtmAlert='Debe seleccionar un estado.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_estado.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_desde.val().length == ''){
-				alert('Debe ingresar una fecha desde'); 
+			}else if(periodoEnvio.f_desde.val().length == ''){				
+				var addhtmAlert='Debe ingresar una fecha desde.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_desde.focus();
 			  	return false; 
 			}else if(!validaFechaDDMMAAAA(periodoEnvio.f_desde.val())){
-				alert('Debe ingresar una fecha desde válida'); 
+				var addhtmAlert='Debe ingresar una fecha desde válida.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_desde.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_hasta.val().length == ''){
-				alert('Debe ingresar una fecha hasta'); 
+			}else if(periodoEnvio.f_hasta.val().length == ''){				
+				var addhtmAlert='Debe ingresar una fecha hasta.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_hasta.focus();
 			  	return false; 
-			}else if(!validaFechaDDMMAAAA(periodoEnvio.f_hasta.val())){
-				alert('Debe ingresar una fecha hasta válida'); 
+			}else if(!validaFechaDDMMAAAA(periodoEnvio.f_hasta.val())){				
+				var addhtmAlert='Debe ingresar una fecha hasta válida.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_desde.focus();
 			  	return false; 
 			}else if(!periodoEnvio.f_fechaAmpl.val().length == '' && 
-					!validaFechaDDMMAAAA(periodoEnvio.f_fechaAmpl.val())){
-				alert('Debe ingresar fecha ampliacion válida'); 
+					!validaFechaDDMMAAAA(periodoEnvio.f_fechaAmpl.val())){				
+				var addhtmAlert='Debe ingresar fecha ampliacion válida.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_fechaAmpl.focus();
 			  	return false; 			
-			}else if(periodoEnvio.f_dias.val().length == ''){
-				alert('Debe ingresar el número de dias de notificación antes del cierre'); 
+			}else if(periodoEnvio.f_dias.val().length == ''){				
+				var addhtmAlert='Debe ingresar el número de dias de notificación antes del cierre.';					
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_dias.focus();
 			  	return false; 
 			}else if(periodoEnvio.verificarFormato(form)==true){
-				if(periodoEnvio.f_anoIniVigencia.val().length == ''){
-					alert('Debe ingresar el año de inicio de vigencia'); 
+				if(periodoEnvio.f_anoIniVigencia.val().length == ''){					
+					var addhtmAlert='Debe ingresar el año de inicio de vigencia.';					
+					periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+					periodoEnvio.dialogValidacion.dialog("open");
 					periodoEnvio.f_anoIniVigencia.focus();
 				  	return false; 
-				}else if(periodoEnvio.f_anoIniVigencia.val().length != 4){
-					alert('Debe ingresar el año de inicio de vigencia válido'); 
+				}else if(periodoEnvio.f_anoIniVigencia.val().length != 4){					
+					var addhtmAlert='Debe ingresar el año de inicio de vigencia válido.';					
+					periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+					periodoEnvio.dialogValidacion.dialog("open");
 					periodoEnvio.f_anoIniVigencia.focus();
 				  	return false; 
-				}else if(periodoEnvio.f_anoFinVigencia.val().length == ''){
-					alert('Debe ingresar el año fin de vigencia'); 
+				}else if(periodoEnvio.f_anoFinVigencia.val().length == ''){					
+					var addhtmAlert='Debe ingresar el año fin de vigencia.';					
+					periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+					periodoEnvio.dialogValidacion.dialog("open");
 					periodoEnvio.f_anoFinVigencia.focus();
 				  	return false; 
-				}else if(periodoEnvio.f_anoFinVigencia.val().length != 4){
-					alert('Debe ingresar el año fin de vigencia válido'); 
+				}else if(periodoEnvio.f_anoFinVigencia.val().length != 4){				
+					var addhtmAlert='Debe ingresar el año fin de vigencia válido.';					
+					periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+					periodoEnvio.dialogValidacion.dialog("open");
 					periodoEnvio.f_anoFinVigencia.focus();
 				  	return false; 
 				}else{
@@ -763,6 +834,7 @@ var periodoEnvio= {
 			periodoEnvio.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,	
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -773,7 +845,7 @@ var periodoEnvio= {
 			periodoEnvio.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -784,7 +856,40 @@ var periodoEnvio= {
 						$( this ).dialog("close");
 					}
 				}
-			});		
+			});	
+			
+			periodoEnvio.dialogValidacion.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			periodoEnvio.dialogError.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			periodoEnvio.dialogInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					OK: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
 			
 		}, /***fin de inicializar los dialogos**/	
 		

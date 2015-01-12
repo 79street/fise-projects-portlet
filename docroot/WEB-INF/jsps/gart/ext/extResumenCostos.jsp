@@ -18,6 +18,14 @@ var resumenCosto= {
 		dialogConfirm:null,//para eliminar
 		dialogConfirmContent:null,//para mostrar la confirmacion de eliminar		
 		
+		dialogValidacion:null,
+		dialogValidacionContent:null,
+		dialogError:null,
+		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
+		
+		
 		//divs
 		divF14A:null,	
 		divF12A:null,	
@@ -55,6 +63,13 @@ var resumenCosto= {
 			
 			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm-eliminar");//para elimar
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content-eliminar");//para eliminar
+			
+			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
+			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
+            this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");	
 			
 			//divs
 			this.divF14A=$("#<portlet:namespace/>div_F14A");
@@ -132,7 +147,9 @@ var resumenCosto= {
 						dwr.util.removeAllOptions("grupoInfBusq");
 						dwr.util.addOptions("grupoInfBusq", data,"codigoItem","descripcionItem");														
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						resumenCosto.dialogErrorContent.html(addhtmError);
+						resumenCosto.dialogError.dialog("open");
 						resumenCosto.initBlockUI();
 					}
 			});
@@ -154,15 +171,21 @@ var resumenCosto= {
 						if(data.resultado=='OK'){
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
-						}else if(data.resultado=='VACIO'){
-							alert("No existe ningún dato para los criterios seleccionados.");
+						}else if(data.resultado=='VACIO'){							
+							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							resumenCosto.dialogInfoContent.html(addhtmInfo);
+							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
-						}else{
-							alert("Error al mostrar el reporte del resumen de costos de F14A");
+						}else{							
+							var addhtmError='Error al mostrar el reporte del resumen de costos de F14A';					
+							resumenCosto.dialogErrorContent.html(addhtmError);
+							resumenCosto.dialogError.dialog("open");	
 							resumenCosto.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						resumenCosto.dialogErrorContent.html(addhtmError);
+						resumenCosto.dialogError.dialog("open");
 						resumenCosto.initBlockUI();
 					}
 				});	
@@ -186,15 +209,21 @@ var resumenCosto= {
 						if(data.resultado=='OK'){
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
-						}else if(data.resultado=='VACIO'){
-							alert("No existe ningún dato para este reporte.");
+						}else if(data.resultado=='VACIO'){							
+							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							resumenCosto.dialogInfoContent.html(addhtmInfo);
+							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
-						}else{
-							alert("Error al mostrar el reporte del resumen de costos de F12A");
+						}else{							
+							var addhtmError='Error al mostrar el reporte del resumen de costos de F12A';					
+							resumenCosto.dialogErrorContent.html(addhtmError);
+							resumenCosto.dialogError.dialog("open");	
 							resumenCosto.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						resumenCosto.dialogErrorContent.html(addhtmError);
+						resumenCosto.dialogError.dialog("open");
 						resumenCosto.initBlockUI();
 					}
 				});	
@@ -218,15 +247,21 @@ var resumenCosto= {
 						if(data.resultado=='OK'){
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
-						}else if(data.resultado=='VACIO'){
-							alert("No existe ningún dato para este reporte.");
+						}else if(data.resultado=='VACIO'){							
+							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							resumenCosto.dialogInfoContent.html(addhtmInfo);
+							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
-						}else{
-							alert("Error al mostrar el reporte del resumen de costos de F12B");
+						}else{							
+							var addhtmError='Error al mostrar el reporte del resumen de costos de F12B';					
+							resumenCosto.dialogErrorContent.html(addhtmError);
+							resumenCosto.dialogError.dialog("open");	
 							resumenCosto.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						resumenCosto.dialogErrorContent.html(addhtmError);
+						resumenCosto.dialogError.dialog("open");
 						resumenCosto.initBlockUI();
 					}
 				});	
@@ -235,12 +270,16 @@ var resumenCosto= {
 		
 		//funcion para validar los datos de la busqueda para el procesamiento del reporte
 		validarBusqueda : function() {			
-			if(resumenCosto.i_grupoInfBusq.val().length == ''){
-				alert('Debe seleccionar un grupo de información.'); 
+			if(resumenCosto.i_grupoInfBusq.val().length == ''){				
+				var addhtmVali='Debe seleccionar un grupo de información.';					
+				resumenCosto.dialogValidacionContent.html(addhtmVali);
+				resumenCosto.dialogValidacion.dialog("open");
 				resumenCosto.i_grupoInfBusq.focus();
 			  	return false; 
-			}else if(resumenCosto.i_codEmpresaBusq.val().length == ''){
-				alert('Debe seleccionar una distribuidora eléctrica.'); 
+			}else if(resumenCosto.i_codEmpresaBusq.val().length == ''){				
+				var addhtmVali='Debe seleccionar una distribuidora eléctrica.';					
+				resumenCosto.dialogValidacionContent.html(addhtmVali);
+				resumenCosto.dialogValidacion.dialog("open");
 				resumenCosto.i_codEmpresaBusq.focus();
 			  	return false; 
 			}else{
@@ -259,7 +298,7 @@ var resumenCosto= {
 			resumenCosto.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -275,12 +314,46 @@ var resumenCosto= {
 			resumenCosto.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,		
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
 					}
 				}
-			});				 
+			});
+			
+			resumenCosto.dialogValidacion.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			resumenCosto.dialogError.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			resumenCosto.dialogInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					OK: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
 			
 		}, /***fin de inicializar los dialogos**/	
 		

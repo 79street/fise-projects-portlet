@@ -16,6 +16,9 @@ var autorizarReenvio= {
 		dialogConfirm:null,//para autorizar reenvio registro
 		dialogConfirmContent:null,//para mostrar la confirmacion al reenviar el registro
 		
+		dialogError:null,
+		dialogErrorContent:null,
+		
 		//mensajes		
 		mensajeReenvio:null,		
 		
@@ -50,6 +53,8 @@ var autorizarReenvio= {
 			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");//para reenviar
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");//para reenviar
 			
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
 			
 			//mensajes						
 			this.mensajeReenvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Reenvio </h3>';			
@@ -146,8 +151,10 @@ var autorizarReenvio= {
 							autorizarReenvio.tablaResultados[0].refreshIndex();
 							autorizarReenvio.initBlockUI();
 					},error : function(){
-							alert("Error de conexión.");
-							autorizarReenvio.initBlockUI();
+						var addhtmError='Error de conexión.';					
+						autorizarReenvio.dialogErrorContent.html(addhtmError);
+						autorizarReenvio.dialogError.dialog("open");
+						autorizarReenvio.initBlockUI();
 					}
 				});			
 		},			
@@ -155,7 +162,7 @@ var autorizarReenvio= {
 		/**Function para confirmar si quiere autorizar el reenvio*/
 		confirmarAutorizarReenvio : function(codEmpresa,anioPres,mesPres,anioEjec,mesEjec,anioIniVig,anioFinVig,etapa,formato){
 			console.debug("entranado a confirmar reenvio:  "+codEmpresa);
-			var addhtml='¿Está seguro que desea autorizar el reenvio del registro seleccionado?';
+			var addhtml='¿Está seguro que desea autorizar el reenvio del registro seleccionado.?';
 			autorizarReenvio.dialogConfirmContent.html(addhtml);
 			autorizarReenvio.dialogConfirm.dialog("open");				
 			cod_Empresa=codEmpresa;
@@ -189,18 +196,22 @@ var autorizarReenvio= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='El Registro se reenvió con exito';					
+						var addhtml2='El Registro se reenvió con exito.';					
 						autorizarReenvio.dialogMessageContent.html(addhtml2);
 					    autorizarReenvio.dialogMessage.dialog("open");						
 						autorizarReenvio.buscarAutorizarReenvio();
 						autorizarReenvio.initBlockUI();
 					}
-					else{
-						alert("Error al autorizar reenvio del registro");
+					else{					
+						var addhtmError='Error al autorizar reenvio del registro seleccionado.';					
+						autorizarReenvio.dialogErrorContent.html(addhtmError);
+						autorizarReenvio.dialogError.dialog("open");	
 						autorizarReenvio.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					autorizarReenvio.dialogErrorContent.html(addhtmError);
+					autorizarReenvio.dialogError.dialog("open");
 					autorizarReenvio.initBlockUI();
 				}
 			});
@@ -211,7 +222,7 @@ var autorizarReenvio= {
 			autorizarReenvio.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -232,7 +243,20 @@ var autorizarReenvio= {
 						$( this ).dialog("close");
 					}
 				}
-			});
+			});		
+		
+			
+			autorizarReenvio.dialogError.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});	
+		
 			
 		}, /***fin de inicializar los dialogos**/	
 		

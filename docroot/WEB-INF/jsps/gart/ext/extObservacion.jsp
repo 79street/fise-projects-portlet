@@ -21,6 +21,13 @@ var fiseObservacion= {
 		dialogConfirm:null,//para eliminar registro
 		dialogConfirmContent:null,//para mostrar la confirmacion al eliminar el registro
 		
+		dialogValidacion:null,
+		dialogValidacionContent:null,
+		dialogError:null,
+		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
+		
 		//mensajes
 		mensajeCargando:null,
 		mensajeObteniendoDatos:null,
@@ -71,6 +78,12 @@ var fiseObservacion= {
 			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");//para eliminar
 			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");//para eliminar
 			
+			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
+			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
+			this.dialogError=$("#<portlet:namespace/>dialog-error");
+			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
+            this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");				
 			
 			//mensajes			
 			this.mensajeCargando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>';
@@ -200,8 +213,10 @@ var fiseObservacion= {
 							fiseObservacion.tablaResultados[0].refreshIndex();
 							fiseObservacion.initBlockUI();
 					},error : function(){
-							alert("Error de conexión.");
-							fiseObservacion.initBlockUI();
+						var addhtmError='Error de conexión.';					
+						fiseObservacion.dialogErrorContent.html(addhtmError);
+						fiseObservacion.dialogError.dialog("open");
+						fiseObservacion.initBlockUI();
 					}
 				});			
 		},		
@@ -226,8 +241,10 @@ var fiseObservacion= {
 					$('#<portlet:namespace/>actualizarfiseObservacion').css('display','none');	
 					
 				},error : function(){
-						alert("Error de conexión.");
-						fiseObservacion.initBlockUI();
+					var addhtmError='Error de conexión.';					
+					fiseObservacion.dialogErrorContent.html(addhtmError);
+					fiseObservacion.dialogError.dialog("open");
+					fiseObservacion.initBlockUI();
 				}
 			});			
 		},
@@ -259,12 +276,16 @@ var fiseObservacion= {
 					    	$('#<portlet:namespace/>actualizarfiseObservacion').css('display','none');
 					    							
 				        }						
-						else{
-							alert("Error al visualizar los datos del registro seleccionado");
+						else{							
+							var addhtmError='Error al visualizar los datos del registro seleccionado.';					
+							fiseObservacion.dialogErrorContent.html(addhtmError);
+							fiseObservacion.dialogError.dialog("open");	
 							fiseObservacion.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseObservacion.dialogErrorContent.html(addhtmError);
+						fiseObservacion.dialogError.dialog("open");
 						fiseObservacion.initBlockUI();
 					}
 			});	
@@ -296,12 +317,16 @@ var fiseObservacion= {
 								$('#<portlet:namespace/>actualizarfiseObservacion').css('display','block');	
 								//ESTILOS								
 					         }
-							else{
-								alert("Error al recuperar los datos del registro seleccionado");
+							else{								
+								var addhtmError='Error al recuperar los datos del registro seleccionado.';					
+								fiseObservacion.dialogErrorContent.html(addhtmError);
+								fiseObservacion.dialogError.dialog("open");	
 								fiseObservacion.initBlockUI();
 							}
 						},error : function(){
-							alert("Error de conexión.");
+							var addhtmError='Error de conexión.';					
+							fiseObservacion.dialogErrorContent.html(addhtmError);
+							fiseObservacion.dialogError.dialog("open");
 							fiseObservacion.initBlockUI();
 						}
 				});		
@@ -338,12 +363,16 @@ var fiseObservacion= {
 						fiseObservacion.buscarfiseObservacion();
 						fiseObservacion.initBlockUI();
 					}
-					else{
-						alert("Error al eliminar el registro");
+					else{						
+						var addhtmError='Error al eliminar el registro.';					
+						fiseObservacion.dialogErrorContent.html(addhtmError);
+						fiseObservacion.dialogError.dialog("open");	
 						fiseObservacion.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					fiseObservacion.dialogErrorContent.html(addhtmError);
+					fiseObservacion.dialogError.dialog("open");
 					fiseObservacion.initBlockUI();
 				}
 			});
@@ -374,19 +403,21 @@ var fiseObservacion= {
 							$('#<portlet:namespace/>guardarfiseObservacion').css('display','none');
 							$('#<portlet:namespace/>actualizarfiseObservacion').css('display','block');
 							
-						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al guardar la Observación.';
-							fiseObservacion.dialogMessageContent.html(addhtml2);
-							fiseObservacion.dialogMessage.dialog("open");						
+						}else if(data.resultado == "Error"){							
+							var addhtmError='Se produjo un error al guardar la Observación.';					
+							fiseObservacion.dialogErrorContent.html(addhtmError);
+							fiseObservacion.dialogError.dialog("open");						
 							fiseObservacion.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtml2='Ya existe registrado una Observación con este Id';
-							fiseObservacion.dialogMessageContent.html(addhtml2);
-							fiseObservacion.dialogMessage.dialog("open");						
+							var addhtmlInfo='Ya existe registrado una Observación con este Id.';
+							fiseObservacion.dialogInfoContent.html(addhtmlInfo);
+							fiseObservacion.dialogInfo.dialog("open");						
 							fiseObservacion.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseObservacion.dialogErrorContent.html(addhtmError);
+						fiseObservacion.dialogError.dialog("open");
 						fiseObservacion.initBlockUI();
 					}
 				});			
@@ -410,14 +441,16 @@ var fiseObservacion= {
 							fiseObservacion.dialogMessageContent.html(addhtml2);
 							fiseObservacion.dialogMessage.dialog("open");						
 							fiseObservacion.initBlockUI();								
-						}else if(data.resultado == "Error"){				
-							var addhtml2='Se produjo un error al actualizar la Observación.';
-							fiseObservacion.dialogMessageContent.html(addhtml2);
-							fiseObservacion.dialogMessage.dialog("open");						
+						}else if(data.resultado == "Error"){						
+							var addhtmError='Se produjo un error al actualizar la Observación.';					
+							fiseObservacion.dialogErrorContent.html(addhtmError);
+							fiseObservacion.dialogError.dialog("open");				
 							fiseObservacion.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						fiseObservacion.dialogErrorContent.html(addhtmError);
+						fiseObservacion.dialogError.dialog("open");
 						fiseObservacion.initBlockUI();
 					}
 				});						
@@ -426,16 +459,22 @@ var fiseObservacion= {
 		//funcion para validar ingreso de datos
 		validarFormulario : function() {
 			console.debug("tamaño de descripcion:  "+fiseObservacion.f_descripcion.val().length);
-			if(fiseObservacion.f_id.val().length == ''){
-				alert('Debe ingresar el id de Observación.'); 
+			if(fiseObservacion.f_id.val().length == ''){				
+				var addhtmAlert='Debe ingresar el id de Observación.';					
+				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
+				fiseObservacion.dialogValidacion.dialog("open");
 				fiseObservacion.f_id.focus();
 			  	return false; 
-			}else if(fiseObservacion.f_descripcion.val().length == ''){
-				alert('Debe ingresar descripción.'); 
+			}else if(fiseObservacion.f_descripcion.val().length == ''){				
+				var addhtmAlert='Debe ingresar descripción.';					
+				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
+				fiseObservacion.dialogValidacion.dialog("open");
 				fiseObservacion.f_descripcion.focus();
 			  	return false; 
-			}else if(fiseObservacion.f_descripcion.val().length > 499){
-				alert('La  descripción acepta como máximo 500 caracteres.'); 
+			}else if(fiseObservacion.f_descripcion.val().length > 499){				
+				var addhtmAlert='La  descripción acepta como máximo 500 caracteres.';					
+				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
+				fiseObservacion.dialogValidacion.dialog("open");
 				fiseObservacion.f_descripcion.focus();
 			  	return false; 
 			}else{
@@ -456,6 +495,7 @@ var fiseObservacion= {
 			fiseObservacion.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,	
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -466,7 +506,7 @@ var fiseObservacion= {
 			fiseObservacion.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -477,7 +517,40 @@ var fiseObservacion= {
 						$( this ).dialog("close");
 					}
 				}
-			});		
+			});	
+			
+			fiseObservacion.dialogValidacion.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			fiseObservacion.dialogError.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					Aceptar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
+			fiseObservacion.dialogInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,		
+				buttons: {
+					OK: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
 			
 		}, /***fin de inicializar los dialogos**/	
 		

@@ -865,23 +865,22 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-message-grabar" title="Mensaje de Informaci&oacute;n">
 		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
-			</span>
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:0 25px 10px 0;">	
 			<label id="<portlet:namespace/>dialog-message-content-grabar">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
 	<div id="<portlet:namespace/>dialog-confirm" title="Confirmar acci&oacute;n">
 		<p>	
-			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:0 25px 10px 0;">	
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>
-	</div>`
+	</div>
 	
 	
 	<div id="<portlet:namespace/>dialog-confirm-envio" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
-			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:0 25px 10px 0;">	
 			<label id="<portlet:namespace/>dialog-confirm-envio-content">¿Está seguro?</label>
 		</p>
 	</div>
@@ -893,11 +892,39 @@ $(document).ready(function () {
 	<!-- dialogo para el reporte de envio definitivo -->
 	<div id="<portlet:namespace/>dialog-message-report" title="Mensaje de Informaci&oacute;n">
 		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
-			</span>
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:0 25px 10px 0;">	
 			<label id="<portlet:namespace/>dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
+	
+	
+	<!-- DIALOGO PARA ALERTAR DE VALIDACION -->
+	
+	<div id="<portlet:namespace/>dialog-alert" title="Mensaje de Validaci&oacute;n">
+		<p>	
+			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
+		</p>
+	</div>	
+	
+	<!-- DIALOGO PARA ERRORES -->
+	
+	<div id="<portlet:namespace/>dialog-error" title="Mensaje de Error">
+		<p>	
+			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-error-content">Error..</label>
+		</p>
+	</div>	
+	
+	<!-- DIALOGO PARA INFORMAR UN MENSAJE -->
+	
+	<div id="<portlet:namespace/>dialog-info" title="Mensaje de Informaci&oacute;n">
+		<p>	
+			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-info-content">Error..</label>
+		</p>
+	</div>
+	
 	
 	
 	

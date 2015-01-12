@@ -478,8 +478,10 @@ var liquidacionVar= {
 						liquidacionVar.tablaResultados[0].refreshIndex();
 						liquidacionVar.initBlockUI();
 					},error : function(){
-							alert("Error de conexión.");
-							liquidacionVar.initBlockUI();
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
+						liquidacionVar.initBlockUI();
 					}
 				});			
 		},			
@@ -494,7 +496,9 @@ var liquidacionVar= {
 						dwr.util.removeAllOptions("grupoInfBusq");
 						dwr.util.addOptions("grupoInfBusq", data,"codigoItem","descripcionItem");														
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
 						liquidacionVar.initBlockUI();
 					}
 			});
@@ -547,7 +551,9 @@ var liquidacionVar= {
 						liquidacionVar.initBlockUI();	
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					liquidacionVar.dialogErrorContent.html(addhtmError);
+					liquidacionVar.dialogError.dialog("open");
 					liquidacionVar.initBlockUI();
 				}
 			});
@@ -607,7 +613,9 @@ var liquidacionVar= {
 						liquidacionVar.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					liquidacionVar.dialogErrorContent.html(addhtmError);
+					liquidacionVar.dialogError.dialog("open");
 					liquidacionVar.initBlockUI();
 				}
 			});
@@ -683,7 +691,9 @@ var liquidacionVar= {
 						liquidacionVar.initBlockUI();
 					}					
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					liquidacionVar.dialogErrorContent.html(addhtmError);
+					liquidacionVar.dialogError.dialog("open");
 					liquidacionVar.initBlockUI();
 				}
 			});
@@ -716,7 +726,9 @@ var liquidacionVar= {
 						liquidacionVar.initBlockUI();
 					}					
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					liquidacionVar.dialogErrorContent.html(addhtmError);
+					liquidacionVar.dialogError.dialog("open");
 					liquidacionVar.initBlockUI();
 				}
 			});
@@ -749,7 +761,9 @@ var liquidacionVar= {
 						liquidacionVar.initBlockUI();
 					}					
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					liquidacionVar.dialogErrorContent.html(addhtmError);
+					liquidacionVar.dialogError.dialog("open");
 					liquidacionVar.initBlockUI();
 				}
 			});
@@ -777,8 +791,10 @@ var liquidacionVar= {
 						liquidacionVar.tablaResultadosMotivo[0].refreshIndex();
 						liquidacionVar.initBlockUI();
 					},error : function(){
-							alert("Error de conexión.");
-							liquidacionVar.initBlockUI();
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
+						liquidacionVar.initBlockUI();
 					}
 				});			
 		},		
@@ -847,7 +863,9 @@ var liquidacionVar= {
 							liquidacionVar.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
 						liquidacionVar.initBlockUI();
 					}
 				});			
@@ -880,7 +898,9 @@ var liquidacionVar= {
 							liquidacionVar.initBlockUI();
 						}
 					},error : function(){
-						alert("Error de conexión.");
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
 						liquidacionVar.initBlockUI();
 					}
 				});						
@@ -938,7 +958,9 @@ var liquidacionVar= {
 								liquidacionVar.initBlockUI();
 							}
 						},error : function(){
-							alert("Error de conexión.");
+							var addhtmError='Error de conexión.';					
+							liquidacionVar.dialogErrorContent.html(addhtmError);
+							liquidacionVar.dialogError.dialog("open");
 							liquidacionVar.initBlockUI();
 						}
 				});		
@@ -987,7 +1009,9 @@ var liquidacionVar= {
 						liquidacionVar.initBlockUI();
 					}
 				},error : function(){
-					alert("Error de conexión.");
+					var addhtmError='Error de conexión.';					
+					liquidacionVar.dialogErrorContent.html(addhtmError);
+					liquidacionVar.dialogError.dialog("open");
 					liquidacionVar.initBlockUI();
 				}
 			});
@@ -1015,7 +1039,7 @@ var liquidacionVar= {
 			liquidacionVar.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1032,7 +1056,7 @@ var liquidacionVar= {
 			liquidacionVar.dialogConfirmEstablecer.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1047,7 +1071,7 @@ var liquidacionVar= {
 			liquidacionVar.dialogConfirmLiquidar.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 500,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1064,6 +1088,7 @@ var liquidacionVar= {
 			liquidacionVar.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,		
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1107,7 +1132,7 @@ var liquidacionVar= {
 			 liquidacionVar.dialogConfirmMotivo.dialog({
 					modal: true,
 					height: 200,
-					width: 400,			
+					width: 500,			
 					autoOpen: false,
 					buttons: {
 						"Si": function() {
@@ -1134,6 +1159,7 @@ var liquidacionVar= {
 			 liquidacionVar.dialogError.dialog({
 					modal: true,
 					autoOpen: false,
+					width: 500,		
 					buttons: {
 						Aceptar: function() {
 							$( this ).dialog("close");
@@ -1144,6 +1170,7 @@ var liquidacionVar= {
 			 liquidacionVar.dialogInfo.dialog({
 					modal: true,
 					autoOpen: false,
+					width: 500,		
 					buttons: {
 						OK: function() {
 							$( this ).dialog("close");
