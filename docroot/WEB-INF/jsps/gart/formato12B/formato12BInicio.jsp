@@ -154,7 +154,7 @@ $(document).ready(function () {
 		</div>
 	</div>
 	<div id="dlgConfirmacion"></div>
-	<div id="dialogMessageGeneralInicio" title="Mensaje de Informaci&oacute;n">
+	<div id="dialogMessageGeneralInicio" title="Mensaje de &Eacute;xito">
 		<p>
 			<!-- <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span> -->
