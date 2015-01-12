@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.2396694214876076"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.8906136901500177"/>
+	<property name="ireport.x" value="2356"/>
+	<property name="ireport.y" value="721"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
@@ -109,7 +109,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FORMATO 14A: RESUMEN DE COSTOS ESTÁNDARE DE IMPLEMENTACIÓN]]></text>
+				<text><![CDATA[FORMATO 14A: RESUMEN DE COSTOS ESTÁNDARES DE IMPLEMENTACIÓN]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="11" y="4" width="280" height="60"/>
@@ -279,7 +279,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<textField>
 				<reportElement x="4" y="0" width="121" height="20"/>
 				<textElement>
@@ -378,107 +378,122 @@
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpAprobadoL}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="5" y="21" width="789" height="1" forecolor="#007DBC" backcolor="#007DBC"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="22" splitType="Stretch">
+		<band height="2" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="6" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="41" splitType="Stretch">
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="603" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="603" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="652" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="652" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="555" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="555" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="311" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="311" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="360" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="360" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="263" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="263" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="458" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="458" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="506" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="506" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="701" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="701" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="750" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="750" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="409" y="1" width="45" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="409" y="4" width="45" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="213" y="1" width="46" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="213" y="4" width="46" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliR}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="128" y="1" width="82" height="20"/>
-				<textElement>
+				<reportElement x="128" y="4" width="82" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL S/.]]></text>
 			</staticText>
+			<line direction="BottomUp">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="5" y="2" width="789" height="1" forecolor="#006699" backcolor="#006699"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line direction="BottomUp">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="5" y="24" width="789" height="1" forecolor="#006699" backcolor="#006699"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
 		</band>
-	</columnFooter>
-	<pageFooter>
-		<band height="2" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="2" splitType="Stretch"/>
 	</summary>
 </jasperReport>
