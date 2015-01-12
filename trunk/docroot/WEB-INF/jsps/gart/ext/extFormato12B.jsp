@@ -27,6 +27,14 @@
 		txtPeriodo:null,
 		divgrupoestado:null,
 		
+		dialogMessageConfirm:null,
+		dialogMessageConfirmContent:null,
+		dialogMessageInfo:null,
+		dialogMessageInfoContent:null,
+		dialogMessageWarning:null,
+		dialogMessageWarningContent:null,
+		dialogMessageError:null,
+		dialogMessageErrorContent:null,
 		
 		urlLoadPeriodo:null,
 		urlLoadCostosUnitarios:null,
@@ -152,6 +160,13 @@
         dialogMessageGeneralInicial:null,
         lblMessageInicial:null,
         
+        dialogMessageInfoDetalle:null,
+		dialogMessageInfoDetalleContent:null,
+		dialogMessageWarningDetalle:null,
+		dialogMessageWarningDetalleContent:null,
+		dialogMessageErrorDetalle:null,
+		dialogMessageErrorDetalleContent:null,
+        
         blockUI : function() {
 			$.blockUI({
 						message : '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>'
@@ -177,6 +192,15 @@
 			this.txtAnioInicio=$("#anioInicio");
 			this.txtAnioFin=$("#anioFin");
 			
+			this.dialogMessageConfirm=$("#<portlet:namespace/>dialog-message-confirm");
+			this.dialogMessageConfirmContent=$("#<portlet:namespace/>dialog-message-confirm-content");
+			this.dialogMessageInfo=$("#<portlet:namespace/>dialog-message-info");
+			this.dialogMessageInfoContent=$("#<portlet:namespace/>dialog-message-info-content");
+			this.dialogMessageWarning=$("#<portlet:namespace/>dialog-message-warning");
+			this.dialogMessageWarningContent=$("#<portlet:namespace/>dialog-message-warning-content");
+			this.dialogMessageError=$("#<portlet:namespace/>dialog-message-error");
+			this.dialogMessageErrorContent=$("#<portlet:namespace/>dialog-message-error-content");
+			
 			formato12B.initDialogsInit();
 			this.urlViewFormato=urlView;
 			formato12B.btnBuscar.click(function() {
@@ -199,15 +223,19 @@
 			
 			
 			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
-	    		 formato12B.lblMessageInicial.html("El año debe contener 4 dígitos");
-				 formato12B.dialogMessageGeneralInicial.dialog("open");
+	    		 //formato12B.lblMessageInicial.html("El año debe contener 4 dígitos");
+				 //formato12B.dialogMessageGeneralInicial.dialog("open");
+				 formato12B.dialogMessageWarningContent.html("El año debe contener 4 dígitos");
+				 formato12B.dialogMessageWarning.dialog("open");
 				 return false; 
 	    		
 	    	 }else if(fin.val().length>0){
 	    		 if(parseFloat(inicio.val().length>0?inicio.val():'0')>parseFloat(fin.val())){
 	    			
-	    			 formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial ");
-					 formato12B.dialogMessageGeneralInicial.dialog("open"); 
+	    			 //formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial ");
+					 //formato12B.dialogMessageGeneralInicial.dialog("open"); 
+					 formato12B.dialogMessageWarningContent.html("El año final debe ser mayor o igual al inicial");
+					 formato12B.dialogMessageWarning.dialog("open");
 					 return false; 
 	    		 }
 	    		 
@@ -218,8 +246,10 @@
 					var mesfin=$("#mesFin").val();
 				
 					if(parseFloat(mesfin)<parseFloat(mesinicio)){
-						 formato12B.lblMessageInicial.html("El mes final debe ser posterior al mes inicial");
-						 formato12B.dialogMessageGeneralInicial.dialog("open"); 
+						 //formato12B.lblMessageInicial.html("El mes final debe ser posterior al mes inicial");
+						 //formato12B.dialogMessageGeneralInicial.dialog("open"); 
+						 formato12B.dialogMessageWarningContent.html("El mes final debe ser posterior al mes inicial");
+						 formato12B.dialogMessageWarning.dialog("open");
 						 return false; 
 					}
 	    		
@@ -454,6 +484,13 @@
          
          this.dialogMessageGeneral=$("#dialogMessageGeneral");
          this.lblMessage=$("#lblMessage");
+         
+         this.dialogMessageInfoDetalle=$("#<portlet:namespace/>dialog-message-info-detalle");
+ 		 this.dialogMessageInfoDetalleContent=$("#<portlet:namespace/>dialog-message-info-content-detalle");
+ 		 this.dialogMessageWarningDetalle=$("#<portlet:namespace/>dialog-message-warning-detalle");
+ 		 this.dialogMessageWarningDetalleContent=$("#<portlet:namespace/>dialog-message-warning-content-detalle");
+ 		 this.dialogMessageErrorDetalle=$("#<portlet:namespace/>dialog-message-error-detalle");
+		 this.dialogMessageErrorDetalleContent=$("#<portlet:namespace/>dialog-message-error-content-detalle");
          
           formato12B.initDialogs();
  		
@@ -902,8 +939,10 @@
 					 }
 					
 					 
-					formato12B.lblMessage.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declara seleccionado");
-					formato12B.dialogMessageGeneral.dialog("open");
+					//formato12B.lblMessage.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declara seleccionado");
+					//formato12B.dialogMessageGeneral.dialog("open");
+					formato12B.dialogMessageInfoDetalleContent.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declara seleccionado");
+					formato12B.dialogMessageInfoDetalle.dialog("open");
 			}
 			formato12B.loadCostoTotal(formato12B.cmbCodEmpresa.val());
 			
@@ -1156,9 +1195,9 @@
 				formato12B.dlgConfirmacion.html(msj);
 				if(numModal == 1){
 					formato12B.dlgConfirmacion.dialog({ 
-				     	title:"Eliminar formato",
+				     	title:"Mensaje de Confirmaci&oacute;n",
 				     	height:150,
-						width: 400,	
+						width: 500,	
 				         modal: true,
 				         buttons:{
 				        	 "Si":function(){
@@ -1174,7 +1213,7 @@
 				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
 				     }).load();
 				}else{
-					titulo="Aviso";
+					/*titulo="Mensaje de Informaci&oacute;n";
 					formato12B.dlgConfirmacion.dialog({ 
 				     	title:titulo,
 				     	height:150,
@@ -1186,7 +1225,9 @@
 				        	}
 				         },
 				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
-				     }).load();
+				     }).load();*/
+					formato12B.dialogMessageInfoContent.html(msj);
+					formato12B.dialogMessageInfo.dialog("open");
 				}
 				
 				
@@ -1235,7 +1276,7 @@
 						isSubmit=true;
 					}else{
 						isSubmit=false;
-						$("#msjUploadFile").html("Archivo inváido");
+						$("#msjUploadFile").html("Archivo inválido");
 					}
 				}
 			}
@@ -1352,20 +1393,28 @@
 									formato12B.dialogMessageGeneral.dialog("open");
 									
 								}else if(item.msg == "-1"){
-									formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");
-									formato12B.dialogMessageGeneral.dialog("open");
+									//formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");
+									//formato12B.dialogMessageGeneral.dialog("open");
+									formato12B.dialogMessageErrorDetalleContent.html("El formato ya existe para la empresa y periodo seleccionado");
+									formato12B.dialogMessageErrorDetalle.dialog("open");
 									
 								}else if(item.msg == "-2"){
-									formato12B.lblMessage.html("Error al obtener usuario");
-									formato12B.dialogMessageGeneral.dialog("open");
+									//formato12B.lblMessage.html("Error al obtener usuario");
+									//formato12B.dialogMessageGeneral.dialog("open");
+									formato12B.dialogMessageErrorDetalleContent.html("Error al obtener usuario");
+									formato12B.dialogMessageErrorDetalle.dialog("open");
 									
 								}else if(item.msg == "-3"){
-									formato12B.lblMessage.html("Error al obtener terminal");
-									formato12B.dialogMessageGeneral.dialog("open");
+									//formato12B.lblMessage.html("Error al obtener terminal");
+									//formato12B.dialogMessageGeneral.dialog("open");
+									formato12B.dialogMessageErrorDetalleContent.html("Error al obtener terminal");
+									formato12B.dialogMessageErrorDetalle.dialog("open");
 									
 								}else if(item.msg == "-4"){
-									formato12B.lblMessage.html("Se produjo un error al guardar los datos");
-									formato12B.dialogMessageGeneral.dialog("open");
+									//formato12B.lblMessage.html("Se produjo un error al guardar los datos");
+									//formato12B.dialogMessageGeneral.dialog("open");
+									formato12B.dialogMessageErrorDetalleContent.html("Se produjo un error al guardar los datos");
+									formato12B.dialogMessageErrorDetalle.dialog("open");
 									
 								}
 							});
@@ -1377,8 +1426,10 @@
 					}
 			});
 			}else{
-				formato12B.lblMessage.html("Debe al menos registrar un campo por zona beneficiaria");
-				formato12B.dialogMessageGeneral.dialog("open");
+				//formato12B.lblMessage.html("Debe al menos registrar un campo por zona beneficiaria");
+				//formato12B.dialogMessageGeneral.dialog("open");
+				formato12B.dialogMessageWarningDetalleContent.html("Debe al menos registrar un campo por zona beneficiaria");
+				formato12B.dialogMessageWarningDetalle.dialog("open");
 			}
 			
 			
@@ -1409,8 +1460,10 @@
 						
 						
 					}else if(data == '-1'){
-						formato12B.lblMessageInicial.html("Error al eliminar registro");
-						formato12B.dialogMessageGeneralInicial.dialog("open");
+						//formato12B.lblMessageInicial.html("Error al eliminar registro");
+						//formato12B.dialogMessageGeneralInicial.dialog("open");
+						formato12B.dialogMessageErrorContent.html("Error al eliminar registro");
+						formato12B.dialogMessageError.dialog("open");
 						
 					}
 					formato12B.searchFormato();
@@ -1574,8 +1627,10 @@
 					}
 				});
 			}else{
-				formato12B.lblMessage.html("Primero debe realizar el envío definitivo");
-			    formato12B.dialogMessageGeneral.dialog("open");
+				//formato12B.lblMessage.html("Primero debe realizar el envío definitivo");
+			    //formato12B.dialogMessageGeneral.dialog("open");
+			    formato12B.dialogMessageInfoDetalleContent.html("Primero debe realizar el envío definitivo");
+				formato12B.dialogMessageInfoDetalle.dialog("open");
 				
 			}
 		},
@@ -1641,6 +1696,47 @@
 				autoOpen: false,
 				buttons: {
 					Cerrar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			//addd
+			formato12B.dialogMessageConfirm.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			formato12B.dialogMessageInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			formato12B.dialogMessageWarning.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			formato12B.dialogMessageError.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,
+				buttons: {
+					Ok: function() {
 						$( this ).dialog("close");
 					}
 				}
@@ -1719,6 +1815,37 @@
 				autoOpen: false,
 				buttons: {
 					Cerrar: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			//addd
+			formato12B.dialogMessageInfoDetalle.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			formato12B.dialogMessageWarningDetalle.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
+			formato12B.dialogMessageErrorDetalle.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 500,
+				buttons: {
+					Ok: function() {
 						$( this ).dialog("close");
 					}
 				}
