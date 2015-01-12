@@ -3173,7 +3173,7 @@ var formato14C= {
 					   // formato14C.divBuscar.show();
 					   // formato14C.botonBuscar.trigger('click');
 					}else{						
-						var addhtmError='Error al realizar el envio definitivo del Formato 14C.';					
+						var addhtmError='Error al realizar el Envio Definitivo del Formato 14C.';					
 						formato14C.dialogErrorContentF14C.html(addhtmError);
 						formato14C.dialogErrorF14C.dialog("open");	
 						formato14C.initBlockUI();

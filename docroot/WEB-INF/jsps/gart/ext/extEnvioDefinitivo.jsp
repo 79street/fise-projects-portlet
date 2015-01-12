@@ -402,19 +402,19 @@ var envioDefinitivoGlobal= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='El envio general se realizó con éxito'; 					
+						var addhtml2='El Envio General Definitivo se realizó satisfactoriamente'; 					
 						envioDefinitivoGlobal.dialogMessageContent.html(addhtml2);
 						envioDefinitivoGlobal.dialogMessage.dialog("open");					
 						envioDefinitivoGlobal.initBlockUI();
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 					}else if(data.resultado == "ENVIADO"){						
-						var addhtmInfo='Este grupo ya ha sido enviado.';					
+						var addhtmInfo='Este grupo de formatos ya ha sido enviado.';					
 						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
 						envioDefinitivoGlobal.dialogInfo.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 					}else if(data.resultado == "NO_DATOS"){						
-						var addhtmInfo='No existe ninguna lista pra realizar el envio general, vuelva a realizar la búsqueda.';					
+						var addhtmInfo='No existe ninguna lista pra realizar el Envío General Definitivo. Realice una nueva búsqueda..';					
 						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
 						envioDefinitivoGlobal.dialogInfo.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();	
@@ -431,7 +431,7 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "ERROR"){						
-						var addhtmError='Error al realizar el envio general de los formatos mostrados.';					
+						var addhtmError='Error al realizar el Envio General Definitivo de los formatos presentados.';					
 						envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
 						envioDefinitivoGlobal.dialogError.dialog("open");	
 						envioDefinitivoGlobal.botonBuscar.trigger('click');

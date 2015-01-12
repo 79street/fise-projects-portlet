@@ -168,18 +168,18 @@ $(document).ready(function () {
 										<tr>
 											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Distribuidora Eléctrica:</label>
 											</td>
-											<td>								  
-											  <output id="empresaMotivo"></output>											  					  
+											<td>											  
+											  <input id="empresaMotivo" readonly="readonly" style="border:none; background:#efefef;">										  					  
 											</td>
 											
 											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Formato:</label></td>
-											<td>
-											  <output id="formatoMotivo"></output>	
+											<td>											  
+											  <input id="formatoMotivo" readonly="readonly" style="border:none; background:#efefef;">
 											</td>
 											
-											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Etapa Origen:</label></td>
-											<td>
-											  <output id="etapaOrigenMotivo"></output>	
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Etapa Final:</label></td>
+											<td>											 
+											  <input id="etapaFinalMotivo" readonly="readonly" style="border:none; background:#efefef;">	
 											</td>
 											
 										</tr>										
@@ -189,18 +189,18 @@ $(document).ready(function () {
 										
 										<tr>
 											<td><label style="font-size: 12px; font-weight:bold">Año Declarado:</label></td>
-											<td>											 	
-											  <output id="anioMotivo"></output> 	
+											<td>										  
+											  <input id="anioMotivo" readonly="readonly" style="border:none; background:#efefef;">	 	
 											</td>
 											
 											<td><label style="font-size: 12px; font-weight:bold">Mes Declarado:</label></td>
-											<td>
-											  <output id="mesMotivo"></output> 	
+											<td>										  
+											  <input id="mesMotivo" readonly="readonly" style="border:none; background:#efefef;">	 	
 											</td>
 											
 											<td><label style="font-size: 12px; font-weight:bold">Año Ejecución:</label></td>
-											<td>
-											  <output id="anioEjecMotivo"></output> 	
+											<td>										 
+											  <input id="anioEjecMotivo" readonly="readonly" style="border:none; background:#efefef;">	 	 	
 											</td>
 											
 										</tr>
@@ -212,18 +212,18 @@ $(document).ready(function () {
 										
 										<tr>
 											<td><label style="font-size: 12px; font-weight:bold">Mes Ejecución:</label></td>
-											<td>											 	
-											  <output id="mesEjecMotivo"></output> 	
+											<td>						 
+											  <input id="mesEjecMotivo" readonly="readonly" style="border:none; background:#efefef;"> 	
 											</td>
 											
 											<td><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
-											<td>
-											  <output id="anioInicioVigMotivo"></output> 	
+											<td>											 
+											  <input id="anioInicioVigMotivo" readonly="readonly" style="border:none; background:#efefef;">	
 											</td>
 											
 											<td><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
-											<td>
-											  <output id="anioFinVigMotivo"></output> 	
+											<td>											  
+											  <input id="anioFinVigMotivo" readonly="readonly" style="border:none; background:#efefef;">	
 											</td>
 											
 										</tr>		
@@ -292,7 +292,7 @@ $(document).ready(function () {
 	
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
-											<td><output class="net-titulo">MOTIVO LIQUIDACIÓN</output>
+											<td><output class="net-titulo">MOTIVO DE NO RECONOCIMIENTO/APROBACIÓN</output>
 											</td>
 										</tr>
 										<tr height="10px">
@@ -302,10 +302,10 @@ $(document).ready(function () {
 									     <td>											
 										   <table style="width: 100%;" border="0">
 											  <tr>										   
-											   <td><label style="font-size: 12px; font-weight: bold">Descripción:</label>
+											   <td><label style="font-size: 12px; font-weight: bold">Descripción Motivo:</label>
 											   </td>
 											   <td>
-												 <form:textarea path="descMotivo" cols="65" rows="4" onkeypress="return soloLetras(event)"/>  
+												 <form:textarea path="descMotivo" cols="80" rows="4" onkeypress="return soloLetras(event)"/>  
 											   </td>								   
 										     </tr>						
 										  </table>								 								
