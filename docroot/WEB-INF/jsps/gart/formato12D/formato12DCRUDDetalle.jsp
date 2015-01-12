@@ -358,13 +358,29 @@ $(function() {
 		</div>
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-message-detalle" title="Mensaje de Informaci&oacute;n">
+	<div id="<portlet:namespace/>dialog-message-detalle" title="Mensaje de &Eacute;xito">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span>
 			<label id="<portlet:namespace/>dialog-message-detalle-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
+	
+	<!--  -->
+	<div id="<portlet:namespace/>dialog-message-warning-detalle" title="Mensaje de Advertencia">
+		<p>
+			<img src="fise-projects-portlet/images/warning.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="dialog-message-warning-content-detalle">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	
+	<div id="<portlet:namespace/>dialog-message-error-detalle" title="Mensaje de Error">
+		<p>
+			<img src="fise-projects-portlet/images/error.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="dialog-message-error-content-detalle">Datos grabados exit&oacute;samente.</label>
+		</p>	
+	</div>
+	<!--  -->
 	
 	<form:input path="codEdelnor" cssStyle="display:none;" />	 
 	<form:input path="codLuzSur" cssStyle="display:none;" />

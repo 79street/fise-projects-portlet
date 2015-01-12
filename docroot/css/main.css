@@ -6,3 +6,10 @@
 	background: none repeat scroll 00 #ffc !important;
 	border: 1px solid #0004ff !important;
 }
+.msgConfirmacionFise {
+	background: url("../images/ic_question_mark.png") no-repeat scroll transparent;
+	background-repeat: no-repeat;
+    display: block;
+    overflow: hidden;
+    text-indent: -99999px;
+}

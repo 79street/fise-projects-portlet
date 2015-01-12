@@ -95,6 +95,14 @@ var formato14B= {
 	dialogConfirmEnvioContent:null,
 	dialogCargaExcel:null,
 	dialogCargaTexto:null,
+	//adds messages
+	dialogMessageInfo:null,
+	dialogMessageInfoContent:null,
+	dialogMessageWarning:null,
+	dialogMessageWarningContent:null,
+	dialogMessageError:null,
+	dialogMessageErrorContent:null,
+	
 	//divs
 	divHome:null,
 	divFormato:null,
@@ -187,6 +195,15 @@ var formato14B= {
 		//
 		this.dialogMessageReport=$("#<portlet:namespace/>dialog-message-report");
 		this.dialogMessageReportContent=$("#<portlet:namespace/>dialog-message-report-content");
+		
+		//add message
+		this.dialogMessageInfo=$("#<portlet:namespace/>dialog-message-info");
+		this.dialogMessageInfoContent=$("#<portlet:namespace/>dialog-message-info-content");
+		this.dialogMessageWarning=$("#<portlet:namespace/>dialog-message-warning");
+		this.dialogMessageWarningContent=$("#<portlet:namespace/>dialog-message-warning-content");
+		this.dialogMessageError=$("#<portlet:namespace/>dialog-message-error");
+		this.dialogMessageErrorContent=$("#<portlet:namespace/>dialog-message-error-content");
+		
 		//divs
 		this.divHome=$("#<portlet:namespace/>div_home");
 		this.divFormato=$("#<portlet:namespace/>div_formato");
@@ -452,7 +469,9 @@ var formato14B= {
 		if(formato14B.i_anioDesde.val().length != '' ) {		  
 			  var numstr = trim(formato14B.i_anioDesde.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-				  alert('Ingrese un año desde válido');
+				  //alert('Ingrese un año desde válido');
+				  formato14B.dialogMessageWarningContent.html('Ingrese un año desde válido');
+				  formato14B.dialogMessageWarning.dialog("open");
 				  formato14B.i_anioDesde.focus();
 				  return false;
 			  }
@@ -460,19 +479,25 @@ var formato14B= {
 		  if(formato14B.i_anioHasta.val().length != '' ) {		  
 			  var numstr = trim(formato14B.i_anioHasta.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-				  alert('Ingrese un año hasta válido');
+				  //alert('Ingrese un año hasta válido');
+				  formato14B.dialogMessageWarningContent.html('Ingrese un año hasta válido');
+				  formato14B.dialogMessageWarning.dialog("open");
 				  formato14B.i_anioHasta.focus();
 				  return false;
 			  }
 		  }
 		  if(formato14B.i_anioDesde.val().length != '' && formato14B.i_anioHasta.val().length != '' ) {
 			  if( parseFloat(formato14B.i_anioDesde.val()) > parseFloat(formato14B.i_anioHasta.val()) ){
-					alert('El año desde no puede exceder al año hasta');
+					//alert('El año desde no puede exceder al año hasta');
+					 formato14B.dialogMessageWarningContent.html('El año desde no puede exceder al año hasta');
+					 formato14B.dialogMessageWarning.dialog("open");
 					return false;
 			  }
 		  }
 		  if(formato14B.i_etapaB.val().length == '' ) { 	    
-			    alert('Seleccione una etapa');
+			    //alert('Seleccione una etapa');
+			    formato14B.dialogMessageWarningContent.html('Seleccione una etapa');
+			    formato14B.dialogMessageWarning.dialog("open");
 			    formato14B.i_etapaB.focus();
 			    return false; 
 		  }
@@ -1361,7 +1386,9 @@ var formato14B= {
 						formato14B.initBlockUI();
 					}
 					else{
-						alert("Error al recuperar los datos del registro seleccionado");
+						//alert("Error al recuperar los datos del registro seleccionado");
+						formato14B.dialogMessageErrorContent.html('Error al recuperar los datos del registro seleccionado');
+					    formato14B.dialogMessageError.dialog("open");
 						formato14B.initBlockUI();
 					}
 				},error : function(){
@@ -1416,7 +1443,9 @@ var formato14B= {
 								formato14B.initBlockUI();
 							}
 							else{
-								alert("Error al recuperar los datos del registro seleccionado");
+								//alert("Error al recuperar los datos del registro seleccionado");
+								formato14B.dialogMessageErrorContent.html('Error al recuperar los datos del registro seleccionado');
+							    formato14B.dialogMessageError.dialog("open");
 								formato14B.initBlockUI();
 							}
 						},error : function(){
@@ -1425,13 +1454,19 @@ var formato14B= {
 						}
 				});
 			}else{
-				alert(" No tiene autorización para realizar esta operación");
+				//alert(" No tiene autorización para realizar esta operación");
+				formato14B.dialogMessageInfoContent.html('No tiene autorización para realizar esta operación');
+			    formato14B.dialogMessageInfo.dialog("open");
 			}	
 			
 		}else if(flagOperacion=='CERRADO'){
-			alert(" Está fuera de plazo");
+			//alert(" Está fuera de plazo");
+			formato14B.dialogMessageInfoContent.html('Está fuera de plazo');
+		    formato14B.dialogMessageInfo.dialog("open");
 		}else{
-			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+			//alert("El formato ya fue enviado a OSINERGMIN-GART");
+			formato14B.dialogMessageInfoContent.html('El formato ya fue enviado a OSINERGMIN-GART');
+		    formato14B.dialogMessageInfo.dialog("open");
 		}
 	},
 	FillEditformato : function(row){
@@ -1584,8 +1619,8 @@ var formato14B= {
 					}
 					else if(data.resultado == "Error"){				
 						var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
-						formato14B.dialogMessageContent.html(addhtml2);
-						formato14B.dialogMessage.dialog("open");
+						formato14B.dialogMessageErrorContent.html(addhtml2);
+						formato14B.dialogMessageError.dialog("open");
 						formato14B.mostrarUltimoFormato();
 						formato14B.initBlockUI();
 					}
@@ -1618,13 +1653,19 @@ var formato14B= {
 				ano_Fin_Vigencia=anoFinVigencia;
 				cod_Etapa=etapa;
 			}else{
-				alert(" No tiene autorización para realizar esta operación");
+				//alert(" No tiene autorización para realizar esta operación");
+				formato14B.dialogMessageInfoContent.html('No tiene autorización para realizar esta operación');
+			    formato14B.dialogMessageInfo.dialog("open");
 			}
 			
 		}else if(flagOperacion=='CERRADO'){
-			alert(" Está fuera de plazo");
+			//alert(" Está fuera de plazo");
+			formato14B.dialogMessageInfoContent.html('Está fuera de plazo');
+		    formato14B.dialogMessageInfo.dialog("open");
 		}else{
-			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+			//alert("El formato ya fue enviado a OSINERGMIN-GART");	
+			formato14B.dialogMessageInfoContent.html('El formato ya fue enviado a OSINERGMIN-GART');
+		    formato14B.dialogMessageInfo.dialog("open");
 		}
 	},
 	eliminarFormato : function(cod_Empresa,ano_Presentacion,mes_Presentacion,ano_Inicio_Vigencia,ano_Fin_Vigencia,cod_Etapa){			
@@ -1651,7 +1692,9 @@ var formato14B= {
 					formato14B.initBlockUI();
 				}
 				else{
-					alert("Error al eliminar el registro");
+					//alert("Error al eliminar el registro");
+					formato14B.dialogMessageErrorContent.html('Error al eliminar el registro');
+				    formato14B.dialogMessageError.dialog("open");
 					formato14B.initBlockUI();
 				}
 			},error : function(){
@@ -1702,114 +1745,156 @@ var formato14B= {
 	},
 	validarFormulario : function() {		
 		if(formato14B.f_empresa.val().length == '' ) { 	
-			alert('Seleccione una Distribuidora Eléctrica'); 
+			//alert('Seleccione una Distribuidora Eléctrica'); 
+			formato14B.dialogMessageWarningContent.html('Seleccione una Distribuidora Eléctrica');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_empresa.focus();
 		  	return false; 
 		}
 		if(formato14B.f_periodoEnvio.val().length == '' ) {		  
-			alert('Debe ingresar el periodo a declarar');
+			//alert('Debe ingresar el periodo a declarar');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el periodo a declarar');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_periodoEnvio.focus();
 			return false; 
 		}
 		if( formato14B.f_flagPeriodo.val()=='S' ){
 			if($('#anioInicioVigencia').val().length == '' ) {		  
-				alert('Debe ingresar el año de inicio de vigencia');
+				//alert('Debe ingresar el año de inicio de vigencia');
+				formato14B.dialogMessageWarningContent.html('Debe ingresar el año de inicio de vigencia');
+			    formato14B.dialogMessageWarning.dialog("open");
 				$('#anioInicioVigencia').focus();
 				return false; 
 			}else{
 				var numstr = trim($('#anioInicioVigencia').val());
 				if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-					alert('Ingrese un año de inicio de inicio de vigencia válido');
+					//alert('Ingrese un año de inicio de inicio de vigencia válido');
+					formato14B.dialogMessageWarningContent.html('Ingrese un año de inicio de inicio de vigencia válido');
+				    formato14B.dialogMessageWarning.dialog("open");
 					return false;
 			 	}
 		 	}
 			if($('#anioFinVigencia').val().length == '' ) {		  
-				alert('Debe ingresar el año de fin de vigencia');
+				//alert('Debe ingresar el año de fin de vigencia');
+				formato14B.dialogMessageWarningContent.html('Debe ingresar el año de fin de vigencia');
+			    formato14B.dialogMessageWarning.dialog("open");
 				$('#anioFinVigencia').focus();
 				return false; 
 			}else{
 				var numstr = trim($('#anioFinVigencia').val());
 				if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-					alert('Ingrese un año de fin de vigencia válido');
+					//alert('Ingrese un año de fin de vigencia válido');
+					formato14B.dialogMessageWarningContent.html('Ingrese un año de fin de vigencia válido');
+				    formato14B.dialogMessageWarning.dialog("open");
 					return false;
 				}
 		 	}
 		}
 		//valores de formulario
 		if(formato14B.f_nroValesImpR.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales impresos para Rural');
+			//alert('Debe ingresar el número de vales impresos para Rural');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales impresos para Rural');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefR.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesReptR.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales repartidos para Rural');
+			//alert('Debe ingresar el número de vales repartidos para Rural');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales repartidos para Rural');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefR.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesEntrR.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales entregados para Rural');
+			//alert('Debe ingresar el número de vales entregados para Rural');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales entregados para Rural');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefR.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesFisR.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales físicos para Rural');
+			//alert('Debe ingresar el número de vales físicos para Rural');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales físicos para Rural');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefR.focus();
 			return false; 
 		}
 		if(formato14B.f_nroTotalAtenR.val().length == '' ) {		  
-			alert('Debe ingresar el número total de atenciones para Rural');
+			//alert('Debe ingresar el número total de atenciones para Rural');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número total de atenciones para Rural');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefR.focus();
 			return false; 
 		}
 		////////////////////
 		if(formato14B.f_nroValesImpP.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales impresos para Provincia');
+			//alert('Debe ingresar el número de vales impresos para Provincia');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales impresos para Provincia');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefP.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesReptP.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales repartidos para Provincia');
+			//alert('Debe ingresar el número de vales repartidos para Provincia');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales repartidos para Provincia');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefP.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesEntrP.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales entregados para Provincia');
+			//alert('Debe ingresar el número de vales entregados para Provincia');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales entregados para Provincia');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefP.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesFisP.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales físicos para Provincia');
+			//alert('Debe ingresar el número de vales físicos para Provincia');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales físicos para Provincia');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefP.focus();
 			return false; 
 		}
 		if(formato14B.f_nroTotalAtenP.val().length == '' ) {		  
-			alert('Debe ingresar el número total de atenciones para Provincia');
+			//alert('Debe ingresar el número total de atenciones para Provincia');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número total de atenciones para Provincia');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefP.focus();
 			return false; 
 		}
 		///////////////////
 		if(formato14B.f_nroValesImpL.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales impresos para Lima');
+			//alert('Debe ingresar el número de vales impresos para Lima');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales impresos para Lima');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefL.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesReptL.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales repartidos para Lima');
+			//alert('Debe ingresar el número de vales repartidos para Lima');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales repartidos para Lima');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefL.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesEntrL.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales entregados para Lima');
+			//alert('Debe ingresar el número de vales entregados para Lima');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales entregados para Lima');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefL.focus();
 			return false; 
 		}
 		if(formato14B.f_nroValesFisL.val().length == '' ) {		  
-			alert('Debe ingresar el número de vales físicos para Lima');
+			//alert('Debe ingresar el número de vales físicos para Lima');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número de vales físicos para Lima');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefL.focus();
 			return false; 
 		}
 		if(formato14B.f_nroTotalAtenL.val().length == '' ) {		  
-			alert('Debe ingresar el número total de atenciones para Lima');
+			//alert('Debe ingresar el número total de atenciones para Lima');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el número total de atenciones para Lima');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_nroBenefL.focus();
 			return false; 
 		}
@@ -1817,12 +1902,16 @@ var formato14B= {
 	},
 	validarArchivoCarga : function() {		
 		if(formato14B.f_empresa.val().length == '' ) { 	
-			alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+			//alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+			formato14B.dialogMessageWarningContent.html('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_empresa.focus();
 			return false; 
 		}
 		if( formato14B.f_periodoEnvio==null || formato14B.f_periodoEnvio.val().length == '' ) {		  
-			alert('Debe seleccionar el periodo a declarar');
+			//alert('Debe seleccionar el periodo a declarar');
+			formato14B.dialogMessageWarningContent.html('Debe seleccionar el periodo a declarar');
+		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_periodoEnvio.focus();
 			return false; 
 		}
@@ -2126,7 +2215,9 @@ var formato14B= {
 				}
 			});
 		}else{
-			alert("Primero debe realizar el envío definitivo");
+			//alert("Primero debe realizar el envío definitivo");
+			formato14B.dialogMessageInfoContent.html('Primero debe realizar el envío definitivo');
+			formato14B.dialogMessageInfo.dialog("open");
 		}
 	},
 	//funcion para desabiliar campos lima
@@ -2304,6 +2395,7 @@ var formato14B= {
 		formato14B.dialogMessage.dialog({
 			modal: true,
 			autoOpen: false,
+			width: 500,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -2313,6 +2405,7 @@ var formato14B= {
 		formato14B.dialogMessageReport.dialog({
 			modal: true,
 			autoOpen: false,
+			width: 500,
 			buttons: {
 				'Ver Acta': function() {
 					formato14B.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -2337,7 +2430,7 @@ var formato14B= {
 		formato14B.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
-			width: 400,			
+			width: 500,	
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -2352,7 +2445,7 @@ var formato14B= {
 		formato14B.dialogConfirmEnvio.dialog({
 			modal: true,
 			height: 200,
-			width: 400,			
+			width: 500,			
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -2396,6 +2489,37 @@ var formato14B= {
 			autoOpen: false,
 			buttons: {
 				Cerrar: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		//addd
+		formato14BdialogMessageInfo.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato14B.dialogMessageWarning.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato14B.dialogMessageError.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
 					$( this ).dialog("close");
 				}
 			}

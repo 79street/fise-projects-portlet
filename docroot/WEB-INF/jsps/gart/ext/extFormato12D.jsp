@@ -28,6 +28,13 @@ var formato12D= {
 	//div
 	dialogConfirm:null,
 	dialogConfirmContent:null,
+	
+	//addd
+	dialogMessageInfo:null,
+	dialogMessageInfoContent:null,
+	dialogMessageWarning:null,
+	dialogMessageWarningContent:null,
+	
 	//mensajes
 	mensajeObteniendoDatos:null,
 	mensajeCargando:null,
@@ -123,6 +130,15 @@ var formato12D= {
 	dialogConfirmEnvioContent:null,
 	dialogConfirmDetalle:null,
 	dialogConfirmDetalleContent:null,
+	
+	//addd
+	dialogMessageInfoCrud:null,
+	dialogMessageInfoCrudContent:null,
+	dialogMessageWarningCrud:null,
+	dialogMessageWarningCrudContent:null,
+	dialogMessageErrorCrud:null,
+	dialogMessageErrorCrudContent:null,
+	
 	//mensajes
 	mensajeObteniendoDatosDetalle:null,
 	mensajeCargandoDetalle:null,
@@ -190,6 +206,12 @@ var formato12D= {
 	botonRegresarBusqueda:null,
 	//mensajes
 	mensajeGuardandoDetalle:null,
+	
+	//addd
+	dialogMessageWarningDetalle:null,
+	dialogMessageWarningDetalleContent:null,
+	dialogMessageErrorDetalle:null,
+	dialogMessageErrorDetalleContent:null,
 	 
 	init : function(urlNuevo,urlView,urlEdit){
 		
@@ -210,6 +232,11 @@ var formato12D= {
 		this.mesDesde=$('#mesDesde');
 		this.anioHasta=$('#anioHasta');
 		this.mesHasta=$('#mesHasta');
+		
+		this.dialogMessageInfo=$("#<portlet:namespace/>dialog-message-info");
+		this.dialogMessageInfoContent=$("#<portlet:namespace/>dialog-message-info-content");
+		this.dialogMessageWarning=$("#<portlet:namespace/>dialog-message-warning");
+		this.dialogMessageWarningContent=$("#<portlet:namespace/>dialog-message-warning-content");
 		
 		formato12D.initDialogs();
 		
@@ -316,6 +343,12 @@ var formato12D= {
 		this.mensajeEliminandoDetalle='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
 		this.urlDeleteDetalle='<portlet:resourceURL id="deleteDetalle" />';
 		
+		this.dialogMessageInfoCrud=$("#<portlet:namespace/>dialog-message-info-crud");
+		this.dialogMessageInfoCrudContent=$("#<portlet:namespace/>dialog-message-info-content-crud");
+		this.dialogMessageWarningCrud=$("#<portlet:namespace/>dialog-message-warning-crud");
+		this.dialogMessageWarningCrudContent=$("#<portlet:namespace/>dialog-message-warning-content-crud");
+		this.dialogMessageErrorCrud=$("#<portlet:namespace/>dialog-message-error-crud");
+		this.dialogMessageErrorCrudContent=$("#<portlet:namespace/>dialog-message-error-content-crud");
 		
 		formato12D.initDialogsCRUD();
 		
@@ -491,6 +524,11 @@ var formato12D= {
 		this.dialogMessageDetalle=$("#<portlet:namespace/>dialog-message-detalle");
 		this.dialogMessageDetalleContent=$("#<portlet:namespace/>dialog-message-detalle-content");
 		
+		this.dialogMessageWarningDetalle=$("#<portlet:namespace/>dialog-message-warning-detalle");
+		this.dialogMessageWarningDetalleContent=$("#<portlet:namespace/>dialog-message-warning-content-detalle");
+		this.dialogMessageErrorDetalle=$("#<portlet:namespace/>dialog-message-error-detalle");
+		this.dialogMessageErrorDetalleContent=$("#<portlet:namespace/>dialog-message-error-content-detalle");
+		
 		formato12D.initDialogsCRUDDetalle();
 		
 		$('input.target[type=text]').on('change', function(){
@@ -543,8 +581,8 @@ var formato12D= {
 				formato12D.dialogMessageDetalle.dialog("open");
 			}else if( formato12D.msgTransaccionDetalle.val()=='ERROR' ){
 				var addhtml='Se produjo un error al guardar el detalle';
-				formato12D.dialogMessageDetalleContent.html(addhtml);
-				formato12D.dialogMessageDetalle.dialog("open");
+				formato12D.dialogMessageErrorDetalleContent.html(addhtml);
+				formato12D.dialogMessageErrorDetalle.dialog("open");
 			}
 			
 		</c:if>
@@ -648,8 +686,8 @@ var formato12D= {
 				formato12D.dialogMessageDetalle.dialog("open");
 			}else if( formato12D.msgTransaccionDetalle.val()=='ERROR' ){
 				var addhtml='Se produjo un error al guardar el detalle';
-				formato12D.dialogMessageDetalleContent.html(addhtml);
-				formato12D.dialogMessageDetalle.dialog("open");
+				formato12D.dialogMessageErrorDetalleContent.html(addhtml);
+				formato12D.dialogMessageErrorDetalle.dialog("open");
 			}
 			
 		</c:if>
@@ -1101,7 +1139,9 @@ var formato12D= {
 		if(formato12D.anioDesde.val().length != '' ) {		  
 			  var numstr = trim(formato12D.anioDesde.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-				  alert('Ingrese un año desde válido');
+				  //alert('Ingrese un año desde válido');
+				  formato12D.dialogMessageWarningContent.html('Ingrese un año desde válido');
+				  formato12D.dialogMessageWarning.dialog("open");
 				  formato12D.anioDesde.focus();
 				  return false;
 			  }
@@ -1109,14 +1149,18 @@ var formato12D= {
 		  if(formato12D.anioHasta.val().length != '' ) {		  
 			  var numstr = trim(formato12D.anioHasta.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-				  alert('Ingrese un año hasta válido');
+				  //alert('Ingrese un año hasta válido');
+				  formato12D.dialogMessageWarningContent.html('Ingrese un año hasta válido');
+				  formato12D.dialogMessageWarning.dialog("open");
 				  formato12D.anioHasta.focus();
 				  return false;
 			  }
 		  }
 		  if(formato12D.anioDesde.val().length != '' && formato12D.anioHasta.val().length != '' ) {
 			  if( parseFloat(formato12D.anioDesde.val()) > parseFloat(formato12D.anioHasta.val()) ){
-					alert('El año desde no puede exceder al año hasta');
+					//alert('El año desde no puede exceder al año hasta');
+					formato12D.dialogMessageWarningContent.html('El año desde no puede exceder al año hasta');
+					formato12D.dialogMessageWarning.dialog("open");
 					return false;
 			  }
 		  }
@@ -1344,12 +1388,16 @@ var formato12D= {
 	},
 	validarArchivoCarga : function() {		
 		if(formato12D.codEmpresa.val().length == '' ) { 	
-			alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+			//alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+			formato12D.dialogMessageWarningCrudContent.html('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo');
+			formato12D.dialogMessageWarningCrud.dialog("open");
 			formato12D.codEmpresa.focus();
 			return false; 
 		}
 		if(formato12D.periodoEnvio==null || formato12D.periodoEnvio.val().length == '' ) {		  
-			alert('Debe seleccionar el periodo a declarar');
+			//alert('Debe seleccionar el periodo a declarar');
+			formato12D.dialogMessageWarningCrudContent.html('Debe seleccionar el periodo a declarar');
+			formato12D.dialogMessageWarningCrud.dialog("open");
 			formato12D.periodoEnvio.focus();
 			return false; 
 		}
@@ -1688,7 +1736,9 @@ var formato12D= {
 				}
 			});
 		}else{
-			alert("Primero debe realizar el envío definitivo");
+			//alert("Primero debe realizar el envío definitivo");
+			formato12D.dialogMessageInfoCrudContent.html('Primero debe realizar el envío definitivo');
+			formato12D.dialogMessageInfoCrud.dialog("open");
 		}
 	},
 	//inicializar dialogs
@@ -1696,7 +1746,7 @@ var formato12D= {
 		formato12D.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
-			width: 400,			
+			width: 500,	
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1708,11 +1758,33 @@ var formato12D= {
 				}
 			}
 		});
+		//addd
+		formato12D.dialogMessageInfo.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato12D.dialogMessageWarning.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
 	},
 	initDialogsCRUD : function(){	
 		formato12D.dialogMessageReport.dialog({
 			modal: true,
 			autoOpen: false,
+			width: 500,
 			buttons: {
 				'Ver Acta': function() {
 					formato12D.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -1731,7 +1803,7 @@ var formato12D= {
 		formato12D.dialogConfirmEnvio.dialog({
 			modal: true,
 			height: 200,
-			width: 400,			
+			width: 500,	
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1746,7 +1818,7 @@ var formato12D= {
 		formato12D.dialogConfirmDetalle.dialog({
 			modal: true,
 			height: 200,
-			width: 400,			
+			width: 500,		
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1781,6 +1853,38 @@ var formato12D= {
 		formato12D.dialogMessage.dialog({
 			modal: true,
 			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		//addd
+		formato12D.dialogMessageInfoCrud.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato12D.dialogMessageWarningCrud.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato12D.dialogMessageErrorCrud.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1792,6 +1896,28 @@ var formato12D= {
 		formato12D.dialogMessageDetalle.dialog({
 			modal: true,
 			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		//addd
+		formato12D.dialogMessageWarningDetalle.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
+		formato12D.dialogMessageErrorDetalle.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 500,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1816,12 +1942,18 @@ var formato12D= {
 				mes_Presentacion_cabecera=mesPresentacion;
 				cod_Etapa_cabecera=etapa;
 			}else{
-				alert(" No tiene autorización para realizar esta operación");
+				//alert(" No tiene autorización para realizar esta operación");
+				formato12D.dialogMessageInfoContent.html('No tiene autorización para realizar esta operación');
+				formato12D.dialogMessageInfo.dialog("open");
 			}
 		}else if(flagOperacion=='CERRADO'){
-			alert(" Está fuera de plazo");		
+			//alert(" Está fuera de plazo");		
+			formato12D.dialogMessageInfoContent.html('Está fuera de plazo');
+			formato12D.dialogMessageInfo.dialog("open");
 		}else{
-			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+			//alert("El formato ya fue enviado a OSINERGMIN-GART");	
+			formato12D.dialogMessageInfoContent.html('El formato ya fue enviado a OSINERGMIN-GART');
+			formato12D.dialogMessageInfo.dialog("open");
 		}
 	},
 	confirmarEliminarDetalle : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,anoEjecucion,mesEjecucion,etapaEjecucion,item){
@@ -1860,7 +1992,9 @@ var formato12D= {
 					formato12D.unblockUI();
 				}
 				else{
-					alert("Error al eliminar el registro");
+					//alert("Error al eliminar el registro");
+					formato12D.dialogMessageErrorCrudContent.html('Error al eliminar el registro');
+					formato12D.dialogMessageErrorCrud.dialog("open");
 					formato12D.unblockUI();
 				}
 			},error : function(){
@@ -1891,7 +2025,9 @@ var formato12D= {
 					formato12D.unblockUI();
 				}
 				else{
-					alert("Error al eliminar el registro");
+					//alert("Error al eliminar el registro");
+					formato12D.dialogMessageErrorContent.html('Error al eliminar el registro');
+					formato12D.dialogMessageError.dialog("open");
 					formato12D.unblockUI();
 				}
 			},error : function(){
@@ -1910,69 +2046,95 @@ var formato12D= {
 			if(process){
 				location.href=formato12D.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descGrupoInformacion='+grupoInfo+'&descEstado='+estado+'&tipo=1';
 			}else{
-				alert(" No tiene autorización para realizar esta operación");
+				//alert(" No tiene autorización para realizar esta operación");
+				formato12D.dialogMessageErrorCrudContent.html('No tiene autorización para realizar esta operación');
+				formato12D.dialogMessageErrorCrud.dialog("open");
 			}
 		}else if(flagOperacion=='CERRADO'){
-			alert(" Está fuera de plazo");		
+			//alert(" Está fuera de plazo");	
+			formato12D.dialogMessageInfoContent.html('Está fuera de plazo');
+			formato12D.dialogMessageInfo.dialog("open");
 		}else{
-			alert("El formato ya fue enviado a OSINERGMIN-GART");	
+			//alert("El formato ya fue enviado a OSINERGMIN-GART");
+			formato12D.dialogMessageInfoContent.html('El formato ya fue enviado a OSINERGMIN-GART');
+			formato12D.dialogMessageInfo.dialog("open");
 		}
 	},
 	/***VALIDACIONES**/
 	validarFormatoDetalle : function(){
 		if( formato12D.codEmpresaDetalle.val().length=='' ){
-			alert('Seleccione una Distribuidora Eléctrica'); 
+			//alert('Seleccione una Distribuidora Eléctrica'); 
+			formato12D.dialogMessageWarningDetalleContent.html('Seleccione una Distribuidora Eléctrica');
+			formato12D.dialogMessageWarningDetalle.dialog("open");
 			formato12D.codEmpresaDetalle.val().focus();
 		    return false;
 		}
 		if(formato12D.periodoEnvioDetalle.val().length == '' ) {		  
-			alert('Debe ingresar el periodo de presentación');
+			//alert('Debe ingresar el periodo de presentación');
+			formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el periodo de presentación');
+			formato12D.dialogMessageWarningDetalle.dialog("open");
 			formato12D.periodoEnvioDetalle.val().focus();
    			return false; 
  		}
 		if(formato12D.anoEjecucionDetalle.val().length == '' ) {		  
-		    alert('Debe ingresar el año de ejecución');
+		    //alert('Debe ingresar el año de ejecución');
+		    formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el año de ejecución');
+			formato12D.dialogMessageWarningDetalle.dialog("open");
 		    formato12D.anoEjecucionDetalle.focus();
 		    return false; 
 	  	}else{
 		  	var numstr = trim(formato12D.anoEjecucionDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  	alert('Ingrese un año de ejecución válido');
+			  	//alert('Ingrese un año de ejecución válido');
+			  	formato12D.dialogMessageWarningDetalleContent.html('Ingrese un año de ejecución válido');
+				formato12D.dialogMessageWarningDetalle.dialog("open");
 			  	return false;
 		  	}
 	 	 }
 		if(formato12D.mesEjecucionDetalle.val().length == '' ) {		  
-		   alert('Debe seleccionar el mes de ejecución');
+		   //alert('Debe seleccionar el mes de ejecución');
+		   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar el mes de ejecución');
+		   formato12D.dialogMessageWarningDetalle.dialog("open");
 		   formato12D.mesEjecucionDetalle.focus();
 		   return false; 
 		}
 		if(formato12D.etapaEjecucionDetalle.val().length == '' ) {		  
-		   alert('Debe ingresar la etapa de ejecución');
+		   //alert('Debe ingresar la etapa de ejecución');
+		   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar la etapa de ejecución');
+		   formato12D.dialogMessageWarningDetalle.dialog("open");
 		   formato12D.etapaEjecucionDetalle.focus();
 		   return false; 
 		}
 		//validamos ubigeo 
 		if(formato12D.codDepa.val().length != '' ) {
 			if(formato12D.codProv.val().length == '' ) {		  
-			   alert('Debe seleccionar la provincia');
+			   //alert('Debe seleccionar la provincia');
+			   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar la provincia');
+			   formato12D.dialogMessageWarningDetalle.dialog("open");
 			   formato12D.codProv.focus();
 			   return false; 
 			}else{
 				if(formato12D.codDist.val().length == '' ) {		  
-				   alert('Debe seleccionar el distrito');
+				   //alert('Debe seleccionar el distrito');
+				   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar el distrito');
+					formato12D.dialogMessageWarningDetalle.dialog("open");
 				   formato12D.codDist.focus();
 				   return false; 
 				}
 			}
 		}
 		if(formato12D.idZonaBenefDetalle.val().length == '' ) {		  
-		   alert('Debe seleccionar la Zona Beneficiario');
+		   //alert('Debe seleccionar la Zona Beneficiario');
+		   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar la Zona Beneficiario');
+			formato12D.dialogMessageWarningDetalle.dialog("open");
 		   formato12D.idZonaBenefDetalle.focus();
 		   return false; 
 		}else{
 			if(formato12D.cod_empresa_edelnor.val()!=formato12D.codEmpresaDetalle.val() && formato12D.cod_empresa_luz_sur.val()!=formato12D.codEmpresaDetalle.val()){
 				if(formato12D.idZonaBenefDetalle.val() == 3 ) {//RURAL
-					alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
+					//alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
+					formato12D.dialogMessageWarningDetalleContent.html('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
+					formato12D.dialogMessageWarningDetalle.dialog("open");
 					formato12D.idZonaBenefDetalle.focus();
 				   	return false;
 				}
@@ -1981,17 +2143,23 @@ var formato12D= {
 		//validamos si escogemos un tipo de documento
 		if(formato12D.tipoDocDetalle.val().length != '' ) {
 			if(formato12D.rucEmpresaDetalle.val().length == '' ) {		  
-			   alert('Debe ingresar el RUC de la empresa');
+			   //alert('Debe ingresar el RUC de la empresa');
+			   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el RUC de la empresa');
+				formato12D.dialogMessageWarningDetalle.dialog("open");
 			   formato12D.rucEmpresaDetalle.focus();
 			   return false; 
 			}
 			if(formato12D.serieDocDetalle.val().length == '' ) {		  
-			   alert('Debe ingresar la serie de documento de referencia');
+			   //alert('Debe ingresar la serie de documento de referencia');
+			   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar la serie de documento de referencia');
+				formato12D.dialogMessageWarningDetalle.dialog("open");
 			   formato12D.serieDocDetalle.focus();
 			   return false; 
 			}
 			if(formato12D.nroDocDetalle.val().length == '' ) {		  
-			   alert('Debe ingresar el nro. documento de referencia');
+			   //alert('Debe ingresar el nro. documento de referencia');
+			   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el nro. documento de referencia');
+				formato12D.dialogMessageWarningDetalle.dialog("open");
 			   formato12D.nroDocDetalle.focus();
 			   return false; 
 			}

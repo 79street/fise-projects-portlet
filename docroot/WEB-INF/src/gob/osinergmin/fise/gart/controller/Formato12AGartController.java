@@ -2432,7 +2432,7 @@ public class Formato12AGartController {
 				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
 				mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
 				mapa.put(FiseConstants.PARAM_ANO_EJECUCION, formato.getId().getAnoPresentacion());
-				mapa.put(FiseConstants.PARAM_DESC_MES_PRESENTACION, fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
+				mapa.put(FiseConstants.PARAM_DESC_MES_EJECUCION, fiseUtil.getMapaMeses().get(formato.getId().getMesEjecucionGasto()));
 				
 				session.setAttribute("mapa", mapa);
 			}
