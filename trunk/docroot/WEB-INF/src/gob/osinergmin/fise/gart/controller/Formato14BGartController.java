@@ -2356,7 +2356,9 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    			   formato.getId().getMesPresentacion(),
 	    			   FiseConstants.TIPO_FORMATO_14B,
 	    			   descripcionFormato,
-	    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
+	    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
+	    			   formato.getId().getAnoInicioVigencia(),
+	    			   formato.getId().getAnoFinVigencia());
 	       }
         }
         

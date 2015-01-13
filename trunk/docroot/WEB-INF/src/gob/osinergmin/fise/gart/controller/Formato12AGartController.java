@@ -2236,7 +2236,9 @@ public class Formato12AGartController {
 		    			   formato.getId().getMesPresentacion(),
 		    			   FiseConstants.TIPO_FORMATO_12A,
 		    			   descripcionFormato,
-		    			   FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION);
+		    			   FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION,
+		    			   null,
+		    			   null);
 
 		       }
 	        }

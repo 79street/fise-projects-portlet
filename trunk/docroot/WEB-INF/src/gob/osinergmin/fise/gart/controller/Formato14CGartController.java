@@ -1131,7 +1131,9 @@ public class Formato14CGartController {
 		    			   formato.getId().getMesPresentacion(),
 		    			   FiseConstants.TIPO_FORMATO_14C,
 		    			   descripcionFormato,
-		    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
+		    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
+		    			   formato.getId().getAnoInicioVigencia(),
+		    			   formato.getId().getAnoFinVigencia());
 		    	   logger.info("El envio de email fue correctamente envio defi."); 
 		    	   /**actualizamos  la fecha de envio*/
 		    	   formato14CGartService.actualizarDatosEnvioFormato14C(f);
