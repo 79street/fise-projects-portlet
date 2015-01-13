@@ -514,17 +514,17 @@ public class FiseUtil {
 	
 	public void enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo,
 			String descEmpresa,	Long anoPresentacion, Long mesPresentacion, 
-			String tipoFormato, String descripcionFormato, String frecuencia) throws Exception {		
+			String tipoFormato, String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
 		enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, 
-				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia);
+				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);
 		enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, 
-				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia);		
+				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);		
 	}
 	
 	private void enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, Long anoPresentacion, Long mesPresentacion, 
-			String tipoFormato, String descripcionFormato, String frecuencia) throws Exception {
+			String tipoFormato, String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -532,8 +532,10 @@ public class FiseUtil {
 			String nombreUsuario = themeDisplay.getUser().getFullName();
 			String periodoEnvio = ""+anoPresentacion+"-"+mesPresentacion;
 			String descripcionCosto ="";
+			String descripcionPeriodo="";
 			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
 				descripcionCosto = "Est&aacute;ndares";
+				descripcionPeriodo = ""+anoIniVigencia+"-"+anoFinVigencia+" declarado el";
 			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
 				descripcionCosto = "Operativos";
 			}
@@ -555,7 +557,8 @@ public class FiseUtil {
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
 						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
-						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n para el periodo "
+						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n para el periodo " 
+						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
 						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos "
 						+ descripcionCosto	+ " Formato "
@@ -576,7 +579,7 @@ public class FiseUtil {
 	
 	private void enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato,
-			String descripcionFormato, String frecuencia) throws Exception {
+			String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -584,8 +587,10 @@ public class FiseUtil {
 			String nombreUsuario = themeDisplay.getUser().getFullName();
 			String periodoEnvio = ""+anoPresentacion+"-"+mesPresentacion;
 			String descripcionCosto ="";
+			String descripcionPeriodo="";
 			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
 				descripcionCosto = "Est&aacute;ndares";
+				descripcionPeriodo = ""+anoIniVigencia+"-"+anoFinVigencia+" declarado el";
 			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
 				descripcionCosto = "Operativos";
 			}
@@ -607,6 +612,7 @@ public class FiseUtil {
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
 						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
 						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
+						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
 						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos "
 						+ descripcionCosto	+ " Formato "

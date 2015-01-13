@@ -2137,7 +2137,9 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			    			   formato.getId().getMesPresentacion(),
 			    			   FiseConstants.TIPO_FORMATO_13A,
 			    			   descripcionFormato,
-			    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
+			    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
+			    			   formato.getAnoInicioVigenciaDetalle(),
+			    			   formato.getAnoFinVigenciaDetalle());
 				}
 			}
 
