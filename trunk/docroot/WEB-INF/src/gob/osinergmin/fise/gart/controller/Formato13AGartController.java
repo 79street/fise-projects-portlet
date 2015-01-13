@@ -1,6 +1,7 @@
 package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.Formato12C12D13Generic;
+import gob.osinergmin.fise.bean.Formato12CCBean;
 import gob.osinergmin.fise.bean.Formato13ACBean;
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
@@ -129,16 +130,46 @@ public class Formato13AGartController {
 	private String nameGrupo;
 	private String inicioVigencia;
 	private String finVigencia;
+	
+	Formato13AGartCommand beanBusqueda; 
 
 	@RequestMapping
 	public String defaultView(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		command.setListaMes(fiseUtil.getMapaMeses());
-		command.setAnioInicio(fiseUtil.obtenerNroAnioFechaActual());
+		
+		if( beanBusqueda!=null && beanBusqueda.getCodEmpresa()!=null ){
+			command.setCodEmpresa(beanBusqueda.getCodEmpresa());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getAnioInicio()!=null ){
+			command.setAnioInicio(beanBusqueda.getAnioInicio());
+		}else{
+			command.setAnioInicio(fiseUtil.obtenerNroAnioFechaAnterior());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getAnioFin()!=null ){
+			command.setAnioFin(beanBusqueda.getAnioFin());
+		}else{
+			command.setAnioFin(fiseUtil.obtenerNroAnioFechaActual());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getMesInicio()!=null ){
+			command.setMesInicio(beanBusqueda.getMesInicio());
+		}else{
+			command.setMesInicio(fiseUtil.obtenerNroMesFechaAnterior());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getMesFin()!=null ){
+			command.setMesFin(beanBusqueda.getMesFin());
+		}else{
+			command.setMesFin(fiseUtil.obtenerNroMesFechaActual());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getEtapa()!=null ){
+			command.setEtapa(beanBusqueda.getEtapa());
+		}
+		
+		/*command.setAnioInicio(fiseUtil.obtenerNroAnioFechaActual());
 		command.setMesInicio(String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1));
 		command.setAnioFin(fiseUtil.obtenerNroAnioFechaActual());
-		command.setMesFin(fiseUtil.obtenerNroMesFechaActual());
+		command.setMesFin(fiseUtil.obtenerNroMesFechaActual());*/
 
 		model.addAttribute("esAdministrador", fiseUtil.esAdministrador(renderRequest));
 
@@ -215,6 +246,15 @@ public class Formato13AGartController {
 				jsonArray.put(new Formato13AGartJSON().asJSONObject(fiseFormato13AC, flagOper,inicioVig,finVig));
 
 			}
+			
+			//valores busqueda
+			beanBusqueda = new Formato13AGartCommand();
+			beanBusqueda.setCodEmpresa(command.getCodEmpresa());
+			beanBusqueda.setAnioInicio(command.getAnioInicio());
+			beanBusqueda.setMesInicio(command.getMesInicio());
+			beanBusqueda.setAnioFin(command.getAnioFin());
+			beanBusqueda.setMesFin(command.getMesFin());
+			beanBusqueda.setEtapa(command.getEtapa());
 
 			// ************************************************************************
 			// Generamos la configuración de la exportación a Excel
@@ -304,6 +344,14 @@ public class Formato13AGartController {
 			command.setAnioFinVigencia(anioFinVigencia);
 		}
 		
+		//valores busqueda
+		beanBusqueda = new Formato13AGartCommand();
+		beanBusqueda.setCodEmpresa(command.getCodEmpresa());
+		beanBusqueda.setAnioInicio(command.getAnioInicio());
+		beanBusqueda.setMesInicio(command.getMesInicio());
+		beanBusqueda.setAnioFin(command.getAnioFin());
+		beanBusqueda.setMesFin(command.getMesFin());
+		beanBusqueda.setEtapa(command.getEtapa());
 
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 

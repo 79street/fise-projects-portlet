@@ -216,8 +216,8 @@ public class Formato12AGartController {
 			model.addAttribute("listaError", listaError);
 		}
 		
-		String anioDesde = FechaUtil.obtenerNroAnioFechaActual();
-		String mesDesde = String.valueOf(Integer.parseInt(FechaUtil.obtenerNroMesFechaActual())-1);
+		String anioDesde = fiseUtil.obtenerNroAnioFechaAnterior();
+		String mesDesde = fiseUtil.obtenerNroMesFechaAnterior();
 		String anioHasta = FechaUtil.obtenerNroAnioFechaActual();
 		String mesHasta = FechaUtil.obtenerNroMesFechaActual();
 		

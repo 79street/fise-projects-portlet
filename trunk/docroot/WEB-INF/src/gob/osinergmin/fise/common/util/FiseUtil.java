@@ -30,6 +30,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -196,6 +197,24 @@ public class FiseUtil {
 	}
 	public String obtenerNroMesFechaActual(){
 		return FechaUtil.obtenerNroMesFechaActual();
+	}
+	
+	public String obtenerNroAnioFechaAnterior(){
+		int anioFechaActual = Integer.parseInt(FechaUtil.obtenerNroAnioFechaActual());
+		int mesFechaActual = Integer.parseInt(FechaUtil.obtenerNroMesFechaActual());
+		if( mesFechaActual == 1 ){
+			return String.valueOf(anioFechaActual-1);
+		}else{
+			return String.valueOf(anioFechaActual);
+		}
+	}
+	public String obtenerNroMesFechaAnterior(){
+		int mesFechaActual = Integer.parseInt(FechaUtil.obtenerNroMesFechaActual());
+		if( mesFechaActual == 1 ){
+			return String.valueOf(Calendar.DECEMBER+1);//diciembre
+		}else{
+			return String.valueOf(mesFechaActual-1);
+		}
 	}
 	
 	public boolean esAdministrador(PortletRequest request){

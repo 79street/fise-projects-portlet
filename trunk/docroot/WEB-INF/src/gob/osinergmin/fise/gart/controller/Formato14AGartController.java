@@ -1,5 +1,6 @@
 package gob.osinergmin.fise.gart.controller;
 
+import gob.osinergmin.fise.bean.Formato12DCBean;
 import gob.osinergmin.fise.bean.Formato14ACBean;
 import gob.osinergmin.fise.bean.Formato14AMensajeBean;
 import gob.osinergmin.fise.bean.Formato14Generic;
@@ -111,6 +112,8 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 	List<MensajeErrorBean> listaObservaciones;
 	Map<Long, String> mapaZonaBenef;
 	
+	Formato14ACBean beanBusqueda;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato14ACBean")Formato14ACBean command){
@@ -155,11 +158,39 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 		
 		
 		command.setListaMes(fiseUtil.getMapaMeses());
-		command.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
+		
+		if( beanBusqueda!=null && beanBusqueda.getCodEmpresaB()!=null ){
+			command.setCodEmpresaB(beanBusqueda.getCodEmpresaB());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getAnioDesde()!=null ){
+			command.setAnioDesde(beanBusqueda.getAnioDesde());
+		}else{
+			command.setAnioDesde(fiseUtil.obtenerNroAnioFechaAnterior());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getAnioHasta()!=null ){
+			command.setAnioHasta(beanBusqueda.getAnioHasta());
+		}else{
+			command.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getMesDesde()!=null ){
+			command.setMesDesde(beanBusqueda.getMesDesde());
+		}else{
+			command.setMesDesde(fiseUtil.obtenerNroMesFechaAnterior());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getMesHasta()!=null ){
+			command.setMesHasta(beanBusqueda.getMesHasta());
+		}else{
+			command.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getEtapaB()!=null ){
+			command.setEtapaB(beanBusqueda.getEtapaB());
+		}
+		
+		/*command.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
 		command.setMesDesde( String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));
 		command.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
 		command.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
-		command.setEtapaB(FiseConstants.ETAPA_SOLICITUD);
+		command.setEtapaB(FiseConstants.ETAPA_SOLICITUD);*/
 		
 		//valores constantes para las empresas edelnor y luz del sur
 		command.setCodEdelnor(FiseConstants.COD_EMPRESA_EDELNOR);
@@ -239,6 +270,15 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
   				
   				jsonArray.put(new Formato14AGartJSON().asJSONObject(fiseFormato14AC,"",flagOper));
   			}
+  			
+  			//valores busqueda
+			beanBusqueda = new Formato14ACBean();
+			beanBusqueda.setCodEmpresaB(command.getCodEmpresaB());
+			beanBusqueda.setAnioDesde(command.getAnioDesde());
+			beanBusqueda.setMesDesde(command.getMesDesde());
+			beanBusqueda.setAnioHasta(command.getAnioHasta());
+			beanBusqueda.setMesHasta(command.getMesHasta());
+			beanBusqueda.setEtapaB(command.getEtapaB());
   			
   			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_14A, FiseConstants.NOMBRE_EXCEL_FORMATO14A, FiseConstants.NOMBRE_HOJA_FORMATO14A, listaFormato);
   			
