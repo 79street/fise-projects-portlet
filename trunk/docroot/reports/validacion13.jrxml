@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="validacion13" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="375"/>
+	<property name="ireport.y" value="348"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="NOMBRE_FORMATO" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -33,41 +33,41 @@
 		<groupHeader>
 			<band height="41">
 				<staticText>
-					<reportElement x="23" y="21" width="103" height="16" forecolor="#006699"/>
+					<reportElement x="9" y="21" width="95" height="16" forecolor="#006699"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Grupo Zona]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="126" y="21" width="67" height="16" forecolor="#006699"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font isBold="true"/>
-					</textElement>
-					<text><![CDATA[Código]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="193" y="21" width="346" height="16" forecolor="#006699"/>
+					<reportElement x="150" y="21" width="398" height="16" forecolor="#006699"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Descripción de observación]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="0" width="79" height="16" forecolor="#006699"/>
+					<reportElement x="9" y="0" width="79" height="16" forecolor="#006699"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Sector Típico :]]></text>
 				</staticText>
 				<line>
-					<reportElement x="20" y="38" width="519" height="1" forecolor="#006699"/>
+					<reportElement x="9" y="38" width="539" height="1" forecolor="#006699"/>
 				</line>
 				<textField>
-					<reportElement x="99" y="0" width="79" height="16"/>
+					<reportElement x="90" y="0" width="79" height="16"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{descCodSectorTipico}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="104" y="21" width="46" height="16" forecolor="#006699"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Código]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -234,25 +234,25 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="23" y="0" width="103" height="16" isPrintWhenDetailOverflows="true"/>
+				<reportElement stretchType="RelativeToBandHeight" x="9" y="0" width="95" height="16" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descZonaBenef}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="126" y="0" width="67" height="16" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="193" y="0" width="346" height="16" isPrintWhenDetailOverflows="true"/>
+				<reportElement stretchType="RelativeToBandHeight" x="150" y="0" width="398" height="16" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="104" y="0" width="46" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
