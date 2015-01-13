@@ -78,25 +78,25 @@
 				<text><![CDATA[Implementación / Mensual]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="17" y="8" width="120" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="13" y="8" width="125" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle" lineSpacing="Single" markup="none">
 					<font size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[ Distribuidora Eléctrica:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="17" y="25" width="120" height="16" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="13" y="25" width="125" height="16" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Año / Mes Declarado:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="20" y="59" width="120" height="16" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="13" y="59" width="125" height="16" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Frecuencia:]]></text>
+				<text><![CDATA[ Frecuencia:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="142" y="25" width="225" height="16"/>
@@ -106,7 +106,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[""+$P{ANO_PRESENTACION}+" / "+$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="17" y="42" width="120" height="16" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="13" y="42" width="125" height="16" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>

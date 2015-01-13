@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actaEnvio" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="2"/>
-	<property name="ireport.y" value="1018"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_INICIO_VIGENCIA" class="java.lang.Long"/>
@@ -72,7 +72,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{NOMBRE_FORMATO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="27" y="38" width="120" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="27" y="38" width="125" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle" lineSpacing="Single" markup="none">
 					<font size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
@@ -209,21 +209,21 @@
 				<text><![CDATA[Usuario Registra:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="151" y="38" width="380" height="16"/>
+				<reportElement x="155" y="38" width="380" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="151" y="56" width="129" height="16"/>
+				<reportElement x="155" y="56" width="129" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[""+$P{ANO_PRESENTACION}+" / "+$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="27" y="56" width="120" height="16" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="27" y="56" width="125" height="16" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -258,7 +258,7 @@
 				<text><![CDATA[ Año Fin Vigencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="27" y="74" width="120" height="16" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="27" y="74" width="125" height="16" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -279,18 +279,18 @@
 				<text><![CDATA[Presenta Sustentos (1)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="151" y="92" width="129" height="16"/>
+				<reportElement x="155" y="92" width="129" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Bienal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="30" y="92" width="120" height="16" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="27" y="92" width="125" height="16" backcolor="#FFFFFF"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Frecuencia:]]></text>
+				<text><![CDATA[ Frecuencia:]]></text>
 			</staticText>
 			<image>
 				<reportElement x="33" y="221" width="10" height="10"/>
@@ -313,7 +313,7 @@
 				<imageExpression class="java.lang.String"><![CDATA[$P{UNCHECKED}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="151" y="74" width="129" height="16"/>
+				<reportElement x="155" y="74" width="129" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
