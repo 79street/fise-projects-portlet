@@ -2494,7 +2494,7 @@ var formato14B= {
 			}
 		});
 		//addd
-		formato14BdialogMessageInfo.dialog({
+		formato14B.dialogMessageInfo.dialog({
 			modal: true,
 			autoOpen: false,
 			width: 500,
