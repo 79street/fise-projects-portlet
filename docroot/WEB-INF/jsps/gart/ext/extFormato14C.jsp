@@ -832,6 +832,10 @@ var formato14C= {
 			formato14C.f_anoIniVigencia.val(bean.anoIniVigencia);
 			formato14C.f_anoFinVigencia.val(bean.anoFinVigencia);	
 			
+			//setamos los hidden
+			$('#anioInicioVigenciaHidden').val(bean.anoIniVigencia);
+			$('#anioFinVigenciaHidden').val(bean.anoFinVigencia);
+			
 			/**RURAL***/	
 			formato14C.f_canDRCoord.val(bean.canDRCoord);
 			formato14C.f_costDRCoord.val(bean.costDRCoord);
@@ -3097,9 +3101,7 @@ var formato14C= {
 					<portlet:namespace />periodoEnvio: formato14C.f_periodoEnvio.val(),					
 					<portlet:namespace />nombreReporte: 'validacion14',
 					<portlet:namespace />nombreArchivo: 'validacion14',
-					<portlet:namespace />tipoArchivo: '0',
-					<portlet:namespace />anoIniVigencia: $('#anoIniVigencia').val(),
-					<portlet:namespace />anoFinVigencia: $('#anoFinVigencia').val() //PDF
+					<portlet:namespace />tipoArchivo: '0' //PDF
 				},
 				success : function(gridData) {
 					if(gridData!=null){

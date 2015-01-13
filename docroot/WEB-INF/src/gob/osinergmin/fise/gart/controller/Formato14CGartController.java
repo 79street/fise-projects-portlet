@@ -900,8 +900,8 @@ public class Formato14CGartController {
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();	    
 		    
-		    String anioInicioVigencia = request.getParameter("anioIniVigencia");
-			String anioFinVigencia = request.getParameter("anioFinVigencia");
+		    String anioInicioVigencia = f.getAnioInicioVigenciaHidden();
+			String anioFinVigencia = f.getAnioFinVigenciaHidden();
 		   
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
