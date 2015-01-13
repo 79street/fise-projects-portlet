@@ -2170,7 +2170,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 }
 
 @ResourceMapping("reporteValidacion")
-public void reporteValidacion(ResourceRequest request,ResourceResponse response) {
+public void reporteValidacion(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command) {
 	try {
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
         HttpSession session = httpRequest.getSession();
@@ -2183,8 +2183,8 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response)
 	    String tipoFormato = FiseConstants.TIPO_FORMATO_VAL;
 	    String tipoArchivo = request.getParameter("tipoArchivo").trim();
 	    
-	    String anioInicioVigencia = request.getParameter("anioInicioVigencia");
-		String anioFinVigencia = request.getParameter("anioFinVigencia");
+	    String anioInicioVigencia = command.getAnioInicioVigenciaHidden();
+		String anioFinVigencia = command.getAnioFinVigenciaHidden();
 	   
 	    session.setAttribute("nombreReporte",nombreReporte);
 	    session.setAttribute("nombreArchivo",nombreArchivo);

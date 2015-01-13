@@ -1436,6 +1436,11 @@ var formato14A= {
 		$('#anioInicioVigencia').val(row.anoIniVigencia);
 		$('#anioFinVigencia').val(row.anoFinVigencia);
 		
+		//setamos los hidden
+		$('#anioInicioVigenciaHidden').val(row.anoIniVigencia);
+		$('#anioFinVigenciaHidden').val(row.anoFinVigencia);
+		
+		
 		/*if( formato14A.f_flagPeriodo.val()=='S' ){
 			$('#anioInicioVigencia').val(row.anoIniVigencia);
 			$('#anioFinVigencia').val(row.anoFinVigencia);
@@ -1965,9 +1970,7 @@ var formato14A= {
 				<portlet:namespace />periodoEnvio: formato14A.f_periodoEnvio.val(),
 				<portlet:namespace />nombreReporte: 'validacion14',
 				<portlet:namespace />nombreArchivo: 'validacion14',
-				<portlet:namespace />tipoArchivo: '0',
-				<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
-				<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val() //PDF
+				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
 				formato14A.verReporte();
