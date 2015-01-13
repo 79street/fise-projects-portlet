@@ -132,7 +132,7 @@ public class Formato12BGartController {
 				System.out.println("volvio entrar anio inicio::"+formato12BBusqueda.getAnioInicio());
 				command.setAnioInicio(formato12BBusqueda.getAnioInicio());
 			}else{
-				command.setAnioInicio(fiseUtil.obtenerNroAnioFechaActual() != null ? Integer.parseInt(fiseUtil.obtenerNroAnioFechaActual()) : null);
+				command.setAnioInicio(fiseUtil.obtenerNroAnioFechaAnterior() != null ? Integer.parseInt(fiseUtil.obtenerNroAnioFechaAnterior()) : null);
 			}
 			if(formato12BBusqueda!=null && formato12BBusqueda.getAnioFin()!=null){
 				command.setAnioFin(formato12BBusqueda.getAnioFin());
@@ -145,7 +145,7 @@ public class Formato12BGartController {
 				command.setMesInicio(formato12BBusqueda.getMesInicio());
 				command.setMesFin(formato12BBusqueda.getMesFin());
 			}else{
-				command.setMesInicio(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1) : null);
+				command.setMesInicio(fiseUtil.obtenerNroMesFechaAnterior() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaAnterior())) : null);
 				command.setMesFin(fiseUtil.obtenerNroMesFechaActual() != null ? (Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())) : null);
 			}
 			

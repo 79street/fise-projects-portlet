@@ -124,6 +124,9 @@ public class Formato12CGartController {
 	Map<String, String> mapaUbigeo;
 	
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
+	
+	//bean de sesion
+	Formato12CCBean beanBusqueda;
 
 	@RequestMapping
 	public String defaultView(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato12CCBean") Formato12CCBean bean) {
@@ -132,10 +135,38 @@ public class Formato12CGartController {
 		
 		bean.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		bean.setListaMes(fiseUtil.getMapaMeses());
-		bean.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
+		
+		if( beanBusqueda!=null && beanBusqueda.getCodEmpresaB()!=null ){
+			bean.setCodEmpresaB(beanBusqueda.getCodEmpresaB());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getAnioDesde()!=null ){
+			bean.setAnioDesde(beanBusqueda.getAnioDesde());
+		}else{
+			bean.setAnioDesde(fiseUtil.obtenerNroAnioFechaAnterior());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getAnioHasta()!=null ){
+			bean.setAnioHasta(beanBusqueda.getAnioHasta());
+		}else{
+			bean.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getMesDesde()!=null ){
+			bean.setMesDesde(beanBusqueda.getMesDesde());
+		}else{
+			bean.setMesDesde(fiseUtil.obtenerNroMesFechaAnterior());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getMesHasta()!=null ){
+			bean.setMesHasta(beanBusqueda.getMesHasta());
+		}else{
+			bean.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getEtapaB()!=null ){
+			bean.setEtapaB(beanBusqueda.getEtapaB());
+		}
+		
+		/*bean.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
 		bean.setMesDesde(String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1));
 		bean.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
-		bean.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
+		bean.setMesHasta(fiseUtil.obtenerNroMesFechaActual());*/
 		
 		model.addAttribute("esAdministrador", fiseUtil.esAdministrador(renderRequest));
 
@@ -202,6 +233,15 @@ public class Formato12CGartController {
   				
   				jsonArray.put(new Formato12CGartJSON().asJSONObject(formato,"",flagOper));
 			}
+			
+			//valores busqueda
+			beanBusqueda = new Formato12CCBean();
+			beanBusqueda.setCodEmpresaB(bean.getCodEmpresaB());
+			beanBusqueda.setAnioDesde(bean.getAnioDesde());
+			beanBusqueda.setMesDesde(bean.getMesDesde());
+			beanBusqueda.setAnioHasta(bean.getAnioHasta());
+			beanBusqueda.setMesHasta(bean.getMesHasta());
+			beanBusqueda.setEtapaB(bean.getEtapaB());
 
 			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12C, FiseConstants.NOMBRE_EXCEL_FORMATO12C, FiseConstants.NOMBRE_HOJA_FORMATO12C, listaFormato);
 
@@ -249,7 +289,16 @@ public class Formato12CGartController {
 			bean.setDescEstado(descEstado);
 		}
 		
-
+		//valores busqueda
+		beanBusqueda = new Formato12CCBean();
+		beanBusqueda.setCodEmpresaB(bean.getCodEmpresaB());
+		beanBusqueda.setAnioDesde(bean.getAnioDesde());
+		beanBusqueda.setMesDesde(bean.getMesDesde());
+		beanBusqueda.setAnioHasta(bean.getAnioHasta());
+		beanBusqueda.setMesHasta(bean.getMesHasta());
+		beanBusqueda.setEtapaB(bean.getEtapaB());
+		
+		
 		bean.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 
 		bean.setReadOnly(read != null ? Boolean.parseBoolean(read) : false);

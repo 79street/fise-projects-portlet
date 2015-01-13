@@ -1,6 +1,7 @@
 package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.Formato12C12D13Generic;
+import gob.osinergmin.fise.bean.Formato12CCBean;
 import gob.osinergmin.fise.bean.Formato12DCBean;
 import gob.osinergmin.fise.bean.Formato12DMensajeBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
@@ -125,6 +126,8 @@ public class Formato12DGartController {
 	Map<String, String> mapaTipoGasto;
 	Map<String, String> mapaUbigeo;
 	
+	Formato12DCBean beanBusqueda;
+	
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
 
 	@RequestMapping
@@ -134,10 +137,38 @@ public class Formato12DGartController {
 		
 		bean.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		bean.setListaMes(fiseUtil.getMapaMeses());
-		bean.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
+		
+		if( beanBusqueda!=null && beanBusqueda.getCodEmpresaB()!=null ){
+			bean.setCodEmpresaB(beanBusqueda.getCodEmpresaB());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getAnioDesde()!=null ){
+			bean.setAnioDesde(beanBusqueda.getAnioDesde());
+		}else{
+			bean.setAnioDesde(fiseUtil.obtenerNroAnioFechaAnterior());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getAnioHasta()!=null ){
+			bean.setAnioHasta(beanBusqueda.getAnioHasta());
+		}else{
+			bean.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getMesDesde()!=null ){
+			bean.setMesDesde(beanBusqueda.getMesDesde());
+		}else{
+			bean.setMesDesde(fiseUtil.obtenerNroMesFechaAnterior());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getMesHasta()!=null ){
+			bean.setMesHasta(beanBusqueda.getMesHasta());
+		}else{
+			bean.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
+		}
+		if( beanBusqueda!=null && beanBusqueda.getEtapaB()!=null ){
+			bean.setEtapaB(beanBusqueda.getEtapaB());
+		}
+		
+		/*bean.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
 		bean.setMesDesde(String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1));
 		bean.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
-		bean.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
+		bean.setMesHasta(fiseUtil.obtenerNroMesFechaActual());*/
 		
 		model.addAttribute("esAdministrador", fiseUtil.esAdministrador(renderRequest));
 
@@ -206,6 +237,15 @@ public class Formato12DGartController {
   				jsonArray.put(new Formato12DGartJSON().asJSONObject(formato,"",flagOper));
 			}
 
+			//valores busqueda
+			beanBusqueda = new Formato12DCBean();
+			beanBusqueda.setCodEmpresaB(bean.getCodEmpresaB());
+			beanBusqueda.setAnioDesde(bean.getAnioDesde());
+			beanBusqueda.setMesDesde(bean.getMesDesde());
+			beanBusqueda.setAnioHasta(bean.getAnioHasta());
+			beanBusqueda.setMesHasta(bean.getMesHasta());
+			beanBusqueda.setEtapaB(bean.getEtapaB());
+			
 			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12D, FiseConstants.NOMBRE_EXCEL_FORMATO12D, FiseConstants.NOMBRE_HOJA_FORMATO12D, listaFormato);
 
 			logger.info("arreglo json:" + jsonArray);
@@ -258,6 +298,14 @@ public class Formato12DGartController {
 			bean.setDescEstado(descEstado);
 		}
 		
+		//valores busqueda
+		beanBusqueda = new Formato12DCBean();
+		beanBusqueda.setCodEmpresaB(bean.getCodEmpresaB());
+		beanBusqueda.setAnioDesde(bean.getAnioDesde());
+		beanBusqueda.setMesDesde(bean.getMesDesde());
+		beanBusqueda.setAnioHasta(bean.getAnioHasta());
+		beanBusqueda.setMesHasta(bean.getMesHasta());
+		beanBusqueda.setEtapaB(bean.getEtapaB());
 
 		bean.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 
