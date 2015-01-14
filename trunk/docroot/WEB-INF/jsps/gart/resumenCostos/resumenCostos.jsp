@@ -47,7 +47,7 @@ $(document).ready(function () {
 											<td colspan="2"></td>
 										</tr>
 										<tr>
-										    <td><output>Periodicidad:</output></td>											
+										    <td style="width: 250px;"><output>Periodicidad:</output></td>	 										
 										    <td>
 												<input type="radio"	name="optionFormato"
 												       id="rbtMensual" value="MENSUAL" checked="true"/>Mensual
@@ -55,7 +55,7 @@ $(document).ready(function () {
 												 
 												<input type="radio"	name="optionFormato"
 												       id="rbtBienal" value="BIENAL"/>Bienal	
-											</td>
+											</td>										
 																													
 										</tr>
 										<tr height="10px">
@@ -67,8 +67,8 @@ $(document).ready(function () {
 												 <form:select path="grupoInfBusq" cssClass="select" cssStyle="width: 200px;">															
 												    <form:options items="${resumenCostoBean.listaGrupoInf}"  itemLabel="descripcion" itemValue="idGrupoInformacion"/>
 												</form:select>													
-											</td>		
-																											
+											</td>	
+																									
 										</tr>
 										<tr height="10px">
 											<td colspan="2"></td>
@@ -81,7 +81,23 @@ $(document).ready(function () {
 													<form:options items="${resumenCostoBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 												</form:select>
 											</td>
-																																				
+																																		
+										</tr>
+										<tr height="10px">
+											<td colspan="2"></td>
+										</tr>
+										
+										<tr>										
+											<td><output>Tipo de Formato de Exportación:</output></td>
+											<td>
+												<input type="radio"	name="formatoExportar"
+												       id="rbtPdf" value="PDF" checked="true"/>PDF
+												 &nbsp;&nbsp;&nbsp;	
+												 
+												<input type="radio"	name="formatoExportar"
+												       id="rbtExcel" value="EXCEL" />EXCEL	
+											</td>
+																																	
 										</tr>
 										<tr height="10px">
 											<td colspan="2"></td>
@@ -91,25 +107,63 @@ $(document).ready(function () {
 										    <td >										  										   
 											</td>										
 											<td> 
-											 <div id="<portlet:namespace/>div_F14A"> 
-											     <input name="<portlet:namespace/>btnF14A"
-												   id="<portlet:namespace/>btnF14A" type="button"
-												   class="net-button-small" value="F14A" style="aling:center" />
+											 <div id="<portlet:namespace/>div_F14A"> 										   
+											     
+												   <div id="<portlet:namespace/>div_F14B_opciones"> 							 
+													     
+													<form:select path="optionBienal" cssClass="select" cssStyle="width: 150px;">														
+														<form:option value="F14A">F14A</form:option>
+														<form:option value="F14B">F14B</form:option>														
+													</form:select>
+																						     											     
+												   </div>
+												  									   
+												   <div id="<portlet:namespace/>div_F14B_zonas" style="display: none;">
+												   	
+												   	 <br>  
+												     
+												     <form:select path="optionZona" cssClass="select" cssStyle="width: 150px;">														
+														<form:option value="RURAL">RURAL</form:option>
+														<form:option value="PROVINCIA">URBANO PROVINCIAS</form:option>
+														<form:option value="LIMA">URBANO LIMA</form:option>														
+													</form:select> 
+																									     
+												  </div>	
+												  								  
+												  <br>
+												  
+											      <input name="<portlet:namespace/>btnExportar"
+														 id="<portlet:namespace/>btnExportar" type="button"
+														 class="net-button-small" value="Exportar" style="aling:center" />						    
 											   </div>
 											   
-											   <div id="<portlet:namespace/>div_F12A">										     
-											     <input name="<portlet:namespace/>btnF12A"
-												   id="<portlet:namespace/>btnF12A" type="button"
-												   class="net-button-small" value="F12A" style="aling:center" />
+											   <div id="<portlet:namespace/>div_F12A">
+											   
+											     <div id="<portlet:namespace/>div_F12A_pdf">										     
+												     <input name="<portlet:namespace/>btnF12A"
+													   id="<portlet:namespace/>btnF12A" type="button"
+													   class="net-button-small" value="F12A-Pdf" style="aling:center" />
+													   
+													    &nbsp;&nbsp;&nbsp;	
+												     <input name="<portlet:namespace/>btnF12B"
+													   id="<portlet:namespace/>btnF12B" type="button"
+													   class="net-button-small" value="F12B-Pdf" style="aling:center" />
+												  </div>
+												  
+												  <div id="<portlet:namespace/>div_F12A_excel">
+												     <input name="<portlet:namespace/>btnF12AExcel"
+													   id="<portlet:namespace/>btnF12AExcel" type="button"
+													   class="net-button-small" value="F12A-Excel" style="aling:center" />
+													   
+													    &nbsp;&nbsp;&nbsp;	
+												     <input name="<portlet:namespace/>btnF12BExcel"
+													   id="<portlet:namespace/>btnF12BExcel" type="button"
+													   class="net-button-small" value="F12B-Excel" style="aling:center" />
 												   
-												    &nbsp;&nbsp;&nbsp;	
-											     <input name="<portlet:namespace/>btnF12B"
-												   id="<portlet:namespace/>btnF12B" type="button"
-												   class="net-button-small" value="F12B" style="aling:center" />
-												   
+												  </div>
+												  
 											   </div>										   
-											</td>											
-																																	
+											</td>																												
 										</tr>
 									</table>
 								</fieldset>
