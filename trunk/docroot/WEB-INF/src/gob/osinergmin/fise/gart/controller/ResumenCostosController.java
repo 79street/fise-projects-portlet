@@ -154,7 +154,7 @@ public class ResumenCostosController {
 		    session.setAttribute("tipoFormato",tipoFormato);
 		    session.setAttribute("tipoArchivo",tipoArchivo);	    
 		    
-		    String nombreReporte = "reporte14A";   		    	
+		    String nombreReporte = "resumenCostos14A";   		    	
 		    String directorio = "/reports/" + nombreReporte + ".jasper";
 		    
 		    listaF14A = resumenCostosService.buscarResumenCostoF14A(r.getCodEmpresaBusq(), idGrupoInf);	    
@@ -188,6 +188,219 @@ public class ResumenCostosController {
 			if(bytesF14A!=null){
 				bytesF14A=null;
 			}
+		}
+    }
+	
+	
+	@ResourceMapping("verResumenCostoF14AExcel")
+	public void verResumenF14AExel(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> listaF14A =null;		
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();	
+			
+			logger.info("Entrando a ver reporte de resumen costos F14A excel");
+			
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);
+			logger.info("periocidad:  "+r.getOptionFormato());
+			
+		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    mapa.put("IMG", rutaImg);
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
+		   
+		    JSONObject jsonObj = new JSONObject();	   
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
+		    String tipoArchivo = "1";//exel		
+		    String nombreReporte = "resumenCostos14A";
+		    String nombreArchivo ="RESUMEN_COSTO_F14A";     
+		    
+		    listaF14A = resumenCostosService.buscarResumenCostoF14A(r.getCodEmpresaBusq(), idGrupoInf);	    
+		    
+		    if(listaF14A!=null && listaF14A.size()>0){
+		    	session.setAttribute("tipoFormato",tipoFormato);
+		    	session.setAttribute("tipoArchivo",tipoArchivo);
+		    	session.setAttribute("nombreReporte",nombreReporte);
+		    	session.setAttribute("nombreArchivo",nombreArchivo);
+		    	session.setAttribute("lista", listaF14A);
+		    	session.setAttribute("mapa", mapa);
+		    	jsonObj.put("resultado", "OK");	 
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver  resumen de costos F14A exel: "+e); 
+			e.printStackTrace();
+		}finally{
+			if(listaF14A!=null){
+				listaF14A =null;
+			}		
+		}
+    }
+	
+	
+	@ResourceMapping("verResumenCostoF14B")
+	public void verResumenF14B(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> listaF14B =null;
+		byte[] bytesF14B = null;
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();	
+			
+			logger.info("Entrando a ver reporte de resumen costos F14B");
+			
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);
+			logger.info("periocidad:  "+r.getOptionFormato());
+			logger.info("zona:  "+r.getOptionZona());	
+			
+		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    mapa.put("IMG", rutaImg);
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
+		   
+		    JSONObject jsonObj = new JSONObject();	   
+		    
+		    String tipoFormato = "RESUMEN DE COSTOS F14B ";
+		    String tipoArchivo = "3";//PDF		   
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);	    
+		    
+		    String nombreReporte = "";  
+		    if(r.getOptionZona()!=null && r.getOptionZona().equals("RURAL")){ 
+		    	nombreReporte = "resumenCostos14B_Rural";  
+		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("PROVINCIA")){
+		    	nombreReporte = "resumenCostos14B_Prov";  
+		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("LIMA")){
+		    	nombreReporte = "resumenCostos14B_Lima";  	
+		    }
+		    String directorio = "/reports/" + nombreReporte + ".jasper";
+		    
+		    listaF14B = resumenCostosService.buscarResumenCostoF14B(r.getCodEmpresaBusq(), idGrupoInf);	    
+		    
+		    if(listaF14B!=null && listaF14B.size()>0 && FormatoUtil.isNotBlank(nombreReporte)){ 
+		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));
+		    	bytesF14B = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+		    			new JRBeanCollectionDataSource(listaF14B));
+		    	if (bytesF14B != null) {				  	  		    		
+		    		session.setAttribute("bytesFormato", bytesF14B);
+		    		jsonObj.put("resultado", "OK");	   	
+		    	}else{
+		    		jsonObj.put("resultado", "ERROR");	   
+		    	}
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver  resumen de costos F14B: "+e); 
+			e.printStackTrace();
+		}finally{
+			if(listaF14B!=null){
+				listaF14B =null;
+			}
+			if(bytesF14B!=null){
+				bytesF14B=null;
+			}
+		}
+    }
+	
+	
+	@ResourceMapping("verResumenCostoF14BExcel")
+	public void verResumenF14BExcel(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> listaF14B =null;		
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();	
+			
+			logger.info("Entrando a ver reporte de resumen costos F14B Excel");
+			
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);
+			logger.info("periocidad:  "+r.getOptionFormato());
+			logger.info("zona:  "+r.getOptionZona());	
+			
+		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    mapa.put("IMG", rutaImg);
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
+		   
+		    JSONObject jsonObj = new JSONObject();	   
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
+		    String tipoArchivo = "1";//exel	   
+		    String nombreArchivo ="RESUMEN_COSTO_F14B"; 
+		    
+		    String nombreReporte = "";  
+		    if(r.getOptionZona()!=null && r.getOptionZona().equals("RURAL")){ 
+		    	nombreReporte = "resumenCostos14B_Rural";  
+		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("PROVINCIA")){
+		    	nombreReporte = "resumenCostos14B_Prov";  
+		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("LIMA")){
+		    	nombreReporte = "resumenCostos14B_Lima";  	
+		    }
+		    
+		    listaF14B = resumenCostosService.buscarResumenCostoF14B(r.getCodEmpresaBusq(), idGrupoInf);	    
+		    
+		    if(listaF14B!=null && listaF14B.size()>0 && FormatoUtil.isNotBlank(nombreReporte)){
+		    	session.setAttribute("tipoFormato",tipoFormato);
+		    	session.setAttribute("tipoArchivo",tipoArchivo);
+		    	session.setAttribute("nombreReporte",nombreReporte);
+		    	session.setAttribute("nombreArchivo",nombreArchivo);
+		    	session.setAttribute("lista", listaF14B);
+		    	session.setAttribute("mapa", mapa);
+		    	jsonObj.put("resultado", "OK");	 
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		
+		    
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver  resumen de costos F14B Excel: "+e); 
+			e.printStackTrace();
+		}finally{
+			if(listaF14B!=null){
+				listaF14B =null;
+			}		
 		}
     }
 	
@@ -227,7 +440,7 @@ public class ResumenCostosController {
 		    session.setAttribute("tipoFormato",tipoFormato);
 		    session.setAttribute("tipoArchivo",tipoArchivo);	    
 		    
-		    String nombreReporte = "reporte12A_12B";   		    	
+		    String nombreReporte = "resumenCostos12A_12B";   		    	
 		    String directorio = "/reports/" + nombreReporte + ".jasper";
 		    
 		    listaF12A = resumenCostosService.buscarResumenCostoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12A");     
@@ -264,6 +477,73 @@ public class ResumenCostosController {
 		}
     }
 	
+	
+	@ResourceMapping("verResumenCostoF12AExcel")
+	public void verResumenF12AExcel(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> listaF12A =null;	
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+			
+			logger.info("Entrando a ver reporte de resumen de costos de F12A Excel"); 
+			
+
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);			
+			logger.info("periocidad:  "+r.getOptionFormato());		    
+		   		    
+            String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    mapa.put("IMG", rutaImg);
+		    mapa.put("TIPO_FORMATO", FiseConstants.NOMBRE_F12A);
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
+		   
+		    JSONObject jsonObj = new JSONObject();	       
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
+		    String tipoArchivo = "1";//exel		
+		    String nombreReporte = "resumenCostos12A_12B";
+		    String nombreArchivo ="RESUMEN_COSTO_F12A";     
+		    
+		    listaF12A = resumenCostosService.buscarResumenCostoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12A"); 
+		    
+		    if(listaF12A!=null && listaF12A.size()>0){
+		    	session.setAttribute("tipoFormato",tipoFormato);
+		    	session.setAttribute("tipoArchivo",tipoArchivo);
+		    	session.setAttribute("nombreReporte",nombreReporte);
+		    	session.setAttribute("nombreArchivo",nombreArchivo);
+		    	session.setAttribute("lista", listaF12A);
+		    	session.setAttribute("mapa", mapa);
+		    	jsonObj.put("resultado", "OK");	 
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		
+		    
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver reporte de reseumen de costo de F12A Excel: "+e); 
+			e.printStackTrace();
+		}finally{	
+			if(listaF12A!=null){
+				listaF12A =null;
+			}		
+		}
+    }
+	
+	
+	
 	@ResourceMapping("verResumenCostoF12B")
 	public void verResumenF12B(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
@@ -283,7 +563,7 @@ public class ResumenCostosController {
 			}
 			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
 			logger.info("grupo inf:  "+idGrupoInf);		
-			logger.info("periocidad:  "+r.getOptionFormato());		    
+			logger.info("periocidad:  "+r.getOptionFormato());			
 		   		    
             String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
 		    
@@ -299,7 +579,7 @@ public class ResumenCostosController {
 		    session.setAttribute("tipoFormato",tipoFormato);
 		    session.setAttribute("tipoArchivo",tipoArchivo);	    
 		    
-		    String nombreReporte = "reporte12A_12B";   		    	
+		    String nombreReporte = "resumenCostos12A_12B";   		    	
 		    String directorio = "/reports/" + nombreReporte + ".jasper";
 		    
 		    listaF12B = resumenCostosService.buscarResumenCostoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12B"); 
@@ -324,7 +604,7 @@ public class ResumenCostosController {
 			pw.flush();
 			pw.close();	    
 		 } catch (Exception e) {
-			logger.error("Error al ver  formatos: "+e); 
+			logger.error("Error al ver el reporte de resumen de costos F12B:  "+e); 
 			e.printStackTrace();
 		}finally{
 			if(listaF12B!=null){
@@ -333,6 +613,70 @@ public class ResumenCostosController {
 			if(bytesF12B!=null){
 				bytesF12B=null;
 			}
+		}
+    }
+	
+	
+	@ResourceMapping("verResumenCostoF12BExcel")
+	public void verResumenF12BExcel(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> listaF12B =null;		
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();		    
+		    
+			logger.info("Entrando a ver reporte de resumen de costos de F12B Excel"); 	
+			
+			
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);		
+			logger.info("periocidad:  "+r.getOptionFormato());			
+		   		    
+            String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    mapa.put("IMG", rutaImg);
+		    mapa.put("TIPO_FORMATO", FiseConstants.NOMBRE_F12B);
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
+		   
+		    JSONObject jsonObj = new JSONObject();    
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
+		    String tipoArchivo = "1";//exel		
+		    String nombreReporte = "resumenCostos12A_12B";
+		    String nombreArchivo ="RESUMEN_COSTO_F12B";     
+		    
+		    listaF12B = resumenCostosService.buscarResumenCostoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12B"); 
+		    
+		    if(listaF12B!=null && listaF12B.size()>0){
+		    	session.setAttribute("tipoFormato",tipoFormato);
+		    	session.setAttribute("tipoArchivo",tipoArchivo);
+		    	session.setAttribute("nombreReporte",nombreReporte);
+		    	session.setAttribute("nombreArchivo",nombreArchivo);
+		    	session.setAttribute("lista", listaF12B);
+		    	session.setAttribute("mapa", mapa);
+		    	jsonObj.put("resultado", "OK");	 
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver reporte resumen costos 12B Excel: "+e); 
+			e.printStackTrace();
+		}finally{
+			if(listaF12B!=null){
+				listaF12B =null;
+			}		
 		}
     }
 	
