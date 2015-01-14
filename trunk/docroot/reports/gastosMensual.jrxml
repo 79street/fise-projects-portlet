@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gastosMensual" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="996"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String"/>
 	<parameter name="UNCHECKED12A" class="java.lang.String"/>
@@ -64,7 +64,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Acta de remisión de información de Gastos Mensuales]]></text>
+				<text><![CDATA[Acta de Remisión de Información de Gastos Mensuales]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
 				<reportElement x="400" y="26" width="150" height="16"/>
@@ -437,35 +437,21 @@
 	<pageFooter>
 		<band height="83" splitType="Stretch">
 			<staticText>
-				<reportElement x="4" y="34" width="548" height="14"/>
+				<reportElement x="4" y="20" width="548" height="14"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
-				<text><![CDATA[ (3) Solo se mostrará marcado cuando la Distribuidora Eléctrica presente físicamente su formato.]]></text>
+				<text><![CDATA[ (1) Solo se mostrará marcado cuando la Distribuidora Eléctrica presente físicamente su formato.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="48" width="548" height="14"/>
+				<reportElement x="5" y="34" width="548" height="14"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
-				<text><![CDATA[- Si no se presenta los formatos físicos, la presente remisión de información de gastos mensuales no será considerado.]]></text>
+				<text><![CDATA[- Si no se presenta los formatos físicos, la presente Remisión de Información de Gastos Mensuales no será considerado.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="4" y="20" width="551" height="14"/>
-				<textElement>
-					<font size="7"/>
-				</textElement>
-				<text><![CDATA[ (2) Se declara cuando en los FISE 12A o FISE 12B se consigna gastos por Actividades Extraordinarias.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="3" y="6" width="551" height="14"/>
-				<textElement>
-					<font size="7" isUnderline="false"/>
-				</textElement>
-				<text><![CDATA[ (1) Se declara cuando en los FISE 12A o FISE 12B se consigna gastos de Desplazamiento de Personal.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="5" y="62" width="547" height="14"/>
+				<reportElement x="5" y="48" width="547" height="14"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>

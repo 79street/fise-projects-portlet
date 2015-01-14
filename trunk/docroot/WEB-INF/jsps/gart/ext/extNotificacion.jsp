@@ -96,7 +96,7 @@ var notificarValidar= {
 			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");		
 			
 			//mensajes						
-			this.mensajeNotificar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Notificacion </h3>';			
+			this.mensajeNotificar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Notificación </h3>';			
 			this.mensajeProcesando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Datos </h3>';
 			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Excluyendo </h3>';
 			
@@ -533,7 +533,7 @@ var notificarValidar= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Se realizó la Notificación a los correos sgtes:'+data.Correo; 					
+						var addhtml2='Se realizó la Notificación a los siguientes correos electrónicos: '+data.Correo; 					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessage.dialog("open");					
 						notificarValidar.initBlockUI();
@@ -603,7 +603,7 @@ var notificarValidar= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro excluido con éxito';					
+						var addhtml2='Registro excluido satisfactoriamente';					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessageEliminar.dialog("open");
 						notificarValidar.buscarNotificacion();

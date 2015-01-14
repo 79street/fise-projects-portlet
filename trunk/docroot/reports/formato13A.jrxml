@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato13A" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="82"/>
-	<property name="ireport.y" value="74"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="26"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
@@ -216,7 +216,7 @@
 	<columnHeader>
 		<band height="53" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="23" width="50" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="0" y="23" width="45" height="29" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -230,7 +230,7 @@
 				<text><![CDATA[Sede que Atiende (**)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="51" y="23" width="30" height="29" forecolor="#FFFFFF" backcolor="#006699">
+				<reportElement mode="Opaque" x="46" y="23" width="35" height="29" forecolor="#FFFFFF" backcolor="#006699">
 					<property name="net.sf.jasperreports.export.pdf.tag.tr"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -330,7 +330,7 @@
 	<detail>
 		<band height="16" splitType="Immediate">
 			<textField isBlankWhenNull="true">
-				<reportElement x="51" y="0" width="30" height="15"/>
+				<reportElement x="46" y="0" width="35" height="15"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -417,7 +417,7 @@
 +$F{nroBenefPoteSecTipico8}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="50" height="15"/>
+				<reportElement x="0" y="0" width="45" height="15"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>

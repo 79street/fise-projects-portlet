@@ -602,7 +602,7 @@ var formato12C= {
 			botonRegresarDetalle.click(function(){
 				formato12C.blockUI();
 				//--location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&periodoEnvio='+formato12C.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
-				location.href=urlRegresarNuevo+'&codEmpresa='+formato13A.codEmpresaDetalle.val();
+				location.href=urlRegresarNuevo+'&codEmpresa='+formato12C.codEmpresaDetalle.val();
 			});
 			
 			formato12C.construirPeriodoEnvio(formato12C.anoPresentacionDetalle.val(), formato12C.mesPresentacionDetalle.val(), formato12C.etapaDetalle.val());
