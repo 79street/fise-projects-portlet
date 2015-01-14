@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acactaEnvioCosto" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.3636363636363646"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="9"/>
+	<property name="ireport.y" value="527"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String"/>
@@ -88,10 +88,10 @@
 	<pageHeader>
 		<band height="602" splitType="Stretch">
 			<rectangle>
-				<reportElement x="26" y="19" width="505" height="572"/>
+				<reportElement x="26" y="19" width="505" height="565"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="152" y="198" width="126" height="180" backcolor="#FFFFFF"/>
+				<reportElement x="152" y="198" width="126" height="147" backcolor="#FFFFFF"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="26" y="30" width="505" height="83" backcolor="#FFFFFF"/>
@@ -104,7 +104,7 @@
 				<text><![CDATA[ Distribuidora Eléctrica:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="405" y="198" width="126" height="180" backcolor="#FFFFFF"/>
+				<reportElement x="405" y="198" width="126" height="147" backcolor="#FFFFFF"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="26" y="425" width="505" height="20" backcolor="#1FDADA"/>
@@ -115,7 +115,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{MSG_OBSERVACIONES}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="278" y="198" width="127" height="180" backcolor="#FFFFFF"/>
+				<reportElement x="278" y="198" width="127" height="147" backcolor="#FFFFFF"/>
 			</rectangle>
 			<image>
 				<reportElement x="412" y="283" width="10" height="10"/>
@@ -125,25 +125,18 @@
 				<reportElement x="26" y="129" width="505" height="20" backcolor="#1FDADA"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="26" y="198" width="126" height="180" backcolor="#FFFFFF"/>
+				<reportElement x="26" y="198" width="126" height="147" backcolor="#FFFFFF"/>
 			</rectangle>
 			<textField>
-				<reportElement x="409" y="333" width="113" height="16"/>
+				<reportElement x="170" y="365" width="113" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{USUARIO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="160" y="333" width="113" height="16"/>
+				<reportElement x="170" y="350" width="113" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$P{FECHA_ENVIO}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="34" y="333" width="115" height="16"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha de Envío:]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="27" y="427" width="504" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -195,13 +188,6 @@
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Etapa:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="285" y="333" width="113" height="16"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Usuario Envía:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="155" y="85" width="68" height="16"/>
@@ -501,6 +487,20 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_INICIO_VIGENCIA}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="34" y="350" width="136" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Envío:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="365" width="136" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario Envía:]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
