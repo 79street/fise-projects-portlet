@@ -670,11 +670,11 @@ public class FiseUtil {
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
 						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
-						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente a "
+						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente al Grupo de Informaci&oacute;n "
 						+ descGrupoInf + ". "
 						+ "" + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
-						+ "<p>Para subsanarlos debe ingresar al sistema y corregir los datos para la etapa LEV.OBS.<u></u><u></u></p>"
-						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
+						+ "<p>Para subsanar las obsevaciones debe ingresar al sistema y corregir los datos para la etapa LEVANTAMIENTO DE OBSERVACIONES (LEV.OBS).<u></u><u></u></p>"
+						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo a: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
@@ -781,11 +781,11 @@ public class FiseUtil {
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
 						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
-						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n correspondiente a "
+						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n correspondiente al Grupo de Informaci&oacuten "
 						+ descGrupoInf + ""
 					    + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formatos "
 					    + " y Anexo de Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
-						+ "<p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
+						+ "<p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo a: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());

@@ -1307,6 +1307,7 @@ public class NotificacionController {
   	  						
   	  						nombreReporte ="validacion13";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
+  	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO13A);
   	  						if( tabla!=null ){
   	  				    		descripcionFormato = tabla.getDescripcionTabla();
   	  				    	}
