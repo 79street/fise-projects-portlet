@@ -1125,6 +1125,7 @@ public class EnvioDefinitivoController {
 			String dirCheckedImage = rutaCheck;
 			String dirUncheckedImage = rutaUncheck;	
 			String formatos = "";
+			boolean msnObs = false;
 			//FORMATO 12A
 			mapa.put("NAMEF12A", ""); 	     		  
 			mapa.put("UNCHECKED12A", rutaImgRelleno);     		  
@@ -1192,6 +1193,7 @@ public class EnvioDefinitivoController {
   	  		        }
   	  		        if(listaObs12A!=null && !listaObs12A.isEmpty() ){
   	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirUncheckedImage);
+  	  		            msnObs = true;
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirCheckedImage);
   	  		        }  	  
@@ -1232,6 +1234,7 @@ public class EnvioDefinitivoController {
   	  		        }
   	  		        if(listaObs12B!=null && !listaObs12B.isEmpty() ){
   	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirUncheckedImage);
+  	  		            msnObs = true;
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirCheckedImage);
   	  		        }  
@@ -1270,6 +1273,7 @@ public class EnvioDefinitivoController {
   	  		        }
   	  		        if(listaObs12C!=null && !listaObs12C.isEmpty() ){
   	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirUncheckedImage);
+  	  		            msnObs = true;
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirCheckedImage);
   	  		        } 
@@ -1308,6 +1312,7 @@ public class EnvioDefinitivoController {
   	  		        }
   	  		        if(listaObs12D!=null && !listaObs12D.isEmpty() ){
   	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirUncheckedImage);
+  	  		            msnObs = true;
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirCheckedImage);
   	  		        }
@@ -1325,7 +1330,12 @@ public class EnvioDefinitivoController {
   	  		        mapa.put("NAMEOTROS12D", "Otros: ___________");   					
   				}	    
   			}//fin del for de la lista	
-           mapa.put("FORMATOS", formatos); 			  		
+           mapa.put("FORMATOS", formatos);
+           if(msnObs){
+        	   mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, FiseConstants.MSG_OBSERVACION_REPORTE_LLENO);   
+           }else{
+        	   mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);   
+           }          
 		} catch (Exception e) {
 		   logger.error("Error al llenar parametros del formato mensual "+e);
 		   e.printStackTrace();
@@ -1351,6 +1361,7 @@ public class EnvioDefinitivoController {
 			String dirCheckedImage = rutaCheck;
 			String dirUncheckedImage = rutaUncheck;	
 			String formatos = "";
+			boolean msnObs=false;
 			//FORMATO 13A
 			mapa.put("NAMEF13A", ""); 	     		  
 			mapa.put("UNCHECKED13A", rutaImgRelleno);     		  
@@ -1421,6 +1432,7 @@ public class EnvioDefinitivoController {
   	  		        }
   	  		        if(listaObs13A!=null && !listaObs13A.isEmpty() ){
   	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirUncheckedImage);
+  	  		            msnObs=true;
   	  		        }else{
   	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirCheckedImage);
   	  		        }
@@ -1463,6 +1475,7 @@ public class EnvioDefinitivoController {
   			        }
   			        if(listaObs14A!=null && !listaObs14A.isEmpty() ){
   			        	mapa.put("CHECKED_OBSERVACION_14A", dirUncheckedImage);
+  			        	msnObs=true;
   			        }else{
   			        	mapa.put("CHECKED_OBSERVACION_14A", dirCheckedImage);
   			        } 
@@ -1505,6 +1518,7 @@ public class EnvioDefinitivoController {
 			        }
 			        if(listaObs14B!=null && !listaObs14B.isEmpty() ){
 			        	mapa.put("CHECKED_OBSERVACION_14B", dirUncheckedImage);
+			        	msnObs=true;
 			        }else{
 			        	mapa.put("CHECKED_OBSERVACION_14B", dirCheckedImage);
 			        }  
@@ -1547,6 +1561,7 @@ public class EnvioDefinitivoController {
  			        }
  			        if(listaObs14C!=null && !listaObs14C.isEmpty() ){
  			        	mapa.put("CHECKED_OBSERVACION_14C", dirUncheckedImage);
+ 			        	msnObs=true;
  			        }else{
  			        	mapa.put("CHECKED_OBSERVACION_14C", dirCheckedImage);
  			        } 
@@ -1566,7 +1581,12 @@ public class EnvioDefinitivoController {
   					
   				}  				    
   			}//fin del for de la lista	
-           mapa.put("FORMATOS", formatos); 			  		
+           mapa.put("FORMATOS", formatos);
+           if(msnObs){
+        	   mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, FiseConstants.MSG_OBSERVACION_REPORTE_LLENO);   
+           }else{
+        	   mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);   
+           }  
 		} catch (Exception e) {
 		   logger.error("Error al llenar parametros del formato bienal "+e);
 		   e.printStackTrace();
