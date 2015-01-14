@@ -1181,7 +1181,7 @@
 							show=false;
 					   		msj=" No tiene autorización para realizar esta operación";
 						}
-					 }else if(flagOperacion=='CERRADO'){
+					 }else if(std=='CERRADO'){
 						show=false;
 						msj=" Está fuera de plazo";
 					 }
@@ -1199,7 +1199,7 @@
 							show=false;
 					   		msj=" No tiene autorización para realizar esta operación";
 						}
-				    }else if(flagOperacion=='CERRADO'){
+				    }else if(std=='CERRADO'){
 				    	show=false;
 				    	msj=" Está fuera de plazo";
 					}

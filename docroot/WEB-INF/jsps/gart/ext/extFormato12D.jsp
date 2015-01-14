@@ -559,7 +559,7 @@ var formato12D= {
 			botonRegresarDetalle.click(function(){
 				formato12D.blockUI();
 				//--location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12D.codEmpresaDetalle.val()+'&periodoEnvio='+formato12D.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12D.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12D.mesPresentacionDetalle.val()+'&etapa='+formato12D.etapaDetalle.val()+'&tipo=1';
-				location.href=urlRegresarNuevo+'&codEmpresa='+formato13A.codEmpresaDetalle.val();
+				location.href=urlRegresarNuevo+'&codEmpresa='+formato12D.codEmpresaDetalle.val();
 			});
 			
 			formato12D.construirPeriodoEnvio(formato12D.anoPresentacionDetalle.val(), formato12D.mesPresentacionDetalle.val(), formato12D.etapaDetalle.val());
