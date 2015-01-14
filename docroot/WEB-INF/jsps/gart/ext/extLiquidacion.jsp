@@ -425,7 +425,7 @@ var liquidacionVar= {
 			var ancho = liquidacionVar.divBuscarLiq.width();
 			liquidacionVar.tablaResultadosMotivo.jqGrid({
 			   datatype: "local",
-		       colNames: ['Item','Descripción','Editar','Eliminar',''],
+		       colNames: ['Item','Descripción del Motivo','Editar','Eliminar',''],
 		       colModel: [
                        { name: 'itemMotivo', index: 'itemMotivo', width: 50,align:'center'},				   
 					   { name: 'descMotivo', index: 'descMotivo', width: 300},					  	  	           

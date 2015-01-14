@@ -157,7 +157,7 @@ var fiseObservacion= {
 		buildGrids : function () {	
 			fiseObservacion.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Observación','Descripción','Visualizar','Editar'],
+		       colNames: ['Id Observación','Descripción de Observación','Visualizar','Editar'],
 		       colModel: [
                        { name: 'idObservacion', index: 'idObservacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},					  
