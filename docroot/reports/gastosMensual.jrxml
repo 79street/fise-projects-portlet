@@ -448,7 +448,7 @@
 				<textElement>
 					<font size="7"/>
 				</textElement>
-				<text><![CDATA[* Si no se presenta los formatos físicos, la presente remisión de información de gastos mensuales no será considerado.]]></text>
+				<text><![CDATA[- Si no se presenta los formatos físicos, la presente remisión de información de gastos mensuales no será considerado.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="4" y="20" width="551" height="14"/>
@@ -469,7 +469,7 @@
 				<textElement>
 					<font size="7"/>
 				</textElement>
-				<text><![CDATA[** La presente Acta no es válido para trámites judiciales.]]></text>
+				<text><![CDATA[- La presente Acta no es válido para trámites judiciales.]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

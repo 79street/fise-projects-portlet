@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="actaEnvio" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="345"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_INICIO_VIGENCIA" class="java.lang.Long"/>
@@ -337,7 +337,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[** La presente Acta no es válido para trámites judiciales.]]></text>
+				<text><![CDATA[- La presente Acta no es válido para trámites judiciales.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="1" y="16" width="552" height="16"/>
@@ -351,7 +351,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[* Si no se presenta los formatos físicos y los sustentos correspondientes, la presente remisión de información de Costos Estándares no será considerada]]></text>
+				<text><![CDATA[- Si no se presenta los formatos físicos y los sustentos correspondientes, la presente remisión de información de Costos Estándares no será considerada]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
