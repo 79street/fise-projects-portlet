@@ -1431,10 +1431,10 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_13A", dirUncheckedImage);
   	  		        }
   	  		        if(listaObs13A!=null && !listaObs13A.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirUncheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirCheckedImage);
   	  		            msnObs=true;
   	  		        }else{
-  	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirCheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_13A", dirUncheckedImage);
   	  		        }
 	  	  		    if(FormatoUtil.isNotBlank(formatos)){ 
 	  	  		        formatos = formatos+", FISE 13A ";
@@ -1474,10 +1474,10 @@ public class EnvioDefinitivoController {
   			        	mapa.put("CHECKED_CUMPLE_PLAZO_14A", dirUncheckedImage);
   			        }
   			        if(listaObs14A!=null && !listaObs14A.isEmpty() ){
-  			        	mapa.put("CHECKED_OBSERVACION_14A", dirUncheckedImage);
+  			        	mapa.put("CHECKED_OBSERVACION_14A", dirCheckedImage);
   			        	msnObs=true;
   			        }else{
-  			        	mapa.put("CHECKED_OBSERVACION_14A", dirCheckedImage);
+  			        	mapa.put("CHECKED_OBSERVACION_14A", dirUncheckedImage);
   			        } 
   			        if(FormatoUtil.isNotBlank(formatos)){ 
   			        	formatos = formatos+", FISE 14A ";
@@ -1517,10 +1517,10 @@ public class EnvioDefinitivoController {
 			        	mapa.put("CHECKED_CUMPLE_PLAZO_14B", dirUncheckedImage);
 			        }
 			        if(listaObs14B!=null && !listaObs14B.isEmpty() ){
-			        	mapa.put("CHECKED_OBSERVACION_14B", dirUncheckedImage);
+			        	mapa.put("CHECKED_OBSERVACION_14B", dirCheckedImage);
 			        	msnObs=true;
 			        }else{
-			        	mapa.put("CHECKED_OBSERVACION_14B", dirCheckedImage);
+			        	mapa.put("CHECKED_OBSERVACION_14B", dirUncheckedImage);
 			        }  
 			        if(FormatoUtil.isNotBlank(formatos)){ 
 			        	formatos = formatos+", FISE 14B ";
@@ -1560,10 +1560,10 @@ public class EnvioDefinitivoController {
  			        	mapa.put("CHECKED_CUMPLE_PLAZO_14C", dirUncheckedImage);
  			        }
  			        if(listaObs14C!=null && !listaObs14C.isEmpty() ){
- 			        	mapa.put("CHECKED_OBSERVACION_14C", dirUncheckedImage);
+ 			        	mapa.put("CHECKED_OBSERVACION_14C", dirCheckedImage);
  			        	msnObs=true;
  			        }else{
- 			        	mapa.put("CHECKED_OBSERVACION_14C", dirCheckedImage);
+ 			        	mapa.put("CHECKED_OBSERVACION_14C", dirUncheckedImage);
  			        } 
  			        if(FormatoUtil.isNotBlank(formatos)){ 
  			        	 formatos = formatos+", FISE 14C ";
