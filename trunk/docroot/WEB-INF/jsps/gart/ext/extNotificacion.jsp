@@ -513,7 +513,7 @@ var notificarValidar= {
 		/**Function para confirmar si quiere notificar la validacion de obs.*/
 		confirmarNotificacion : function(){
 			console.debug("entranado a confirmar notificación");
-			var addhtml='¿Está seguro que desea realizar la notificación?';
+			var addhtml='¿Está seguro que desea Notificar a los Usuarios de las Distribuidoras Eléctricas.?';
 			notificarValidar.dialogConfirmContent.html(addhtml);
 			notificarValidar.dialogConfirm.dialog("open");
 		},
@@ -533,12 +533,12 @@ var notificarValidar= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Se realizó la notificación a los correos sgtes:'+data.Correo; 					
+						var addhtml2='Se realizó la Notificación a los correos sgtes:'+data.Correo; 					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessage.dialog("open");					
 						notificarValidar.initBlockUI();
 					}else if(data.resultado == "NO_DATOS"){						
-						var addhtmInfo='No existe ninguna lista pra realizar la notificación';					
+						var addhtmInfo='No existe ninguna lista pra realizar la Notificación';					
 						notificarValidar.dialogInfoContent.html(addhtmInfo);
 						notificarValidar.dialogInfo.dialog("open");						
 						notificarValidar.initBlockUI();	
@@ -553,7 +553,7 @@ var notificarValidar= {
 						notificarValidar.dialogError.dialog("open");					
 						notificarValidar.initBlockUI();	
 					}else if(data.resultado == "ERROR"){
-						var addhtmError='Error al realizar la notificación.';					
+						var addhtmError='Error al realizar la Notificación.';					
 						notificarValidar.dialogErrorContent.html(addhtmError);
 						notificarValidar.dialogError.dialog("open");					
 						notificarValidar.initBlockUI();

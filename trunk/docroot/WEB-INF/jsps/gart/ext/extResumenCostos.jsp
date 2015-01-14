@@ -27,12 +27,8 @@ var resumenCosto= {
 		
 		
 		//divs
-		divF14A:null,
-		divF14APdf:null,
-		divF14AExcel:null,	
-		divF12A:null,
-		divF12APdf:null,
-		divF12AExcel:null,
+		divF14A:null,		
+		divF12A:null,	
 		
 		div_F14AB_opc:null,
 		div_F14AB_zona:null,
@@ -54,15 +50,8 @@ var resumenCosto= {
 	    urlVerF12BExcel:null,		
 		
 		//botones
-		botonExportar:null,
-		//botonF14A:null,
-		//botonF14AExcel:null,	
-		//botonF14B:null,	
-		//botonF14BExcel:null,		
-		botonF12A:null,
-		botonF12AExcel:null,
-		botonF12B:null,
-		botonF12BExcel:null,
+		botonGenerarBienal:null,
+		botonGenerarMensual:null,		
 		
 		//varibales de busqueda
 		i_codEmpresaBusq:null,
@@ -70,13 +59,10 @@ var resumenCosto= {
 		i_tipoBienal:null,
 		i_tipoMensual:null,
 		
-		i_cboBienal:null,
-		i_cboZonas:null,		
-		
-		i_formatoPdf:null,
-		i_formatoExcel:null,
-		
-		i_tipoExport:null,
+		i_cboBienal:null,		
+		i_cboZonas:null,	
+		i_cboMensual:null,		
+				
 				
 		init : function() {
 			
@@ -97,11 +83,9 @@ var resumenCosto= {
 			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");	
 			
 			//divs
-			this.divF14A=$("#<portlet:namespace/>div_F14A");			
-			//this.divF14AExcel=$("#<portlet:namespace/>div_F14A_excel");
+			this.divF14A=$("#<portlet:namespace/>div_F14A");		
 			this.divF12A=$("#<portlet:namespace/>div_F12A");
-			this.divF12APdf=$("#<portlet:namespace/>div_F12A_pdf");
-			this.divF12AExcel=$("#<portlet:namespace/>div_F12A_excel");
+			
 			
 			this.div_F14AB_opc=$("#<portlet:namespace/>div_F14B_opciones");
 			this.div_F14AB_zona=$("#<portlet:namespace/>div_F14B_zonas");
@@ -125,35 +109,25 @@ var resumenCosto= {
 			this.urlVerF12BExcel='<portlet:resourceURL id="verResumenCostoF12BExcel" />'; 
 					
 			//botones			
-			this.botonExportar=$("#<portlet:namespace/>btnExportar");
-			//this.botonF14A=$("#<portlet:namespace/>btnF14A");			
-			//this.botonF14AExcel=$("#<portlet:namespace/>btnF14AExcel");
-			//this.botonF14B=$("#<portlet:namespace/>btnF14B");
-			//this.botonF14BExcel=$("#<portlet:namespace/>btnF14BExcel");
-			this.botonF12A=$("#<portlet:namespace/>btnF12A");
-			this.botonF12AExcel=$("#<portlet:namespace/>btnF12AExcel");
-			this.botonF12B=$("#<portlet:namespace/>btnF12B");
-			this.botonF12BExcel=$("#<portlet:namespace/>btnF12BExcel");
+			this.botonGenerarBienal=$("#<portlet:namespace/>btnGenerarF14AB");
+			this.botonGenerarMensual=$("#<portlet:namespace/>btnGenerarF12AB");		
 			
 			//variables de busqueda
 			this.i_codEmpresaBusq=$('#codEmpresaBusq');
 			this.i_grupoInfBusq=$('#grupoInfBusq');				
 			this.i_tipoBienal=$('#rbtBienal');
-			this.i_tipoMensual=$('#rbtMensual');
-			
-			this.i_formatoPdf=$('#rbtPdf');
-			this.i_formatoExcel=$('#rbtExcel');	
+			this.i_tipoMensual=$('#rbtMensual');			
 			
 			this.i_cboBienal=$('#optionBienal');
 			this.i_cboZonas=$('#optionZona');
 			
-			this.i_tipoExport=$('#formatoExportar');			
+			this.i_cboMensual=$('#optionMensual');
 			
 						
 			//llamado a la funciones de cada boton
 			
-			//boton export pdf 14A
-			resumenCosto.botonExportar.click(function() {
+			//boton generar los formatos bienales
+			resumenCosto.botonGenerarBienal.click(function() {
 				console.debug("entranado a exportar los bienales ");
 				console.debug("entranado a exportar los bienales: "+resumenCosto.i_cboBienal.val());
 				var valorPdf = document.getElementById('rbtPdf').checked;
@@ -171,51 +145,30 @@ var resumenCosto= {
 					resumenCosto.mostrarReporteCostoF14BExcel();
 				}else{					
 				}				
-			});			
-			
-			//boton export pdf 14A
-			/* resumenCosto.botonF14A.click(function() {			
-				resumenCosto.mostrarReporteCostoF14A();
-			}); */
-			
-			//boton export excel 14A
-			/* resumenCosto.botonF14AExcel.click(function() {			
-				resumenCosto.mostrarReporteCostoF14AExcel();
-			}); */
-			
-			//boton export pdf 14B
-			/* resumenCosto.botonF14B.click(function() {			
-				//resumenCosto.mostrarReporteCostoF14B();
-				resumenCosto.div_F14B_opc.show();
-			}); */
-			
-			//boton export excel 14B
-			/* resumenCosto.botonF14BExcel.click(function() {			
-				resumenCosto.mostrarReporteCostoF14BExcel();
-			}); */
-			
-			
-			
-			
-			//boton export pdf 12A
-			resumenCosto.botonF12A.click(function() {			
-				resumenCosto.mostrarReporteCostoF12A();				
 			});
 			
-			//boton export excel 12A
-			resumenCosto.botonF12AExcel.click(function() {			
-				resumenCosto.mostrarReporteCostoF12AExcel();				
-			});
 			
-			//boton export pdf 12B
-			resumenCosto.botonF12B.click(function() {	
-				resumenCosto.mostrarReporteCostoF12B();				
-			});	
+			//boton generar los formatos mensuales
+			resumenCosto.botonGenerarMensual.click(function() {
+				console.debug("entranado a exportar los mensuales ");
+				console.debug("entranado a exportar los mensuales: "+resumenCosto.i_cboMensual.val());
+				var valorPdf = document.getElementById('rbtPdf').checked;
+				var valorExcel = document.getElementById('rbtExcel').checked;
+				console.debug("entranado a exportar los mensuales PDF: "+valorPdf);	
+				console.debug("entranado a exportar los mensuales Excel: "+valorExcel);	
+				
+				if(valorPdf && resumenCosto.i_cboMensual.val()=='F12A'){					
+					resumenCosto.mostrarReporteCostoF12A();
+				}else if(valorExcel && resumenCosto.i_cboMensual.val()=='F12A'){
+					resumenCosto.mostrarReporteCostoF12AExcel();
+				}else if(valorPdf && resumenCosto.i_cboMensual.val()=='F12B'){
+					resumenCosto.mostrarReporteCostoF12B();	
+				}else if(valorExcel && resumenCosto.i_cboMensual.val()=='F12B'){
+					resumenCosto.mostrarReporteCostoF12BExcel();
+				}else{					
+				}				
+			});		
 			
-			//boton export exel 12B
-			resumenCosto.botonF12BExcel.click(function() {	
-				resumenCosto.mostrarReporteCostoF12BExcel();				
-			});	
 			
 			resumenCosto.initDialogs();		    
 		    
@@ -224,34 +177,16 @@ var resumenCosto= {
 				resumenCosto.<portlet:namespace/>loadGrupoInformacion();
 				resumenCosto.divF14A.show();
 				resumenCosto.divF12A.hide();							
-			});
-			
-			//evento change para reportes en pdf
-			resumenCosto.i_formatoPdf.change(function(){				
-				//resumenCosto.divF14AExcel.hide();
-				//resumenCosto.divF14APdf.show();
-				resumenCosto.div_F14AB_opc.show();				
-				resumenCosto.divF12AExcel.hide();
-				resumenCosto.divF12APdf.show();
-			});
+			});	
 			
 			//evento change para mensuales
 			resumenCosto.i_tipoMensual.change(function(){
 				resumenCosto.<portlet:namespace/>loadGrupoInformacion();
 				resumenCosto.divF14A.hide();
 				resumenCosto.divF12A.show();					
-			});
+			});		
 			
-			//evento change para reportes en excel
-			resumenCosto.i_formatoExcel.change(function(){				
-				//resumenCosto.divF14AExcel.show();
-				//resumenCosto.divF14APdf.hide();
-				resumenCosto.div_F14AB_opc.show();
-				resumenCosto.divF12AExcel.show();
-				resumenCosto.divF12APdf.hide();
-			});
-			
-			
+			//evento change para bienales
 			resumenCosto.i_cboBienal.change(function(){	
 				if(resumenCosto.i_cboBienal.val()=='F14A'){
 					resumenCosto.div_F14AB_zona.hide();		
@@ -261,8 +196,6 @@ var resumenCosto= {
 			});			
 		    		   
 			resumenCosto.i_tipoMensual.trigger('change');
-			
-			resumenCosto.i_formatoPdf.trigger('change');
 			
 		},			
 		

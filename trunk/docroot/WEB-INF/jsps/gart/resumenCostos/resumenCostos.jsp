@@ -101,13 +101,13 @@ $(document).ready(function () {
 										</tr>
 										<tr height="10px">
 											<td colspan="2"></td>
-										</tr>
-										
+										</tr>										
 										<tr>
-										    <td >										  										   
+										    <td valign="top"> 
+										    	<output>Formatos:</output>									  										   
 											</td>										
 											<td> 
-											 <div id="<portlet:namespace/>div_F14A"> 										   
+											 <div id="<portlet:namespace/>div_F14A">										   
 											     
 												   <div id="<portlet:namespace/>div_F14B_opciones"> 							 
 													     
@@ -132,39 +132,39 @@ $(document).ready(function () {
 												  								  
 												  <br>
 												  
-											      <input name="<portlet:namespace/>btnExportar"
-														 id="<portlet:namespace/>btnExportar" type="button"
-														 class="net-button-small" value="Exportar" style="aling:center" />						    
+											      <input name="<portlet:namespace/>btnGenerarF14AB"
+														 id="<portlet:namespace/>btnGenerarF14AB" type="button"
+														 class="net-button-small" value="Generar" style="aling:center" />						    
 											   </div>
 											   
 											   <div id="<portlet:namespace/>div_F12A">
 											   
-											     <div id="<portlet:namespace/>div_F12A_pdf">										     
-												     <input name="<portlet:namespace/>btnF12A"
-													   id="<portlet:namespace/>btnF12A" type="button"
-													   class="net-button-small" value="F12A-Pdf" style="aling:center" />
-													   
-													    &nbsp;&nbsp;&nbsp;	
-												     <input name="<portlet:namespace/>btnF12B"
-													   id="<portlet:namespace/>btnF12B" type="button"
-													   class="net-button-small" value="F12B-Pdf" style="aling:center" />
-												  </div>
+											       <div id="<portlet:namespace/>div_F12B_opciones"> 							 
+													     
+														<form:select path="optionMensual" cssClass="select" cssStyle="width: 150px;">														
+															<form:option value="F12A">F12A</form:option>
+															<form:option value="F12B">F12B</form:option>														
+														</form:select>
+																						     											     
+												   </div>									  
 												  
-												  <div id="<portlet:namespace/>div_F12A_excel">
-												     <input name="<portlet:namespace/>btnF12AExcel"
-													   id="<portlet:namespace/>btnF12AExcel" type="button"
-													   class="net-button-small" value="F12A-Excel" style="aling:center" />
-													   
-													    &nbsp;&nbsp;&nbsp;	
-												     <input name="<portlet:namespace/>btnF12BExcel"
-													   id="<portlet:namespace/>btnF12BExcel" type="button"
-													   class="net-button-small" value="F12B-Excel" style="aling:center" />
-												   
-												  </div>
+												   <br>												  
+											      <input name="<portlet:namespace/>btnGenerarF12AB"
+														 id="<portlet:namespace/>btnGenerarF12AB" type="button"
+														 class="net-button-small" value="Generar" style="aling:center" />
 												  
 											   </div>										   
 											</td>																												
 										</tr>
+										
+										
+										
+										
+										
+										
+										
+										
+										
 									</table>
 								</fieldset>
 							</td>
