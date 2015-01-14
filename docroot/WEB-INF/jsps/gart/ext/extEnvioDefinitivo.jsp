@@ -376,7 +376,7 @@ var envioDefinitivoGlobal= {
 		confirmarEnvioDefinitivo : function(){
 			console.debug("entranado a confirmar envio: "+envioDefinitivoGlobal.f_flagExisteData.val());			
 			if(envioDefinitivoGlobal.f_flagExisteData.val()=='SI'){
-				var addhtml='¿Está seguro que desea realizar el Envío General Definitivo de los Formatos presentados en el Resultado(s) de la búsqueda?';
+				var addhtml='¿Está seguro que desea realizar el Envío General Definitivo de el(los) Formato(s) presentado(s) en el Resultado de la búsqueda?';
 				envioDefinitivoGlobal.dialogConfirmContent.html(addhtml);
 				envioDefinitivoGlobal.dialogConfirm.dialog("open");	
 			}else{			
@@ -402,7 +402,7 @@ var envioDefinitivoGlobal= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='El Envio General Definitivo se realizó satisfactoriamente'; 					
+						var addhtml2='El Envío General Definitivo se realizó satisfactoriamente'; 					
 						envioDefinitivoGlobal.dialogMessageContent.html(addhtml2);
 						envioDefinitivoGlobal.dialogMessage.dialog("open");					
 						envioDefinitivoGlobal.initBlockUI();
@@ -414,7 +414,7 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.initBlockUI();
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 					}else if(data.resultado == "NO_DATOS"){						
-						var addhtmInfo='No existe ninguna lista pra realizar el Envío General Definitivo. Realice una nueva búsqueda..';					
+						var addhtmInfo='No existe ninguna lista para realizar el Envío General Definitivo. Realice una nueva búsqueda.';					
 						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
 						envioDefinitivoGlobal.dialogInfo.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();	
@@ -431,7 +431,7 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "ERROR"){						
-						var addhtmError='Error al realizar el Envio General Definitivo de los formatos presentados.';					
+						var addhtmError='Error al realizar el Envío General Definitivo de los formatos presentados.';					
 						envioDefinitivoGlobal.dialogErrorContent.html(addhtmError);
 						envioDefinitivoGlobal.dialogError.dialog("open");	
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
