@@ -78,8 +78,9 @@ public class FiseCargoFijoController {
     		mapaEmpresa = fiseUtil.getMapaEmpresa();
     		
     		c.setListaMes(fiseUtil.getMapaMeses());
-    		c.setAnioRepBusq(fiseUtil.obtenerNroAnioFechaActual());
     		
+    		c.setAnioRepBusq(fiseUtil.obtenerNroAnioFechaAnterior());
+    		c.setMesRepBusq(fiseUtil.obtenerNroMesFechaAnterior());
     		model.addAttribute("model", c);   		
     		
     		

@@ -278,11 +278,8 @@ $(document).ready(function () {
 										<tr height="10px" class="filete-bottom">
 										  <td colspan="2"></td> 
 										</tr>
-										<tr>
-										  <td colspan="2"></td> 
-										</tr>	
-										<tr>
-										  <td colspan="2"></td> 
+										<tr height="10px">
+										   <td colspan="2"></td> 
 										</tr>									
 										<tr>
 										<td>
@@ -623,16 +620,16 @@ $(document).ready(function () {
 										</td>
 										</tr>
 											
-										<tr>
-										<td colspan="2"></td>
-										</tr>
-										<tr>
-										<td colspan="2"></td>
-										</tr>
+									    <tr height="10px">
+										   <td colspan="2"></td> 
+										</tr>		
 																				
 										<tr class="filete-top">
 										  <td colspan="2">
 											<table style="width: 100%">
+											  <tr height="10px">
+										         <td colspan="3"></td> 
+										      </tr>	
 											  <tr>
 												<td width="25%">
 												   <fieldset id="<portlet:namespace/>panelCargaArchivosF14C"
@@ -654,7 +651,7 @@ $(document).ready(function () {
 												 </td>
 												<td width="10%"></td>
 												 <td width="65%">
-												  <table style="width: 100%">
+												  <table style="width: 100%">												    
 												    <tr>
 													  <td width="13%" align="center">
 														<input type="button" class="boton" name="<portlet:namespace/>reportePdfF14C" style="display: none;"

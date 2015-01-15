@@ -2345,7 +2345,7 @@ var formato14C= {
 			  	return false; 
 			}else if(formato14C.f_periodoEnvio.val()==null || 
 					formato14C.f_periodoEnvio.val().length == '' ) {			
-				var addhtmAlert='Debe ingresar periodo a declarar.';					
+				var addhtmAlert='No existe un Periodo Declarado para la Dist. Eléctrica seleccionada.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
 				formato14C.f_periodoEnvio.focus();
