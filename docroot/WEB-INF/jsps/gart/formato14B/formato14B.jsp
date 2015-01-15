@@ -204,7 +204,8 @@ $(document).ready(function () {
 														</td>														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descGrupoInformacion"  ></output>
+														  <!-- <output id="descGrupoInformacion"  ></output> -->
+														  <input id="descGrupoInformacion" readonly="readonly" style="border:none; background:#efefef;">
 													   </td>
 													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													   <td>
@@ -213,7 +214,8 @@ $(document).ready(function () {
 														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="descEstado"></output>														 
+														  <!-- <output id="descEstado"></output>		 -->
+														  <input id="descEstado" readonly="readonly" style="border:none; background:#efefef;">												 
 													    </td>
 													 </tr>													
 												</table>

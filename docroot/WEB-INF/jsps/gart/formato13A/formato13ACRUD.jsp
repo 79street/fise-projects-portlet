@@ -72,7 +72,8 @@
 														</td>														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="o_descGrupoInformacion" ></output>
+														  <!-- <output id="o_descGrupoInformacion" ></output> -->
+														  <input id="o_descGrupoInformacion" readonly="readonly" style="border:none; background:#efefef;">
 													   </td>
 													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													   <td>
@@ -81,7 +82,8 @@
 														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="o_descestado"></output>														 
+														  <!-- <output id="o_descestado"></output> -->						
+														  <input id="o_descestado" readonly="readonly" style="border:none; background:#efefef;">								 
 													    </td>
 													 </tr>													
 												</table>
@@ -279,17 +281,19 @@
 																						name="<portlet:namespace/>anadirFormato"
 																						value="Añadir" /></td>
 
+																					<c:if test="${crud =='UPDATE'}">
+																						<td width="17%" align="center"><input
+																							type="button" class="net-button-small"
+																							id="<portlet:namespace/>validacionFormato"
+																							name="<portlet:namespace/>validacionFormato"
+																							value="Validación" /></td>
+																						<td width="17%" align="center"><input
+																							type="button" class="net-button-small"
+																							id="<portlet:namespace/>envioDefinitivo"
+																							name="<portlet:namespace/>envioDefinitivo"
+																							value="Envío Def." /></td>
+																					</c:if>
 
-																					<td width="17%" align="center"><input
-																						type="button" class="net-button-small"
-																						id="<portlet:namespace/>validacionFormato"
-																						name="<portlet:namespace/>validacionFormato"
-																						value="Validación" /></td>
-																					<td width="17%" align="center"><input
-																						type="button" class="net-button-small"
-																						id="<portlet:namespace/>envioDefinitivo"
-																						name="<portlet:namespace/>envioDefinitivo"
-																						value="Envío Def." /></td>
 
 																				</c:if>
 

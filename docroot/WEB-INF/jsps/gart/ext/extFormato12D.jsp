@@ -2069,13 +2069,20 @@ var formato12D= {
 			formato12D.codEmpresaDetalle.val().focus();
 		    return false;
 		}
-		if(formato12D.periodoEnvioDetalle.val().length == '' ) {		  
+		/*if(formato12D.periodoEnvioDetalle.val().length == '' ) {		  
 			//alert('Debe ingresar el periodo de presentación');
 			formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el periodo de presentación');
 			formato12D.dialogMessageWarningDetalle.dialog("open");
 			formato12D.periodoEnvioDetalle.val().focus();
    			return false; 
- 		}
+ 		}*/
+		if(formato12D.periodoEnvio==null || formato12D.periodoEnvio.val().length == '' ) {		  
+			//alert('Debe seleccionar el periodo a declarar');
+			formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el periodo a declarar');
+			formato12D.dialogMessageWarningDetalle.dialog("open");
+			formato12D.periodoEnvio.focus();
+			return false; 
+		}
 		if(formato12D.anoEjecucionDetalle.val().length == '' ) {		  
 		    //alert('Debe ingresar el año de ejecución');
 		    formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el año de ejecución');
