@@ -1192,10 +1192,10 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12A", dirUncheckedImage);//dirCheckedImage
   	  		        }
   	  		        if(listaObs12A!=null && !listaObs12A.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirUncheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirCheckedImage);
   	  		            msnObs = true;
   	  		        }else{
-  	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirCheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_12A", dirUncheckedImage);
   	  		        }  	  
   	  		        if(FormatoUtil.isNotBlank(formatos)){ 
   	  		           formatos = formatos+", FISE 12A ";
@@ -1233,10 +1233,10 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12B", dirUncheckedImage);
   	  		        }
   	  		        if(listaObs12B!=null && !listaObs12B.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirUncheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirCheckedImage);
   	  		            msnObs = true;
   	  		        }else{
-  	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirCheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_12B", dirUncheckedImage);
   	  		        }  
   	  		        if(FormatoUtil.isNotBlank(formatos)){ 
   	  		    	     formatos = formatos+", FISE 12B ";
@@ -1272,10 +1272,10 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12C", dirUncheckedImage);
   	  		        }
   	  		        if(listaObs12C!=null && !listaObs12C.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirUncheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirCheckedImage);
   	  		            msnObs = true;
   	  		        }else{
-  	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirCheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_12C", dirUncheckedImage);
   	  		        } 
 	  	  		    if(FormatoUtil.isNotBlank(formatos)){ 
 	  	  		         formatos = formatos+", FISE 12C ";
@@ -1311,10 +1311,10 @@ public class EnvioDefinitivoController {
   	  		        	mapa.put("CHECKED_CUMPLE_PLAZO_12D", dirUncheckedImage);
   	  		        }
   	  		        if(listaObs12D!=null && !listaObs12D.isEmpty() ){
-  	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirUncheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirCheckedImage);
   	  		            msnObs = true;
   	  		        }else{
-  	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirCheckedImage);
+  	  		        	mapa.put("CHECKED_OBSERVACION_12D", dirUncheckedImage);
   	  		        }
 	  	  		    if(FormatoUtil.isNotBlank(formatos)){ 
 	  	  		         formatos = formatos+", FISE 12D ";

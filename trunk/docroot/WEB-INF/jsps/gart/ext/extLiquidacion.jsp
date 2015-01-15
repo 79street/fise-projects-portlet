@@ -294,7 +294,7 @@ var liquidacionVar= {
 		buildGrids : function () {	
 			liquidacionVar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','Motivo No Reconoc./Aprob.','','','',''],
+		       colNames: ['Dist. Eléct.','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','Motivo No Rec./Est.','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
@@ -335,7 +335,7 @@ var liquidacionVar= {
 		      			verF = "<a href='#'><img border='0' title='Ver Formato' src='/net-theme/images/img-net/file.png' align='center' onclick=\"liquidacionVar.mostrarReporteFormatos('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			verObs = "<a href='#'><img border='0' title='Ver Obs.' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"liquidacionVar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"liquidacionVar.confirmarEliminar('"+ret.correlativo+"','"+ret.liquidado+"');\" /></a> ";
-		      			mostrar = "<a href='#'><img border='0' title='Motivo de no Reconocimiento/Aprobación' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapaReconocido+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
+		      			mostrar = "<a href='#'><img border='0' title='Motivo de no Reconocimiento/Establecimiento' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapaReconocido+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
 		      			liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verF:verF});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verObs:verObs});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -636,7 +636,7 @@ var liquidacionVar= {
 				}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
 					msg = 'aprobado';
 				}
-				var addhtml2='No se puede excluir, ya está '+msg;
+				var addhtml2='No se puede excluir, el registro seleccionado ya se encuentra '+msg;
 				liquidacionVar.dialogInfoContent.html(addhtml2);
 				liquidacionVar.dialogInfo.dialog("open");	
 			}	
@@ -650,7 +650,7 @@ var liquidacionVar= {
 			}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
 				msg = 'costos estándares';
 			}
-			var addhtml='¿Está seguro que desea establecer los '+msg+'?';
+			var addhtml='¿Está seguro que desea procesar los '+msg+'?';
 			liquidacionVar.dialogConfirmEstablecerContent.html(addhtml);
 			liquidacionVar.dialogConfirmEstablecer.dialog("open");
 		},
@@ -710,11 +710,11 @@ var liquidacionVar= {
 					if(data.resultado == "OK"){
 						var msgFinal;
 						if( liquidacionVar.i_tipoMensual.prop('checked')){
-							msgFinal = 'gastos operativos';
+							msgFinal = 'Reconocimiento de los gastos operativos';
 						}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
-							msgFinal = 'costos estándares';
+							msgFinal = 'Establecimiento de los costos estándares';
 						}
-						var addhtml2='El establecimiento de los '+msgFinal+' fue satisfactorio';				
+						var addhtml2='El '+msgFinal+' se procesó satisfactoriamente.';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');
