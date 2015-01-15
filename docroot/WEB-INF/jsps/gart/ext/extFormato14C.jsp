@@ -499,7 +499,7 @@ var formato14C= {
 			formato14C.tablaResultados.jqGrid('navButtonAdd',formato14C.paginadoResultados,{
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
-			       onClickButton : function () {
+			       onClickButton : function () {			          
 			          location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
 			       } 
 			}); 
