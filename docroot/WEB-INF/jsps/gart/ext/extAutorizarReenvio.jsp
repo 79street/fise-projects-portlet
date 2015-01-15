@@ -97,7 +97,7 @@ var autorizarReenvio= {
 		buildGrids : function () {	
 			autorizarReenvio.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Formato.','Año Decl.','Mes Decl.','Etapa','Estado','Aut.Reenvio','','','','','',''],
+		       colNames: ['Dist. Eléct.','Formato','Año Decl.','Mes Decl.','Etapa','Estado','Aut.Reenvio','','','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 80},					   
 					   { name: 'formato', index: 'formato', width: 30},
