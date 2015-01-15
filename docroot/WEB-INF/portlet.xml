@@ -402,7 +402,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>AUTORIZAR REENVIO</title>
+			<title>AUTORIZAR REENVÍO</title>
 			<short-title>GartAutorizarReenvio</short-title>
 			<keywords>GartAutorizarReenvio</keywords>
 		</portlet-info>
