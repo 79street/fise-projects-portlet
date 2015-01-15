@@ -364,6 +364,7 @@ var formato14B= {
 				 $("#anioFinVigencia").val(anioPresSes);
 			}
 			 formato14B.botonValidacion.css('display','none');
+			 formato14B.botonEnvioDefinitivo.css('display','none');
 			 formato14B.<portlet:namespace/>loadPeriodo(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
 		}else{
 			//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioIniVigSes+','+anioFinVigSes+','+etapaSes);
@@ -517,6 +518,7 @@ var formato14B= {
 			$("#anioFinVigencia").val(formato14B.i_anioDesde.val());
 		}*/
 		formato14B.botonValidacion.css('display','none');
+		formato14B.botonEnvioDefinitivo.css('display','none');
 		formato14B.<portlet:namespace/>loadPeriodo('');
 		
 		formato14B.estiloEdicionRural();
@@ -1736,6 +1738,7 @@ var formato14B= {
 			 }
 		 }
 		 formato14B.botonValidacion.css('display','');
+		 formato14B.botonEnvioDefinitivo.css('display','');
 	},
 	mostrarUltimoFormato : function(){	
 		formato14B.procesoEstado.val('SAVE');
@@ -1757,6 +1760,13 @@ var formato14B= {
 		}
 		if(formato14B.f_periodoEnvio.val().length == '' ) {		  
 			//alert('Debe ingresar el periodo a declarar');
+			formato14B.dialogMessageWarningContent.html('Debe ingresar el periodo a declarar');
+		    formato14B.dialogMessageWarning.dialog("open");
+			formato14B.f_periodoEnvio.focus();
+			return false; 
+		}
+		if( formato14B.f_periodoEnvio==null || formato14B.f_periodoEnvio.val().length == '' ) {		  
+			//alert('Debe seleccionar el periodo a declarar');
 			formato14B.dialogMessageWarningContent.html('Debe ingresar el periodo a declarar');
 		    formato14B.dialogMessageWarning.dialog("open");
 			formato14B.f_periodoEnvio.focus();

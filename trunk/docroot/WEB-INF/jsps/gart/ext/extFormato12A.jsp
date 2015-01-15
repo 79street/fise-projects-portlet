@@ -587,13 +587,20 @@ function validarFormulario() {
 	    document.getElementById('s_empresa').focus();
 	    return false; 
 	  }
-	  if($('#s_periodoenvio_present').val().length == '' ) {		  
+	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
+		    //alert('Debe seleccionar el periodo a declarar');
+		    $("#dialog-message-warning-content").html('Debe seleccionar el periodo a declarar');
+			$("#dialog-message-warning").dialog( "open" );
+		    document.getElementById('s_periodoenvio_present').focus();
+		    return false; 
+	  }
+	  /*if($('#s_periodoenvio_present').val().length == '' ) {		  
 		    //alert('Debe ingresar el periodo a declarar');
 		    $("#dialog-message-warning-content").html('Debe ingresar el periodo a declarar');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('s_periodoenvio_present').focus();
 		    return false; 
-	  }
+	  }*/
 	  if( $('#flagPeriodoEjecucion').val()=='S' ){
 		  if($('#i_anioejecuc').val().length == '' ) {		  
 			    //alert('Debe ingresar el año de ejecución');

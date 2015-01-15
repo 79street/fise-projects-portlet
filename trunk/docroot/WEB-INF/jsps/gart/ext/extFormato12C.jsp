@@ -2217,13 +2217,20 @@ var formato12C= {
 			formato12C.codEmpresaDetalle.val().focus();
 		    return false;
 		}
-		if(formato12C.periodoEnvioDetalle.val().length == '' ) {		  
+		if(formato12C.periodoEnvioDetalle==null || formato12C.periodoEnvioDetalle.val().length == '' ) {		  
+			//alert('Debe seleccionar el periodo a declarar');
+			 formato12C.dialogMessageWarningDetalleContent.html('Debe ingresar el periodo a declarar');
+			 formato12C.dialogMessageWarningDetalle.dialog("open");
+			formato12C.periodoEnvio.focus();
+			return false; 
+		}
+		/*if(formato12C.periodoEnvioDetalle.val().length == '' ) {		  
 			//alert('Debe ingresar el periodo de presentación');
 			formato12C.dialogMessageWarningDetalleContent.html('Debe ingresar el periodo de presentación');
 			formato12C.dialogMessageWarningDetalle.dialog("open");
 			formato12C.periodoEnvioDetalle.val().focus();
    			return false; 
- 		}
+ 		}*/
 		if(formato12C.anoEjecucionDetalle.val().length == '' ) {		  
 		    //alert('Debe ingresar el año de ejecución');
 		    formato12C.dialogMessageWarningDetalleContent.html('Debe ingresar el año de ejecución');

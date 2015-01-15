@@ -1706,8 +1706,8 @@
 		},initDialogsInit : function(){	
 				formato12B.dialogMessageGeneralInicial.dialog({
 				modal: true,
-				height: 120,
-				width: 400,
+				height: 200,
+				width: 500,
 				autoOpen: false,
 				buttons: {
 					Cerrar: function() {
@@ -1825,8 +1825,8 @@
 			
 			formato12B.dialogMessageGeneral.dialog({
 				modal: true,
-				height: 120,
-				width: 400,
+				height: 200,
+				width: 500,
 				autoOpen: false,
 				buttons: {
 					Cerrar: function() {

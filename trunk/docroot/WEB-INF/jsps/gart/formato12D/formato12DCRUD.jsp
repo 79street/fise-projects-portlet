@@ -70,7 +70,8 @@ $(document).ready(function () {
 														</td>														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="o_descGrupoInformacion" ></output>
+														  <!-- <output id="o_descGrupoInformacion" ></output> -->
+														  <input id="o_descGrupoInformacion" readonly="readonly" style="border:none; background:#efefef;">
 													   </td>
 													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													   <td>
@@ -79,7 +80,8 @@ $(document).ready(function () {
 														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														  <output id="o_descEstado"></output>														 
+														  <!-- <output id="o_descEstado"></output>	 -->			
+														  <input id="o_descEstado" readonly="readonly" style="border:none; background:#efefef;">										 
 													    </td>
 													 </tr>													
 												</table>
@@ -267,14 +269,16 @@ $(document).ready(function () {
 																						<input type="button" class="net-button-small" id="<portlet:namespace/>anadirFormato"
 																						name="<portlet:namespace/>anadirFormato" value="Añadir" />
 																					</td>
-																					<td width="17%" align="center">
-																						<input type="button" class="net-button-small" id="<portlet:namespace/>validacionFormato"
-																						name="<portlet:namespace/>validacionFormato" value="Validación" />
-																					</td>
-																					<td width="17%" align="center">
-																						<input type="button" class="net-button-small" id="<portlet:namespace/>envioDefinitivo"
-																						name="<portlet:namespace/>envioDefinitivo" value="Envío Def." />
-																					</td>
+																					<c:if test="${crud =='UPDATE'}">
+																						<td width="17%" align="center">
+																							<input type="button" class="net-button-small" id="<portlet:namespace/>validacionFormato"
+																							name="<portlet:namespace/>validacionFormato" value="Validación" />
+																						</td>
+																						<td width="17%" align="center">
+																							<input type="button" class="net-button-small" id="<portlet:namespace/>envioDefinitivo"
+																							name="<portlet:namespace/>envioDefinitivo" value="Envío Def." />
+																						</td>
+																					</c:if>
 																				</c:if>
 																				<td width="17%" align="center">
 																					<input type="button" class="net-button-small" id="<portlet:namespace/>regresarBusqueda"
