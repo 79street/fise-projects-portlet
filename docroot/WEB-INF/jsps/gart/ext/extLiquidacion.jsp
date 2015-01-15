@@ -607,7 +607,7 @@ var liquidacionVar= {
 						liquidacionVar.verReporteFormato();	
 						liquidacionVar.initBlockUI();
 					}else{						
-						var addhtmError='Error al Ver el Reporte del formato seleccionado.';					
+						var addhtmError='Error al ver el reporte del formato seleccionado.';					
 						liquidacionVar.dialogErrorContent.html(addhtmError);
 						liquidacionVar.dialogError.dialog("open");
 						liquidacionVar.initBlockUI();
@@ -917,7 +917,7 @@ var liquidacionVar= {
 				liquidacionVar.f_descMotivo.focus();
 			  	return false; 
 			}else if(liquidacionVar.f_descMotivo.val().length > 499){				
-				var addhtmAlert='La Descripción del Motivo no debe exceder a los 500 caracteres.';					
+				var addhtmAlert='La descripción del Motivo no debe exceder a los 500 caracteres.';					
 				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
 				liquidacionVar.dialogValidacion.dialog("open");	
 				liquidacionVar.f_descMotivo.focus();
