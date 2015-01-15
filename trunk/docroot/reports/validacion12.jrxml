@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="validacion12" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="568"/>
+	<property name="ireport.y" value="564"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="NOMBRE_FORMATO" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -234,15 +234,10 @@
 	</pageFooter>
 	<summary>
 		<band height="26" splitType="Stretch">
-			<staticText>
-				<reportElement x="23" y="10" width="150" height="16"/>
-				<textElement/>
-				<text><![CDATA[Total de registros observados:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="174" y="10" width="150" height="16"/>
+				<reportElement x="9" y="10" width="271" height="16"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{NRO_OBSERVACIONES}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Total de registros observados: "+$P{NRO_OBSERVACIONES}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
