@@ -271,11 +271,11 @@ public class Formato14CGartController {
   				
   				jsonArray.put(new Formato14CJSON().asJSONObject(formato14c,flagOper));
   				
-  				if(formato14c.getFechaEnvioDefinitivo()!=null){
+  				/*if(formato14c.getFechaEnvioDefinitivo()!=null){
   					formato14c.setDescEstado(FiseConstants.ESTADO_ENVIADO_F14C);  						
   				}else{
   					formato14c.setDescEstado(FiseConstants.ESTADO_POR_ENVIAR_F14C);  				
-  				} 				
+  				}   */				
   				listaFormatoExporExcel.add(formato14c);
   			}
   			
