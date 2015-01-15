@@ -179,8 +179,10 @@ public class Formato14CGartController {
         	listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
         	
         	f.setListaMes(fiseUtil.getMapaMeses());
-    		f.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
-    		f.setMesDesde( String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));
+    		f.setAnioDesde(fiseUtil.obtenerNroAnioFechaAnterior());
+    		
+    		f.setMesDesde(fiseUtil.obtenerNroMesFechaAnterior());
+    		
     		f.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
     		f.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
     		f.setEtapaBusq(FiseConstants.ETAPA_SOLICITUD); 
@@ -224,28 +226,37 @@ public class Formato14CGartController {
 			long anioHasta =0;
 			long mesDesde = 0;			
 			long mesHasta = 0;
+			long fechaDesde=0;
+  			long fechaHasta=0;
+  			
 			if(StringUtils.isNotBlank(f.getAnioDesde())){
-				anioDesde = Long.valueOf(f.getAnioDesde());	
+				anioDesde = Long.valueOf(f.getAnioDesde());				
 			}
 			if(StringUtils.isNotBlank(f.getAnioHasta())){
 				anioHasta = Long.valueOf(f.getAnioHasta());	
 			}
 			if(StringUtils.isNotBlank(f.getMesDesde())){
-				mesDesde = Long.valueOf(f.getMesDesde());	
+				mesDesde = Long.valueOf(f.getMesDesde());				
 			}
 			if(StringUtils.isNotBlank(f.getMesHasta())){
 				mesHasta = Long.valueOf(f.getMesHasta());	
-			}			
+			}	
+			
+			fechaDesde = anioDesde * 100 + mesDesde;
+  			fechaHasta = anioHasta * 100 + mesHasta;  	
+  			
 			logger.info("codigo empresa "+ codEmpresa);
   			logger.info("anio desde "+ anioDesde);
   			logger.info("mes desde "+ mesDesde);
   			logger.info("anio hasta "+ anioHasta);
   			logger.info("mes hasta "+ mesHasta);
+  			logger.info("fecha desde "+ fechaDesde);
+  			logger.info("fecha hasta "+ fechaHasta); 			
   			logger.info("etapa "+ etapa);
-  			logger.info("admin "+ f.isAdmin());
+  			logger.info("admin "+ f.isAdmin()); 			
  		   
  			List<FiseFormato14CC> listaFormato14C = formato14CGartService.buscarFiseFormato14CC(codEmpresa, 
-  					anioDesde, anioHasta, mesDesde, mesHasta, etapa);	
+ 					fechaDesde, fechaHasta, etapa);	
  			List<FiseFormato14CC> listaFormatoExporExcel= new ArrayList<FiseFormato14CC>();
   			logger.info("tamaño de la lista formato 14c   :"+listaFormato14C.size());
   			for(FiseFormato14CC formato14c : listaFormato14C){ 				

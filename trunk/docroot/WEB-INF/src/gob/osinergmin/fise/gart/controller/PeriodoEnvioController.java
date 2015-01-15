@@ -72,8 +72,8 @@ public class PeriodoEnvioController {
 			     @ModelAttribute("periodoEnvioBean")PeriodoEnvioBean p){
         try {        	
         	p.setListaMes(fiseUtil.getMapaMeses());
-    		p.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
-    		p.setMesDesde( String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));    		
+    		p.setAnioDesde(fiseUtil.obtenerNroAnioFechaAnterior());
+    		p.setMesDesde(fiseUtil.obtenerNroMesFechaAnterior());    		
     		p.setEtapaBusq(FiseConstants.ETAPA_SOLICITUD); 
     		p.setFormatoBusq("F12A"); 
     		p.setFlagEnvioBusq("Si"); 

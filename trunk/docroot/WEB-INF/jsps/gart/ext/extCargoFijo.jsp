@@ -219,7 +219,7 @@ var fiseCargoFijo= {
 		    fiseCargoFijo.initDialogs();
 		    
 		    //eventos por defecto	
-		    fiseCargoFijo.inicializarMesReportado();
+		    //fiseCargoFijo.inicializarMesReportado();
 			fiseCargoFijo.botonBuscar.trigger('click');
 			fiseCargoFijo.initBlockUI();
 		},

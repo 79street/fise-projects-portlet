@@ -64,8 +64,8 @@ public class AutorizarReenvioController {
 			     @ModelAttribute("autorizarReenvioBean")AutorizarReenvioBean r){
         try {        	
         	r.setListaMes(fiseUtil.getMapaMeses());
-    		r.setAnioPresBusq(fiseUtil.obtenerNroAnioFechaActual());
-    		r.setMesPres(String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));     		
+    		r.setAnioPresBusq(fiseUtil.obtenerNroAnioFechaAnterior());
+    		r.setMesPresBusq(fiseUtil.obtenerNroMesFechaAnterior());     		
     		r.setEtapaBusq(FiseConstants.ETAPA_SOLICITUD); 
     		r.setFormatoBusq("F12A"); 		
     		
