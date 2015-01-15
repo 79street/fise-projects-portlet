@@ -3290,6 +3290,7 @@ var formato14C= {
 			formato14C.flagCarga.val('');
 			formato14C.dialogCargaExcel.hide();
 			formato14C.divOverlay.hide();   
+			$("#msjUploadFileExel").html("");			
 		},
 		
 		<portlet:namespace/>cargarFormatoExcel : function(){
@@ -3298,7 +3299,7 @@ var formato14C= {
 			var nameFile=$("#archivoExcel").val();
 			var isSubmit=true;
 			
-			$("#msjUploadFileExel").html("");
+			$("#msjUploadFileExel").html("");			
 			if(typeof (nameFile) == "undefined" || nameFile.length==0){				
 				isSubmit=false;
 				$("#msjUploadFileExel").html("Debe seleccionar un archivo");
@@ -3334,7 +3335,8 @@ var formato14C= {
 		regresarFormularioCargaTexto : function(){
 			formato14C.flagCarga.val('');
 			formato14C.dialogCargaTexto.hide();
-			formato14C.divOverlay.hide();   
+			formato14C.divOverlay.hide();  
+			$("#msjUploadFileText").html("");			
 		},
 		
 		<portlet:namespace/>cargarFormatoTexto : function(){
@@ -3343,7 +3345,7 @@ var formato14C= {
 			var nameFile=$("#archivoTxt").val();
 			var isSubmit=true;
 			
-			$("#msjUploadFileText").html("");
+			$("#msjUploadFileText").html("");			
 			if(typeof (nameFile) == "undefined" || nameFile.length==0){				
 				isSubmit=false;
 				$("#msjUploadFileText").html("Debe seleccionar un archivo");
@@ -3358,7 +3360,7 @@ var formato14C= {
 			}			
 			if(isSubmit){
 				frm.submit();
-			}		
+			}	
 		},
 		//funcion para desabiliar campos lima
 		deshabilitarLima : function(){
