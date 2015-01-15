@@ -220,8 +220,9 @@ public class NotificacionController {
   			logger.info("Option formato "+ optionFormato);
   			logger.info("etapa "+ etapa);
   			
+  			String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4);
   			
-  			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpresa, 
+  			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpreCompleta, 
   					optionFormato, etapa,idGrupo, "");
   			
   			logger.info("tamaño de la lista notificacion   :"+lista.size());
@@ -311,8 +312,9 @@ public class NotificacionController {
   			logger.info("Option formato "+ optionFormato);
   			logger.info("etapa "+ etapa);
   			
+  			String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4);
   			
-  			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpresa, 
+  			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpreCompleta, 
   					optionFormato, etapa, idGrupo,FiseConstants.PROCESAR_VALIDACION);
   			
   			logger.info("tamaño de la lista notificacion al procesar   :"+lista.size());
