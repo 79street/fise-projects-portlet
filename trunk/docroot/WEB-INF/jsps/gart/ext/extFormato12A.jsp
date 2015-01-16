@@ -994,7 +994,7 @@ function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecuc
 	var admin = $("#esAdmin").val();
 	if(flagOperacion=='ABIERTO'){
 		var process=true;
-		if( etapa=='RECONOCIDO' || !admin ){
+		if( etapa=='RECONOCIDO'  &&  admin=='false' ){
 			process = false;
 		}
 		if(process){
@@ -1136,7 +1136,7 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 	console.debug(admin);
 	if(flagOperacion=='ABIERTO'){
 		var process=true;
-		if( etapa=='RECONOCIDO' || !admin ){
+		if( etapa=='RECONOCIDO'  &&  admin=='false' ){
 			process = false;
 		}
 		if(process){
@@ -1588,7 +1588,7 @@ function <portlet:namespace/>mostrarFormularioCargaExcel(){
 		}
 	    $('#divOverlay').show();
 	    $("#dialog-form-cargaExcel").show();
-	    $("#dialog-form-cargaExcel").drags();
+	    $("#dialog-form-cargaExcel").draggable();
 	    $("#dialog-form-cargaExcel").css({ 
 	        'left': ($(window).width() / 2 - $("#dialog-form-cargaExcel").width() / 2) + 'px', 
 	        'top': ($(window).height()  - $("#dialog-form-cargaExcel").height() ) + 'px'
