@@ -975,14 +975,18 @@ public class Formato14CGartController {
 	        HttpSession session = httpRequest.getSession();
 	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		  
-	        JSONArray jsonArray = new JSONArray();	
+	        JSONObject jsonObj = new JSONObject(); 
 		  
 		    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 	 
 		    
 		    Formato14CReportBean bean = new Formato14CReportBean();
 		    
 		    Map<String, Object> mapa = null;
-		    String directorio = null;	  
+		    String directorio = null;
+		    //cambios
+		    boolean valorEmail = false;
+		    boolean valorFormato = false;
+		    boolean valorActa = false;
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
@@ -1010,7 +1014,7 @@ public class Formato14CGartController {
 		    FiseFormato14CC formato = formato14CGartService.obtenerFiseFormato14CC(f);
 		    logger.info("Objeto formato 14C: "+formato);
 		    
-	        if( formato!=null ){       
+	        if(formato!=null ){       
 			    bean = formato14CGartService.estructurarFormato14CBeanByFiseFormato14C(formato);
 	        	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
 	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
@@ -1082,11 +1086,12 @@ public class Formato14CGartController {
 		    	   logger.info("subiendo archivo al repositorio del formato 14c"); 
 		    	   FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
 		    	   logger.info("Archivo subido correctamente  formato 14c envio."+archivo); 
-		    	   if( archivo!=null ){
+		    	   if(archivo!=null ){
 		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
 		    		   fileEntryJsp.setNombreArchivo(nombre);
 		    		   fileEntryJsp.setFileEntry(archivo);
 		    		   listaArchivo.add(fileEntryJsp);
+		    		   valorFormato = true;
 		    	   }
 		       }
 		       /**REPORTE OBSERVACIONES*/
@@ -1130,32 +1135,50 @@ public class Formato14CGartController {
 		    		   fileEntryJsp.setNombreArchivo(nombre);
 		    		   fileEntryJsp.setFileEntry(archivo3);
 		    		   listaArchivo.add(fileEntryJsp);
+		    		   valorActa = true;
 		    	   }
-		       }		   
-		       if( listaArchivo!=null && listaArchivo.size()>0 ){		    	  
-		    	   logger.info("Entrando a enviar email envio defi."); 
-		    	   fiseUtil.enviarMailsAdjunto(
-		    			   request,
-		    			   listaArchivo, 
-		    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
-		    			   formato.getId().getAnoPresentacion(),
-		    			   formato.getId().getMesPresentacion(),
-		    			   FiseConstants.TIPO_FORMATO_14C,
-		    			   descripcionFormato,
-		    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
-		    			   formato.getId().getAnoInicioVigencia(),
-		    			   formato.getId().getAnoFinVigencia());
-		    	   logger.info("El envio de email fue correctamente envio defi."); 
-		    	   /**actualizamos  la fecha de envio*/
-		    	   formato14CGartService.actualizarDatosEnvioFormato14C(f);
 		       }
+		       /**actualizamos  la fecha de envio*/
+		       String valorActuaizar = "0";
+		       if(valorFormato && valorActa){
+		    	   valorActuaizar = formato14CGartService.actualizarDatosEnvioFormato14C(f);   
+		       }
+	    	   if(valorActuaizar.equals("1")){
+	    		   if(listaArchivo!=null && listaArchivo.size()>0){ 	 	    	  
+			    	   logger.info("Entrando a enviar email envio defi."); 
+			    	   valorEmail = fiseUtil.enviarMailsAdjunto(
+			    			   request,
+			    			   listaArchivo, 
+			    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
+			    			   formato.getId().getAnoPresentacion(),
+			    			   formato.getId().getMesPresentacion(),
+			    			   FiseConstants.TIPO_FORMATO_14C,
+			    			   descripcionFormato,
+			    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
+			    			   formato.getId().getAnoInicioVigencia(),
+			    			   formato.getId().getAnoFinVigencia());
+			    	   logger.info("El envio de email fue correctamente envio defi.");			    	   
+			       }
+	    		   if(valorEmail){
+	    			   jsonObj.put("resultado", "OK"); 
+	    		   }else{
+	    			   jsonObj.put("resultado", "EMAIL");	    			  
+	    		   }			
+	    	   }else{
+	    		   jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio o al formar
+	    		   //los reportes del formato o del acta de envio
+	    	   }		       
+	        }else{
+	        	 jsonObj.put("resultado", "ERROR"); //formato null  	
 	        }
 	       response.setContentType("application/json");
+	       logger.info("arreglo json:"+jsonObj);
 	       PrintWriter pw = response.getWriter();
-		   pw.write(jsonArray.toString());
-		   pw.flush();
-		   pw.close();
+	       pw.write(jsonObj.toString());
+	       pw.flush();
+	       pw.close();
 		}catch (Exception e) {
+			logger.info("Error al realizar el envio del formato 14c : "+e); 
 			e.printStackTrace();
 		}
 	 }

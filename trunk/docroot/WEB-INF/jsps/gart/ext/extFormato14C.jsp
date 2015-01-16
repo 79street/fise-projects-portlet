@@ -3165,21 +3165,23 @@ var formato14C= {
 					<portlet:namespace />nombreArchivo: 'formato14C',
 					<portlet:namespace />tipoArchivo: '0'//PDF
 				},
-				success : function(gridData) {
-					if(gridData!=null){
+				success : function(data) {
+					if(data.resultado == "OK"){
 						var addhtml='El Formato 14C se envió satisfactoriamente.';					
 						formato14C.dialogMessageContent.html(addhtml);
 						formato14C.dialogMessageReport.dialog("open");
+						formato14C.initBlockUI();					
+					}else if(data.resultado == "EMAIL"){						
+						var addhtmEmail='Error al enviar el email del Formato 14C.';					
+						formato14C.dialogInfoContent.html(addhtmEmail);
+						formato14C.dialogInfo.dialog("open");					
 						formato14C.initBlockUI();	
-						//formato14C.divNuevo.hide();
-					   // formato14C.divBuscar.show();
-					   // formato14C.botonBuscar.trigger('click');
 					}else{						
 						var addhtmError='Error al realizar el Envio Definitivo del Formato 14C.';					
 						formato14C.dialogErrorContentF14C.html(addhtmError);
 						formato14C.dialogErrorF14C.dialog("open");	
 						formato14C.initBlockUI();
-					}					
+					}								
 				},error : function(){
 					var addhtmError='Error de conexión.';					
 					formato14C.dialogErrorContentF14C.html(addhtmError);

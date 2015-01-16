@@ -275,13 +275,16 @@ var liquidacionVar= {
 				liquidacionVar.<portlet:namespace/>loadGrupoInformacion();
 				liquidacionVar.botonGenerarEtapa.val("Procesar costos estándares");
 				liquidacionVar.botonLiquidar.val("Aprobar costos estándares");
+				//liquidacionVar.buscarLiquidacion('B');
 			});
 			
 			liquidacionVar.i_tipoMensual.change(function(){
 				liquidacionVar.<portlet:namespace/>loadGrupoInformacion();
 				liquidacionVar.botonGenerarEtapa.val("Procesar gastos operativos");
 				liquidacionVar.botonLiquidar.val("Liquidar gastos operativos");
-			});
+				//liquidacionVar.buscarLiquidacion('B');
+			});			
+			
 		    
 		    //eventos por defecto	
 		    
@@ -334,7 +337,7 @@ var liquidacionVar= {
 		      			var ret = liquidacionVar.tablaResultados.jqGrid('getRowData',cl);	        			
 		      			verF = "<a href='#'><img border='0' title='Ver Formato' src='/net-theme/images/img-net/file.png' align='center' onclick=\"liquidacionVar.mostrarReporteFormatos('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			verObs = "<a href='#'><img border='0' title='Ver Obs.' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"liquidacionVar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"liquidacionVar.confirmarEliminar('"+ret.correlativo+"','"+ret.liquidado+"');\" /></a> ";
+		      			elim = "<a href='#'><img border='0' title='Excluir' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"liquidacionVar.confirmarEliminar('"+ret.correlativo+"','"+ret.liquidado+"');\" /></a> ";
 		      			mostrar = "<a href='#'><img border='0' title='Motivo de no Reconocimiento/Establecimiento' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapaReconocido+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
 		      			liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verF:verF});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verObs:verObs});
@@ -813,9 +816,9 @@ var liquidacionVar= {
 				
 				$('#coMotivo').val(cod_correlativo);//para el nuevo registro de motivo
 				if(liquidacionVar.i_tipoMensual.prop('checked')){
-					$('#tituloBusquedaMotivo').val('Motivos de no Reconocimiento/Aprobación.');	
+					$('#tituloBusquedaMotivo').val('Motivo de no Reconocimiento de Gastos Operativos.');	
 				}else{
-					$('#tituloBusquedaMotivo').val('Motivos de no Establecimiento/Aprobación.');
+					$('#tituloBusquedaMotivo').val('Motivo de no Establecimiento de Costos Estándares.');
 				}				
 				liquidacionVar.divBuscarMotivo.show();
 				liquidacionVar.divBuscarLiq.hide();		
@@ -835,9 +838,9 @@ var liquidacionVar= {
 			liquidacionVar.divBuscarMotivo.hide();
 			liquidacionVar.f_descMotivo.val('');
 			if(liquidacionVar.i_tipoMensual.prop('checked')){
-				$('#tituloNuevoMotivo').val('MOTIVO DE NO RECONOCIMIENTO/APROBACIÓN.');	
+				$('#tituloNuevoMotivo').val('Motivo de no Reconocimiento de Gastos Operativos.');	
 			}else{
-				$('#tituloNuevoMotivo').val('MOTIVO DE NO ESTABLECIMIENTO/APROBACIÓN.');
+				$('#tituloNuevoMotivo').val('Motivo de no Establecimiento de Costos Estándares.');
 			}	
 		    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
 			$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');			
