@@ -361,13 +361,15 @@ $(document).ready(function () {
 												 <form:input path="montoCanje"  cssStyle="width: 50px; text-align: right;"/>
 											  </td>
 											
-											 <td><label style="font-size: 12px; font-weight: bold">Fecha Informe Sustento:(dd/mm/aaaa)</label>
+											 <td width="150px"> 
+											    <label style="font-size: 12px; font-weight: bold">Fecha Informe Sustento:(dd/mm/aaaa)</label>
 											  </td>
 											  <td>											  										 
 											   <form:input path="fechaSustento" cssStyle="text-align: right;" size="7"/>								    												
 											  </td>										 
 											  
-											  <td><label style="font-size: 12px; font-weight: bold">Fecha Recepción Información.(dd/mm/aaaa):</label>
+											  <td width="200px">
+											     <label style="font-size: 12px; font-weight: bold">Fecha Recepción Información:(dd/mm/aaaa)</label>
 											  </td>
 											  <td>									  
 											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" size="7" />			 							    												
@@ -420,7 +422,7 @@ $(document).ready(function () {
 											
 											 <td><label style="font-size: 12px; font-weight: bold">Estado:</label>
 											 </td>
-											 <td>												     
+											 <td width="120px">												     
 											     <input type="radio"	name="estado"
 												        id="rbtActivo" value="1" checked="true"/>Activo
 												 &nbsp;&nbsp;&nbsp;													 

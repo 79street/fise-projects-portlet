@@ -620,7 +620,8 @@ var periodoEnvio= {
 				periodoEnvio.dialogValidacion.dialog("open");
 				periodoEnvio.f_anoPres.focus();
 			  	return false; 
-			}else if(periodoEnvio.f_anoPres.val().length != 4){				
+			}else if(periodoEnvio.f_anoPres.val().length < 4 ||
+					parseFloat(periodoEnvio.f_anoPres.val())<1900){				
 				var addhtmAlert='Debe ingresar año a declarar válido.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");

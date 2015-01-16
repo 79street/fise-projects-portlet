@@ -809,10 +809,14 @@ var liquidacionVar= {
 				$('#anioInicioVigMotivo').val(anio_inicio);
 				$('#anioFinVigMotivo').val(anio_fin);
 				$('#etapaFinalMotivo').val(etapa_final);
-				$('#formatoMotivo').val(formato);	
+				$('#formatoMotivo').val(formato);					
 				
-				$('#coMotivo').val(cod_correlativo);//para el nuevo registro de motivo		
-				
+				$('#coMotivo').val(cod_correlativo);//para el nuevo registro de motivo
+				if(liquidacionVar.i_tipoMensual.prop('checked')){
+					$('#tituloBusquedaMotivo').val('Motivos de no Reconocimiento/Aprobación.');	
+				}else{
+					$('#tituloBusquedaMotivo').val('Motivos de no Establecimiento/Aprobación.');
+				}				
 				liquidacionVar.divBuscarMotivo.show();
 				liquidacionVar.divBuscarLiq.hide();		
 				liquidacionVar.buscarMotivos(cod_correlativo);	
@@ -830,6 +834,11 @@ var liquidacionVar= {
 			liquidacionVar.divBuscarLiq.hide();	
 			liquidacionVar.divBuscarMotivo.hide();
 			liquidacionVar.f_descMotivo.val('');
+			if(liquidacionVar.i_tipoMensual.prop('checked')){
+				$('#tituloNuevoMotivo').val('MOTIVO DE NO RECONOCIMIENTO/APROBACIÓN.');	
+			}else{
+				$('#tituloNuevoMotivo').val('MOTIVO DE NO ESTABLECIMIENTO/APROBACIÓN.');
+			}	
 		    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
 			$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');			
 		},	
