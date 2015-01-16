@@ -541,11 +541,11 @@ var notificarValidar= {
 						var addhtmInfo='No existe ninguna lista pra realizar la Notificación';					
 						notificarValidar.dialogInfoContent.html(addhtmInfo);
 						notificarValidar.dialogInfo.dialog("open");						
-						notificarValidar.initBlockUI();	
+						notificarValidar.initBlockUI();
 					}else if(data.resultado == "EMAIL"){
-						var addhtmEmail=data.Correo;					
-						notificarValidar.dialogInfoContent.html(addhtmEmail);
-						notificarValidar.dialogInfo.dialog("open");							
+						var addhtmEmail='Error al realizar la Notificación a los siguientes correos electrónicos: ' +data.Correo;					
+						notificarValidar.dialogErrorContent.html(addhtmEmail);
+						notificarValidar.dialogError.dialog("open");							
 						notificarValidar.initBlockUI();	
 					}else if(data.resultado == "Mensaje"){
 						var addhtmError='Error al realizar el cambio de etapa.';					
