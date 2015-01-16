@@ -513,7 +513,7 @@ var notificarValidar= {
 		/**Function para confirmar si quiere notificar la validacion de obs.*/
 		confirmarNotificacion : function(){
 			console.debug("entranado a confirmar notificación");
-			var addhtml='¿Está seguro que desea Notificar a los usuarios de las Distribuidoras Eléctricas.?';
+			var addhtml='¿Está seguro que desea Notificar a los usuarios de la Distribuidora Eléctrica?';
 			notificarValidar.dialogConfirmContent.html(addhtml);
 			notificarValidar.dialogConfirm.dialog("open");
 		},
