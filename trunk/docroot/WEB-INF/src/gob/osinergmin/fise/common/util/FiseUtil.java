@@ -663,19 +663,15 @@ public class FiseUtil {
 			String correoD = themeDisplay.getUser().getEmailAddress();
 			logger.info("correo remitente: "+correoR);
 			logger.info("correo destinatario: "+correoD);
-			
-			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
-									
-//			for(CorreoBean c:listaCorreoDestino){
-//				correoD = correoD +","+ c.getDireccionCorreo();	
-//			}
-			
-			if( !FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) ){
+			String correoMostrar = "";
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();		
+			if(!FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) &&
+					listaCorreoDestino!=null && !listaCorreoDestino.isEmpty()){
 				mailMessage.setFrom(new InternetAddress(correoR));
 				mailMessage.setSubject("Notificación de envío de observaciones para el usuario de la Distribuidora Eléctrica");
-				mailMessage.setTo(new InternetAddress(correoD));
-				if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
-					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
+				mailMessage.setTo(getArrayCorreoDestinatarios(listaCorreoDestino));			
+				if( !FiseConstants.BLANCO.equals(correoD) ){
+					mailMessage.setCC(new InternetAddress(correoD));
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
 						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
@@ -689,7 +685,10 @@ public class FiseUtil {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
 				MailServiceUtil.sendEmail(mailMessage);
-				valor =FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correoD;
+				for(CorreoBean c:listaCorreoDestino){
+					correoMostrar = correoMostrar +","+ c.getDireccionCorreo();	
+			    }
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correoMostrar;
 			}else{
 				valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"No esta configurado el correo de Remitente o Destinatario";
 				//throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
