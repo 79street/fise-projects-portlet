@@ -675,7 +675,7 @@ var formato13A= {
 	buildGridsBusqueda : function () {	
 		formato13A.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Ver','Editar','Eliminar','','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -710,7 +710,7 @@ var formato13A= {
 	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl); 
 	      			
 
-	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&descGrupoInformacion="+ret.grupoInfo+"&descestado="+ret.estado+"&anioInicioVigencia="+ret.anioInicioVigencia+"&anioFinVigencia="+ret.anioFinVigencia+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&descGrupoInformacion="+ret.grupoInfo+"&descestado="+ret.estado+"&anioInicioVigencia="+ret.anioInicioVigencia+"&anioFinVigencia="+ret.anioFinVigencia+"&tipo=0' ><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
 	      			//edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' /></a> ";
 	      			
 	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato13A.confirmarEditCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.descripcionPeriodo+"','"+ret.grupoInfo+"','"+ret.estado+"','"+ret.anioInicioVigencia+"','"+ret.anioFinVigencia+"','"+ret.flagOperacion+"');\" /></a> ";
@@ -790,7 +790,7 @@ var formato13A= {
 	buildGridsDeclaracion : function () {	
 		formato13A.tablaDeclaracion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año / Mes Alta','Cód. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','Editar','Eliminar','','','','',''],
+	       colNames: ['Año / Mes Alta','Cód. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Ver','Editar','Eliminar','','','','',''],
 	       colModel: [
 					{ name: 'descAnioMesAlta', index: 'descAnioMesAlta', width: 70},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
@@ -854,7 +854,7 @@ var formato13A= {
 					  	  	urlEdit.setParameter("codUbigeo", ret.codUbigeo);
 					  	  	urlEdit.setPortletId(formato13A.portletID);
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 		  	      			
 		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato13A.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.codUbigeo+"','"+ret.idZonaBenef+"');\" /></a> ";              			
@@ -878,7 +878,7 @@ var formato13A= {
 	buildGridsDeclaracionView : function () {	
 		formato13A.tablaDeclaracionView.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año / Mes Alta','Cód. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Visualizar','','','','',''],
+	       colNames: ['Año / Mes Alta','Cód. Ubigeo','Localidad','ST-1','ST-2','ST-3','ST-4','ST-5','ST-6','ST-SER','Especial','Total','Zona Benef.','Sede que Atiende','Ver','','','','',''],
 	       colModel: [
 					{ name: 'descAnioMesAlta', index: 'descAnioMesAlta', width: 70},
 		            { name: 'codUbigeo', index: 'codUbigeo', width: 50},
@@ -931,7 +931,7 @@ var formato13A= {
 		  	      			urlView.setPortletId(formato13A.portletID);
 		  	      			
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			formato13A.tablaDeclaracionView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	

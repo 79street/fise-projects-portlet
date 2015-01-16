@@ -396,7 +396,7 @@ var formato14B= {
 	buildGrids : function () {	
 		formato14B.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ini. Vig.','Año Fin Vig.','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ini. Vig.','Año Fin Vig.','Grupo de Información','Estado','Ver','Editar','Eliminar','','','',''],
 	       colModel: [
 					{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -429,7 +429,7 @@ var formato14B= {
 	      		for(var i=0;i < ids.length;i++){
 	      			var cl = ids[i];
 	      			var ret = formato14B.tablaResultados.jqGrid('getRowData',cl);           
-	      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato14B.verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
+	      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato14B.verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"');\" /></a> ";
 	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato14B.editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
 	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato14B.confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoIniVigencia+"','"+ret.anoFinVigencia+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";              			
 	      			formato14B.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
