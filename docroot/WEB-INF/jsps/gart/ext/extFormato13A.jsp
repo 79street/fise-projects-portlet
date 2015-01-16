@@ -236,21 +236,21 @@ var formato13A= {
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");
-			 formato13A.dialogMessageWarningContent.html("Debe ingresar un año declarado desde válido");
+			 formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado desde válido");
 			 formato13A.dialogMessageWarning.dialog("open");
    		
    	 }else if(inicio.val().length>0){
    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
    			//formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
    			//formato13A.dialogMessageGeneralInicial.dialog("open");
-   			formato13A.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
+   			formato13A.dialogMessageWarningContent.html("El Año Declarado desde no puede exceder al año declarado hasta");
 			formato13A.dialogMessageWarning.dialog("open");
    		 }
    	 }else if(fin.val().length>0){
    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
    			//formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
    			//formato13A.dialogMessageGeneralInicial.dialog("open");
-   			formato13A.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
+   			formato13A.dialogMessageWarningContent.html("El Año Declarado desde no puede exceder al año declarado hasta");
 			formato13A.dialogMessageWarning.dialog("open");
    		 }
    		 
@@ -261,7 +261,7 @@ var formato13A= {
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");
-			 formato13A.dialogMessageWarningContent.html("Debe ingresar un año declarado desde válido");
+			 formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado desde válido");
 			 formato13A.dialogMessageWarning.dialog("open");
 			 return false; 
    		
@@ -270,7 +270,7 @@ var formato13A= {
    			 fin.focus();
    			//formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
    			//formato13A.dialogMessageGeneralInicial.dialog("open"); 
-   			formato13A.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
+   			formato13A.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
 				 return false; 
    		 }
@@ -279,7 +279,7 @@ var formato13A= {
    			 inicio.focus();
    			//formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
    			//formato13A.dialogMessageGeneralInicial.dialog("open"); 
-   			formato13A.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
+   			formato13A.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
 				 return false; 
    		 }
@@ -1905,7 +1905,7 @@ var formato13A= {
 		
 		if(formato13A.anoIniVigenciaDetalle.val().length == '' ) {		  
 		    //alert('Debe ingresar el año inicio vigencia');
-		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el año inicio vigencia");
+		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el Año Inicio Vigencia");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
 		    formato13A.anoIniVigenciaDetalle.focus();
 		    return false; 
@@ -1913,14 +1913,14 @@ var formato13A= {
 		  	var numstr = trim(formato13A.anoIniVigenciaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  	//alert('Ingrese un año inicio vigencia válido');
-			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un año inicio vigencia válido");
+			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un Año Inicio Vigencia válido");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
 			  	return false;
 		  	}
 	 	 }
 		if(formato13A.anoFinVigenciaDetalle.val().length == '' ) {		  
 		    //alert('Debe ingresar el año fin vigencia');
-		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el año fin vigencia");
+		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el Año Fin Vigencia");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
 		    formato13A.anoFinVigenciaDetalle.focus();
 		    return false; 
@@ -1928,7 +1928,7 @@ var formato13A= {
 		  	var numstr = trim(formato13A.anoFinVigenciaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  	//alert('Ingrese un año fin vigencia válido');
-			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un año fin vigencia válido");
+			  	formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar un Año Fin Vigencia válido");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
 			  	return false;
 		  	}
@@ -1938,7 +1938,7 @@ var formato13A= {
 		   	var numstr = trim(formato13A.anoAltaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  	//alert('Ingrese un año alta válido');
-			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un año alta válido");
+			  	formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar un Año Alta válido");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
 			  	return false;
 		  	}
@@ -1946,7 +1946,7 @@ var formato13A= {
 		//periodo de alta
 		if( parseFloat(formato13A.anoAltaDetalle.val())*100 + parseFloat(formato13A.mesAltaDetalle.val()) > parseFloat(formato13A.anoPresentacionDetalle.val())*100 + parseFloat(formato13A.mesPresentacionDetalle.val()) ){
 			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
-			formato13A.dialogMessageWarningDetalleContent.html("El periodo de alta no puede ser mayor al periodo a declarar");
+			formato13A.dialogMessageWarningDetalleContent.html("El Periodo de Alta no puede ser mayor al periodo a declarar");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
 			return false;
 		}
@@ -1965,14 +1965,14 @@ var formato13A= {
 		if(formato13A.codDepa.val().length != '' ) {
 			if(formato13A.codProv.val().length == '' ) {		  
 			   //alert('Debe seleccionar la provincia');
-			   formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar la provincia");
+			   formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar la Provincia");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
 			   formato13A.codProv.focus();
 			   return false; 
 			}else{
 				if(formato13A.codDist.val().length == '' ) {		  
 				   //alert('Debe seleccionar el distrito');
-				   formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar el distrito");
+				   formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar el Distrito");
 					formato13A.dialogMessageWarningDetalle.dialog("open");
 				   formato13A.codDist.focus();
 				   return false; 
@@ -1980,7 +1980,7 @@ var formato13A= {
 			}
 		}else{
 			//alert('Debe seleccionar el departamento');
-			formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar el departamento");
+			formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar el Departamento");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
 			formato13A.codDepa.focus();
 			return false;
