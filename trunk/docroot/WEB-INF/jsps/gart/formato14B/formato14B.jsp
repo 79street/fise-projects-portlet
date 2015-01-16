@@ -274,7 +274,7 @@ $(document).ready(function () {
 																<fieldset class="net-frame-border">
 																	<table>
 																		<tr>
-																			<td colspan="5"><output class="net-titulo">Periodo de vigencia</output></td>
+																			<td colspan="5"><output class="net-titulo">Periodo de Vigencia</output></td>
 																		</tr>
 																		<tr>
 																			<td width="110px">Año Inicio Vigencia:</td>
