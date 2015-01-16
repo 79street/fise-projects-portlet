@@ -512,19 +512,25 @@ public class FiseUtil {
 		}
 	}*/
 	
-	public void enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo,
+	public boolean  enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo,
 			String descEmpresa,	Long anoPresentacion, Long mesPresentacion, 
 			String tipoFormato, String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
-		enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, 
+		boolean admin = enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, 
 				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);
-		enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, 
-				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);		
+		boolean user = enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, 
+				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);
+		if(admin && user){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
-	private void enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+	private boolean enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, Long anoPresentacion, Long mesPresentacion, 
 			String tipoFormato, String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {
+		boolean valor = true;
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -566,20 +572,22 @@ public class FiseUtil {
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
-				MailServiceUtil.sendEmail(mailMessage);
+				MailServiceUtil.sendEmail(mailMessage);				
 			}else{
+				valor = false;
 				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
 			}
-
 		} catch (Exception e) {
-			e.printStackTrace();
-			//throw e;
+			valor = false;
+			e.printStackTrace();			
 		}
+		return valor;
 	}
 	
-	private void enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+	private boolean  enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato,
 			String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {
+		boolean valor = true;
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -623,15 +631,16 @@ public class FiseUtil {
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
-				MailServiceUtil.sendEmail(mailMessage);
+				MailServiceUtil.sendEmail(mailMessage);				
 			}else{
+				valor = false;
 				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
 			}
-
 		} catch (Exception e) {
-			e.printStackTrace();
-			//throw e;
+			valor = false;
+			e.printStackTrace();		
 		}
+		return valor;
 	}
 	
 	public String enviarMailsAdjuntoValidacion(PortletRequest request,List<FileEntryJSP> listaArchivo,
