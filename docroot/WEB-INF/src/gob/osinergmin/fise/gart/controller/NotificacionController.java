@@ -1481,7 +1481,7 @@ public class NotificacionController {
   		    	    		  request, 
   		    	    		  listaArchivo, 
   		    	    		  mapaEmpresa.get(codEmpreCompleta), 
-  		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--");
+  		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--",codEmpreCompleta);
   		    	       logger.info("El envio de email fue correctamente al realizar notificacion."); 		    	       
   		    	       valor = true;
   		           }  	  		     	 	   
@@ -1499,7 +1499,7 @@ public class NotificacionController {
   					jsonObj.put("resultado", "OK");	
   	  				jsonObj.put("Correo",msnId[1]);		
   				}else{
-  					jsonObj.put("resultado", "EMAIL");	
+  					jsonObj.put("resultado", "EMAIL");//error al enviar al email	
   	  				jsonObj.put("Correo",msnId[1]);		
   				}	
   			}
