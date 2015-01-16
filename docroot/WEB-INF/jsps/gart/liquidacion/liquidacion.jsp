@@ -158,8 +158,9 @@ $(document).ready(function () {
 								<fieldset class="">
 									<table class="" style="width: 100%;" border="0">
 										<tr>
-											<td colspan="6"><output class="net-titulo" style="font-size: 14px;font-weight:bold"> 
-											Motivos de no Reconocimiento/Aprobación</output>
+											<td colspan="6">											
+											<input id="tituloBusquedaMotivo" readonly="readonly" style="border:none; width:100%; 
+											       background:#efefef;font-weight:bold; font-size: 14px"  class="net-titulo">
 											</td>
 										</tr>
 										<tr height="10px">
@@ -292,7 +293,9 @@ $(document).ready(function () {
 	
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
-											<td><output class="net-titulo">MOTIVO DE NO RECONOCIMIENTO/APROBACIÓN</output>
+											<td>
+											<input id="tituloNuevoMotivo" readonly="readonly" style="border:none; width:100%; 
+											       background:#efefef;font-weight:bold; font-size: 12px"  class="net-titulo">											
 											</td>
 										</tr>
 										<tr height="10px">

@@ -97,7 +97,7 @@ var autorizarReenvio= {
 		buildGrids : function () {	
 			autorizarReenvio.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Formato','Año Decl.','Mes Decl.','Etapa','Estado','Aut.Reenvio','','','','','',''],
+		       colNames: ['Dist. Eléct.','Formato','Año Decl.','Mes Decl.','Etapa','Estado','Aut.Reenvío','','','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 80},					   
 					   { name: 'formato', index: 'formato', width: 30},
@@ -162,7 +162,7 @@ var autorizarReenvio= {
 		/**Function para confirmar si quiere autorizar el reenvio*/
 		confirmarAutorizarReenvio : function(codEmpresa,anioPres,mesPres,anioEjec,mesEjec,anioIniVig,anioFinVig,etapa,formato){
 			console.debug("entranado a confirmar reenvio:  "+codEmpresa);
-			var addhtml='¿Está seguro que desea autorizar el reenvio del registro seleccionado.?';
+			var addhtml='¿Está seguro que desea autorizar el reenvío del registro seleccionado.?';
 			autorizarReenvio.dialogConfirmContent.html(addhtml);
 			autorizarReenvio.dialogConfirm.dialog("open");				
 			cod_Empresa=codEmpresa;
@@ -196,14 +196,14 @@ var autorizarReenvio= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='El Registro se reenvió con exito.';					
+						var addhtml2='Se autorizó el reenvío del registro seleccionado.';					
 						autorizarReenvio.dialogMessageContent.html(addhtml2);
 					    autorizarReenvio.dialogMessage.dialog("open");						
 						autorizarReenvio.buscarAutorizarReenvio();
 						autorizarReenvio.initBlockUI();
 					}
 					else{					
-						var addhtmError='Error al autorizar reenvio del registro seleccionado.';					
+						var addhtmError='Error al autorizar el reenvío del registro seleccionado.';					
 						autorizarReenvio.dialogErrorContent.html(addhtmError);
 						autorizarReenvio.dialogError.dialog("open");	
 						autorizarReenvio.initBlockUI();

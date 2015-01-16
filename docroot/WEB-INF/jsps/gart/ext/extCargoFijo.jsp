@@ -940,6 +940,13 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_anioRep.focus();
 			  	return false; 
+			}else if(fiseCargoFijo.f_anioRep.val().length < 4 ||
+					parseFloat(fiseCargoFijo.f_anioRep.val())<1900){				
+				var addhtmVali='Debe ingresar año reportado válido.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_anioRep.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_mesRep.val().length == ''){				
 				var addhtmVali='Debe seleccionar un mes reportado.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
@@ -952,8 +959,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuBenefR.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numUsuBenefR.val())){				
+				var addhtmVali='Debe ingresar Número de Usuarios Beneficiarios Rural diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numUsuBenefR.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numUsuBenefP.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Usuarios Beneficiarios Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numUsuBenefP.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numUsuBenefP.val())){				
+				var addhtmVali='Debe ingresar Número de Usuarios Beneficiarios Urbano Provincias diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuBenefP.focus();
@@ -964,8 +983,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuBenefL.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numUsuBenefL.val())){				
+				var addhtmVali='Debe ingresar Número de Usuarios Beneficiarios Urbano Lima diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numUsuBenefL.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numUsuEmpR.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Usuarios Empadronados Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numUsuEmpR.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numUsuEmpR.val())){				
+				var addhtmVali='Debe ingresar Número de Usuarios Empadronados Rural diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuEmpR.focus();
@@ -976,8 +1007,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuEmpP.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numUsuEmpP.val())){				
+				var addhtmVali='Debe ingresar Número de Usuarios Empadronados Urbano Provincias diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numUsuEmpP.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numUsuEmpL.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Usuarios Empadronados Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numUsuEmpL.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numUsuEmpL.val())){				
+				var addhtmVali='Debe ingresar Número de Usuarios Empadronados Urbano Lima diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numUsuEmpL.focus();
@@ -988,8 +1031,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFEmiR.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValFEmiR.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Emitidos Rural diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValFEmiR.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numValFEmiP.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Vales Físicos Emitidos Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValFEmiP.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValFEmiP.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Emitidos Urbano Provincias diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFEmiP.focus();
@@ -1000,8 +1055,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFEmiL.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValFEmiL.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Emitidos Urbano Lima diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValFEmiL.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numValDEmiR.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Vales Digitales Emitidos Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValDEmiR.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValDEmiR.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Emitidos Rural diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDEmiR.focus();
@@ -1012,8 +1079,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDEmiP.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValDEmiP.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Emitidos Urbano Provincias diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValDEmiP.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numValDEmiL.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Vales Digitales Emitidos Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValDEmiL.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValDEmiL.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Emitidos Urbano Lima diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDEmiL.focus();
@@ -1024,8 +1103,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFCanR.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValFCanR.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Canjeados Rural diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValFCanR.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numValFCanP.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Vales Físicos Canjeados Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValFCanP.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValFCanP.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Canjeados Urbano Provincias diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFCanP.focus();
@@ -1036,8 +1127,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValFCanL.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValFCanL.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Físicos Canjeados Urbano Lima diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValFCanL.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numValDCanR.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Vales Digitales Canjeados Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValDCanR.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValDCanR.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Canjeados Rural diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDCanR.focus();
@@ -1048,8 +1151,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDCanP.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValDCanP.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Canjeados Urbano Provincias diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValDCanP.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numValDCanL.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Vales Digitales Canjeados Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numValDCanL.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numValDCanL.val())){				
+				var addhtmVali='Debe ingresar Número de Vales Digitales Canjeados Urbano Lima diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numValDCanL.focus();
@@ -1060,8 +1175,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numAgenR.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numAgenR.val())){				
+				var addhtmVali='Debe ingresar Número de Agentes Rural diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numAgenR.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_numAgenP.val().length == ''){				
 				var addhtmVali='Debe ingresar Número de Agentes Urbano Provincias.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numAgenP.focus();
+			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numAgenP.val())){				
+				var addhtmVali='Debe ingresar Número de Agentes Urbano Provincias diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numAgenP.focus();
@@ -1072,8 +1199,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_numAgenL.focus();
 			  	return false; 
+			}else if(validarCargoFijoNumero(fiseCargoFijo.f_numAgenL.val())){				
+				var addhtmVali='Debe ingresar Número de Agentes Urbano Lima diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_numAgenL.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_montoMesR.val().length == ''){				
 				var addhtmVali='Debe ingresar Cargo Fijo del Mes Rural.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_montoMesR.focus();
+			  	return false; 
+			}else if(validarCargoFijoFloat(fiseCargoFijo.f_montoMesR.val())){				
+				var addhtmVali='Debe ingresar Cargo Fijo del Mes Rural diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_montoMesR.focus();
@@ -1084,8 +1223,20 @@ var fiseCargoFijo= {
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_montoMesP.focus();
 			  	return false; 
+			}else if(validarCargoFijoFloat(fiseCargoFijo.f_montoMesP.val())){				
+				var addhtmVali='Debe ingresar Cargo Fijo del Mes Urbano Provincias diferente de 0.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_montoMesP.focus();
+			  	return false; 
 			}else if(fiseCargoFijo.f_montoMesL.val().length == ''){				
 				var addhtmVali='Debe ingresar Cargo Fijo del Mes Urbano Lima.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				fiseCargoFijo.f_montoMesL.focus();
+			  	return false; 
+			}else if(validarCargoFijoFloat(fiseCargoFijo.f_montoMesL.val())){				
+				var addhtmVali='Debe ingresar Cargo Fijo del Mes Urbano Lima diferente de 0.';					
 				fiseCargoFijo.dialogValidacionContent.html(addhtmVali);
 				fiseCargoFijo.dialogValidacion.dialog("open");	
 				fiseCargoFijo.f_montoMesL.focus();
@@ -1134,6 +1285,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 500,	
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
