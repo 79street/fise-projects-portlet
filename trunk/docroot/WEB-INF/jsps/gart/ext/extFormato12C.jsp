@@ -2094,7 +2094,7 @@ var formato12C= {
 		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
 			var process=true;
-			if( etapa=='RECONOCIDO' || !admin ){
+			if( etapa=='RECONOCIDO' && !admin ){
 				process = false;
 			}
 			if(process){
@@ -2204,7 +2204,7 @@ var formato12C= {
 		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
 			var process=true;
-			if( etapa=='RECONOCIDO' || !admin ){
+			if( etapa=='RECONOCIDO' && !admin ){
 				process = false;
 			}
 			if(process){	
