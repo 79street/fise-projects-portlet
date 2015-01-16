@@ -260,7 +260,7 @@
      buildGridsBusqueda : function () {	
 			formato12B.tablaBusqueda.jqGrid({
 				   datatype: "local",
-			       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','','','','',''],
+			       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Ver','Editar','Eliminar','','','','','','',''],
 			       colModel: [
 							{ name: 'descEmpresa', index: 'descEmpresa', width: 50},
 			               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -295,7 +295,7 @@
 			      		for(var i=0;i < ids.length;i++){
 			      			var cl = ids[i];
 			      			var ret = formato12B.tablaBusqueda.jqGrid('getRowData',cl); 
-			      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','0');\" /></a> ";
+			      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','0');\" /></a> ";
 			      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','1');\" /></a> ";
 			      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12B.showConfirmacion('"+ret.codEmpresa+"','"+ret.mesPresentacion+"','"+ret.anoPresentacion+"','"+ret.etapa+"','"+ret.descMes+"','"+ret.estadoEnvio+"','"+ret.estadoProceso+"','"+ret.mesEjecucionGasto+"','"+ret.descMesEjec+"','"+ret.anoEjecucionGasto+"','3');\" /></a> ";
 			      			
