@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="gastosMensual" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="189"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String"/>
@@ -64,7 +64,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Acta de Remisión de Información de Gastos Mensuales]]></text>
+				<text><![CDATA[Acta de Remisión de Información de Gastos Operativos]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
 				<reportElement x="400" y="26" width="150" height="16"/>

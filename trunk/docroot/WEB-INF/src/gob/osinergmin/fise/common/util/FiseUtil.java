@@ -534,10 +534,10 @@ public class FiseUtil {
 			String descripcionCosto ="";
 			String descripcionPeriodo="";
 			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
-				descripcionCosto = "Est&aacute;ndares";
+				descripcionCosto = "Costos Est&aacute;ndares";
 				descripcionPeriodo = ""+anoIniVigencia+"-"+anoFinVigencia+" declarado el";
 			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
-				descripcionCosto = "Operativos";
+				descripcionCosto = "Gastos Operativos";
 			}
 			
 			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
@@ -560,9 +560,9 @@ public class FiseUtil {
 						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n para el periodo " 
 						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
-						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos "
+						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
 						+ descripcionCosto	+ " Formato "
-						+ tipoFormato + ", y Anexo de Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+						+ tipoFormato + " y Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
@@ -589,10 +589,10 @@ public class FiseUtil {
 			String descripcionCosto ="";
 			String descripcionPeriodo="";
 			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
-				descripcionCosto = "Est&aacute;ndares";
+				descripcionCosto = "Costos Est&aacute;ndares";
 				descripcionPeriodo = ""+anoIniVigencia+"-"+anoFinVigencia+" declarado el";
 			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
-				descripcionCosto = "Operativos";
+				descripcionCosto = "Gastos Operativos";
 			}
 			
 			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
@@ -614,9 +614,9 @@ public class FiseUtil {
 						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
 						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
-						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos "
-						+ descripcionCosto	+ " Formato "
-						+ tipoFormato + ", y Anexo de Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
+						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
+						+ descripcionCosto	+ ", Formato "
+						+ tipoFormato + " y Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
 						+ "<p>Recomendamos tener en cuenta aquellos formatos faltantes para que, de acuerdo a sus necesidades, lo registren y env&iacute;en a la brevedad. As&iacute; mismo una vez enviado todos los formatos, cerrar el proceso de env&iacute;o.<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
@@ -693,15 +693,15 @@ public class FiseUtil {
 	}
 	
 	public boolean enviarMailsAdjuntoEnvioGeneral(PortletRequest request,List<FileEntryJSP> listaArchivo,
-			String descEmpresa,String descGrupoInf) throws Exception {
+			String descEmpresa,String descGrupoInf, String frecuencia) throws Exception {
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
 		
 		boolean admin= enviarMailAdjuntoAdmEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
-				descGrupoInf);
+				descGrupoInf, frecuencia);
 		
 		boolean user =enviarMailAdjuntoUsuEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
-				descGrupoInf);	
+				descGrupoInf, frecuencia);	
 		if(admin && user){
 		    return true;	
 		}else{
@@ -710,13 +710,20 @@ public class FiseUtil {
 	}
 	
 	private boolean enviarMailAdjuntoAdmEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
-			String descEmpresa, String descGrupoInf) throws Exception {
+			String descEmpresa, String descGrupoInf, String frecuencia) throws Exception {
 		boolean valor = true;
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
 			
 			String nombreUsuario = themeDisplay.getUser().getFullName();
+			
+			String descripcionCosto ="";
+			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
+				descripcionCosto = "Costos Est&aacute;ndares";
+			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
+				descripcionCosto = "Gastos Operativos";
+			}
 			
 			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);			
 			String correoD = themeDisplay.getUser().getEmailAddress();
@@ -736,8 +743,9 @@ public class FiseUtil {
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
 						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
 						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n, correspondiente al Grupo de Informaci&oacute;n "						
-						+ descGrupoInf + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formatos "
-						+"y Anexo de Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+						+ descGrupoInf + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
+						+ descripcionCosto	+ ", Formatos "
+						+"y Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
@@ -756,13 +764,20 @@ public class FiseUtil {
 	}
 	
 	private boolean enviarMailAdjuntoUsuEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
-			String descEmpresa, String descGrupoInf) throws Exception {
+			String descEmpresa, String descGrupoInf, String frecuencia) throws Exception {
 		boolean valor = true;
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
 			
 			String nombreUsuario = themeDisplay.getUser().getFullName();		
+			
+			String descripcionCosto ="";
+			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
+				descripcionCosto = "Costos Est&aacute;ndares";
+			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
+				descripcionCosto = "Gastos Operativos";
+			}
 			
 			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
 			String correoD = themeDisplay.getUser().getEmailAddress();
@@ -783,8 +798,9 @@ public class FiseUtil {
 						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
 						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n correspondiente al Grupo de Informaci&oacute;n "
 						+ descGrupoInf + ""
-					    + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de Costos Est&aacute;ndares, Formatos "
-					    + " y Anexo de Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
+					    + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
+					    + descripcionCosto	+ ", Formato "
+					    + " y Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
 						+ "<p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo a: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
 						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {

@@ -68,9 +68,7 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Desde Año Decl.:</output></td>
 											<td>
-												<form:input path="anioInicio" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"
-												 onkeypress="formato13A.validateInputTextNumber('anioInicio')"
-												 onblur="formato13A.validateInputAnioTxt(formato13A.txtAnioInicio,formato13A.txtAnioFin)"/>
+												<form:input path="anioInicio" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											</td>
 											<td><output>Mes Decl.:</output></td>
 											<td>
@@ -82,9 +80,7 @@ $(document).ready(function () {
 											</td>
 											<td><output>Hasta Año Decl.:</output></td>
 											<td>
-												<form:input path="anioFin" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"
-												 onkeypress="formato13A.validateInputTextNumber('anioFin')"
-												 onblur="formato13A.validateInputAnioTxt(formato13A.txtAnioInicio,formato13A.txtAnioFin)"/>
+												<form:input path="anioFin" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4"/>
 											</td>
 											<td><output>Mes Decl.:</output></td>
 											<td>

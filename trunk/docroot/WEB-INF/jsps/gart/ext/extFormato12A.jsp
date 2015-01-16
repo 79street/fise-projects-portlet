@@ -543,7 +543,7 @@ function validarBusqueda() {
 		  var numstr = trim($('#i_anio_d').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  //alert('Ingrese un año desde válido');
-			  $("#dialog-message-warning-content").html('Ingrese un año desde válido');
+			  $("#dialog-message-warning-content").html('Debe ingresar un año declarado desde válido');
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_anio_d').focus();
 			  return false;
@@ -553,7 +553,7 @@ function validarBusqueda() {
 		  var numstr = trim($('#i_anio_h').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  //alert('Ingrese un año hasta válido');
-			  $("#dialog-message-warning-content").html('Ingrese un año hasta válido');
+			  $("#dialog-message-warning-content").html('Debe ingresar un año declarado desde válido');
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_anio_h').focus();
 			  return false;
@@ -562,7 +562,7 @@ function validarBusqueda() {
 	  if($('#i_anio_d').val().length != '' && $('#i_anio_h').val().length != '' ) {
 		  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){
 				//alert('El año desde no puede exceder al año hasta');
-				$("#dialog-message-warning-content").html('El año desde no puede exceder al año hasta');
+				$("#dialog-message-warning-content").html('El año declarado desde no puede exceder al año declarado hasta');
 				$("#dialog-message-warning").dialog( "open" );	
 				return false;
 		  }
@@ -570,7 +570,7 @@ function validarBusqueda() {
 	  
 	  if($('#s_etapa').val().length == '' ) { 	    
 		    //alert('Seleccione una etapa');
-		    $("#dialog-message-warning-content").html('Seleccione una etapa');
+		    $("#dialog-message-warning-content").html('Debe seleccionar una etapa');
 			$("#dialog-message-warning").dialog( "open" );	
 		    document.getElementById('s_etapa').focus();
 		    return false; 
@@ -582,7 +582,7 @@ function validarBusqueda() {
 function validarFormulario() {		
 	  if($('#s_empresa').val().length == '' ) { 	
 	    //alert('Seleccione una Distribuidora Eléctrica'); 
-	    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica');
+	    $("#dialog-message-warning-content").html('Debe seleccionar una Distribuidora Eléctrica');
 		$("#dialog-message-warning").dialog( "open" );
 	    document.getElementById('s_empresa').focus();
 	    return false; 
@@ -612,7 +612,7 @@ function validarFormulario() {
 			  var numstr = trim($('#i_anioejecuc').val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 				  //alert('Ingrese un año de ejecución válido');
-				  $("#dialog-message-warning-content").html('Ingrese un año de ejecución válido');
+				  $("#dialog-message-warning-content").html('Debe ingresar un año de ejecución válido');
 				  $("#dialog-message-warning").dialog( "open" );
 				  return false;
 			  }
@@ -628,7 +628,7 @@ function validarFormulario() {
 	  //valores de formulario
 	  if($('#i_nroEmpad_r').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de empadronados para Rural');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para Rural');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para la Zona Rural');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_r').focus();
 		    return false; 
@@ -640,7 +640,7 @@ function validarFormulario() {
 	  }*/
 	  if($('#i_nroAgentGlp_r').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de agentes para Rural');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para Rural');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para la Zona Rural');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_r').focus();
 		    return false; 
@@ -663,7 +663,7 @@ function validarFormulario() {
 	  ////////////////////
 	  if($('#i_nroEmpad_p').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de empadronados para Provincia');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para Provincia');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para la Zona Urbano Provincias');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_p').focus();
 		    return false; 
@@ -675,7 +675,7 @@ function validarFormulario() {
 	  }*/
 	  if($('#i_nroAgentGlp_p').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de agentes para Provincia');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para Provincia');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para la Zona Urbano Provincias');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_p').focus();
 		    return false; 
@@ -698,7 +698,7 @@ function validarFormulario() {
 	  ///////////
 	  if($('#i_nroEmpad_l').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de empadronados para Lima');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para Lima');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para la Zona Urbano Lima');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_l').focus();
 		    return false; 
@@ -710,7 +710,7 @@ function validarFormulario() {
 	  }*/
 	  if($('#i_nroAgentGlp_l').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de agentes para Lima');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para Lima');
+		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para la Zona Urbano Lima');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_l').focus();
 		    return false; 
@@ -748,14 +748,14 @@ function validarFormulario() {
 function validarArchivoCarga() {		
   if($('#s_empresa').val().length == '' ) { 	
     //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
-    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo');
+    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
 	$("#dialog-message-warning").dialog( "open" );
     document.getElementById('s_empresa').focus();
     return false; 
   }
   if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
 	    //alert('Debe seleccionar el periodo a declarar');
-	    $("#dialog-message-warning-content").html('Debe seleccionar el periodo a declarar');
+	    $("#dialog-message-warning-content").html('Debe seleccionar el periodo a declarar para proceder con la carga del archivo');
 		$("#dialog-message-warning").dialog( "open" );
 	    document.getElementById('s_periodoenvio_present').focus();
 	    return false; 
@@ -1009,13 +1009,13 @@ function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecuc
 			codEtapa=etapa;
 		}else{
 			//alert(" No tiene autorización para realizar esta operación");
-			$("#dialog-message-info-content").html('No tiene autorización para realizar esta operación');
+			$("#dialog-message-info-content").html('No tiene autorización para realizar esta acción');
 			$("#dialog-message-info").dialog( "open" );
 		}
 		
 	}else if(flagOperacion=='CERRADO'){
 		//alert(" Está fuera de plazo");	
-		$("#dialog-message-info-content").html('Está fuera de plazo');
+		$("#dialog-message-info-content").html('El plazo para realizar esta acción se encuentra cerrado');
 		$("#dialog-message-info").dialog( "open" );
 	}else{
 		//alert("El formato ya fue enviado a OSINERGMIN-GART");	
@@ -1040,7 +1040,7 @@ function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecuc
 			},
 		success: function(data) {
 			if (data.resultado == "OK"){
-				var addhtml2='Registro eliminado con éxito';					
+				var addhtml2='El registro seleccionado para el Formato 12A se eliminó satisfactoriamente';					
 				$("#dialog-message-content").html(addhtml2);
 				$("#dialog-message").dialog( "open" );					
 				<portlet:namespace/>buscar();
@@ -1121,7 +1121,7 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 				}
 				else{
 					//alert("Error al recuperar los datos del registro seleccionado");
-					$("#dialog-message-error-content").html('Error al recuperar los datos del registro seleccionado');
+					$("#dialog-message-error-content").html('Se produjo un error al recuperar los datos del registro seleccionado');
 					$("#dialog-message-error").dialog( "open" );
 					initBlockUI();
 				}
@@ -1180,7 +1180,7 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 						}
 						else{
 							//alert("Error al recuperar los datos del registro seleccionado");
-							$("#dialog-message-error-content").html('Error al recuperar los datos del registro seleccionado');
+							$("#dialog-message-error-content").html('Se produjo un error al recuperar los datos del registro seleccionado');
 							$("#dialog-message-error").dialog( "open" );
 							initBlockUI();
 						}
@@ -1191,13 +1191,13 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 			});
 		}else{
 			//alert(" No tiene autorización para realizar esta operación");
-			$("#dialog-message-info-content").html('No tiene autorización para realizar esta operación');
+			$("#dialog-message-info-content").html('No tiene autorización para realizar esta acción');
 			$("#dialog-message-info").dialog( "open" );
 		}
 			
 	}else if(flagOperacion=='CERRADO'){
 		//alert(" Está fuera de plazo");
-		$("#dialog-message-info-content").html('Está fuera de plazo');
+		$("#dialog-message-info-content").html('El plazo para realizar esta acción se encuentra cerrado');
 		$("#dialog-message-info").dialog( "open" );
 	}else{
 		//alert("El formato ya fue enviado a OSINERGMIN-GART");	
@@ -1361,7 +1361,7 @@ function <portlet:namespace/>guardarFormato(){
 				},
 			success: function(data) {			
 				if (data.resultado == "OK"){				
-					var addhtml2='Datos guardados satisfactoriamente';
+					var addhtml2='El Formato 12A se guardó satisfactoriamente';
 					$("#dialog-message-content").html(addhtml2);
 					$("#dialog-message").dialog( "open" );
 					//limpiar();		
@@ -1530,8 +1530,16 @@ function <portlet:namespace/>cargarFormatoExcel(){
 		isSubmit=false;
 		$("#msjFileExcel").html("Debe seleccionar un archivo");
 	}else{
-		isSubmit=true;
-		$("#msjFileExcel").html("");
+		var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
+		if(extension == 'xls' || extension == 'xlsx'){
+			isSubmit=true;
+			$("#msjFileExcel").html("");
+		}else{
+			isSubmit=false;
+			$("#msjFileExcel").html("Archivo inválido");
+		}
+		//isSubmit=true;
+		//$("#msjFileExcel").html("");
 	}
 	if(isSubmit){
 		frm.submit();
@@ -1548,8 +1556,16 @@ function <portlet:namespace/>cargarFormatoTexto(){
 		isSubmit=false;
 		$("#msjFileTxt").html("Debe seleccionar un archivo");
 	}else{
-		isSubmit=true;
-		$("#msjFileTxt").html("");
+		var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
+		if(extension == 'txt'){
+			isSubmit=true;
+			$("#msjFileTxt").html("");
+		}else{
+			isSubmit=false;
+			$("#msjFileTxt").html("Archivo inválido");
+		}
+		//isSubmit=true;
+		//$("#msjFileTxt").html("");
 	}
 	if(isSubmit){
 		frm.submit();
@@ -1572,6 +1588,7 @@ function <portlet:namespace/>mostrarFormularioCargaExcel(){
 		}
 	    $('#divOverlay').show();
 	    $("#dialog-form-cargaExcel").show();
+	    $("#dialog-form-cargaExcel").drags();
 	    $("#dialog-form-cargaExcel").css({ 
 	        'left': ($(window).width() / 2 - $("#dialog-form-cargaExcel").width() / 2) + 'px', 
 	        'top': ($(window).height()  - $("#dialog-form-cargaExcel").height() ) + 'px'
@@ -1749,7 +1766,7 @@ function <portlet:namespace/>mostrarReporteValidacion(){
 	});
 }
 function confirmarEnvioDefinitivo(){	
-	var addhtml='¿Está seguro que desea realizar el envío definitivo?';
+	var addhtml='¿Está seguro que desea realizar el Envío Definitivo del Formato 12A?';
 	$("#dialog-confirm-envio-content").html(addhtml);		 
 	$("#dialog-confirm-envio").dialog("open");
 }
@@ -1769,7 +1786,7 @@ function <portlet:namespace/>envioDefinitivo(){
 			<portlet:namespace />tipoArchivo: '0'//PDF
 		},
 		success : function(gridData) {
-			var addhtml='Se realizó el envío satisfactoriamente';					
+			var addhtml='El Envío Definitivo se realizó satisfactoriamente';					
 			$("#dialog-message-report-content").html(addhtml);
 			$("#dialog-message-report").dialog( "open" );					
 			initBlockUI();
@@ -1826,7 +1843,7 @@ function <portlet:namespace/>mostrarReporteActaEnvio(){
 		});
 	}else{
 		//alert("Primero debe realizar el envío definitivo");
-		$("#dialog-message-info-content").html('Primero debe realizar el envío definitivo');
+		$("#dialog-message-info-content").html('Primero debe realizar el Envío Definitivo del Formato 12A');
 		$("#dialog-message-info").dialog( "open" );
 	}
 }

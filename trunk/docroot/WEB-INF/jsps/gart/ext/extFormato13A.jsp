@@ -236,21 +236,21 @@ var formato13A= {
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");
-			 formato13A.dialogMessageWarningContent.html("El año debe contener 4 dígitos");
+			 formato13A.dialogMessageWarningContent.html("Debe ingresar un año declarado desde válido");
 			 formato13A.dialogMessageWarning.dialog("open");
    		
    	 }else if(inicio.val().length>0){
    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
    			//formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
    			//formato13A.dialogMessageGeneralInicial.dialog("open");
-   			formato13A.dialogMessageWarningContent.html("El año final debe ser mayor o igual al inicial");
+   			formato13A.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
 			formato13A.dialogMessageWarning.dialog("open");
    		 }
    	 }else if(fin.val().length>0){
    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
    			//formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
    			//formato13A.dialogMessageGeneralInicial.dialog("open");
-   			formato13A.dialogMessageWarningContent.html("El año inicial debe ser menor o igual al final");
+   			formato13A.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
 			formato13A.dialogMessageWarning.dialog("open");
    		 }
    		 
@@ -261,7 +261,7 @@ var formato13A= {
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");
-			 formato13A.dialogMessageWarningContent.html("El año debe contener 4 dígitos");
+			 formato13A.dialogMessageWarningContent.html("Debe ingresar un año declarado desde válido");
 			 formato13A.dialogMessageWarning.dialog("open");
 			 return false; 
    		
@@ -270,7 +270,7 @@ var formato13A= {
    			 fin.focus();
    			//formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
    			//formato13A.dialogMessageGeneralInicial.dialog("open"); 
-   			formato13A.dialogMessageWarningContent.html("El año final debe ser mayor o igual al inicial");
+   			formato13A.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
 			formato13A.dialogMessageWarning.dialog("open");
 				 return false; 
    		 }
@@ -279,7 +279,7 @@ var formato13A= {
    			 inicio.focus();
    			//formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
    			//formato13A.dialogMessageGeneralInicial.dialog("open"); 
-   			formato13A.dialogMessageWarningContent.html("El año inicial debe ser menor o igual al final");
+   			formato13A.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
 			formato13A.dialogMessageWarning.dialog("open");
 				 return false; 
    		 }
@@ -578,15 +578,15 @@ var formato13A= {
 			
 			//mostramos el mensaje de informacion
 			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='Datos guardados satisfactoriamente';
+				var addhtml='El Detalle de Localidades de la Zona de Beneficiarios seleccionado se guardó satisfactoriamente';
 				formato13A.dialogMessageDetalleContent.html(addhtml);
 				formato13A.dialogMessageDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
-				var addhtml='Ya existe un registro para la Distribuidora Eléctrica y periodo a declarar';
+				var addhtml='Ya existe un Detalle de Localidades para la Zona, Periodo y Distribuidora Eléctrica seleccionada';
 				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
 				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR2' ){
-				var addhtml='Se produjo un error al guardar el detalle';
+				var addhtml='Se produjo un error al guardar el Detalle de Localidades para la Zona';
 				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
 				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}
@@ -651,15 +651,15 @@ var formato13A= {
 			
 			//mostramos el mensaje de informacion
 			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='Datos guardados satisfactoriamente';
+				var addhtml='El Detalle de Localidades de la Zona de Beneficiarios seleccionado se guardó satisfactoriamente';
 				formato13A.dialogMessageDetalleContent.html(addhtml);
 				formato13A.dialogMessageDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
-				var addhtml='Ya existe un registro para la empresa y periodo a declarar';
+				var addhtml='Ya existe un Detalle de Localidades para la Zona, Periodo y Distribuidora Eléctrica seleccionada';
 				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
 				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR2' ){
-				var addhtml='Se produjo un error al guardar el detalle';
+				var addhtml='Se produjo un error al guardar el Detalle de Localidades para la Zona';
 				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
 				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}
@@ -1381,7 +1381,7 @@ var formato13A= {
 		});
 	},
 	confirmarEnvioDefinitivo : function(){	
-		var addhtml='¿Está seguro que desea realizar el envío definitivo?';
+		var addhtml='¿Está seguro que desea realizar el Envío Definitivo del Formato 13A?';
 		formato13A.dialogConfirmEnvioContent.html(addhtml);
 		formato13A.dialogConfirmEnvio.dialog("open");
 	},
@@ -1402,7 +1402,7 @@ var formato13A= {
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
-				var addhtml='Se realizó el envío satisfactoriamente al correo '+formato13A.emailConfigured;
+				var addhtml='El Envío Definitivo se realizó satisfactoriamente al correo electrónico '+formato13A.emailConfigured;
 				formato13A.dialogMessageReportContent.html(addhtml);
 				formato13A.dialogMessageReport.dialog("open");
 				formato13A.unblockUI();
@@ -1491,7 +1491,7 @@ var formato13A= {
 			});
 		}else{
 			//alert("Primero debe realizar el envío definitivo");
-			formato13A.dialogMessageInfoCrudContent.html("Primero debe realizar el envío definitivo");
+			formato13A.dialogMessageInfoCrudContent.html("Primero debe realizar el Envío Definitivo del Formato 13A");
 			formato13A.dialogMessageInfoCrud.dialog("open");
 		}
 	},
@@ -1701,12 +1701,12 @@ var formato13A= {
 				cod_Etapa_cabecera=etapa;
 			}else{
 				//alert(" No tiene autorización para realizar esta operación");
-				formato13A.dialogMessageInfoContent.html("No tiene autorización para realizar esta operación");
+				formato13A.dialogMessageInfoContent.html("No tiene autorización para realizar esta acción");
 				formato13A.dialogMessageInfo.dialog("open");
 			}
 		}else if(flagOperacion=='CERRADO'){
 			//alert(" Está fuera de plazo");
-			formato13A.dialogMessageInfoContent.html("Está fuera de plazo");
+			formato13A.dialogMessageInfoContent.html("El plazo para realizar esta acción se encuentra cerrado");
 			formato13A.dialogMessageInfo.dialog("open");
 		}else{
 			//alert("El formato ya fue enviado a OSINERGMIN-GART");
@@ -1808,7 +1808,7 @@ var formato13A= {
 			
 		}else if(flagOperacion=='CERRADO'){
 			//alert(" Está fuera de plazo");
-			formato13A.dialogMessageInfoContent.html("Está fuera de plazo");
+			formato13A.dialogMessageInfoContent.html("El plazo para realizar esta acción se encuentra cerrado.");
 			formato13A.dialogMessageInfo.dialog("open");
 		}else{
 			//alert("El formato ya fue enviado a OSINERGMIN-GART");
@@ -1996,7 +1996,7 @@ var formato13A= {
 			if(formato13A.cod_empresa_edelnor.val()!=formato13A.codEmpresaDetalle.val() && formato13A.cod_empresa_luz_sur.val()!=formato13A.codEmpresaDetalle.val()){
 				if(formato13A.idZonaBenefDetalle.val() == 3 ) {//LIMA
 					//alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
-					formato13A.dialogMessageWarningDetalleContent.html("No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica");
+					formato13A.dialogMessageWarningDetalleContent.html("No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica seleccionada");
 					formato13A.dialogMessageWarningDetalle.dialog("open");
 				    formato13A.idZonaBenefDetalle.focus();
 				   	return false;
