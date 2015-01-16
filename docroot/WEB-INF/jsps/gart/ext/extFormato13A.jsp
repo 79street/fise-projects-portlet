@@ -1688,7 +1688,7 @@ var formato13A= {
 		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
 			var process=true;
-			if( etapa=='ESTABLECIDO' || !admin ){
+			if( etapa=='ESTABLECIDO' && !admin ){
 				process = false;
 			}
 			if(process){

@@ -1347,7 +1347,7 @@ var formato14A= {
 		if(flagOperacion=='ABIERTO'){
 			//control para tipo de usuario
 			var process=true;
-			if( etapa=='ESTABLECIDO' || !admin ){
+			if( etapa=='ESTABLECIDO' && !admin ){
 				process = false;
 			}
 			if(process){
@@ -1583,10 +1583,11 @@ var formato14A= {
 	},
 	confirmarEliminar : function(codEmpresa,anoPresentacion,mesPresentacion,anoIniVigencia,anoFinVigencia,etapa,flagOperacion){
 		var admin = '${formato14ACBean.admin}';
+		console.debug(admin);
 		if(flagOperacion=='ABIERTO'){
 			//control para tipo de usuario
 			var process=true;
-			if( etapa=='ESTABLECIDO' || !admin ){
+			if( etapa=='ESTABLECIDO' && !admin ){
 				process = false;
 			}
 			if(process){
