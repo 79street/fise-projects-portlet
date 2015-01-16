@@ -163,7 +163,7 @@ var fiseGrupoInformacion= {
 		buildGrids : function () {	
 			fiseGrupoInformacion.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Grupo Inf.','Descripción','Año Decl.','Mes Decl.','Estado','Periodicidad','Visualizar','Editar','Desactivar'],
+		       colNames: ['Id Grupo Inf.','Descripción','Año Decl.','Mes Decl.','Estado','Periodicidad','Ver','Editar','Desactivar'],
 		       colModel: [
                        { name: 'idGrupoInformacion', index: 'idGrupoInformacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},	
@@ -191,7 +191,7 @@ var fiseGrupoInformacion= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = fiseGrupoInformacion.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseGrupoInformacion.verGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
+		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseGrupoInformacion.verGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
 		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseGrupoInformacion.editarGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseGrupoInformacion.confirmarEliminarGrupoInformacion('"+ret.idGrupoInformacion+"','"+ret.descEstado+"');\" /></a> ";              			
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
