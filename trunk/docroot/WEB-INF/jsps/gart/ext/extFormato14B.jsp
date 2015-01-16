@@ -1616,7 +1616,7 @@ var formato14B= {
 					},
 				success: function(data) {			
 					if (data.resultado == "OK"){				
-						var addhtml2='El Formato 14A se guardó satisfactoriamente';
+						var addhtml2='El Formato 14B se guardó satisfactoriamente';
 						formato14B.dialogMessageContent.html(addhtml2);
 						formato14B.dialogMessage.dialog("open");
 						formato14B.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
