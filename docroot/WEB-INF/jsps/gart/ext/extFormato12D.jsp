@@ -389,7 +389,7 @@ var formato12D= {
 
 			//mostramos el mensaje de informacion
 			if( formato12D.msgTransaccion.val()=='OK' ){
-				var addhtml='Datos guardados satisfactoriamente';
+				var addhtml='La carga del archivo se realizó satisfactoriamente';
 				formato12D.dialogMessageContent.html(addhtml);
 				formato12D.dialogMessage.dialog("open");
 			}else if( formato12D.msgTransaccion.val()=='ERROR' ){
@@ -447,7 +447,7 @@ var formato12D= {
 
 			//mostramos el mensaje de informacion
 			if( formato12D.msgTransaccion.val()=='OK' ){
-				var addhtml='Datos guardados satisfactoriamente';
+				var addhtml='La carga del archivo se realizó satisfactoriamente';
 				formato12D.dialogMessageContent.html(addhtml);
 				formato12D.dialogMessage.dialog("open");
 			}else if( formato12D.msgTransaccion.val()=='ERROR' ){
@@ -576,11 +576,11 @@ var formato12D= {
 			
 			//mostramos el mensaje de informacion
 			if( formato12D.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='Datos guardados satisfactoriamente';
+				var addhtml='El Detalle de los Gastos se guardó satisfactoriamente';
 				formato12D.dialogMessageDetalleContent.html(addhtml);
 				formato12D.dialogMessageDetalle.dialog("open");
 			}else if( formato12D.msgTransaccionDetalle.val()=='ERROR' ){
-				var addhtml='Se produjo un error al guardar el detalle';
+				var addhtml='Se produjo un error al guardar el Detalle de Gastos';
 				formato12D.dialogMessageErrorDetalleContent.html(addhtml);
 				formato12D.dialogMessageErrorDetalle.dialog("open");
 			}
@@ -681,11 +681,11 @@ var formato12D= {
 			
 			//mostramos el mensaje de informacion
 			if( formato12D.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='Datos guardados satisfactoriamente';
+				var addhtml='El Detalle de los Gastos se guardó satisfactoriamente';
 				formato12D.dialogMessageDetalleContent.html(addhtml);
 				formato12D.dialogMessageDetalle.dialog("open");
 			}else if( formato12D.msgTransaccionDetalle.val()=='ERROR' ){
-				var addhtml='Se produjo un error al guardar el detalle';
+				var addhtml='Se produjo un error al guardar el Detalle de Gastos';
 				formato12D.dialogMessageErrorDetalleContent.html(addhtml);
 				formato12D.dialogMessageErrorDetalle.dialog("open");
 			}
@@ -1140,7 +1140,7 @@ var formato12D= {
 			  var numstr = trim(formato12D.anioDesde.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 				  //alert('Ingrese un año desde válido');
-				  formato12D.dialogMessageWarningContent.html('Ingrese un año desde válido');
+				  formato12D.dialogMessageWarningContent.html('Debe ingresar un año declarado desde válido');
 				  formato12D.dialogMessageWarning.dialog("open");
 				  formato12D.anioDesde.focus();
 				  return false;
@@ -1150,7 +1150,7 @@ var formato12D= {
 			  var numstr = trim(formato12D.anioHasta.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 				  //alert('Ingrese un año hasta válido');
-				  formato12D.dialogMessageWarningContent.html('Ingrese un año hasta válido');
+				  formato12D.dialogMessageWarningContent.html('Debe ingresar un año declarado hasta válido');
 				  formato12D.dialogMessageWarning.dialog("open");
 				  formato12D.anioHasta.focus();
 				  return false;
@@ -1159,7 +1159,7 @@ var formato12D= {
 		  if(formato12D.anioDesde.val().length != '' && formato12D.anioHasta.val().length != '' ) {
 			  if( parseFloat(formato12D.anioDesde.val()) > parseFloat(formato12D.anioHasta.val()) ){
 					//alert('El año desde no puede exceder al año hasta');
-					formato12D.dialogMessageWarningContent.html('El año desde no puede exceder al año hasta');
+					formato12D.dialogMessageWarningContent.html('El año declarado desde no puede exceder al año declarado hasta');
 					formato12D.dialogMessageWarning.dialog("open");
 					return false;
 			  }
@@ -1389,14 +1389,14 @@ var formato12D= {
 	validarArchivoCarga : function() {		
 		if(formato12D.codEmpresa.val().length == '' ) { 	
 			//alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
-			formato12D.dialogMessageWarningCrudContent.html('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo');
+			formato12D.dialogMessageWarningCrudContent.html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
 			formato12D.dialogMessageWarningCrud.dialog("open");
 			formato12D.codEmpresa.focus();
 			return false; 
 		}
 		if(formato12D.periodoEnvio==null || formato12D.periodoEnvio.val().length == '' ) {		  
 			//alert('Debe seleccionar el periodo a declarar');
-			formato12D.dialogMessageWarningCrudContent.html('Debe seleccionar el periodo a declarar');
+			formato12D.dialogMessageWarningCrudContent.html('Debe seleccionar el Periodo a declarar para proceder con la carga del archivo');
 			formato12D.dialogMessageWarningCrud.dialog("open");
 			formato12D.periodoEnvio.focus();
 			return false; 
@@ -1440,8 +1440,16 @@ var formato12D= {
 			isSubmit=false;
 			$("#msjFileExcel").html("Debe seleccionar un archivo");
 		}else{
-			isSubmit=true;
-			$("#msjFileExcel").html("");
+			var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
+			if(extension == 'xls' || extension == 'xlsx'){
+				isSubmit=true;
+				$("#msjFileExcel").html("");
+			}else{
+				isSubmit=false;
+				$("#msjFileExcel").html("Archivo inválido");
+			}
+			//isSubmit=true;
+			//$("#msjFileExcel").html("");
 		}
 		if(isSubmit){
 			formato12D.formNuevo.submit();
@@ -1485,8 +1493,16 @@ var formato12D= {
 			isSubmit=false;
 			$("#msjFileTxt").html("Debe seleccionar un archivo");
 		}else{
-			isSubmit=true;
-			$("#msjFileTxt").html("");
+			var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
+			if(extension == 'txt'){
+				isSubmit=true;
+				$("#msjFileTxt").html("");
+			}else{
+				isSubmit=false;
+				$("#msjFileTxt").html("Archivo inválido");
+			}
+			//isSubmit=true;
+			//$("#msjFileTxt").html("");
 		}
 		if(isSubmit){
 			formato12D.formNuevo.submit();
@@ -1628,7 +1644,7 @@ var formato12D= {
 		});
 	},
 	confirmarEnvioDefinitivo : function(){	
-		var addhtml='¿Está seguro que desea realizar el envío definitivo?';
+		var addhtml='¿Está seguro que desea realizar el Envío Definitivo para el Formato 12D?';
 		formato12D.dialogConfirmEnvioContent.html(addhtml);
 		formato12D.dialogConfirmEnvio.dialog("open");
 	},
@@ -1649,7 +1665,7 @@ var formato12D= {
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
 			success : function(gridData) {
-				var addhtml='Se realizó el envío satisfactoriamente el envío.';
+				var addhtml='El Envío Definitivo se realizó satisfactoriamente';
 				formato12D.dialogMessageReportContent.html(addhtml);
 				formato12D.dialogMessageReport.dialog("open");
 				formato12D.unblockUI();
@@ -1737,7 +1753,7 @@ var formato12D= {
 			});
 		}else{
 			//alert("Primero debe realizar el envío definitivo");
-			formato12D.dialogMessageInfoCrudContent.html('Primero debe realizar el envío definitivo');
+			formato12D.dialogMessageInfoCrudContent.html('Primero debe realizar el Envío Definitivo del Formato 12D');
 			formato12D.dialogMessageInfoCrud.dialog("open");
 		}
 	},
@@ -1943,12 +1959,12 @@ var formato12D= {
 				cod_Etapa_cabecera=etapa;
 			}else{
 				//alert(" No tiene autorización para realizar esta operación");
-				formato12D.dialogMessageInfoContent.html('No tiene autorización para realizar esta operación');
+				formato12D.dialogMessageInfoContent.html('No tiene autorización para realizar esta acción');
 				formato12D.dialogMessageInfo.dialog("open");
 			}
 		}else if(flagOperacion=='CERRADO'){
 			//alert(" Está fuera de plazo");		
-			formato12D.dialogMessageInfoContent.html('Está fuera de plazo');
+			formato12D.dialogMessageInfoContent.html('El plazo para realizar esta acción se encuentra cerrado');
 			formato12D.dialogMessageInfo.dialog("open");
 		}else{
 			//alert("El formato ya fue enviado a OSINERGMIN-GART");	
@@ -2064,7 +2080,7 @@ var formato12D= {
 	validarFormatoDetalle : function(){
 		if( formato12D.codEmpresaDetalle.val().length=='' ){
 			//alert('Seleccione una Distribuidora Eléctrica'); 
-			formato12D.dialogMessageWarningDetalleContent.html('Seleccione una Distribuidora Eléctrica');
+			formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar una Distribuidora Eléctrica');
 			formato12D.dialogMessageWarningDetalle.dialog("open");
 			formato12D.codEmpresaDetalle.val().focus();
 		    return false;

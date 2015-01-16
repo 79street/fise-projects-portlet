@@ -225,7 +225,7 @@
 			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 	    		 //formato12B.lblMessageInicial.html("El año debe contener 4 dígitos");
 				 //formato12B.dialogMessageGeneralInicial.dialog("open");
-				 formato12B.dialogMessageWarningContent.html("El año debe contener 4 dígitos");
+				 formato12B.dialogMessageWarningContent.html("Debe ingresar un año declarado desde válido");
 				 formato12B.dialogMessageWarning.dialog("open");
 				 return false; 
 	    		
@@ -234,7 +234,7 @@
 	    			
 	    			 //formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial ");
 					 //formato12B.dialogMessageGeneralInicial.dialog("open"); 
-					 formato12B.dialogMessageWarningContent.html("El año final debe ser mayor o igual al inicial");
+					 formato12B.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
 					 formato12B.dialogMessageWarning.dialog("open");
 					 return false; 
 	    		 }
@@ -248,7 +248,7 @@
 					if(parseFloat(mesfin)<parseFloat(mesinicio)){
 						 //formato12B.lblMessageInicial.html("El mes final debe ser posterior al mes inicial");
 						 //formato12B.dialogMessageGeneralInicial.dialog("open"); 
-						 formato12B.dialogMessageWarningContent.html("El mes final debe ser posterior al mes inicial");
+						 formato12B.dialogMessageWarningContent.html("El mes declarado desde no puede exceder al mes declarado hasta");
 						 formato12B.dialogMessageWarning.dialog("open");
 						 return false; 
 					}
@@ -941,7 +941,7 @@
 					 
 					//formato12B.lblMessage.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declara seleccionado");
 					//formato12B.dialogMessageGeneral.dialog("open");
-					formato12B.dialogMessageInfoDetalleContent.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declara seleccionado");
+					formato12B.dialogMessageInfoDetalleContent.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declarar seleccionado");
 					formato12B.dialogMessageInfoDetalle.dialog("open");
 			}
 			formato12B.loadCostoTotal(formato12B.cmbCodEmpresa.val());
@@ -1179,11 +1179,11 @@
 							location.href=formato12B.urlViewFormato+'&codEmpresa='+emp+'&anioPresentacion='+anio+'&mesPresentacion='+mes+'&etapa='+etapa+'&desmes='+desmes+'&tipoOperacion='+tipo+'&mesEjecucionGasto='+mesEjec+'&descMesEjec='+desmesEjec+'&anoEjecucionGasto='+anioEjec+'&'+formato12B.formBusqueda.serialize();
 						}else{
 							show=false;
-					   		msj=" No tiene autorización para realizar esta operación";
+					   		msj=" No tiene autorización para realizar esta acción";
 						}
 					 }else if(std=='CERRADO'){
 						show=false;
-						msj=" Está fuera de plazo";
+						msj=" El plazo para realizar esta acción se encuentra cerrado";
 					 }
 				}break;
 				case '3':{//eliminar
@@ -1197,11 +1197,11 @@
 							numModal=1;
 						}else{
 							show=false;
-					   		msj=" No tiene autorización para realizar esta operación";
+					   		msj=" No tiene autorización para realizar esta acción";
 						}
 				    }else if(std=='CERRADO'){
 				    	show=false;
-				    	msj=" Está fuera de plazo";
+				    	msj=" El plazo para realizar esta acción se encuentra cerrado";
 					}
 				 }break;
 			}
@@ -1404,13 +1404,13 @@
 									}else{
 										formato12B.tpOperacion.val('1');
 									}
-									formato12B.lblMessage.html("Datos guardados satisfactoriamente");
+									formato12B.lblMessage.html("El Formato 12B se guardó satisfactoriamente");
 									formato12B.dialogMessageGeneral.dialog("open");
 									
 								}else if(item.msg == "-1"){
 									//formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");
 									//formato12B.dialogMessageGeneral.dialog("open");
-									formato12B.dialogMessageErrorDetalleContent.html("El formato ya existe para la empresa y periodo seleccionado");
+									formato12B.dialogMessageErrorDetalleContent.html("El Formato ya existe para la Distribuidora Eléctrica y Periodo a declarar seleccionado");
 									formato12B.dialogMessageErrorDetalle.dialog("open");
 									
 								}else if(item.msg == "-2"){
@@ -1470,7 +1470,7 @@
 					
 					if(data == '1' ){
 						//formato12B.btnBuscar.trigger('click');
-						formato12B.lblMessageInicial.html("Registro eliminado con éxito");
+						formato12B.lblMessageInicial.html("El registro selecionado para el Formato 12B se eliminó satisfactoriamente");
 						formato12B.dialogMessageGeneralInicial.dialog("open");
 						
 						
@@ -1599,7 +1599,7 @@
 			});
 		},
 		confirmarEnvioDefinitivo : function(){	
-			var addhtml='¿Está seguro que desea realizar el envío definitivo?';
+			var addhtml='¿Está seguro que desea realizar el Envío Definitivo para el Formato 12B?';
 			formato12B.lblConfirmEnvioContent.html(addhtml);
 			formato12B.dialogConfirmEnvio.dialog("open");
 		},
@@ -1614,7 +1614,7 @@
 					<portlet:namespace />tipoArchivo: '0'//PDF
 				},
 				success : function(gridData) {
-					var addhtml='Se realizó el envío satisfactoriamente al correo '+formato12B.emailConfigured;
+					var addhtml='Se realizó el Envío Definitivo se realizó satisfactoriamente al correo '+formato12B.emailConfigured;
 					formato12B.lblMessageReportContent.html(addhtml);
 					formato12B.dialogMessageReport.dialog("open");
 					formato12B.initBlockUI();
@@ -1644,7 +1644,7 @@
 			}else{
 				//formato12B.lblMessage.html("Primero debe realizar el envío definitivo");
 			    //formato12B.dialogMessageGeneral.dialog("open");
-			    formato12B.dialogMessageInfoDetalleContent.html("Primero debe realizar el envío definitivo");
+			    formato12B.dialogMessageInfoDetalleContent.html("Primero debe realizar el Envío Definitivo para el Formato 12B");
 				formato12B.dialogMessageInfoDetalle.dialog("open");
 				
 			}

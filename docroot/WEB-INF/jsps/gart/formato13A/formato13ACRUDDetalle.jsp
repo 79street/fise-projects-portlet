@@ -44,7 +44,7 @@ $(document).ready(function () {
 									<table class="" border="0" width="100%">
 										<tr class="filete-bottom">
 											<td><output class="net-titulo">FORMATO FISE-13A:
-												</output> Remisión de Gastos Operativos - Implementación</td>
+												</output> Detalle de Localidades por Zonas de Beneficiarios FISE</td>
 										</tr>
 										<tr height="10px">
 											<td></td>
