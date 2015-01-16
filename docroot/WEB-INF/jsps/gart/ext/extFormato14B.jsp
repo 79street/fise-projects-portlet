@@ -1404,7 +1404,7 @@ var formato14B= {
 		if(flagOperacion=='ABIERTO'){
 			//control para tipo de usuario
 			var process=true;
-			if( etapa=='ESTABLECIDO' && !admin ){
+			if( etapa=='ESTABLECIDO'  &&  admin=='false' ){
 				process = false;
 			}
 			if(process){
@@ -1645,9 +1645,10 @@ var formato14B= {
 		if(flagOperacion=='ABIERTO'){
 			//control para tipo de usuario
 			var process=true;
-			if( etapa=='ESTABLECIDO' && !admin ){
+			if( etapa=='ESTABLECIDO'  &&  admin=='false' ){
 				process = false;
 			}
+			console.debug("process : "+process);	
 			if(process){
 				var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 				formato14B.dialogConfirmContent.html(addhtml);
