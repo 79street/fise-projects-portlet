@@ -299,5 +299,21 @@ function soloLetras(e){
     }
 }
 
+function validarCargoFijoNumero(valor){
+	if(valor!=null && parseInt(valor)+0==0){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+function validarCargoFijoFloat(valor){	
+	if(valor!=null && parseFloat(valor)+ 0.0 == 0.0){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 
 
