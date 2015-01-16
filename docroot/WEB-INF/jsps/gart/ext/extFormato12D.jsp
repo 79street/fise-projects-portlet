@@ -2092,7 +2092,7 @@ var formato12D= {
 			formato12D.periodoEnvioDetalle.val().focus();
    			return false; 
  		}*/
-		if(formato12D.periodoEnvio==null || formato12D.periodoEnvio.val().length == '' ) {		  
+		if(formato12D.periodoEnvioDetalle==null || formato12D.periodoEnvioDetalle.val().length == '' ) {		  
 			//alert('Debe seleccionar el periodo a declarar');
 			formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el periodo a declarar');
 			formato12D.dialogMessageWarningDetalle.dialog("open");
