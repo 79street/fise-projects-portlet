@@ -686,7 +686,11 @@ public class FiseUtil {
 				}
 				MailServiceUtil.sendEmail(mailMessage);
 				for(CorreoBean c:listaCorreoDestino){
-					correoMostrar = correoMostrar +","+ c.getDireccionCorreo();	
+					if(FormatoUtil.isNotBlank(correoMostrar)){
+						correoMostrar = correoMostrar +","+ c.getDireccionCorreo();		
+					}else{
+						correoMostrar = c.getDireccionCorreo();	
+					}					
 			    }
 				valor =FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correoMostrar;
 			}else{
