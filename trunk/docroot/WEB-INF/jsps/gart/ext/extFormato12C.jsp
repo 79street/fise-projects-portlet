@@ -762,7 +762,7 @@ var formato12C= {
 	buildGridsBusqueda : function () {	
 		formato12C.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Información','Estado','Ver','Editar','Eliminar','','',''],
 	       colModel: [
 				   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -794,7 +794,7 @@ var formato12C= {
 	      			var cl = ids[i];
 	      			var ret = formato12C.tablaResultados.jqGrid('getRowData',cl); 
 					
-	      			view = "<a href='"+formato12C.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descGrupoInformacion="+ret.grupoInfo+"&descEstado="+ret.estado+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			view = "<a href='"+formato12C.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descGrupoInformacion="+ret.grupoInfo+"&descEstado="+ret.estado+"&tipo=0' ><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
 	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato12C.confirmarEditCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.flagOperacion+"','"+ret.grupoInfo+"','"+ret.estado+"');\" /></a> ";
 					elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12C.confirmarEliminarCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
 	      			
