@@ -2017,8 +2017,6 @@ var formato13A= {
 		    formato13A.idZonaBenefDetalle.focus();
 		    return false;
 		}
-			
-		}
 		
 		//
 		return true; 
