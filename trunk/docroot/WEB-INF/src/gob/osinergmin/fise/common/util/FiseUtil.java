@@ -567,7 +567,7 @@ public class FiseUtil {
 						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
 						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
-						+ descripcionCosto	+ " Formato "
+						+ descripcionCosto	+ ", Formato "
 						+ tipoFormato + " y Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
