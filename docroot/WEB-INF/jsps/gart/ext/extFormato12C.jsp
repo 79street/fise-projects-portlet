@@ -746,7 +746,7 @@ var formato12C= {
 			
 			//mostramos el mensaje de informacion
 			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='El Detalle de Gastos de guardó satisfactoriamente';
+				var addhtml='El Detalle de Gastos se guardó satisfactoriamente';
 				formato12C.dialogMessageDetalleContent.html(addhtml);
 				formato12C.dialogMessageDetalle.dialog("open");
 			}else if( formato12C.msgTransaccionDetalle.val()=='ERROR' ){
@@ -816,7 +816,7 @@ var formato12C= {
 	buildGridsImplementacion : function () {	
 		formato12C.tablaImplementacion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Eliminar','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Ver','Editar','Eliminar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -895,7 +895,7 @@ var formato12C= {
 					  		urlEdit.setParameter("itemDetalle", ret.item);
 					  	  	urlEdit.setPortletId(formato12C.portletID);
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 		  	      			
 		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12C.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapaEjecucion+"','"+ret.item+"');\" /></a> ";              			
@@ -918,7 +918,7 @@ var formato12C= {
 	buildGridsMensual : function () {	
 		formato12C.tablaMensual.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','Editar','Eliminar','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Ver','Editar','Eliminar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -997,7 +997,7 @@ var formato12C= {
 					  		urlEdit.setParameter("itemDetalle", ret.item);
 					  	  	urlEdit.setPortletId(formato12C.portletID);
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 		  	      			
 		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12C.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapaEjecucion+"','"+ret.item+"');\" /></a> ";              			
@@ -1021,7 +1021,7 @@ var formato12C= {
 	buildGridsImplementacionView : function () {	
 		formato12C.tablaImplementacionView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Ver','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -1084,7 +1084,7 @@ var formato12C= {
 		  	      			urlView.setPortletId(formato12C.portletID);
 		  	      			
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			formato12C.tablaImplementacionView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
@@ -1102,7 +1102,7 @@ var formato12C= {
 	buildGridsMensualView : function () {	
 		formato12C.tablaMensualView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo Origen','Localidad Origen','Cód. Ubigeo Destino','Localidad Destino','Zona Benef.','Cta. Contable','Actividad','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Días','Alimentación','Alojamiento','Movilidad','Ver','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -1165,7 +1165,7 @@ var formato12C= {
 		  	      			urlView.setPortletId(formato12C.portletID);
 		  	      			
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			formato12C.tablaMensualView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
