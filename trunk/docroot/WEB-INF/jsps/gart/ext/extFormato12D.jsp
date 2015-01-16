@@ -697,7 +697,7 @@ var formato12D= {
 	buildGridsBusqueda : function () {	
 		formato12D.tablaResultados.jqGrid({
 		   datatype: "local",
-	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Informaición','Estado','Visualizar','Editar','Eliminar','','',''],
+	       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Etapa','Grupo de Informaición','Estado','Ver','Editar','Eliminar','','',''],
 	       colModel: [
 				   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
 	               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
@@ -729,7 +729,7 @@ var formato12D= {
 	      			var cl = ids[i];
 	      			var ret = formato12D.tablaResultados.jqGrid('getRowData',cl); 
 					
-	      			view = "<a href='"+formato12D.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descGrupoInformacion="+ret.grupoInfo+"&descEstado="+ret.estado+"&tipo=0' ><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			view = "<a href='"+formato12D.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descGrupoInformacion="+ret.grupoInfo+"&descEstado="+ret.estado+"&tipo=0' ><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
 	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato12D.confirmarEditCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.flagOperacion+"','"+ret.grupoInfo+"','"+ret.estado+"');\" /></a> ";
 					elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12D.confirmarEliminarCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
 	      			
@@ -751,7 +751,7 @@ var formato12D= {
 	buildGridsImplementacion : function () {	
 		formato12D.tablaImplementacion.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','Editar','Eliminar','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Ver','Editar','Eliminar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -829,7 +829,7 @@ var formato12D= {
 					  		urlEdit.setParameter("itemDetalle", ret.item);
 					  	  	urlEdit.setPortletId(formato12D.portletID);
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 		  	      			
 		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12D.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapaEjecucion+"','"+ret.item+"');\" /></a> ";              			
@@ -852,7 +852,7 @@ var formato12D= {
 	buildGridsMensual : function () {	
 		formato12D.tablaMensual.jqGrid({
 		   datatype: "local",
-	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','Editar','Eliminar','','','','','',''],
+	       colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Ver','Editar','Eliminar','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -930,7 +930,7 @@ var formato12D= {
 					  		urlEdit.setParameter("itemDetalle", ret.item);
 					  	  	urlEdit.setPortletId(formato12D.portletID);
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			edit = "<a href='"+urlEdit+"'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center'  /></a> ";
 		  	      			
 		  	      			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"formato12D.confirmarEliminarDetalle('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapaEjecucion+"','"+ret.item+"');\" /></a> ";              			
@@ -954,7 +954,7 @@ var formato12D= {
 	buildGridsImplementacionView : function () {	
 		formato12D.tablaImplementacionView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Ver','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -1016,7 +1016,7 @@ var formato12D= {
 		  	      			urlView.setPortletId(formato12D.portletID);
 		  	      			
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			formato12D.tablaImplementacionView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
@@ -1034,7 +1034,7 @@ var formato12D= {
 	buildGridsMensualView : function () {	
 		formato12D.tablaMensualView.jqGrid({
 		   datatype: "local",
-		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Visualizar','','','','','',''],
+		   colNames: ['Año Ejec.','Mes Ejec.','Item','Cód. Ubigeo','Localidad','Zona Benef.','Cta. Contable','Gasto','Tipo gasto','Tipo Doc.','RUC','Serie Doc.','Nro. Doc.','Fecha autor.','Nro. doc. Autor.','Cantidad','Cto. Unitario','Ver','','','','','',''],
 	       colModel: [
 					{ name: 'anoEjecucion', index: 'anoEjecucion', width: 60},
 					{ name: 'descMesEjecucion', index: 'descMesEjecucion', width: 80},
@@ -1096,7 +1096,7 @@ var formato12D= {
 		  	      			urlView.setPortletId(formato12D.portletID);
 		  	      			
 		  	      			
-		  	      			view = "<a href='"+urlView+"'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
+		  	      			view = "<a href='"+urlView+"'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center'  /></a> ";
 		  	      			formato12D.tablaMensualView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
