@@ -1632,6 +1632,7 @@ public class EnvioDefinitivoController {
 			boolean valorValidacion = false;
 			boolean actaEnvio = false;
 			boolean actualizar = false;
+			
 			String f12A = "0";
 			String f12B = "0";
 			String f12C = "0";
@@ -2153,7 +2154,7 @@ public class EnvioDefinitivoController {
   	  	  								request,
   	  	  								listaArchivo, 
   	  	  								mapaEmpresa.get(codEmpreCompleta),		    			  
-  	  	  								n.getDescGrupoInf());
+  	  	  								n.getDescGrupoInf(),optionFormato);//option formato es la periocidad
   	  	  						logger.info("El envio de email fue correctamente envio general.");	    	  
   	  	  					}
   	  	  					logger.info("Valor del envio de email:  "+valorEmail); 
