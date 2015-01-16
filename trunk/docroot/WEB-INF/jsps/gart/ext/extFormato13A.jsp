@@ -2003,6 +2003,22 @@ var formato13A= {
 				}
 			}
 		}
+		//validacion para que ingrese valores
+		if( formato13A.st1Detalle.val()==0 && 
+				formato13A.st2Detalle.val()==0 && 
+				formato13A.st3Detalle.val()==0 && 
+				formato13A.st4Detalle.val()==0 && 
+				formato13A.st5Detalle.val()==0 &&
+				formato13A.st6Detalle.val()==0 &&
+				formato13A.stserDetalle.val()==0 &&
+				formato13A.stespDetalle.val()==0 ){
+			formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar al menos una cantidad para los Sectores típicos");
+			formato13A.dialogMessageWarningDetalle.dialog("open");
+		    formato13A.idZonaBenefDetalle.focus();
+		    return false;
+		}
+			
+		}
 		
 		//
 		return true; 
