@@ -3309,7 +3309,7 @@ var formato14C= {
 					isSubmit=true;
 				}else{
 					isSubmit=false;
-					$("#msjUploadFileExel").html("Archivo invalido");
+					$("#msjUploadFileExel").html("Archivo inválido");
 				}				
 			}			
 			if(isSubmit){
@@ -3355,7 +3355,7 @@ var formato14C= {
 					isSubmit=true;
 				}else{
 					isSubmit=false;
-					$("#msjUploadFileText").html("Archivo invalido");
+					$("#msjUploadFileText").html("Archivo inválido");
 				}				
 			}			
 			if(isSubmit){
