@@ -1170,7 +1170,7 @@
 				}break;
 				case '1':{//edit
 					if(std =='ABIERTO'){//1enviado 0=x enviar
-						if( etapa=='RECONOCIDO' || !admin ){
+						if( etapa=='RECONOCIDO'  &&  admin=='false' ){
 							process = false;
 						}
 						if(process){
@@ -1188,7 +1188,7 @@
 				}break;
 				case '3':{//eliminar
 					if(std=='ABIERTO'){//1enviado 0=x enviar
-						if( etapa=='RECONOCIDO' && !admin ){
+						if( etapa=='RECONOCIDO'  &&  admin=='false' ){
 							process = false;
 						}
 						if(process){
