@@ -220,12 +220,13 @@ public class FiseUtil {
 	public boolean esAdministrador(PortletRequest request){
 		try {
 			ThemeDisplay theme = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-			PermissionChecker permissionChecker = PermissionCheckerFactoryUtil.create(theme.getUser(), false);
+			/*PermissionChecker permissionChecker = PermissionCheckerFactoryUtil.create(theme.getUser(), false);
 			long groupId = theme.getScopeGroupId();
 			String name = theme.getPortletDisplay().getRootPortletId();
 			String primKey = theme.getPortletDisplay().getResourcePK();
 			String actionAdministrador = "ADMINISTRADOR";
-			return permissionChecker.hasPermission(groupId, name, primKey, actionAdministrador);
+			return permissionChecker.hasPermission(groupId, name, primKey, actionAdministrador);*/
+			return commonService.esAdministradorFise(theme.getUser().getLogin());
 		} catch (Exception e) {
 			logger.error("Error al verificar usuario administrador:",e);
 			return false;
@@ -644,14 +645,14 @@ public class FiseUtil {
 	}
 	
 	public String enviarMailsAdjuntoValidacion(PortletRequest request,List<FileEntryJSP> listaArchivo,
-			String descEmpresa,String descGrupoInf) throws Exception {		
+			String descEmpresa,String descGrupoInf,String codEmpresa) throws Exception {		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
 		
-		return enviarMailAdjuntoUsuarioValidacion(themeDisplay, listaArchivo, descEmpresa,descGrupoInf);		
+		return enviarMailAdjuntoUsuarioValidacion(themeDisplay, listaArchivo, descEmpresa,descGrupoInf,codEmpresa);		
 	}
 	
 	private String enviarMailAdjuntoUsuarioValidacion(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
-			String descEmpresa,String descGrupoInf) throws Exception {
+			String descEmpresa,String descGrupoInf,String codEmpresa) throws Exception {
 		String valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"";
 		try {
 			MailMessage mailMessage = new MailMessage();
@@ -664,7 +665,7 @@ public class FiseUtil {
 			logger.info("correo remitente: "+correoR);
 			logger.info("correo destinatario: "+correoD);
 			String correoMostrar = "";
-			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();		
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatariosByEmpresa(codEmpresa);	
 			if(!FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) &&
 					listaCorreoDestino!=null && !listaCorreoDestino.isEmpty()){
 				mailMessage.setFrom(new InternetAddress(correoR));
