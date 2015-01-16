@@ -1688,7 +1688,7 @@ var formato13A= {
 		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){
 			var process=true;
-			if( etapa=='ESTABLECIDO' && !admin ){
+			if( etapa=='ESTABLECIDO'  &&  admin=='false' ){
 				process = false;
 			}
 			if(process){
@@ -1795,7 +1795,7 @@ var formato13A= {
 		var admin = '${esAdministrador}';
 		if(flagOperacion=='ABIERTO'){//"&anioInicioVigencia="+ret.anioInicioVigencia+"&anioFinVigencia="+ret.anioFinVigencia
 			var process=true;
-			if( etapa=='ESTABLECIDO' || !admin ){
+			if( etapa=='ESTABLECIDO'  &&  admin=='false' ){			
 				process = false;
 			}
 			if(process){
