@@ -57,7 +57,7 @@ var autorizarReenvio= {
 			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
 			
 			//mensajes						
-			this.mensajeReenvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Reenvio </h3>';			
+			this.mensajeReenvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Autorización de Reenvío </h3>';			
 			
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="busquedaReenvio" />';					
