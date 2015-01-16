@@ -115,7 +115,7 @@ public class FiseUtil {
 		try {
 			ThemeDisplay theme = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 			String cadenaEmpresas ="";
-			boolean bAdministrador =esAdministrador(request);
+			boolean bAdministrador =esAdministradorEmpresa(request);
 			
 			List<Organization> lstOrgUser = OrganizationLocalServiceUtil.getUserOrganizations(theme.getUserId());
 			for (Organization organization : lstOrgUser) {
@@ -217,15 +217,24 @@ public class FiseUtil {
 		}
 	}
 	
-	public boolean esAdministrador(PortletRequest request){
+	public boolean esAdministradorEmpresa(PortletRequest request){
 		try {
 			ThemeDisplay theme = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-			/*PermissionChecker permissionChecker = PermissionCheckerFactoryUtil.create(theme.getUser(), false);
+			PermissionChecker permissionChecker = PermissionCheckerFactoryUtil.create(theme.getUser(), false);
 			long groupId = theme.getScopeGroupId();
 			String name = theme.getPortletDisplay().getRootPortletId();
 			String primKey = theme.getPortletDisplay().getResourcePK();
 			String actionAdministrador = "ADMINISTRADOR";
-			return permissionChecker.hasPermission(groupId, name, primKey, actionAdministrador);*/
+			return permissionChecker.hasPermission(groupId, name, primKey, actionAdministrador);
+		} catch (Exception e) {
+			logger.error("Error al verificar usuario administrador:",e);
+			return false;
+		}
+	}
+	
+	public boolean esAdministrador(PortletRequest request){
+		try {
+			ThemeDisplay theme = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 			return commonService.esAdministradorFise(theme.getUser().getLogin());
 		} catch (Exception e) {
 			logger.error("Error al verificar usuario administrador:",e);
