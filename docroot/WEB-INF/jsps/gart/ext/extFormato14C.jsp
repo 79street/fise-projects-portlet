@@ -743,7 +743,7 @@ var formato14C= {
 			var admin = '${formato14CBean.admin}';
 			if(flagOperacion=='ABIERTO'){
 				var process=true;
-				if( etapa=='ESTABLECIDO' || !admin ){
+				if( etapa=='ESTABLECIDO'  &&  admin=='false' ){
 					process = false;
 				}
 				if(process){
@@ -968,7 +968,7 @@ var formato14C= {
 			var admin = '${formato14CBean.admin}';
 			if(flagOperacion=='ABIERTO'){
 				var process=true;
-				if( etapa=='ESTABLECIDO' || !admin ){
+				if( etapa=='ESTABLECIDO'  &&  admin=='false' ){
 					process = false;
 				}
 				if(process){
