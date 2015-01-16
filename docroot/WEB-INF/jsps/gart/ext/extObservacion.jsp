@@ -157,7 +157,7 @@ var fiseObservacion= {
 		buildGrids : function () {	
 			fiseObservacion.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Observación','Descripción de Observación','Visualizar','Editar'],
+		       colNames: ['Id Observación','Descripción de Observación','Ver','Editar'],
 		       colModel: [
                        { name: 'idObservacion', index: 'idObservacion', width: 20},
 					   { name: 'descripcion', index: 'descripcion', width: 80},					  
@@ -182,7 +182,7 @@ var fiseObservacion= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = fiseObservacion.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseObservacion.verfiseObservacion('"+ret.idObservacion+"');\" /></a> ";
+		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseObservacion.verfiseObservacion('"+ret.idObservacion+"');\" /></a> ";
 		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseObservacion.editarfiseObservacion('"+ret.idObservacion+"');\" /></a> ";
 		      			//elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseObservacion.confirmarEliminarfiseObservacion('"+ret.idObservacion+"');\" /></a> ";              			
 		      			fiseObservacion.tablaResultados.jqGrid('setRowData',ids[i],{view:view});

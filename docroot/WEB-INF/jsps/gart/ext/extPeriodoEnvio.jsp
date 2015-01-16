@@ -187,7 +187,7 @@ var periodoEnvio= {
 		buildGrids : function () {	
 			periodoEnvio.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Secuencia','Dist. Eléct.','Formato.','Año Decl.','Mes Decl.','Estado','Visualizar','Editar','Anular'],
+		       colNames: ['Secuencia','Dist. Eléct.','Formato.','Año Decl.','Mes Decl.','Estado','Ver','Editar','Anular'],
 		       colModel: [
                        { name: 'secuencia', index: 'secuencia', width: 20},
 					   { name: 'descEmpresa', index: 'descEmpresa', width: 80},
@@ -216,7 +216,7 @@ var periodoEnvio= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = periodoEnvio.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"periodoEnvio.verPeriodoEnvio('"+ret.secuencia+"');\" /></a> ";
+		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"periodoEnvio.verPeriodoEnvio('"+ret.secuencia+"');\" /></a> ";
 		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"periodoEnvio.editarPeriodoEnvio('"+ret.secuencia+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"periodoEnvio.confirmarEliminarPeriodoEnvio('"+ret.secuencia+"');\" /></a> ";              			
 		      			periodoEnvio.tablaResultados.jqGrid('setRowData',ids[i],{view:view});

@@ -227,7 +227,7 @@ var fiseCargoFijo= {
 		buildGrids : function () {	
 			fiseCargoFijo.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Año Reportado','Mes Reportado','Monto Cargo Fijo Rural','Monto Cargo Fijo Urbano Provincias','Monto Cargo Fijo Urbano Lima','Glosa','Estado','Visualizar','Editar','Anular','',''],
+		       colNames: ['Dist. Eléct.','Año Reportado','Mes Reportado','Monto Cargo Fijo Rural','Monto Cargo Fijo Urbano Provincias','Monto Cargo Fijo Urbano Lima','Glosa','Estado','Ver','Editar','Anular','',''],
 		       colModel: [
 						   { name: 'desEmpresa', index: 'desEmpresa', width: 50},
 			               { name: 'anioReporte', index: 'anioReporte', width: 40 },   
@@ -259,7 +259,7 @@ var fiseCargoFijo= {
 			      		for(var i=0;i < ids.length;i++){
 			      			var cl = ids[i];
 			      			var ret = fiseCargoFijo.tablaResultados.jqGrid('getRowData',cl);           
-			      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
+			      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
 			      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
 			      			elim = "<a href='#'><img border='0' title='' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"','"+ret.desEstado+"');\" /></a> ";              			
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
