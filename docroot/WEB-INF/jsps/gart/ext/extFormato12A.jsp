@@ -116,6 +116,10 @@ $(document).ready(function () {
 	 $("#mesEjecSes").val('');
 	 $("#etapaSes").val('');
 	 
+	 $('input.target[type=text]').on('change', function(){
+			calculoTotal();
+	 });
+	 
 	 initBlockUI();	
 });
 
