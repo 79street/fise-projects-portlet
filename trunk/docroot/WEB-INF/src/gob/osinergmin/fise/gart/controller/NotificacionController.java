@@ -512,23 +512,23 @@ public class NotificacionController {
 				pk.setAnoEjecucionGasto(new Long(n.getAnioEjec()));
 				pk.setMesEjecucionGasto(new Long(n.getMesEjec()));
 				pk.setEtapa(n.getEtapa());  	  			        
-				FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);				
-				cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());	
-				
-		    	for (MensajeErrorBean error : listaObservaciones) {
-	  				JSONObject jsonObj = new JSONObject();
-					jsonObj.put("id", error.getId());	
-					jsonObj.put("descZonaBenef", error.getDescZonaBenef());
-					jsonObj.put("codigo", error.getCodigo());			
-					jsonObj.put("descripcion", error.getDescripcion());						
-					jsonArray.put(jsonObj);		
-				}		    			
-		    	/**exportar excel*/			
-				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
-						FiseConstants.NOMBRE_EXCEL_VALIDACION_F12A, 
-						FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-				valorObs = true;
-		    
+				FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);	
+				if(formato12A!=null){
+					cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());	
+					for (MensajeErrorBean error : listaObservaciones) {
+		  				JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());	
+						jsonObj.put("descZonaBenef", error.getDescZonaBenef());
+						jsonObj.put("codigo", error.getCodigo());			
+						jsonObj.put("descripcion", error.getDescripcion());						
+						jsonArray.put(jsonObj);		
+					}		    			
+			    	/**exportar excel*/			
+					fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
+							FiseConstants.NOMBRE_EXCEL_VALIDACION_F12A, 
+							FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+					valorObs = true;
+				}    
 			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 
 				jsonArray= new JSONArray();
 				FiseFormato12BCPK pk=new FiseFormato12BCPK();
@@ -538,22 +538,23 @@ public class NotificacionController {
 				pk.setAnoEjecucionGasto(new Integer(n.getAnioEjec()));
 				pk.setMesEjecucionGasto(new Integer(n.getMesEjec()));
 				pk.setEtapa(n.getEtapa());  
-				FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);      
-				cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());
-				for (MensajeErrorBean error : listaObservaciones) {
-					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("id", error.getId());	
-					jsonObj.put("descZonaBenef", error.getDescZonaBenef());
-					jsonObj.put("codigo", error.getCodigo());			
-					jsonObj.put("descripcion", error.getDescripcion());						
-					jsonArray.put(jsonObj);		
-				}
-				/**exportar excel*/			
-				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
-						FiseConstants.NOMBRE_EXCEL_VALIDACION_F12B, 
-						FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-				valorObs = true;
-				
+				FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);
+				if(formato12B!=null){
+					cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());
+					for (MensajeErrorBean error : listaObservaciones) {
+						JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());	
+						jsonObj.put("descZonaBenef", error.getDescZonaBenef());
+						jsonObj.put("codigo", error.getCodigo());			
+						jsonObj.put("descripcion", error.getDescripcion());						
+						jsonArray.put(jsonObj);		
+					}
+					/**exportar excel*/			
+					fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
+							FiseConstants.NOMBRE_EXCEL_VALIDACION_F12B, 
+							FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+					valorObs = true;
+				}			
 			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 
 				jsonArray= new JSONArray();
 				FiseFormato12CCPK pk = new FiseFormato12CCPK();
@@ -561,23 +562,24 @@ public class NotificacionController {
 				pk.setAnoPresentacion(new Long(n.getAnioPres()));
 				pk.setMesPresentacion(new Long(n.getMesPres()));
 				pk.setEtapa(n.getEtapa()); 
-				FiseFormato12CC formato12C = formatoService12C.obtenerFormato12CCByPK(pk);	        
-				cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());
-				for (MensajeErrorBean error : listaObservaciones) {
-					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("id", error.getId());
-					jsonObj.put("nroItemEtapa", error.getNroItemEtapa());
-					jsonObj.put("codigo", error.getCodigo());
-					jsonObj.put("descripcion", error.getDescripcion());
-					jsonObj.put("descEtapaEjecucion", error.getDescEtapaEjecucion());					
-					jsonArray.put(jsonObj);
-				}
-				/**exportar excel*/			
-				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
-						FiseConstants.NOMBRE_EXCEL_VALIDACION_F12C, 
-						FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-				valorObs = true;
-				
+				FiseFormato12CC formato12C = formatoService12C.obtenerFormato12CCByPK(pk);
+				if(formato12C!=null){
+					cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());
+					for (MensajeErrorBean error : listaObservaciones) {
+						JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());
+						jsonObj.put("nroItemEtapa", error.getNroItemEtapa());
+						jsonObj.put("codigo", error.getCodigo());
+						jsonObj.put("descripcion", error.getDescripcion());
+						jsonObj.put("descEtapaEjecucion", error.getDescEtapaEjecucion());					
+						jsonArray.put(jsonObj);
+					}
+					/**exportar excel*/			
+					fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
+							FiseConstants.NOMBRE_EXCEL_VALIDACION_F12C, 
+							FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+					valorObs = true;	
+				}				
 			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){ 
 				jsonArray= new JSONArray();
 				FiseFormato12DCPK pk = new FiseFormato12DCPK();
@@ -585,24 +587,24 @@ public class NotificacionController {
 				pk.setAnoPresentacion(new Long(n.getAnioPres()));
 				pk.setMesPresentacion(new Long(n.getMesPres()));
 				pk.setEtapa(n.getEtapa()); 
-				FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk);  
-				cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
-				for (MensajeErrorBean error : listaObservaciones) {
-					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("id", error.getId());
-					jsonObj.put("nroItemEtapa", error.getNroItemEtapa());
-					jsonObj.put("codigo", error.getCodigo());
-					jsonObj.put("descripcion", error.getDescripcion());
-					jsonObj.put("descEtapaEjecucion", error.getDescEtapaEjecucion());			
-					jsonArray.put(jsonObj);
-				}
-				/**exportar excel*/			
-				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
-						FiseConstants.NOMBRE_EXCEL_VALIDACION_F12D, 
-						FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-				valorObs = true;
-				
-				
+				FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk); 
+				if(formato12D!=null){
+					cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
+					for (MensajeErrorBean error : listaObservaciones) {
+						JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());
+						jsonObj.put("nroItemEtapa", error.getNroItemEtapa());
+						jsonObj.put("codigo", error.getCodigo());
+						jsonObj.put("descripcion", error.getDescripcion());
+						jsonObj.put("descEtapaEjecucion", error.getDescEtapaEjecucion());			
+						jsonArray.put(jsonObj);
+					}
+					/**exportar excel*/			
+					fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
+							FiseConstants.NOMBRE_EXCEL_VALIDACION_F12D, 
+							FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+					valorObs = true;	
+				}			
 			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){
 				jsonArray= new JSONArray();
 				FiseFormato13ACPK pk = new FiseFormato13ACPK();
@@ -612,23 +614,23 @@ public class NotificacionController {
 				pk.setEtapa(n.getEtapa());
 				
 				FiseFormato13AC formato13A = formatoService13A.obtenerFormato13ACByPK(pk);	
-				
-				cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
-				for (MensajeErrorBean error : listaObservaciones) {
-					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("id", error.getId());
-					jsonObj.put("descZonaBenef", error.getDescZonaBenef());
-					jsonObj.put("codigo", error.getCodigo());
-					jsonObj.put("descripcion", error.getDescripcion());
-					jsonObj.put("descSectorTipico", error.getDescCodSectorTipico());					
-					jsonArray.put(jsonObj);
+				if(formato13A!=null){
+					cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+					for (MensajeErrorBean error : listaObservaciones) {
+						JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());
+						jsonObj.put("descZonaBenef", error.getDescZonaBenef());
+						jsonObj.put("codigo", error.getCodigo());
+						jsonObj.put("descripcion", error.getDescripcion());
+						jsonObj.put("descSectorTipico", error.getDescCodSectorTipico());					
+						jsonArray.put(jsonObj);
+					}
+					// **exportar excel
+					fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
+							FiseConstants.NOMBRE_EXCEL_VALIDACION_F13A, 
+							FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+					valorObs = true;	
 				}
-				// **exportar excel
-				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
-						FiseConstants.NOMBRE_EXCEL_VALIDACION_F13A, 
-						FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-				valorObs = true;
-
 			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 
 				jsonArray= new JSONArray();
 				FiseFormato14ACPK pk = new FiseFormato14ACPK();
@@ -638,22 +640,23 @@ public class NotificacionController {
 				pk.setAnoInicioVigencia(new Long(n.getAnioIniVig()));
 				pk.setAnoFinVigencia(new Long(n.getAnioFinVig()));
 				pk.setEtapa(n.getEtapa());  				        
-				FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);	
-				cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());		    	
-		    	for (MensajeErrorBean error : listaObservaciones) {
-	  				JSONObject jsonObj = new JSONObject();
-					jsonObj.put("id", error.getId());	
-					jsonObj.put("descZonaBenef", error.getDescZonaBenef());
-					jsonObj.put("codigo", error.getCodigo());			
-					jsonObj.put("descripcion", error.getDescripcion());				
-					jsonArray.put(jsonObj);		
-				}	    			
-		    	//**exportar excel
-		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
-		    			FiseConstants.NOMBRE_EXCEL_VALIDACION_F14A, 
-		    			FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-		    	valorObs = true;
-		    	
+				FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);
+				if(formato14A!=null){
+					cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());		    	
+			    	for (MensajeErrorBean error : listaObservaciones) {
+		  				JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());	
+						jsonObj.put("descZonaBenef", error.getDescZonaBenef());
+						jsonObj.put("codigo", error.getCodigo());			
+						jsonObj.put("descripcion", error.getDescripcion());				
+						jsonArray.put(jsonObj);		
+					}	    			
+			    	//**exportar excel
+			    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
+			    			FiseConstants.NOMBRE_EXCEL_VALIDACION_F14A, 
+			    			FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+			    	valorObs = true;	
+				}		    	
 			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){
 				jsonArray= new JSONArray();
 				FiseFormato14BCPK pk = new FiseFormato14BCPK();
@@ -663,22 +666,23 @@ public class NotificacionController {
 				pk.setAnoInicioVigencia(new Long(n.getAnioIniVig()));
 				pk.setAnoFinVigencia(new Long(n.getAnioFinVig()));
 				pk.setEtapa(n.getEtapa());  						        
-				FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);	
-				cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());		    
-		    	for (MensajeErrorBean error : listaObservaciones) {
-	  				JSONObject jsonObj = new JSONObject();
-					jsonObj.put("id", error.getId());	
-					jsonObj.put("descZonaBenef", error.getDescZonaBenef());
-					jsonObj.put("codigo", error.getCodigo());			
-					jsonObj.put("descripcion", error.getDescripcion());					
-					jsonArray.put(jsonObj);		
-				}	    			
-		    	//**exportar excel
-		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, 
-		    			FiseConstants.NOMBRE_EXCEL_VALIDACION_F14B, 
-		    			FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-		    	valorObs = true;
-		    	
+				FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);
+				if(formato14B!=null){
+					cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());		    
+			    	for (MensajeErrorBean error : listaObservaciones) {
+		  				JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());	
+						jsonObj.put("descZonaBenef", error.getDescZonaBenef());
+						jsonObj.put("codigo", error.getCodigo());			
+						jsonObj.put("descripcion", error.getDescripcion());					
+						jsonArray.put(jsonObj);		
+					}	    			
+			    	//**exportar excel
+			    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, 
+			    			FiseConstants.NOMBRE_EXCEL_VALIDACION_F14B, 
+			    			FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+			    	valorObs = true;	
+				}	    	
 			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 
 				jsonArray= new JSONArray();
 				Formato14CBean f14C = new Formato14CBean();				
@@ -689,21 +693,22 @@ public class NotificacionController {
 				f14C.setAnoFinVigencia(n.getAnioFinVig());
 				f14C.setEtapa(n.getEtapa());
 				FiseFormato14CC formato14C = formatoService14C.obtenerFiseFormato14CC(f14C);
-				cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());		    	
-		    	for (MensajeErrorBean error : listaObservaciones) {
-	  				JSONObject jsonObj = new JSONObject();
-					jsonObj.put("id", error.getId());	
-					jsonObj.put("descZonaBenef", error.getDescZonaBenef());
-					jsonObj.put("codigo", error.getCodigo());			
-					jsonObj.put("descripcion", error.getDescripcion());					
-					jsonArray.put(jsonObj);		
-				}		    			
-		    	//**exportar excel
-		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
-		    			FiseConstants.NOMBRE_EXCEL_VALIDACION_F14C,
-		    			FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-		    	valorObs = true;
-		    	
+				if(formato14C!=null){
+					cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());		    	
+			    	for (MensajeErrorBean error : listaObservaciones) {
+		  				JSONObject jsonObj = new JSONObject();
+						jsonObj.put("id", error.getId());	
+						jsonObj.put("descZonaBenef", error.getDescZonaBenef());
+						jsonObj.put("codigo", error.getCodigo());			
+						jsonObj.put("descripcion", error.getDescripcion());					
+						jsonArray.put(jsonObj);		
+					}		    			
+			    	//**exportar excel
+			    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL,
+			    			FiseConstants.NOMBRE_EXCEL_VALIDACION_F14C,
+			    			FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
+			    	valorObs = true;	
+				}	    	
 			}
 			 pRequest.getPortletSession().setAttribute("codigoEmpresa", n.getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
 			 pRequest.getPortletSession().setAttribute("anioPresentacion", n.getAnioPres(), PortletSession.APPLICATION_SCOPE);
@@ -753,11 +758,10 @@ public class NotificacionController {
 	
 	private void cargarListaObservaciones12B(List<FiseFormato12BD> listaDetalle){
 		int cont=0;
-		listaObservaciones = new ArrayList<MensajeErrorBean>();
-		//logger.info("Tamaño de la lista detalle de B:   "+listaDetalle.size()); 
-		for (FiseFormato12BD detalle : listaDetalle) {
+		listaObservaciones = new ArrayList<MensajeErrorBean>();		
+		for (FiseFormato12BD detalle : listaDetalle) {			
 			detalle.setFiseFormato12BDObs(formatoService12B.getLstFormatoObs(detalle));			
-			List<FiseFormato12BDOb> listaObser = formatoService12B.getLstFormatoObs(detalle); 
+			List<FiseFormato12BDOb> listaObser = formatoService12B.getLstFormatoObs(detalle);			
 			for (FiseFormato12BDOb observacion : listaObser) {
 				cont++;
 				MensajeErrorBean obs = new MensajeErrorBean();
@@ -1547,10 +1551,9 @@ public class NotificacionController {
 				for (FiseFormato12AD detalle : formato12A.getFiseFormato12ADs()) {
 					//detalle.setFiseFormato12ADObs(formatoService12A.listarFormato12ADObByFormato12AD(detalle));
 					List<FiseFormato12ADOb> listaObser = formatoService12A.listarFormato12ADObByFormato12AD(detalle);
-					formatoService12A.eliminarObservaciones12A(listaObser);  
-				}
-				valor = true;
-				
+					formatoService12A.eliminarObservaciones12A(listaObser);
+					valor = true;
+				}				
 			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 				
 				FiseFormato12BCPK pk=new FiseFormato12BCPK();
 				pk.setCodEmpresa(n.getCodEmpresa());
@@ -1564,10 +1567,10 @@ public class NotificacionController {
 				for (FiseFormato12BD detalle : formato12B.getFiseFormato12BDs()) {
 					//detalle.setFiseFormato12BDObs(formatoService12B.getLstFormatoObs(detalle)); 
 					List<FiseFormato12BDOb> listaObser = formatoService12B.getLstFormatoObs(detalle);
-					formatoService12B.eliminarObservaciones12B(listaObser);  
-				}
-				valor = true;
-				
+					formatoService12B.eliminarObservaciones12B(listaObser);
+					logger.info("Formato 12B eliminado"); 
+					valor = true;
+				}			
 			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 				
 				FiseFormato12CCPK pk = new FiseFormato12CCPK();
 				pk.setCodEmpresa(n.getCodEmpresa());
@@ -1579,10 +1582,9 @@ public class NotificacionController {
 				for (FiseFormato12CD detalle : formato12C.getFiseFormato12CDs()) {
 					//detalle.setFiseFormato12ADObs(formatoService12A.listarFormato12ADObByFormato12AD(detalle));
 					List<FiseFormato12CDOb> listaObser = formatoService12C.listarFormato12CDObByFormato12CD(detalle);
-					formatoService12C.eliminarObservaciones12C(listaObser);  
-				}
-				valor = true;
-				
+					formatoService12C.eliminarObservaciones12C(listaObser);
+					valor = true;
+				}			
 			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){ 			
 				FiseFormato12DCPK pk = new FiseFormato12DCPK();
 				pk.setCodEmpresa(n.getCodEmpresa());
@@ -1594,10 +1596,9 @@ public class NotificacionController {
 				for (FiseFormato12DD detalle : formato12D.getFiseFormato12DDs()) {
 					//detalle.setFiseFormato12ADObs(formatoService12A.listarFormato12ADObByFormato12AD(detalle));
 					List<FiseFormato12DDOb> listaObser = formatoService12D.listarFormato12DDObByFormato12DD(detalle);
-					formatoService12D.eliminarObservaciones12D(listaObser);  
-				}
-				valor = true;
-				
+					formatoService12D.eliminarObservaciones12D(listaObser); 
+					valor = true;
+				}			
 			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){				
 				FiseFormato13ACPK pk = new FiseFormato13ACPK();
 				pk.setCodEmpresa(n.getCodEmpresa());
@@ -1609,9 +1610,8 @@ public class NotificacionController {
 				for (FiseFormato13AD detalle : formato13A.getFiseFormato13ADs()) {
 					List<FiseFormato13ADOb> listaObser = formatoService13A.listarFormato13ADObByFormato13AD(detalle);
 					formatoService13A.eliminarObservaciones13A(listaObser);
-				}
-				valor = true;
-				
+					valor = true;
+				}			
 			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 				
 				FiseFormato14ACPK pk = new FiseFormato14ACPK();
 				pk.setCodEmpresa(n.getCodEmpresa());
@@ -1626,9 +1626,8 @@ public class NotificacionController {
 					//detalle.setFiseFormato14ADObs(formatoService14A.listarFormato14ADObByFormato14AD(detalle));
 					List<FiseFormato14ADOb> listaObser = formatoService14A.listarFormato14ADObByFormato14AD(detalle);
 					formatoService14A.eliminarObservaciones14A(listaObser); 
-				}
-				valor = true;
-				
+					valor = true;
+				}			
 			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){				
 				FiseFormato14BCPK pk = new FiseFormato14BCPK();
 				pk.setCodEmpresa(n.getCodEmpresa());
@@ -1643,9 +1642,8 @@ public class NotificacionController {
 					//detalle.setFiseFormato14BDObs(formatoService14B.listarFormato14BDObByFormato14BD(detalle));
 					List<FiseFormato14BDOb> listaObser = formatoService14B.listarFormato14BDObByFormato14BD(detalle);
 					formatoService14B.eliminarObservaciones14B(listaObser);
-				}
-				valor = true;
-				
+					valor = true;
+				}			
 			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 			
 				Formato14CBean f14C = new Formato14CBean();				
 				f14C.setCodEmpresa(n.getCodEmpresa());
@@ -1659,9 +1657,8 @@ public class NotificacionController {
 				for (FiseFormato14CD detalle : formato14C.getListaDetalle14cDs()) {			
 					List<FiseFormato14CDOb> listaObser = formatoService14C.listaObservacionesF14C(detalle);					
 					formatoService14C.eliminarObservaciones14C(listaObser); 
-				}
-				valor = true;
-				
+					valor = true;
+				}			
 			}
 			if(valor){
 				jsonObj.put("resultado", "OK");			
