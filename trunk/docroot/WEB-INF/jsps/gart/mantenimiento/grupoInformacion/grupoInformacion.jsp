@@ -282,8 +282,7 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-message-grabar" title="Mensaje de Informaci&oacute;n">
 		<p>
-			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:20px 25px 20px 5px;">
-			</span>
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
 			<label id="<portlet:namespace/>dialog-message-content-grabar">Datos grabados exit&oacute;samente.</label>
 		</p>	
@@ -291,7 +290,7 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
-			<span class="ui-icon ui-icon-alert" style="float:left; margin:20px 25px 20px 5px;"></span>
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>
