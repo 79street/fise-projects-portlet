@@ -536,7 +536,7 @@ public class FiseUtil {
 					anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);
 			String[] msnIdUser = user.split("/");
 			if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnIdUser[0])){
-				String correos = msnIdAdmin[1] + " y " + msnIdUser[0].toString();
+				String correos = msnIdAdmin[1] + " y " + msnIdUser[1].toString();
 				String valor = FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correos;
 				return valor;
 			}else{
