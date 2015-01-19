@@ -196,14 +196,14 @@ var autorizarReenvio= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Se autorizó el reenvío del registro seleccionado.';					
+						var addhtml2='Se Autorizó el Reenvío del registro seleccionado.';					
 						autorizarReenvio.dialogMessageContent.html(addhtml2);
 					    autorizarReenvio.dialogMessage.dialog("open");						
 						autorizarReenvio.buscarAutorizarReenvio();
 						autorizarReenvio.initBlockUI();
 					}
 					else{					
-						var addhtmError='Error al autorizar el reenvío del registro seleccionado.';					
+						var addhtmError='Error al Autorizar el Reenvío del registro seleccionado.';					
 						autorizarReenvio.dialogErrorContent.html(addhtmError);
 						autorizarReenvio.dialogError.dialog("open");	
 						autorizarReenvio.initBlockUI();
