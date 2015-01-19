@@ -1051,7 +1051,7 @@ var liquidacionVar= {
 			liquidacionVar.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1068,7 +1068,7 @@ var liquidacionVar= {
 			liquidacionVar.dialogConfirmEstablecer.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1083,7 +1083,7 @@ var liquidacionVar= {
 			liquidacionVar.dialogConfirmLiquidar.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1100,7 +1100,7 @@ var liquidacionVar= {
 			liquidacionVar.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1144,7 +1144,7 @@ var liquidacionVar= {
 			 liquidacionVar.dialogConfirmMotivo.dialog({
 					modal: true,
 					height: 200,
-					width: 500,			
+					width: 450,			
 					autoOpen: false,
 					buttons: {
 						"Si": function() {
@@ -1160,7 +1160,7 @@ var liquidacionVar= {
 			 liquidacionVar.dialogValidacion.dialog({
 					modal: true,
 					autoOpen: false,
-					width:500,
+					width:450,
 					buttons: {
 						Aceptar: function() {
 							$( this ).dialog("close");
@@ -1171,7 +1171,7 @@ var liquidacionVar= {
 			 liquidacionVar.dialogError.dialog({
 					modal: true,
 					autoOpen: false,
-					width: 500,		
+					width: 450,		
 					buttons: {
 						Aceptar: function() {
 							$( this ).dialog("close");
@@ -1182,7 +1182,7 @@ var liquidacionVar= {
 			 liquidacionVar.dialogInfo.dialog({
 					modal: true,
 					autoOpen: false,
-					width: 500,		
+					width: 450,		
 					buttons: {
 						OK: function() {
 							$( this ).dialog("close");

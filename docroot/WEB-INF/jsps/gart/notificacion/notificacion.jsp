@@ -189,7 +189,8 @@ $(document).ready(function () {
    
    	<div id="<portlet:namespace/>dialog-message-notificacion" title="Mensaje de Informaci&oacute;n">
 		<p>
-			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:0 25px 10px 0;">	
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">	
+			<br/>
 			<label id="<portlet:namespace/>dialog-message-content-notificacion">Datos notificados exit&oacute;samente.</label>
 		</p>	
 	</div>
@@ -198,7 +199,8 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-confirm_notificacion" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
-			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:0 25px 10px 0;">	
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
+			<br/>
 			<label id="<portlet:namespace/>dialog-confirm-content_notificacion">¿Está seguro?</label>
 		</p>
 	</div>
@@ -206,7 +208,8 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
-			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:0 25px 10px 0;">	
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
+			<br/>
 			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>
 	</div>
@@ -215,7 +218,8 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-alert" title="Mensaje de Validaci&oacute;n">
 		<p>	
-			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
 		</p>
 	</div>	
@@ -224,7 +228,8 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-error" title="Mensaje de Error">
 		<p>	
-			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="<portlet:namespace/>dialog-error-content">Error..</label>
 		</p>
 	</div>	
@@ -233,7 +238,8 @@ $(document).ready(function () {
 	
 	<div id="<portlet:namespace/>dialog-info" title="Mensaje de Informaci&oacute;n">
 		<p>	
-			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="<portlet:namespace/>dialog-info-content">Error..</label>
 		</p>
 	</div>

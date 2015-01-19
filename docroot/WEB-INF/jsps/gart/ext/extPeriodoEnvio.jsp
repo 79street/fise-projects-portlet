@@ -835,7 +835,7 @@ var periodoEnvio= {
 			periodoEnvio.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,	
+				width: 450,	
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -846,7 +846,7 @@ var periodoEnvio= {
 			periodoEnvio.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -862,7 +862,7 @@ var periodoEnvio= {
 			periodoEnvio.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -873,7 +873,7 @@ var periodoEnvio= {
 			periodoEnvio.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -884,7 +884,7 @@ var periodoEnvio= {
 			periodoEnvio.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					OK: function() {
 						$( this ).dialog("close");
