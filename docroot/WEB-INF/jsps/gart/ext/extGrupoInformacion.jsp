@@ -193,7 +193,7 @@ var fiseGrupoInformacion= {
 		      			var ret = fiseGrupoInformacion.tablaResultados.jqGrid('getRowData',cl);           
 		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseGrupoInformacion.verGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
 		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseGrupoInformacion.editarGrupoInformacion('"+ret.idGrupoInformacion+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseGrupoInformacion.confirmarEliminarGrupoInformacion('"+ret.idGrupoInformacion+"','"+ret.descEstado+"');\" /></a> ";              			
+		      			elim = "<a href='#'><img border='0' title='Desactivar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseGrupoInformacion.confirmarEliminarGrupoInformacion('"+ret.idGrupoInformacion+"','"+ret.descEstado+"');\" /></a> ";              			
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 		      			fiseGrupoInformacion.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
