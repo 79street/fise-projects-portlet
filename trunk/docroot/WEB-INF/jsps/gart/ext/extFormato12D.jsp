@@ -1670,7 +1670,7 @@ var formato12D= {
 			},
 			success : function(data) {
 				if(data.resultado == "OK"){
-					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;					
 					formato12D.dialogMessageReportContent.html(addhtml);
 					formato12D.dialogMessageReport.dialog("open");
 					formato12D.unblockUI();			
@@ -1778,7 +1778,7 @@ var formato12D= {
 		formato12D.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
-			width: 500,	
+			width: 450,	
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1794,7 +1794,7 @@ var formato12D= {
 		formato12D.dialogMessageInfo.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1804,7 +1804,7 @@ var formato12D= {
 		formato12D.dialogMessageWarning.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1816,7 +1816,7 @@ var formato12D= {
 		formato12D.dialogMessageReport.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				'Ver Acta': function() {
 					formato12D.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -1835,7 +1835,7 @@ var formato12D= {
 		formato12D.dialogConfirmEnvio.dialog({
 			modal: true,
 			height: 200,
-			width: 500,	
+			width: 450,	
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1850,7 +1850,7 @@ var formato12D= {
 		formato12D.dialogConfirmDetalle.dialog({
 			modal: true,
 			height: 200,
-			width: 500,		
+			width: 450,		
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1885,7 +1885,7 @@ var formato12D= {
 		formato12D.dialogMessage.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1896,7 +1896,7 @@ var formato12D= {
 		formato12D.dialogMessageInfoCrud.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1906,7 +1906,7 @@ var formato12D= {
 		formato12D.dialogMessageWarningCrud.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1916,7 +1916,7 @@ var formato12D= {
 		formato12D.dialogMessageErrorCrud.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1928,7 +1928,7 @@ var formato12D= {
 		formato12D.dialogMessageDetalle.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1939,7 +1939,7 @@ var formato12D= {
 		formato12D.dialogMessageWarningDetalle.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1949,7 +1949,7 @@ var formato12D= {
 		formato12D.dialogMessageErrorDetalle.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");

@@ -561,7 +561,7 @@ public class FiseUtil {
 			String descripcionPeriodo="";
 			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
 				descripcionCosto = "Costos Est&aacute;ndares";
-				descripcionPeriodo = ""+anoIniVigencia+"-"+anoFinVigencia+" declarado el";
+				descripcionPeriodo = ""+anoIniVigencia+"-"+anoFinVigencia+" declarado el ";
 			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
 				descripcionCosto = "Gastos Operativos";
 			}
@@ -626,7 +626,7 @@ public class FiseUtil {
 			String descripcionPeriodo="";
 			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
 				descripcionCosto = "Costos Est&aacute;ndares";
-				descripcionPeriodo = ""+anoIniVigencia+"-"+anoFinVigencia+" declarado el";
+				descripcionPeriodo = ""+anoIniVigencia+"-"+anoFinVigencia+" declarado el ";
 			}else if( FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION.equals(frecuencia) ){
 				descripcionCosto = "Gastos Operativos";
 			}

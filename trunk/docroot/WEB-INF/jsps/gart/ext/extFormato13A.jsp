@@ -1405,7 +1405,7 @@ var formato13A= {
 			},
 			success : function(data) {
 				if(data.resultado == "OK"){
-					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+datacorreo;					
 					formato13A.dialogMessageReportContent.html(addhtml);
 					formato13A.dialogMessageReport.dialog("open");
 					formato13A.unblockUI();				
@@ -1514,7 +1514,7 @@ var formato13A= {
 		formato13A.dialogMessageGeneralInicial.dialog({
 			modal: true,
 			height: 200,
-			width: 500,
+			width: 450,
 			autoOpen: false,
 			buttons: {
 				Cerrar: function() {
@@ -1525,7 +1525,7 @@ var formato13A= {
 		formato13A.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
-			width: 500,
+			width: 450,
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1541,7 +1541,7 @@ var formato13A= {
 		formato13A.dialogMessageInfo.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1551,7 +1551,7 @@ var formato13A= {
 		formato13A.dialogMessageWarning.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1562,7 +1562,7 @@ var formato13A= {
 	initDialogsCRUD : function(){	
 		formato13A.dialogMessageReport.dialog({
 			modal: true,
-			width: 500,
+			width: 450,
 			autoOpen: false,
 			buttons: {
 				'Ver Acta': function() {
@@ -1582,7 +1582,7 @@ var formato13A= {
 		formato13A.dialogConfirmEnvio.dialog({
 			modal: true,
 			height: 200,
-			width: 500,		
+			width: 450,		
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1597,7 +1597,7 @@ var formato13A= {
 		formato13A.dialogConfirmDetalle.dialog({
 			modal: true,
 			height: 200,
-			width: 500,		
+			width: 450,		
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -1624,7 +1624,7 @@ var formato13A= {
 		formato13A.dialogMessageGeneral.dialog({
 			modal: true,
 			height: 200,
-			width: 500,
+			width: 450,
 			autoOpen: false,
 			buttons: {
 				Cerrar: function() {
@@ -1636,7 +1636,7 @@ var formato13A= {
 		formato13A.dialogMessageInfoCrud.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1646,7 +1646,7 @@ var formato13A= {
 		formato13A.dialogMessageWarningCrud.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1656,7 +1656,7 @@ var formato13A= {
 		formato13A.dialogMessageErrorCrud.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1668,7 +1668,7 @@ var formato13A= {
 		formato13A.dialogMessageDetalle.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1679,7 +1679,7 @@ var formato13A= {
 		formato13A.dialogMessageWarningDetalle.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -1689,7 +1689,7 @@ var formato13A= {
 		formato13A.dialogMessageErrorDetalle.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");

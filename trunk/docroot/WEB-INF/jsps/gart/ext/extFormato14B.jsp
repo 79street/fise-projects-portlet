@@ -2156,7 +2156,7 @@ var formato14B= {
 			},
 			success : function(data) {
 				if(data.resultado == "OK"){
-					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;
 					formato14B.dialogMessageReportContent.html(addhtml);
 					formato14B.dialogMessageReport.dialog("open");
 					formato14B.initBlockUI();	
@@ -2441,7 +2441,7 @@ var formato14B= {
 		formato14B.dialogMessage.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -2451,7 +2451,7 @@ var formato14B= {
 		formato14B.dialogMessageReport.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				'Ver Acta': function() {
 					formato14B.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -2476,7 +2476,7 @@ var formato14B= {
 		formato14B.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
-			width: 500,	
+			width: 450,	
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -2491,7 +2491,7 @@ var formato14B= {
 		formato14B.dialogConfirmEnvio.dialog({
 			modal: true,
 			height: 200,
-			width: 500,			
+			width: 450,			
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -2543,7 +2543,7 @@ var formato14B= {
 		formato14B.dialogMessageInfo.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -2553,7 +2553,7 @@ var formato14B= {
 		formato14B.dialogMessageWarning.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -2563,7 +2563,7 @@ var formato14B= {
 		formato14B.dialogMessageError.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
