@@ -11,6 +11,8 @@ var formato12D= {
 	
 	/**********INICIO**********/
 	
+	codEmpresaBusqueda:null,
+	
 	anioDesde:null,
 	mesDesde:null,
 	anioHasta:null,
@@ -228,6 +230,8 @@ var formato12D= {
 		this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");
 		this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");
 		
+		this.codEmpresaBusqueda=$('#codEmpresaB');
+		
 		this.anioDesde=$('#anioDesde');
 		this.mesDesde=$('#mesDesde');
 		this.anioHasta=$('#anioHasta');
@@ -242,7 +246,7 @@ var formato12D= {
 		
 		formato12D.botonCrearFormato.click(function() {
 			formato12D.blockUI();
-			location.href=urlNuevo;
+			location.href=urlNuevo+'&codEmpresa='+formato12D.codEmpresaBusqueda.val();
 		});
 		formato12D.botonBuscar.click(function() {
 			formato12D.buscarFormatos();

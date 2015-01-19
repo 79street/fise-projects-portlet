@@ -554,7 +554,12 @@ var formato14B= {
 		
 		formato14B.divInformacion.hide();
 		
-		formato14B.f_empresa.val('');
+		if(formato14B.i_codEmpresaB.val()!=''){
+			formato14B.f_empresa.val(formato14B.i_codEmpresaB.val());
+		}else{
+			formato14B.f_empresa.val('');
+		}	
+		
 		/*if( formato14B.f_flagPeriodo.val()=='S' ){
 			$('#anioInicioVigencia').val('');
 			$('#anioFinVigencia').val('');

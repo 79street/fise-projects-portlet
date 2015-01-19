@@ -298,6 +298,8 @@ public class Formato12BGartController {
 
 		if (codEmpresa != null) {
 			command.setCodEmpresa(codEmpresa);
+		}else{//cuando es nuevo, cargamos la empresa seleccionada en la busqueda
+			command.setCodEmpresa(command.getCodEmpresaBusqueda());
 		}
 		if (periodo != null) {
 			command.setPeridoDeclaracion(periodo);
