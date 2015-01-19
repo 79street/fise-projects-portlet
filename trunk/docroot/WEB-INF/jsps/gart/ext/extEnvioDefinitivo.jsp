@@ -475,7 +475,7 @@ var envioDefinitivoGlobal= {
 			envioDefinitivoGlobal.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 500,
+				width: 450,
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -491,7 +491,7 @@ var envioDefinitivoGlobal= {
 			envioDefinitivoGlobal.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,
+				width: 450,
 				buttons: {
 					'Ver Acta': function() {
 						envioDefinitivoGlobal.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -506,7 +506,7 @@ var envioDefinitivoGlobal= {
 			envioDefinitivoGlobal.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -517,7 +517,7 @@ var envioDefinitivoGlobal= {
 			envioDefinitivoGlobal.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -528,7 +528,7 @@ var envioDefinitivoGlobal= {
 			envioDefinitivoGlobal.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					OK: function() {
 						$( this ).dialog("close");

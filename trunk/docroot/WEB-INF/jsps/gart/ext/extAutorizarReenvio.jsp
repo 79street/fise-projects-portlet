@@ -222,7 +222,7 @@ var autorizarReenvio= {
 			autorizarReenvio.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -238,7 +238,7 @@ var autorizarReenvio= {
 			autorizarReenvio.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,			
+				width: 450,			
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -250,7 +250,7 @@ var autorizarReenvio= {
 			autorizarReenvio.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 50,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");

@@ -495,7 +495,7 @@ var fiseObservacion= {
 			fiseObservacion.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,	
+				width: 450,	
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -506,7 +506,7 @@ var fiseObservacion= {
 			fiseObservacion.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -522,7 +522,7 @@ var fiseObservacion= {
 			fiseObservacion.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -533,7 +533,7 @@ var fiseObservacion= {
 			fiseObservacion.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -544,7 +544,7 @@ var fiseObservacion= {
 			fiseObservacion.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					OK: function() {
 						$( this ).dialog("close");

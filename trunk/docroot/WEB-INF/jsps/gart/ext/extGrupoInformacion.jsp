@@ -554,7 +554,7 @@ var fiseGrupoInformacion= {
 			fiseGrupoInformacion.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,	
+				width: 450,	
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -565,7 +565,7 @@ var fiseGrupoInformacion= {
 			fiseGrupoInformacion.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -581,7 +581,7 @@ var fiseGrupoInformacion= {
 			fiseGrupoInformacion.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -592,7 +592,7 @@ var fiseGrupoInformacion= {
 			fiseGrupoInformacion.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -603,7 +603,7 @@ var fiseGrupoInformacion= {
 			fiseGrupoInformacion.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					OK: function() {
 						$( this ).dialog("close");

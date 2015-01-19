@@ -555,7 +555,7 @@ var resumenCosto= {
 			resumenCosto.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -571,7 +571,7 @@ var resumenCosto= {
 			resumenCosto.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -582,7 +582,7 @@ var resumenCosto= {
 			resumenCosto.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -593,7 +593,7 @@ var resumenCosto= {
 			resumenCosto.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -604,7 +604,7 @@ var resumenCosto= {
 			resumenCosto.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,		
+				width: 450,		
 				buttons: {
 					OK: function() {
 						$( this ).dialog("close");

@@ -1285,7 +1285,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,	
+				width: 450,	
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1296,7 +1296,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
-				width: 500,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1313,7 +1313,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,	
+				width: 450,	
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -1324,7 +1324,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,	
+				width: 450,	
 				buttons: {
 					Aceptar: function() {
 						$( this ).dialog("close");
@@ -1335,7 +1335,7 @@ var fiseCargoFijo= {
 			fiseCargoFijo.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,	
+				width: 450,	
 				buttons: {
 					OK: function() {
 						$( this ).dialog("close");
