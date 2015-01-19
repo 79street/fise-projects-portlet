@@ -37,7 +37,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpSession;
@@ -522,25 +521,36 @@ public class FiseUtil {
 		}
 	}*/
 	
-	public boolean  enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo,
+	public String  enviarMailsAdjunto(PortletRequest request,List<FileEntryJSP> listaArchivo,
 			String descEmpresa,	Long anoPresentacion, Long mesPresentacion, 
 			String tipoFormato, String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
-		boolean admin = enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, 
+		
+		String admin = enviarMailAdjuntoAdministrador(themeDisplay, listaArchivo, descEmpresa, 
 				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);
-		boolean user = enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, 
-				anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);
-		if(admin && user){
-			return true;
+		
+		String[] msnIdAdmin = admin.split("/");
+		
+		if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnIdAdmin[0])){
+			String user = enviarMailAdjuntoUsuario(themeDisplay, listaArchivo, descEmpresa, 
+					anoPresentacion, mesPresentacion, tipoFormato, descripcionFormato, frecuencia, anoIniVigencia, anoFinVigencia);
+			String[] msnIdUser = user.split("/");
+			if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnIdUser[0])){
+				String correos = msnIdAdmin[1] + " y " + msnIdUser[0].toString();
+				String valor = FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correos;
+				return valor;
+			}else{
+				return user;
+			}		 
 		}else{
-			return false;
+			return admin;
 		}
 	}
 	
-	private boolean enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+	private String enviarMailAdjuntoAdministrador(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, Long anoPresentacion, Long mesPresentacion, 
 			String tipoFormato, String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {
-		boolean valor = true;
+		String valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"";
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -561,6 +571,7 @@ public class FiseUtil {
 			String correoD = themeDisplay.getUser().getEmailAddress();
 			logger.info("correo remitente: "+correoR);
 			logger.info("correo a copiar: "+correoD);
+			String correoMostrar = "";
 			//
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
 			//validamos que tanto el correo del from ni del to deben estar vacios
@@ -582,22 +593,29 @@ public class FiseUtil {
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
-				MailServiceUtil.sendEmail(mailMessage);				
-			}else{
-				valor = false;
-				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
+				MailServiceUtil.sendEmail(mailMessage);
+				for(CorreoBean c:listaCorreoDestino){
+					if(FormatoUtil.isNotBlank(correoMostrar)){
+						correoMostrar = correoMostrar +","+ c.getDireccionCorreo();		
+					}else{
+						correoMostrar = c.getDireccionCorreo();	
+					}					
+				}
+		        valor =FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correoMostrar;
+			}else{				
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"No esta configurado el correo de Remitente o Destinatario";
 			}
 		} catch (Exception e) {
-			valor = false;
+			valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"Ocurrió un error al enviar e-mail a los Administradores de la Dist. Eléctrica.";
 			e.printStackTrace();			
 		}
 		return valor;
 	}
 	
-	private boolean  enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+	private String  enviarMailAdjuntoUsuario(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, Long anoPresentacion, Long mesPresentacion, String tipoFormato,
 			String descripcionFormato, String frecuencia,Long anoIniVigencia, Long anoFinVigencia) throws Exception {
-		boolean valor = true;
+		String valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"";
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -641,13 +659,13 @@ public class FiseUtil {
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
-				MailServiceUtil.sendEmail(mailMessage);				
+				MailServiceUtil.sendEmail(mailMessage);
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correoD;
 			}else{
-				valor = false;
-				throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"No esta configurado el correo de Remitente o Destinatario";
 			}
 		} catch (Exception e) {
-			valor = false;
+			valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"Ocurrió un error al enviar e-mail a los Usuarios de la Dist. Eléctrica.";
 			e.printStackTrace();		
 		}
 		return valor;
@@ -708,32 +726,31 @@ public class FiseUtil {
 				//throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
 			}          
 		} catch (Exception e) {
-			valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+e.toString();
+			valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"Ocurrió un error al enviar e-mail a los Usuarios de la Dist. Eléctrica.";
 			e.printStackTrace();		
 		}
 		return valor;
 	}
 	
-	public boolean enviarMailsAdjuntoEnvioGeneral(PortletRequest request,List<FileEntryJSP> listaArchivo,
+	public String enviarMailsAdjuntoEnvioGeneral(PortletRequest request,List<FileEntryJSP> listaArchivo,
 			String descEmpresa,String descGrupoInf, String frecuencia) throws Exception {
 		
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
 		
-		boolean admin= enviarMailAdjuntoAdmEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
+		String admin= enviarMailAdjuntoAdmEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
 				descGrupoInf, frecuencia);
-		
-		boolean user =enviarMailAdjuntoUsuEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
-				descGrupoInf, frecuencia);	
-		if(admin && user){
-		    return true;	
+		String[] msnIdAdmin = admin.split("/");
+		if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnIdAdmin[0])){
+			return enviarMailAdjuntoUsuEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
+					descGrupoInf, frecuencia);
 		}else{
-			return false;
-		}
+			return admin;
+		}		
 	}
 	
-	private boolean enviarMailAdjuntoAdmEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+	private String enviarMailAdjuntoAdmEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, String descGrupoInf, String frecuencia) throws Exception {
-		boolean valor = true;
+		String valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"";
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -751,7 +768,8 @@ public class FiseUtil {
 			String correoD = themeDisplay.getUser().getEmailAddress();
 			
 			logger.info("correo remitente: "+correoR);
-			logger.info("correo a copiar: "+correoD);
+			logger.info("correo a copiar: "+correoD);			
+			String correoMostrar = "";
 			//
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
 			//validamos que tanto el correo del from ni del to deben estar vacios
@@ -771,23 +789,28 @@ public class FiseUtil {
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
-				MailServiceUtil.sendEmail(mailMessage);			   
+				MailServiceUtil.sendEmail(mailMessage);	
+				for(CorreoBean c:listaCorreoDestino){
+					if(FormatoUtil.isNotBlank(correoMostrar)){
+						correoMostrar = correoMostrar +","+ c.getDireccionCorreo();		
+					}else{
+						correoMostrar = c.getDireccionCorreo();	
+					}					
+				}
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correoMostrar;
 			}else{
-				//throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
-				valor = false;
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"No esta configurado el correo de Remitente o Destinatario";				
 			}
-
 		} catch (Exception e) {
-			valor = false;
-			e.printStackTrace();
-			//throw e;
+			valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"Ocurrió un error al enviar e-mail a los Administradores de la Dist. Eléctrica.";
+			e.printStackTrace();			
 		}
 		return valor;
 	}
 	
-	private boolean enviarMailAdjuntoUsuEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
+	private String enviarMailAdjuntoUsuEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
 			String descEmpresa, String descGrupoInf, String frecuencia) throws Exception {
-		boolean valor = true;
+		String valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"";
 		try {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
@@ -828,15 +851,14 @@ public class FiseUtil {
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
-				MailServiceUtil.sendEmail(mailMessage);				
+				MailServiceUtil.sendEmail(mailMessage);	
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correoD;
 			}else{
-				//throw new AddressException("No esta configurado el correo de Remitente o Destinatario");
-				valor = false;
+				valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"No esta configurado el correo de Remitente o Destinatario";				
 			}
 		} catch (Exception e) {
-			valor = false;
+			valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"Ocurrió un error al enviar e-mail a los Usuarios de la Dist. Eléctrica.";
 			e.printStackTrace();			
-			//throw e;
 		}
 		return valor;
 	}	

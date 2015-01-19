@@ -1789,11 +1789,23 @@ function <portlet:namespace/>envioDefinitivo(){
 			<portlet:namespace />nombreArchivo: 'formato12A',
 			<portlet:namespace />tipoArchivo: '0'//PDF
 		},
-		success : function(gridData) {
-			var addhtml='El Envío Definitivo se realizó satisfactoriamente';					
-			$("#dialog-message-report-content").html(addhtml);
-			$("#dialog-message-report").dialog( "open" );					
-			initBlockUI();
+		success : function(data) {
+			if(data.resultado == "OK"){
+				var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
+				$("#dialog-message-report-content").html(addhtml);
+				$("#dialog-message-report").dialog( "open" );					
+				initBlockUI();					
+			}else if(data.resultado == "EMAIL"){						
+				var addhtmEmail = data.correo;						
+				$("#dialog-message-error-content").html(addhtmEmail);
+				$("#dialog-message-error").dialog( "open" );					
+				initBlockUI();
+			}else{						
+				var addhtmError='Error al realizar el Envio Definitivo del Formato 12A.';					
+				$("#dialog-message-error-content").html(addhtmError);
+				$("#dialog-message-error").dialog( "open" );					
+				initBlockUI();
+			}		
 		},error : function(){
 			alert("Error de conexión.");
 			initBlockUI();

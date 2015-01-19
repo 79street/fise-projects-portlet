@@ -3167,17 +3167,17 @@ var formato14C= {
 				},
 				success : function(data) {
 					if(data.resultado == "OK"){
-						var addhtml='El Formato 14C se envió satisfactoriamente.';					
+						var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
 						formato14C.dialogMessageContent.html(addhtml);
 						formato14C.dialogMessageReport.dialog("open");
 						formato14C.initBlockUI();					
 					}else if(data.resultado == "EMAIL"){						
-						var addhtmEmail='Error al enviar el email del Formato 14C.';					
+						var addhtmEmail = data.Correo;				
 						formato14C.dialogInfoContent.html(addhtmEmail);
 						formato14C.dialogInfo.dialog("open");					
 						formato14C.initBlockUI();	
 					}else{						
-						var addhtmError='Error al realizar el Envio Definitivo del Formato 14C.';					
+						var addhtmError='Error al realizar el Envío Definitivo del Formato 14C.';					
 						formato14C.dialogErrorContentF14C.html(addhtmError);
 						formato14C.dialogErrorF14C.dialog("open");	
 						formato14C.initBlockUI();

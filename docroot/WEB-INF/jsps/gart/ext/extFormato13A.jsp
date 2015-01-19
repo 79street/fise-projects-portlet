@@ -1401,11 +1401,23 @@ var formato13A= {
 				<portlet:namespace />nombreArchivo: 'formato13A',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
-			success : function(gridData) {
-				var addhtml='El Envío Definitivo se realizó satisfactoriamente al correo electrónico '+formato13A.emailConfigured;
-				formato13A.dialogMessageReportContent.html(addhtml);
-				formato13A.dialogMessageReport.dialog("open");
-				formato13A.unblockUI();
+			success : function(data) {
+				if(data.resultado == "OK"){
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
+					formato13A.dialogMessageReportContent.html(addhtml);
+					formato13A.dialogMessageReport.dialog("open");
+					formato13A.unblockUI();				
+				}else if(data.resultado == "EMAIL"){					
+					var addhtmEmail = data.correo;						
+					formato13A.dialogMessageErrorCrudContent.html(addhtmEmail);
+					formato13A.dialogMessageErrorCrud.dialog("open");
+					formato13A.unblockUI();
+				}else{								
+					var addhtmError='Error al realizar el Envio Definitivo del Formato 13A.';					
+					formato13A.dialogMessageErrorCrudContent.html(addhtmError);
+					formato13A.dialogMessageErrorCrud.dialog("open");
+					formato13A.unblockUI();
+				}				
 			},error : function(){
 				alert("Error de conexión.");
 				formato13A.unblockUI();
