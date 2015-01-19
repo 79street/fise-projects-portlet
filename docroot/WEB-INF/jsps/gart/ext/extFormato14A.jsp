@@ -2034,7 +2034,7 @@ var formato14A= {
 			},
 			success : function(data) {
 				if(data.resultado == "OK"){
-					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;					
 					formato14A.dialogMessageReportContent.html(addhtml);
 					formato14A.dialogMessageReport.dialog("open");
 					formato14A.initBlockUI();					
@@ -2327,7 +2327,7 @@ var formato14A= {
 		formato14A.dialogMessage.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -2337,7 +2337,7 @@ var formato14A= {
 		formato14A.dialogMessageReport.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				'Ver Acta': function() {
 					formato14A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -2362,7 +2362,7 @@ var formato14A= {
 		formato14A.dialogConfirm.dialog({
 			modal: true,
 			height: 200,
-			width: 500,
+			width: 450,
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -2377,7 +2377,7 @@ var formato14A= {
 		formato14A.dialogConfirmEnvio.dialog({
 			modal: true,
 			height: 200,
-			width: 500,			
+			width: 450,			
 			autoOpen: false,
 			buttons: {
 				"Si": function() {
@@ -2429,7 +2429,7 @@ var formato14A= {
 		formato14A.dialogMessageInfo.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -2439,7 +2439,7 @@ var formato14A= {
 		formato14A.dialogMessageWarning.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");
@@ -2449,7 +2449,7 @@ var formato14A= {
 		formato14A.dialogMessageError.dialog({
 			modal: true,
 			autoOpen: false,
-			width: 500,
+			width: 450,
 			buttons: {
 				Ok: function() {
 					$( this ).dialog("close");

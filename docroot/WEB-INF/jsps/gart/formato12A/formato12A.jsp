@@ -841,7 +841,8 @@
 		<p>
 <!-- 			<span class="msgConfirmacionFise" style="float:left; margin:0 50px 50px 0;">
 			</span> -->
-			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="dialog-message-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
@@ -850,7 +851,8 @@
 	<div id="dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
-			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="dialog-confirm-content">¿Está seguro?</label>
 		</p>
 	</div>
@@ -858,7 +860,8 @@
 	<div id="dialog-confirm-envio" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
-			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="dialog-confirm-envio-content">¿Está seguro?</label>
 		</p>
 	</div>
@@ -867,7 +870,8 @@
 		<p>
 			<!-- <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span> -->
-			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
@@ -875,21 +879,23 @@
 	<!--  -->
 	<div id="dialog-message-info" title="Mensaje de Informaci&oacute;n">
 		<p>
-			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="dialog-message-info-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
 	<div id="dialog-message-warning" title="Mensaje de Advertencia">
 		<p>
-			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
 			<label id="dialog-message-warning-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
 	<div id="dialog-message-error" title="Mensaje de Error">
 		<p>
-			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:0 25px 10px 0;">
+			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label id="dialog-message-error-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>

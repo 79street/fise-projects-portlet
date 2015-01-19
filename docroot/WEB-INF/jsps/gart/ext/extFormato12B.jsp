@@ -1615,7 +1615,7 @@
 				},
 				success : function(data) {
 					if(data.resultado == "OK"){
-						var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;
+						var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;
 						formato12B.lblMessageReportContent.html(addhtml);
 						formato12B.dialogMessageReport.dialog("open");
 						formato12B.initBlockUI();					
@@ -1719,7 +1719,7 @@
 				formato12B.dialogMessageGeneralInicial.dialog({
 				modal: true,
 				height: 200,
-				width: 500,
+				width: 450,
 				autoOpen: false,
 				buttons: {
 					Cerrar: function() {
@@ -1731,7 +1731,7 @@
 			formato12B.dialogMessageConfirm.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,
+				width: 450,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1741,7 +1741,7 @@
 			formato12B.dialogMessageInfo.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,
+				width: 450,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1751,7 +1751,7 @@
 			formato12B.dialogMessageWarning.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,
+				width: 450,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1761,7 +1761,7 @@
 			formato12B.dialogMessageError.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,
+				width: 450,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1822,7 +1822,7 @@
 			formato12B.dialogConfirmEnvio.dialog({
 				modal: true,
 				height: 200,
-				width: 400,			
+				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
@@ -1838,7 +1838,7 @@
 			formato12B.dialogMessageGeneral.dialog({
 				modal: true,
 				height: 200,
-				width: 500,
+				width: 450,
 				autoOpen: false,
 				buttons: {
 					Cerrar: function() {
@@ -1850,7 +1850,7 @@
 			formato12B.dialogMessageInfoDetalle.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,
+				width: 450,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1860,7 +1860,7 @@
 			formato12B.dialogMessageWarningDetalle.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,
+				width: 450,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");
@@ -1870,7 +1870,7 @@
 			formato12B.dialogMessageErrorDetalle.dialog({
 				modal: true,
 				autoOpen: false,
-				width: 500,
+				width: 450,
 				buttons: {
 					Ok: function() {
 						$( this ).dialog("close");

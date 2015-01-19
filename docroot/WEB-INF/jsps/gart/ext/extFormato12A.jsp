@@ -780,7 +780,7 @@ function initBlockUI(){
 function initDialogs(){	
 	$( "#dialog-message" ).dialog({
 		modal: true,
-		width: 500,	
+		width: 450,	
 		autoOpen: false,
 		buttons: {
 			Ok: function() {
@@ -791,7 +791,7 @@ function initDialogs(){
 	$( "#dialog-message-report" ).dialog({
 		modal: true,
 		autoOpen: false,
-		width: 500,
+		width: 450,
 		buttons: {
 			'Ver Acta': function() {
 				<portlet:namespace/>mostrarReporteEnvioDefinitivo();
@@ -816,7 +816,7 @@ function initDialogs(){
 	$("#dialog-confirm").dialog({
 		modal: true,
 		height: 200,
-		width: 500,		
+		width: 450,		
 		autoOpen: false,
 		buttons: {
 			"Si": function() {
@@ -831,7 +831,7 @@ function initDialogs(){
 	$("#dialog-confirm-envio").dialog({
 		modal: true,
 		height: 200,
-		width: 500,		
+		width: 450,		
 		autoOpen: false,
 		buttons: {
 			"Si": function() {
@@ -886,7 +886,7 @@ function initDialogs(){
 	/////addd messages
 	$( "#dialog-message-info" ).dialog({
 		modal: true,
-		width: 500,	
+		width: 450,	
 		autoOpen: false,
 		buttons: {
 			Ok: function() {
@@ -896,7 +896,7 @@ function initDialogs(){
 	});
 	$( "#dialog-message-warning" ).dialog({
 		modal: true,
-		width: 500,	
+		width: 450,	
 		autoOpen: false,
 		buttons: {
 			Ok: function() {
@@ -906,7 +906,7 @@ function initDialogs(){
 	});
 	$( "#dialog-message-error" ).dialog({
 		modal: true,
-		width: 500,	
+		width: 450,	
 		autoOpen: false,
 		buttons: {
 			Ok: function() {
@@ -1797,7 +1797,7 @@ function <portlet:namespace/>envioDefinitivo(){
 		},
 		success : function(data) {
 			if(data.resultado == "OK"){
-				var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
+				var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;					
 				$("#dialog-message-report-content").html(addhtml);
 				$("#dialog-message-report").dialog( "open" );					
 				initBlockUI();					
