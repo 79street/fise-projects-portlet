@@ -533,7 +533,7 @@ var notificarValidar= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Se realizó la Notificación a los siguientes correos electrónicos: '+data.Correo; 					
+						var addhtml2='Se realizó la Notificación a los siguientes correos electrónicos: '+data.correo; 					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessage.dialog("open");					
 						notificarValidar.initBlockUI();
@@ -543,7 +543,7 @@ var notificarValidar= {
 						notificarValidar.dialogInfo.dialog("open");						
 						notificarValidar.initBlockUI();
 					}else if(data.resultado == "EMAIL"){
-						var addhtmEmail='Error al realizar la Notificación a los siguientes correos electrónicos: ' +data.Correo;					
+						var addhtmEmail= data.correo;					
 						notificarValidar.dialogErrorContent.html(addhtmEmail);
 						notificarValidar.dialogError.dialog("open");							
 						notificarValidar.initBlockUI();	
@@ -584,7 +584,7 @@ var notificarValidar= {
 		},
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
 		eliminarNotificacion : function(cod_Empresa,anio_Pres,mes_Pres,anio_Ejec,mes_Ejec,anio_IniVig,anio_FinVig,cod_etapa,cod_formato){			
-			console.debug("entranado a eliminar notificacion ");
+			console.debug("entranado a eliminar notificacion : "+cod_Empresa);
 			$.blockUI({ message: notificarValidar.mensajeEliminando});
 			jQuery.ajax({
 				url: notificarValidar.urlEliminar+'&'+notificarValidar.formCommand.serialize(),

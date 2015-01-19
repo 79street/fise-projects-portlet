@@ -402,7 +402,7 @@ var envioDefinitivoGlobal= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='El Envío General Definitivo se realizó satisfactoriamente'; 					
+						var addhtml2='El Envío General Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo; 
 						envioDefinitivoGlobal.dialogMessageContent.html(addhtml2);
 						envioDefinitivoGlobal.dialogMessage.dialog("open");					
 						envioDefinitivoGlobal.initBlockUI();
@@ -419,7 +419,7 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.dialogInfo.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "EMAIL"){						
-						var addhtmEmail=data.mensaje;					
+						var addhtmEmail = data.correo;					
 						envioDefinitivoGlobal.dialogInfoContent.html(addhtmEmail);
 						envioDefinitivoGlobal.dialogInfo.dialog("open");		
 						envioDefinitivoGlobal.botonBuscar.trigger('click');

@@ -1812,11 +1812,23 @@ var formato12C= {
 				<portlet:namespace />nombreArchivo: 'formato12C',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
-			success : function(gridData) {
-				var addhtml='El Envío Definitivo se realizó satisfactoriamente';
-				formato12C.dialogMessageReportContent.html(addhtml);
-				formato12C.dialogMessageReport.dialog("open");
-				formato12C.unblockUI();
+			success : function(data) {
+				if(data.resultado == "OK"){
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
+					formato12C.dialogMessageReportContent.html(addhtml);
+					formato12C.dialogMessageReport.dialog("open");
+					formato12C.unblockUI();					
+				}else if(data.resultado == "EMAIL"){						
+					var addhtmEmail = data.correo;						
+					formato12C.dialogMessageErrorCrudContent.html(addhtmEmail);
+					formato12C.dialogMessageErrorCrud.dialog("open");
+					formato12C.unblockUI();
+				}else{								
+					var addhtmError='Error al realizar el Envio Definitivo del Formato 12C.';					
+					formato12C.dialogMessageErrorCrudContent.html(addhtmError);
+					formato12C.dialogMessageErrorCrud.dialog("open");
+					formato12C.unblockUI();
+				}				
 			},error : function(){
 				alert("Error de conexión.");
 				formato12C.unblockUI();

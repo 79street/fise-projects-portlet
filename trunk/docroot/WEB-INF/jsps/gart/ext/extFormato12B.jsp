@@ -1613,11 +1613,23 @@
 					<portlet:namespace />nombreArchivo: 'formato12B',
 					<portlet:namespace />tipoArchivo: '0'//PDF
 				},
-				success : function(gridData) {
-					var addhtml='Se realizó el Envío Definitivo se realizó satisfactoriamente al correo '+formato12B.emailConfigured;
-					formato12B.lblMessageReportContent.html(addhtml);
-					formato12B.dialogMessageReport.dialog("open");
-					formato12B.initBlockUI();
+				success : function(data) {
+					if(data.resultado == "OK"){
+						var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;
+						formato12B.lblMessageReportContent.html(addhtml);
+						formato12B.dialogMessageReport.dialog("open");
+						formato12B.initBlockUI();					
+					}else if(data.resultado == "EMAIL"){						
+						var addhtmEmail = data.correo;						
+						formato12B.dialogMessageErrorDetalleContent.html(addhtmEmail);
+						formato12B.dialogMessageErrorDetalle.dialog("open");
+						formato12B.initBlockUI();
+					}else{						
+						var addhtmError='Error al realizar el Envio Definitivo del Formato 12B.';					
+						formato12B.dialogMessageErrorDetalleContent.html(addhtmError);
+						formato12B.dialogMessageErrorDetalle.dialog("open");						
+						formato12B.initBlockUI();
+					}				
 				},error : function(){
 					alert("Error de conexión.");
 					formato12B.initBlockUI();

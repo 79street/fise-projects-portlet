@@ -2026,11 +2026,23 @@ var formato14A= {
 				<portlet:namespace />nombreArchivo: 'formato14A',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
-			success : function(gridData) {
-				var addhtml='El Envío Definitivo se realizó satisfactoriamente al correo '+formato14A.emailConfigured;	
-				formato14A.dialogMessageReportContent.html(addhtml);
-				formato14A.dialogMessageReport.dialog("open");
-				formato14A.initBlockUI();
+			success : function(data) {
+				if(data.resultado == "OK"){
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
+					formato14A.dialogMessageReportContent.html(addhtml);
+					formato14A.dialogMessageReport.dialog("open");
+					formato14A.initBlockUI();					
+				}else if(data.resultado == "EMAIL"){						
+					var addhtmEmail = data.correo;					
+					formato14A.dialogMessageErrorContent.html(addhtmEmail);
+					formato14A.dialogMessageError.dialog("open");
+					formato14A.initBlockUI();
+				}else{								
+					var addhtmError='Error al realizar el Envio Definitivo del Formato 14A.';					
+					formato14A.dialogMessageErrorContent.html(addhtmError);
+					formato14A.dialogMessageError.dialog("open");
+					formato14A.initBlockUI();
+				}			
 			},error : function(){
 				alert("Error de conexión.");
 				formato14A.initBlockUI();

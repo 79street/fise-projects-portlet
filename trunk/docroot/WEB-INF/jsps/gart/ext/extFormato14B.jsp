@@ -2149,11 +2149,23 @@ var formato14B= {
 				<portlet:namespace />nombreArchivo: 'formato14B',
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
-			success : function(gridData) {
-				var addhtml='El Envío Definitivo se realizó satisfactoriamente al correo '+formato14B.emailConfigured;
-				formato14B.dialogMessageReportContent.html(addhtml);
-				formato14B.dialogMessageReport.dialog("open");
-				formato14B.initBlockUI();
+			success : function(data) {
+				if(data.resultado == "OK"){
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;
+					formato14B.dialogMessageReportContent.html(addhtml);
+					formato14B.dialogMessageReport.dialog("open");
+					formato14B.initBlockUI();	
+				}else if(data.resultado == "EMAIL"){						
+					var addhtmEmail = data.correo;					
+					formato14B.dialogMessageErrorContent.html(addhtmEmail);
+					formato14B.dialogMessageError.dialog("open");
+					formato14B.initBlockUI();					
+				}else{								
+					var addhtmError='Error al realizar el Envio Definitivo del Formato 14B.';					
+					formato14B.dialogMessageErrorContent.html(addhtmError);
+					formato14B.dialogMessageError.dialog("open");
+					formato14B.initBlockUI();
+				}				
 			},error : function(){
 				alert("Error de conexión.");
 				formato14B.initBlockUI();
