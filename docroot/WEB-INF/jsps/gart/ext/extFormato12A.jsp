@@ -127,6 +127,12 @@ $(document).ready(function () {
 function inicializarFormulario(){
 	$('#s_empresa').val('');
 	
+	if($('#s_empresa_b').val()!=''){
+		$('#s_empresa').val($('#s_empresa_b').val());
+	}else{
+		$('#s_empresa').val('');
+	}
+	
 	$("#<portlet:namespace/>divInformacion").hide();
 	
 	//validar lima edelnor y luz del sur

@@ -20,6 +20,8 @@ var formato13A= {
 	tablaObservacion:null,
 	paginadoObservacion:null,
 	//
+	codEmpresaBusqueda:null,
+	
 	//URL
 	urlBusqueda: null,
 	urlBusquedaDetalle: null,
@@ -202,6 +204,7 @@ var formato13A= {
 		this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm");
 		this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content");
 		
+		this.codEmpresaBusqueda=$('#codEmpresa');
 		
 		this. dialogMessageGeneralInicial=$("#dialogMessageGeneralInicio");
 		this.lblMessageInicial=$("#lblMessageInicio");
@@ -218,8 +221,7 @@ var formato13A= {
 		
 		formato13A.botonCrearFormato.click(function() {
 			formato13A.blockUI();
-			
-			location.href=urlNuevo;
+			location.href=urlNuevo+'&codEmpresa='+formato13A.codEmpresaBusqueda.val();
 		});
 		
 		formato13A.botonBuscar.click(function() {
