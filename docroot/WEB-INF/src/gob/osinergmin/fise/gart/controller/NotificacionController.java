@@ -1501,10 +1501,10 @@ public class NotificacionController {
   				String[] msnId = respuestaEmail.split("/");
   				if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
   					jsonObj.put("resultado", "OK");	
-  	  				jsonObj.put("Correo",msnId[1]);		
+  	  				jsonObj.put("correo",msnId[1]);		
   				}else{
   					jsonObj.put("resultado", "EMAIL");//error al enviar al email	
-  	  				jsonObj.put("Correo",msnId[1]);		
+  	  				jsonObj.put("correo",msnId[1]);		
   				}	
   			}
   			logger.info("arreglo json:"+jsonObj);

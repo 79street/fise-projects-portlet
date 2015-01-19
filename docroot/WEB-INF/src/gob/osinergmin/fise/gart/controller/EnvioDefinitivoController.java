@@ -1628,7 +1628,7 @@ public class EnvioDefinitivoController {
 			//boolean valor = false;
 			boolean estadoCerrado = true;
 			Map<String, Object> mapa =null;	
-			boolean valorEmail = false;
+			String respuestaEmail ="";	
 			boolean valorValidacion = false;
 			boolean actaEnvio = false;
 			boolean actualizar = false;
@@ -2150,20 +2150,21 @@ public class EnvioDefinitivoController {
   	  	  					if(listaArchivo!=null && listaArchivo.size()>0 && actaEnvio){		    	  
   	  	  						logger.info("Entrando a enviar email envio general."); 
   	  	  					    String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4);
-  	  	  						valorEmail =fiseUtil.enviarMailsAdjuntoEnvioGeneral(
+  	  	  					    respuestaEmail = fiseUtil.enviarMailsAdjuntoEnvioGeneral(
   	  	  								request,
   	  	  								listaArchivo, 
   	  	  								mapaEmpresa.get(codEmpreCompleta),		    			  
   	  	  								n.getDescGrupoInf(),optionFormato);//option formato es la periocidad
   	  	  						logger.info("El envio de email fue correctamente envio general.");	    	  
-  	  	  					}
-  	  	  					logger.info("Valor del envio de email:  "+valorEmail); 
-  	  	  					if(valorEmail){
-  	  	  						jsonObj.put("resultado", "OK"); 
-  	  	  					}else{
-  	  	  						jsonObj.put("resultado", "EMAIL");
-  	  	  						jsonObj.put("mensaje", "Error al enviar el email del consolidado "); 
-  	  	  					}
+  	  	  					} 
+  	  	  				    String[] msnId = respuestaEmail.split("/");
+  	  	  				    if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
+  	  	  				    	jsonObj.put("resultado", "OK");	
+  	  	  				    	jsonObj.put("Correo",msnId[1]);		
+  	  	  				    }else{
+  	  	  				    	jsonObj.put("resultado", "EMAIL");//error al enviar al email	
+  	  	  				    	jsonObj.put("Correo",msnId[1]);		
+  	  	  				    }  	  	  					
   	  	  				}else{
   	  	  					jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio
   	  	  				}	  			 

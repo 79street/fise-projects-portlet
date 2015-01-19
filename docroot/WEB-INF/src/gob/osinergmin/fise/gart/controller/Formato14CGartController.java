@@ -970,6 +970,9 @@ public class Formato14CGartController {
 	@ResourceMapping("envioDefinitivoF14C")
 	public void envioDefinitivo(ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("formato14CBean")Formato14CBean f) {
+		 FiseFormato14CC formato = null;
+		 Formato14CReportBean bean = new Formato14CReportBean();
+		 Map<String, Object> mapa = null;
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
@@ -977,14 +980,12 @@ public class Formato14CGartController {
 		  
 	        JSONObject jsonObj = new JSONObject(); 
 		  
-		    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 	 
+		    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 	    
 		    
-		    Formato14CReportBean bean = new Formato14CReportBean();
-		    
-		    Map<String, Object> mapa = null;
+		   
 		    String directorio = null;
 		    //cambios
-		    boolean valorEmail = false;
+		    String respuestaEmail = "";
 		    boolean valorFormato = false;
 		    boolean valorActa = false;
 		    
@@ -1011,7 +1012,7 @@ public class Formato14CGartController {
 		    f.setUsuario(themeDisplay.getUser().getLogin());
 			f.setTerminal(themeDisplay.getUser().getLoginIP());	
 			
-		    FiseFormato14CC formato = formato14CGartService.obtenerFiseFormato14CC(f);
+		    formato = formato14CGartService.obtenerFiseFormato14CC(f);
 		    logger.info("Objeto formato 14C: "+formato);
 		    
 	        if(formato!=null ){       
@@ -1052,7 +1053,7 @@ public class Formato14CGartController {
 	     				   formato.getId().getAnoPresentacion(), 
 	     				   formato.getId().getMesPresentacion(), 
 	     				   formato.getId().getEtapa(), 
-	     				   FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
+	     				   FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
 	     		   if( cumplePlazo ){
 	     			   mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
 	     	   	   }else{
@@ -1146,7 +1147,7 @@ public class Formato14CGartController {
 	    	   if(valorActuaizar.equals("1")){
 	    		   if(listaArchivo!=null && listaArchivo.size()>0){ 	 	    	  
 			    	   logger.info("Entrando a enviar email envio defi."); 
-			    	   valorEmail = fiseUtil.enviarMailsAdjunto(
+			    	   respuestaEmail = fiseUtil.enviarMailsAdjunto(
 			    			   request,
 			    			   listaArchivo, 
 			    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
@@ -1159,11 +1160,14 @@ public class Formato14CGartController {
 			    			   formato.getId().getAnoFinVigencia());
 			    	   logger.info("El envio de email fue correctamente envio defi.");			    	   
 			       }
-	    		   if(valorEmail){
-	    			   jsonObj.put("resultado", "OK"); 
+	    		   String[] msnId = respuestaEmail.split("/");
+	    		   if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
+	    			   jsonObj.put("resultado", "OK");	
+	    			   jsonObj.put("correo",msnId[1]);		
 	    		   }else{
-	    			   jsonObj.put("resultado", "EMAIL");	    			  
-	    		   }			
+	    			   jsonObj.put("resultado", "EMAIL");//error al enviar al email	
+	    			   jsonObj.put("correo",msnId[1]);		
+	    		   }	 		
 	    	   }else{
 	    		   jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio o al formar
 	    		   //los reportes del formato o del acta de envio
@@ -1180,6 +1184,16 @@ public class Formato14CGartController {
 		}catch (Exception e) {
 			logger.info("Error al realizar el envio del formato 14c : "+e); 
 			e.printStackTrace();
+		}finally{
+			if(formato != null){
+				formato = null;
+			}
+			if(bean != null){
+				bean = null;
+			}
+			if(mapa != null){
+				mapa = null;
+			}
 		}
 	 }
 	

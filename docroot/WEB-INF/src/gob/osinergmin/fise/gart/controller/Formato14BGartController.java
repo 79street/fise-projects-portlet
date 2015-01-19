@@ -1,7 +1,5 @@
 package gob.osinergmin.fise.gart.controller;
 
-import gob.osinergmin.fise.bean.Formato12DCBean;
-import gob.osinergmin.fise.bean.Formato14ACBean;
 import gob.osinergmin.fise.bean.Formato14BCBean;
 import gob.osinergmin.fise.bean.Formato14BMensajeBean;
 import gob.osinergmin.fise.bean.Formato14Generic;
@@ -2167,22 +2165,24 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response,
 
 @ResourceMapping("envioDefinitivo")
 public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14BCBean")Formato14BCBean command) {
-	try {
-		
-		//List<byte[]> listaBytes = new ArrayList<byte[]>();
-		
+	 FiseFormato14BC formato =null;
+	 //FiseFormato14BC formatoActualizar =null;	 
+	try {		
+		//List<byte[]> listaBytes = new ArrayList<byte[]>();		
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
         HttpSession session = httpRequest.getSession();
         ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-	    JSONArray jsonArray = new JSONArray();	
+        JSONObject jsonObj = new JSONObject();
 	    //FileEntry archivo=null;
-	    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 
-	    
-	    FiseFormato14BC formato = new FiseFormato14BC();
+	    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>();    
 	    
 	    Formato14BCBean bean = new Formato14BCBean();
 	    Map<String, Object> mapa = null;
 	    String directorio = null;
+	   //cambios		    
+	    boolean valorFormato = false;
+	    boolean valorActa = false;			
+		String respuestaEmail ="";	
 	    //OutputStream outputStream = response.getPortletOutputStream();
 	    
 	    String codEmpresa = request.getParameter("codEmpresa").trim();
@@ -2239,20 +2239,13 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
         	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14B, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 		    if(i==0){
 		    	cargarListaObservaciones(formato.getFiseFormato14BDs());
-		    } 
-		    
-		   //guardamos la fecha de envio, en este momento porque necesitamos la fecha de envio para mandar al reporte
-    	   Formato14BCBean form = new Formato14BCBean();
-    	   form.setUsuario(themeDisplay.getUser().getLogin());
-    	   form.setTerminal(themeDisplay.getUser().getLoginIP());
-    	   formato = formato14Service.modificarEnvioDefinitivoFormato14BC(form, formato);
-		   
+		    }    
     	   if(mapa!=null){
    		   		mapa.put(FiseConstants.PARAM_IMG_LOGOTIPO, session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
 				mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
 				mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
 				mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
-				mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
+				mapa.put(FiseConstants.PARAM_FECHA_ENVIO, FechaUtil.obtenerFechaActual());
 				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 				mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, formato.getId().getAnoInicioVigencia());
@@ -2270,7 +2263,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 						formato.getId().getAnoPresentacion(), 
 						formato.getId().getMesPresentacion(), 
 						formato.getId().getEtapa(), 
-						FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
+						FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
 				if( cumplePlazo ){
 					mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirCheckedImage);
 				}else{
@@ -2302,6 +2295,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    		   fileEntryJsp.setNombreArchivo(nombre);
 	    		   fileEntryJsp.setFileEntry(archivo);
 	    		   listaArchivo.add(fileEntryJsp);
+	    		   valorFormato = true;
 	    	   }
 	       }
 	       /**REPORTE OBSERVACIONES*/
@@ -2343,34 +2337,61 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    		   fileEntryJsp.setNombreArchivo(nombre);
 	    		   fileEntryJsp.setFileEntry(archivo);
 	    		   listaArchivo.add(fileEntryJsp);
+	    		   valorActa = true;
 	    	   }
+	       }	      
+    	   /*Formato14BCBean form = new Formato14BCBean();
+    	   form.setUsuario(themeDisplay.getUser().getLogin());
+    	   form.setTerminal(themeDisplay.getUser().getLoginIP()); */	   
+    	   /**actualizamos  la fecha de envio*/
+    	   String valorActuaizar = "0";
+	       if(valorFormato && valorActa){
+	    	   //formatoActualizar = formato14Service.modificarEnvioDefinitivoFormato14BC(form, formato);
+	    	   valorActuaizar = formato14Service.modificarEnvioDefinitivoFormato14BC(
+	    			    themeDisplay.getUser().getLogin(),
+	    			    themeDisplay.getUser().getLoginIP(), formato);
 	       }
-	       //
-	       if( listaArchivo!=null && listaArchivo.size()>0 ){
-	    	   //obtener e nombre del formato
-	    	   fiseUtil.enviarMailsAdjunto(
-	    			   request,
-	    			   listaArchivo, 
-	    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
-	    			   formato.getId().getAnoPresentacion(),
-	    			   formato.getId().getMesPresentacion(),
-	    			   FiseConstants.TIPO_FORMATO_14B,
-	    			   descripcionFormato,
-	    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
-	    			   formato.getId().getAnoInicioVigencia(),
-	    			   formato.getId().getAnoFinVigencia());
-	       }
-        }
-        
+	       if(valorActuaizar.equals("1")){
+	    	   if( listaArchivo!=null && listaArchivo.size()>0 ){		    	
+	    		   respuestaEmail = fiseUtil.enviarMailsAdjunto(
+		    			   request,
+		    			   listaArchivo, 
+		    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
+		    			   formato.getId().getAnoPresentacion(),
+		    			   formato.getId().getMesPresentacion(),
+		    			   FiseConstants.TIPO_FORMATO_14B,
+		    			   descripcionFormato,
+		    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
+		    			   formato.getId().getAnoInicioVigencia(),
+		    			   formato.getId().getAnoFinVigencia());
+		       } 
+	    	   String[] msnId = respuestaEmail.split("/");
+    		   if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
+    			   jsonObj.put("resultado", "OK");	
+    			   jsonObj.put("correo",msnId[1]);		
+    		   }else{
+    			   jsonObj.put("resultado", "EMAIL");//error al enviar al email	
+    			   jsonObj.put("correo",msnId[1]);		
+    		   }	    	
+	       }else{
+	    	   jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio o al formar
+    		   //los reportes del formato o del acta de envio   
+	       }	       
+        }else{
+        	 jsonObj.put("resultado", "ERROR"); //formato null  	
+        }        
        response.setContentType("application/json");
+       logger.info("arreglo json:"+jsonObj);
        PrintWriter pw = response.getWriter();
-	   pw.write(jsonArray.toString());
+       pw.write(jsonObj.toString());
 	   pw.flush();
 	   pw.close();
 	}catch (Exception e) {
 		e.printStackTrace();
-	}finally{
-		
+	}finally{		
+		if(formato != null){
+			formato = null;
+		}
 	}
 }
 

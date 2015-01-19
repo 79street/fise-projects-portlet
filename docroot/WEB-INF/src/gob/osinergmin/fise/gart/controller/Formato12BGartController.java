@@ -1,19 +1,5 @@
 package gob.osinergmin.fise.gart.controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import gob.osinergmin.fise.bean.Formato12A12BGeneric;
 import gob.osinergmin.fise.bean.Formato12BCBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
@@ -39,6 +25,20 @@ import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.xls.FormatoExcelImport;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -1502,24 +1502,26 @@ public class Formato12BGartController {
 	
 	
 	@ResourceMapping("envioDefinitivo")
-	public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
-		try {
-			
+	public void envioDefinitivo(ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
 		
-			
+		FiseFormato12BC formato = null;
+		try {		
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
 	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		    JSONArray jsonArray = new JSONArray();	
+	        JSONObject jsonObj = new JSONObject(); 
 		    //FileEntry archivo=null;
-		    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 
-		    
-		   
+		    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 	   
 		    
 		    Formato12BCBean bean = new Formato12BCBean();
 		    Map<String, Object> mapa = null;
 		    String directorio = null;
 		   
+          //cambios		    
+		    boolean valorFormato = false;
+		    boolean valorActa = false;			
+			String respuestaEmail ="";	
 		   
 		    System.out.println("EMPRESA::"+command.getCodEmpresaHidden().trim());
 		    System.out.println("PERIODOD::"+command.getPeridoDeclaracionHidden().trim());
@@ -1535,7 +1537,7 @@ public class Formato12BGartController {
 		    pk.setMesEjecucionGasto(command.getMesEjecucionGasto());
 		    pk.setEtapa(command.getEtapa());
 		    
-		    FiseFormato12BC formato=formatoService.getFormatoCabeceraById(pk);
+		    formato=formatoService.getFormatoCabeceraById(pk);
 	        if( formato!=null ){
 	        	List<FiseFormato12BD> lst=formatoService.getLstFormatoDetalle(formato.getId());
 		    	if(lst!=null && !lst.isEmpty()){
@@ -1557,21 +1559,13 @@ public class Formato12BGartController {
 	        	int i = commonService.validarFormatos_12A12B(formato12Generic, FiseConstants.NOMBRE_FORMATO_12B, themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 			    if(i==0){
 			    	cargarListaObservaciones(formato.getFiseFormato12BDs());
-			    } 
-			    
-			   //guardamos la fecha de envio, en este momento porque necesitamos la fecha de envio para mandar al reporte
-	    	   Formato12BCBean form = new Formato12BCBean();
-	    	   form.setUsuario(themeDisplay.getUser().getLogin());
-	    	   form.setTerminal(themeDisplay.getUser().getLoginIP());
-	    	   formato = formatoService.modificarEnvioDefinitivoFormato12BC(form, formato);
-	    	  // formato = formato14Service.modificarEnvioDefinitivoFormato14BC(form, formato);
-			   
+			    } 			   
 	    	   if(mapa!=null){
 	   		   		mapa.put(FiseConstants.PARAM_IMG_LOGOTIPO, session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
 					mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
 					mapa.put(FiseConstants.PARAM_USUARIO, themeDisplay.getUser().getLogin());
 					mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
-					mapa.put(FiseConstants.PARAM_FECHA_ENVIO, formato.getFechaEnvioDefinitivo());
+					mapa.put(FiseConstants.PARAM_FECHA_ENVIO, FechaUtil.obtenerFechaActual());
 					mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 					mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 					mapa.put(FiseConstants.PARAM_ANO_EJEC_F12B_R, (long)formato.getId().getAnoEjecucionGasto());
@@ -1589,7 +1583,7 @@ public class Formato12BGartController {
 							formato.getId().getAnoPresentacion().longValue(), 
 							formato.getId().getMesPresentacion().longValue(), 
 							formato.getId().getEtapa(), 
-							FechaUtil.fecha_DD_MM_YYYY(formato.getFechaEnvioDefinitivo()));
+							FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
 					if( cumplePlazo ){
 						mapa.put(FiseConstants.PARAM_CHECKED_CUMPLEPLAZO, dirCheckedImage);
 					}else{
@@ -1606,7 +1600,7 @@ public class Formato12BGartController {
 	    	   
 		        /**REPORTE FORMATO 12B*/
 	    	   String nombreReporte = request.getParameter("nombreReporte").trim();
-			    String nombreArchivo = request.getParameter("nombreArchivo").trim();
+			   String nombreArchivo = request.getParameter("nombreArchivo").trim();
 			 
 		       nombreReporte = "formato12B";
 		       nombreArchivo = nombreReporte;
@@ -1624,6 +1618,7 @@ public class Formato12BGartController {
 		    		   fileEntryJsp.setNombreArchivo(nombre);
 		    		   fileEntryJsp.setFileEntry(archivo);
 		    		   listaArchivo.add(fileEntryJsp);
+		    		   valorFormato = true;
 		    	   }
 		       }
 		       /**REPORTE OBSERVACIONES*/
@@ -1665,33 +1660,61 @@ public class Formato12BGartController {
 		    		   fileEntryJsp.setNombreArchivo(nombre);
 		    		   fileEntryJsp.setFileEntry(archivo);
 		    		   listaArchivo.add(fileEntryJsp);
+		    		   valorActa = true;
 		    	   }
 		       }
-		       //
-		       if( listaArchivo!=null && listaArchivo.size()>0 ){
-		    	   //obtener e nombre del formato
-		    	   fiseUtil.enviarMailsAdjunto(
-		    			   request,
-		    			   listaArchivo, 
-		    			   formato.getAdmEmpresa().getDscCortaEmpresa(),
-		    			   formato.getId().getAnoPresentacion().longValue(),
-		    			   formato.getId().getMesPresentacion().longValue(),
-		    			   FiseConstants.TIPO_FORMATO_12B,
-		    			   descripcionFormato,FiseConstants.MENSUAL,
-		    			   null,
-		    			   null);
+		       //guardamos la fecha de envio, en este momento porque necesitamos la fecha de envio para mandar al reporte
+	    	  /* Formato12BCBean form = new Formato12BCBean();
+	    	   form.setUsuario(themeDisplay.getUser().getLogin());
+	    	   form.setTerminal(themeDisplay.getUser().getLoginIP());*/
+	    	   /**actualizamos  la fecha de envio*/	
+	    	   String valorActuaizar = "0";
+		       if(valorFormato && valorActa){
+		    	   //formatoActualizar =formatoService.modificarEnvioDefinitivoFormato12BC(form, formato);
+		    	   valorActuaizar = formatoService.modificarEnvioDefinitivoFormato12BC(
+		    			   themeDisplay.getUser().getLogin(), 
+		    			   themeDisplay.getUser().getLoginIP(),formato);
 		       }
-	        }
-	        
+		       if(valorActuaizar.equals("1")){
+		    	   if( listaArchivo!=null && listaArchivo.size()>0 ){			    	   
+		    		   respuestaEmail = fiseUtil.enviarMailsAdjunto(
+			    			   request,
+			    			   listaArchivo, 
+			    			   formato.getAdmEmpresa().getDscCortaEmpresa(),
+			    			   formato.getId().getAnoPresentacion().longValue(),
+			    			   formato.getId().getMesPresentacion().longValue(),
+			    			   FiseConstants.TIPO_FORMATO_12B,
+			    			   descripcionFormato,FiseConstants.MENSUAL,
+			    			   null,
+			    			   null);
+			       }
+			       String[] msnId = respuestaEmail.split("/");
+	    		   if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
+	    			   jsonObj.put("resultado", "OK");	
+	    			   jsonObj.put("correo",msnId[1]);		
+	    		   }else{
+	    			   jsonObj.put("resultado", "EMAIL");//error al enviar al email	
+	    			   jsonObj.put("correo",msnId[1]);		
+	    		   }	  
+		       }else{
+		    	   jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio o al formar
+	    		   //los reportes del formato o del acta de envio      
+		       }		       
+	         }else{
+	        	 jsonObj.put("resultado", "ERROR"); //formato null  	
+	         }	        
 	       response.setContentType("application/json");
+	       logger.info("arreglo json:"+jsonObj);
 	       PrintWriter pw = response.getWriter();
-		   pw.write(jsonArray.toString());
+	       pw.write(jsonObj.toString());
 		   pw.flush();
 		   pw.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			
+			if(formato != null){
+				formato = null;
+			}
 		}
 	}
 
