@@ -322,7 +322,7 @@ $(document).ready(function () {
 											 
 											 <td><label style="font-size: 12px; font-weight: bold">Habilita Costos(F14C):</label>
 											 </td>
-											 <td>												     
+											 <td width="190px;"> 												     
 											     <input type="radio"	name="flagHabCostos"
 												        id="rbtAmbos" value="A" checked="true"/>Ambos
 												 &nbsp;&nbsp;&nbsp;													 
