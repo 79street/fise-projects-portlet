@@ -36,33 +36,50 @@ $(document).ready(function () {
 });
 
 function <portlet:namespace/>mostrarReportePdf(){
-	jQuery.ajax({
-		url : '<portlet:resourceURL id="reporte" />',
-		type : 'post',
-		dataType : 'json',
-		data : {
-			<portlet:namespace />periodo: $("#<portlet:namespace/>s_periodo_cump").val(),
-			<portlet:namespace />tipoArchivo: '0'//PDF
-		},
-		success : function(gridData) {
-			verReporte();
-		}
-	});
+	if(<portlet:namespace />validarCumplimientoMensual()){
+		jQuery.ajax({
+			url : '<portlet:resourceURL id="reporte" />',
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />periodo: $("#<portlet:namespace/>s_periodo_cump").val(),
+				<portlet:namespace />tipoArchivo: '0'//PDF
+			},
+			success : function(gridData) {
+				verReporte();
+			}
+		});	
+	}	
 }
+
 function <portlet:namespace/>mostrarReporteExcel(){
-	jQuery.ajax({
-		url : '<portlet:resourceURL id="reporte" />',
-		type : 'post',
-		dataType : 'json',
-		data : {
-			<portlet:namespace />periodo: $("#<portlet:namespace/>s_periodo_cump").val(),
-			<portlet:namespace />tipoArchivo: '1'//XLS
-		},
-		success : function(gridData) {
-			verReporte();
-		}
-	});
+	if(<portlet:namespace />validarCumplimientoMensual()){
+		jQuery.ajax({
+			url : '<portlet:resourceURL id="reporte" />',
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />periodo: $("#<portlet:namespace/>s_periodo_cump").val(),
+				<portlet:namespace />tipoArchivo: '1'//XLS
+			},
+			success : function(gridData) {
+				verReporte();
+			}
+		});
+	}	
 }
+
+function <portlet:namespace />validarCumplimientoMensual(){
+	console.debug('entrando a validar formulario');
+	if($("#<portlet:namespace/>s_periodo_cump").val()==null || 
+			$("#<portlet:namespace/>s_periodo_cump").val()==''){		
+		alert('Debe seleccionar un Periodo.'); 	
+	 	return false;
+	}else{
+		return true;
+	}
+} 
+
 function verReporte(){
 	window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
 }
@@ -142,6 +159,15 @@ function verReporte(){
 				</div>
 			</div>
 		</div>
-
+		
+		
+    <!-- DIALOGO PARA ALERTAR DE VALIDACION -->
+	
+	<div id="<portlet:namespace/>dialog-alert" title="Mensaje de Validaci&oacute;n" style="display: none;"> 
+		<p>						
+			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:0 25px 10px 0;">
+			<label id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
+		</p>
+	</div>
 
 </form> 
