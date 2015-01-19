@@ -187,7 +187,7 @@ var periodoEnvio= {
 		buildGrids : function () {	
 			periodoEnvio.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Secuencia','Dist. Eléct.','Formato.','Año Decl.','Mes Decl.','Estado','Ver','Editar','Anular'],
+		       colNames: ['Secuencia','Dist. Eléct.','Formato','Año Decl.','Mes Decl.','Estado','Ver','Editar','Anular'],
 		       colModel: [
                        { name: 'secuencia', index: 'secuencia', width: 20},
 					   { name: 'descEmpresa', index: 'descEmpresa', width: 80},
