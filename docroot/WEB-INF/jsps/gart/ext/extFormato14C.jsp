@@ -624,13 +624,13 @@ var formato14C= {
 		validarBusqueda : function(){			
 			if(formato14C.i_anioDesde.val().length != '' || formato14C.i_anioHasta.val().length != '') {		  
 				if(formato14C.i_anioDesde.val().length == ''){				    
-				     var addhtmAlert='Por favor, Ingrese un año declarado desde.';					
+				     var addhtmAlert='Por favor, Ingrese un Año Declarado Desde.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
 				     formato14C.i_anioDesde.focus();
 				     return false;		
 				} else if(formato14C.i_anioHasta.val().length == '' ) {				   
-				     var addhtmAlert='Por favor, Ingrese un año declarado hasta.';					
+				     var addhtmAlert='Por favor, Ingrese un Año Declarado Hasta.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
 					 formato14C.i_anioHasta.focus();
@@ -638,7 +638,7 @@ var formato14C= {
 				}else if (isNaN(trim(formato14C.i_anioDesde.val())) || 
 						formato14C.i_anioDesde.val().length<4 || 
 						parseFloat(trim(formato14C.i_anioDesde.val()))<1900){				    
-				     var addhtmAlert='Ingrese un año declarado desde válido.';					
+				     var addhtmAlert='Ingrese un Año Declarado Desde válido.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
 				     formato14C.i_anioDesde.focus();
@@ -646,13 +646,13 @@ var formato14C= {
 				}else if (isNaN(trim(formato14C.i_anioHasta.val())) || 
 						formato14C.i_anioDesde.val().length<4 || 
 						parseFloat(trim(formato14C.i_anioHasta.val()))<1900){				     
-				     var addhtmAlert='Ingrese un año declarado hasta válido.';					
+				     var addhtmAlert='Ingrese un Año Declarado Hasta válido.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
 				     formato14C.i_anioHasta.focus();
 				     return false;					 
 			   }else if(parseFloat(formato14C.i_anioDesde.val()) > parseFloat(formato14C.i_anioHasta.val()) ){				   
-				     var addhtmAlert='El año declarado desde no puede exceder al año declarado hasta.';					
+				     var addhtmAlert='El Año Declarado Desde no puede exceder al Año Declarado Hasta.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
 				    return false;					 
@@ -660,7 +660,7 @@ var formato14C= {
 				  return true;
 			  }
 		   }else if(formato14C.i_etapaBusq.val().length == '' ) { 			    
-				    var addhtmAlert='Seleccione una etapa.';					
+				    var addhtmAlert='Seleccione una Etapa.';					
 				    formato14C.dialogValidacionContent.html(addhtmAlert);
 					formato14C.dialogValidacion.dialog("open");
 				    formato14C.i_etapaB.focus();

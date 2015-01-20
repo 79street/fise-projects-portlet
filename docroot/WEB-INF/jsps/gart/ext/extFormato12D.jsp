@@ -1144,7 +1144,7 @@ var formato12D= {
 			  var numstr = trim(formato12D.anioDesde.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 				  //alert('Ingrese un año desde válido');
-				  formato12D.dialogMessageWarningContent.html('Debe ingresar un año declarado desde válido');
+				  formato12D.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Desde válido');
 				  formato12D.dialogMessageWarning.dialog("open");
 				  formato12D.anioDesde.focus();
 				  return false;
@@ -1154,7 +1154,7 @@ var formato12D= {
 			  var numstr = trim(formato12D.anioHasta.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 				  //alert('Ingrese un año hasta válido');
-				  formato12D.dialogMessageWarningContent.html('Debe ingresar un año declarado hasta válido');
+				  formato12D.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Hasta válido');
 				  formato12D.dialogMessageWarning.dialog("open");
 				  formato12D.anioHasta.focus();
 				  return false;
@@ -1163,7 +1163,7 @@ var formato12D= {
 		  if(formato12D.anioDesde.val().length != '' && formato12D.anioHasta.val().length != '' ) {
 			  if( parseFloat(formato12D.anioDesde.val()) > parseFloat(formato12D.anioHasta.val()) ){
 					//alert('El año desde no puede exceder al año hasta');
-					formato12D.dialogMessageWarningContent.html('El año declarado desde no puede exceder al año declarado hasta');
+					formato12D.dialogMessageWarningContent.html('El Año Declarado Desde no puede exceder al Año Declarado Hasta');
 					formato12D.dialogMessageWarning.dialog("open");
 					return false;
 			  }
@@ -1400,7 +1400,7 @@ var formato12D= {
 		}
 		if(formato12D.periodoEnvio==null || formato12D.periodoEnvio.val().length == '' ) {		  
 			//alert('Debe seleccionar el periodo a declarar');
-			formato12D.dialogMessageWarningCrudContent.html('Debe seleccionar el Periodo a declarar para proceder con la carga del archivo');
+			formato12D.dialogMessageWarningCrudContent.html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
 			formato12D.dialogMessageWarningCrud.dialog("open");
 			formato12D.periodoEnvio.focus();
 			return false; 
@@ -1680,7 +1680,7 @@ var formato12D= {
 					formato12D.dialogMessageErrorCrud.dialog("open");
 					formato12D.unblockUI();
 				}else{								
-					var addhtmError='Error al realizar el Envio Definitivo del Formato 12D.';					
+					var addhtmError='Error al realizar el Envío Definitivo del Formato 12D.';					
 					formato12D.dialogMessageErrorCrudContent.html(addhtmError);
 					formato12D.dialogMessageErrorCrud.dialog("open");
 					formato12D.unblockUI();
@@ -2110,14 +2110,14 @@ var formato12D= {
  		}*/
 		if(formato12D.periodoEnvioDetalle==null || formato12D.periodoEnvioDetalle.val().length == '' ) {		  
 			//alert('Debe seleccionar el periodo a declarar');
-			formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el periodo a declarar');
+			formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el Periodo a Declarar');
 			formato12D.dialogMessageWarningDetalle.dialog("open");
 			formato12D.periodoEnvio.focus();
 			return false; 
 		}
 		if(formato12D.anoEjecucionDetalle.val().length == '' ) {		  
 		    //alert('Debe ingresar el año de ejecución');
-		    formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el año de ejecución');
+		    formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el Año de Ejecución');
 			formato12D.dialogMessageWarningDetalle.dialog("open");
 		    formato12D.anoEjecucionDetalle.focus();
 		    return false; 
@@ -2125,21 +2125,21 @@ var formato12D= {
 		  	var numstr = trim(formato12D.anoEjecucionDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  	//alert('Ingrese un año de ejecución válido');
-			  	formato12D.dialogMessageWarningDetalleContent.html('Ingrese un año de ejecución válido');
+			  	formato12D.dialogMessageWarningDetalleContent.html('Ingrese un Año de Ejecución válido');
 				formato12D.dialogMessageWarningDetalle.dialog("open");
 			  	return false;
 		  	}
 	 	 }
 		if(formato12D.mesEjecucionDetalle.val().length == '' ) {		  
 		   //alert('Debe seleccionar el mes de ejecución');
-		   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar el mes de ejecución');
+		   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar el Mes de Ejecución');
 		   formato12D.dialogMessageWarningDetalle.dialog("open");
 		   formato12D.mesEjecucionDetalle.focus();
 		   return false; 
 		}
 		if(formato12D.etapaEjecucionDetalle.val().length == '' ) {		  
 		   //alert('Debe ingresar la etapa de ejecución');
-		   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar la etapa de ejecución');
+		   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar la Etapa de Ejecución');
 		   formato12D.dialogMessageWarningDetalle.dialog("open");
 		   formato12D.etapaEjecucionDetalle.focus();
 		   return false; 
@@ -2148,14 +2148,14 @@ var formato12D= {
 		if(formato12D.codDepa.val().length != '' ) {
 			if(formato12D.codProv.val().length == '' ) {		  
 			   //alert('Debe seleccionar la provincia');
-			   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar la provincia');
+			   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar la Provincia');
 			   formato12D.dialogMessageWarningDetalle.dialog("open");
 			   formato12D.codProv.focus();
 			   return false; 
 			}else{
 				if(formato12D.codDist.val().length == '' ) {		  
 				   //alert('Debe seleccionar el distrito');
-				   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar el distrito');
+				   formato12D.dialogMessageWarningDetalleContent.html('Debe seleccionar el Distrito');
 					formato12D.dialogMessageWarningDetalle.dialog("open");
 				   formato12D.codDist.focus();
 				   return false; 
@@ -2190,14 +2190,14 @@ var formato12D= {
 			}
 			if(formato12D.serieDocDetalle.val().length == '' ) {		  
 			   //alert('Debe ingresar la serie de documento de referencia');
-			   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar la serie de documento de referencia');
+			   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar la Serie de Documento de Referencia');
 				formato12D.dialogMessageWarningDetalle.dialog("open");
 			   formato12D.serieDocDetalle.focus();
 			   return false; 
 			}
 			if(formato12D.nroDocDetalle.val().length == '' ) {		  
 			   //alert('Debe ingresar el nro. documento de referencia');
-			   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el nro. documento de referencia');
+			   formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar el Nro. Documento de Referencia');
 				formato12D.dialogMessageWarningDetalle.dialog("open");
 			   formato12D.nroDocDetalle.focus();
 			   return false; 

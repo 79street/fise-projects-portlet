@@ -389,7 +389,7 @@ $(document).ready(function () {
 			</span> -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-detalle-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-detalle-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -399,7 +399,7 @@ $(document).ready(function () {
 		<p>
 			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-warning-content-detalle">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-warning-content-detalle">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -407,7 +407,7 @@ $(document).ready(function () {
 		<p>
 			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-error-content-detalle">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-error-content-detalle">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	<!--  -->

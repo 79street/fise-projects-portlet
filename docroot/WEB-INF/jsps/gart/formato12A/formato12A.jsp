@@ -843,7 +843,7 @@
 			</span> -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="dialog-message-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="dialog-message-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -853,7 +853,7 @@
 			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="dialog-confirm-content">¿Está seguro?</label>
+			<label class="labelCentrado" id="dialog-confirm-content">¿Está seguro?</label>
 		</p>
 	</div>
 	
@@ -862,7 +862,7 @@
 			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="dialog-confirm-envio-content">¿Está seguro?</label>
+			<label class="labelCentrado" id="dialog-confirm-envio-content">¿Está seguro?</label>
 		</p>
 	</div>
 	
@@ -872,7 +872,7 @@
 			</span> -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -881,14 +881,14 @@
 		<p>
 			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="dialog-message-info-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="dialog-message-info-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
 	<div id="dialog-message-warning" title="Mensaje de Advertencia">
 		<p>
 			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
-			<label id="dialog-message-warning-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="dialog-message-warning-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -896,7 +896,7 @@
 		<p>
 			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="dialog-message-error-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="dialog-message-error-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	<!--  -->

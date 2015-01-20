@@ -1075,7 +1075,7 @@
 		<!-- <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>  -->
 		<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 		<br/>
-		<label id="lblConfirmEnvioContent">¿Está seguro?</label>
+		<label class="labelCentrado" id="lblConfirmEnvioContent">¿Está seguro?</label>
 		</p>
 	</div>
 	<div id="dialogMessageReport" title="Mensaje de Informaci&oacute;n">
@@ -1084,7 +1084,7 @@
 			</span> -->
 			<img src="f/ise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="lblMessageReportContent">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="lblMessageReportContent">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -1094,7 +1094,7 @@
 			</span> -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="lblMessage">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="lblMessage">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -1103,7 +1103,7 @@
 		<p>
 			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-info-content-detalle">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-info-content-detalle">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -1111,7 +1111,7 @@
 		<p>
 			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-warning-content-detalle">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-warning-content-detalle">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -1119,7 +1119,7 @@
 		<p>
 			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-error-content-detalle">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-error-content-detalle">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	<!--  -->

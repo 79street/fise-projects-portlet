@@ -973,7 +973,7 @@ $(document).ready(function () {
 			</span> -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -983,7 +983,7 @@ $(document).ready(function () {
 			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>
 	</div>
 	
@@ -992,7 +992,7 @@ $(document).ready(function () {
 			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-confirm-envio-content">¿Está seguro?</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-envio-content">¿Está seguro?</label>
 		</p>
 	</div>
 	
@@ -1002,7 +1002,7 @@ $(document).ready(function () {
 			</span> -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-report-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -1011,7 +1011,7 @@ $(document).ready(function () {
 		<p>
 			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-info-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-info-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -1019,7 +1019,7 @@ $(document).ready(function () {
 		<p>
 			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-warning-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-warning-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -1027,7 +1027,7 @@ $(document).ready(function () {
 		<p>
 			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-error-content">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-error-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	<!--  -->
