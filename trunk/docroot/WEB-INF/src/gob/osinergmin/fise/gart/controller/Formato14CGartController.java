@@ -721,7 +721,7 @@ public class Formato14CGartController {
 			pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
 			pRequest.getPortletSession().setAttribute("mensajeError", formatoMensaje.getMensajeError(), PortletSession.APPLICATION_SCOPE);
 		}else{
-			pRequest.getPortletSession().setAttribute("mensajeInformacion", "Datos guardados satisfactoriamente.", PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("mensajeInformacion", "El Formato 14C se guardó satisfactoriament", PortletSession.APPLICATION_SCOPE);
 		}
 		/***limpiamos las variables en sesion utilizados para la edicion de archivos de carga**/
 		pRequest.getPortletSession().setAttribute("codEmpresaEdit", "", PortletSession.APPLICATION_SCOPE);

@@ -845,7 +845,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 			pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
 			pRequest.getPortletSession().setAttribute("mensajeError", formatoMensaje.getMensajeError(), PortletSession.APPLICATION_SCOPE);
 		}else{
-			pRequest.getPortletSession().setAttribute("mensajeInformacion", "Datos guardados satisfactoriamente.", PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("mensajeInformacion", "El Formato 14A se guardó satisfactoriamente", PortletSession.APPLICATION_SCOPE);
 		}
 		//limpiamos las variables en sesion utilizados para la edicion de archivos de carga
 		pRequest.getPortletSession().setAttribute("codEmpresaEdit", "", PortletSession.APPLICATION_SCOPE);
@@ -1543,7 +1543,7 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							//
 							formulario.setEtapa(etapaEdit);
 							
-							if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
 									Long.parseLong(mesPres) == formulario.getMesPresent() &&
 									anioIniVigencia.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&
