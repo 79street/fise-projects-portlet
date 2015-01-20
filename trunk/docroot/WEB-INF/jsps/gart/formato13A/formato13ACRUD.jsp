@@ -511,7 +511,7 @@
 			</span> -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="lblMessage">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="lblMessage">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -520,7 +520,7 @@
 		<p>
 			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-info-content-crud">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-info-content-crud">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -528,7 +528,7 @@
 		<p>
 			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-warning-content-crud">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-warning-content-crud">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -536,7 +536,7 @@
 		<p>
 			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-message-error-content-crud">Datos grabados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-error-content-crud">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	<!--  -->

@@ -407,7 +407,7 @@ $(document).ready(function () {
 		<p>
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>			
-			<label id="<portlet:namespace/>dialog-message-content-liquidacion">Datos eliminados exit&oacute;samente.</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-content-liquidacion">Datos eliminados exit&oacute;samente.</label>
 		</p>	
 	</div>
 	
@@ -415,7 +415,7 @@ $(document).ready(function () {
 		<p>	
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>
-			<label id="<portlet:namespace/>dialog-confirm-content-eliminar">¿Está seguro?</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content-eliminar">¿Está seguro?</label>
 		</p>
 	</div>
 	
@@ -424,7 +424,7 @@ $(document).ready(function () {
 		<p>	
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>
-			<label id="<portlet:namespace/>dialog-confirm-content-establecer">¿Está seguro?</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content-establecer">¿Está seguro?</label>
 		</p>
 	</div>
 	
@@ -432,7 +432,7 @@ $(document).ready(function () {
 		<p>	
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>
-			<label id="<portlet:namespace/>dialog-confirm-content-liquidar">¿Está seguro?</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content-liquidar">¿Está seguro?</label>
 		</p>
 	</div>
 	
@@ -442,7 +442,7 @@ $(document).ready(function () {
 		<p>						
 			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
 		</p>
 	</div>
 	
@@ -452,7 +452,7 @@ $(document).ready(function () {
 		<p>	
 			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-error-content">Error..</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-error-content">Error..</label>
 		</p>
 	</div>
 	
@@ -462,7 +462,7 @@ $(document).ready(function () {
 		<p>	
 			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label id="<portlet:namespace/>dialog-info-content">Error..</label>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-info-content">Error..</label>
 		</p>
 	</div>
 		

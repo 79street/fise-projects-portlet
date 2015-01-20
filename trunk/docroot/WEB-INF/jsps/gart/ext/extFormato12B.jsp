@@ -225,7 +225,7 @@
 			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 	    		 //formato12B.lblMessageInicial.html("El año debe contener 4 dígitos");
 				 //formato12B.dialogMessageGeneralInicial.dialog("open");
-				 formato12B.dialogMessageWarningContent.html("Debe ingresar un año declarado desde válido");
+				 formato12B.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde válido");
 				 formato12B.dialogMessageWarning.dialog("open");
 				 return false; 
 	    		
@@ -234,7 +234,7 @@
 	    			
 	    			 //formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial ");
 					 //formato12B.dialogMessageGeneralInicial.dialog("open"); 
-					 formato12B.dialogMessageWarningContent.html("El año declarado desde no puede exceder al año declarado hasta");
+					 formato12B.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 					 formato12B.dialogMessageWarning.dialog("open");
 					 return false; 
 	    		 }
@@ -248,7 +248,7 @@
 					if(parseFloat(mesfin)<parseFloat(mesinicio)){
 						 //formato12B.lblMessageInicial.html("El mes final debe ser posterior al mes inicial");
 						 //formato12B.dialogMessageGeneralInicial.dialog("open"); 
-						 formato12B.dialogMessageWarningContent.html("El mes declarado desde no puede exceder al mes declarado hasta");
+						 formato12B.dialogMessageWarningContent.html("El Mes Declarado Desde no puede exceder al Mes Declarado Hasta");
 						 formato12B.dialogMessageWarning.dialog("open");
 						 return false; 
 					}
@@ -941,7 +941,7 @@
 					 
 					//formato12B.lblMessage.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declara seleccionado");
 					//formato12B.dialogMessageGeneral.dialog("open");
-					formato12B.dialogMessageInfoDetalleContent.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declarar seleccionado");
+					formato12B.dialogMessageInfoDetalleContent.html("No existe Costos Estándares Establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a Declarar seleccionado");
 					formato12B.dialogMessageInfoDetalle.dialog("open");
 			}
 			formato12B.loadCostoTotal(formato12B.cmbCodEmpresa.val());
@@ -1410,7 +1410,7 @@
 								}else if(item.msg == "-1"){
 									//formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");
 									//formato12B.dialogMessageGeneral.dialog("open");
-									formato12B.dialogMessageErrorDetalleContent.html("El Formato ya existe para la Distribuidora Eléctrica y Periodo a declarar seleccionado");
+									formato12B.dialogMessageErrorDetalleContent.html("El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar seleccionado");
 									formato12B.dialogMessageErrorDetalle.dialog("open");
 									
 								}else if(item.msg == "-2"){
@@ -1443,7 +1443,7 @@
 			}else{
 				//formato12B.lblMessage.html("Debe al menos registrar un campo por zona beneficiaria");
 				//formato12B.dialogMessageGeneral.dialog("open");
-				formato12B.dialogMessageWarningDetalleContent.html("Debe al menos registrar un campo por zona beneficiaria");
+				formato12B.dialogMessageWarningDetalleContent.html("Debe al menos registrar un campo por Zona Beneficiaria");
 				formato12B.dialogMessageWarningDetalle.dialog("open");
 			}
 			

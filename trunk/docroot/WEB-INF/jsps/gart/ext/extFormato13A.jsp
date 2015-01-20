@@ -238,21 +238,21 @@ var formato13A= {
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");
-			 formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado desde válido");
+			 formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde válido");
 			 formato13A.dialogMessageWarning.dialog("open");
    		
    	 }else if(inicio.val().length>0){
    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
    			//formato13A.lblMessageInicial.html("El año final debe ser mayor o igual al inicial");
    			//formato13A.dialogMessageGeneralInicial.dialog("open");
-   			formato13A.dialogMessageWarningContent.html("El Año Declarado desde no puede exceder al año declarado hasta");
+   			formato13A.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
    		 }
    	 }else if(fin.val().length>0){
    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
    			//formato13A.lblMessageInicial.html("El año inicial debe ser menor o igual al final");
    			//formato13A.dialogMessageGeneralInicial.dialog("open");
-   			formato13A.dialogMessageWarningContent.html("El Año Declarado desde no puede exceder al año declarado hasta");
+   			formato13A.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
    		 }
    		 
@@ -263,7 +263,7 @@ var formato13A= {
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");
-			 formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado desde válido");
+			 formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde válido");
 			 formato13A.dialogMessageWarning.dialog("open");
 			 return false; 
    		
@@ -1212,7 +1212,7 @@ var formato13A= {
 					
 					formato13A.buscarDetalles();
 				}else if(data == '-1'){
-					formato13A.lblMessage.html("El formato ya existe para esa Distribuidora Eléctrica para ese periodo");
+					formato13A.lblMessage.html("El formato ya existe para la Distribuidora Eléctrica y Periodo seleccionado");
 					formato13A.dialogMessageGeneral.dialog("open");
 					
 				}else if(data == '-2'){
@@ -1415,7 +1415,7 @@ var formato13A= {
 					formato13A.dialogMessageErrorCrud.dialog("open");
 					formato13A.unblockUI();
 				}else{								
-					var addhtmError='Error al realizar el Envio Definitivo del Formato 13A.';					
+					var addhtmError='Error al realizar el Envío Definitivo del Formato 13A.';					
 					formato13A.dialogMessageErrorCrudContent.html(addhtmError);
 					formato13A.dialogMessageErrorCrud.dialog("open");
 					formato13A.unblockUI();
@@ -1960,7 +1960,7 @@ var formato13A= {
 		//periodo de alta
 		if( parseFloat(formato13A.anoAltaDetalle.val())*100 + parseFloat(formato13A.mesAltaDetalle.val()) > parseFloat(formato13A.anoPresentacionDetalle.val())*100 + parseFloat(formato13A.mesPresentacionDetalle.val()) ){
 			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
-			formato13A.dialogMessageWarningDetalleContent.html("El Periodo de Alta no puede ser mayor al periodo a declarar");
+			formato13A.dialogMessageWarningDetalleContent.html("El Periodo de Alta no puede ser mayor al Periodo a Declarar");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
 			return false;
 		}
@@ -2026,7 +2026,7 @@ var formato13A= {
 				formato13A.st6Detalle.val()==0 &&
 				formato13A.stserDetalle.val()==0 &&
 				formato13A.stespDetalle.val()==0 ){
-			formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar al menos una cantidad para los Sectores típicos");
+			formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar al menos una cantidad para los Sectores Típicos");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
 		    formato13A.idZonaBenefDetalle.focus();
 		    return false;

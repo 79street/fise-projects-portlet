@@ -553,7 +553,7 @@ function validarBusqueda() {
 		  var numstr = trim($('#i_anio_d').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  //alert('Ingrese un año desde válido');
-			  $("#dialog-message-warning-content").html('Debe ingresar un año declarado desde válido');
+			  $("#dialog-message-warning-content").html('Debe ingresar un Año Declarado Desde válido');
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_anio_d').focus();
 			  return false;
@@ -563,7 +563,7 @@ function validarBusqueda() {
 		  var numstr = trim($('#i_anio_h').val());
 		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  //alert('Ingrese un año hasta válido');
-			  $("#dialog-message-warning-content").html('Debe ingresar un año declarado desde válido');
+			  $("#dialog-message-warning-content").html('Debe ingresar un Año Declarado Hasta válido');
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_anio_h').focus();
 			  return false;
@@ -572,7 +572,7 @@ function validarBusqueda() {
 	  if($('#i_anio_d').val().length != '' && $('#i_anio_h').val().length != '' ) {
 		  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){
 				//alert('El año desde no puede exceder al año hasta');
-				$("#dialog-message-warning-content").html('El año declarado desde no puede exceder al año declarado hasta');
+				$("#dialog-message-warning-content").html('El Año Declarado Desde no puede exceder al Año Declarado Hasta');
 				$("#dialog-message-warning").dialog( "open" );	
 				return false;
 		  }
@@ -580,7 +580,7 @@ function validarBusqueda() {
 	  
 	  if($('#s_etapa').val().length == '' ) { 	    
 		    //alert('Seleccione una etapa');
-		    $("#dialog-message-warning-content").html('Debe seleccionar una etapa');
+		    $("#dialog-message-warning-content").html('Debe seleccionar una Etapa');
 			$("#dialog-message-warning").dialog( "open" );	
 		    document.getElementById('s_etapa').focus();
 		    return false; 
@@ -599,7 +599,7 @@ function validarFormulario() {
 	  }
 	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
 		    //alert('Debe seleccionar el periodo a declarar');
-		    $("#dialog-message-warning-content").html('Debe seleccionar el periodo a declarar');
+		    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('s_periodoenvio_present').focus();
 		    return false; 
@@ -614,7 +614,7 @@ function validarFormulario() {
 	  if( $('#flagPeriodoEjecucion').val()=='S' ){
 		  if($('#i_anioejecuc').val().length == '' ) {		  
 			    //alert('Debe ingresar el año de ejecución');
-			    $("#dialog-message-warning-content").html('Debe ingresar el año de ejecución');
+			    $("#dialog-message-warning-content").html('Debe ingresar el Año de Ejecución');
 				$("#dialog-message-warning").dialog( "open" );
 			    document.getElementById('i_anioejecuc').focus();
 			    return false; 
@@ -622,14 +622,14 @@ function validarFormulario() {
 			  var numstr = trim($('#i_anioejecuc').val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 				  //alert('Ingrese un año de ejecución válido');
-				  $("#dialog-message-warning-content").html('Debe ingresar un año de ejecución válido');
+				  $("#dialog-message-warning-content").html('Debe ingresar un Año de Ejecución válido');
 				  $("#dialog-message-warning").dialog( "open" );
 				  return false;
 			  }
 		  }
 		  if($('#s_mes_ejecuc').val().length == '' ) {		  
 			    //alert('Debe ingresar el mes de ejecución');
-			    $("#dialog-message-warning-content").html('Debe ingresar el mes de ejecución');
+			    $("#dialog-message-warning-content").html('Debe ingresar el Mes de Ejecución');
 				$("#dialog-message-warning").dialog( "open" );
 			    document.getElementById('s_mes_ejecuc').focus();
 			    return false; 
@@ -638,7 +638,7 @@ function validarFormulario() {
 	  //valores de formulario
 	  if($('#i_nroEmpad_r').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de empadronados para Rural');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para la Zona Rural');
+		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Empadronados para la Zona Rural');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_r').focus();
 		    return false; 
@@ -650,7 +650,7 @@ function validarFormulario() {
 	  }*/
 	  if($('#i_nroAgentGlp_r').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de agentes para Rural');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para la Zona Rural');
+		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Agentes para la Zona Rural');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_r').focus();
 		    return false; 
@@ -673,7 +673,7 @@ function validarFormulario() {
 	  ////////////////////
 	  if($('#i_nroEmpad_p').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de empadronados para Provincia');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para la Zona Urbano Provincias');
+		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Empadronados para la Zona Urbano Provincias');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_p').focus();
 		    return false; 
@@ -685,7 +685,7 @@ function validarFormulario() {
 	  }*/
 	  if($('#i_nroAgentGlp_p').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de agentes para Provincia');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para la Zona Urbano Provincias');
+		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Agentes para la Zona Urbano Provincias');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_p').focus();
 		    return false; 
@@ -708,7 +708,7 @@ function validarFormulario() {
 	  ///////////
 	  if($('#i_nroEmpad_l').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de empadronados para Lima');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de empadronados para la Zona Urbano Lima');
+		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Empadronados para la Zona Urbano Lima');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_l').focus();
 		    return false; 
@@ -720,7 +720,7 @@ function validarFormulario() {
 	  }*/
 	  if($('#i_nroAgentGlp_l').val().length == '' ) {		  
 		    //alert('Debe ingresar el número de agentes para Lima');
-		    $("#dialog-message-warning-content").html('Debe ingresar el número de agentes para la Zona Urbano Lima');
+		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Agentes para la Zona Urbano Lima');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_l').focus();
 		    return false; 
@@ -746,7 +746,7 @@ function validarFormulario() {
 	   if($('#i_nroEmpad_r').val() == '0' && $('#i_nroAgentGlp_r').val() == '0' && $('#i_nroEmpad_p').val() == '0' && 
 			   $('#i_nroAgentGlp_p').val() == '0' && $('#i_nroEmpad_l').val() == '0' && $('#i_nroAgentGlp_l').val() == '0'  ) {		  
 		    //alert('Debe ingresar al menos un valor en el nro. de empadronados o nro. de agentes autorizados para el grupo de beneficiario');
-		    $("#dialog-message-warning-content").html('Debe ingresar al menos un valor en el nro. de empadronados o nro. de agentes autorizados para el grupo de beneficiario');
+		    $("#dialog-message-warning-content").html('Debe ingresar al menos un valor en el Nro. de Empadronados o Nro. de Agentes Autorizados para el Grupo de Beneficiarios');
 			$("#dialog-message-warning").dialog( "open" );
 		    //document.getElementById('i_nroEmpad_r').focus();
 		    return false; 
@@ -765,7 +765,7 @@ function validarArchivoCarga() {
   }
   if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
 	    //alert('Debe seleccionar el periodo a declarar');
-	    $("#dialog-message-warning-content").html('Debe seleccionar el periodo a declarar para proceder con la carga del archivo');
+	    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
 		$("#dialog-message-warning").dialog( "open" );
 	    document.getElementById('s_periodoenvio_present').focus();
 	    return false; 
@@ -1500,7 +1500,7 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);*/
 				
 				if( data.costoEmpR == '0' && data.costoAgentR == '0' && data.costoEmpP == '0' && data.costoAgentP == '0' && data.costoEmpL == '0' && data.costoAgentL == '0' ){
-					var addhtml2='No existe costos estándares establecidos en el Formato 14A para la Distribuidora Eléctrica y Periodo a declarar seleccionado';					
+					var addhtml2='No existe Costos Estándares Establecidos en el Formato 14A para la Distribuidora Eléctrica y Periodo a declarar seleccionado';					
 					$("#dialog-message-info-content").html(addhtml2);
 					$("#dialog-message-info").dialog( "open" );	
 				}

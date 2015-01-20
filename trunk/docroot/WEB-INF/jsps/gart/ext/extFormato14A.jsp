@@ -474,7 +474,7 @@ var formato14A= {
 			  var numstr = trim(formato14A.i_anioDesde.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 				  //alert('Ingrese un año desde válido');
-				  formato14A.dialogMessageWarningContent.html('Debe ingresar un año declarado desde válido');
+				  formato14A.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Desde válido');
 				  formato14A.dialogMessageWarning.dialog("open");
 				  formato14A.i_anioDesde.focus();
 				  return false;
@@ -484,7 +484,7 @@ var formato14A= {
 			  var numstr = trim(formato14A.i_anioHasta.val());
 			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 				  //alert('Ingrese un año hasta válido');
-				  formato14A.dialogMessageWarningContent.html('Debe ingresar un año declarado hasta válido');
+				  formato14A.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Hasta válido');
 				  formato14A.dialogMessageWarning.dialog("open");
 				  formato14A.i_anioHasta.focus();
 				  return false;
@@ -493,14 +493,14 @@ var formato14A= {
 		  if(formato14A.i_anioDesde.val().length != '' && formato14A.i_anioHasta.val().length != '' ) {
 			  if( parseFloat(formato14A.i_anioDesde.val()) > parseFloat(formato14A.i_anioHasta.val()) ){
 					//alert('El año desde no puede exceder al año hasta');
-					formato14A.dialogMessageWarningContent.html('El año declarado desde no puede exceder al año declarado hasta');
+					formato14A.dialogMessageWarningContent.html('El Año Declarado Desde no puede exceder al Año Declarado Hasta');
 					formato14A.dialogMessageWarning.dialog("open");
 					return false;
 			  }
 		  }
 		  if(formato14A.i_etapaB.val().length == '' ) { 	    
 			    //alert('Seleccione una etapa');
-			    formato14A.dialogMessageWarningContent.html('Debe seleccionar una etapa');
+			    formato14A.dialogMessageWarningContent.html('Debe seleccionar una Etapa');
 				formato14A.dialogMessageWarning.dialog("open");
 			    formato14A.i_etapaB.focus();
 			    return false; 
@@ -1608,7 +1608,7 @@ var formato14A= {
 				cod_Etapa=etapa;
 			}else{
 				//alert(" No tiene autorización para realizar esta operación");
-				formato14A.dialogMessageInfoContent.html('No tiene autorización para realizar esta acci;on');
+				formato14A.dialogMessageInfoContent.html('No tiene autorización para realizar esta acción');
 				formato14A.dialogMessageInfo.dialog("open");
 			}
 
@@ -1714,7 +1714,7 @@ var formato14A= {
 		}*/
 		if(formato14A.f_periodoEnvio==null || formato14A.f_periodoEnvio.val().length == '' ) {		  
 			//alert('Debe seleccionar el periodo a declarar');
-			formato14A.dialogMessageWarningContent.html('Debe ingresar el periodo a declarar');
+			formato14A.dialogMessageWarningContent.html('Debe ingresar el Periodo a Declarar');
 			formato14A.dialogMessageWarning.dialog("open");
 			formato14A.f_periodoEnvio.focus();
 			return false; 
@@ -1722,7 +1722,7 @@ var formato14A= {
 		if( formato14A.f_flagPeriodo.val()=='S' ){
 			if($('#anioInicioVigencia').val().length == '' ) {		  
 				//alert('Debe ingresar el año de inicio de vigencia');
-				formato14A.dialogMessageWarningContent.html('Debe ingresar el año de inicio de vigencia');
+				formato14A.dialogMessageWarningContent.html('Debe ingresar el Año de Inicio de Vigencia');
 				formato14A.dialogMessageWarning.dialog("open");
 				$('#anioInicioVigencia').focus();
 				return false; 
@@ -1730,14 +1730,14 @@ var formato14A= {
 				var numstr = trim($('#anioInicioVigencia').val());
 				if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 					//alert('Ingrese un año de inicio de inicio de vigencia válido');
-					formato14A.dialogMessageWarningContent.html('Debe Ingresar un año de inicio de vigencia válido');
+					formato14A.dialogMessageWarningContent.html('Debe Ingresar un Año de Inicio de Vigencia válido');
 					formato14A.dialogMessageWarning.dialog("open");
 					return false;
 			 	}
 		 	}
 			if($('#anioFinVigencia').val().length == '' ) {		  
 				//alert('Debe ingresar el año de fin de vigencia');
-				formato14A.dialogMessageWarningContent.html('Debe ingresar el año de fin de vigencia');
+				formato14A.dialogMessageWarningContent.html('Debe ingresar el Año de Fin de Vigencia');
 				formato14A.dialogMessageWarning.dialog("open");
 				$('#anioFinVigencia').focus();
 				return false; 
@@ -1745,7 +1745,7 @@ var formato14A= {
 				var numstr = trim($('#anioFinVigencia').val());
 				if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 					//alert('Ingrese un año de fin de vigencia válido');
-					formato14A.dialogMessageWarningContent.html('Debe ingresar un año de fin de vigencia válido');
+					formato14A.dialogMessageWarningContent.html('Debe ingresar un Año de Fin de Vigencia válido');
 					formato14A.dialogMessageWarning.dialog("open");
 					return false;
 				}
@@ -1754,14 +1754,14 @@ var formato14A= {
 		//valores de formulario
 		if(formato14A.f_nroBenefR.val().length == '' ) {		  
 			//alert('Debe ingresar el número de empadronados para Rural');
-			formato14A.dialogMessageWarningContent.html('Debe ingresar el número de empadronados para la Zona Rural');
+			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Empadronados para la Zona Rural');
 			formato14A.dialogMessageWarning.dialog("open");
 			formato14A.f_nroBenefR.focus();
 			return false; 
 		}
 		if(formato14A.f_nroAgentR.val().length == '' ) {		  
 			//alert('Debe ingresar el número de agentes para Rural');
-			formato14A.dialogMessageWarningContent.html('Debe ingresar el número de agentes para la Zona Rural');
+			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Agentes para la Zona Rural');
 			formato14A.dialogMessageWarning.dialog("open");
 			formato14A.f_nroAgentR.focus();
 			return false; 
@@ -1769,14 +1769,14 @@ var formato14A= {
 		////////////////////
 		if(formato14A.f_nroBenefP.val().length == '' ) {		  
 			//alert('Debe ingresar el número de empadronados para Provincia');
-			formato14A.dialogMessageWarningContent.html('Debe ingresar el número de empadronados para la Zona Urbano Provincias');
+			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Empadronados para la Zona Urbano Provincias');
 			formato14A.dialogMessageWarning.dialog("open");
 			formato14A.f_nroBenefP.focus();
 			return false; 
 		}
 		if(formato14A.f_nroAgentP.val().length == '' ) {		  
 			//alert('Debe ingresar el número de agentes para Provincia');
-			formato14A.dialogMessageWarningContent.html('Debe ingresar el número de agentes para la Zona Urbano Provincias');
+			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Agentes para la Zona Urbano Provincias');
 			formato14A.dialogMessageWarning.dialog("open");
 			formato14A.f_nroAgentP.focus();
 			return false; 
@@ -1784,14 +1784,14 @@ var formato14A= {
 		///////////////////
 		if(formato14A.f_nroBenefL.val().length == '' ) {		  
 			//alert('Debe ingresar el número de empadronados para Lima');
-			formato14A.dialogMessageWarningContent.html('Debe ingresar el número de empadronados para la Zona Lima');
+			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Empadronados para la Zona Lima');
 			formato14A.dialogMessageWarning.dialog("open");
 			formato14A.f_nroBenefL.focus();
 			return false; 
 		}
 		if(formato14A.f_nroAgentL.val().length == '' ) {		  
 			//alert('Debe ingresar el número de agentes para Lima');
-			formato14A.dialogMessageWarningContent.html('Debe ingresar el número de agentes para la Zona Lima');
+			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Agentes para la Zona Lima');
 			formato14A.dialogMessageWarning.dialog("open");
 			formato14A.f_nroAgentL.focus();
 			return false; 
@@ -1808,7 +1808,7 @@ var formato14A= {
 		}
 		if(formato14A.f_periodoEnvio==null || formato14A.f_periodoEnvio.val().length == '' ) {		  
 			//alert('Debe seleccionar el periodo a declarar');
-			formato14A.dialogMessageWarningContent.html('Debe seleccionar el periodo a declarar para proceder con la carga del archivo');
+			formato14A.dialogMessageWarningContent.html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
 			formato14A.dialogMessageWarning.dialog("open");
 			formato14A.f_periodoEnvio.focus();
 			return false; 
@@ -2044,7 +2044,7 @@ var formato14A= {
 					formato14A.dialogMessageError.dialog("open");
 					formato14A.initBlockUI();
 				}else{								
-					var addhtmError='Error al realizar el Envio Definitivo del Formato 14A.';					
+					var addhtmError='Error al realizar el Envío Definitivo del Formato 14A.';					
 					formato14A.dialogMessageErrorContent.html(addhtmError);
 					formato14A.dialogMessageError.dialog("open");
 					formato14A.initBlockUI();
