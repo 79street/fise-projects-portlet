@@ -2511,7 +2511,7 @@ public class Formato12CGartController {
 								FiseConstants.BLANCO.equals(sMsgOperativa.toString())
 								){
 							
-							if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresentacion())) &&
 									Long.parseLong(mesPres) == formulario.getMesPresentacion() 
 									){

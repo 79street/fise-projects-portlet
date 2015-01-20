@@ -1481,7 +1481,7 @@ public class Formato12AGartController {
 							
 							formulario.setEtapa(etapaEdit);
 							//
-							if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
 									Long.parseLong(mesPres) == formulario.getMesPresent() &&
 									anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
@@ -1675,7 +1675,7 @@ public class Formato12AGartController {
 							formulario.setAnioEjecuc(Long.parseLong(key2));
 							formulario.setMesEjecuc(Long.parseLong(key3));
 
-							if( codEmpresaEdit.equals(formulario.getCodigoEmpresa()) &&
+							if( codEmpresaEdit.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
 									Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
 									anioEjecEdit.equals(String.valueOf(formulario.getAnioPresent())) &&

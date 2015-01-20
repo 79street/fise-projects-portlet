@@ -1734,7 +1734,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 						formulario.setAnioInicioVigencia(Long.parseLong(key4));
 						formulario.setAnioFinVigencia(Long.parseLong(key5));
 
-						if( codEmpresaEdit.equals(formulario.getCodigoEmpresa()) &&
+						if( codEmpresaEdit.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 								anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
 								Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
 								anioIniVigEdit.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&

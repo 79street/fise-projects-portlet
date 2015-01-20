@@ -2485,7 +2485,7 @@ public class Formato12DGartController {
 								FiseConstants.BLANCO.equals(sMsgOperativa.toString())
 								){
 							
-							if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresentacion())) &&
 									Long.parseLong(mesPres) == formulario.getMesPresentacion() 
 									){
@@ -2698,7 +2698,7 @@ public Formato12DMensajeBean readTxtFile(FileEntry archivo,UploadPortletRequest 
 							
 							formulario.setEtapa(etapaEdit);
 
-							if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresentacion())) &&
 									Long.parseLong(mesPres)==formulario.getMesPresentacion() 
 									//anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
