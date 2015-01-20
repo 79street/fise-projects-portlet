@@ -1189,7 +1189,7 @@ public class Formato13AGartController {
 			response.setRenderParameter("error", lstErrores.get(0).getDescripcion());
 
 		} else {
-			response.setRenderParameter("error", "Carga exitosa");
+			response.setRenderParameter("error", "El Formato 13A se guardó satisfactoriamente");
 			response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.UPDATE));
 			response.setRenderParameter("crud", "UPDATE");
 			response.setRenderParameter("readonly", "true");

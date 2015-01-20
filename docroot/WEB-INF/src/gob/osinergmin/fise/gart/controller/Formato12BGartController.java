@@ -440,7 +440,7 @@ public class Formato12BGartController {
 			response.setRenderParameter("error", lstErrores.get(0).getDescripcion().substring(lstErrores.get(0).getDescripcion().indexOf(":")+1 , lstErrores.get(0).getDescripcion().length()));
 		} else {
 			response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.UPDATE));
-			response.setRenderParameter("error", "Carga exitosa");
+			response.setRenderParameter("error", "El Formato 12B se guardó satisfactoriamente");
 			response.setRenderParameter("action", "viewFormato");
 		}
 		
