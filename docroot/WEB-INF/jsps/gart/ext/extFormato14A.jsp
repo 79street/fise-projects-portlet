@@ -1796,6 +1796,33 @@ var formato14A= {
 			formato14A.f_nroAgentL.focus();
 			return false; 
 		}
+		//validacion para no grabacion de ceros
+		if( formato14A.f_impEsqInvR.val()=='0.00' && formato14A.f_impDeclJuradaR.val()=='0.00' && formato14A.f_impFichaVerifR.val()=='0.00' 
+			&& formato14A.f_repEsqInvR.val()=='0.00' && formato14A.f_verifInfoR.val()=='0.00' && formato14A.f_elabArchBenefR.val()=='0.00' 
+			&& formato14A.f_digitFichaR.val()=='0.00' && formato14A.f_impVolanteR.val()=='0.00' && formato14A.f_impAficheR.val()=='0.00'
+			&& formato14A.f_repFolletoR.val()=='0.00' && formato14A.f_spotPublicTvR.val()=='0.00' && formato14A.f_spotPublicRadioR.val()=='0.00'
+			&& formato14A.f_nroBenefR.val()=='0' && formato14A.f_promConvR.val()=='0.00' && formato14A.f_regFirmaConvR.val()=='0.00' 
+			&& formato14A.f_impBandR.val()=='0.00' && formato14A.f_nroAgentR.val()=='0'
+			&&//	
+			formato14A.f_impEsqInvP.val()=='0.00' && formato14A.f_impDeclJuradaP.val()=='0.00' && formato14A.f_impFichaVerifP.val()=='0.00' 
+			&& formato14A.f_repEsqInvP.val()=='0.00' && formato14A.f_verifInfoP.val()=='0.00' && formato14A.f_elabArchBenefP.val()=='0.00' 
+			&& formato14A.f_digitFichaP.val()=='0.00' && formato14A.f_impVolanteP.val()=='0.00' && formato14A.f_impAficheP.val()=='0.00'
+			&& formato14A.f_repFolletoP.val()=='0.00' && formato14A.f_spotPublicTvP.val()=='0.00' && formato14A.f_spotPublicRadioP.val()=='0.00'
+			&& formato14A.f_nroBenefP.val()=='0' && formato14A.f_promConvP.val()=='0.00' && formato14A.f_regFirmaConvP.val()=='0.00' 
+			&& formato14A.f_impBandP.val()=='0.00' && formato14A.f_nroAgentP.val()=='0'
+			&&//		
+			formato14A.f_impEsqInvL.val()=='0.00' && formato14A.f_impDeclJuradaL.val()=='0.00' && formato14A.f_impFichaVerifL.val()=='0.00' 
+			&& formato14A.f_repEsqInvL.val()=='0.00' && formato14A.f_verifInfoL.val()=='0.00' && formato14A.f_elabArchBenefL.val()=='0.00' 
+			&& formato14A.f_digitFichaL.val()=='0.00' && formato14A.f_impVolanteL.val()=='0.00' && formato14A.f_impAficheL.val()=='0.00'
+			&& formato14A.f_repFolletoL.val()=='0.00' && formato14A.f_spotPublicTvL.val()=='0.00' && formato14A.f_spotPublicRadioL.val()=='0.00'
+			&& formato14A.f_nroBenefL.val()=='0' && formato14A.f_promConvL.val()=='0.00' && formato14A.f_regFirmaConvL.val()=='0.00' 
+			&& formato14A.f_impBandL.val()=='0.00' && formato14A.f_nroAgentL.val()=='0'
+		
+		){
+			formato14A.dialogMessageWarningContent.html('Debe ingresar al menos un valor para poder guardar un formato');
+			formato14A.dialogMessageWarning.dialog("open");
+		}
+		
 		return true; 
 	},
 	validarArchivoCarga : function() {		

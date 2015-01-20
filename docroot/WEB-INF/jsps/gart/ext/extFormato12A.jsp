@@ -752,6 +752,14 @@ function validarFormulario() {
 		    return false; 
 	  }
 	  
+	  //validacion de ceros
+	  if( $('#i_nroEmpad_r').val()=='0' && $('#i_nroAgentGlp_r').val()=='0' && $('#i_despPersonal_r').val()=='0.00' && $('#i_activExtraord_r').val()=='0.00' &&    
+		  $('#i_nroEmpad_p').val()=='0' && $('#i_nroAgentGlp_p').val()=='0' && $('#i_despPersonal_p').val()=='0.00' && $('#i_activExtraord_p').val()=='0.00' &&
+		  $('#i_nroEmpad_l').val()=='0' && $('#i_nroAgentGlp_l').val()=='0' && $('#i_despPersonal_l').val()=='0.00' && $('#i_activExtraord_l').val()=='0.00' ){
+		  	$("#dialog-message-warning-content").html('Debe ingresar al menos un valor para poder guardar un formato');
+			$("#dialog-message-warning").dialog( "open" );
+		    return false;
+	  }
 	  
 	  return true; 
 	}
