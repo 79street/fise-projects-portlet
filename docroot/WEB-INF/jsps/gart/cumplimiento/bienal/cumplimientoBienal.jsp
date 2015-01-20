@@ -33,6 +33,7 @@ $(document).ready(function () {
 	 $("#<portlet:namespace/>reportePdf").click(function() {<portlet:namespace/>mostrarReportePdf();});
 	 $("#<portlet:namespace/>reporteExcel").click(function() {<portlet:namespace/>mostrarReporteExcel();});
  	//initBlockUI();	
+ 	initDialogs();
 });
 
 function <portlet:namespace/>mostrarReportePdf(){
@@ -73,7 +74,9 @@ function <portlet:namespace />validarCumplimientoBienal(){
 	console.debug('entrando a validar formulario');
 	if($("#<portlet:namespace/>s_periodo_cump").val()==null || 
 			$("#<portlet:namespace/>s_periodo_cump").val()==''){		
-		alert('Debe seleccionar un Periodo.'); 	
+		//alert('Debe seleccionar un Periodo.'); 	
+		$("#<portlet:namespace/>dialog-alert-content").html('Debe seleccionar un Periodo');
+		$("#<portlet:namespace/>dialog-alert").dialog( "open" );
 	 	return false;
 	}else{
 		return true;
@@ -82,6 +85,19 @@ function <portlet:namespace />validarCumplimientoBienal(){
 
 function verReporte(){
 	window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
+}
+
+function initDialogs(){	
+	$( "#<portlet:namespace/>dialog-alert" ).dialog({
+		modal: true,
+		width: 450,	
+		autoOpen: false,
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
 }
 //////////
 </script>
@@ -160,5 +176,14 @@ function verReporte(){
 			</div>
 		</div>
 
+	<!-- DIALOGO PARA ALERTAR DE VALIDACION -->
+	
+	<div id="<portlet:namespace/>dialog-alert" title="Mensaje de Validaci&oacute;n" style="display: none;"> 
+		<p>						
+			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
+		</p>
+	</div>
 
 </form> 
