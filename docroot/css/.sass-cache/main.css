@@ -13,3 +13,10 @@
   overflow: hidden;
   text-indent: -99999px; }
 
+.labelCentrado {
+  display: table-cell;
+  height: 50px;
+  text-align: left;
+  vertical-align: middle;
+  width: 1008px; }
+
