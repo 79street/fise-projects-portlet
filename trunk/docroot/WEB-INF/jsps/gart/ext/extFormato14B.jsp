@@ -1918,6 +1918,28 @@ var formato14B= {
 			formato14B.f_nroBenefL.focus();
 			return false; 
 		}
+		//validacion de ceros
+		if( formato14B.f_impValEdeR.val()=='0.00' && formato14B.f_impValNoEdeR.val()=='0.00' && formato14B.f_nroValesImpR.val()=='0' && formato14B.f_costoTotalValR.val()=='0.00'
+			&& formato14B.f_nroValesReptR.val()=='0' && formato14B.f_costoTotalValOficR.val()=='0.00' && formato14B.f_nroValesEntrR.val()=='0' && formato14B.f_costoEnvPadronR.val()=='0.00'
+			&& formato14B.f_nroValesFisR.val()=='0' && formato14B.f_costoUnitDigitR.val()=='0.00' && formato14B.f_costoAtenSolicR.val()=='0.00' && formato14B.f_costoAtenConsR.val()=='0.00'
+			&& formato14B.f_nroTotalAtenR.val()=='0' && formato14B.f_costoPersonalR.val()=='0.00' && formato14B.f_capacAgentR.val()=='0.00' && formato14B.f_utilMatOficR.val()=='0.00'
+			&&//
+			formato14B.f_impValEdeP.val()=='0.00' && formato14B.f_impValNoEdeP.val()=='0.00' && formato14B.f_nroValesImpP.val()=='0' && formato14B.f_costoTotalValP.val()=='0.00'
+			&& formato14B.f_nroValesReptP.val()=='0' && formato14B.f_costoTotalValOficP.val()=='0.00' && formato14B.f_nroValesEntrP.val()=='0' && formato14B.f_costoEnvPadronP.val()=='0.00'
+			&& formato14B.f_nroValesFisP.val()=='0' && formato14B.f_costoUnitDigitP.val()=='0.00' && formato14B.f_costoAtenSolicP.val()=='0.00' && formato14B.f_costoAtenConsP.val()=='0.00'
+			&& formato14B.f_nroTotalAtenP.val()=='0' && formato14B.f_costoPersonalP.val()=='0.00' && formato14B.f_capacAgentP.val()=='0.00' && formato14B.f_utilMatOficP.val()=='0.00'
+			&&//	
+			formato14B.f_impValEdeL.val()=='0.00' && formato14B.f_impValNoEdeL.val()=='0.00' && formato14B.f_nroValesImpL.val()=='0' && formato14B.f_costoTotalValL.val()=='0.00'
+			&& formato14B.f_nroValesReptL.val()=='0' && formato14B.f_costoTotalValOficL.val()=='0.00' && formato14B.f_nroValesEntrL.val()=='0' && formato14B.f_costoEnvPadronL.val()=='0.00'
+			&& formato14B.f_nroValesFisL.val()=='0' && formato14B.f_costoUnitDigitL.val()=='0.00' && formato14B.f_costoAtenSolicL.val()=='0.00' && formato14B.f_costoAtenConsL.val()=='0.00'
+			&& formato14B.f_nroTotalAtenL.val()=='0' && formato14B.f_costoPersonalL.val()=='0.00' && formato14B.f_capacAgentL.val()=='0.00' && formato14B.f_utilMatOficL.val()=='0.00'
+			
+		) {		  
+			formato14B.dialogMessageWarningContent.html('Debe ingresar al menos un valor para poder guardar un formato');
+		    formato14B.dialogMessageWarning.dialog("open");
+			return false; 
+		}
+		
 		return true; 
 	},
 	validarArchivoCarga : function() {		

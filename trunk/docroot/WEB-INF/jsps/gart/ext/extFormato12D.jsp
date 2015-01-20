@@ -2204,6 +2204,11 @@ var formato12D= {
 			}
 		}
 		//
+		if( formato12D.cantidadDetalle.val()=='0' && formato12D.costoUnitarioDetalle.val()=='0.00' ){
+			formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar al menos una cantidad para el Detalle de Gastos de Actividades Extraordinarias');
+			formato12D.dialogMessageWarningDetalle.dialog("open");
+		}
+		//
 		return true; 
 	},
 	soloNumerosEnteros : function(){

@@ -624,11 +624,11 @@ var formato12C= {
 			//alert(formato12C.msgTransaccion.val());
 			//mostramos el mensaje de informacion
 			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='El Detalle de Gastos se guardó satisfactoriamente';
+				var addhtml='El Detalle de Gastos de Desplazamiento de Personal se guardó satisfactoriamente';
 				formato12C.dialogMessageDetalleContent.html(addhtml);
 				formato12C.dialogMessageDetalle.dialog("open");
 			}else if( formato12C.msgTransaccionDetalle.val()=='ERROR' ){
-				var addhtml='Se produjo un error al guardar el Detalle de Gastos';
+				var addhtml='Se produjo un error al guardar el Detalle de Gastos de Desplazamiento de Personal';
 				formato12C.dialogMessageErrorDetalleContent.html(addhtml);
 				formato12C.dialogMessageErrorDetalle.dialog("open");
 			}
@@ -750,11 +750,11 @@ var formato12C= {
 			
 			//mostramos el mensaje de informacion
 			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='El Detalle de Gastos se guardó satisfactoriamente';
+				var addhtml='El Detalle de Gastos de Desplazamiento de Personal se guardó satisfactoriamente';
 				formato12C.dialogMessageDetalleContent.html(addhtml);
 				formato12C.dialogMessageDetalle.dialog("open");
 			}else if( formato12C.msgTransaccionDetalle.val()=='ERROR' ){
-				var addhtml='Se produjo un error al guardar el Detalle de Gastos';
+				var addhtml='Se produjo un error al guardar el Detalle de Gastos de Desplazamiento de Personal';
 				formato12C.dialogMessageErrorDetalleContent.html(addhtml);
 				formato12C.dialogMessageErrorDetalle.dialog("open");
 			}
@@ -2368,6 +2368,11 @@ var formato12C= {
 			   formato12C.nroDocDetalle.focus();
 			   return false; 
 			}
+		}
+		//validamos que no ingrese ceros
+		if( formato12C.nroDiasDetalle.val()=='0' && formato12C.montoAlimentacionDetalle.val()=='0.00' && formato12C.montoAlojamientoDetalle.val()=='0.00' && formato12C.montoMovilidadDetalle.val()=='0.00' ){
+			formato12C.dialogMessageWarningDetalleContent.html('Debe ingresar al menos un valor en las cantidades para el Detalle de Gastos de Desplazamiento de Personal');
+			formato12C.dialogMessageWarningDetalle.dialog("open");
 		}
 		//
 		return true; 
