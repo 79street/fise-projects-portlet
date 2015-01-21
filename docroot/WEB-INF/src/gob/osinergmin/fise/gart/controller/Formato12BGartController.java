@@ -553,9 +553,9 @@ public class Formato12BGartController {
 							throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
 						}
 					}
-				} else {
+				}/* else {
 					throw new Exception("Libro vacio");
-				}
+				}*/
 
 			} else {
 				throw new Exception("Archvivo vacio");
@@ -629,119 +629,123 @@ public class Formato12BGartController {
 				int lenghtTotalValeDigital=0;
 				int lenghtTotalAtenciones=0;
 				
-				if(listaCampo!=null && !listaCampo.isEmpty()){
-					
-					for(CfgCampo campo:listaCampo){
-						boolean isAdd=false;
-						System.out.println("COD CAMPO::"+campo.getCodCampo());
-						if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_EMPRESA.trim())){
-							isAdd=true;
-							lenghtEmpresa=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_PRESENTACION.trim())){
-							isAdd=true;
-							lenghtAnioPres=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_MES_PRESENTACION.trim())){
-							isAdd=true;
-							lenghtMesPres=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_ANO_EJECUCION_GASTO.trim())){
-							isAdd=true;
-							lenghtAnioEjec=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_MES_EJECUCION_GASTO.trim())){
-							isAdd=true;
-							lenghtMesEjec=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ID_ZONA_BENEF.trim())){
-							isAdd=true;
-							lenghtZona=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_IMPRESO.trim())){
-							isAdd=true;
-							lenghtValesImp=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_REPARTIDOS_DOMI.trim())){
-							isAdd=true;
-							lenghtValeRepartido=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_ENTREGADO_DIS_EL.trim())){
-							isAdd=true;
-							lenghtValeEntrDE=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_FISICOS_CANJEADOS.trim())){
-							isAdd=true;
-							lenghtValeFisico=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_DIGITAL_CANJEADOS.trim())){
-							isAdd=true;
-							lenghtValeDigital=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_ATENCIONES.trim())){
-							isAdd=true;
-							lenghtAtenciones=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_GESTION_ADMINISTRATIVA.trim())){
-							isAdd=true;
-							lenghtGestion=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_DESPLAZAMIENTO_PERSONAL.trim())){
-							isAdd=true;
-							lenghtDesplazamiento=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_ACTIVIDADES_EXTRAORD.trim())){
-							isAdd=true;
-							lenghtActividades=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_RECONOCER.trim())){
-						isAdd=true;
-							lenghtReconocer=campo.getLongitud().intValue();
-							//************************COSTOS*************************//
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_IMPRE.trim())){
-							isAdd=false;
-							lenghtCostoValesImp=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_IMPRESION_VALE.trim())){
-							isAdd=false;
-							lenghtTotalValesImp=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_REPAR.trim())){
-							isAdd=false;
-							lenghtCostoValeRepartido=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_REPARTO_VALES_DOMI.trim())){
-							isAdd=false;
-							lenghtTotalValeRepartido=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_DIS_EL.trim())){
-							isAdd=false;
-							lenghtCostoValeEntrDE=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_ENTREGA_VAL_DIS_EL.trim())){
-							isAdd=false;
-							lenghtTotalValeEntrDE=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_FI_CAN.trim())){
-							isAdd=false;
-							lenghtCostoValeFisico=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_CANJE_LIQ_VALE_FIS.trim())){
-							isAdd=false;
-							lenghtTotalValeFisico=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_DG_CAN.trim())){
-							isAdd=false;
-							lenghtCostoValeDigital=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_CANJE_LIQ_VALE_DIG.trim())){
-							isAdd=false;
-							lenghtTotalValeDigital=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_ATENCION.trim())){
-							isAdd=false;
-							lenghtCostoAtenciones=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_ATENCION_CONS_RECL.trim())){
-							isAdd=false;
-							lenghtTotalAtenciones=campo.getLongitud().intValue();
-						}
-						if(isAdd){
-							listaCampoRead.add(campo);
-						}
+				String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(pk.getAnoPresentacion().toString()), Long.parseLong(pk.getMesPresentacion().toString()), pk.getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B);
+				if( nombreIdeal.trim().equals(archivo.getDescription().trim()) ){
+					//---
+					if(listaCampo!=null && !listaCampo.isEmpty()){
 						
+						for(CfgCampo campo:listaCampo){
+							boolean isAdd=false;
+							System.out.println("COD CAMPO::"+campo.getCodCampo());
+							if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_EMPRESA.trim())){
+								isAdd=true;
+								lenghtEmpresa=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_PRESENTACION.trim())){
+								isAdd=true;
+								lenghtAnioPres=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_MES_PRESENTACION.trim())){
+								isAdd=true;
+								lenghtMesPres=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_ANO_EJECUCION_GASTO.trim())){
+								isAdd=true;
+								lenghtAnioEjec=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_MES_EJECUCION_GASTO.trim())){
+								isAdd=true;
+								lenghtMesEjec=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ID_ZONA_BENEF.trim())){
+								isAdd=true;
+								lenghtZona=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_IMPRESO.trim())){
+								isAdd=true;
+								lenghtValesImp=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_REPARTIDOS_DOMI.trim())){
+								isAdd=true;
+								lenghtValeRepartido=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_ENTREGADO_DIS_EL.trim())){
+								isAdd=true;
+								lenghtValeEntrDE=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_FISICOS_CANJEADOS.trim())){
+								isAdd=true;
+								lenghtValeFisico=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_DIGITAL_CANJEADOS.trim())){
+								isAdd=true;
+								lenghtValeDigital=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_ATENCIONES.trim())){
+								isAdd=true;
+								lenghtAtenciones=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_GESTION_ADMINISTRATIVA.trim())){
+								isAdd=true;
+								lenghtGestion=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_DESPLAZAMIENTO_PERSONAL.trim())){
+								isAdd=true;
+								lenghtDesplazamiento=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_ACTIVIDADES_EXTRAORD.trim())){
+								isAdd=true;
+								lenghtActividades=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_RECONOCER.trim())){
+								isAdd=true;
+								lenghtReconocer=campo.getLongitud().intValue();
+								//************************COSTOS*************************//
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_IMPRE.trim())){
+								isAdd=false;
+								lenghtCostoValesImp=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_IMPRESION_VALE.trim())){
+								isAdd=false;
+								lenghtTotalValesImp=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_REPAR.trim())){
+								isAdd=false;
+								lenghtCostoValeRepartido=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_REPARTO_VALES_DOMI.trim())){
+								isAdd=false;
+								lenghtTotalValeRepartido=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_DIS_EL.trim())){
+								isAdd=false;
+								lenghtCostoValeEntrDE=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_ENTREGA_VAL_DIS_EL.trim())){
+								isAdd=false;
+								lenghtTotalValeEntrDE=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_FI_CAN.trim())){
+								isAdd=false;
+								lenghtCostoValeFisico=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_CANJE_LIQ_VALE_FIS.trim())){
+								isAdd=false;
+								lenghtTotalValeFisico=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_DG_CAN.trim())){
+								isAdd=false;
+								lenghtCostoValeDigital=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_CANJE_LIQ_VALE_DIG.trim())){
+								isAdd=false;
+								lenghtTotalValeDigital=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_ATENCION.trim())){
+								isAdd=false;
+								lenghtCostoAtenciones=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_ATENCION_CONS_RECL.trim())){
+								isAdd=false;
+								lenghtTotalAtenciones=campo.getLongitud().intValue();
+							}
+							
+							if(isAdd){
+								listaCampoRead.add(campo);
+							}
+							
+						}
 					}
-				}
-				System.out.println("CANTIDAD CAMPOS ::"+listaCampoRead.size());
-				BufferedReader br = new BufferedReader( new InputStreamReader(is));
-				//List<String> listaDetalleTxt= new ArrayList<String>();
-				String sCurrentLine;
+					System.out.println("CANTIDAD CAMPOS ::"+listaCampoRead.size());
+					BufferedReader br = new BufferedReader( new InputStreamReader(is));
+					//List<String> listaDetalleTxt= new ArrayList<String>();
+					String sCurrentLine;
+					
+					List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
 				
-				List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
-			
-				while ((sCurrentLine = br.readLine()) != null) {
-					System.out.println("total::"+sCurrentLine.length());
-					System.out.println(sCurrentLine);
-					int posInicial=0;
-					String codEm=sCurrentLine.substring(posInicial, lenghtEmpresa);
+					while ((sCurrentLine = br.readLine()) != null) {
+						System.out.println("total::"+sCurrentLine.length());
+						System.out.println(sCurrentLine);
+						int posInicial=0;
+						String codEm=sCurrentLine.substring(posInicial, lenghtEmpresa);
 						posInicial=posInicial+lenghtEmpresa;
 						System.out.println("codEm ::"+codEm+"/"+posInicial+"/"+lenghtAnioPres);//0+4
 						System.out.println("sCurrentLine ::"+sCurrentLine.length());//0+4
-						
+							
 						String anioPres=sCurrentLine.substring(posInicial, posInicial+lenghtAnioPres);
 						System.out.println("anioPres ::"+anioPres+"/"+posInicial);
 						posInicial=posInicial+lenghtAnioPres;
@@ -757,9 +761,9 @@ public class Formato12BGartController {
 						String idzon=sCurrentLine.substring(posInicial, posInicial+lenghtZona);
 						System.out.println("idzon ::"+idzon+"/"+posInicial);
 						posInicial=posInicial+lenghtZona;
-						
-						
-					String numValesImp=sCurrentLine.substring(posInicial,posInicial+ lenghtValesImp);
+							
+							
+						String numValesImp=sCurrentLine.substring(posInicial,posInicial+ lenghtValesImp);
 						posInicial=posInicial+lenghtValesImp+lenghtCostoValesImp+lenghtTotalValesImp;
 						String numValesRepar=sCurrentLine.substring(posInicial, posInicial+lenghtValeRepartido);
 						posInicial=posInicial+lenghtValeRepartido+lenghtCostoValeRepartido+lenghtTotalValeRepartido;
@@ -778,8 +782,8 @@ public class Formato12BGartController {
 						String numValeActividad=sCurrentLine.substring(posInicial, posInicial+lenghtActividades);
 						posInicial=posInicial+lenghtActividades;
 						String totalreconocer=sCurrentLine.substring(posInicial, posInicial+lenghtReconocer);
-						
-						
+							
+							
 						System.out.println("codEm**LG ::"+codEm);
 						System.out.println("anioPres**LG ::"+anioPres);
 						System.out.println("mesPres**LG ::"+mesPres);
@@ -797,8 +801,8 @@ public class Formato12BGartController {
 						System.out.println("numValeDesplazamiento**LG ::"+numValeDesplazamiento);
 						System.out.println("numValeActividad**LG ::"+numValeActividad);
 						System.out.println("totalreconocer**LG ::"+totalreconocer);
-					   
-							 
+						  
+								 
 						validarCampos(anioPres, "Año de Presentación", 3, 0);//validar vacio
 						validarCampos(mesPres, "Mes de Presentación", 3, 0);//validar vacio
 						validarCampos(anioEjec, "Año de Ejecución", 3, 0);//validar vacio
@@ -818,127 +822,124 @@ public class Formato12BGartController {
 						validarCampos(numValeDesplazamiento, "Desplazamiento personal", 5, 0);//number formart
 						validarCampos(numValeActividad, "Actividades extraordinarias", 5, 0);//number formart
 						validarCampos(totalreconocer, "Total a reconocer", 5, 0);//number formart
-						
-					   
-					    
+							
+						   
+						    
 						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)){
-							
-							 FiseFormato12BDPK pkDetalle=new FiseFormato12BDPK();
-							   FiseFormato12BD detalle=new FiseFormato12BD();
-							   pkDetalle.setCodEmpresa(codEm);
-							   pkDetalle.setAnoEjecucionGasto(Integer.parseInt(anioEjec));
-							   pkDetalle.setAnoPresentacion(Integer.parseInt(anioEjec));
-							   pkDetalle.setEtapa(pk.getEtapa());
-							   pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
-							   pkDetalle.setMesEjecucionGasto(Integer.parseInt(mesEjec));
-							   pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
-							   
-							   FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_ESTABLECIDO);
-							  // formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
-								detalle.setNumeroValesImpreso(numValesImp.trim()!=null && !numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
-								detalle.setCostoEstandarUnitValeImpre(fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
-								detalle.setCostoTotalImpresionVale(detalle.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(detalle.getNumeroValesImpreso())).setScale(2, BigDecimal.ROUND_DOWN));
-								  
-								detalle.setNumeroValesRepartidosDomi(numValesRepar.trim()!=null && !numValesRepar.trim().isEmpty()?Integer.parseInt(numValesRepar.trim()):0);
-								detalle.setCostoEstandarUnitValeRepar(fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
-								detalle.setCostoTotalRepartoValesDomi(detalle.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(detalle.getNumeroValesRepartidosDomi())).setScale(2, BigDecimal.ROUND_DOWN));
-								  
-								detalle.setNumeroValesEntregadoDisEl(numValesEntrDE.trim()!=null && !numValesEntrDE.trim().isEmpty()?Integer.parseInt(numValesEntrDE.trim()):0);
-								detalle.setCostoEstandarUnitValDisEl(fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
-								detalle.setCostoTotalEntregaValDisEl(detalle.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(detalle.getNumeroValesEntregadoDisEl()) ).setScale(2, BigDecimal.ROUND_DOWN));
-								  
-								detalle.setNumeroValesFisicosCanjeados(numValesFisico.trim()!=null && !numValesFisico.trim().isEmpty()?Integer.parseInt(numValesFisico.trim()):0);
-								detalle.setCostoEstandarUnitValFiCan(fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
-								detalle.setCostoTotalCanjeLiqValeFis(detalle.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(detalle.getNumeroValesFisicosCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
-								  
-								detalle.setNumeroValesDigitalCanjeados(numValesDigital.trim()!=null && !numValesDigital.trim().isEmpty()?Integer.parseInt(numValesDigital.trim()):0);
-								detalle.setCostoEstandarUnitValDgCan(fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
-								detalle.setCostoTotalCanjeLiqValeDig(detalle.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(detalle.getNumeroValesDigitalCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
-								  
-								detalle.setNumeroAtenciones(numValeAtenciones.trim()!=null && !numValeAtenciones.trim().isEmpty()?Integer.parseInt(numValeAtenciones.trim()):0);
-							    detalle.setCostoEstandarUnitAtencion(fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0).setScale(2, BigDecimal.ROUND_DOWN));
-								detalle.setCostoTotalAtencionConsRecl(detalle.getCostoEstandarUnitAtencion().multiply(new BigDecimal(detalle.getNumeroAtenciones()) ));
-								  
-								  detalle.setTotalGestionAdministrativa(numValeGestion.trim()!=null && !numValeGestion.trim().isEmpty()?new BigDecimal(numValeGestion.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0) );
-								  detalle.setTotalDesplazamientoPersonal(numValeDesplazamiento.trim()!=null && !numValeDesplazamiento.trim().isEmpty()?new BigDecimal(numValeDesplazamiento.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-								  detalle.setTotalActividadesExtraord(numValeActividad.trim()!=null && !numValeActividad.trim().isEmpty()?new BigDecimal(numValeActividad.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-								  
-								  detalle.setTotalReconocer(totalreconocer.trim()!=null && !totalreconocer.trim().isEmpty()?new BigDecimal(totalreconocer.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-							   
-								  
-								  
-							   detalle.setId(pkDetalle);
-							   lstDetalle.add(detalle);
-							   
-							   
+								
+							FiseFormato12BDPK pkDetalle=new FiseFormato12BDPK();
+							FiseFormato12BD detalle=new FiseFormato12BD();
+							pkDetalle.setCodEmpresa(codEm);
+							pkDetalle.setAnoEjecucionGasto(Integer.parseInt(anioEjec));
+							pkDetalle.setAnoPresentacion(Integer.parseInt(anioEjec));
+							pkDetalle.setEtapa(pk.getEtapa());
+							pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
+							pkDetalle.setMesEjecucionGasto(Integer.parseInt(mesEjec));
+							pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
+								   
+							FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_ESTABLECIDO);
+							// formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
+							detalle.setNumeroValesImpreso(numValesImp.trim()!=null && !numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
+							detalle.setCostoEstandarUnitValeImpre(fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
+							detalle.setCostoTotalImpresionVale(detalle.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(detalle.getNumeroValesImpreso())).setScale(2, BigDecimal.ROUND_DOWN));
+									  
+							detalle.setNumeroValesRepartidosDomi(numValesRepar.trim()!=null && !numValesRepar.trim().isEmpty()?Integer.parseInt(numValesRepar.trim()):0);
+							detalle.setCostoEstandarUnitValeRepar(fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
+							detalle.setCostoTotalRepartoValesDomi(detalle.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(detalle.getNumeroValesRepartidosDomi())).setScale(2, BigDecimal.ROUND_DOWN));
+									  
+							detalle.setNumeroValesEntregadoDisEl(numValesEntrDE.trim()!=null && !numValesEntrDE.trim().isEmpty()?Integer.parseInt(numValesEntrDE.trim()):0);
+							detalle.setCostoEstandarUnitValDisEl(fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
+							detalle.setCostoTotalEntregaValDisEl(detalle.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(detalle.getNumeroValesEntregadoDisEl()) ).setScale(2, BigDecimal.ROUND_DOWN));
+							  
+							detalle.setNumeroValesFisicosCanjeados(numValesFisico.trim()!=null && !numValesFisico.trim().isEmpty()?Integer.parseInt(numValesFisico.trim()):0);
+							detalle.setCostoEstandarUnitValFiCan(fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
+							detalle.setCostoTotalCanjeLiqValeFis(detalle.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(detalle.getNumeroValesFisicosCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
+									  
+							detalle.setNumeroValesDigitalCanjeados(numValesDigital.trim()!=null && !numValesDigital.trim().isEmpty()?Integer.parseInt(numValesDigital.trim()):0);
+							detalle.setCostoEstandarUnitValDgCan(fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
+							detalle.setCostoTotalCanjeLiqValeDig(detalle.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(detalle.getNumeroValesDigitalCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
+							  
+							detalle.setNumeroAtenciones(numValeAtenciones.trim()!=null && !numValeAtenciones.trim().isEmpty()?Integer.parseInt(numValeAtenciones.trim()):0);
+							detalle.setCostoEstandarUnitAtencion(fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0).setScale(2, BigDecimal.ROUND_DOWN));
+							detalle.setCostoTotalAtencionConsRecl(detalle.getCostoEstandarUnitAtencion().multiply(new BigDecimal(detalle.getNumeroAtenciones()) ));
+									  
+							detalle.setTotalGestionAdministrativa(numValeGestion.trim()!=null && !numValeGestion.trim().isEmpty()?new BigDecimal(numValeGestion.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0) );
+							detalle.setTotalDesplazamientoPersonal(numValeDesplazamiento.trim()!=null && !numValeDesplazamiento.trim().isEmpty()?new BigDecimal(numValeDesplazamiento.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+							detalle.setTotalActividadesExtraord(numValeActividad.trim()!=null && !numValeActividad.trim().isEmpty()?new BigDecimal(numValeActividad.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+									  
+							detalle.setTotalReconocer(totalreconocer.trim()!=null && !totalreconocer.trim().isEmpty()?new BigDecimal(totalreconocer.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+								   
+									  
+									  
+							detalle.setId(pkDetalle);
+							lstDetalle.add(detalle);
+								   
+								   
 						}else{
-							
 							throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
-							
 						}
+							
+					}
+					if(lstDetalle!=null && !lstDetalle.isEmpty()){
+						FiseFormato12BCPK pkCabecera=new FiseFormato12BCPK();
+						FiseFormato12BC cabecera=new FiseFormato12BC();
+						 
+						pkCabecera.setCodEmpresa(lstDetalle.get(0).getId().getCodEmpresa());
+						pkCabecera.setAnoEjecucionGasto(lstDetalle.get(0).getId().getAnoEjecucionGasto());
+						pkCabecera.setAnoPresentacion(lstDetalle.get(0).getId().getAnoPresentacion());
+						pkCabecera.setEtapa(lstDetalle.get(0).getId().getEtapa());
+						pkCabecera.setMesEjecucionGasto(lstDetalle.get(0).getId().getMesEjecucionGasto());
+						pkCabecera.setMesPresentacion(lstDetalle.get(0).getId().getMesPresentacion());
+						cabecera.setId(pkCabecera);
+						cabecera.setNombreArchivoTexto(archivo.getTitle());
+						FiseGrupoInformacion grupoInfo = null;
+						long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion().longValue(), cabecera.getId().getMesPresentacion().longValue(),FiseConstants.MENSUAL.trim());
+						if (idGrupoInf != 0) {
+							grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
+							nameGrupo = grupoInfo.getDescripcion();
+						}
+						cabecera.setFiseGrupoInformacion(grupoInfo);
+						 
+						 
 						
+						if(tipoOperacion.equalsIgnoreCase(FiseConstants.ADD+"")){
+							cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+							cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+							cabecera.setFechaCreacion(new Date());
+							 
+							cabecera=formatoService.saveFormatoCabecera(cabecera);
+							 
+							for(FiseFormato12BD detalle:lstDetalle){
+								detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+								detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+								detalle.setFechaCreacion(new Date());
+								formatoService.saveFormatoDetalle(detalle);
+							}
+							 
+						}else if(tipoOperacion.equalsIgnoreCase(FiseConstants.UPDATE+"")){
+							 
+							cabecera.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+							cabecera.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+							cabecera.setFechaActualizacion(new Date());
+							 
+	                        formatoService.updateFormatoCabecera(cabecera);
+							 
+							for(FiseFormato12BD detalle:lstDetalle){
+								detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+								detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+								detalle.setFechaActualizacion(new Date());
+								formatoService.updateFormatoDetalle(detalle);
+							}
+						}
+						 
+					}else{
+						throw new Exception("Archivo vacio");
+					}
+					//---
+				}else{
+					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
 				}
-						if(lstDetalle!=null && !lstDetalle.isEmpty()){
-							 FiseFormato12BCPK pkCabecera=new FiseFormato12BCPK();
-							 FiseFormato12BC cabecera=new FiseFormato12BC();
-							 
-							 pkCabecera.setCodEmpresa(lstDetalle.get(0).getId().getCodEmpresa());
-							 pkCabecera.setAnoEjecucionGasto(lstDetalle.get(0).getId().getAnoEjecucionGasto());
-							 pkCabecera.setAnoPresentacion(lstDetalle.get(0).getId().getAnoPresentacion());
-							 pkCabecera.setEtapa(lstDetalle.get(0).getId().getEtapa());
-							 pkCabecera.setMesEjecucionGasto(lstDetalle.get(0).getId().getMesEjecucionGasto());
-							 pkCabecera.setMesPresentacion(lstDetalle.get(0).getId().getMesPresentacion());
-							 cabecera.setId(pkCabecera);
-							 cabecera.setNombreArchivoTexto(archivo.getTitle());
-							 FiseGrupoInformacion grupoInfo = null;
-								long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion().longValue(), cabecera.getId().getMesPresentacion().longValue(),FiseConstants.MENSUAL.trim());
-								if (idGrupoInf != 0) {
-									grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
-									nameGrupo = grupoInfo.getDescripcion();
-								}
-								cabecera.setFiseGrupoInformacion(grupoInfo);
-							 
-							 
-							
-							 if(tipoOperacion.equalsIgnoreCase(FiseConstants.ADD+"")){
-								 cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-								 cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-								 cabecera.setFechaCreacion(new Date());
-								 
-								 cabecera=formatoService.saveFormatoCabecera(cabecera);
-								 
-								 for(FiseFormato12BD detalle:lstDetalle){
-									 detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-									 detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-									 detalle.setFechaCreacion(new Date());
-									 formatoService.saveFormatoDetalle(detalle);
-								 }
-								 
-							 }else if(tipoOperacion.equalsIgnoreCase(FiseConstants.UPDATE+"")){
-								 
-								 cabecera.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-								 cabecera.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-								 cabecera.setFechaActualizacion(new Date());
-								 
-                                 formatoService.updateFormatoCabecera(cabecera);
-								 
-								 for(FiseFormato12BD detalle:lstDetalle){
-									 detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-									 detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-									 detalle.setFechaActualizacion(new Date());
-									 formatoService.updateFormatoDetalle(detalle);
-								 }
-							 }
-							 
-						}else{
-							throw new Exception("Archivo vacio");
-						}
-						
-					  
-				
-				
-				
-				
+
 			} 
 			
 			

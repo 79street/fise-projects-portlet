@@ -1412,239 +1412,241 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 				int lenghtNumTotalBenefLocal=0;
 				int lenghtNumTotalBenefPotenc=0;
 				
-				
-				
-				if(listaCampo!=null && !listaCampo.isEmpty()){
-					
-					for(CfgCampo campo:listaCampo){
-						boolean isAdd=false;
-						System.out.println("COD CAMPO::"+campo.getCodCampo());
-						if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_EMPRESA.trim())){
-							isAdd=true;
-							lenghtEmpresa=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_PRESENTACION.trim())){
-							isAdd=true;
-							lenghtAnioPres=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_MES_PRESENTACION.trim())){
-							isAdd=true;
-							lenghtMesPres=campo.getLongitud().intValue();///aqui
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_ALTA.trim())){
-							isAdd=true;
-							lenghtAnioAlta=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_MES_ALTA.trim())){
-							isAdd=true;
-							lenghtMesAlta=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_INICIO_VIGENCIA.trim())){
-							isAdd=true;
-							lenghtAnioIniVig=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_FIN_VIGENCIA.trim())){
-							isAdd=true;
-							lenghtAnioFinVig=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ID_UBIGEO.trim())){
-							isAdd=true;
-							lenghtUbigeo=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_DESCRIPCION_LOCALIDAD.trim())){
-							isAdd=true;
-							lenghtDescLoc=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_SECTOR_TIPICO.trim())){
-							isAdd=true;
-							lenghtCodSector=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NOMBRE_SEDE_ATIENDE.trim())){
-							isAdd=true;
-							lenghtNombSedeAt=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NUMERO_BENEFI_POTE_SECT_TIPICO.trim())){
-							isAdd=true;
-							lenghtNumBenefSector=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NUMERO_TOTAL_BENEF_POTE_LOCAL.trim())){
-							isAdd=true;
-							lenghtNumTotalBenefLocal=campo.getLongitud().intValue();
-						}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NUMERO_TOTAL_BENEF_POTENCIAL.trim())){
-							isAdd=true;
-							lenghtNumTotalBenefPotenc=campo.getLongitud().intValue();
-						}
-						if(isAdd){
-							listaCampoRead.add(campo);
-						}
+				String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(pk.getAnoPresentacion(), pk.getMesPresentacion(), pk.getCodEmpresa(), FiseConstants.TIPO_FORMATO_13A);
+				if( nombreIdeal.trim().equals(archivo.getDescription().trim()) ){
+
+					//---
+					if(listaCampo!=null && !listaCampo.isEmpty()){
 						
+						for(CfgCampo campo:listaCampo){
+							boolean isAdd=false;
+							System.out.println("COD CAMPO::"+campo.getCodCampo());
+							if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_EMPRESA.trim())){
+								isAdd=true;
+								lenghtEmpresa=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_PRESENTACION.trim())){
+								isAdd=true;
+								lenghtAnioPres=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_MES_PRESENTACION.trim())){
+								isAdd=true;
+								lenghtMesPres=campo.getLongitud().intValue();///aqui
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_ALTA.trim())){
+								isAdd=true;
+								lenghtAnioAlta=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_MES_ALTA.trim())){
+								isAdd=true;
+								lenghtMesAlta=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_INICIO_VIGENCIA.trim())){
+								isAdd=true;
+								lenghtAnioIniVig=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_FIN_VIGENCIA.trim())){
+								isAdd=true;
+								lenghtAnioFinVig=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ID_UBIGEO.trim())){
+								isAdd=true;
+								lenghtUbigeo=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_DESCRIPCION_LOCALIDAD.trim())){
+								isAdd=true;
+								lenghtDescLoc=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_SECTOR_TIPICO.trim())){
+								isAdd=true;
+								lenghtCodSector=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NOMBRE_SEDE_ATIENDE.trim())){
+								isAdd=true;
+								lenghtNombSedeAt=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NUMERO_BENEFI_POTE_SECT_TIPICO.trim())){
+								isAdd=true;
+								lenghtNumBenefSector=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NUMERO_TOTAL_BENEF_POTE_LOCAL.trim())){
+								isAdd=true;
+								lenghtNumTotalBenefLocal=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NUMERO_TOTAL_BENEF_POTENCIAL.trim())){
+								isAdd=true;
+								lenghtNumTotalBenefPotenc=campo.getLongitud().intValue();
+							}
+							if(isAdd){
+								listaCampoRead.add(campo);
+							}
+							
+						}
 					}
-				}
-				System.out.println("CANTIDAD CAMPOS ::"+listaCampoRead.size());
-				BufferedReader br = new BufferedReader( new InputStreamReader(is));
-				//List<String> listaDetalleTxt= new ArrayList<String>();
-				String sCurrentLine;
-				
-				List<FiseFormato13AD> lstDetalle=new ArrayList<FiseFormato13AD>();
-			
-				while ((sCurrentLine = br.readLine()) != null) {
-					System.out.println("total::"+sCurrentLine.length());
-					System.out.println(sCurrentLine);
-					int posInicial=0;
-					String codEm=sCurrentLine.substring(posInicial, lenghtEmpresa);
-						posInicial=posInicial+lenghtEmpresa;
-						System.out.println("codEm ::"+codEm+"/"+posInicial+"/"+lenghtAnioPres);//0+4
-						System.out.println("sCurrentLine ::"+sCurrentLine.length());//0+4
-						
-						String anioPres=sCurrentLine.substring(posInicial, posInicial+lenghtAnioPres);
-						System.out.println("anioPres ::"+anioPres+"/"+posInicial);
-						posInicial=posInicial+lenghtAnioPres;
-						String mesPres=sCurrentLine.substring(posInicial, posInicial+lenghtMesPres);
-						System.out.println("mesPres ::"+mesPres+"/"+posInicial);
-						posInicial=posInicial+lenghtMesPres;
-						String anioAlta=sCurrentLine.substring(posInicial, posInicial+lenghtAnioAlta);
-						System.out.println("anioAlta ::"+anioAlta+"/"+posInicial);
-						posInicial=posInicial+lenghtAnioAlta;
-						String mesAlta=sCurrentLine.substring(posInicial, posInicial+lenghtMesAlta);
-						System.out.println("mesAlta ::"+mesAlta+"/"+posInicial);
-						posInicial=posInicial+lenghtMesAlta;
-						String anioIniVig=sCurrentLine.substring(posInicial, posInicial+lenghtAnioIniVig);
-						System.out.println("anioIniVig ::"+anioIniVig+"/"+posInicial);
-						posInicial=posInicial+lenghtAnioIniVig;
-						String anioFinVig=sCurrentLine.substring(posInicial, posInicial+lenghtAnioFinVig);
-						System.out.println("anioFinVig ::"+anioFinVig+"/"+posInicial);
-						posInicial=posInicial+lenghtAnioFinVig;
-						String idUbig=sCurrentLine.substring(posInicial, posInicial+lenghtUbigeo);
-						System.out.println("idUbig ::"+idUbig+"/"+posInicial);
-						posInicial=posInicial+lenghtUbigeo;
-						String desLoc=sCurrentLine.substring(posInicial, posInicial+lenghtDescLoc);
-						System.out.println("desLoc ::"+desLoc+"/"+posInicial);
-						posInicial=posInicial+lenghtDescLoc;
-						String codSector=sCurrentLine.substring(posInicial, posInicial+lenghtCodSector);
-						System.out.println("codSector ::"+codSector+"/"+posInicial);
-						posInicial=posInicial+lenghtCodSector;
-						String idzon=sCurrentLine.substring(posInicial, posInicial+lenghtZona);
-						System.out.println("idzon ::"+idzon+"/"+posInicial);
-						posInicial=posInicial+lenghtZona;
-						String nombSede=sCurrentLine.substring(posInicial, posInicial+lenghtNombSedeAt);
-						System.out.println("nombSede ::"+nombSede+"/"+posInicial);
-						posInicial=posInicial+lenghtNombSedeAt;
-						String numBenef=sCurrentLine.substring(posInicial, posInicial+lenghtNumBenefSector);
-						System.out.println("numBenef ::"+numBenef+"/"+posInicial);
-						posInicial=posInicial+lenghtNumBenefSector;
-						String numTotalLocal=sCurrentLine.substring(posInicial, posInicial+lenghtNumTotalBenefLocal);
-						System.out.println("numTotalLocal ::"+numTotalLocal+"/"+posInicial);
-						posInicial=posInicial+lenghtNumTotalBenefLocal;
-						String numTotalPot=sCurrentLine.substring(posInicial, posInicial+lenghtNumTotalBenefPotenc);
-						System.out.println("numTotalPot ::"+numTotalPot+"/"+posInicial);
+					System.out.println("CANTIDAD CAMPOS ::"+listaCampoRead.size());
+					BufferedReader br = new BufferedReader( new InputStreamReader(is));
+					//List<String> listaDetalleTxt= new ArrayList<String>();
+					String sCurrentLine;
 					
-						
-							 
-						validarCampos(anioPres, "Año de Presentación", 3, 0);//validar vacio
-						validarCampos(mesPres, "Mes de Presentación", 3, 0);//validar vacio
-						validarCampos(anioAlta, "Año de Alta", 3, 0);//validar vacio
-						validarCampos(mesAlta, "Mes de Alta", 3, 0);//validar vacio
-						validarCampos(anioIniVig, "Año Inicio de vigencia", 3, 0);//validar vacio
-						validarCampos(anioFinVig, "Año fin de vigencia", 3, 0);//validar vacio
-						validarCampos(anioPres, "Año de Presentacion", 1, 4);//validar tamaño
-						validarCampos(mesPres, "Mes de Presentación", 2, 0);//validar rango
-						validarCampos(anioAlta, "Año de Alta", 1, 4);//validar tamaño
-						validarCampos(mesAlta, "Mes de Alata", 2, 0);//validar rango
-						validarCampos(anioIniVig, "Año Inicio de vigencia", 1, 4);//validar tamaño
-						validarCampos(anioFinVig, "Año fin de vigencia", 1, 4);//validar tamaño
-						
-						
-						validarCampos(idUbig, "Número de ubigeo", 4, 0);//number formart
-						//validarCampos(desLoc, "Descripciòn de localidad", 4, 0);//number formart
-						validarCampos(codSector, "Còdigo de sector", 3, 0);//validar vacio
-						//validarCampos(codSector, "Còdigo de sector", 4, 0);//number formart
-						validarCampos(idzon, "Còdigo de zona", 3, 0);//validar vacio
-						//validarCampos(idzon, "Còdigo de zona", 4, 0);//number formart
-					//	validarCampos(nombSede, "Nombre de Sede", 4, 0);//number formart
-						validarCampos(numBenef, "Número de beneficiario", 4, 0);//number formart
-						validarCampos(numTotalLocal, "Número Total de beneficiario Local ", 4, 0);//number formart
-						validarCampos(numTotalPot, "Número Total de beneficiario potencial ", 4, 0);//number formart
-						
-					 
-					    
-						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)){
+					List<FiseFormato13AD> lstDetalle=new ArrayList<FiseFormato13AD>();
+				
+					while ((sCurrentLine = br.readLine()) != null) {
+						System.out.println("total::"+sCurrentLine.length());
+						System.out.println(sCurrentLine);
+						int posInicial=0;
+						String codEm=sCurrentLine.substring(posInicial, lenghtEmpresa);
+							posInicial=posInicial+lenghtEmpresa;
+							System.out.println("codEm ::"+codEm+"/"+posInicial+"/"+lenghtAnioPres);//0+4
+							System.out.println("sCurrentLine ::"+sCurrentLine.length());//0+4
 							
-							 FiseFormato13ADPK pkDetalle=new FiseFormato13ADPK();
-							   FiseFormato13AD detalle=new FiseFormato13AD();
-							   pkDetalle.setCodEmpresa(codEm);
-							   pkDetalle.setAnoPresentacion(Integer.parseInt(anioPres));
-							   pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
-							   pkDetalle.setEtapa(pk.getEtapa());
-							   pkDetalle.setCodUbigeo(idUbig);
-							   pkDetalle.setCodSectorTipico(codSector);
-							   pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
-							   
-							   detalle.setAnoAlta(anioAlta!=null && !anioAlta.trim().isEmpty()?Long.valueOf(anioAlta.trim()):null);
-							   detalle.setMesAlta(mesAlta!=null && !mesAlta.trim().isEmpty()?Long.valueOf(mesAlta.trim()):null);
-							   detalle.setAnoInicioVigencia(anioIniVig!=null && !anioIniVig.trim().isEmpty()?Long.valueOf(anioIniVig.trim()):null);
-							   detalle.setAnoFinVigencia(anioFinVig!=null && !anioFinVig.trim().isEmpty()?Long.valueOf(anioFinVig.trim()):null);
-							   detalle.setDescripcionLocalidad(desLoc!=null?desLoc.trim():"");
-							   detalle.setNombreSedeAtiende(nombSede!=null?nombSede.trim():"");
-							   detalle.setNumeroBenefiPoteSectTipico(numBenef!=null && !numBenef.trim().isEmpty()?Long.valueOf(numBenef.trim()):null);
-							 
-							    detalle.setId(pkDetalle);
-							   lstDetalle.add(detalle);
-							   
-							   
-						}else{
-							
-							throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
-							
-						}
+							String anioPres=sCurrentLine.substring(posInicial, posInicial+lenghtAnioPres);
+							System.out.println("anioPres ::"+anioPres+"/"+posInicial);
+							posInicial=posInicial+lenghtAnioPres;
+							String mesPres=sCurrentLine.substring(posInicial, posInicial+lenghtMesPres);
+							System.out.println("mesPres ::"+mesPres+"/"+posInicial);
+							posInicial=posInicial+lenghtMesPres;
+							String anioAlta=sCurrentLine.substring(posInicial, posInicial+lenghtAnioAlta);
+							System.out.println("anioAlta ::"+anioAlta+"/"+posInicial);
+							posInicial=posInicial+lenghtAnioAlta;
+							String mesAlta=sCurrentLine.substring(posInicial, posInicial+lenghtMesAlta);
+							System.out.println("mesAlta ::"+mesAlta+"/"+posInicial);
+							posInicial=posInicial+lenghtMesAlta;
+							String anioIniVig=sCurrentLine.substring(posInicial, posInicial+lenghtAnioIniVig);
+							System.out.println("anioIniVig ::"+anioIniVig+"/"+posInicial);
+							posInicial=posInicial+lenghtAnioIniVig;
+							String anioFinVig=sCurrentLine.substring(posInicial, posInicial+lenghtAnioFinVig);
+							System.out.println("anioFinVig ::"+anioFinVig+"/"+posInicial);
+							posInicial=posInicial+lenghtAnioFinVig;
+							String idUbig=sCurrentLine.substring(posInicial, posInicial+lenghtUbigeo);
+							System.out.println("idUbig ::"+idUbig+"/"+posInicial);
+							posInicial=posInicial+lenghtUbigeo;
+							String desLoc=sCurrentLine.substring(posInicial, posInicial+lenghtDescLoc);
+							System.out.println("desLoc ::"+desLoc+"/"+posInicial);
+							posInicial=posInicial+lenghtDescLoc;
+							String codSector=sCurrentLine.substring(posInicial, posInicial+lenghtCodSector);
+							System.out.println("codSector ::"+codSector+"/"+posInicial);
+							posInicial=posInicial+lenghtCodSector;
+							String idzon=sCurrentLine.substring(posInicial, posInicial+lenghtZona);
+							System.out.println("idzon ::"+idzon+"/"+posInicial);
+							posInicial=posInicial+lenghtZona;
+							String nombSede=sCurrentLine.substring(posInicial, posInicial+lenghtNombSedeAt);
+							System.out.println("nombSede ::"+nombSede+"/"+posInicial);
+							posInicial=posInicial+lenghtNombSedeAt;
+							String numBenef=sCurrentLine.substring(posInicial, posInicial+lenghtNumBenefSector);
+							System.out.println("numBenef ::"+numBenef+"/"+posInicial);
+							posInicial=posInicial+lenghtNumBenefSector;
+							String numTotalLocal=sCurrentLine.substring(posInicial, posInicial+lenghtNumTotalBenefLocal);
+							System.out.println("numTotalLocal ::"+numTotalLocal+"/"+posInicial);
+							posInicial=posInicial+lenghtNumTotalBenefLocal;
+							String numTotalPot=sCurrentLine.substring(posInicial, posInicial+lenghtNumTotalBenefPotenc);
+							System.out.println("numTotalPot ::"+numTotalPot+"/"+posInicial);
 						
-				}
-						if(lstDetalle!=null && !lstDetalle.isEmpty()){
-							 FiseFormato13ACPK pkCabecera=new FiseFormato13ACPK();
-							 FiseFormato13AC cabecera=new FiseFormato13AC();
-							 
-							 pkCabecera.setCodEmpresa(lstDetalle.get(0).getId().getCodEmpresa());
-							 pkCabecera.setAnoPresentacion(lstDetalle.get(0).getId().getAnoPresentacion());
-							 pkCabecera.setMesPresentacion(lstDetalle.get(0).getId().getMesPresentacion());
-							 pkCabecera.setEtapa(lstDetalle.get(0).getId().getEtapa());
-							 cabecera.setId(pkCabecera);
-							 cabecera.setNombreArchivoTexto(archivo.getTitle());
-							 FiseGrupoInformacion grupoInfo = null;
-								long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion(), cabecera.getId().getMesPresentacion(),FiseConstants.MENSUAL.trim());
-								if (idGrupoInf != 0) {
-									grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
-									nameGrupo = grupoInfo.getDescripcion();
-								}
-								cabecera.setFiseGrupoInformacion(grupoInfo);
-							 
-							 
 							
-							 if(tipoOperacion.equalsIgnoreCase(FiseConstants.ADD+"")){
-								 cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-								 cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-								 cabecera.setFechaCreacion(new Date());
 								 
-								 cabecera=formatoService.savecabecera(cabecera);
+							validarCampos(anioPres, "Año de Presentación", 3, 0);//validar vacio
+							validarCampos(mesPres, "Mes de Presentación", 3, 0);//validar vacio
+							validarCampos(anioAlta, "Año de Alta", 3, 0);//validar vacio
+							validarCampos(mesAlta, "Mes de Alta", 3, 0);//validar vacio
+							validarCampos(anioIniVig, "Año Inicio de vigencia", 3, 0);//validar vacio
+							validarCampos(anioFinVig, "Año fin de vigencia", 3, 0);//validar vacio
+							validarCampos(anioPres, "Año de Presentacion", 1, 4);//validar tamaño
+							validarCampos(mesPres, "Mes de Presentación", 2, 0);//validar rango
+							validarCampos(anioAlta, "Año de Alta", 1, 4);//validar tamaño
+							validarCampos(mesAlta, "Mes de Alata", 2, 0);//validar rango
+							validarCampos(anioIniVig, "Año Inicio de vigencia", 1, 4);//validar tamaño
+							validarCampos(anioFinVig, "Año fin de vigencia", 1, 4);//validar tamaño
+							
+							
+							validarCampos(idUbig, "Número de ubigeo", 4, 0);//number formart
+							//validarCampos(desLoc, "Descripciòn de localidad", 4, 0);//number formart
+							validarCampos(codSector, "Còdigo de sector", 3, 0);//validar vacio
+							//validarCampos(codSector, "Còdigo de sector", 4, 0);//number formart
+							validarCampos(idzon, "Còdigo de zona", 3, 0);//validar vacio
+							//validarCampos(idzon, "Còdigo de zona", 4, 0);//number formart
+						//	validarCampos(nombSede, "Nombre de Sede", 4, 0);//number formart
+							validarCampos(numBenef, "Número de beneficiario", 4, 0);//number formart
+							validarCampos(numTotalLocal, "Número Total de beneficiario Local ", 4, 0);//number formart
+							validarCampos(numTotalPot, "Número Total de beneficiario potencial ", 4, 0);//number formart
+							
+						 
+						    
+							if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)){
+								
+								 FiseFormato13ADPK pkDetalle=new FiseFormato13ADPK();
+								   FiseFormato13AD detalle=new FiseFormato13AD();
+								   pkDetalle.setCodEmpresa(codEm);
+								   pkDetalle.setAnoPresentacion(Integer.parseInt(anioPres));
+								   pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
+								   pkDetalle.setEtapa(pk.getEtapa());
+								   pkDetalle.setCodUbigeo(idUbig);
+								   pkDetalle.setCodSectorTipico(codSector);
+								   pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
+								   
+								   detalle.setAnoAlta(anioAlta!=null && !anioAlta.trim().isEmpty()?Long.valueOf(anioAlta.trim()):null);
+								   detalle.setMesAlta(mesAlta!=null && !mesAlta.trim().isEmpty()?Long.valueOf(mesAlta.trim()):null);
+								   detalle.setAnoInicioVigencia(anioIniVig!=null && !anioIniVig.trim().isEmpty()?Long.valueOf(anioIniVig.trim()):null);
+								   detalle.setAnoFinVigencia(anioFinVig!=null && !anioFinVig.trim().isEmpty()?Long.valueOf(anioFinVig.trim()):null);
+								   detalle.setDescripcionLocalidad(desLoc!=null?desLoc.trim():"");
+								   detalle.setNombreSedeAtiende(nombSede!=null?nombSede.trim():"");
+								   detalle.setNumeroBenefiPoteSectTipico(numBenef!=null && !numBenef.trim().isEmpty()?Long.valueOf(numBenef.trim()):null);
 								 
-								 for(FiseFormato13AD detalle:lstDetalle){
-									 detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-									 detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-									 detalle.setFechaCreacion(new Date());
-									 formatoService.savedetalle(detalle);
-								 }
-								 
-							 }else if(tipoOperacion.equalsIgnoreCase(FiseConstants.UPDATE+"")){
-								 
-								 cabecera.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-								 cabecera.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-								 cabecera.setFechaActualizacion(new Date());
-								 
-                                 formatoService.updatecabecera(cabecera);
-								 
-								 for(FiseFormato13AD detalle:lstDetalle){
-									 detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-									 detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-									 detalle.setFechaActualizacion(new Date());
-									 formatoService.updatedetalle(detalle);
-								 }
+								    detalle.setId(pkDetalle);
+								   lstDetalle.add(detalle);
+								   
+								   
+							}else{
+								
+								throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
+								
+							}
+							
+					}
+					if(lstDetalle!=null && !lstDetalle.isEmpty()){
+						 FiseFormato13ACPK pkCabecera=new FiseFormato13ACPK();
+						 FiseFormato13AC cabecera=new FiseFormato13AC();
+						 
+						 pkCabecera.setCodEmpresa(lstDetalle.get(0).getId().getCodEmpresa());
+						 pkCabecera.setAnoPresentacion(lstDetalle.get(0).getId().getAnoPresentacion());
+						 pkCabecera.setMesPresentacion(lstDetalle.get(0).getId().getMesPresentacion());
+						 pkCabecera.setEtapa(lstDetalle.get(0).getId().getEtapa());
+						 cabecera.setId(pkCabecera);
+						 cabecera.setNombreArchivoTexto(archivo.getTitle());
+						 FiseGrupoInformacion grupoInfo = null;
+							long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion(), cabecera.getId().getMesPresentacion(),FiseConstants.MENSUAL.trim());
+							if (idGrupoInf != 0) {
+								grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
+								nameGrupo = grupoInfo.getDescripcion();
+							}
+							cabecera.setFiseGrupoInformacion(grupoInfo);
+						 
+						 
+						
+						 if(tipoOperacion.equalsIgnoreCase(FiseConstants.ADD+"")){
+							 cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+							 cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+							 cabecera.setFechaCreacion(new Date());
+							 
+							 cabecera=formatoService.savecabecera(cabecera);
+							 
+							 for(FiseFormato13AD detalle:lstDetalle){
+								 detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+								 detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+								 detalle.setFechaCreacion(new Date());
+								 formatoService.savedetalle(detalle);
 							 }
 							 
-						}else{
-							throw new Exception("Archivo vacio");
-						}
-						
-					  
-				
-				
-				
-				
+						 }else if(tipoOperacion.equalsIgnoreCase(FiseConstants.UPDATE+"")){
+							 
+							 cabecera.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+							 cabecera.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+							 cabecera.setFechaActualizacion(new Date());
+							 
+	                         formatoService.updatecabecera(cabecera);
+							 
+							 for(FiseFormato13AD detalle:lstDetalle){
+								 detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+								 detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+								 detalle.setFechaActualizacion(new Date());
+								 formatoService.updatedetalle(detalle);
+							 }
+						 }
+						 
+					}else{
+						throw new Exception("Archivo vacio");
+					}
+					//---
+					
+				}else{
+					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
+				}
+
 			} 
 			
 			

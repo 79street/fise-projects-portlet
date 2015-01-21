@@ -3093,1055 +3093,1066 @@ public class Formato14CGartController {
     			
     			String sCurrentLine;
     			is=uploadPortletRequest.getFileAsStream("archivoTxt");
-    			int BUFFER_SIZE = 8192;
-    			BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
-    			List<String> listaDetalleTxt= new ArrayList<String>();
-    			sCurrentLine = br.readLine();
-    			logger.info("sCurrentLine :  "+sCurrentLine.length());
-    			while(sCurrentLine!=null){
-    				logger.info("CONTADOR EN PANTALLA.");
-    				cont++;
-    				if( sCurrentLine.length()>0 ){
-    					if( sCurrentLine.length() == longitudMaxima){
-    						listaDetalleTxt.add(sCurrentLine);
-    					}else{
-    						cont++;
-    						sMsg="ERROR";    
-    					    fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    								listaError, cont, FiseConstants.COD_ERROR_F12_220);//error datos incompletos
-    					}
-    				}else{
-    					cont++;
-    					sMsg="ERROR";     
-    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F12_230);//error archivo sin datos
-    				}
-    				sCurrentLine = br.readLine();
-    				if( cont>24 ){
-    					cont++;
-    					sMsg="ERROR";    
-    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F14C_1460);//no debe pasar las 24 lineas 
-    					break;
-    				}
-    			}
-    			logger.info("TOTAL DE FILAS DEL TEXTO:  "+listaDetalleTxt.size()); 
     			
-    			boolean process = false;
-    			String key1 ="";
-    			String key2="";
-    			String key3="";
-    			String key4="";
-    			String codEmpresaRural="";//cod_empresa+aniopresentacion+mespresentacion+zonarual+sede
-    			String codEmpresaProv="";//cod_empresa+aniopresentacion+mespresentacion+zonaProv+sede
-    			String codEmpresaLima="";//cod_empresa+aniopresentacion+mespresentacion+zonalima+sede
-    			
-    			if(listaDetalleTxt.size()>15 && listaDetalleTxt.size()<=24){ 
-    				process = true;
-    				key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
-    				key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-    				key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
-    				key4 = listaDetalleTxt.get(0).substring(posicionAnioFinVigencia, posicionSede).trim();
-    				logger.info("Codigo key1:   "+key1); //codigo empresa
-    				logger.info("Codigo key2:   "+key2); //anio presentacion 
-    				logger.info("Codigo key3:   "+key3); //mes presentacion
-    				logger.info("Codigo key4:   "+key4); //sede    			
-    				for (String s : listaDetalleTxt) {
-        				String codEmp = s.substring(0, posicionCodEmpresa).trim();
-    					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-    					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
-    					String zonaBenef = s.substring(posicionSede, posicionZonaBenef).trim();
-    					String sede = s.substring(posicionAnioFinVigencia, posicionSede).trim();
-    					logger.info("codigo empresa:   "+codEmp); 
-        				logger.info("anio pres:   "+anioPres); 
-        				logger.info("mes pres:   "+mesPres); 
-        				logger.info("sede:   "+sede);
-        				logger.info("zona:   "+zonaBenef);
-    					if(key1.equals(codEmp) && 
-    							key2.equals(anioPres) && 
-    							key3.equals(mesPres) &&
-    							key4.equals(sede) &&
-    							FiseConstants.ZONABENEF_RURAL_COD_STRING.equals(zonaBenef))
-    					{
-    						codEmpresaRural=key1+key2+key3+zonaBenef+key4;						
-    					}else if(key1.equals(codEmp) && 
-    							key2.equals(anioPres) && 
-    							key3.equals(mesPres) &&
-    							key4.equals(sede) &&							
-    							FiseConstants.ZONABENEF_PROVINCIA_COD_STRING.equals(zonaBenef))
-    					{
-    						codEmpresaProv=key1+key2+key3+zonaBenef+key4;						
-    					}else if(key1.equals(codEmp) && 
-    							key2.equals(anioPres) && 
-    							key3.equals(mesPres) &&
-    							key4.equals(sede) &&							
-    							FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(zonaBenef))
-    					{
-    						codEmpresaLima=key1+key2+key3+zonaBenef+key4;						
-    					}else{ 
-    						process = false;
-    						cont++;
-    						sMsg="ERROR";    
-    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    								listaError, cont, FiseConstants.COD_ERROR_F14C_1470);
-    						break;
-    					}
-        			}//fin del for  
-        			
-        			logger.info("Codigo muestra codEmpresaRural:   "+codEmpresaRural); 
-        			logger.info("Codigo muestra codEmpresaProv:   "+codEmpresaProv); 
-        			logger.info("Codigo muestra codEmpresaLima:   "+codEmpresaLima); 
-    			}    			
-    			//empesando asignar valores al bean
-    			if(process){
-    			  for (String s : listaDetalleTxt) {
-    				String codEmp = s.substring(0, posicionCodEmpresa).trim();
-  					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
-  					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
-  					String zonaBenef = s.substring(posicionSede, posicionZonaBenef).trim();
-  					String sede = s.substring(posicionAnioFinVigencia, posicionSede).trim(); 
-  					
-    				String codigoMuestraZonal =codEmp+anioPres+mesPres+zonaBenef+sede; 
-    				logger.info("Codigo muestra zona para setear al bean: "+codigoMuestraZonal);
-    				
-    				String idTipoCostGestion =s.substring(posicionNroItemTipoGestCosto, posicionIdTipoCostoGest).trim();  
-    			    String idTipoPersonal = s.substring(posicionIdTipoCostoGest, posicionPersonalBenef).trim();
-    			   
-    			    String codigoMuestraTipPersona =idTipoCostGestion+idTipoPersonal; 
-    			    logger.info("Codigo muestra persona para setear al bean: "+codigoMuestraTipPersona);
-    			    
-    			    String nroTotalBenef = s.substring(posicionZonaBenef, posicionNroTotalBenef).trim();
-    			    logger.info("nroTotalBenef: "+nroTotalBenef);
-    			    String cantidad = s.substring(posicionPersonalBenef, posicionCantidad).trim();
-    			    logger.info("cantidad: "+cantidad);
-    			    String costo = s.substring(posicionCantidad, posicionCostoUnitario).trim();
-    			    logger.info("costo: "+costo);
-    			    String costoProemdio = s.substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
-    			    logger.info("costoProemdio: "+costoProemdio);
-    			    String costoPromedioRural = listaDetalleTxt.get(0).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
-    			    logger.info("costoPromedioRural: "+costoPromedioRural);
-    			    String costoPromedioProv = listaDetalleTxt.get(8).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
-    			    logger.info("costoPromedioProv: "+costoPromedioProv);
-    			    
-    			    String costoPromedioLima  ="0.0";
-    			    if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
-							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
-					{
-    			        costoPromedioLima = listaDetalleTxt.get(16).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
-        			   
-					}
-    			    logger.info("costoPromedioLima: "+costoPromedioLima);
-    				
-    			    /**seteando valores al bean de la cabecera**/
-    				bean.setCodEmpresa(key1); 
-    				bean.setAnioPres(key2);
-    				bean.setMesPres(key3);
-    				//bean.setAnoIniVigencia(key2);
-    				//bean.setAnoFinVigencia(key2);
-    				bean.setEtapa(etapa); 
-    				bean.setNombreSede(key4); 
-    			    /**ZONA RURAL*/
-    			    if(codEmpresaRural.equals(codigoMuestraZonal)){ 
-    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
-    			    		bean.setNumRural(nroTotalBenef); //cabecera
-    			    		bean.setCanDRCoord(cantidad);
-    			    		bean.setCostDRCoord(costo);
-    			    		bean.setCostoPromRural(costoPromedioRural);//cabecera
-    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDRSupe(cantidad);
-    			    		bean.setCostDRSupe(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDRGest(cantidad);
-    			    		bean.setCostDRGest(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDRAsist(cantidad);
-    			    		bean.setCostDRAsist(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanIRCoord(cantidad);
-    			    		bean.setCostIRCoord(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanIRSupe(cantidad);
-    			    		bean.setCostIRSupe(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanIRGest(cantidad);
-    			    		bean.setCostIRGest(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanIRAsist(cantidad);
-    			    		bean.setCostIRAsist(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else{
-    			    	   //no coinciden ningun tipo de personal
-    			    		cont++;
-    			    		sMsg="ERROR";    
-    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    								listaError, cont, FiseConstants.COD_ERROR_F14C_1480);
-    						break;
-    			    	}   			    	
-    			    }
-    			    /**PROVINCIAS*/
-    			    else if(codEmpresaProv.equals(codigoMuestraZonal)){
-    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
-    			    		bean.setNumUrbProv(nroTotalBenef); //cabecera
-    			    		bean.setCanDPCoord(cantidad);
-    			    		bean.setCostDPCoord(costo);
-    			    		bean.setCostoPromUrbProv(costoPromedioProv);//cabecera
-    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDPSupe(cantidad);
-    			    		bean.setCostDPSupe(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDPGest(cantidad);
-    			    		bean.setCostDPGest(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDPAsist(cantidad);
-    			    		bean.setCostDPAsist(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanIPCoord(cantidad);
-    			    		bean.setCostIPCoord(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanIPSupe(cantidad);
-    			    		bean.setCostIPSupe(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanIPGest(cantidad);
-    			    		bean.setCostIPGest(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanIPAsist(cantidad);
-    			    		bean.setCostIPAsist(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else{
-    			    	   //no coinciden ningun tipo de personal
-    			    		cont++;
-    			    		sMsg="ERROR";    
-    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    								listaError, cont, FiseConstants.COD_ERROR_F14C_1490);
-    						break;
-    			    	}    				    	
-    			    }
-    			    /*****LIMA******/
-    			    else if(codEmpresaLima.equals(codigoMuestraZonal)){
-    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
-    			    		bean.setNumUrbLima(nroTotalBenef); //cabecera
-    			    		bean.setCanDLCoord(cantidad);
-    			    		bean.setCostDLCoord(costo);
-    			    		bean.setCostoPromUrbLima(costoPromedioLima);//cabecera
-    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDLSupe(cantidad);
-    			    		bean.setCostDLSupe(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDLGest(cantidad);
-    			    		bean.setCostDLGest(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanDLAsist(cantidad);
-    			    		bean.setCostDLAsist(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanILCoord(cantidad);
-    			    		bean.setCostILCoord(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanILSupe(cantidad);
-    			    		bean.setCostILSupe(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanILGest(cantidad);
-    			    		bean.setCostILGest(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
-    			    		//bean.setNumRural(nroTotalBenef); 
-    			    		bean.setCanILAsist(cantidad);
-    			    		bean.setCostILAsist(costo);
-    			    		//bean.setCostoPromRural(costoPromedioRural);
-    			    	}else{
-    			    	   //no coinciden ningun tipo de personal
-    			    		cont++;
-    			    		sMsg="ERROR";    
-    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    								listaError, cont, FiseConstants.COD_ERROR_F14C_1500);
-    						break;
-    			    	}   			    	
-    			    }else{
-    			    	cont++;
-    			    	sMsg="ERROR";    
-						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-								listaError, cont, FiseConstants.COD_ERROR_F14C_1510);
-						break;
-    			    }    			    
-    			  }//fin del for del recorrido de la lista seteando valores    			  
-    			}//fin del if process = true
-    			
-    		   /*****validaciones de consistencia***/
-    			if(process && FiseConstants.BLANCO.equals(sMsg)){
-    				/**CABECERA**/
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getAnioPres())){    				
-    					cont++;
-    					sMsg="ERROR";    
-    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F12_60);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getMesPres())){    				
-    					cont++;
-    					sMsg="ERROR";    
-    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F12_80);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumRural())){    				
-    					cont++;
-    					sMsg="ERROR";    
-    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F14C_390);
-    				}
-    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbProv())){    				
-    					cont++;
-    					sMsg="ERROR";    
-    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F14C_410);
-    				}
-    				/**Habilita Lima*/
-    				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
-							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
-					{
-    					if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbLima())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_430);
-        				}
-    					if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbLima()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_490);
-        				}
-					} //fin habilita lima   				
-    				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromRural()) ){    				
-    					cont++;
-    					sMsg="ERROR";    
-    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F14C_450);
-    				}
-    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbProv()) ){    				
-    					cont++;
-    					sMsg="ERROR";    
-    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    							listaError, cont, FiseConstants.COD_ERROR_F14C_470);
-    				}       				
-    				
-    				///VERIFICACION DE COSTO DIRECTO O INDIRECTO
-    				if(FiseConstants.COSTO_DIRECTO_F14C.equals(flagCosto)){
-    					/*****RURAL*****/     
-    					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRCoord())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_510);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRSupe())){   				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_590);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRGest())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_670);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRAsist())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_750);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					 fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_530);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_610);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_690);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_770);
-        				}
-        				/*****PROVINCIA*****/    
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPCoord())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_830);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPSupe())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_910);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPGest())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_990);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPAsist())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1070);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_850);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_930);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1010);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1090);
-        				}
-        				/**Habilita LIMA*/
-        				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
-    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
-    					{
-        					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLCoord())){    		
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1150);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLSupe())){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1230);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLGest())){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1310);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLAsist())){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1390);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){    					
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1170);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1250);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1330);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores,
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1410);
-            				}       					
-    					}       				
-    				}else if(FiseConstants.COSTO_INDIRECTO_F14C.equals(flagCosto)){
-    					/*****RURAL*****/     
-    					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRCoord())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_550);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRSupe())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_630);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRGest())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_710);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRAsist())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_790);
-        				}  
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_570);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_650);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_730);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_810);
-        				}    					
-    					/*****PROVINCIA*****/ 
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPCoord())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_870);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPSupe())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_950);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPGest())){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1030);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPAsist())){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1530);
-        				}    	
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_890);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){    		
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_970);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1050);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1130);
-        				}
-        				/**Habilita LIMA*/
-        				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
-    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
-    					{
-        					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILCoord())){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1190);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILSupe())){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1270);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILGest())){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILAsist())){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1430);
-            				}	
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1210);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1290);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1370);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1450);
-            				}         					
-    					}     					
-    				}else{
-    					/************COSTO DIRECTO E INDIRECTO***********/
-    					/*****RURAL*****/     				
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRCoord())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_510);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRSupe())){   				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_590);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRGest())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_670);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRAsist())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_750);
-        				}
-        				
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRCoord())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_550);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRSupe())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_630);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRGest())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_710);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRAsist())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_790);
-        				}    				
-
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_530);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_610);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_690);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_770);
-        				}
-        				
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_570);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_650);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_730);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_810);
-        				}
-        				
-        				/*******PROVINCIAS******/
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPCoord())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_830);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPSupe())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_910);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPGest())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_990);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPAsist())){    					
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1070);
-        				}
-        				
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPCoord())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_870);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPSupe())){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_950);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPGest())){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1030);
-        				}
-        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPAsist())){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1530);
-        				}    				
-
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_850);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_930);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1010);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1090);
-        				}
-        				
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){    				
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_890);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){    		
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_970);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1050);
-        				}
-        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){    			
-        					cont++;
-        					sMsg="ERROR";    
-        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-        							listaError, cont, FiseConstants.COD_ERROR_F14C_1130);
-        				}
-        				/**Habilita LIMA*/
-        				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
-    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
-    					{
-        					/**LIMA***/
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLCoord())){    		
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1150);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLSupe())){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1230);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLGest())){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1310);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLAsist())){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1390);
-            				}
-            				
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILCoord())){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1190);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILSupe())){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1270);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILGest())){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
-            				}
-            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILAsist())){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1430);
-            				}        				
-
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){    					
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1170);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1250);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){    				
-            					cont++;
-            					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1330);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores,
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1410);
-            				}
-            				
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1210);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){    			
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1290);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1370);
-            				}
-            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){    				
-            					cont++;
-            					sMsg="ERROR";    
-            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-            							listaError, cont, FiseConstants.COD_ERROR_F14C_1450);
-            				}   					
-    					}        					
-    				}//fin del else de ambos   							
-    			}  //fin de validacion 			
-				
-				logger.info("Valor de del mesaje pasando la validacion:  "+sMsg); 
-				if(FiseConstants.BLANCO.equals(sMsg) ){	
-					logger.info("Entro a verificar cero errores de validacion"); 
-					bean.setUsuario(user.getLogin());
-					bean.setTerminal(user.getLoginIP());						
-					bean.setNombreText(archivo.getTitle());	
-					logger.info("Cod empresa del for: "+codigoEmpresa);
-					logger.info("anio pres del for: "+anioPresentacion);
-					int mesForm = Integer.valueOf(mesPresentacion);
-					logger.info("mes pres del for: "+mesForm);
-					logger.info("anio inicio del for: "+anioIniVigencia);
-					logger.info("anio fin del for: "+anioFinVigencia);
+    			String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPresentacion), Long.parseLong(mesPresentacion), codigoEmpresa, FiseConstants.TIPO_FORMATO_14C);
+				if( nombreIdeal.trim().equals(archivo.getDescription().trim()) ){
 					
-					logger.info("Cod empresa del bean: "+bean.getCodEmpresa());
-					logger.info("anio pres del bean: "+bean.getAnioPres());					
-					logger.info("anio inicio del bean: "+bean.getAnioPres());
-					logger.info("anio fin del bean: "+bean.getAnioPres());
-					int mesBean = Integer.valueOf(bean.getMesPres());						
-					logger.info("mes pres del bean: "+mesBean);
-					
-					if(codigoEmpresa.equals(bean.getCodEmpresa()) && 
-							anioPresentacion.equals(bean.getAnioPres()) &&	
-							mesForm==mesBean)
-					{
-						logger.info("Entro a verificar datos si coincide la Pk"); 
-						if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
-							bean.setCodEmpresa(codigoEmpresa);
-							bean.setAnioPres(anioPresentacion);
-							bean.setMesPres(mesPresentacion);
-							bean.setAnoIniVigencia(anioIniVigencia);
-							bean.setAnoFinVigencia(anioFinVigencia); 
-							bean.setEtapa(etapa); 
-							bean.setFlagCosto(flagCosto); 
-							logger.info("Entro agrabar nuevo registro"); 
-							valor=formato14CGartService.insertarDatosFormato14C(bean);		
-							logger.info("valor del  agrabar nuevo registro: "+valor); 
-						}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
-							bean.setCodEmpresa(codigoEmpresa);
-							bean.setAnioPres(anioPresentacion);
-							bean.setMesPres(mesPresentacion);
-							bean.setAnoIniVigencia(anioIniVigencia);
-							bean.setAnoFinVigencia(anioFinVigencia); 
-							bean.setEtapa(etapa); 
-							bean.setFlagCosto(flagCosto); 
-							logger.info("Entro actualizar nuevo registro"); 
-							valor =formato14CGartService.actualizarDatosFormato14C(bean);
-							logger.info("valor del  actualizar nuevo registro: "+valor); 
+					int BUFFER_SIZE = 8192;
+	    			BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
+	    			List<String> listaDetalleTxt= new ArrayList<String>();
+	    			sCurrentLine = br.readLine();
+	    			logger.info("sCurrentLine :  "+sCurrentLine.length());
+	    			while(sCurrentLine!=null){
+	    				logger.info("CONTADOR EN PANTALLA.");
+	    				cont++;
+	    				if( sCurrentLine.length()>0 ){
+	    					if( sCurrentLine.length() == longitudMaxima){
+	    						listaDetalleTxt.add(sCurrentLine);
+	    					}else{
+	    						cont++;
+	    						sMsg="ERROR";    
+	    					    fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    								listaError, cont, FiseConstants.COD_ERROR_F12_220);//error datos incompletos
+	    					}
+	    				}else{
+	    					cont++;
+	    					sMsg="ERROR";     
+	    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    							listaError, cont, FiseConstants.COD_ERROR_F12_230);//error archivo sin datos
+	    				}
+	    				sCurrentLine = br.readLine();
+	    				if( cont>24 ){
+	    					cont++;
+	    					sMsg="ERROR";    
+	    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    							listaError, cont, FiseConstants.COD_ERROR_F14C_1460);//no debe pasar las 24 lineas 
+	    					break;
+	    				}
+	    			}
+	    			logger.info("TOTAL DE FILAS DEL TEXTO:  "+listaDetalleTxt.size()); 
+	    			
+	    			boolean process = false;
+	    			String key1 ="";
+	    			String key2="";
+	    			String key3="";
+	    			String key4="";
+	    			String codEmpresaRural="";//cod_empresa+aniopresentacion+mespresentacion+zonarual+sede
+	    			String codEmpresaProv="";//cod_empresa+aniopresentacion+mespresentacion+zonaProv+sede
+	    			String codEmpresaLima="";//cod_empresa+aniopresentacion+mespresentacion+zonalima+sede
+	    			
+	    			if(listaDetalleTxt.size()>15 && listaDetalleTxt.size()<=24){ 
+	    				process = true;
+	    				key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
+	    				key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+	    				key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
+	    				key4 = listaDetalleTxt.get(0).substring(posicionAnioFinVigencia, posicionSede).trim();
+	    				logger.info("Codigo key1:   "+key1); //codigo empresa
+	    				logger.info("Codigo key2:   "+key2); //anio presentacion 
+	    				logger.info("Codigo key3:   "+key3); //mes presentacion
+	    				logger.info("Codigo key4:   "+key4); //sede    			
+	    				for (String s : listaDetalleTxt) {
+	        				String codEmp = s.substring(0, posicionCodEmpresa).trim();
+	    					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+	    					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+	    					String zonaBenef = s.substring(posicionSede, posicionZonaBenef).trim();
+	    					String sede = s.substring(posicionAnioFinVigencia, posicionSede).trim();
+	    					logger.info("codigo empresa:   "+codEmp); 
+	        				logger.info("anio pres:   "+anioPres); 
+	        				logger.info("mes pres:   "+mesPres); 
+	        				logger.info("sede:   "+sede);
+	        				logger.info("zona:   "+zonaBenef);
+	    					if(key1.equals(codEmp) && 
+	    							key2.equals(anioPres) && 
+	    							key3.equals(mesPres) &&
+	    							key4.equals(sede) &&
+	    							FiseConstants.ZONABENEF_RURAL_COD_STRING.equals(zonaBenef))
+	    					{
+	    						codEmpresaRural=key1+key2+key3+zonaBenef+key4;						
+	    					}else if(key1.equals(codEmp) && 
+	    							key2.equals(anioPres) && 
+	    							key3.equals(mesPres) &&
+	    							key4.equals(sede) &&							
+	    							FiseConstants.ZONABENEF_PROVINCIA_COD_STRING.equals(zonaBenef))
+	    					{
+	    						codEmpresaProv=key1+key2+key3+zonaBenef+key4;						
+	    					}else if(key1.equals(codEmp) && 
+	    							key2.equals(anioPres) && 
+	    							key3.equals(mesPres) &&
+	    							key4.equals(sede) &&							
+	    							FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(zonaBenef))
+	    					{
+	    						codEmpresaLima=key1+key2+key3+zonaBenef+key4;						
+	    					}else{ 
+	    						process = false;
+	    						cont++;
+	    						sMsg="ERROR";    
+	    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    								listaError, cont, FiseConstants.COD_ERROR_F14C_1470);
+	    						break;
+	    					}
+	        			}//fin del for  
+	        			
+	        			logger.info("Codigo muestra codEmpresaRural:   "+codEmpresaRural); 
+	        			logger.info("Codigo muestra codEmpresaProv:   "+codEmpresaProv); 
+	        			logger.info("Codigo muestra codEmpresaLima:   "+codEmpresaLima); 
+	    			}    			
+	    			//empesando asignar valores al bean
+	    			if(process){
+	    			  for (String s : listaDetalleTxt) {
+	    				String codEmp = s.substring(0, posicionCodEmpresa).trim();
+	  					String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+	  					String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+	  					String zonaBenef = s.substring(posicionSede, posicionZonaBenef).trim();
+	  					String sede = s.substring(posicionAnioFinVigencia, posicionSede).trim(); 
+	  					
+	    				String codigoMuestraZonal =codEmp+anioPres+mesPres+zonaBenef+sede; 
+	    				logger.info("Codigo muestra zona para setear al bean: "+codigoMuestraZonal);
+	    				
+	    				String idTipoCostGestion =s.substring(posicionNroItemTipoGestCosto, posicionIdTipoCostoGest).trim();  
+	    			    String idTipoPersonal = s.substring(posicionIdTipoCostoGest, posicionPersonalBenef).trim();
+	    			   
+	    			    String codigoMuestraTipPersona =idTipoCostGestion+idTipoPersonal; 
+	    			    logger.info("Codigo muestra persona para setear al bean: "+codigoMuestraTipPersona);
+	    			    
+	    			    String nroTotalBenef = s.substring(posicionZonaBenef, posicionNroTotalBenef).trim();
+	    			    logger.info("nroTotalBenef: "+nroTotalBenef);
+	    			    String cantidad = s.substring(posicionPersonalBenef, posicionCantidad).trim();
+	    			    logger.info("cantidad: "+cantidad);
+	    			    String costo = s.substring(posicionCantidad, posicionCostoUnitario).trim();
+	    			    logger.info("costo: "+costo);
+	    			    String costoProemdio = s.substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
+	    			    logger.info("costoProemdio: "+costoProemdio);
+	    			    String costoPromedioRural = listaDetalleTxt.get(0).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
+	    			    logger.info("costoPromedioRural: "+costoPromedioRural);
+	    			    String costoPromedioProv = listaDetalleTxt.get(8).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
+	    			    logger.info("costoPromedioProv: "+costoPromedioProv);
+	    			    
+	    			    String costoPromedioLima  ="0.0";
+	    			    if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
+								FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
+						{
+	    			        costoPromedioLima = listaDetalleTxt.get(16).substring(posicionCostoTotalZona, posicionCostoTotalTipPer).trim();
+	        			   
 						}
-					}else{
-						logger.info("Entro a verificar datos la Pk no coincide--"); 
-						cont++;
-						sMsg="ERROR";    
-						sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-								listaError, cont, FiseConstants.COD_ERROR_F12_210);
-					}
-				}			
-    			is.close();
-    			if("2".equals(valor)){ 
-    				cont++;
-    				sMsg="ERROR";
-    				fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    						listaError, cont, FiseConstants.COD_ERROR_F14C_1540);//error codigo ya esta registrado 	
-    			}else if("0".equals(valor)){
-    				cont++;
-    				sMsg="ERROR";
-    				fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-    						listaError, cont, FiseConstants.COD_ERROR_F14C_1550);//error al grabar		
-    			}    			
+	    			    logger.info("costoPromedioLima: "+costoPromedioLima);
+	    				
+	    			    /**seteando valores al bean de la cabecera**/
+	    				bean.setCodEmpresa(key1); 
+	    				bean.setAnioPres(key2);
+	    				bean.setMesPres(key3);
+	    				//bean.setAnoIniVigencia(key2);
+	    				//bean.setAnoFinVigencia(key2);
+	    				bean.setEtapa(etapa); 
+	    				bean.setNombreSede(key4); 
+	    			    /**ZONA RURAL*/
+	    			    if(codEmpresaRural.equals(codigoMuestraZonal)){ 
+	    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
+	    			    		bean.setNumRural(nroTotalBenef); //cabecera
+	    			    		bean.setCanDRCoord(cantidad);
+	    			    		bean.setCostDRCoord(costo);
+	    			    		bean.setCostoPromRural(costoPromedioRural);//cabecera
+	    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDRSupe(cantidad);
+	    			    		bean.setCostDRSupe(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDRGest(cantidad);
+	    			    		bean.setCostDRGest(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDRAsist(cantidad);
+	    			    		bean.setCostDRAsist(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanIRCoord(cantidad);
+	    			    		bean.setCostIRCoord(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanIRSupe(cantidad);
+	    			    		bean.setCostIRSupe(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanIRGest(cantidad);
+	    			    		bean.setCostIRGest(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanIRAsist(cantidad);
+	    			    		bean.setCostIRAsist(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else{
+	    			    	   //no coinciden ningun tipo de personal
+	    			    		cont++;
+	    			    		sMsg="ERROR";    
+	    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    								listaError, cont, FiseConstants.COD_ERROR_F14C_1480);
+	    						break;
+	    			    	}   			    	
+	    			    }
+	    			    /**PROVINCIAS*/
+	    			    else if(codEmpresaProv.equals(codigoMuestraZonal)){
+	    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
+	    			    		bean.setNumUrbProv(nroTotalBenef); //cabecera
+	    			    		bean.setCanDPCoord(cantidad);
+	    			    		bean.setCostDPCoord(costo);
+	    			    		bean.setCostoPromUrbProv(costoPromedioProv);//cabecera
+	    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDPSupe(cantidad);
+	    			    		bean.setCostDPSupe(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDPGest(cantidad);
+	    			    		bean.setCostDPGest(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDPAsist(cantidad);
+	    			    		bean.setCostDPAsist(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanIPCoord(cantidad);
+	    			    		bean.setCostIPCoord(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanIPSupe(cantidad);
+	    			    		bean.setCostIPSupe(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanIPGest(cantidad);
+	    			    		bean.setCostIPGest(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanIPAsist(cantidad);
+	    			    		bean.setCostIPAsist(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else{
+	    			    	   //no coinciden ningun tipo de personal
+	    			    		cont++;
+	    			    		sMsg="ERROR";    
+	    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    								listaError, cont, FiseConstants.COD_ERROR_F14C_1490);
+	    						break;
+	    			    	}    				    	
+	    			    }
+	    			    /*****LIMA******/
+	    			    else if(codEmpresaLima.equals(codigoMuestraZonal)){
+	    			    	if(FiseConstants.COSTODIERCTO_COORD_F14C.equals(codigoMuestraTipPersona)){ 
+	    			    		bean.setNumUrbLima(nroTotalBenef); //cabecera
+	    			    		bean.setCanDLCoord(cantidad);
+	    			    		bean.setCostDLCoord(costo);
+	    			    		bean.setCostoPromUrbLima(costoPromedioLima);//cabecera
+	    			    	}else if(FiseConstants.COSTODIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDLSupe(cantidad);
+	    			    		bean.setCostDLSupe(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTODIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDLGest(cantidad);
+	    			    		bean.setCostDLGest(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTODIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanDLAsist(cantidad);
+	    			    		bean.setCostDLAsist(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_COORD_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanILCoord(cantidad);
+	    			    		bean.setCostILCoord(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_SUPE_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanILSupe(cantidad);
+	    			    		bean.setCostILSupe(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_GEST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanILGest(cantidad);
+	    			    		bean.setCostILGest(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else if(FiseConstants.COSTOINDIRECTO_ASIST_F14C.equals(codigoMuestraTipPersona)){
+	    			    		//bean.setNumRural(nroTotalBenef); 
+	    			    		bean.setCanILAsist(cantidad);
+	    			    		bean.setCostILAsist(costo);
+	    			    		//bean.setCostoPromRural(costoPromedioRural);
+	    			    	}else{
+	    			    	   //no coinciden ningun tipo de personal
+	    			    		cont++;
+	    			    		sMsg="ERROR";    
+	    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    								listaError, cont, FiseConstants.COD_ERROR_F14C_1500);
+	    						break;
+	    			    	}   			    	
+	    			    }else{
+	    			    	cont++;
+	    			    	sMsg="ERROR";    
+							fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+									listaError, cont, FiseConstants.COD_ERROR_F14C_1510);
+							break;
+	    			    }    			    
+	    			  }//fin del for del recorrido de la lista seteando valores    			  
+	    			}//fin del if process = true
+	    			
+	    		   /*****validaciones de consistencia***/
+	    			if(process && FiseConstants.BLANCO.equals(sMsg)){
+	    				/**CABECERA**/
+	    				if(!FormatoUtil.validarCampoLongTxt(bean.getAnioPres())){    				
+	    					cont++;
+	    					sMsg="ERROR";    
+	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    							listaError, cont, FiseConstants.COD_ERROR_F12_60);
+	    				}
+	    				if(!FormatoUtil.validarCampoLongTxt(bean.getMesPres())){    				
+	    					cont++;
+	    					sMsg="ERROR";    
+	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    							listaError, cont, FiseConstants.COD_ERROR_F12_80);
+	    				}
+	    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumRural())){    				
+	    					cont++;
+	    					sMsg="ERROR";    
+	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    							listaError, cont, FiseConstants.COD_ERROR_F14C_390);
+	    				}
+	    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbProv())){    				
+	    					cont++;
+	    					sMsg="ERROR";    
+	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    							listaError, cont, FiseConstants.COD_ERROR_F14C_410);
+	    				}
+	    				/**Habilita Lima*/
+	    				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
+								FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
+						{
+	    					if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbLima())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_430);
+	        				}
+	    					if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbLima()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_490);
+	        				}
+						} //fin habilita lima   				
+	    				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromRural()) ){    				
+	    					cont++;
+	    					sMsg="ERROR";    
+	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    							listaError, cont, FiseConstants.COD_ERROR_F14C_450);
+	    				}
+	    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbProv()) ){    				
+	    					cont++;
+	    					sMsg="ERROR";    
+	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    							listaError, cont, FiseConstants.COD_ERROR_F14C_470);
+	    				}       				
+	    				
+	    				///VERIFICACION DE COSTO DIRECTO O INDIRECTO
+	    				if(FiseConstants.COSTO_DIRECTO_F14C.equals(flagCosto)){
+	    					/*****RURAL*****/     
+	    					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRCoord())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_510);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRSupe())){   				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_590);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRGest())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_670);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRAsist())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_750);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					 fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_530);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_610);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_690);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_770);
+	        				}
+	        				/*****PROVINCIA*****/    
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPCoord())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_830);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPSupe())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_910);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPGest())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_990);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPAsist())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1070);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_850);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_930);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1010);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1090);
+	        				}
+	        				/**Habilita LIMA*/
+	        				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
+	    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
+	    					{
+	        					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLCoord())){    		
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1150);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLSupe())){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1230);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLGest())){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1310);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLAsist())){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1390);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){    					
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1170);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1250);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1330);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores,
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1410);
+	            				}       					
+	    					}       				
+	    				}else if(FiseConstants.COSTO_INDIRECTO_F14C.equals(flagCosto)){
+	    					/*****RURAL*****/     
+	    					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRCoord())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_550);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRSupe())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_630);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRGest())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_710);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRAsist())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_790);
+	        				}  
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_570);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_650);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_730);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_810);
+	        				}    					
+	    					/*****PROVINCIA*****/ 
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPCoord())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_870);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPSupe())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_950);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPGest())){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1030);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPAsist())){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1530);
+	        				}    	
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_890);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){    		
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_970);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1050);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1130);
+	        				}
+	        				/**Habilita LIMA*/
+	        				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
+	    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
+	    					{
+	        					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILCoord())){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1190);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILSupe())){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1270);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILGest())){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILAsist())){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1430);
+	            				}	
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1210);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1290);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1370);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1450);
+	            				}         					
+	    					}     					
+	    				}else{
+	    					/************COSTO DIRECTO E INDIRECTO***********/
+	    					/*****RURAL*****/     				
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRCoord())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_510);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRSupe())){   				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_590);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRGest())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_670);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRAsist())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_750);
+	        				}
+	        				
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRCoord())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_550);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRSupe())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_630);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRGest())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_710);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRAsist())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_790);
+	        				}    				
+
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_530);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_610);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_690);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_770);
+	        				}
+	        				
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_570);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_650);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_730);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_810);
+	        				}
+	        				
+	        				/*******PROVINCIAS******/
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPCoord())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_830);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPSupe())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_910);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPGest())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_990);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPAsist())){    					
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1070);
+	        				}
+	        				
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPCoord())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_870);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPSupe())){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_950);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPGest())){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1030);
+	        				}
+	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPAsist())){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1530);
+	        				}    				
+
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_850);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_930);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1010);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1090);
+	        				}
+	        				
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){    				
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_890);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){    		
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_970);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1050);
+	        				}
+	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){    			
+	        					cont++;
+	        					sMsg="ERROR";    
+	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1130);
+	        				}
+	        				/**Habilita LIMA*/
+	        				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
+	    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
+	    					{
+	        					/**LIMA***/
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLCoord())){    		
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1150);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLSupe())){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1230);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLGest())){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1310);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLAsist())){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1390);
+	            				}
+	            				
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILCoord())){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1190);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILSupe())){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1270);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILGest())){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
+	            				}
+	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILAsist())){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1430);
+	            				}        				
+
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){    					
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1170);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1250);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){    				
+	            					cont++;
+	            					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1330);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores,
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1410);
+	            				}
+	            				
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1210);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){    			
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1290);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1370);
+	            				}
+	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){    				
+	            					cont++;
+	            					sMsg="ERROR";    
+	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1450);
+	            				}   					
+	    					}        					
+	    				}//fin del else de ambos   							
+	    			}  //fin de validacion 			
+					
+					logger.info("Valor de del mesaje pasando la validacion:  "+sMsg); 
+					if(FiseConstants.BLANCO.equals(sMsg) ){	
+						logger.info("Entro a verificar cero errores de validacion"); 
+						bean.setUsuario(user.getLogin());
+						bean.setTerminal(user.getLoginIP());						
+						bean.setNombreText(archivo.getTitle());	
+						logger.info("Cod empresa del for: "+codigoEmpresa);
+						logger.info("anio pres del for: "+anioPresentacion);
+						int mesForm = Integer.valueOf(mesPresentacion);
+						logger.info("mes pres del for: "+mesForm);
+						logger.info("anio inicio del for: "+anioIniVigencia);
+						logger.info("anio fin del for: "+anioFinVigencia);
+						
+						logger.info("Cod empresa del bean: "+bean.getCodEmpresa());
+						logger.info("anio pres del bean: "+bean.getAnioPres());					
+						logger.info("anio inicio del bean: "+bean.getAnioPres());
+						logger.info("anio fin del bean: "+bean.getAnioPres());
+						int mesBean = Integer.valueOf(bean.getMesPres());						
+						logger.info("mes pres del bean: "+mesBean);
+						
+						if(codigoEmpresa.equals(bean.getCodEmpresa()) && 
+								anioPresentacion.equals(bean.getAnioPres()) &&	
+								mesForm==mesBean)
+						{
+							logger.info("Entro a verificar datos si coincide la Pk"); 
+							if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
+								bean.setCodEmpresa(codigoEmpresa);
+								bean.setAnioPres(anioPresentacion);
+								bean.setMesPres(mesPresentacion);
+								bean.setAnoIniVigencia(anioIniVigencia);
+								bean.setAnoFinVigencia(anioFinVigencia); 
+								bean.setEtapa(etapa); 
+								bean.setFlagCosto(flagCosto); 
+								logger.info("Entro agrabar nuevo registro"); 
+								valor=formato14CGartService.insertarDatosFormato14C(bean);		
+								logger.info("valor del  agrabar nuevo registro: "+valor); 
+							}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
+								bean.setCodEmpresa(codigoEmpresa);
+								bean.setAnioPres(anioPresentacion);
+								bean.setMesPres(mesPresentacion);
+								bean.setAnoIniVigencia(anioIniVigencia);
+								bean.setAnoFinVigencia(anioFinVigencia); 
+								bean.setEtapa(etapa); 
+								bean.setFlagCosto(flagCosto); 
+								logger.info("Entro actualizar nuevo registro"); 
+								valor =formato14CGartService.actualizarDatosFormato14C(bean);
+								logger.info("valor del  actualizar nuevo registro: "+valor); 
+							}
+						}else{
+							logger.info("Entro a verificar datos la Pk no coincide--"); 
+							cont++;
+							sMsg="ERROR";    
+							sMsg = sMsg +fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+									listaError, cont, FiseConstants.COD_ERROR_F12_210);
+						}
+					}			
+	    			is.close();
+	    			if("2".equals(valor)){ 
+	    				cont++;
+	    				sMsg="ERROR";
+	    				fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    						listaError, cont, FiseConstants.COD_ERROR_F14C_1540);//error codigo ya esta registrado 	
+	    			}else if("0".equals(valor)){
+	    				cont++;
+	    				sMsg="ERROR";
+	    				fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+	    						listaError, cont, FiseConstants.COD_ERROR_F14C_1550);//error al grabar		
+	    			}    			
+					
+				}else{
+					cont++;
+					sMsg="ERROR";
+					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
+				}
+    			
     		}else{
     			//no hay campos o error al consultar a la tabla de campos
     			logger.info("No hay los campos configurados en la tabla campos--"); 
