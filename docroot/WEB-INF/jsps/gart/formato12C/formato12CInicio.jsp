@@ -179,7 +179,7 @@ $(document).ready(function () {
 	<div id="<portlet:namespace/>dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
-			<img src="fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
 			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content">¿Está seguro?</label>
 		</p>

@@ -420,7 +420,8 @@ var formato13A= {
 			formato13A.botonAnadirFormato.click(function(){
 				formato13A.blockUI();
 				//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
-				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				formato13A.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 			formato13A.divInformacion.hide();
@@ -467,7 +468,8 @@ var formato13A= {
 
 				formato13A.blockUI();
 				//--formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
-				formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				//--formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				formato13A.formNuevo.attr('action',urlAnadirFormato+'&origen=1'+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 			formato13A.botonRegresarBusqueda.click(function(){
@@ -605,6 +607,56 @@ var formato13A= {
 				formato13A.dialogMessageErrorDetalle.dialog("open");
 			}
 
+		</c:if>
+		
+		<c:if test="${crud =='CREATEUPDATE'}">
+			formato13A.codDepa.change(function(){
+				formato13A.listarProvincias(formato13A.codDepa.val());
+			});
+			
+			formato13A.codProv.change(function(){
+				formato13A.listarDistritos(formato13A.codProv.val());
+			});
+			
+			formato13A.botonGuardarDetalle.click(function(){
+				
+				if( formato13A.validarFormatoDetalle() ){
+					formato13A.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion).submit();
+				}
+				
+			});
+			
+			botonRegresarDetalle.click(function(){
+				formato13A.blockUI();
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+				//--location.href=urlRegresarNuevo+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val();
+			});
+			
+			formato13A.codDepa.val(formato13A.codDepartamentoHidden.val());
+			formato13A.listarProvinciasEdit(formato13A.codDepartamentoHidden.val(),formato13A.codProvinciaHidden.val(),formato13A.codDistritoHidden.val());
+			
+			formato13A.soloNumerosEnteros();
+			
+			formato13A.mostrarPeriodoEjecucion();
+			formato13A.estiloEdicionDetalle();
+			
+			formato13A.calculoTotal();
+			
+			//mostramos el mensaje de informacion
+			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
+				var addhtml='El Detalle de Localidades de la Zona de Beneficiarios seleccionado se guardó satisfactoriamente';
+				formato13A.dialogMessageDetalleContent.html(addhtml);
+				formato13A.dialogMessageDetalle.dialog("open");
+			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
+				var addhtml='Ya existe un Detalle de Localidades para la Zona, Periodo y Distribuidora Eléctrica seleccionada';
+				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
+				formato13A.dialogMessageErrorDetalle.dialog("open");
+			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR2' ){
+				var addhtml='Se produjo un error al guardar el Detalle de Localidades para la Zona';
+				formato13A.dialogMessageErrorDetalleContent.html(addhtml);
+				formato13A.dialogMessageErrorDetalle.dialog("open");
+			}
+	
 		</c:if>
 		
 		<c:if test="${crud =='READ'}">

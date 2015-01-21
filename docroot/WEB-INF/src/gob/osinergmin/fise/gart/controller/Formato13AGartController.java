@@ -95,6 +95,7 @@ public class Formato13AGartController {
 	Logger logger = Logger.getLogger(Formato13AGartController.class);
 	
 	private static final String CRUD_CREATE = "CREATE";
+	private static final String CRUD_CREATEUPDATE = "CREATEUPDATE";
 	private static final String CRUD_UPDATE = "UPDATE";
 	// ---private static final String CRUD_DELETE = "DELETE";
 	private static final String CRUD_READ = "READ";
@@ -550,7 +551,7 @@ public class Formato13AGartController {
 			// validar si es nuevo o modificacion
 			try {
 
-				if (CRUD_CREATE.equals(crud)) {
+				if( CRUD_CREATE.equals(crud) || CRUD_CREATEUPDATE.equals(crud) ){
 					// create
 					
 					boolean existe = false;
@@ -657,6 +658,8 @@ public class Formato13AGartController {
 		}else if( "ERROR1".equals(msg) || "ERROR2".equals(msg) ){
 			if( CRUD_CREATE.equals(crud) ){
 				response.setRenderParameter("crud", CRUD_CREATE);
+			}else if ( CRUD_CREATEUPDATE.equals(crud) ) {
+				response.setRenderParameter("crud", CRUD_CREATEUPDATE);
 			}else if ( CRUD_UPDATE.equals(crud) ) {
 				response.setRenderParameter("crud", CRUD_UPDATE);
 			}
@@ -674,7 +677,8 @@ public class Formato13AGartController {
 	}
 
 	@ActionMapping(params = "action=nuevoDetalle")
-	public void nuevoDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+	public void nuevoDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command,
+			@RequestParam("origen") String origen ) {
 		String codEmpresa = command.getCodEmpresa();
 		String periodoDeclaracion = command.getPeridoDeclaracion();
 		//String periodoDeclaracion = command.getDescripcionPeriodoHidden();//se obtiene el valor del periodo guardado de el campo descripcionPeriodoHidden(valorPeriodoHidden), probar los demas flujos
@@ -714,6 +718,12 @@ public class Formato13AGartController {
 		FiseFormato13AC cabecera = new FiseFormato13AC();
 		cabecera.setId(pkCabecera);*/
 
+		if( "0".equals(origen) ){
+			response.setRenderParameter("crud", CRUD_CREATE);
+		}else if( "1".equals(origen) ){
+			response.setRenderParameter("crud", CRUD_CREATEUPDATE);
+		}
+		
 		response.setRenderParameter("crud", CRUD_CREATE);
 		response.setRenderParameter("action", "detalle");
 		
@@ -897,7 +907,7 @@ public class Formato13AGartController {
 					}
 
 				}
-			} else if (CRUD_CREATE.equals(crud)) {
+			} else if (CRUD_CREATE.equals(crud) || CRUD_CREATEUPDATE.equals(crud) ) {
 				model.addAttribute("readonlyEdit", "false");
 
 				command.setSt1(FiseConstants.CERO);
