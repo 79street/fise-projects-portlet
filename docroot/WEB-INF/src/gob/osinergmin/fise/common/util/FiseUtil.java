@@ -585,14 +585,14 @@ public class FiseUtil {
 				if( !FiseConstants.BLANCO.equals(correoD) ){
 					mailMessage.setCC(new InternetAddress(correoD));
 				}
-				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
-						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
+						+ nombreUsuario + "</b></p><p>Mediante el presente se le comunica que la empresa "
 						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n para el periodo " 
 						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
-						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
+						+ descripcionFormato + ".</p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
 						+ descripcionCosto	+ ", Formato "
-						+ tipoFormato + " y Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+						+ tipoFormato + " y Resultados de Validaci&oacute;n (Observaciones).</p><p>Cordialmente,<br/>Sistemas GART</p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
@@ -648,17 +648,17 @@ public class FiseUtil {
 				if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
 					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
 				}
-				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
-						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
-						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
+						+ nombreUsuario + "</b><br/><b>Empresa:<b/> "
+						+ descEmpresa + "</p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
 						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
-						+ descripcionFormato + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
+						+ descripcionFormato + ".</p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
 						+ descripcionCosto	+ ", Formato "
-						+ tipoFormato + " y Resultados de Validaci&oacute;n (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
-						+ "<p>Recomendamos tener en cuenta aquellos formatos faltantes para que, de acuerdo a sus necesidades, lo registren y env&iacute;en a la brevedad. As&iacute; mismo una vez enviado todos los formatos, cerrar el proceso de env&iacute;o.<u></u><u></u></p>"
-						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
-						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+						+ tipoFormato + " y Resultados de Validaci&oacute;n (Observaciones).</p>"
+						+ "<p>Recomendamos tener en cuenta aquellos formatos faltantes para que, de acuerdo a sus necesidades, lo registren y env&iacute;en a la brevedad. As&iacute; mismo una vez enviado todos los formatos, cerrar el proceso de env&iacute;o.</p>"
+						+ "<p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo al: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.</p>"
+						+ "<p>Cordialmente,<br/>Sistemas GART</p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
@@ -704,14 +704,14 @@ public class FiseUtil {
 				if( !FiseConstants.BLANCO.equals(correoD) ){
 					mailMessage.setCC(new InternetAddress(correoD));
 				}
-				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
-						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
-						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente al Grupo de Informaci&oacute;n "
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
+						+ nombreUsuario + "</b><br/><b>Empresa:</b> "
+						+ descEmpresa + "</p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente al Grupo de Informaci&oacute;n "
 						+ descGrupoInf + ". "
-						+ "" + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
-						+ "<p>Para subsanar las obsevaciones debe ingresar al sistema y corregir los datos para la etapa LEVANTAMIENTO DE OBSERVACIONES (LEV.OBS).<u></u><u></u></p>"
-						+ "<p><u></u>&nbsp;<u></u></p><p>Si tiene alg&uacute;n inconveniente, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo a: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
-						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+						+ "" + "</p>"
+						+ "<p>Para subsanar las observaciones debe ingresar al sistema y corregir los datos para la etapa LEVANTAMIENTO DE OBSERVACIONES (LEV.OBS).</p>"
+						+ "<p>Si tiene alg&uacute;n inconveniente, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo a: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.</p>"
+						+ "<p>Cordialmente,<br/>Sistemas GART</p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
@@ -783,12 +783,12 @@ public class FiseUtil {
 				if( !FiseConstants.BLANCO.equals(correoD) ){
 					mailMessage.setCC(new InternetAddress(correoD));
 				}
-				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
-						+ nombreUsuario + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que la empresa "
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
+						+ nombreUsuario + "</b></p><p>Mediante el presente se le comunica que la empresa "
 						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n, correspondiente al Grupo de Informaci&oacute;n "						
-						+ descGrupoInf + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
+						+ descGrupoInf + ".</p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
 						+ descripcionCosto	+ ", Formatos "
-						+"y Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+						+"y Resultados de Validaciones (Observaciones).</p><p>Cordialmente,<br/>Sistemas GART</p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
@@ -842,15 +842,15 @@ public class FiseUtil {
 				if( listaCorreoDestino!=null && !listaCorreoDestino.isEmpty() ){
 					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
 				}
-				mailMessage.setBody("<html><head></head><body><p>Estimado(a) "
-						+ nombreUsuario + "<u></u><u></u></p><p>Empresa: "
-						+ descEmpresa + "<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n correspondiente al Grupo de Informaci&oacute;n "
+				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
+						+ nombreUsuario + "</b><br/><b>Empresa:</b> "
+						+ descEmpresa + "</p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n correspondiente al Grupo de Informaci&oacute;n "
 						+ descGrupoInf + ""
-					    + ".<u></u><u></u></p><p><u></u>&nbsp;<u></u></p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
+					    + ".</p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
 					    + descripcionCosto	+ ", Formato "
-					    + " y Resultados de Validaciones (Observaciones).<u></u><u></u></p><p><u></u>&nbsp;<u></u></p>"
-						+ "<p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo a: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.<u></u><u></u></p>"
-						+ "<p><u></u>&nbsp;<u></u></p><p>Cordialmente,<u></u><u></u></p><p>Sistemas GART<u></u><u></u></p></body></html>");
+					    + " y Resultados de Validaciones (Observaciones).</p>"
+						+ "<p>Si tiene alg&uacute;n inconveniente para registrar y enviar los formatos establecidos, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo a: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.</p>"
+						+ "<p>Cordialmente,<br/>Sistemas GART</p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
 					mailMessage.addFileAttachment(FileUtil.createTempFile(fej.getFileEntry().getContentStream()), fej.getNombreArchivo());
 				}
