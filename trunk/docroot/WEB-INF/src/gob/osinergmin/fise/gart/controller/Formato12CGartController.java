@@ -2648,7 +2648,7 @@ public class Formato12CGartController {
 				is=uploadPortletRequest.getFileAsStream("archivoTxt");
 				
 				String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPres), Long.parseLong(mesPres), codEmpresa, FiseConstants.TIPO_FORMATO_12C);
-				if( nombreIdeal.trim().equals(archivo.getTitle().trim()) ){
+				if( nombreIdeal.trim().equals(archivo.getDescription().trim()) ){
 					
 					int BUFFER_SIZE = 8192;
 					BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
