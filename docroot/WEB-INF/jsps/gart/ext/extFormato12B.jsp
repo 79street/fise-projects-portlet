@@ -221,6 +221,16 @@
 		
 		validateInputAnio : function(inicio,fin){//validateInputAnio
 			
+			if( inicio.val()=='' ){
+				 formato12B.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde");
+				 formato12B.dialogMessageWarning.dialog("open");
+				 return false; 
+			}
+			if( fin.val()=='' ){
+				 formato12B.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Hasta");
+				 formato12B.dialogMessageWarning.dialog("open");
+				 return false; 
+			}
 			
 			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 	    		 //formato12B.lblMessageInicial.html("El año debe contener 4 dígitos");
