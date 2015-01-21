@@ -98,7 +98,7 @@
 											<td>
 												<table class="" style="width: 100%;" border="0">
 													<tr>
-														<td>Distribuidora Eléctrica:</td>
+														<td width="115px">Distribuidora Eléctrica:</td>
 														<td><form:select path="codEmpresa" cssClass="select"
 																cssStyle="width: 375px;" 
 																disabled="${formato13AGartCommand.readOnly}" >
