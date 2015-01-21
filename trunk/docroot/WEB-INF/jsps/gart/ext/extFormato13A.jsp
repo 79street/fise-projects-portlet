@@ -235,6 +235,18 @@ var formato13A= {
 		
 	},
 	validateInputAnioTxt : function(inicio,fin){
+		
+		if( inicio.val()=='' ){
+			formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde");
+			formato13A.dialogMessageWarning.dialog("open");
+			 return false; 
+		}
+		if( fin.val()=='' ){
+			formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Hasta");
+			formato13A.dialogMessageWarning.dialog("open");
+			 return false; 
+		}
+		
 		 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
 			 //formato13A.lblMessageInicial.html("El año debe contener 4 dígitos");
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");

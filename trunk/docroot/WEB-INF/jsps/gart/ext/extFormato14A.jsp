@@ -479,6 +479,11 @@ var formato14A= {
 				  formato14A.i_anioDesde.focus();
 				  return false;
 			  }
+		  }else if( formato14A.i_anioDesde.val() == '' ){
+			  formato14A.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Desde');
+			  formato14A.dialogMessageWarning.dialog("open");
+			  formato14A.i_anioDesde.focus();
+			  return false;
 		  }
 		  if(formato14A.i_anioHasta.val().length != '' ) {		  
 			  var numstr = trim(formato14A.i_anioHasta.val());
@@ -489,6 +494,11 @@ var formato14A= {
 				  formato14A.i_anioHasta.focus();
 				  return false;
 			  }
+		  }else if( formato14A.i_anioHasta.val() == '' ){
+			  formato14A.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Hasta');
+			  formato14A.dialogMessageWarning.dialog("open");
+			  formato14A.i_anioHasta.focus();
+			  return false;
 		  }
 		  if(formato14A.i_anioDesde.val().length != '' && formato14A.i_anioHasta.val().length != '' ) {
 			  if( parseFloat(formato14A.i_anioDesde.val()) > parseFloat(formato14A.i_anioHasta.val()) ){

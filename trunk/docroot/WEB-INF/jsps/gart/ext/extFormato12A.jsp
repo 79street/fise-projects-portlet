@@ -558,6 +558,11 @@ function validarBusqueda() {
 			  document.getElementById('i_anio_d').focus();
 			  return false;
 		  }
+	  }else if($('#i_anio_d').val() == ''){
+		  $("#dialog-message-warning-content").html('Debe ingresar un Año Declarado Desde');
+		  $("#dialog-message-warning").dialog( "open" );	
+		  document.getElementById('i_anio_d').focus();
+		  return false;
 	  }
 	  if($('#i_anio_h').val().length != '' ) {		  
 		  var numstr = trim($('#i_anio_h').val());
@@ -568,6 +573,11 @@ function validarBusqueda() {
 			  document.getElementById('i_anio_h').focus();
 			  return false;
 		  }
+	  }else if($('#i_anio_h').val() == ''){
+		  $("#dialog-message-warning-content").html('Debe ingresar un Año Declarado Hasta');
+		  $("#dialog-message-warning").dialog( "open" );	
+		  document.getElementById('i_anio_h').focus();
+		  return false;
 	  }
 	  if($('#i_anio_d').val().length != '' && $('#i_anio_h').val().length != '' ) {
 		  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){

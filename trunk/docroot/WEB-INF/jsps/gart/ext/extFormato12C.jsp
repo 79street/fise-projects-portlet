@@ -411,7 +411,7 @@ var formato12C= {
 
 			//mostramos el mensaje de informacion
 			if( formato12C.msgTransaccion.val()=='OK' ){
-				var addhtml='La carga del archivo se realizó satisfactoriamente';
+				var addhtml='La carga de información del Formato 12C se realizó satisfactoriamente';
 				formato12C.dialogMessageContent.html(addhtml);
 				formato12C.dialogMessage.dialog("open");
 			}else if( formato12C.msgTransaccion.val()=='ERROR' ){
@@ -472,7 +472,7 @@ var formato12C= {
 
 			//mostramos el mensaje de informacion
 			if( formato12C.msgTransaccion.val()=='OK' ){
-				var addhtml='La carga del archivo se realizó satisfactoriamente';
+				var addhtml='La carga de información del Formato 12C se realizó satisfactoriamente';
 				formato12C.dialogMessageContent.html(addhtml);
 				formato12C.dialogMessage.dialog("open");
 			}else if( formato12C.msgTransaccion.val()=='ERROR' ){
@@ -1218,6 +1218,11 @@ var formato12C= {
 				  formato12C.anioDesde.focus();
 				  return false;
 			  }
+		  }else if( formato12C.anioDesde.val() == '' ){
+			  formato12C.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Desde');
+			  formato12C.dialogMessageWarning.dialog("open");
+			  formato12C.anioDesde.focus();
+			  return false;
 		  }
 		  if(formato12C.anioHasta.val().length != '' ) {		  
 			  var numstr = trim(formato12C.anioHasta.val());
@@ -1228,6 +1233,11 @@ var formato12C= {
 				  formato12C.anioHasta.focus();
 				  return false;
 			  }
+		  }else if( formato12C.anioHasta.val() == '' ){
+			  formato12C.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Hasta');
+			  formato12C.dialogMessageWarning.dialog("open");
+			  formato12C.anioHasta.focus();
+			  return false;
 		  }
 		  if(formato12C.anioDesde.val().length != '' && formato12C.anioHasta.val().length != '' ) {
 			  if( parseFloat(formato12C.anioDesde.val()) > parseFloat(formato12C.anioHasta.val()) ){
