@@ -1659,7 +1659,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 			is=uploadPortletRequest.getFileAsStream("archivoTxt");
 			
 			String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPresEdit), Long.parseLong(mesPresEdit), codEmpresaEdit, FiseConstants.TIPO_FORMATO_14A);
-			if( nombreIdeal.trim().equals(archivo.getTitle().trim()) ){
+			if( nombreIdeal.trim().equals(archivo.getDescription().trim()) ){
 				
 				int BUFFER_SIZE = 8192;
 				BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
