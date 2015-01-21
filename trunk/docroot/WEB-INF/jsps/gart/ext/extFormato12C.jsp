@@ -402,7 +402,7 @@ var formato12C= {
 			formato12C.botonAnadirFormato.click(function(){
 				formato12C.blockUI();
 				//--formato12C.formNuevo.attr('action',urlAnadirFormato+'&codigoEmpresa='+formato12C.codEmpresa.val()+'&periodoEnvio='+formato12C.periodoEnvio.val()+'&strip=0').removeAttr('enctype').submit();
-				formato12C.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				formato12C.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
 			});
 			formato12C.botonRegresarBusqueda.click(function(){
 				formato12C.blockUI();
@@ -456,7 +456,7 @@ var formato12C= {
             formato12C.botonAnadirFormato.click(function(){
 				formato12C.blockUI();
 				//formato12C.formNuevo.attr('action',urlAnadirFormato+'&codigoEmpresa='+formato12C.codEmpresa.val()+'&periodoEnvio='+formato12C.periodoEnvio.val()+'&strip=0').removeAttr('enctype').submit();--
-				formato12C.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				formato12C.formNuevo.attr('action',urlAnadirFormato+'&origen=1'+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 			formato12C.botonRegresarBusqueda.click(function(){
@@ -607,6 +607,66 @@ var formato12C= {
 				formato12C.blockUI();
 				//--location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&periodoEnvio='+formato12C.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
 				location.href=urlRegresarNuevo+'&codEmpresa='+formato12C.codEmpresaDetalle.val();
+			});
+			
+			formato12C.construirPeriodoEnvio(formato12C.anoPresentacionDetalle.val(), formato12C.mesPresentacionDetalle.val(), formato12C.etapaDetalle.val());
+			formato12C.anoEjecucionDetalle.val(formato12C.anoPresentacionDetalle.val());
+			formato12C.mesEjecucionDetalle.val(formato12C.mesPresentacionDetalle.val());
+		
+			formato12C.soloNumerosEnteros();
+			formato12C.soloNumerosDecimales();
+			
+			formato12C.iniciamosValores();
+			
+			formato12C.mostrarPeriodoEjecucion();
+			formato12C.estiloEdicionDetalle();
+			
+			//alert(formato12C.msgTransaccion.val());
+			//mostramos el mensaje de informacion
+			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
+				var addhtml='El Detalle de Gastos de Desplazamiento de Personal se guardó satisfactoriamente';
+				formato12C.dialogMessageDetalleContent.html(addhtml);
+				formato12C.dialogMessageDetalle.dialog("open");
+			}else if( formato12C.msgTransaccionDetalle.val()=='ERROR' ){
+				var addhtml='Se produjo un error al guardar el Detalle de Gastos de Desplazamiento de Personal';
+				formato12C.dialogMessageErrorDetalleContent.html(addhtml);
+				formato12C.dialogMessageErrorDetalle.dialog("open");
+			}
+			
+		</c:if>
+		
+		<c:if test="${crud =='CREATEUPDATE'}">
+			//origen	
+			formato12C.codDepaOrigen.change(function(){
+				formato12C.listarProvincias(formato12C.codDepaOrigen.val(),'0');
+			});
+			formato12C.codProvOrigen.change(function(){
+				formato12C.listarDistritos(formato12C.codProvOrigen.val(),'0');
+			});
+			//destino
+			formato12C.codDepaDestino.change(function(){
+				formato12C.listarProvincias(formato12C.codDepaDestino.val(),'1');
+			});
+			formato12C.codProvDestino.change(function(){
+				formato12C.listarDistritos(formato12C.codProvDestino.val(),'1');
+			});
+			//
+			
+			formato12C.botonGuardarDetalle.click(function(){
+				if( formato12C.validarFormatoDetalle() ){
+					//--formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&anoEjecucionHidden='+formato12C.anoEjecucionDetalle.val()+'&mesEjecucionHidden='+formato12C.mesEjecucionDetalle.val()+'&etapaEjecucionHidden='+formato12C.etapaEjecucionDetalle.val()).submit();
+					//guardamos los valores
+					formato12C.anoEjecucionHiddenDetalle.val(formato12C.anoEjecucionDetalle.val());
+					formato12C.mesEjecucionHiddenDetalle.val(formato12C.mesEjecucionDetalle.val());
+					formato12C.etapaEjecucionHiddenDetalle.val(formato12C.etapaEjecucionDetalle.val());
+					formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()).submit();
+				}
+			});
+			
+			botonRegresarDetalle.click(function(){
+				formato12C.blockUI();
+				//--location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&periodoEnvio='+formato12C.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&periodoEnvio='+formato12C.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12C.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12C.mesPresentacionDetalle.val()+'&etapa='+formato12C.etapaDetalle.val()+'&tipo=1';
 			});
 			
 			formato12C.construirPeriodoEnvio(formato12C.anoPresentacionDetalle.val(), formato12C.mesPresentacionDetalle.val(), formato12C.etapaDetalle.val());
@@ -2383,6 +2443,7 @@ var formato12C= {
 		if( formato12C.nroDiasDetalle.val()=='0' && formato12C.montoAlimentacionDetalle.val()=='0.00' && formato12C.montoAlojamientoDetalle.val()=='0.00' && formato12C.montoMovilidadDetalle.val()=='0.00' ){
 			formato12C.dialogMessageWarningDetalleContent.html('Debe ingresar al menos un valor en las cantidades para el Detalle de Gastos de Desplazamiento de Personal');
 			formato12C.dialogMessageWarningDetalle.dialog("open");
+			return false; 
 		}
 		//
 		return true; 

@@ -384,7 +384,8 @@ var formato12D= {
 			formato12D.botonAnadirFormato.click(function(){
 				formato12D.blockUI();
 				//--formato12D.formNuevo.attr('action',urlAnadirFormato+'&codigoEmpresa='+formato12D.codEmpresa.val()+'&periodoEnvio='+formato12D.periodoEnvio.val()+'&strip=0').removeAttr('enctype').submit();
-				formato12D.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				//--formato12D.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				formato12D.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
 			});
 			formato12D.botonRegresarBusqueda.click(function(){
 				formato12D.blockUI();
@@ -435,7 +436,8 @@ var formato12D= {
             formato12D.botonAnadirFormato.click(function(){
 				formato12D.blockUI();
 				//formato12D.formNuevo.attr('action',urlAnadirFormato+'&codigoEmpresa='+formato12D.codEmpresa.val()+'&periodoEnvio='+formato12D.periodoEnvio.val()+'&strip=0').removeAttr('enctype').submit();--
-				formato12D.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				//formato12D.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+				formato12D.formNuevo.attr('action',urlAnadirFormato+'&origen=1'+'&strip=0').removeAttr('enctype').submit();
 			});
 			
 			formato12D.botonRegresarBusqueda.click(function(){
@@ -564,6 +566,58 @@ var formato12D= {
 				formato12D.blockUI();
 				//--location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12D.codEmpresaDetalle.val()+'&periodoEnvio='+formato12D.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12D.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12D.mesPresentacionDetalle.val()+'&etapa='+formato12D.etapaDetalle.val()+'&tipo=1';
 				location.href=urlRegresarNuevo+'&codEmpresa='+formato12D.codEmpresaDetalle.val();
+			});
+			
+			formato12D.construirPeriodoEnvio(formato12D.anoPresentacionDetalle.val(), formato12D.mesPresentacionDetalle.val(), formato12D.etapaDetalle.val());
+			formato12D.anoEjecucionDetalle.val(formato12D.anoPresentacionDetalle.val());
+			formato12D.mesEjecucionDetalle.val(formato12D.mesPresentacionDetalle.val());
+		
+			formato12D.soloNumerosEnteros();
+			formato12D.soloNumerosDecimales();
+			
+			formato12D.iniciamosValores();
+			
+			formato12D.mostrarPeriodoEjecucion();
+			formato12D.estiloEdicionDetalle();
+			
+			//mostramos el mensaje de informacion
+			if( formato12D.msgTransaccionDetalle.val()=='OK' ){
+				var addhtml='El Detalle de los Gastos se guardó satisfactoriamente';
+				formato12D.dialogMessageDetalleContent.html(addhtml);
+				formato12D.dialogMessageDetalle.dialog("open");
+			}else if( formato12D.msgTransaccionDetalle.val()=='ERROR' ){
+				var addhtml='Se produjo un error al guardar el Detalle de Gastos';
+				formato12D.dialogMessageErrorDetalleContent.html(addhtml);
+				formato12D.dialogMessageErrorDetalle.dialog("open");
+			}
+			
+		</c:if>
+		
+		<c:if test="${crud =='CREATEUPDATE'}">
+			//	
+			formato12D.codDepa.change(function(){
+				formato12D.listarProvincias(formato12D.codDepa.val());
+			});
+			formato12D.codProv.change(function(){
+				formato12D.listarDistritos(formato12D.codProv.val());
+			});
+			//
+			
+			formato12D.botonGuardarDetalle.click(function(){
+				if( formato12D.validarFormatoDetalle() ){
+					//--formato12D.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12D.codEmpresaDetalle.val()+'&anoEjecucionHidden='+formato12D.anoEjecucionDetalle.val()+'&mesEjecucionHidden='+formato12D.mesEjecucionDetalle.val()+'&etapaEjecucionHidden='+formato12D.etapaEjecucionDetalle.val()).submit();
+					//guardamos los valores
+					formato12D.anoEjecucionHiddenDetalle.val(formato12D.anoEjecucionDetalle.val());
+					formato12D.mesEjecucionHiddenDetalle.val(formato12D.mesEjecucionDetalle.val());
+					formato12D.etapaEjecucionHiddenDetalle.val(formato12D.etapaEjecucionDetalle.val());
+					formato12D.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12D.codEmpresaDetalle.val()).submit();
+				}
+			});
+			
+			botonRegresarDetalle.click(function(){
+				formato12D.blockUI();
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato12D.codEmpresaDetalle.val()+'&periodoEnvio='+formato12D.periodoEnvioDetalle.val()+'&anioPresentacion='+formato12D.anoPresentacionDetalle.val()+'&mesPresentacion='+formato12D.mesPresentacionDetalle.val()+'&etapa='+formato12D.etapaDetalle.val()+'&tipo=1';
+				//--location.href=urlRegresarNuevo+'&codEmpresa='+formato12D.codEmpresaDetalle.val();
 			});
 			
 			formato12D.construirPeriodoEnvio(formato12D.anoPresentacionDetalle.val(), formato12D.mesPresentacionDetalle.val(), formato12D.etapaDetalle.val());
@@ -2217,6 +2271,7 @@ var formato12D= {
 		if( formato12D.cantidadDetalle.val()=='0' && formato12D.costoUnitarioDetalle.val()=='0.00' ){
 			formato12D.dialogMessageWarningDetalleContent.html('Debe ingresar al menos una cantidad para el Detalle de Gastos de Actividades Extraordinarias');
 			formato12D.dialogMessageWarningDetalle.dialog("open");
+			return false; 
 		}
 		//
 		return true; 

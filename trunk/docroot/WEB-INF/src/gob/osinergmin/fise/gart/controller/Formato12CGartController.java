@@ -89,6 +89,7 @@ public class Formato12CGartController {
 	Logger logger = Logger.getLogger(Formato12CGartController.class);
 	
 	private static final String CRUD_CREATE = "CREATE";
+	private static final String CRUD_CREATEUPDATE = "CREATEUPDATE";
 	private static final String CRUD_UPDATE = "UPDATE";
 	private static final String CRUD_READ = "READ";
 	private static final String CRUD_READ_CREATEUPDATE = "READCREATEUPDATE";
@@ -602,7 +603,8 @@ public class Formato12CGartController {
 	}
 	
 	@ActionMapping(params = "action=nuevoDetalle")
-	public void nuevoDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @ModelAttribute("formato12CCBean") Formato12CCBean bean) {
+	public void nuevoDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @ModelAttribute("formato12CCBean") Formato12CCBean bean,
+			@RequestParam("origen") String origen ) {
 		String codEmpresa = bean.getCodigoEmpresa();
 		//String periodoDeclaracion = command.getPeridoDeclaracion();
 		String periodoDeclaracion = bean.getPeriodoEnvio();//se obtiene el valor del periodo guardado de el campo descripcionPeriodoHidden(valorPeriodoHidden), probar los demas flujos
@@ -616,7 +618,13 @@ public class Formato12CGartController {
 			periodoDeclaracion = bean.getPeriodoEnvioHidden();
 		}
 		
-		response.setRenderParameter("crud", CRUD_CREATE);
+		if( "0".equals(origen) ){
+			response.setRenderParameter("crud", CRUD_CREATE);
+		}else if( "1".equals(origen) ){
+			response.setRenderParameter("crud", CRUD_CREATEUPDATE);
+		}
+		
+		//response.setRenderParameter("crud", CRUD_CREATE);
 		response.setRenderParameter("action", "detalle");
 		
 		response.setRenderParameter("msg",msg);
@@ -859,7 +867,7 @@ public class Formato12CGartController {
 					
 				}
 				
-			} else if (CRUD_CREATE.equals(crud)) {
+			} else if (CRUD_CREATE.equals(crud) || CRUD_CREATEUPDATE.equals(crud) ) {
 				model.addAttribute("readonlyEdit", "false");
 
 				bean.setAnioEjecucion(Long.parseLong(anioPres));
@@ -1013,7 +1021,7 @@ public class Formato12CGartController {
 			
 			if (formato != null) {
 				//para modificar registros
-				if( CRUD_CREATE.equals(crud) ){
+				if( CRUD_CREATE.equals(crud) || CRUD_CREATEUPDATE.equals(crud) ){
 					f = formatoService.modificarFormato12CCregistrarFormato12CD(bean, formato);
 				}else if( CRUD_UPDATE.equals(crud) ){
 					f = formatoService.modificarFormato12CCmodificarFormato12CD(bean, formato);
@@ -1040,6 +1048,8 @@ public class Formato12CGartController {
 		}else if( "ERROR".equals(msg) ){
 			if( CRUD_CREATE.equals(crud) ){
 				response.setRenderParameter("crud", CRUD_CREATE);
+			}else if ( CRUD_CREATEUPDATE.equals(crud) ) {
+				response.setRenderParameter("crud", CRUD_CREATEUPDATE);
 			}else if ( CRUD_UPDATE.equals(crud) ) {
 				response.setRenderParameter("crud", CRUD_UPDATE);
 			}

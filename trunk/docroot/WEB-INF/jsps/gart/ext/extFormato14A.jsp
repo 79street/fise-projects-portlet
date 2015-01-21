@@ -1831,6 +1831,7 @@ var formato14A= {
 		){
 			formato14A.dialogMessageWarningContent.html('Debe ingresar al menos un valor para poder guardar un formato');
 			formato14A.dialogMessageWarning.dialog("open");
+			return false; 
 		}
 		
 		return true; 
