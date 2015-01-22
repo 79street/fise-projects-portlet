@@ -142,7 +142,366 @@ $(document).ready(function () {
 						</tr>					
 					</table>			
 				</div>								
-				<!-- FIN DE DIV  PARA BUSQUEDA -->					
+				<!-- FIN DE DIV  PARA BUSQUEDA -->	
+				
+				<!-- DIV PARA PRESENTAR LOS DETALLE DEL FORMATO SELECCIONADO -->
+				
+				<div id="<portlet:namespace/>div_detalle_formato" class="net-frame-listado" style="display: none;"> 
+				
+			     <table style="width: 100%;" border="0">
+						<tr>
+							<td>								
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td> 
+						</tr>
+						<tr>
+							<td class="filete">
+								<fieldset class="">
+									<table class="" style="width: 100%;" border="0">
+										<tr>
+											<td colspan="6"><output class="net-titulo">
+											Detalle del Formato seleccionado:</output></td>
+										</tr>
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										<tr>
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Distribuidora Eléctrica:</label>
+											</td>
+											<td>											  
+											  <input id="empresaDetalle" readonly="readonly" style="border:none; background:#efefef;">										  					  
+											</td>
+											
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Formato:</label></td>
+											<td>											  
+											  <input id="formatoDetalle" readonly="readonly" style="border:none; background:#efefef;">
+											</td>
+											
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Etapa:</label></td>
+											<td>											 
+											  <input id="etapaDetalle" readonly="readonly" style="border:none; background:#efefef;">	
+											</td>
+											
+									 	</tr>		
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										
+										<tr>
+											<td><label style="font-size: 12px; font-weight:bold">Año Declarado:</label></td>
+											<td>										  
+											  <input id="anioDetalle" readonly="readonly" style="border:none; background:#efefef;">	 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Mes Declarado:</label></td>
+											<td>										  
+											  <input id="mesDetalle" readonly="readonly" style="border:none; background:#efefef;">	 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Año Ejecución:</label></td>
+											<td>										 
+											  <input id="anioEjecDetalle" readonly="readonly" style="border:none; background:#efefef;">	 	 	
+											</td>
+											
+										</tr>
+										
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										
+										
+										<tr>
+											<td><label style="font-size: 12px; font-weight:bold">Mes Ejecución:</label></td>
+											<td>						 
+											  <input id="mesEjecDetalle" readonly="readonly" style="border:none; background:#efefef;"> 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
+											<td>											 
+											  <input id="anioInicioVigDetalle" readonly="readonly" style="border:none; background:#efefef;">	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
+											<td>											  
+											  <input id="anioFinVigDetalle" readonly="readonly" style="border:none; background:#efefef;">	
+											</td>
+											
+										</tr>		
+										
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+																		
+									</table>
+								</fieldset>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+							    <div id="<portlet:namespace/>div_grilla_F12AB" style="display: none;"> 
+							    
+							    <table id="<portlet:namespace/>grid_resultado_busqueda_detalle_12AB">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_busqueda_detalle_12AB"></div>
+							    
+							    </div>
+							    
+							    <div id="<portlet:namespace/>div_grilla_F12CD" style="display: none;">
+							    
+							    <table id="<portlet:namespace/>grid_resultado_busqueda_detalle_12CD">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_busqueda_detalle_12CD"></div>
+							    
+							    </div>
+							    
+							    <div id="<portlet:namespace/>div_grilla_F13A" style="display: none;">
+							    
+							    <table id="<portlet:namespace/>grid_resultado_busqueda_detalle_13A">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_busqueda_detalle_13A"></div>
+							    
+							    </div>
+							    
+							    <div id="<portlet:namespace/>div_grilla_F14AB" style="display: none;">
+							    
+							    <table id="<portlet:namespace/>grid_resultado_busqueda_detalle_14AB">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_busqueda_detalle_14AB"></div>
+							    
+							    </div>
+							    
+							    <div id="<portlet:namespace/>div_grilla_F14C" style="display: none;">
+							    
+							    <table id="<portlet:namespace/>grid_resultado_busqueda_detalle_14C">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_busqueda_detalle_14C"></div>
+							    
+							    </div>
+								
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						
+						<tr>
+							<td>
+								<table style="width: 100%;" border="0">
+									<tr>										
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>										
+										<td align="right" width="90px">	
+										    <div id="d_opc_regresar_busqueda">
+												<input type="button" class="net-button-small"
+													id="<portlet:namespace/>btnRegresarBusqueda"
+													name="<portlet:namespace/>btnRegresarBusqueda" value="Regresar" />
+											</div>										
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						
+						<tr height="10px">
+							<td></td>
+						</tr>
+																
+					</table>			
+				</div>								
+				<!-- FIN DIV PARA PRESENTAR LOS DETALLE DEL FORMATO SELECCIONADO -->			
+				
+				<!-- DIV PARA PRESENTAR LAS OBS.  POR CADA DETALLE SELECCIONADO -->
+				
+				<div id="<portlet:namespace/>div_detalle_observaciones" class="net-frame-listado" style="display: none;"> 
+				
+			     <table style="width: 100%;" border="0">
+						<tr>
+							<td>								
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td> 
+						</tr>
+						<tr>
+							<td class="filete">
+								<fieldset class="">
+									<table class="" style="width: 100%;" border="0">
+										<tr>
+											<td><output class="net-titulo">
+											Observaciones del detalle del Formato seleccionado:</output></td>
+										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>
+																										
+									</table>
+								</fieldset>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+							    <div id="<portlet:namespace/>div_grilla_obs_12AB_14AB" style="display: none;"> 
+							    
+							    <table id="<portlet:namespace/>grid_resultado_obs_12AB_14AB">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_obs_12AB_14AB"></div>
+							    
+							    </div>
+							    
+							    <div id="<portlet:namespace/>div_grilla_obs_F12CD" style="display: none;">
+							    
+							    <table id="<portlet:namespace/>grid_resultado_obs_12CD">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_obs_12CD"></div>
+							    
+							    </div>
+							    
+							    <div id="<portlet:namespace/>div_grilla_obs_F13A" style="display: none;">
+							    
+							    <table id="<portlet:namespace/>grid_resultado_obs_13A">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_obs_13A"></div>
+							    
+							    </div>	   
+							    
+							    <div id="<portlet:namespace/>div_grilla_obs_F14C" style="display: none;">
+							    
+							    <table id="<portlet:namespace/>grid_resultado_obs_14C">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_obs_14C"></div>
+							    
+							    </div>
+								
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						
+						<tr>
+							<td>
+								<table style="width: 100%;" border="0">
+									<tr>	
+									    <td align="center" width="90px">
+											<div id="d_opc_crear_obs">
+												<input type="button" class="net-button-small"
+													id="<portlet:namespace/>btnNuevoObservacion"
+													name="<portlet:namespace/>btnNuevoObservacion" value="Agregar" />
+											</div>
+										</td>													
+										 <td align="right" width="90px">	
+										     <div id="d_opc_regresar_detalle">
+												<input type="button" class="net-button-small"
+													id="<portlet:namespace/>btnRegresarDetalle"
+													name="<portlet:namespace/>btnRegresarDetalle" value="Regresar" />
+											</div>										
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						
+						<tr height="10px">
+							<td></td>
+						</tr>
+																
+					</table>			
+				</div>								
+				<!-- FIN DIV PARA PRESENTAR LAS OBS.  POR CADA DETALLE SELECCIONADO -->
+				
+								
+				<!-- DIV PARA NUEVO REGISTRO DE UNA OBSERVACION MANUAL-->	
+				
+				<div id="<portlet:namespace/>div_nuevo_observacion" class="net-frame-border" style="display: none;">			
+					
+					<table border="0" width="100%">
+						<tr>
+							<td>
+								<fieldset class="">
+	
+									<table class="" border="0" width="100%">
+									   <tr class="filete-bottom">
+											<td><output class="net-titulo">
+											      Ingreso de Observaciones Manuales</output></td>
+										</tr>
+										<tr height="10px">
+											<td></td>
+										</tr>					
+										<tr>
+									     <td>											
+										   <table style="width: 100%;" border="0">
+											  <tr>										   
+											   <td><label style="font-size: 12px; font-weight: bold">Descripción Observación:</label>
+											   </td>
+											   <td>
+												 <form:textarea path="desObservacion" cols="80" rows="4" onkeypress="return soloLetras(event)"/>  
+											   </td>								   
+										     </tr>						
+										  </table>								 								
+										 </td>
+										</tr>																										
+										<tr height="10px" class="filete-bottom">
+										  <td></td> 
+										</tr>																																														
+										<tr class="filete-top">
+										<tr height="10px">
+										   <td></td> 
+										</tr>	
+										<tr>
+										  <td>
+											<table style="width: 100%">
+											  <tr>												
+												 <td>
+												  <table style="width: 100%">
+												    <tr>													  
+													 <td width="17%" align="center">													  
+														  <input type="button" class="net-button-small" id="<portlet:namespace/>btnActualizarObservacion"
+															   name="<portlet:namespace/>btnActualizarObservacion" value="Actualizar" style="display: none;"/>
+																												
+														<input type="button" class="net-button-small" id="<portlet:namespace/>btnGrabarObservacion"
+															   name="<portlet:namespace/>btnGrabarObservacion" value="Grabar" />									   
+													 </td>													
+													 <td width="17%" align="center">
+														<input type="button" class="net-button-small" id="<portlet:namespace/>btnRegresarObs" 
+															  name="<portlet:namespace/>btnRegresarObs" value="Regresar" />
+													 </td>
+												 </tr>
+											  </table>
+											</td>
+											</tr>
+									    </table> 
+										</td>
+										</tr>
+										<tr height="10px" class="filete-bottom">
+											<td></td>
+										</tr>
+										<tr height="10px">
+										 <td></td>
+										</tr>							
+									</table>	
+								</fieldset>
+							</td>
+						</tr>
+						<tr>
+						 <td></td>
+						</tr>
+					</table>	
+				</div>				
+				
+				<!-- FIN DIV PARA NUEVO REGISTRO -->				
+				
+								
             </div>
        </div>       
    </div>
@@ -214,6 +573,14 @@ $(document).ready(function () {
 		</p>
 	</div>
 	
+	<div id="<portlet:namespace/>dialog-confirm_observacion" title="Mensaje de Confirmaci&oacute;n">
+		<p>	
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content_observacion">¿Está seguro?</label>
+		</p>
+	</div>
+	
 	<!-- DIALOGO PARA ALERTAR DE VALIDACION -->
 	
 	<div id="<portlet:namespace/>dialog-alert" title="Mensaje de Validaci&oacute;n">
@@ -244,5 +611,25 @@ $(document).ready(function () {
 		</p>
 	</div>
 		
+	<!-- HIDEN PARA MANTENER LA PK DE LOS DETALLES DE CADA FORMATO -->	
+	<input id="hiddenCodEmpresa" style="display: none"> 
+	<input id="hiddenAnioPres" style="display: none"> 
+	<input id="hiddenMesPres" style="display: none"> 
+	<input id="hiddenEtapa" style="display: none"> 
+	<input id="hiddenAnioEjec" style="display: none"> 
+	<input id="hiddenMesEjec" style="display: none"> 
+	<input id="hiddenAnioIniVig" style="display: none"> 
+	<input id="hiddenAnioFinVig" style="display: none"> 
+	<input id="hiddenEtapaEjec" style="display: none"> 
+	<input id="hiddenIdZona" style="display: none"> 
+	<input id="hiddenIdPersonal" style="display: none"> 
+	<input id="hiddenItemEtapa" style="display: none"> 
+	<input id="hiddenCodUbigeo" style="display: none"> 
+	<input id="hiddenCodSector" style="display: none"> 	
+	
+	<input id="hiddenTipoBusqueda" style="display: none">
+	
+	<input id="hiddenIdObservacion" style="display: none"> 	 	
+	
 	
 </form:form>

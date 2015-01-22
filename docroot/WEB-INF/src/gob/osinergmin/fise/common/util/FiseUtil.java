@@ -9,6 +9,7 @@ import gob.osinergmin.fise.domain.FiseFormato14BD;
 import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.domain.FiseTipDocRef;
 import gob.osinergmin.fise.domain.FiseTipGasto;
+import gob.osinergmin.fise.domain.FiseTipPersonal;
 import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
@@ -17,6 +18,7 @@ import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
 import gob.osinergmin.fise.gart.service.FiseTipDocRefGartService;
 import gob.osinergmin.fise.gart.service.FiseTipGastoGartService;
+import gob.osinergmin.fise.gart.service.FiseTipPersonalService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato14BGartService;
@@ -108,6 +110,10 @@ public class FiseUtil {
 	@Autowired
 	@Qualifier("formato14BGartServiceImpl")
     Formato14BGartService formatoService14B;
+	
+	@Autowired
+	@Qualifier("fiseTipPersonalServiceImpl")
+	FiseTipPersonalService fiseTipPersonalService;
 	
 	public List<AdmEmpresa> getEmpresaxUsuario(PortletRequest request){
 		 List<AdmEmpresa> listaEmpresas=new ArrayList<AdmEmpresa>();
@@ -471,6 +477,16 @@ public class FiseUtil {
 			mapaZonaBenef.put(zonaBenef.getIdZonaBenef(), zonaBenef.getDescripcion());
 		}
 		return mapaZonaBenef;
+	}
+	
+	public Map<Long, String> getMapaTipoPersonal() throws Exception{
+		List<FiseTipPersonal> listaTipoPer =fiseTipPersonalService.listarTipoPersonal();
+		Map<Long, String> mapaTipoPersonal = new HashMap<Long, String>();
+		for (FiseTipPersonal tipoPer : listaTipoPer) {
+			logger.info("idPersonal: "+tipoPer.getIdTipPersonal()+" descPersonal: "+tipoPer.getDescripcion());
+			mapaTipoPersonal.put(tipoPer.getIdTipPersonal(), tipoPer.getDescripcion());
+		}
+		return mapaTipoPersonal;
 	}
 	
 	public Map<String, String> getMapTipoDocumento(){
