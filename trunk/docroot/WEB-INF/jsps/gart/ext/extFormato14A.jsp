@@ -1581,7 +1581,8 @@ var formato14A= {
 						formato14A.initBlockUI();
 					}
 					else if(data.resultado == "Error"){				
-						var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
+						//var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
+						var addhtml2='Se produjo un error al guardar los datos del Formato 14A';
 						formato14A.dialogMessageErrorContent.html(addhtml2);
 						formato14A.dialogMessageError.dialog("open");
 						formato14A.mostrarUltimoFormato();
