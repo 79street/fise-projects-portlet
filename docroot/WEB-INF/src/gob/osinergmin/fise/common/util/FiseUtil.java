@@ -602,7 +602,7 @@ public class FiseUtil {
 					mailMessage.setCC(new InternetAddress(correoD));
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
-						+ nombreUsuario + "</b></p><p>Mediante el presente se le comunica que la empresa "
+						+ nombreUsuario + "</b></p><p>Mediante el presente se le comunica que la Distribuidora El&eacute;ctrica "
 						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n para el periodo " 
 						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
@@ -665,8 +665,8 @@ public class FiseUtil {
 					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
-						+ nombreUsuario + "</b><br/><b>Empresa:</b> "
-						+ descEmpresa + "</p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
+						+ nombreUsuario + "</b><br/><b>"
+						+ descEmpresa + "</b></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
 						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
 						+ descripcionFormato + ".</p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
@@ -721,8 +721,8 @@ public class FiseUtil {
 					mailMessage.setCC(new InternetAddress(correoD));
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
-						+ nombreUsuario + "</b><br/><b>Empresa:</b> "
-						+ descEmpresa + "</p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente al Grupo de Informaci&oacute;n "
+						+ nombreUsuario + "</b><br/><b>"
+						+ descEmpresa + "</b></p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente al Grupo de Informaci&oacute;n "
 						+ descGrupoInf + ". "
 						+ "" + "</p>"
 						+ "<p>Para subsanar las observaciones debe ingresar al sistema y corregir los datos para la etapa LEVANTAMIENTO DE OBSERVACIONES (LEV.OBS).</p>"
@@ -800,7 +800,7 @@ public class FiseUtil {
 					mailMessage.setCC(new InternetAddress(correoD));
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
-						+ nombreUsuario + "</b></p><p>Mediante el presente se le comunica que la empresa "
+						+ nombreUsuario + "</b></p><p>Mediante el presente se le comunica que la Distribuidora El&eacute;ctrica "
 						+ descEmpresa + " ha cumplido con enviar informaci&oacute;n, correspondiente al Grupo de Informaci&oacute;n "						
 						+ descGrupoInf + ".</p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
 						+ descripcionCosto	+ ", Formatos "
@@ -859,8 +859,8 @@ public class FiseUtil {
 					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
-						+ nombreUsuario + "</b><br/><b>Empresa:</b> "
-						+ descEmpresa + "</p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n correspondiente al Grupo de Informaci&oacute;n "
+						+ nombreUsuario + "</b><br/><b>"
+						+ descEmpresa + "</b></p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n correspondiente al Grupo de Informaci&oacute;n "
 						+ descGrupoInf + ""
 					    + ".</p><p>Se adjunta Acta de Remisi&oacute;n de Informaci&oacute;n de "
 					    + descripcionCosto	+ ", Formato "
