@@ -51,7 +51,7 @@ $(document).ready(function () {
 											<td>
 												<table class="" style="width: 100%;" border="0">
 								   					<tr>
-								   						<td>Distribuidora Eléctrica:</td>
+								   						<td width="150px">Distribuidora Eléctrica:</td>
 								   						<td>
 								   							<form:select path="codigoEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="true" >
 																<form:options items="${formato12CCBean.listaEmpresas}" itemLabel="dscEmpresa" itemValue="codEmpresa" />
@@ -164,7 +164,7 @@ $(document).ready(function () {
 															<fieldset>
 																<table>
 																	<tr>
-																		<td width="150px">Etapa ejecución:</td>
+																		<td width="90px">Etapa Ejecución:</td>
 																		<td>
 																			<form:select path="etapaEjecucion" cssClass="select" cssStyle="width: 170px;" disabled="${readonly}">
 																				<form:option value="">-Seleccione-</form:option>
@@ -186,7 +186,7 @@ $(document).ready(function () {
 													<tr>
 														<td colspan="11">
 															<fieldset>
-																<legend style="font-weight: normal;" >Origen</legend>
+																<legend>Ubigeo Origen</legend>
 																<table>
 																	<tr>
 																		<td width="150px">Departamento:</td> 
@@ -230,7 +230,7 @@ $(document).ready(function () {
 													<tr>
 														<td colspan="11">
 															<fieldset>
-																<legend style="font-weight: normal;" >Destino</legend>
+																<legend>Ubigeo Destino</legend>
 																<table>
 																	<tr>
 																	
@@ -272,7 +272,11 @@ $(document).ready(function () {
 															</fieldset>
 														</td>
 													</tr>
-													
+													<tr height="7px">
+														<td colspan="11">
+															
+														</td>
+													</tr>
 													<tr>
 														<td colspan="11">
 															<fieldset>
@@ -288,7 +292,7 @@ $(document).ready(function () {
 																			</form:select>																			
 																		</td>
 								   										<td width="10px"></td>
-								   										<td width="150px">Cuenta contable:</td>
+								   										<td width="150px">Cuenta Contable:</td>
 								   										<td>
 								   											<form:input path="codCuentaContable" disabled="${readonlyEdit}" maxlength="30" onkeypress="return soloLetras(event);" />
 								   										</td>
@@ -311,11 +315,11 @@ $(document).ready(function () {
 													<tr>
 														<td colspan="11">
 															<fieldset>
-																<legend style="font-weight: normal;" >Documento de Referencia</legend>
+																<legend >Documento de Referencia</legend>
 																<table>
 																	<tr>
 																	
-																		<td width="150px">Tipo doc.:</td> 
+																		<td width="150px">Tipo Doc.:</td> 
 																		<td>
 																			<form:select path="tipoDocumento" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
 																				<form:option value="">-Seleccione-</form:option>
@@ -324,17 +328,17 @@ $(document).ready(function () {
 																			</form:select>																			
 																		</td>
 								   										<td width="10px"></td>
-								   										<td width="150px">RUC empresa:</td>
+								   										<td width="150px">RUC Empresa:</td>
 								   										<td>
 								   											<form:input path="rucEmpresa" disabled="${readonlyEdit}" maxlength="11" onkeypress="return soloNumerosDecimales(event, 1, 'rucEmpresa',11,0)" />
 								   										</td>
 								   										<td width="10px"></td>
-								   										<td width="150px">Serie doc.:</td>
+								   										<td width="150px">Serie Doc.:</td>
 								   										<td>
 								   											<form:input path="serieDocumento" disabled="${readonlyEdit}" maxlength="6" onkeypress="return soloLetras(event);" />
 								   										</td>
 								   										<td width="10px"></td>
-								   										<td width="150px">Nro. doc.:</td>
+								   										<td width="150px">Nro. Doc.:</td>
 								   										<td>
 								   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" onkeypress="return soloNumerosDecimales(event, 1, 'nroDocumento',20,0)" />
 								   										</td>
@@ -347,7 +351,7 @@ $(document).ready(function () {
 													<tr>
 														<td colspan="11">
 															<fieldset>
-																<legend style="font-weight: normal;" >Monto</legend>
+																<legend>Monto</legend>
 																<table>
 																	<tr>
 									

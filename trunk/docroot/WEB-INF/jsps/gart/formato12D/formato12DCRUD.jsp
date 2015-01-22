@@ -96,7 +96,7 @@ $(document).ready(function () {
 											<td>
 												<table class="" style="width: 100%;" border="0">
 													<tr>
-														<td width="163px">Distribuidora Eléctrica:</td>
+														<td width="150px">Distribuidora Eléctrica:</td>
 														<td>
 															<form:select path="codigoEmpresa" cssClass="select" cssStyle="width: 375px;" disabled="${formato12DCBean.readOnly}" >
 																<form:options items="${formato12DCBean.listaEmpresas}" itemLabel="dscEmpresa" itemValue="codEmpresa" />
