@@ -649,7 +649,7 @@ public class FiseUtil {
 					mailMessage.setCC(getArrayCorreoDestinatarios(listaCorreoDestino));
 				}
 				mailMessage.setBody("<html><head></head><body><p>Estimado(a) <b>"
-						+ nombreUsuario + "</b><br/><b>Empresa:<b/> "
+						+ nombreUsuario + "</b><br/><b>Empresa:</b> "
 						+ descEmpresa + "</p><p>Mediante el presente se le comunica que su representada ha cumplido con enviar informaci&oacute;n para el periodo "
 						+ descripcionPeriodo 
 						+ periodoEnvio + " del "
