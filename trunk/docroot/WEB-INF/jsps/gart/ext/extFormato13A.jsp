@@ -1046,6 +1046,7 @@ var formato13A= {
 	<portlet:namespace/>showUploadExcel : function(){
 		formato13A.divOverlay.show();
 		formato13A.dialogCargaExcel.show();
+		formato13A.dialogCargaExcel.draggable();
 		formato13A.dialogCargaExcel.css({ 
 	        'left': ($(window).width() / 2 - formato13A.dialogCargaExcel.width() / 2) + 'px', 
 	        'top': ($(window).height()  - formato13A.dialogCargaExcel.height() ) + 'px'
@@ -1091,6 +1092,7 @@ var formato13A= {
 	<portlet:namespace/>showUploadTxt : function(){
 		formato13A.divOverlay.show();
 		formato13A.dialogCargaTexto.show();
+		formato13A.dialogCargaTexto.draggable();
 		formato13A.dialogCargaTexto.css({ 
 	        'left': ($(window).width() / 2 - formato13A.dialogCargaTexto.width() / 2) + 'px', 
 	        'top': ($(window).height()  - formato13A.dialogCargaTexto.height() ) + 'px'

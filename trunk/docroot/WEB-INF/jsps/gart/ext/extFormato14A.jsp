@@ -1916,7 +1916,7 @@ var formato14A= {
 			}
 			formato14A.divOverlay.show();
 		    formato14A.dialogCargaExcel.show();
-		    formato14A.dialogCargaExcel.show();
+		    formato14A.dialogCargaExcel.draggable();
 		    formato14A.dialogCargaExcel.css({ 
 		        'left': ($(window).width() / 2 - formato14A.dialogCargaExcel.width() / 2) + 'px', 
 		        'top': ($(window).height()  - formato14A.dialogCargaExcel.height() ) + 'px'
@@ -1939,6 +1939,7 @@ var formato14A= {
 			}
 			formato14A.divOverlay.show();
 			formato14A.dialogCargaTexto.show();
+			formato14A.dialogCargaTexto.draggable();
 			formato14A.dialogCargaTexto.css({ 
 		        'left': ($(window).width() / 2 - formato14A.dialogCargaTexto.width() / 2) + 'px', 
 		        'top': ($(window).height() - formato14A.dialogCargaTexto.height() ) + 'px'

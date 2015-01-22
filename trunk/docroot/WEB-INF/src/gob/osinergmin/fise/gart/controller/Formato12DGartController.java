@@ -1903,66 +1903,6 @@ public class Formato12DGartController {
 								
 								detalleBean.setEtapa(etapaEdit);
 								
-								//ANO EJECUCION
-								if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnoEjecucion.getCellType()  ){
-									detalleBean.setAnioEjecucion(new Double(celdaAnoEjecucion.getNumericCellValue()).longValue());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnoEjecucion.getCellType()  ){
-									detalleBean.setAnioEjecucion(0L);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_50));
-								}else{
-									detalleBean.setAnioEjecucion(0L);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3485,i+1));
-								}
-								//MES EJECUCION
-								if( HSSFCell.CELL_TYPE_NUMERIC == celdaMesEjecucion.getCellType()  ){
-									detalleBean.setMesEjecucion(new Double(celdaMesEjecucion.getNumericCellValue()).longValue());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaMesEjecucion.getCellType()  ){
-									detalleBean.setMesEjecucion(0L);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
-								}else{
-									detalleBean.setMesEjecucion(0L);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3487,i+1));
-								}
-								//NRO ITEM ETAPA
-								/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaItem.getCellType()  ){
-									detalleBean.setNroItemEtapa(new Double(celdaItem.getNumericCellValue()).longValue());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaItem.getCellType()  ){
-									detalleBean.setNroItemEtapa(0L);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
-								}else{
-									detalleBean.setNroItemEtapa(0L);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3478,i+1));
-								}*/
-								//COD UBIGEO
-								if( HSSFCell.CELL_TYPE_STRING == celdaCodUbigeo.getCellType() ){
-									detalleBean.setCodUbigeo(celdaCodUbigeo.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaCodUbigeo.getCellType()  ){
-									detalleBean.setCodUbigeo(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setCodUbigeo(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3489,i+1));
-								}
-								//LOCALIDAD
-								if( HSSFCell.CELL_TYPE_STRING == celdaLocalidad.getCellType() ){
-									detalleBean.setLocalidad(celdaLocalidad.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaLocalidad.getCellType()  ){
-									detalleBean.setLocalidad(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setLocalidad(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3492,i+1));
-								}
 								//ZONA BENEFICIARIO
 								if( HSSFCell.CELL_TYPE_NUMERIC == celdaZonaBeneficiario.getCellType()  ){
 									detalleBean.setZonaBenef(new Double(celdaZonaBeneficiario.getNumericCellValue()).longValue());
@@ -1975,205 +1915,278 @@ public class Formato12DGartController {
 									cont++;
 									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3494,i+1));
 								}
-								//CUENTA CONTABLE
-								if( HSSFCell.CELL_TYPE_STRING == celdaCuentaContable.getCellType() ){
-									detalleBean.setCodCuentaContable(celdaCuentaContable.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCuentaContable.getCellType()  ){
-									String valor = "" + celdaCuentaContable.getNumericCellValue();
-									detalleBean.setCodCuentaContable(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaCuentaContable.getCellType()  ){
-									detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+								
+								boolean target=false;
+								if(  FiseConstants.ZONABENEF_LIMA_COD == detalleBean.getZonaBenef() ){
+									if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+										target=true;
+									}
 								}else{
-									detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3497,i+1));
+									target=true;
 								}
-								//GASTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaGasto.getCellType() ){
-									detalleBean.setGasto(celdaGasto.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaGasto.getCellType()  ){
-									detalleBean.setGasto(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setGasto(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3499,i+1));
-								}
-								//TIPO GASTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaTipoGasto.getCellType() ){
-									detalleBean.setTipoGasto(celdaTipoGasto.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaTipoGasto.getCellType()  ){
-									detalleBean.setTipoGasto(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setTipoGasto(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3501,i+1));
-								}
-								//TIPO DOCUMENTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaTipoDocumento.getCellType() ){
-									detalleBean.setTipoDocumento(celdaTipoDocumento.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaTipoDocumento.getCellType()  ){
-									detalleBean.setTipoDocumento(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setTipoDocumento(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3504,i+1));
-								}
-								//RUC
-								if( HSSFCell.CELL_TYPE_STRING == celdaRUCEmpresa.getCellType() ){
-									detalleBean.setRucEmpresa(celdaRUCEmpresa.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaRUCEmpresa.getCellType()  ){
-									double d = celdaRUCEmpresa.getNumericCellValue();
-									String valor = FormatoUtil.conversion(d);
-									//String valor = "" + celdaRUCEmpresa.getNumericCellValue();
-									detalleBean.setRucEmpresa(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaRUCEmpresa.getCellType()  ){
-									detalleBean.setRucEmpresa(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setRucEmpresa(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3507,i+1));
-								}
-								//SERIE DOCUMENTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaSerieDocumento.getCellType() ){
-									detalleBean.setSerieDocumento(celdaSerieDocumento.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaSerieDocumento.getCellType()  ){
-									String valor = "" + celdaSerieDocumento.getNumericCellValue();
-									detalleBean.setSerieDocumento(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaSerieDocumento.getCellType()  ){
-									detalleBean.setSerieDocumento(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setSerieDocumento(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3509,i+1));
-								}
-								//NRO DOCUMENTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaNroDocumento.getCellType() ){
-									detalleBean.setNroDocumento(celdaNroDocumento.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroDocumento.getCellType()  ){
-									String valor = "" + celdaNroDocumento.getNumericCellValue();
-									detalleBean.setNroDocumento(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroDocumento.getCellType()  ){
-									detalleBean.setNroDocumento(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setNroDocumento(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3511,i+1));
-								}
-								//FECHA AUTORIZACION
-								if( HSSFCell.CELL_TYPE_STRING == celdaFechaAuto.getCellType() ){
-									detalleBean.setFechaAutorizacionString(celdaFechaAuto.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaFechaAuto.getCellType()  ){
-									if( HSSFDateUtil.isCellDateFormatted(celdaFechaAuto) ){
-										detalleBean.setFechaAutorizacionString(FechaUtil.fecha_DD_MM_YYYY(celdaFechaAuto.getDateCellValue()));
+								
+								if( target ){
+									//ANO EJECUCION
+									if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnoEjecucion.getCellType()  ){
+										detalleBean.setAnioEjecucion(new Double(celdaAnoEjecucion.getNumericCellValue()).longValue());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnoEjecucion.getCellType()  ){
+										detalleBean.setAnioEjecucion(0L);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_50));
+									}else{
+										detalleBean.setAnioEjecucion(0L);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3485,i+1));
+									}
+									//MES EJECUCION
+									if( HSSFCell.CELL_TYPE_NUMERIC == celdaMesEjecucion.getCellType()  ){
+										detalleBean.setMesEjecucion(new Double(celdaMesEjecucion.getNumericCellValue()).longValue());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaMesEjecucion.getCellType()  ){
+										detalleBean.setMesEjecucion(0L);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
+									}else{
+										detalleBean.setMesEjecucion(0L);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3487,i+1));
+									}
+									//NRO ITEM ETAPA
+									/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaItem.getCellType()  ){
+										detalleBean.setNroItemEtapa(new Double(celdaItem.getNumericCellValue()).longValue());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaItem.getCellType()  ){
+										detalleBean.setNroItemEtapa(0L);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
+									}else{
+										detalleBean.setNroItemEtapa(0L);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3478,i+1));
+									}*/
+									//COD UBIGEO
+									if( HSSFCell.CELL_TYPE_STRING == celdaCodUbigeo.getCellType() ){
+										detalleBean.setCodUbigeo(celdaCodUbigeo.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCodUbigeo.getCellType()  ){
+										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3489,i+1));
+									}
+									//LOCALIDAD
+									if( HSSFCell.CELL_TYPE_STRING == celdaLocalidad.getCellType() ){
+										detalleBean.setLocalidad(celdaLocalidad.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaLocalidad.getCellType()  ){
+										detalleBean.setLocalidad(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setLocalidad(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3492,i+1));
+									}
+									
+									//CUENTA CONTABLE
+									if( HSSFCell.CELL_TYPE_STRING == celdaCuentaContable.getCellType() ){
+										detalleBean.setCodCuentaContable(celdaCuentaContable.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCuentaContable.getCellType()  ){
+										String valor = "" + celdaCuentaContable.getNumericCellValue();
+										detalleBean.setCodCuentaContable(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCuentaContable.getCellType()  ){
+										detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3497,i+1));
+									}
+									//GASTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaGasto.getCellType() ){
+										detalleBean.setGasto(celdaGasto.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaGasto.getCellType()  ){
+										detalleBean.setGasto(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setGasto(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3499,i+1));
+									}
+									//TIPO GASTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaTipoGasto.getCellType() ){
+										detalleBean.setTipoGasto(celdaTipoGasto.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaTipoGasto.getCellType()  ){
+										detalleBean.setTipoGasto(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setTipoGasto(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3501,i+1));
+									}
+									//TIPO DOCUMENTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaTipoDocumento.getCellType() ){
+										detalleBean.setTipoDocumento(celdaTipoDocumento.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaTipoDocumento.getCellType()  ){
+										detalleBean.setTipoDocumento(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setTipoDocumento(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3504,i+1));
+									}
+									//RUC
+									if( HSSFCell.CELL_TYPE_STRING == celdaRUCEmpresa.getCellType() ){
+										detalleBean.setRucEmpresa(celdaRUCEmpresa.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaRUCEmpresa.getCellType()  ){
+										double d = celdaRUCEmpresa.getNumericCellValue();
+										String valor = FormatoUtil.conversion(d);
+										//String valor = "" + celdaRUCEmpresa.getNumericCellValue();
+										detalleBean.setRucEmpresa(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaRUCEmpresa.getCellType()  ){
+										detalleBean.setRucEmpresa(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setRucEmpresa(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3507,i+1));
+									}
+									//SERIE DOCUMENTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaSerieDocumento.getCellType() ){
+										detalleBean.setSerieDocumento(celdaSerieDocumento.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaSerieDocumento.getCellType()  ){
+										String valor = "" + celdaSerieDocumento.getNumericCellValue();
+										detalleBean.setSerieDocumento(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaSerieDocumento.getCellType()  ){
+										detalleBean.setSerieDocumento(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setSerieDocumento(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3509,i+1));
+									}
+									//NRO DOCUMENTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaNroDocumento.getCellType() ){
+										detalleBean.setNroDocumento(celdaNroDocumento.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroDocumento.getCellType()  ){
+										String valor = "" + celdaNroDocumento.getNumericCellValue();
+										detalleBean.setNroDocumento(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroDocumento.getCellType()  ){
+										detalleBean.setNroDocumento(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setNroDocumento(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3511,i+1));
+									}
+									//FECHA AUTORIZACION
+									if( HSSFCell.CELL_TYPE_STRING == celdaFechaAuto.getCellType() ){
+										detalleBean.setFechaAutorizacionString(celdaFechaAuto.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaFechaAuto.getCellType()  ){
+										if( HSSFDateUtil.isCellDateFormatted(celdaFechaAuto) ){
+											detalleBean.setFechaAutorizacionString(FechaUtil.fecha_DD_MM_YYYY(celdaFechaAuto.getDateCellValue()));
+										}else{
+											detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
+											cont++;
+											sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3513,i+1));
+										}
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaFechaAuto.getCellType()  ){
+										detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
 									}else{
 										detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
 										cont++;
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3513,i+1));
 									}
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaFechaAuto.getCellType()  ){
-									detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3513,i+1));
-								}
-								//NRO DOC AUTORIZACION
-								if( HSSFCell.CELL_TYPE_STRING == celdaNroDocumentoAuto.getCellType() ){
-									detalleBean.setNroDocAutorizacion(celdaNroDocumentoAuto.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroDocumentoAuto.getCellType()  ){
-									String valor = "" + celdaNroDocumentoAuto.getNumericCellValue();
-									detalleBean.setNroDocAutorizacion(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroDocumentoAuto.getCellType()  ){
-									detalleBean.setNroDocAutorizacion(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setNroDocAutorizacion(FiseConstants.BLANCO);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3516,i+1));
-								}
-								//CANTIDAD
-								if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantidad.getCellType()  ){
-									detalleBean.setCantidad(new Double(celdaCantidad.getNumericCellValue()).longValue());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantidad.getCellType()  ){
-									detalleBean.setCantidad(0L);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
-								}else{
-									detalleBean.setCantidad(0L);
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3518,i+1));
-								}
-								//COSTO UNITARIO
-								if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitario.getCellType()  ){
-									detalleBean.setCostoUnitario(new BigDecimal(celdaCostoUnitario.getNumericCellValue()));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitario.getCellType()  ){
-									detalleBean.setCostoUnitario(new BigDecimal(0.00));
-								}else{
-									detalleBean.setCostoUnitario(new BigDecimal(0.00));
-									cont++;
-									sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3520,i+1));
-								}
-								
-								/**validar los valores de los inputs correctos*/
-								
-								
-								if( detalleBean.getAnioEjecucion() != 0 ||
-										detalleBean.getMesEjecucion() != 0 ||
-										detalleBean.getNroItemEtapa() != 0 ||
-										!detalleBean.getCodUbigeo().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getLocalidad().equals(FiseConstants.BLANCO) ||
-										detalleBean.getZonaBenef() != 0 ||
-										!detalleBean.getCodCuentaContable().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getGasto().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getTipoGasto().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getTipoDocumento().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getRucEmpresa().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getSerieDocumento().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getNroDocumento().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getFechaAutorizacionString().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getNroDocAutorizacion().equals(FiseConstants.BLANCO) ||
-										detalleBean.getCantidad() != 0 ||
-										!detalleBean.getCostoUnitario().equals(BigDecimal.ZERO) 
-										){
-									
-									if( !mapaUbigeo.containsKey(detalleBean.getCodUbigeo()) ){
+									//NRO DOC AUTORIZACION
+									if( HSSFCell.CELL_TYPE_STRING == celdaNroDocumentoAuto.getCellType() ){
+										detalleBean.setNroDocAutorizacion(celdaNroDocumentoAuto.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroDocumentoAuto.getCellType()  ){
+										String valor = "" + celdaNroDocumentoAuto.getNumericCellValue();
+										detalleBean.setNroDocAutorizacion(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroDocumentoAuto.getCellType()  ){
+										detalleBean.setNroDocAutorizacion(FiseConstants.BLANCO);
 										cont++;
-										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3490,i+1));
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setNroDocAutorizacion(FiseConstants.BLANCO);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3516,i+1));
 									}
-									if( !mapaZonaBenef.containsKey(detalleBean.getZonaBenef()) ){
+									//CANTIDAD
+									if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantidad.getCellType()  ){
+										detalleBean.setCantidad(new Double(celdaCantidad.getNumericCellValue()).longValue());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantidad.getCellType()  ){
+										detalleBean.setCantidad(0L);
 										cont++;
-										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3495,i+1));
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
+									}else{
+										detalleBean.setCantidad(0L);
+										cont++;
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3518,i+1));
 									}
-									if( !mapaTipoGasto.containsKey(detalleBean.getTipoGasto()) ){
+									//COSTO UNITARIO
+									if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitario.getCellType()  ){
+										detalleBean.setCostoUnitario(new BigDecimal(celdaCostoUnitario.getNumericCellValue()));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitario.getCellType()  ){
+										detalleBean.setCostoUnitario(new BigDecimal(0.00));
+									}else{
+										detalleBean.setCostoUnitario(new BigDecimal(0.00));
 										cont++;
-										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3502,i+1));
-									}
-									if( !mapaTipoDocumento.containsKey(detalleBean.getTipoDocumento()) ){
-										cont++;
-										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3505,i+1));
+										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3520,i+1));
 									}
 									
-								}
-								
-								if( FiseConstants.BLANCO.equals(sMsgImplementacion.toString()) ){
-									listaDetalle.add(detalleBean);
+									/**validar los valores de los inputs correctos*/
+									
+									
+									if( detalleBean.getAnioEjecucion() != 0 ||
+											detalleBean.getMesEjecucion() != 0 ||
+											detalleBean.getNroItemEtapa() != 0 ||
+											!detalleBean.getCodUbigeo().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getLocalidad().equals(FiseConstants.BLANCO) ||
+											detalleBean.getZonaBenef() != 0 ||
+											!detalleBean.getCodCuentaContable().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getGasto().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getTipoGasto().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getTipoDocumento().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getRucEmpresa().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getSerieDocumento().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getNroDocumento().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getFechaAutorizacionString().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getNroDocAutorizacion().equals(FiseConstants.BLANCO) ||
+											detalleBean.getCantidad() != 0 ||
+											!detalleBean.getCostoUnitario().equals(BigDecimal.ZERO) 
+											){
+										
+										if( !mapaUbigeo.containsKey(detalleBean.getCodUbigeo()) ){
+											cont++;
+											sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3490,i+1));
+										}
+										if( !mapaZonaBenef.containsKey(detalleBean.getZonaBenef()) ){
+											cont++;
+											sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3495,i+1));
+										}
+										if( !mapaTipoGasto.containsKey(detalleBean.getTipoGasto()) ){
+											cont++;
+											sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3502,i+1));
+										}
+										if( !mapaTipoDocumento.containsKey(detalleBean.getTipoDocumento()) ){
+											cont++;
+											sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3505,i+1));
+										}
+										
+									}
+									
+									if( FiseConstants.BLANCO.equals(sMsgImplementacion.toString()) ){
+										listaDetalle.add(detalleBean);
+									}
 								}
 								
 							}
@@ -2214,66 +2227,6 @@ public class Formato12DGartController {
 								
 								detalleBean.setEtapa(etapaEdit);
 								
-								//ANO EJECUCION
-								if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnoEjecucion.getCellType()  ){
-									detalleBean.setAnioEjecucion(new Double(celdaAnoEjecucion.getNumericCellValue()).longValue());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnoEjecucion.getCellType()  ){
-									detalleBean.setAnioEjecucion(0L);
-									cont++;
-									//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_50));
-								}else{
-									detalleBean.setAnioEjecucion(0L);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3522,i+1));
-								}
-								//MES EJECUCION
-								if( HSSFCell.CELL_TYPE_NUMERIC == celdaMesEjecucion.getCellType()  ){
-									detalleBean.setMesEjecucion(new Double(celdaMesEjecucion.getNumericCellValue()).longValue());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaMesEjecucion.getCellType()  ){
-									detalleBean.setMesEjecucion(0L);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
-								}else{
-									detalleBean.setMesEjecucion(0L);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3524,i+1));
-								}
-								//NRO ITEM ETAPA
-								/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaItem.getCellType()  ){
-									detalleBean.setNroItemEtapa(new Double(celdaItem.getNumericCellValue()).longValue());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaItem.getCellType()  ){
-									detalleBean.setNroItemEtapa(0L);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
-								}else{
-									detalleBean.setNroItemEtapa(0L);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_80,i+1));
-								}*/
-								//COD UBIGEO
-								if( HSSFCell.CELL_TYPE_STRING == celdaCodUbigeo.getCellType() ){
-									detalleBean.setCodUbigeo(celdaCodUbigeo.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaCodUbigeo.getCellType()  ){
-									detalleBean.setCodUbigeo(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setCodUbigeo(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3526,i+1));
-								}
-								//LOCALIDAD
-								if( HSSFCell.CELL_TYPE_STRING == celdaLocalidad.getCellType() ){
-									detalleBean.setLocalidad(celdaLocalidad.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaLocalidad.getCellType()  ){
-									detalleBean.setLocalidad(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setLocalidad(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3529,i+1));
-								}
 								//ZONA BENEFICIARIO
 								if( HSSFCell.CELL_TYPE_NUMERIC == celdaZonaBeneficiario.getCellType()  ){
 									detalleBean.setZonaBenef(new Double(celdaZonaBeneficiario.getNumericCellValue()).longValue());
@@ -2286,205 +2239,278 @@ public class Formato12DGartController {
 									cont++;
 									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3531,i+1));
 								}
-								//CUENTA CONTABLE
-								if( HSSFCell.CELL_TYPE_STRING == celdaCuentaContable.getCellType() ){
-									detalleBean.setCodCuentaContable(celdaCuentaContable.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCuentaContable.getCellType()  ){
-									String valor = "" + celdaCuentaContable.getNumericCellValue();
-									detalleBean.setCodCuentaContable(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaCuentaContable.getCellType()  ){
-									detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+								
+								boolean target=false;
+								if(  FiseConstants.ZONABENEF_LIMA_COD == detalleBean.getZonaBenef() ){
+									if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+										target=true;
+									}
 								}else{
-									detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3534,i+1));
+									target=true;
 								}
-								//GASTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaGasto.getCellType() ){
-									detalleBean.setGasto(celdaGasto.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaGasto.getCellType()  ){
-									detalleBean.setGasto(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setGasto(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3536,i+1));
-								}
-								//TIPO GASTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaTipoGasto.getCellType() ){
-									detalleBean.setTipoGasto(celdaTipoGasto.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaTipoGasto.getCellType()  ){
-									detalleBean.setTipoGasto(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setTipoGasto(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3538,i+1));
-								}
-								//TIPO DOCUMENTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaTipoDocumento.getCellType() ){
-									detalleBean.setTipoDocumento(celdaTipoDocumento.toString());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaTipoDocumento.getCellType()  ){
-									detalleBean.setTipoDocumento(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setTipoDocumento(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3541,i+1));
-								}
-								//RUC
-								if( HSSFCell.CELL_TYPE_STRING == celdaRUCEmpresa.getCellType() ){
-									detalleBean.setRucEmpresa(celdaRUCEmpresa.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaRUCEmpresa.getCellType()  ){
-									double d = celdaRUCEmpresa.getNumericCellValue();
-									String valor = FormatoUtil.conversion(d);
-									//String valor = "" + celdaRUCEmpresa.getNumericCellValue();
-									detalleBean.setRucEmpresa(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaRUCEmpresa.getCellType()  ){
-									detalleBean.setRucEmpresa(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setRucEmpresa(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3544,i+1));
-								}
-								//SERIE DOCUMENTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaSerieDocumento.getCellType() ){
-									detalleBean.setSerieDocumento(celdaSerieDocumento.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaSerieDocumento.getCellType()  ){
-									String valor = "" + celdaSerieDocumento.getNumericCellValue();
-									detalleBean.setSerieDocumento(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaSerieDocumento.getCellType()  ){
-									detalleBean.setSerieDocumento(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setSerieDocumento(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3546,i+1));
-								}
-								//NRO DOCUMENTO
-								if( HSSFCell.CELL_TYPE_STRING == celdaNroDocumento.getCellType() ){
-									detalleBean.setNroDocumento(celdaNroDocumento.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroDocumento.getCellType()  ){
-									String valor = "" + celdaNroDocumento.getNumericCellValue();
-									detalleBean.setNroDocumento(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroDocumento.getCellType()  ){
-									detalleBean.setNroDocumento(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setNroDocumento(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3548,i+1));
-								}
-								//FECHA AUTORIZACION
-								if( HSSFCell.CELL_TYPE_STRING == celdaFechaAuto.getCellType() ){
-									detalleBean.setFechaAutorizacionString(celdaFechaAuto.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaFechaAuto.getCellType()  ){
-									if( HSSFDateUtil.isCellDateFormatted(celdaFechaAuto) ){
-										detalleBean.setFechaAutorizacionString(FechaUtil.fecha_DD_MM_YYYY(celdaFechaAuto.getDateCellValue()));
+								
+								if(target){
+									//ANO EJECUCION
+									if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnoEjecucion.getCellType()  ){
+										detalleBean.setAnioEjecucion(new Double(celdaAnoEjecucion.getNumericCellValue()).longValue());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnoEjecucion.getCellType()  ){
+										detalleBean.setAnioEjecucion(0L);
+										cont++;
+										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_50));
+									}else{
+										detalleBean.setAnioEjecucion(0L);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3522,i+1));
+									}
+									//MES EJECUCION
+									if( HSSFCell.CELL_TYPE_NUMERIC == celdaMesEjecucion.getCellType()  ){
+										detalleBean.setMesEjecucion(new Double(celdaMesEjecucion.getNumericCellValue()).longValue());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaMesEjecucion.getCellType()  ){
+										detalleBean.setMesEjecucion(0L);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
+									}else{
+										detalleBean.setMesEjecucion(0L);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3524,i+1));
+									}
+									//NRO ITEM ETAPA
+									/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaItem.getCellType()  ){
+										detalleBean.setNroItemEtapa(new Double(celdaItem.getNumericCellValue()).longValue());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaItem.getCellType()  ){
+										detalleBean.setNroItemEtapa(0L);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
+									}else{
+										detalleBean.setNroItemEtapa(0L);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_80,i+1));
+									}*/
+									//COD UBIGEO
+									if( HSSFCell.CELL_TYPE_STRING == celdaCodUbigeo.getCellType() ){
+										detalleBean.setCodUbigeo(celdaCodUbigeo.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCodUbigeo.getCellType()  ){
+										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3526,i+1));
+									}
+									//LOCALIDAD
+									if( HSSFCell.CELL_TYPE_STRING == celdaLocalidad.getCellType() ){
+										detalleBean.setLocalidad(celdaLocalidad.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaLocalidad.getCellType()  ){
+										detalleBean.setLocalidad(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setLocalidad(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3529,i+1));
+									}
+									
+									//CUENTA CONTABLE
+									if( HSSFCell.CELL_TYPE_STRING == celdaCuentaContable.getCellType() ){
+										detalleBean.setCodCuentaContable(celdaCuentaContable.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCuentaContable.getCellType()  ){
+										String valor = "" + celdaCuentaContable.getNumericCellValue();
+										detalleBean.setCodCuentaContable(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCuentaContable.getCellType()  ){
+										detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3534,i+1));
+									}
+									//GASTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaGasto.getCellType() ){
+										detalleBean.setGasto(celdaGasto.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaGasto.getCellType()  ){
+										detalleBean.setGasto(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setGasto(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3536,i+1));
+									}
+									//TIPO GASTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaTipoGasto.getCellType() ){
+										detalleBean.setTipoGasto(celdaTipoGasto.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaTipoGasto.getCellType()  ){
+										detalleBean.setTipoGasto(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setTipoGasto(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3538,i+1));
+									}
+									//TIPO DOCUMENTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaTipoDocumento.getCellType() ){
+										detalleBean.setTipoDocumento(celdaTipoDocumento.toString());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaTipoDocumento.getCellType()  ){
+										detalleBean.setTipoDocumento(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setTipoDocumento(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3541,i+1));
+									}
+									//RUC
+									if( HSSFCell.CELL_TYPE_STRING == celdaRUCEmpresa.getCellType() ){
+										detalleBean.setRucEmpresa(celdaRUCEmpresa.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaRUCEmpresa.getCellType()  ){
+										double d = celdaRUCEmpresa.getNumericCellValue();
+										String valor = FormatoUtil.conversion(d);
+										//String valor = "" + celdaRUCEmpresa.getNumericCellValue();
+										detalleBean.setRucEmpresa(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaRUCEmpresa.getCellType()  ){
+										detalleBean.setRucEmpresa(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setRucEmpresa(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3544,i+1));
+									}
+									//SERIE DOCUMENTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaSerieDocumento.getCellType() ){
+										detalleBean.setSerieDocumento(celdaSerieDocumento.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaSerieDocumento.getCellType()  ){
+										String valor = "" + celdaSerieDocumento.getNumericCellValue();
+										detalleBean.setSerieDocumento(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaSerieDocumento.getCellType()  ){
+										detalleBean.setSerieDocumento(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setSerieDocumento(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3546,i+1));
+									}
+									//NRO DOCUMENTO
+									if( HSSFCell.CELL_TYPE_STRING == celdaNroDocumento.getCellType() ){
+										detalleBean.setNroDocumento(celdaNroDocumento.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroDocumento.getCellType()  ){
+										String valor = "" + celdaNroDocumento.getNumericCellValue();
+										detalleBean.setNroDocumento(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroDocumento.getCellType()  ){
+										detalleBean.setNroDocumento(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setNroDocumento(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3548,i+1));
+									}
+									//FECHA AUTORIZACION
+									if( HSSFCell.CELL_TYPE_STRING == celdaFechaAuto.getCellType() ){
+										detalleBean.setFechaAutorizacionString(celdaFechaAuto.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaFechaAuto.getCellType()  ){
+										if( HSSFDateUtil.isCellDateFormatted(celdaFechaAuto) ){
+											detalleBean.setFechaAutorizacionString(FechaUtil.fecha_DD_MM_YYYY(celdaFechaAuto.getDateCellValue()));
+										}else{
+											detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
+											cont++;
+											sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3550,i+1));
+										}
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaFechaAuto.getCellType()  ){
+										detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
+										cont++;
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
 									}else{
 										detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
 										cont++;
 										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3550,i+1));
 									}
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaFechaAuto.getCellType()  ){
-									detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setFechaAutorizacionString(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3550,i+1));
-								}
-								//NRO DOC AUTORIZACION
-								if( HSSFCell.CELL_TYPE_STRING == celdaNroDocumentoAuto.getCellType() ){
-									detalleBean.setNroDocAutorizacion(celdaNroDocumentoAuto.toString());
-								}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroDocumentoAuto.getCellType()  ){
-									String valor = "" + celdaNroDocumentoAuto.getNumericCellValue();
-									detalleBean.setNroDocAutorizacion(FormatoUtil.eliminaDecimales(valor));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroDocumentoAuto.getCellType()  ){
-									detalleBean.setNroDocAutorizacion(FiseConstants.BLANCO);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
-								}else{
-									detalleBean.setNroDocAutorizacion(FiseConstants.BLANCO);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3553,i+1));
-								}
-								//CANTIDAD
-								if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantidad.getCellType()  ){
-									detalleBean.setCantidad(new Double(celdaCantidad.getNumericCellValue()).longValue());
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantidad.getCellType()  ){
-									detalleBean.setCantidad(0L);
-									cont++;
-									//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
-								}else{
-									detalleBean.setCantidad(0L);
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3555,i+1));
-								}
-								//COSTO UNITARIO
-								if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitario.getCellType()  ){
-									detalleBean.setCostoUnitario(new BigDecimal(celdaCostoUnitario.getNumericCellValue()));
-								}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitario.getCellType()  ){
-									detalleBean.setCostoUnitario(new BigDecimal(0.00));
-								}else{
-									detalleBean.setCostoUnitario(new BigDecimal(0.00));
-									cont++;
-									sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3557,i+1));
-								}
-								
-								/**validar los valores de los inputs correctos*/
-								
-								
-								if( detalleBean.getAnioEjecucion() != 0 ||
-										detalleBean.getMesEjecucion() != 0 ||
-										detalleBean.getNroItemEtapa() != 0 ||
-										!detalleBean.getCodUbigeo().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getLocalidad().equals(FiseConstants.BLANCO) ||
-										detalleBean.getZonaBenef() != 0 ||
-										!detalleBean.getCodCuentaContable().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getGasto().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getTipoGasto().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getTipoDocumento().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getRucEmpresa().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getSerieDocumento().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getNroDocumento().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getFechaAutorizacionString().equals(FiseConstants.BLANCO) ||
-										!detalleBean.getNroDocAutorizacion().equals(FiseConstants.BLANCO) ||
-										detalleBean.getCantidad() != 0 ||
-										!detalleBean.getCostoUnitario().equals(BigDecimal.ZERO) 
-										){
-									
-									if( !mapaUbigeo.containsKey(detalleBean.getCodUbigeo()) ){
+									//NRO DOC AUTORIZACION
+									if( HSSFCell.CELL_TYPE_STRING == celdaNroDocumentoAuto.getCellType() ){
+										detalleBean.setNroDocAutorizacion(celdaNroDocumentoAuto.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroDocumentoAuto.getCellType()  ){
+										String valor = "" + celdaNroDocumentoAuto.getNumericCellValue();
+										detalleBean.setNroDocAutorizacion(FormatoUtil.eliminaDecimales(valor));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaNroDocumentoAuto.getCellType()  ){
+										detalleBean.setNroDocAutorizacion(FiseConstants.BLANCO);
 										cont++;
-										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3527,i+1));
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else{
+										detalleBean.setNroDocAutorizacion(FiseConstants.BLANCO);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3553,i+1));
 									}
-									if( !mapaZonaBenef.containsKey(detalleBean.getZonaBenef()) ){
+									//CANTIDAD
+									if( HSSFCell.CELL_TYPE_NUMERIC == celdaCantidad.getCellType()  ){
+										detalleBean.setCantidad(new Double(celdaCantidad.getNumericCellValue()).longValue());
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCantidad.getCellType()  ){
+										detalleBean.setCantidad(0L);
 										cont++;
-										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3532,i+1));
+										//---sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_70));
+									}else{
+										detalleBean.setCantidad(0L);
+										cont++;
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3555,i+1));
 									}
-									if( !mapaTipoGasto.containsKey(detalleBean.getTipoGasto()) ){
+									//COSTO UNITARIO
+									if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitario.getCellType()  ){
+										detalleBean.setCostoUnitario(new BigDecimal(celdaCostoUnitario.getNumericCellValue()));
+									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitario.getCellType()  ){
+										detalleBean.setCostoUnitario(new BigDecimal(0.00));
+									}else{
+										detalleBean.setCostoUnitario(new BigDecimal(0.00));
 										cont++;
-										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3539,i+1));
-									}
-									if( !mapaTipoDocumento.containsKey(detalleBean.getTipoDocumento()) ){
-										cont++;
-										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3542,i+1));
+										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3557,i+1));
 									}
 									
-								}
-								
-								if( FiseConstants.BLANCO.equals(sMsgOperativa.toString()) ){
-									listaDetalle.add(detalleBean);
+									/**validar los valores de los inputs correctos*/
+									
+									
+									if( detalleBean.getAnioEjecucion() != 0 ||
+											detalleBean.getMesEjecucion() != 0 ||
+											detalleBean.getNroItemEtapa() != 0 ||
+											!detalleBean.getCodUbigeo().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getLocalidad().equals(FiseConstants.BLANCO) ||
+											detalleBean.getZonaBenef() != 0 ||
+											!detalleBean.getCodCuentaContable().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getGasto().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getTipoGasto().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getTipoDocumento().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getRucEmpresa().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getSerieDocumento().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getNroDocumento().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getFechaAutorizacionString().equals(FiseConstants.BLANCO) ||
+											!detalleBean.getNroDocAutorizacion().equals(FiseConstants.BLANCO) ||
+											detalleBean.getCantidad() != 0 ||
+											!detalleBean.getCostoUnitario().equals(BigDecimal.ZERO) 
+											){
+										
+										if( !mapaUbigeo.containsKey(detalleBean.getCodUbigeo()) ){
+											cont++;
+											sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3527,i+1));
+										}
+										if( !mapaZonaBenef.containsKey(detalleBean.getZonaBenef()) ){
+											cont++;
+											sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3532,i+1));
+										}
+										if( !mapaTipoGasto.containsKey(detalleBean.getTipoGasto()) ){
+											cont++;
+											sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3539,i+1));
+										}
+										if( !mapaTipoDocumento.containsKey(detalleBean.getTipoDocumento()) ){
+											cont++;
+											sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3542,i+1));
+										}
+										
+									}
+									
+									if( FiseConstants.BLANCO.equals(sMsgOperativa.toString()) ){
+										listaDetalle.add(detalleBean);
+									}
 								}
 								
 							}
