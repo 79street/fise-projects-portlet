@@ -379,7 +379,7 @@ var notificarValidar= {
 		      			/* notificar = "<a href='#'><img border='0' title='Notificar' src='/net-theme/images/img-net/lock.png' align='center' onclick=\"notificar.confirmarnotificar('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"');\" /></a> "; */
 		      			ver = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png' align='center' onclick=\"notificarValidar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Excluir' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"notificarValidar.confirmarEliminarNotificacion('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
-		      			obs = "<a href='#'><img border='0' title='Observaciones Manuales' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"notificarValidar.mostrarDetalleFormato('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"','"+ret.desEmpresa+"','"+ret.desMes+"','"+ret.desMesEje+"');\" /></a> ";
+		      			obs = "<a href='#'><img border='0' title='Obs. de Ingreso Manual' src='/net-theme/images/img-net/form-edit.png'  align='center' onclick=\"notificarValidar.mostrarDetalleFormato('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"','"+ret.desEmpresa+"','"+ret.desMes+"','"+ret.desMesEje+"');\" /></a> ";
 		      			/* notificarValidar.tablaResultados.jqGrid('setRowData',ids[i],{notificar:notificar}); */
 		      			notificarValidar.tablaResultados.jqGrid('setRowData',ids[i],{ver:ver});
 		      			notificarValidar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -542,14 +542,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF12AB,
 				    viewrecords: true,
-				   	caption: "Resultado(s) del detalle del Formato seleccionado 12AB",
+				   	caption: "Resultado(s) del detalle del Formato seleccionado.",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF12AB.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF12AB.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"notificarValidar.buscarObsF12AB('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.etapa+"','"+ret.idZona+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF12AB('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.etapa+"','"+ret.idZona+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF12AB.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
@@ -587,14 +587,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF12CD,
 				    viewrecords: true,
-					caption: "Resultado(s) del detalle del Formato seleccionado 12CD",
+					caption: "Resultado(s) del detalle del Formato seleccionado.",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF12CD.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF12CD.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"notificarValidar.buscarObsF12CD('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.etapa+"','"+ret.etapaEjec+"','"+ret.itemEtapa+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF12CD('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.etapa+"','"+ret.etapaEjec+"','"+ret.itemEtapa+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF12CD.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
@@ -631,14 +631,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF13A,
 				    viewrecords: true,
-					caption: "Resultado(s) del detalle del Formato seleccionado 13A",
+					caption: "Resultado(s) del detalle del Formato seleccionado.",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF13A.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF13A.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"notificarValidar.buscarObsF13A('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.etapa+"','"+ret.codUbigeo+"','"+ret.codSector+"','"+ret.idZona+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF13A('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.etapa+"','"+ret.codUbigeo+"','"+ret.codSector+"','"+ret.idZona+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF13A.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
@@ -674,14 +674,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF14AB,
 				    viewrecords: true,
-				    caption: "Resultado(s) del detalle del Formato seleccionado 14AB",
+				    caption: "Resultado(s) del detalle del Formato seleccionado.",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF14AB.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF14AB.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"notificarValidar.buscarObsF14AB('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.idZona+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF14AB('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.idZona+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF14AB.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
@@ -720,14 +720,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF14C,
 				    viewrecords: true,
-				    caption: "Resultado(s) del detalle del Formato seleccionado 14C",
+				    caption: "Resultado(s) del detalle del Formato seleccionado.",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF14C.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF14C.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"notificarValidar.buscarObsF14C('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.idZona+"','"+ret.idPersonal+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF14C('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.idZona+"','"+ret.idPersonal+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF14C.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
