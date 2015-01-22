@@ -391,6 +391,10 @@ public class Formato12DGartController {
 				}else{
 					bean.setDescEstado(descEstado!=null?descEstado:"");
 				}
+				
+				//seteamos el ano inicio y fin de vigencia
+				bean.setAnioEjecucionDetalle(""+f.getAnoEjecucionView());
+				bean.setMesEjecucionDetalle(""+mapaMeses.get(f.getMesEjecucionView()));
 			}
 			
 			if (tipo != null && tipo.equalsIgnoreCase(String.valueOf(FiseConstants.VIEW))) {

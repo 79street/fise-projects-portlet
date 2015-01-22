@@ -146,25 +146,25 @@ $(document).ready(function () {
 														</td>
 														
 														<td width="45%" style="padding-left: 15px;">
-															<%-- <div id="<portlet:namespace/>divPeriodoEjecucion"  >
+															<div id="<portlet:namespace/>divPeriodoEjecucionView" style="display: none;"  >
 																<fieldset class="net-frame-border" style="padding-left: 15px;">
 																	<table>
 																		<tr>
-																			<td colspan="5"><output class="net-titulo">Año Inicio de Vigencia</output></td>
-																			<td colspan="5"><output class="net-titulo">Año Fin de Vigencia</output></td>
+																			<td width="150px" colspan="5"><output class="net-titulo">Año de Ejecución</output></td>
+																			<td width="150px" colspan="5"><output class="net-titulo">Mes de Ejecución</output></td>
 																		</tr>
 																		<tr>
 																			
 																			<td colspan="5">
-																				<form:input path="anioInicioVigencia" style="width: 50px;" disabled="${formato12CCBean.readOnly}" />
+																				<form:input path="anioEjecucionDetalle" style="width: 50px;" disabled="${formato12CCBean.readOnly}" />
 																			</td>
 																			<td colspan="5">
-																				<form:input path="anioFinVigencia" style="width: 50px;" disabled="${formato12CCBean.readOnly}" />	
+																				<form:input path="mesEjecucionDetalle" style="width: 100px;" disabled="${formato12CCBean.readOnly}" />	
 																			</td>
 																		</tr>
 																	</table>
 																</fieldset>
-															</div>  --%>
+															</div>
 	
 														</td>
 													</tr>

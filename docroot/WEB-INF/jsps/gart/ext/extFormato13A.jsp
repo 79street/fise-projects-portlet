@@ -1817,9 +1817,9 @@ var formato13A= {
 				},
 			success: function(data) {
 				if (data.resultado == "OK"){
-					//var addhtml2='Registro eliminado con éxito';					
-					//formato13A.dialogMessageContent.html(addhtml2);
-					//formato13A.dialogMessage.dialog("open");
+					var addhtml2='El registro seleccionado para el Detalle del Formato 13A se eliminó satisfactoriamente';					
+					formato13A.lblMessage.html(addhtml2);
+					formato13A.dialogMessageGeneral.dialog("open");
 					formato13A.buscarDetalles();
 					formato13A.unblockUI();
 				}
@@ -1850,9 +1850,9 @@ var formato13A= {
 				},
 			success: function(data) {
 				if (data.resultado == "OK"){
-					//var addhtml2='Registro eliminado con éxito';					
-					//formato13A.dialogMessageContent.html(addhtml2);
-					//formato13A.dialogMessage.dialog("open");
+					var addhtml2='El registro seleccionado para el Formato 13A se eliminó satisfactoriamente';					
+					formato13A.lblMessageInicial.html(addhtml2);
+					formato13A.dialogMessageGeneralInicial.dialog("open");
 					formato13A.buscarFormatos();
 					formato13A.unblockUI();
 				}
