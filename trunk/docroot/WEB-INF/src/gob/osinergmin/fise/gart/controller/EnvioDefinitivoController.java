@@ -166,7 +166,7 @@ public class EnvioDefinitivoController {
 	
 	
 	private Map<String, String> mapaEmpresa;
-	private Map<String, String> mapaErrores;
+	//private Map<String, String> mapaErrores;
 	private Map<String, String> mapaSectorTipico;
 	private Map<Long, String> mapaEtapaEjecucion;
 	
@@ -204,7 +204,7 @@ public class EnvioDefinitivoController {
     		
     		mapaEmpresa = fiseUtil.getMapaEmpresa();
     		
-    		mapaErrores = fiseUtil.getMapaErrores();
+    		//mapaErrores = fiseUtil.getMapaErrores();
     		
     		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
     		
@@ -480,7 +480,7 @@ public class EnvioDefinitivoController {
 				obs.setId(cont);
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				//obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
 				listaObs12A.add(obs);
 			}
@@ -521,7 +521,7 @@ public class EnvioDefinitivoController {
 				obs.setId(cont);
 				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
 				listaObs12C.add(obs);
 			}
@@ -539,7 +539,7 @@ public class EnvioDefinitivoController {
 				obs.setId(cont);
 				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
 				listaObs12D.add(obs);
 			}
@@ -559,7 +559,7 @@ public class EnvioDefinitivoController {
 				obs.setId(cont);
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
 				listaObs13A.add(obs);
 			}
@@ -578,7 +578,7 @@ public class EnvioDefinitivoController {
 				obs.setId(cont);
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				listaObs14A.add(obs);
 			}
 		}
@@ -596,7 +596,7 @@ public class EnvioDefinitivoController {
 				obs.setId(cont);
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				listaObs14B.add(obs);
 			}
 		}
@@ -615,7 +615,7 @@ public class EnvioDefinitivoController {
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
 				//obs.setDescZonaBenef(mapaZonaBenef.get(o.getId().getIdZonaBenef()));
 				obs.setCodigo(o.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(o.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(o.getFiseObservacion().getDescripcion());
 				listaObs14C.add(obs);							
 			}
 		}
