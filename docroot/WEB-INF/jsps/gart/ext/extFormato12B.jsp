@@ -1264,6 +1264,7 @@
 			formato12B.txtTypeFile.val(tipoFile);
 			formato12B.divOverlay.show();
 		    formato12B.dlgLoadFile.show();
+		    formato12B.dlgLoadFile.draggable();
 		    formato12B.dlgLoadFile.css({ 
 		        'left': ($(window).width() / 3 - formato12B.dlgLoadFile.width() / 3) + 'px', 
 		        'top': ($(window).height()  - formato12B.dlgLoadFile.height() ) + 'px'

@@ -1077,7 +1077,7 @@ public class Formato12AGartController {
 				fileEntry = DLAppLocalServiceUtil.getFileEntry(dlFolder.getGroupId(), folderId, sourceFileName);
 			} catch (NoSuchFileEntryException e) {
 				logger.info("el archivo no existe en el folder del repositorio");
-				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, "", "Subido el "+hoy, file, serviceContext);
+				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, sourceFileName, "Subido el "+hoy, file, serviceContext);
 			}
 			DLAppLocalServiceUtil.updateFileEntry(fileEntry.getUserId(), fileEntry.getFileEntryId(),sourceFileName, mimeType, title, fileEntry.getDescription(), "Actualizo estado", true, file, serviceContext);
 			logger.info("Archivo subido:"+sourceFileName);

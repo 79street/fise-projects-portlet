@@ -2032,7 +2032,7 @@ var formato14B= {
 			}
 			formato14B.divOverlay.show();
 		    formato14B.dialogCargaExcel.show();
-		    formato14B.dialogCargaExcel.show();
+		    formato14B.dialogCargaExcel.draggable();
 		    formato14B.dialogCargaExcel.css({ 
 		        'left': ($(window).width() / 2 - formato14B.dialogCargaExcel.width() / 2) + 'px', 
 		        'top': ($(window).height()  - formato14B.dialogCargaExcel.height() ) + 'px'
@@ -2055,6 +2055,7 @@ var formato14B= {
 			}
 			formato14B.divOverlay.show();
 			formato14B.dialogCargaTexto.show();
+			formato14B.dialogCargaTexto.draggable();
 			formato14B.dialogCargaTexto.css({ 
 		        'left': ($(window).width() / 2 - formato14B.dialogCargaTexto.width() / 2) + 'px', 
 		        'top': ($(window).height() - formato14B.dialogCargaTexto.height() ) + 'px'

@@ -1639,7 +1639,7 @@ var formato12C= {
 			
 			formato12C.divOverlay.show();
 			formato12C.dialogCargaExcel.show();
-			formato12C.dialogCargaExcel.show();
+			formato12C.dialogCargaExcel.draggable();
 			formato12C.dialogCargaExcel.css({ 
 		        'left': ($(window).width() / 2 - formato12C.dialogCargaExcel.width() / 2) + 'px', 
 		        'top': ($(window).height()  - formato12C.dialogCargaExcel.height() ) + 'px'
@@ -1693,6 +1693,7 @@ var formato12C= {
 			
 			formato12C.divOverlay.show();
 			formato12C.dialogCargaTexto.show();
+			formato12C.dialogCargaTexto.draggable();
 			formato12C.dialogCargaTexto.css({ 
 		        'left': ($(window).width() / 2 - formato12C.dialogCargaTexto.width() / 2) + 'px', 
 		        'top': ($(window).height()  - formato12C.dialogCargaTexto.height() ) + 'px'

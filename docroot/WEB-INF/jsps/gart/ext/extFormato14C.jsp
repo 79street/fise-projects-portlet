@@ -3263,6 +3263,7 @@ var formato14C= {
 				}
 				formato14C.divOverlay.show();
 			    formato14C.dialogCargaExcel.show();			   
+			    formato14C.dialogCargaExcel.draggable();
 			    formato14C.dialogCargaExcel.css({ 
 			        'left': ($(window).width() / 2 - formato14C.dialogCargaExcel.width() / 2) + 'px', 
 			        'top': ($(window).height()  - formato14C.dialogCargaExcel.height() ) + 'px'
@@ -3328,6 +3329,7 @@ var formato14C= {
 				}
 				formato14C.divOverlay.show();
 				formato14C.dialogCargaTexto.show();
+				formato14C.dialogCargaTexto.draggable();
 				formato14C.dialogCargaTexto.css({ 
 			        'left': ($(window).width() / 2 - formato14C.dialogCargaTexto.width() / 2) + 'px', 
 			        'top': ($(window).height() - formato14C.dialogCargaTexto.height() ) + 'px'

@@ -1640,6 +1640,7 @@ function <portlet:namespace/>mostrarFormularioCargaTexto(){
 		}
 	    $('#divOverlay').show();
 	    $("#dialog-form-cargaTexto").show();
+	    $("#dialog-form-cargaTexto").draggable();
 	    $("#dialog-form-cargaTexto").css({ 
 	        'left': ($(window).width() / 2 - $("#dialog-form-cargaTexto").width() / 2) + 'px', 
 	        'top': ($(window).height() - $("#dialog-form-cargaTexto").height() ) + 'px'
