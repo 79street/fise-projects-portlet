@@ -37,6 +37,9 @@ var formato12C= {
 	dialogMessageWarning:null,
 	dialogMessageWarningContent:null,
 	
+	dialogMessageSuccess:null,
+	dialogMessageSuccessContent:null,
+	
 	
 	//mensajes
 	mensajeObteniendoDatos:null,
@@ -46,6 +49,7 @@ var formato12C= {
 	portletID:null,
 	
 	/**********CRUD**********/
+	divPeriodoEjecucionView:null,
 	flagCarga:null,
 	divInformacion:null,
 	
@@ -255,6 +259,9 @@ var formato12C= {
 		this.dialogMessageWarning=$("#<portlet:namespace/>dialog-message-warning");
 		this.dialogMessageWarningContent=$("#<portlet:namespace/>dialog-message-warning-content");
 		
+		this.dialogMessageSuccess=$("#<portlet:namespace/>dialog-message-success");
+		this.dialogMessageSuccessContent=$("#<portlet:namespace/>dialog-message-success-content");
+		
 		formato12C.initDialogs();
 		
 		formato12C.botonCrearFormato.click(function() {
@@ -276,6 +283,8 @@ var formato12C= {
 		this.divInformacion=$("#<portlet:namespace/>divInformacion");
 		
 		this.msgTransaccion=$("#msgTransaccion");
+		
+		this.divPeriodoEjecucionView = $('#<portlet:namespace/>divPeriodoEjecucionView');
 		
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
 		
@@ -424,6 +433,8 @@ var formato12C= {
 			formato12C.tipoOperacion=operacion;
 			formato12C.buscarDetalles();
 			
+			formato12C.divPeriodoEjecucionView.css("display","block");
+			
 			formato12C.divInformacion.show();
 			formato12C.labelEstado.val(formato12C.estado.val());
 			formato12C.labelGrupoInfo.val(formato12C.grupoInfo.val());
@@ -446,6 +457,8 @@ var formato12C= {
 			formato12C.tipoOperacion.val(operacion);
 			
 			formato12C.buscarDetalles();
+			
+			formato12C.divPeriodoEjecucionView.css("display","block");
 			//formato12C.botonAnadirFormato.css("display","block");
 			
 			formato12C.flagCarga.val('1');//iniciamos la carga de excel o txt
@@ -2029,6 +2042,17 @@ var formato12C= {
 				}
 			}
 		});
+		//
+		formato12C.dialogMessageSuccess.dialog({
+			modal: true,
+			autoOpen: false,
+			width: 450,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog("close");
+				}
+			}
+		});
 	},
 	initDialogsCRUD : function(){	
 		formato12C.dialogMessageReport.dialog({
@@ -2235,9 +2259,9 @@ var formato12C= {
 				},
 			success: function(data) {
 				if (data.resultado == "OK"){
-					//var addhtml2='Registro eliminado con éxito';					
-					//formato12C.dialogMessageContent.html(addhtml2);
-					//formato12C.dialogMessage.dialog("open");
+					var addhtml2='El registro seleccionado para el Detalle del Formato 12C se eliminó satisfactoriamente';					
+					formato12C.dialogMessageContent.html(addhtml2);
+					formato12C.dialogMessage.dialog("open");
 					formato12C.buscarDetalles();
 					formato12C.unblockUI();
 				}
@@ -2268,9 +2292,9 @@ var formato12C= {
 				},
 			success: function(data) {
 				if (data.resultado == "OK"){
-					//var addhtml2='Registro eliminado con éxito';					
-					//formato12C.dialogMessageContent.html(addhtml2);
-					//formato12C.dialogMessage.dialog("open");
+					var addhtml2='El registro seleccionado para el Formato 12C se eliminó satisfactoriamente';					
+					formato12C.dialogMessageSuccessContent.html(addhtml2);
+					formato12C.dialogMessageSuccess.dialog("open");
 					formato12C.buscarFormatos();
 					formato12C.unblockUI();
 				}

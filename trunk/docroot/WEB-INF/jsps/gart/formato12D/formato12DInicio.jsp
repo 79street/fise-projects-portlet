@@ -175,6 +175,14 @@ $(document).ready(function () {
 		</div>
 	</div>
 
+	<div id="<portlet:namespace/>dialog-message-success" title="Mensaje de &Eacute;xito">
+		<p>	
+			<!-- <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> -->
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-message-success-content">¿Está seguro?</label>
+		</p>
+	</div>
 	
 	<div id="<portlet:namespace/>dialog-confirm" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
