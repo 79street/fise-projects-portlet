@@ -160,168 +160,222 @@ $(document).ready(function () {
 												<table class="" style="width: 100%;" border="0">
 													
 													<tr>
-														<td width="120px">Etapa ejecución:</td>
-														<td>
-															<form:select path="etapaEjecucion" cssClass="select" cssStyle="width: 200px;" disabled="${readonly}">
-																<form:option value="">-Seleccione-</form:option>
-																<form:options items="${formato12CCBean.listaEtapaEjecucion}"/>
-															</form:select>
-															
-															<form:hidden path="anoEjecucionHidden"  />
-															<form:hidden path="mesEjecucionHidden"   />
-															<form:hidden path="etapaEjecucionHidden"   />
-															
-															
+														<td colspan="11">
+															<fieldset>
+																<table>
+																	<tr>
+																		<td width="150px">Etapa ejecución:</td>
+																		<td>
+																			<form:select path="etapaEjecucion" cssClass="select" cssStyle="width: 170px;" disabled="${readonly}">
+																				<form:option value="">-Seleccione-</form:option>
+																				<form:options items="${formato12CCBean.listaEtapaEjecucion}"/>
+																			</form:select>
+																			
+																			<form:hidden path="anoEjecucionHidden"  />
+																			<form:hidden path="mesEjecucionHidden"   />
+																			<form:hidden path="etapaEjecucionHidden"   />
+																			
+																			
+																		</td>
+																		<td colspan="9"></td>
+																	</tr>
+																</table>
+															</fieldset>
 														</td>
-														<td colspan="9"></td>
+													</tr>
+													<tr>
+														<td colspan="11">
+															<fieldset>
+																<legend style="font-weight: normal;" >Origen</legend>
+																<table>
+																	<tr>
+																		<td width="150px">Departamento:</td> 
+																		<td>
+																			<form:select path="codDepartamentoOrigen" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
+																				<form:option value="">-Seleccione-</form:option>
+																				<form:options items="${formato12CCBean.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
+																			</form:select>			
+																			
+																																		
+																		</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Provincia:</td>
+								   										<td>
+								   											<form:select path="codProvinciaOrigen" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
+																				<form:option value="">-Seleccione-</form:option>																					
+																			</form:select>
+																			
+																			
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Distrito:</td>
+								   										<td>
+								   											<form:select path="codDistritoOrigen" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
+																				<form:option value="">-Seleccione-</form:option>																					
+																			</form:select>
+																			
+																			
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Localidad:</td>
+								   										<td>
+								   											<form:input path="localidadOrigen" disabled="${readonlyEdit}" maxlength="50" onkeypress="return soloLetras(event);" />
+								   										</td>
+																	</tr>
+																</table>
+															</fieldset>
+														</td>
 													
 													</tr>
 													<tr>
-														<td width="120px">Departamento origen:</td> 
-														<td>
-															<form:select path="codDepartamentoOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
-																<form:option value="">-Seleccione-</form:option>
-																<form:options items="${formato12CCBean.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
-															</form:select>			
-															
-																														
-														</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Provincia origen:</td>
-				   										<td>
-				   											<form:select path="codProvinciaOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
-																<form:option value="">-Seleccione-</form:option>																					
-															</form:select>
-															
-															
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Distrito origen:</td>
-				   										<td>
-				   											<form:select path="codDistritoOrigen" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
-																<form:option value="">-Seleccione-</form:option>																					
-															</form:select>
-															
-															
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Localidad origen:</td>
-				   										<td>
-				   											<form:input path="localidadOrigen" disabled="${readonlyEdit}" maxlength="50" onkeypress="return soloLetras(event);" />
-				   										</td>
-													</tr>
-													<tr>
-														<td width="120px">Departamento destino:</td> 
-														<td>
-															<form:select path="codDepartamentoDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
-																<form:option value="">-Seleccione-</form:option>
-																<form:options items="${formato12CCBean.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
-															</form:select>								
-															
-																								
-														</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Provincia destino:</td>
-				   										<td>
-				   											<form:select path="codProvinciaDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
-																<form:option value="">-Seleccione-</form:option>																					
-															</form:select>
-															
-															
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Distrito destino:</td>
-				   										<td>
-				   											<form:select path="codDistritoDestino" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
-																<form:option value="">-Seleccione-</form:option>																					
-															</form:select>
-															
-															
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Localidad destino:</td>
-				   										<td>
-				   											<form:input path="localidadDestino" disabled="${readonlyEdit}" maxlength="50" onkeypress="return soloLetras(event);" />
-				   										</td>
-													</tr>
-													
-													<tr>
-														<td width="120px">Zona Beneficiario:</td> 
-														<td>
-															<form:select path="zonaBenef" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
-																<form:option value="">-Seleccione-</form:option>
-																<form:options items="${formato12CCBean.listaZonaBenef}"/>
-																<%-- <form:options items="${formato12CCBean.listaZonaBenef}" itemLabel="descripcion" itemValue="idZonaBenef"/> --%>
-															</form:select>																			
-														</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Cuenta contable:</td>
-				   										<td>
-				   											<form:input path="codCuentaContable" disabled="${readonlyEdit}" maxlength="30" onkeypress="return soloLetras(event);" />
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Actividad:</td>
-				   										<td>
-				   											<form:input path="actividad" disabled="${readonlyEdit}" maxlength="250" onkeypress="return soloLetras(event);" />
-				   										</td>
-				   										<td colspan="3"></td>
-													</tr>
-													
-													<tr>
-														<td width="120px">Tipo doc. Referencia:</td> 
-														<td>
-															<form:select path="tipoDocumento" cssClass="select" cssStyle="width: 200px;" disabled="${readonlyEdit}">
-																<form:option value="">-Seleccione-</form:option>
-																<form:options items="${formato12CCBean.listaTipoDocumento}" />
-																<%-- <form:options items="${formato12CCBean.listaTipoDocumento}" itemLabel="descripcion" itemValue="idTipDocRef"/> --%>
-															</form:select>																			
-														</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">RUC empresa:</td>
-				   										<td>
-				   											<form:input path="rucEmpresa" disabled="${readonlyEdit}" maxlength="11" onkeypress="return soloNumerosDecimales(event, 1, 'rucEmpresa',11,0)" />
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Serie doc. Referencia:</td>
-				   										<td>
-				   											<form:input path="serieDocumento" disabled="${readonlyEdit}" maxlength="6" onkeypress="return soloLetras(event);" />
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Nro. doc. Referencia:</td>
-				   										<td>
-				   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" onkeypress="return soloNumerosDecimales(event, 1, 'nroDocumento',20,0)" />
-				   										</td>
-													</tr>
-													<tr>
-														<td width="120px">Número de días:</td>
-				   										<td>
-				   											<form:input path="nroDias" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Alimentación:</td>
-				   										<td>
-				   											<form:input path="montoAlimentacion" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Alojamiento:</td>
-				   										<td>
-				   											<form:input path="montoAlojamiento" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
-				   										</td>
-				   										<td width="10px"></td>
-				   										<td width="120px">Movilidad:</td>
-				   										<td>
-				   											<form:input path="montoMovilidad" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
-				   										</td>
-													</tr>
-													<tr>
-														<td width="120px">Total:</td> 
-														<td>
-															<form:input path="totalGeneral" disabled="true" cssStyle="text-align: right;" />																			
+														<td colspan="11">
+															<fieldset>
+																<legend style="font-weight: normal;" >Destino</legend>
+																<table>
+																	<tr>
+																	
+																		<td width="150px">Departamento:</td> 
+																		<td>
+																			<form:select path="codDepartamentoDestino" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
+																				<form:option value="">-Seleccione-</form:option>
+																				<form:options items="${formato12CCBean.listaDepartamentos}" itemLabel="nomUbigeo" itemValue="codUbigeo"/>
+																			</form:select>								
+																			
+																												
+																		</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Provincia:</td>
+								   										<td>
+								   											<form:select path="codProvinciaDestino" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
+																				<form:option value="">-Seleccione-</form:option>																					
+																			</form:select>
+																			
+																			
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Distrito:</td>
+								   										<td>
+								   											<form:select path="codDistritoDestino" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
+																				<form:option value="">-Seleccione-</form:option>																					
+																			</form:select>
+																			
+																			
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Localidad:</td>
+								   										<td>
+								   											<form:input path="localidadDestino" disabled="${readonlyEdit}" maxlength="50" onkeypress="return soloLetras(event);" />
+								   										</td>
+				   										
+				   													</tr>
+																</table>
+															</fieldset>
 														</td>
 													</tr>
 													
+													<tr>
+														<td colspan="11">
+															<fieldset>
+																<table>
+																	<tr>
+																	
+																		<td width="150px">Zona Beneficiario:</td> 
+																		<td>
+																			<form:select path="zonaBenef" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
+																				<form:option value="">-Seleccione-</form:option>
+																				<form:options items="${formato12CCBean.listaZonaBenef}"/>
+																				<%-- <form:options items="${formato12CCBean.listaZonaBenef}" itemLabel="descripcion" itemValue="idZonaBenef"/> --%>
+																			</form:select>																			
+																		</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Cuenta contable:</td>
+								   										<td>
+								   											<form:input path="codCuentaContable" disabled="${readonlyEdit}" maxlength="30" onkeypress="return soloLetras(event);" />
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Actividad:</td>
+								   										<td>
+								   											<form:input path="actividad" disabled="${readonlyEdit}" maxlength="250" onkeypress="return soloLetras(event);" />
+								   										</td>
+								   										<td width="10px"></td>
+																		<td width="150px">Número de días:</td>
+								   										<td>
+								   											<form:input path="nroDias" disabled="${readonlyEdit}" maxlength="3" cssStyle="text-align: right;" />
+								   										</td>
+																	</tr>
+																</table>
+															</fieldset>
+														</td>
+													</tr>
 													
-													
+													<tr>
+														<td colspan="11">
+															<fieldset>
+																<legend style="font-weight: normal;" >Documento de Referencia</legend>
+																<table>
+																	<tr>
+																	
+																		<td width="150px">Tipo doc.:</td> 
+																		<td>
+																			<form:select path="tipoDocumento" cssClass="select" cssStyle="width: 170px;" disabled="${readonlyEdit}">
+																				<form:option value="">-Seleccione-</form:option>
+																				<form:options items="${formato12CCBean.listaTipoDocumento}" />
+																				<%-- <form:options items="${formato12CCBean.listaTipoDocumento}" itemLabel="descripcion" itemValue="idTipDocRef"/> --%>
+																			</form:select>																			
+																		</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">RUC empresa:</td>
+								   										<td>
+								   											<form:input path="rucEmpresa" disabled="${readonlyEdit}" maxlength="11" onkeypress="return soloNumerosDecimales(event, 1, 'rucEmpresa',11,0)" />
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Serie doc.:</td>
+								   										<td>
+								   											<form:input path="serieDocumento" disabled="${readonlyEdit}" maxlength="6" onkeypress="return soloLetras(event);" />
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Nro. doc.:</td>
+								   										<td>
+								   											<form:input path="nroDocumento" disabled="${readonlyEdit}" maxlength="20" onkeypress="return soloNumerosDecimales(event, 1, 'nroDocumento',20,0)" />
+								   										</td>
+				   													
+				   													</tr>
+																</table>
+															</fieldset>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="11">
+															<fieldset>
+																<legend style="font-weight: normal;" >Monto</legend>
+																<table>
+																	<tr>
+									
+								   										<td width="150px">Alimentación:</td>
+								   										<td>
+								   											<form:input path="montoAlimentacion" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Alojamiento:</td>
+								   										<td>
+								   											<form:input path="montoAlojamiento" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Movilidad:</td>
+								   										<td>
+								   											<form:input path="montoMovilidad" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
+								   										</td>
+								   										<td width="10px"></td>
+								   										<td width="150px">Total:</td> 
+																		<td>
+																			<form:input path="totalGeneral" disabled="true" cssStyle="text-align: right;" />																			
+																		</td>
+				   										
+				   													</tr>
+																</table>
+															</fieldset>
+														</td>
+													</tr>
 
 											
 													<tr height="10px">
