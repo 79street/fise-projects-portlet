@@ -280,7 +280,7 @@ $(function() {
 				   										<td width="10px"></td>
 				   										<td width="120px">Cantidad:</td>
 				   										<td>
-				   											<form:input path="cantidad" cssClass="target" disabled="${readonlyEdit}" cssStyle="text-align: right;" />
+				   											<form:input path="cantidad" cssClass="target" disabled="${readonlyEdit}" maxlength="6"  cssStyle="text-align: right;" />
 				   										</td>
 				   										<td width="10px"></td>
 				   										<td width="120px">Costo unitario:</td>
