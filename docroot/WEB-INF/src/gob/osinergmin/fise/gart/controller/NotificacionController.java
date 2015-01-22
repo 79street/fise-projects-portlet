@@ -1,5 +1,6 @@
 package gob.osinergmin.fise.gart.controller;
 
+import gob.osinergmin.fise.bean.FiseObservacionBean;
 import gob.osinergmin.fise.bean.Formato12A12BGeneric;
 import gob.osinergmin.fise.bean.Formato12C12D13Generic;
 import gob.osinergmin.fise.bean.Formato14CBean;
@@ -13,38 +14,47 @@ import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
 import gob.osinergmin.fise.domain.FiseFormato12AD;
 import gob.osinergmin.fise.domain.FiseFormato12ADOb;
+import gob.osinergmin.fise.domain.FiseFormato12ADPK;
 import gob.osinergmin.fise.domain.FiseFormato12BC;
 import gob.osinergmin.fise.domain.FiseFormato12BCPK;
 import gob.osinergmin.fise.domain.FiseFormato12BD;
 import gob.osinergmin.fise.domain.FiseFormato12BDOb;
+import gob.osinergmin.fise.domain.FiseFormato12BDPK;
 import gob.osinergmin.fise.domain.FiseFormato12CC;
 import gob.osinergmin.fise.domain.FiseFormato12CCPK;
 import gob.osinergmin.fise.domain.FiseFormato12CD;
 import gob.osinergmin.fise.domain.FiseFormato12CDOb;
+import gob.osinergmin.fise.domain.FiseFormato12CDPK;
 import gob.osinergmin.fise.domain.FiseFormato12DC;
 import gob.osinergmin.fise.domain.FiseFormato12DCPK;
 import gob.osinergmin.fise.domain.FiseFormato12DD;
 import gob.osinergmin.fise.domain.FiseFormato12DDOb;
+import gob.osinergmin.fise.domain.FiseFormato12DDPK;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13ACPK;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
 import gob.osinergmin.fise.domain.FiseFormato13ADOb;
+import gob.osinergmin.fise.domain.FiseFormato13ADPK;
 import gob.osinergmin.fise.domain.FiseFormato14AC;
 import gob.osinergmin.fise.domain.FiseFormato14ACPK;
 import gob.osinergmin.fise.domain.FiseFormato14AD;
 import gob.osinergmin.fise.domain.FiseFormato14ADOb;
+import gob.osinergmin.fise.domain.FiseFormato14ADPK;
 import gob.osinergmin.fise.domain.FiseFormato14BC;
 import gob.osinergmin.fise.domain.FiseFormato14BCPK;
 import gob.osinergmin.fise.domain.FiseFormato14BD;
 import gob.osinergmin.fise.domain.FiseFormato14BDOb;
+import gob.osinergmin.fise.domain.FiseFormato14BDPK;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
 import gob.osinergmin.fise.domain.FiseFormato14CD;
 import gob.osinergmin.fise.domain.FiseFormato14CDOb;
+import gob.osinergmin.fise.domain.FiseFormato14CDPK;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
+import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.service.Formato12CGartService;
@@ -151,11 +161,15 @@ public class NotificacionController {
 	@Qualifier("cfgTablaGartServiceImpl")
 	private CfgTablaGartService tablaService;
 	
+	@Autowired
+	@Qualifier("fiseObservacionGartServiceImpl")
+	FiseObservacionGartService fiseObservacionGartService;
+	
 	
 	
 	private Map<String, String> mapaEmpresa;	
 	private List<MensajeErrorBean> listaObservaciones;
-	private Map<String, String> mapaErrores;
+	//private Map<String, String> mapaErrores;
 	private Map<String, String> mapaSectorTipico;
 	private Map<Long, String> mapaEtapaEjecucion;
 	
@@ -181,7 +195,7 @@ public class NotificacionController {
     		
     		mapaEmpresa = fiseUtil.getMapaEmpresa();
     		
-    		mapaErrores = fiseUtil.getMapaErrores();
+    		//mapaErrores = fiseUtil.getMapaErrores();
     		
     		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
     		
@@ -749,7 +763,7 @@ public class NotificacionController {
 				obs.setId(cont);
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				//obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
 				listaObservaciones.add(obs);
 			}
@@ -789,7 +803,7 @@ public class NotificacionController {
 				obs.setId(cont);
 				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
 				listaObservaciones.add(obs);
 			}
@@ -807,7 +821,7 @@ public class NotificacionController {
 				obs.setId(cont);
 				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));				
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());				
 				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
 				listaObservaciones.add(obs);
 			}
@@ -825,7 +839,7 @@ public class NotificacionController {
 				obs.setId(cont);
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
 				listaObservaciones.add(obs);
 			}
@@ -844,7 +858,7 @@ public class NotificacionController {
 				obs.setId(cont);
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
 				listaObservaciones.add(obs);
 			}
 		}
@@ -862,7 +876,7 @@ public class NotificacionController {
 				obs.setId(cont);
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());			
 				listaObservaciones.add(obs);
 			}
 		}
@@ -881,7 +895,7 @@ public class NotificacionController {
 				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
 				//obs.setDescZonaBenef(mapaZonaBenef.get(o.getId().getIdZonaBenef()));
 				obs.setCodigo(o.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(o.getFiseObservacion().getIdObservacion()));
+				obs.setDescripcion(o.getFiseObservacion().getDescripcion());
 				listaObservaciones.add(obs);							
 			}
 		}
@@ -1674,5 +1688,783 @@ public class NotificacionController {
 			logger.error("Error al eliminar el registro seleccionado");
 		}		
 	}
+	
+	/***Para agregar observaciones de forma manual****/	
+	
+	@ResourceMapping("verDetalleFormatos")
+  	public void verDetalleFormato(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){
+		NotificacionBean not =null;
+		try{
+			response.setContentType("application/json");
+			
+			String data = "";			
+			List<NotificacionBean> listaDetalle = new ArrayList<NotificacionBean>();			
+			logger.info("Entrando a ver detalle de cada formato"); 				
+			logger.info("Codigo empresa:  "+ n.getCodEmpresa()); 
+			logger.info("anio pres:  "+ n.getAnioPres());	
+			logger.info("mes pres:  "+ n.getMesPres());
+			logger.info("formato:  "+ n.getFormato());	
+			logger.info("etapa:  "+ n.getEtapa());	
+			logger.info("anio ejec:  "+ n.getAnioEjec());
+			logger.info("mes ejec:  "+ n.getMesEjec());
+			logger.info("anio ini vige:  "+ n.getAnioIniVig());
+			logger.info("anio fin vige:  "+ n.getAnioFinVig());	 
+  			 							
+			if(FiseConstants.NOMBRE_FORMATO_12A.equals(n.getFormato())){				
+				FiseFormato12ACPK pk = new FiseFormato12ACPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setAnoEjecucionGasto(new Long(n.getAnioEjec()));
+				pk.setMesEjecucionGasto(new Long(n.getMesEjec()));
+				pk.setEtapa(n.getEtapa());  	  			        
+				FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);	
+				if(formato12A!=null){					
+					for (FiseFormato12AD d : formato12A.getFiseFormato12ADs()) {
+						not = new NotificacionBean();
+						not.setCodEmpresa(d.getId().getCodEmpresa());
+						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
+						not.setAnioPres(""+d.getId().getAnoPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion())); 
+						not.setEtapa(d.getId().getEtapa());
+						not.setAnioEjec(""+d.getId().getAnoEjecucionGasto());
+						not.setMesEjec(""+d.getId().getMesEjecucionGasto()); 
+						not.setDesMesEje(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion())); 
+						not.setIdZona(""+d.getId().getIdZonaBenef()); 
+						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));						
+						listaDetalle.add(not);
+					}	    	
+				}    
+			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 				
+				FiseFormato12BCPK pk=new FiseFormato12BCPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Integer(n.getAnioPres()));
+				pk.setMesPresentacion(new Integer(n.getMesPres()));
+				pk.setAnoEjecucionGasto(new Integer(n.getAnioEjec()));
+				pk.setMesEjecucionGasto(new Integer(n.getMesEjec()));
+				pk.setEtapa(n.getEtapa());  
+				FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);
+				if(formato12B!=null){					
+					for (FiseFormato12BD d : formato12B.getListaDetalle12BDs()) {
+						not = new NotificacionBean();
+						not.setCodEmpresa(d.getId().getCodEmpresa());
+						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
+						not.setAnioPres(""+d.getId().getAnoPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion())); 
+						not.setEtapa(d.getId().getEtapa());
+						not.setAnioEjec(""+d.getId().getAnoEjecucionGasto());
+						not.setMesEjec(""+d.getId().getMesEjecucionGasto()); 
+						not.setDesMesEje(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));
+						not.setIdZona(""+d.getId().getIdZonaBenef()); 
+						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));						
+						listaDetalle.add(not);	
+					}		
+				}			
+			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 				
+				FiseFormato12CCPK pk = new FiseFormato12CCPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setEtapa(n.getEtapa()); 
+				FiseFormato12CC formato12C = formatoService12C.obtenerFormato12CCByPK(pk);
+				if(formato12C!=null){					
+					for (FiseFormato12CD d : formato12C.getFiseFormato12CDs()) {
+						not = new NotificacionBean();
+						not.setCodEmpresa(d.getId().getCodEmpresa());
+						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
+						not.setAnioPres(""+d.getId().getAnoPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion())); 
+						not.setEtapa(d.getId().getEtapa());
+						not.setAnioEjec(""+d.getId().getAnoEjecucionGasto());
+						not.setMesEjec(""+d.getId().getMesEjecucionGasto()); 
+						not.setDesMesEje(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));
+						not.setEtapaEjec(""+d.getId().getEtapaEjecucion());
+						not.setDesEstapaEjec(mapaEtapaEjecucion.get(d.getId().getEtapaEjecucion())); 
+						not.setItemEtapa(""+d.getId().getNumeroItemEtapa());						
+						listaDetalle.add(not);
+					}			
+				}				
+			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){				
+				FiseFormato12DCPK pk = new FiseFormato12DCPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setEtapa(n.getEtapa()); 
+				FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk); 
+				if(formato12D!=null){					
+					for (FiseFormato12DD d : formato12D.getFiseFormato12DDs()) {
+						not = new NotificacionBean();
+						not.setCodEmpresa(d.getId().getCodEmpresa());
+						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
+						not.setAnioPres(""+d.getId().getAnoPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));						
+						not.setEtapa(d.getId().getEtapa());
+						not.setAnioEjec(""+d.getId().getAnoEjecucionGasto());
+						not.setMesEjec(""+d.getId().getMesEjecucionGasto()); 
+						not.setDesMesEje(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));
+						not.setEtapaEjec(""+d.getId().getEtapaEjecucion());
+						not.setDesEstapaEjec(mapaEtapaEjecucion.get(d.getId().getEtapaEjecucion())); 
+						not.setItemEtapa(""+d.getId().getNumeroItemEtapa());
+						listaDetalle.add(not);
+					}				
+				}			
+			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){				
+				FiseFormato13ACPK pk = new FiseFormato13ACPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setEtapa(n.getEtapa());				
+				FiseFormato13AC formato13A = formatoService13A.obtenerFormato13ACByPK(pk);	
+				if(formato13A!=null){					
+					for (FiseFormato13AD d : formato13A.getFiseFormato13ADs()) {
+						not = new NotificacionBean();
+						not.setCodEmpresa(d.getId().getCodEmpresa());
+						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
+						not.setAnioPres(""+d.getId().getAnoPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));	
+						not.setEtapa(d.getId().getEtapa());
+						not.setIdZona(""+d.getId().getIdZonaBenef()); 
+						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));
+						not.setCodUbigeo(d.getId().getCodUbigeo());
+						not.setCodSector(d.getId().getCodSectorTipico());
+						not.setDesSector(mapaSectorTipico.get(d.getId().getCodSectorTipico())); 						 
+						listaDetalle.add(not);
+					}			
+				}
+			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 				
+				FiseFormato14ACPK pk = new FiseFormato14ACPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setAnoInicioVigencia(new Long(n.getAnioIniVig()));
+				pk.setAnoFinVigencia(new Long(n.getAnioFinVig()));
+				pk.setEtapa(n.getEtapa());  				        
+				FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);
+				if(formato14A!=null){					
+			    	for (FiseFormato14AD d : formato14A.getFiseFormato14ADs()) {
+			    		not = new NotificacionBean();
+			    		not.setCodEmpresa(d.getId().getCodEmpresa());
+						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
+						not.setAnioPres(""+d.getId().getAnoPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));	
+						not.setEtapa(d.getId().getEtapa());						
+						not.setAnioIniVig(""+d.getId().getAnoInicioVigencia());		
+						not.setAnioFinVig(""+d.getId().getAnoFinVigencia());
+						not.setIdZona(""+d.getId().getIdZonaBenef()); 
+						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));						 
+						listaDetalle.add(not);
+					}			    		
+				}		    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){				
+				FiseFormato14BCPK pk = new FiseFormato14BCPK();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setAnoInicioVigencia(new Long(n.getAnioIniVig()));
+				pk.setAnoFinVigencia(new Long(n.getAnioFinVig()));
+				pk.setEtapa(n.getEtapa());  						        
+				FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);
+				if(formato14B!=null){							    
+			    	for (FiseFormato14BD d : formato14B.getFiseFormato14BDs()) {
+			    		not = new NotificacionBean();
+			    		not.setCodEmpresa(d.getId().getCodEmpresa());
+						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
+						not.setAnioPres(""+d.getId().getAnoPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));	
+						not.setEtapa(d.getId().getEtapa());						
+						not.setAnioIniVig(""+d.getId().getAnoInicioVigencia());		
+						not.setAnioFinVig(""+d.getId().getAnoFinVigencia());
+						not.setIdZona(""+d.getId().getIdZonaBenef());
+						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));					
+						listaDetalle.add(not);
+					}		    	
+				}	    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 				
+				Formato14CBean f14C = new Formato14CBean();				
+				f14C.setCodEmpresa(n.getCodEmpresa());
+				f14C.setAnioPres(n.getAnioPres());
+				f14C.setMesPres(n.getMesPres());
+				f14C.setAnoIniVigencia(n.getAnioIniVig());
+				f14C.setAnoFinVigencia(n.getAnioFinVig());
+				f14C.setEtapa(n.getEtapa());
+				FiseFormato14CC formato14C = formatoService14C.obtenerFiseFormato14CC(f14C);
+				if(formato14C!=null){					
+			    	for (FiseFormato14CD d : formato14C.getListaDetalle14cDs()) {
+			    		not = new NotificacionBean();
+			    		not.setCodEmpresa(d.getId().getCodEmpresa());
+						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
+						not.setAnioPres(""+d.getId().getAnoPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));	
+						not.setEtapa(d.getId().getEtapa());						
+						not.setAnioIniVig(""+d.getId().getAnoInicioVigencia());		
+						not.setAnioFinVig(""+d.getId().getAnoFinVigencia());
+						not.setIdZona(""+d.getId().getIdZonaBenef());
+						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));
+						not.setIdPersonal(""+d.getId().getIdTipPersonal()); 
+						not.setDesPersonal(fiseUtil.getMapaTipoPersonal().get(d.getId().getIdTipPersonal()));					
+						listaDetalle.add(not);		
+					}		    	
+				}	    	
+			}		
+  			data = toStringListJSON(listaDetalle);
+  			logger.info("arreglo json:"+data);
+  			PrintWriter pw = response.getWriter();
+  			pw.write(data);
+  			pw.flush();
+  			pw.close();  			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}finally{
+			if(not!=null){
+				not =null;
+			}
+		}
+	}
+	
+	/*****Lista las observaciones por cada detalle de los formatos******/
+	
+	@ResourceMapping("verListaObservacionesDetalle")
+  	public void verObservacionesPorDetalle(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){
+		NotificacionBean not =null;
+		try{
+			response.setContentType("application/json");
+			
+			String data = "";			
+			List<NotificacionBean> listaObsFormato = new ArrayList<NotificacionBean>();			
+			logger.info("Entrando a ver lista de observaciones por cada detalle del formato"); 				
+			logger.info("Codigo empresa:  "+ n.getCodEmpresa()); 
+			logger.info("anio pres:  "+ n.getAnioPres());	
+			logger.info("mes pres:  "+ n.getMesPres());
+			logger.info("formato:  "+ n.getFormato());	
+			logger.info("etapa:  "+ n.getEtapa());	
+			logger.info("anio ejec:  "+ n.getAnioEjec());
+			logger.info("mes ejec:  "+ n.getMesEjec());
+			logger.info("anio ini vige:  "+ n.getAnioIniVig());
+			logger.info("anio fin vige:  "+ n.getAnioFinVig());	
+			logger.info("etapa ejec:  "+ n.getEtapaEjec());
+			logger.info("id zona:  "+ n.getIdZona());
+			logger.info("id personal:  "+ n.getIdPersonal());
+			logger.info("item etapa:  "+ n.getItemEtapa());
+			logger.info("cod ubigeo:  "+ n.getCodUbigeo());
+			logger.info("cod sector:  "+ n.getCodSector());
+  			 							
+			if(FiseConstants.NOMBRE_FORMATO_12A.equals(n.getFormato())){				
+				FiseFormato12ADPK pk = new FiseFormato12ADPK();
+				FiseFormato12AD detalle = new FiseFormato12AD();				
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setAnoEjecucionGasto(new Long(n.getAnioEjec()));
+				pk.setMesEjecucionGasto(new Long(n.getMesEjec()));
+				pk.setEtapa(n.getEtapa()); 
+				pk.setIdZonaBenef(new Long(n.getIdZona()));
+				detalle.setId(pk);				
+				List<FiseFormato12ADOb> listaObser = formatoService12A.listarFormato12ADObByFormato12AD(detalle);								
+				for (FiseFormato12ADOb o : listaObser) {					
+					not = new NotificacionBean();
+					not.setCodEmpresa(o.getId().getCodEmpresa());					
+					not.setAnioPres(""+o.getId().getAnoPresentacion());
+					not.setMesPres(""+o.getId().getMesPresentacion());					
+					not.setEtapa(o.getId().getEtapa());
+					not.setAnioEjec(""+o.getId().getAnoEjecucionGasto());
+					not.setMesEjec(""+o.getId().getMesEjecucionGasto()); 					
+					not.setIdZona(""+o.getId().getIdZonaBenef()); 
+					not.setDesZona(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
+					not.setItemObs(""+o.getId().getItemObservacion());  
+					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
+					not.setDesObservacion(o.getFiseObservacion().getDescripcion());
+					not.setOrigenObs(o.getFiseObservacion().getOrigen());
+					listaObsFormato.add(not);				
+				} 				   
+			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 				
+				FiseFormato12BDPK pk=new FiseFormato12BDPK();
+				FiseFormato12BD detalle = new FiseFormato12BD();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Integer(n.getAnioPres()));
+				pk.setMesPresentacion(new Integer(n.getMesPres()));
+				pk.setAnoEjecucionGasto(new Integer(n.getAnioEjec()));
+				pk.setMesEjecucionGasto(new Integer(n.getMesEjec()));
+				pk.setEtapa(n.getEtapa());  
+				pk.setIdZonaBenef(new Integer(n.getIdZona()));
+				detalle.setId(pk); 
+				List<FiseFormato12BDOb> listaObser = formatoService12B.getLstFormatoObs(detalle);								
+				for (FiseFormato12BDOb o : listaObser) {
+					not = new NotificacionBean();
+					not.setCodEmpresa(o.getId().getCodEmpresa());					
+					not.setAnioPres(""+o.getId().getAnoPresentacion());
+					not.setMesPres(""+o.getId().getMesPresentacion());					
+					not.setEtapa(o.getId().getEtapa());
+					not.setAnioEjec(""+o.getId().getAnoEjecucionGasto());
+					not.setMesEjec(""+o.getId().getMesEjecucionGasto());					
+					not.setIdZona(""+o.getId().getIdZonaBenef()); 
+					not.setDesZona(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
+					not.setItemObs(""+o.getId().getItemObservacion()); 
+					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
+					not.setDesObservacion(o.getFiseObservacion().getDescripcion());
+					not.setOrigenObs(o.getFiseObservacion().getOrigen());
+					listaObsFormato.add(not);	
+				}						
+			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 				
+				FiseFormato12CDPK pk = new FiseFormato12CDPK();
+				FiseFormato12CD detalle = new FiseFormato12CD();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setEtapa(n.getEtapa()); 
+				pk.setAnoEjecucionGasto(new Long(n.getAnioEjec()));
+				pk.setMesEjecucionGasto(new Long(n.getMesEjec()));
+				pk.setEtapaEjecucion(new Long(n.getEtapaEjec()));
+				pk.setNumeroItemEtapa(new Long(n.getItemEtapa())); 
+				detalle.setId(pk); 
+				List<FiseFormato12CDOb> listaObser = formatoService12C.listarFormato12CDObByFormato12CD(detalle);								
+				for (FiseFormato12CDOb o : listaObser) {
+					not = new NotificacionBean();
+					not.setCodEmpresa(o.getId().getCodEmpresa());					
+					not.setAnioPres(""+o.getId().getAnoPresentacion());
+					not.setMesPres(""+o.getId().getMesPresentacion());					
+					not.setEtapa(o.getId().getEtapa());
+					not.setAnioEjec(""+o.getId().getAnoEjecucionGasto());
+					not.setMesEjec(""+o.getId().getMesEjecucionGasto()); 					
+					not.setEtapaEjec(""+o.getId().getEtapaEjecucion());
+					not.setDesEstapaEjec(mapaEtapaEjecucion.get(o.getId().getEtapaEjecucion())); 
+					not.setItemEtapa(""+o.getId().getNumeroItemEtapa());
+					not.setItemObs(""+o.getId().getItemObservacion()); 
+					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
+					not.setDesObservacion(o.getFiseObservacion().getDescripcion()); 
+					not.setOrigenObs(o.getFiseObservacion().getOrigen());
+					listaObsFormato.add(not);
+				}			
+							
+			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){				
+				FiseFormato12DDPK pk = new FiseFormato12DDPK();
+				FiseFormato12DD detalle = new FiseFormato12DD();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setEtapa(n.getEtapa()); 
+				pk.setAnoEjecucionGasto(new Long(n.getAnioEjec()));
+				pk.setMesEjecucionGasto(new Long(n.getMesEjec()));
+				pk.setEtapaEjecucion(new Long(n.getEtapaEjec()));
+				pk.setNumeroItemEtapa(new Long(n.getItemEtapa())); 
+				detalle.setId(pk); 
+				List<FiseFormato12DDOb> listaObser = formatoService12D.listarFormato12DDObByFormato12DD(detalle);								
+				for (FiseFormato12DDOb o : listaObser) {
+					not = new NotificacionBean();
+					not.setCodEmpresa(o.getId().getCodEmpresa());					
+					not.setAnioPres(""+o.getId().getAnoPresentacion());
+					not.setMesPres(""+o.getId().getMesPresentacion());					
+					not.setEtapa(o.getId().getEtapa());
+					not.setAnioEjec(""+o.getId().getAnoEjecucionGasto());
+					not.setMesEjec(""+o.getId().getMesEjecucionGasto()); 					
+					not.setEtapaEjec(""+o.getId().getEtapaEjecucion());
+					not.setDesEstapaEjec(mapaEtapaEjecucion.get(o.getId().getEtapaEjecucion())); 
+					not.setItemEtapa(""+o.getId().getNumeroItemEtapa());
+					not.setItemObs(""+o.getId().getItemObservacion()); 
+					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
+					not.setDesObservacion(o.getFiseObservacion().getDescripcion());
+					not.setOrigenObs(o.getFiseObservacion().getOrigen());
+					listaObsFormato.add(not);
+				}	
+			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){				
+				FiseFormato13ADPK pk = new FiseFormato13ADPK();
+				FiseFormato13AD detalle = new FiseFormato13AD();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setEtapa(n.getEtapa());	
+				pk.setCodUbigeo(n.getCodUbigeo());
+				pk.setCodSectorTipico(n.getCodSector());
+				pk.setIdZonaBenef(new Long(n.getIdZona()));
+				detalle.setId(pk); 
+				List<FiseFormato13ADOb> listaObser = formatoService13A.listarFormato13ADObByFormato13AD(detalle);								
+				for (FiseFormato13ADOb o : listaObser) {
+					not = new NotificacionBean();
+					not.setCodEmpresa(o.getId().getCodEmpresa());					
+					not.setAnioPres(""+o.getId().getAnoPresentacion());
+					not.setMesPres(""+o.getId().getMesPresentacion());					
+					not.setEtapa(o.getId().getEtapa());
+					not.setIdZona(""+o.getId().getIdZonaBenef()); 
+					not.setDesZona(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
+					not.setCodUbigeo(o.getId().getCodUbigeo());
+					not.setCodSector(o.getId().getCodSectorTipico());
+					not.setDesSector(mapaSectorTipico.get(o.getId().getCodSectorTipico())); 
+					not.setItemObs(""+o.getId().getItemObservacion()); 
+					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
+					not.setDesObservacion(o.getFiseObservacion().getDescripcion());
+					not.setOrigenObs(o.getFiseObservacion().getOrigen());
+					listaObsFormato.add(not);
+				}			
+			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 				
+				FiseFormato14ADPK pk = new FiseFormato14ADPK();
+				FiseFormato14AD detalle = new FiseFormato14AD();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setAnoInicioVigencia(new Long(n.getAnioIniVig()));
+				pk.setAnoFinVigencia(new Long(n.getAnioFinVig()));
+				pk.setEtapa(n.getEtapa());
+				pk.setIdZonaBenef(new Long(n.getIdZona()));
+				detalle.setId(pk); 
+				List<FiseFormato14ADOb> listaObser = formatoService14A.listarFormato14ADObByFormato14AD(detalle);								
+				for (FiseFormato14ADOb o : listaObser) {
+					not = new NotificacionBean();
+					not.setCodEmpresa(o.getId().getCodEmpresa());					
+					not.setAnioPres(""+o.getId().getAnoPresentacion());
+					not.setMesPres(""+o.getId().getMesPresentacion());					
+					not.setEtapa(o.getId().getEtapa());						
+					not.setAnioIniVig(""+o.getId().getAnoInicioVigencia());		
+					not.setAnioFinVig(""+o.getId().getAnoFinVigencia());
+					not.setIdZona(""+o.getId().getIdZonaBenef()); 
+					not.setDesZona(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
+					not.setItemObs(""+o.getId().getItemObservacion()); 
+					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
+					not.setDesObservacion(o.getFiseObservacion().getDescripcion());
+					not.setOrigenObs(o.getFiseObservacion().getOrigen());
+					listaObsFormato.add(not);
+				}						    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){				
+				FiseFormato14BDPK pk = new FiseFormato14BDPK();
+				FiseFormato14BD detalle = new FiseFormato14BD();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setAnoInicioVigencia(new Long(n.getAnioIniVig()));
+				pk.setAnoFinVigencia(new Long(n.getAnioFinVig()));
+				pk.setEtapa(n.getEtapa()); 
+				pk.setIdZonaBenef(new Long(n.getIdZona()));
+				detalle.setId(pk); 
+				List<FiseFormato14BDOb> listaObser = formatoService14B.listarFormato14BDObByFormato14BD(detalle);										    
+				for (FiseFormato14BDOb o : listaObser) {
+					not = new NotificacionBean();
+					not.setCodEmpresa(o.getId().getCodEmpresa());					
+					not.setAnioPres(""+o.getId().getAnoPresentacion());
+					not.setMesPres(""+o.getId().getMesPresentacion());					
+					not.setEtapa(o.getId().getEtapa());						
+					not.setAnioIniVig(""+o.getId().getAnoInicioVigencia());		
+					not.setAnioFinVig(""+o.getId().getAnoFinVigencia());
+					not.setIdZona(""+o.getId().getIdZonaBenef()); 
+					not.setDesZona(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
+					not.setItemObs(""+o.getId().getItemObservacion()); 
+					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
+					not.setDesObservacion(o.getFiseObservacion().getDescripcion());	
+					not.setOrigenObs(o.getFiseObservacion().getOrigen());
+					listaObsFormato.add(not);
+				}			    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 				
+				FiseFormato14CDPK pk = new FiseFormato14CDPK();
+				FiseFormato14CD detalle = new FiseFormato14CD();
+				pk.setCodEmpresa(n.getCodEmpresa());
+				pk.setAnoPresentacion(new Long(n.getAnioPres()));
+				pk.setMesPresentacion(new Long(n.getMesPres()));
+				pk.setAnoInicioVigencia(new Long(n.getAnioIniVig()));
+				pk.setAnoFinVigencia(new Long(n.getAnioFinVig()));
+				pk.setEtapa(n.getEtapa()); 
+				pk.setIdZonaBenef(new Long(n.getIdZona()));
+				pk.setIdTipPersonal(new Long(n.getIdPersonal())); 
+				detalle.setId(pk); 
+				List<FiseFormato14CDOb> listaObser = formatoService14C.listaObservacionesF14C(detalle);						
+				for (FiseFormato14CDOb o : listaObser) {
+					not = new NotificacionBean();
+					not.setCodEmpresa(o.getId().getCodEmpresa());					
+					not.setAnioPres(""+o.getId().getAnoPresentacion());
+					not.setMesPres(""+o.getId().getMesPresentacion());					
+					not.setEtapa(o.getId().getEtapa());						
+					not.setAnioIniVig(""+o.getId().getAnoInicioVigencia());		
+					not.setAnioFinVig(""+o.getId().getAnoFinVigencia());
+					not.setIdZona(""+o.getId().getIdZonaBenef());
+					not.setDesZona(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
+					not.setIdPersonal(""+o.getId().getIdTipPersonal()); 
+					not.setDesPersonal(fiseUtil.getMapaTipoPersonal().get(o.getId().getIdTipPersonal()));
+					not.setItemObs(""+o.getId().getItemObservacion()); 
+					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
+					not.setDesObservacion(o.getFiseObservacion().getDescripcion());
+					not.setOrigenObs(o.getFiseObservacion().getOrigen());
+					logger.info("origen observacion del 14c:  "+o.getFiseObservacion().getOrigen()); 
+					listaObsFormato.add(not);		
+				}		    	
+			}	  				
+  			data = toStringListJSON(listaObsFormato);
+  			logger.info("arreglo json:"+data);
+  			PrintWriter pw = response.getWriter();
+  			pw.write(data);
+  			pw.flush();
+  			pw.close();  			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}finally{
+			if(not!=null){
+				not =null;
+			}
+		}
+	}
+	
+	
+	
+    /*****metodo para grabar observacion manual*****/	
+	
+	@ResourceMapping("grabarObservacionManual")
+  	public void grabarObservacionManual(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){		
+		String valor = "0";
+		try{
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);			
+			String user = themeDisplay.getUser().getLogin();
+		    String terminal = themeDisplay.getUser().getLoginIP(); 
+		    JSONObject jsonObj = new JSONObject();
+		    String codEmpreCompleta = FormatoUtil.rellenaDerecha(n.getCodEmpresa(), ' ', 4);
+			logger.info("Entrando a grabar observaciones manual"); 				
+			logger.info("Codigo empresa:  "+ n.getCodEmpresa()); 
+			logger.info("anio pres:  "+ n.getAnioPres());	
+			logger.info("mes pres:  "+ n.getMesPres());
+			logger.info("formato:  "+ n.getFormato());	
+			logger.info("etapa:  "+ n.getEtapa());	
+			logger.info("anio ejec:  "+ n.getAnioEjec());
+			logger.info("mes ejec:  "+ n.getMesEjec());
+			logger.info("anio ini vige:  "+ n.getAnioIniVig());
+			logger.info("anio fin vige:  "+ n.getAnioFinVig());	
+			logger.info("etapa ejec:  "+ n.getEtapaEjec());
+			logger.info("id zona:  "+ n.getIdZona());
+			logger.info("id personal:  "+ n.getIdPersonal());
+			logger.info("item etapa:  "+ n.getItemEtapa());
+			logger.info("cod ubigeo:  "+ n.getCodUbigeo());
+			logger.info("cod sector:  "+ n.getCodSector());
+  			 							
+			if(FiseConstants.NOMBRE_FORMATO_12A.equals(n.getFormato())){
+				logger.info("ingresando a grabar obs 12A");
+				valor = formatoService12A.insertarObservacion12A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal);
+						
+			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 				
+				logger.info("ingresando a grabar obs 12B");
+				valor = formatoService12B.insertarObservacion12B(codEmpreCompleta, 
+						Integer.valueOf(n.getAnioPres()), Integer.valueOf(n.getMesPres()), 
+						Integer.valueOf(n.getAnioEjec()), Integer.valueOf(n.getMesEjec()), n.getEtapa(), 
+						Integer.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal);
+						
+			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 				
+				logger.info("ingresando a grabar obs 12C");
+				valor = formatoService12C.insertarObservacion12C(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getEtapaEjec()),Long.valueOf(n.getItemEtapa()),
+					    n.getDesObservacion(), user, terminal);
+				
+			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){	
+				logger.info("ingresando a grabar obs 12D");
+				valor = formatoService12D.insertarObservacion12D(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getEtapaEjec()),Long.valueOf(n.getItemEtapa()),
+					    n.getDesObservacion(), user, terminal);
+				
+			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){				
+				logger.info("ingresando a grabar obs 13A");
+				valor = formatoService13A.insertarObservacion13A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						n.getCodUbigeo(), n.getCodSector(), n.getEtapa(),Long.valueOf(n.getIdZona()),					    
+					    n.getDesObservacion(), user, terminal);
+					
+			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 			
+				logger.info("ingresando a grabar obs 14A");
+				valor = formatoService14A.insertarObservacion14A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal);
+							    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){			 
+				logger.info("ingresando a grabar obs 14B");
+				valor = formatoService14B.insertarObservacion14B(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal);
+				    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 			
+				logger.info("ingresando a grabar obs 14C");
+				valor = formatoService14C.insertarObservacion14C(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), Long.valueOf(n.getIdPersonal()), 
+					    n.getDesObservacion(), user, terminal);					
+			}	 			
+			if(valor.equals("1")){ 
+				jsonObj.put("resultado", "OK");	   	
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+  			pw.flush();
+  			pw.close();  			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
+	
+   /*****metodo para actualizar observacion manual*****/	
+	
+	@ResourceMapping("actualizarObservacionManual")
+  	public void actualizarObservacionManual(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){		
+		FiseObservacionBean bean = null;
+		try{
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);			
+			String user = themeDisplay.getUser().getLogin();
+		    String terminal = themeDisplay.getUser().getLoginIP();
+		    
+		    JSONObject jsonObj = new JSONObject();	   
+  			 							
+			logger.info("Entrando a actualizar observacion manual"); 	
+			logger.info("ID:  "+ n.getIdObservacion()); 
+			logger.info("Descripcion:  "+ n.getDesObservacion());		
+			
+			bean = new FiseObservacionBean();
+			bean.setId(n.getIdObservacion()); 
+			bean.setDescripcion(n.getDesObservacion());
+			bean.setUsuario(user);
+			bean.setTerminal(terminal);			
+			String valor = fiseObservacionGartService.actualizarDatosFiseObservacion(bean);
+			logger.info("valor de la transaccion al actualizar:  "+valor); 
+			if(!valor.equals("0")){ 
+				jsonObj.put("resultado", "OK");				
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}			
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+  			pw.flush();
+  			pw.close();  			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}finally{
+			if(bean!=null){
+				bean = null;
+			}
+		}
+	}
+	
+	/**Metodo para eliminar una observacion manual*/
+	
+	@ResourceMapping("eliminarObservacionManual")
+  	public void eliminarObservacionManual(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){		
+		String valor = "0";
+		try{			
+		    JSONObject jsonObj = new JSONObject();
+		    String codEmpreCompleta = FormatoUtil.rellenaDerecha(n.getCodEmpresa(), ' ', 4);
+			logger.info("Entrando a eliminar observaciones manual"); 				
+			logger.info("Codigo empresa:  "+ n.getCodEmpresa()); 
+			logger.info("anio pres:  "+ n.getAnioPres());	
+			logger.info("mes pres:  "+ n.getMesPres());
+			logger.info("formato:  "+ n.getFormato());	
+			logger.info("etapa:  "+ n.getEtapa());	
+			logger.info("anio ejec:  "+ n.getAnioEjec());
+			logger.info("mes ejec:  "+ n.getMesEjec());
+			logger.info("anio ini vige:  "+ n.getAnioIniVig());
+			logger.info("anio fin vige:  "+ n.getAnioFinVig());	
+			logger.info("etapa ejec:  "+ n.getEtapaEjec());
+			logger.info("id zona:  "+ n.getIdZona());
+			logger.info("id personal:  "+ n.getIdPersonal());
+			logger.info("item etapa:  "+ n.getItemEtapa());
+			logger.info("cod ubigeo:  "+ n.getCodUbigeo());
+			logger.info("cod sector:  "+ n.getCodSector());
+			logger.info("itemObs:   "+n.getItemObs()); 
+			logger.info("id observacion:   "+n.getIdObservacion()); 
+  			 							
+			if(FiseConstants.NOMBRE_FORMATO_12A.equals(n.getFormato())){
+				logger.info("ingresando a eliminar obs 12A");
+				valor = formatoService12A.eliminarObservacion12A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getIdObservacion(), Long.valueOf(n.getItemObs()));
+						
+			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 				
+				logger.info("ingresando a eliminar obs 12B");
+				valor = formatoService12B.eliminarObservacion12B(codEmpreCompleta, 
+						Integer.valueOf(n.getAnioPres()), Integer.valueOf(n.getMesPres()), 
+						Integer.valueOf(n.getAnioEjec()), Integer.valueOf(n.getMesEjec()), n.getEtapa(), 
+						Integer.valueOf(n.getIdZona()), n.getIdObservacion(), Integer.valueOf(n.getItemObs()));
+						
+			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 				
+				logger.info("ingresando a eliminar obs 12C");
+				valor = formatoService12C.eliminarObservacion12C(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getEtapaEjec()),Long.valueOf(n.getItemEtapa()),
+					    n.getIdObservacion(), Long.valueOf(n.getItemObs()));
+				
+			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){	
+				logger.info("ingresando a eliminar obs 12D");
+				valor = formatoService12D.eliminarObservacion12D(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getEtapaEjec()),Long.valueOf(n.getItemEtapa()),
+					    n.getIdObservacion(), Long.valueOf(n.getItemObs()));
+				
+			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){				
+				logger.info("ingresando a eliminar obs 13A");
+				valor = formatoService13A.eliminarObservacion13A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						n.getCodUbigeo(), n.getCodSector(), n.getEtapa(),Long.valueOf(n.getIdZona()),					    
+						n.getIdObservacion(), Long.valueOf(n.getItemObs()));
+					
+			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 			
+				logger.info("ingresando a eliminar obs 14A");
+				valor = formatoService14A.eliminarObservacion14A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getIdObservacion(), Long.valueOf(n.getItemObs()));
+							    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){			 
+				logger.info("ingresando a eliminar obs 14B");
+				valor = formatoService14B.eliminarObservacion14B(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getIdObservacion(), Long.valueOf(n.getItemObs()));
+				    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 			
+				logger.info("ingresando a eliminar obs 14C");
+				valor = formatoService14C.eliminarObservacion14C(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), Long.valueOf(n.getIdPersonal()), 
+					    n.getIdObservacion(), Long.valueOf(n.getItemObs()));					
+			}	 			
+			if(valor.equals("1")){ 
+				jsonObj.put("resultado", "OK");	   	
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+  			pw.flush();
+  			pw.close();  			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	 }
+	
+	
+	
 
 }
