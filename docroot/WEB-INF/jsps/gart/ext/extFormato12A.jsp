@@ -1398,7 +1398,8 @@ function <portlet:namespace/>guardarFormato(){
 					initBlockUI();
 				}
 				else if(data.resultado == "Error"){				
-					var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
+					//var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
+					var addhtml2='Se produjo un error al guardar los datos del Formato 12A ';
 					$("#dialog-message-error-content").html(addhtml2);
 					$("#dialog-message-error").dialog( "open" );
 					//<portlet:namespace/>filtrar();

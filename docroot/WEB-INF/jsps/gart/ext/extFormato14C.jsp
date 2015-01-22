@@ -798,12 +798,12 @@ var formato14C= {
 							}
 					});			
 				}else{					
-					var addhtmInfo='No tiene autorización para realizar esta operación.';				
+					var addhtmInfo='No tiene autorización para realizar esta acción';				
 					formato14C.dialogInfoContent.html(addhtmInfo);
 					formato14C.dialogInfo.dialog("open");		
 				}				
 			}else if(flagOperacion=='CERRADO'){				
-				var addhtmInfo='Está fuera de plazo.';				
+				var addhtmInfo='El plazo para realizar esta acción se encuentra cerrado';				
 				formato14C.dialogInfoContent.html(addhtmInfo);
 				formato14C.dialogInfo.dialog("open");	
 			}else{				
@@ -982,12 +982,12 @@ var formato14C= {
 					ano_Fin_Vigencia=anoFinVigencia;
 					cod_Etapa=etapa;	
 				}else{					
-					var addhtmInfo='No tiene autorización para realizar esta operación.';				
+					var addhtmInfo='No tiene autorización para realizar esta acción';				
 					formato14C.dialogInfoContent.html(addhtmInfo);
 					formato14C.dialogInfo.dialog("open");	
 				}			
 			}else if(flagOperacion=='CERRADO'){				
-				var addhtmInfo='El registro seleccionado del Formato 14C está fuera de plazo.';				
+				var addhtmInfo='El plazo para realizar esta acción se encuentra cerrado';				
 				formato14C.dialogInfoContent.html(addhtmInfo);
 				formato14C.dialogInfo.dialog("open");	
 			}else{				
