@@ -933,7 +933,11 @@ var formato12C= {
 				pager: formato12C.paginadoImplementacion,
 			    viewrecords: true,
 			   	caption: "Desplazamiento de Personal Implementación",
-			    sortorder: "asc",	   	    	   	   
+			    sortorder: "asc",	 
+			    //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    // 	    	   	   
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato12C.tablaImplementacion.jqGrid('getDataIDs');
@@ -981,6 +985,21 @@ var formato12C= {
 		  	      			formato12C.tablaImplementacion.jqGrid('setRowData',ids[i],{elim:elem});
 		  	      		}
 	    		   });	
+	      },
+	      loadComplete: function(){
+	    	  var $grid=formato12C.tablaImplementacion;
+	    	  //NRO DIAS
+	    	  var colSum=$grid.jqGrid('getCol','nroDias', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{nroDoc:"Total:",nroDias:colSum});
+	    	  //ALIMENTACION
+	    	  var colSum=$grid.jqGrid('getCol','alimentacion', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{alimentacion:colSum});
+	    	  //ALOJAMIENTO
+	    	  var colSum=$grid.jqGrid('getCol','alojamiento', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{alojamiento:colSum});
+	    	  //MOVILIDAD
+	    	  var colSum=$grid.jqGrid('getCol','movilidad', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{movilidad:colSum});
 	      }
 	  	});
 		formato12C.tablaImplementacion.jqGrid('navGrid',formato12C.paginadoImplementacion,{add:false,edit:false,del:false,search: false,refresh: false});	
@@ -1035,7 +1054,11 @@ var formato12C= {
 				pager: formato12C.paginadoMensual,
 			    viewrecords: true,
 			   	caption: "Desplazamiento de Personal Mensual",
-			    sortorder: "asc",	   	    	   	   
+			    sortorder: "asc",	   	
+			   //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    // 
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato12C.tablaMensual.jqGrid('getDataIDs');
@@ -1083,6 +1106,21 @@ var formato12C= {
 		  	      			formato12C.tablaMensual.jqGrid('setRowData',ids[i],{elim:elem});
 		  	      		}
 	    		   });	
+	      },
+	      loadComplete: function(){
+	    	  var $grid=formato12C.tablaMensual;
+	    	  //NRO DIAS
+	    	  var colSum=$grid.jqGrid('getCol','nroDias', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{nroDoc:"Total:",nroDias:colSum});
+	    	  //ALIMENTACION
+	    	  var colSum=$grid.jqGrid('getCol','alimentacion', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{alimentacion:colSum});
+	    	  //ALOJAMIENTO
+	    	  var colSum=$grid.jqGrid('getCol','alojamiento', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{alojamiento:colSum});
+	    	  //MOVILIDAD
+	    	  var colSum=$grid.jqGrid('getCol','movilidad', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{movilidad:colSum});
 	      }
 	  	});
 		formato12C.tablaMensual.jqGrid('navGrid',formato12C.paginadoMensual,{add:false,edit:false,del:false,search: false,refresh: false});	
@@ -1136,7 +1174,11 @@ var formato12C= {
 				pager: formato12C.paginadoImplementacionView,
 			    viewrecords: true,
 			   	caption: "Desplazamiento de Personal Implementación",
-			    sortorder: "asc",	   	    	   	  
+			    sortorder: "asc",	
+			    //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    //
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato12C.tablaImplementacionView.jqGrid('getDataIDs');
@@ -1165,6 +1207,21 @@ var formato12C= {
 		  	      			formato12C.tablaImplementacionView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
+	      },
+	      loadComplete: function(){
+	    	  var $grid=formato12C.tablaImplementacionView;
+	    	  //NRO DIAS
+	    	  var colSum=$grid.jqGrid('getCol','nroDias', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{nroDoc:"Total:",nroDias:colSum});
+	    	  //ALIMENTACION
+	    	  var colSum=$grid.jqGrid('getCol','alimentacion', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{alimentacion:colSum});
+	    	  //ALOJAMIENTO
+	    	  var colSum=$grid.jqGrid('getCol','alojamiento', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{alojamiento:colSum});
+	    	  //MOVILIDAD
+	    	  var colSum=$grid.jqGrid('getCol','movilidad', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{movilidad:colSum});
 	      }
 	  	});
 		formato12C.tablaImplementacionView.jqGrid('navGrid',formato12C.paginadoImplementacionView,{add:false,edit:false,del:false,search: false,refresh: false});	
@@ -1217,7 +1274,11 @@ var formato12C= {
 				pager: formato12C.paginadoMensualView,
 			    viewrecords: true,
 			   	caption: "Desplazamiento de Personal Mensual",
-			    sortorder: "asc",	   	    	   	   
+			    sortorder: "asc",	   	 
+			    //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    // 
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato12C.tablaMensualView.jqGrid('getDataIDs');
@@ -1246,6 +1307,21 @@ var formato12C= {
 		  	      			formato12C.tablaMensualView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
+	      },
+	      loadComplete: function(){
+	    	  var $grid=formato12C.tablaMensualView;
+	    	  //NRO DIAS
+	    	  var colSum=$grid.jqGrid('getCol','nroDias', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{nroDoc:"Total:",nroDias:colSum});
+	    	  //ALIMENTACION
+	    	  var colSum=$grid.jqGrid('getCol','alimentacion', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{alimentacion:colSum});
+	    	  //ALOJAMIENTO
+	    	  var colSum=$grid.jqGrid('getCol','alojamiento', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{alojamiento:colSum});
+	    	  //MOVILIDAD
+	    	  var colSum=$grid.jqGrid('getCol','movilidad', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{movilidad:colSum});
 	      }
 	  	});
 		formato12C.tablaMensualView.jqGrid('navGrid',formato12C.paginadoMensualView,{add:false,edit:false,del:false,search: false,refresh: false});	

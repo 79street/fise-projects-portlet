@@ -768,8 +768,8 @@ var formato13A= {
 				pager: formato13A.paginadoResultados,
 			    viewrecords: true,
 			   	caption: "Resultado(s) de la búsqueda",
-			    sortorder: "asc",	   	    	   	   
-	       gridComplete: function(){
+			    sortorder: "asc",	   	
+			gridComplete: function(){
 	      		var ids = formato13A.tablaResultados.jqGrid('getDataIDs');
 	      		for(var i=0;i < ids.length;i++){
 	      			var cl = ids[i];
@@ -891,7 +891,11 @@ var formato13A= {
 				pager: formato13A.paginadoDeclaracion,
 			    viewrecords: true,
 			   	caption: "Formatos declarados",
-			    sortorder: "asc",	   	    	   	   
+			    sortorder: "asc",	  
+			    //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    //
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato13A.tablaDeclaracion.jqGrid('getDataIDs');
@@ -929,6 +933,36 @@ var formato13A= {
 		  	      			formato13A.tablaDeclaracion.jqGrid('setRowData',ids[i],{elim:elem});
 		  	      		}
 	    		   });	
+	      },
+  	      loadComplete: function(){
+	    	  var $grid=formato13A.tablaDeclaracionView;
+	    	  //ST1
+	    	  var colSum=$grid.jqGrid('getCol','st1',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{descripcionLocalidad:"Total:",st1:colSum});
+	    	  //ST2
+	    	  var colSum=$grid.jqGrid('getCol','st2',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st2:colSum});
+	    	  //ST3
+	    	  var colSum=$grid.jqGrid('getCol','st3',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st3:colSum});
+	    	  //ST4
+	    	  var colSum=$grid.jqGrid('getCol','st4',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st4:colSum});
+	    	  //ST5
+	    	  var colSum=$grid.jqGrid('getCol','st5',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st5:colSum});
+	    	  //ST6
+	    	  var colSum=$grid.jqGrid('getCol','st6',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st6:colSum});
+	    	  //STSER
+	    	  var colSum=$grid.jqGrid('getCol','stserv',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{stserv:colSum});
+	    	  //STESPECIAL
+	    	  var colSum=$grid.jqGrid('getCol','stesp',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{stesp:colSum});
+	    	  //TOTAL
+	    	  var colSum=$grid.jqGrid('getCol','total',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{total:colSum});
 	      }
 	  	});
 		formato13A.tablaDeclaracion.jqGrid('navGrid',formato13A.paginadoDeclaracion,{add:false,edit:false,del:false,search: false,refresh: false});	
@@ -977,7 +1011,11 @@ var formato13A= {
 				pager: formato13A.paginadoDeclaracionView,
 			    viewrecords: true,
 			   	caption: "Formatos declarados",
-			    sortorder: "asc",	   	    	   	   
+			    sortorder: "asc",	
+			  	//add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    //
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato13A.tablaDeclaracionView.jqGrid('getDataIDs');
@@ -1001,6 +1039,36 @@ var formato13A= {
 		  	      			formato13A.tablaDeclaracionView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
+	      },
+  	      loadComplete: function(){
+	    	  var $grid=formato13A.tablaDeclaracionView;
+	    	  //ST1
+	    	  var colSum=$grid.jqGrid('getCol','st1',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{descripcionLocalidad:"Total:",st1:colSum});
+	    	  //ST2
+	    	  var colSum=$grid.jqGrid('getCol','st2',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st2:colSum});
+	    	  //ST3
+	    	  var colSum=$grid.jqGrid('getCol','st3',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st3:colSum});
+	    	  //ST4
+	    	  var colSum=$grid.jqGrid('getCol','st4',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st4:colSum});
+	    	  //ST5
+	    	  var colSum=$grid.jqGrid('getCol','st5',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st5:colSum});
+	    	  //ST6
+	    	  var colSum=$grid.jqGrid('getCol','st6',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{st6:colSum});
+	    	  //STSER
+	    	  var colSum=$grid.jqGrid('getCol','stserv',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{stserv:colSum});
+	    	  //STESPECIAL
+	    	  var colSum=$grid.jqGrid('getCol','stesp',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{stesp:colSum});
+	    	  //TOTAL
+	    	  var colSum=$grid.jqGrid('getCol','total',false,'sum');
+	    	  $grid.jqGrid('footerData','set',{total:colSum});
 	      }
 	  	});
 		formato13A.tablaDeclaracionView.jqGrid('navGrid',formato13A.paginadoDeclaracionView,{add:false,edit:false,del:false,search: false,refresh: false});	
