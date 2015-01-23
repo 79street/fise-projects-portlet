@@ -542,14 +542,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF12AB,
 				    viewrecords: true,
-				   	caption: "Resultado(s) del detalle del Formato seleccionado.",
+				   	caption: "Detalle del Formato seleccionado",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF12AB.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF12AB.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF12AB('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.etapa+"','"+ret.idZona+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF12AB('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.etapa+"','"+ret.idZona+"','"+ret.desZona+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF12AB.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
@@ -587,7 +587,7 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF12CD,
 				    viewrecords: true,
-					caption: "Resultado(s) del detalle del Formato seleccionado.",
+					caption: "Detalle del Formato seleccionado",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF12CD.jqGrid('getDataIDs');
@@ -631,14 +631,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF13A,
 				    viewrecords: true,
-					caption: "Resultado(s) del detalle del Formato seleccionado.",
+					caption: "Detalle del Formato seleccionado",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF13A.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF13A.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF13A('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.etapa+"','"+ret.codUbigeo+"','"+ret.codSector+"','"+ret.idZona+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF13A('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.etapa+"','"+ret.codUbigeo+"','"+ret.codSector+"','"+ret.idZona+"','"+ret.desSector+"','"+ret.desZona+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF13A.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
@@ -674,14 +674,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF14AB,
 				    viewrecords: true,
-				    caption: "Resultado(s) del detalle del Formato seleccionado.",
+				    caption: "Detalle del Formato seleccionado",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF14AB.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF14AB.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF14AB('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.idZona+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF14AB('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.idZona+"','"+ret.desZona+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF14AB.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
@@ -720,14 +720,14 @@ var notificarValidar= {
 					width:ancho ,
 					pager: notificarValidar.paginadoResultadosDetalleF14C,
 				    viewrecords: true,
-				    caption: "Resultado(s) del detalle del Formato seleccionado.",
+				    caption: "Detalle del Formato seleccionado",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
 		      		var ids = notificarValidar.tablaResultadosDetalleF14C.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaResultadosDetalleF14C.jqGrid('getRowData',cl);	      			
-		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF14C('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.idZona+"','"+ret.idPersonal+"');\" /></a> ";
+		      			agregarObs = "<a href='#'><img border='0' title='Agregar Obs. Manuales' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"notificarValidar.buscarObsF14C('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.idZona+"','"+ret.idPersonal+"','"+ret.desZona+"','"+ret.desPersonal+"');\" /></a> ";
 		      			notificarValidar.tablaResultadosDetalleF14C.jqGrid('setRowData',ids[i],{agregarObs:agregarObs});
 		      		}
 		      }
@@ -1286,7 +1286,24 @@ var notificarValidar= {
 		},		
 		//funcion  para mostrar detalle de los formatos
 		mostrarDetalleFormato : function(cod_empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,anio_inicio,anio_fin,etapa,formato,desEmpresa,desMes,desMesEje){	
-				$('#empresaDetalle').val(desEmpresa);
+				if(formato=='F12A'){
+					$('#tituloDetalleFormato').val('Remisión de Gastos Operativos- Implementación');	
+				}else if(formato=='F12B'){
+					$('#tituloDetalleFormato').val('Remisión Gastos Operativos- Mensual');	
+				}else if(formato=='F12C'){
+					$('#tituloDetalleFormato').val('Detalle de Gastos de Desplazamiento de Personal');
+				}else if(formato=='F12D'){
+					$('#tituloDetalleFormato').val('Detalle de Gastos por Actividades Extraordinarias');
+				}else if(formato=='F13A'){
+					$('#tituloDetalleFormato').val('Detalle de Localidades por Zonas de Beneficiarios FISE');
+				}else if(formato=='F14A'){
+					$('#tituloDetalleFormato').val('Costos Estándares de Implementación');
+				}else if(formato=='F14B'){
+					$('#tituloDetalleFormato').val('Costos Estándares Operativos - Mensual');
+				}else if(formato=='F14C'){
+					$('#tituloDetalleFormato').val('Costos de Gestión');
+				}
+			    $('#empresaDetalle').val(desEmpresa);
 				$('#anioDetalle').val(anio_pres);
 				$('#mesDetalle').val(desMes);
 				$('#anioEjecDetalle').val(anio_ejec);
@@ -1301,7 +1318,7 @@ var notificarValidar= {
 		},	
 		
 		//funcion para mostrar la lista de observaciones por detalle de formato		
-		buscarObsF12AB : function (cod_empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,etapa,id_zona) {	
+		buscarObsF12AB : function (cod_empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,etapa,id_zona,des_zona) {	
 			console.debug("entranado a buscar observaciones de formato 12AB");
 			notificarValidar.blockUI();
 			jQuery.ajax({			
@@ -1322,6 +1339,10 @@ var notificarValidar= {
 							notificarValidar.tablaObsF12ABF14AB.clearGridData(true);
 							notificarValidar.tablaObsF12ABF14AB.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 							notificarValidar.tablaObsF12ABF14AB[0].refreshIndex();
+							
+							//llenando datos de la cabecera del detalle para la grilla de observacioes
+							notificarValidar.llenarDatosDetalleObs(des_zona,'---','---','---','---','---');
+							
 							//juego de divs grilla
 							notificarValidar.divGrillaObsF14AB.show();
 							notificarValidar.divGrillaObsF12CD.hide();	
@@ -1374,6 +1395,10 @@ var notificarValidar= {
 								notificarValidar.tablaObsF12CD.clearGridData(true);
 								notificarValidar.tablaObsF12CD.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 								notificarValidar.tablaObsF12CD[0].refreshIndex();
+								
+								//llenando datos de la cabecera del detalle para la grilla de observacioes
+								notificarValidar.llenarDatosDetalleObs('---',etapa_ejec,num_item,'---','---','---');								
+								
 								//juego de divs
 								notificarValidar.divGrillaObsF14AB.hide();
 								notificarValidar.divGrillaObsF12CD.show();	
@@ -1404,7 +1429,7 @@ var notificarValidar= {
 					});			
 			   },
 		
-			  buscarObsF13A : function (cod_empresa,anio_pres,mes_pres,etapa,cod_ubigeo,cod_sector,id_zona) {	
+			  buscarObsF13A : function (cod_empresa,anio_pres,mes_pres,etapa,cod_ubigeo,cod_sector,id_zona,des_sector,des_zona) {	
 					console.debug("entranado a buscar observaciones de formato 13A");
 					notificarValidar.blockUI();
 					jQuery.ajax({			
@@ -1425,6 +1450,10 @@ var notificarValidar= {
 									notificarValidar.tablaObsF13A.clearGridData(true);
 									notificarValidar.tablaObsF13A.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 									notificarValidar.tablaObsF13A[0].refreshIndex();
+									
+									//llenando datos de la cabecera del detalle para la grilla de observacioes
+									notificarValidar.llenarDatosDetalleObs(des_zona,'---','---',cod_ubigeo,des_sector,'---');									
+									
 									//juego de divs
 									notificarValidar.divGrillaObsF14AB.hide();
 									notificarValidar.divGrillaObsF12CD.hide();	
@@ -1454,7 +1483,7 @@ var notificarValidar= {
 						});			
 				  },
 		
-				 buscarObsF14AB : function (cod_empresa,anio_pres,mes_pres,anio_inicio,anio_fin,etapa,id_zona) {	
+				 buscarObsF14AB : function (cod_empresa,anio_pres,mes_pres,anio_inicio,anio_fin,etapa,id_zona,des_zona) {	
 						console.debug("entranado a buscar observaciones de formato 14AB");
 						notificarValidar.blockUI();
 						jQuery.ajax({			
@@ -1475,6 +1504,10 @@ var notificarValidar= {
 										notificarValidar.tablaObsF12ABF14AB.clearGridData(true);
 										notificarValidar.tablaObsF12ABF14AB.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 										notificarValidar.tablaObsF12ABF14AB[0].refreshIndex();
+										
+										//llenando datos de la cabecera del detalle para la grilla de observacioes
+										notificarValidar.llenarDatosDetalleObs(des_zona,'---','---','---','---','---');
+										
 										//juego de divs
 										notificarValidar.divGrillaObsF14AB.show();
 										notificarValidar.divGrillaObsF12CD.hide();	
@@ -1503,7 +1536,7 @@ var notificarValidar= {
 								}
 							});			
 					   },
-					   buscarObsF14C : function (cod_empresa,anio_pres,mes_pres,anio_inicio,anio_fin,etapa,id_zona,id_personal) {	
+					   buscarObsF14C : function (cod_empresa,anio_pres,mes_pres,anio_inicio,anio_fin,etapa,id_zona,id_personal,des_zona,des_personal) {	
 							console.debug("entranado a buscar observaciones de formato 14C");
 							notificarValidar.blockUI();
 							jQuery.ajax({			
@@ -1525,6 +1558,10 @@ var notificarValidar= {
 											notificarValidar.tablaObsF14C.clearGridData(true);
 											notificarValidar.tablaObsF14C.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 											notificarValidar.tablaObsF14C[0].refreshIndex();
+											
+											//llenando datos de la cabecera del detalle para la grilla de observacioes
+											notificarValidar.llenarDatosDetalleObs(des_zona,'---','---','---','---',des_personal);
+											
 											//juego de divs
 											notificarValidar.divGrillaObsF14AB.hide();
 											notificarValidar.divGrillaObsF12CD.hide();	
@@ -1554,8 +1591,39 @@ var notificarValidar= {
 									}
 								});			
 						   },
-						   
-						   
+		
+		 //funcion para llenar datos de la cabecera de la grilla observaciones
+          llenarDatosDetalleObs : function(zona_des,etapa_ejec,item_etapa,ubigeo,sector,personal){
+        	    var formato = $('#formatoDetalle').val();
+        	    $('#tituloDetObs').val('Observaciones del Detalle del Formato: '+formato); 		
+        	    $('#empresaObs').val($('#empresaDetalle').val());
+				$('#anioObs').val($('#anioDetalle').val());
+				$('#mesObs').val($('#mesDetalle').val());
+				$('#etapaObs').val($('#etapaDetalle').val());  
+				if(formato=='F12A' || formato=='F12B' || formato=='F12C' || formato=='F12D'){
+					$('#anioEjecObs').val($('#anioEjecDetalle').val());
+					$('#mesEjecObs').val($('#mesEjecDetalle').val());
+					$('#AnioIniVigObs').val('---');
+					$('#AnioFinVigObs').val('---');
+				}else if(formato=='F14A' || formato=='F14B'|| formato=='F14C'){
+					$('#anioEjecObs').val('---');
+					$('#mesEjecObs').val('---');
+					$('#AnioIniVigObs').val($('#anioInicioVigDetalle').val());
+					$('#AnioFinVigObs').val($('#anioFinVigDetalle').val());
+				}else if(formato=='F13A'){
+					$('#anioEjecObs').val('---');
+					$('#mesEjecObs').val('---');
+					$('#AnioIniVigObs').val('---');
+					$('#AnioFinVigObs').val('---');
+				}			
+				$('#zonaObs').val(zona_des);
+				$('#etapaEjecObs').val(etapa_ejec);
+				$('#itemEtapaObs').val(item_etapa);
+				$('#ubigeoObs').val(ubigeo);			
+				$('#sectorObs').val(sector);
+				$('#tipoPersonalObs').val(personal);       	  
+		  },	 	 
+		 
 		//funcion para regresar a busqueda desde el detalle del formato
 		<portlet:namespace/>agregarObservacion : function(){			
 			notificarValidar.divDetalle.hide();
@@ -1623,7 +1691,7 @@ var notificarValidar= {
 								notificarValidar.buscarObsF12AB($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 										$('#hiddenAnioEjec').val(),	$('#hiddenMesEjec').val(),
-										$('#hiddenEtapa').val(), $('#hiddenIdZona').val());	
+										$('#hiddenEtapa').val(), $('#hiddenIdZona').val(),'');	
 							}else if(tipoBusq=='1'){
 								notificarValidar.buscarObsF12CD($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),$('#hiddenMesPres').val(),
@@ -1634,18 +1702,18 @@ var notificarValidar= {
 								notificarValidar.buscarObsF13A($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 										$('#hiddenEtapa').val(),$('#hiddenCodUbigeo').val(),
-										$('#hiddenCodSector').val(),$('#hiddenIdZona').val());	
+										$('#hiddenCodSector').val(),$('#hiddenIdZona').val(),'','');	
 							}else if(tipoBusq=='3'){
 								notificarValidar.buscarObsF14AB($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 										$('#hiddenAnioIniVig').val(),$('#hiddenAnioFinVig').val(),
-										$('#hiddenEtapa').val(),$('#hiddenIdZona').val());
+										$('#hiddenEtapa').val(),$('#hiddenIdZona').val(),'');
 							}else if(tipoBusq=='4'){								
 								notificarValidar.buscarObsF14C($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 										$('#hiddenAnioIniVig').val(),$('#hiddenAnioFinVig').val(),
 										$('#hiddenEtapa').val(),$('#hiddenIdZona').val(),
-										$('#hiddenIdPersonal').val());
+										$('#hiddenIdPersonal').val(),'','');
 							}						
 							$('#<portlet:namespace/>btnGrabarObservacion').css('display','none');
 							$('#<portlet:namespace/>btnActualizarObservacion').css('display','block');
@@ -1688,7 +1756,7 @@ var notificarValidar= {
 								notificarValidar.buscarObsF12AB($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 										$('#hiddenAnioEjec').val(),	$('#hiddenMesEjec').val(),
-										$('#hiddenEtapa').val(), $('#hiddenIdZona').val());	
+										$('#hiddenEtapa').val(), $('#hiddenIdZona').val(),'');	
 							}else if(tipoBusq=='1'){
 								notificarValidar.buscarObsF12CD($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),$('#hiddenMesPres').val(),
@@ -1699,18 +1767,18 @@ var notificarValidar= {
 								notificarValidar.buscarObsF13A($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 										$('#hiddenEtapa').val(),$('#hiddenCodUbigeo').val(),
-										$('#hiddenCodSector').val(),$('#hiddenIdZona').val());	
+										$('#hiddenCodSector').val(),$('#hiddenIdZona').val(),'','');	
 							}else if(tipoBusq=='3'){
 								notificarValidar.buscarObsF14AB($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 										$('#hiddenAnioIniVig').val(),$('#hiddenAnioFinVig').val(),
-										$('#hiddenEtapa').val(),$('#hiddenIdZona').val());
+										$('#hiddenEtapa').val(),$('#hiddenIdZona').val(),'');
 							}else if(tipoBusq=='4'){								
 								notificarValidar.buscarObsF14C($('#hiddenCodEmpresa').val(),
 										$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 										$('#hiddenAnioIniVig').val(),$('#hiddenAnioFinVig').val(),
 										$('#hiddenEtapa').val(),$('#hiddenIdZona').val(),
-										$('#hiddenIdPersonal').val());
+										$('#hiddenIdPersonal').val(),'','');
 							}			
 							notificarValidar.initBlockUI();								
 						}else{								
@@ -1801,7 +1869,7 @@ var notificarValidar= {
 							notificarValidar.buscarObsF12AB($('#hiddenCodEmpresa').val(),
 									$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 									$('#hiddenAnioEjec').val(),	$('#hiddenMesEjec').val(),
-									$('#hiddenEtapa').val(), $('#hiddenIdZona').val());	
+									$('#hiddenEtapa').val(), $('#hiddenIdZona').val(),'');	
 						}else if(tipoBusq=='1'){
 							notificarValidar.buscarObsF12CD($('#hiddenCodEmpresa').val(),
 									$('#hiddenAnioPres').val(),$('#hiddenMesPres').val(),
@@ -1812,18 +1880,18 @@ var notificarValidar= {
 							notificarValidar.buscarObsF13A($('#hiddenCodEmpresa').val(),
 									$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 									$('#hiddenEtapa').val(),$('#hiddenCodUbigeo').val(),
-									$('#hiddenCodSector').val(),$('#hiddenIdZona').val());	
+									$('#hiddenCodSector').val(),$('#hiddenIdZona').val(),'','');	
 						}else if(tipoBusq=='3'){
 							notificarValidar.buscarObsF14AB($('#hiddenCodEmpresa').val(),
 									$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 									$('#hiddenAnioIniVig').val(),$('#hiddenAnioFinVig').val(),
-									$('#hiddenEtapa').val(),$('#hiddenIdZona').val());
+									$('#hiddenEtapa').val(),$('#hiddenIdZona').val(),'');
 						}else if(tipoBusq=='4'){								
 							notificarValidar.buscarObsF14C($('#hiddenCodEmpresa').val(),
 									$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
 									$('#hiddenAnioIniVig').val(),$('#hiddenAnioFinVig').val(),
 									$('#hiddenEtapa').val(),$('#hiddenIdZona').val(),
-									$('#hiddenIdPersonal').val());
+									$('#hiddenIdPersonal').val(),'','');
 						}						
 						notificarValidar.initBlockUI();
 					}

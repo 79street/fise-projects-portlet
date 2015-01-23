@@ -161,8 +161,10 @@ $(document).ready(function () {
 								<fieldset class="">
 									<table class="" style="width: 100%;" border="0">
 										<tr>
-											<td colspan="6"><output class="net-titulo">
-											Detalle del Formato seleccionado:</output></td>
+										    <td colspan="6">
+											    <input id="tituloDetalleFormato" readonly="readonly" style="border:none; width:100%; 
+											       background:#efefef;font-weight:bold; font-size: 12px"  class="net-titulo">
+										    </td>
 										</tr>
 										<tr height="10px">
 											<td colspan="6"></td>
@@ -335,12 +337,119 @@ $(document).ready(function () {
 								<fieldset class="">
 									<table class="" style="width: 100%;" border="0">
 										<tr>
-											<td><output class="net-titulo">
-											Observaciones del detalle del Formato seleccionado:</output></td>
+											<td colspan="6">											
+											<input id="tituloDetObs" readonly="readonly" style="border:none; width:100%; 
+											       background:#efefef;font-weight:bold; font-size: 12px"  class="net-titulo">
+											</td>
 										</tr>
 										<tr height="10px">
-											<td></td>
+											<td colspan="6"></td>
 										</tr>
+										<tr>
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Distribuidora Eléctrica:</label>
+											</td>
+											<td>											  
+											  <input id="empresaObs" readonly="readonly" style="border:none; background:#efefef;">										  					  
+											</td>
+											
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Año Declarado:</label></td>
+											<td>											  
+											  <input id="anioObs" readonly="readonly" style="border:none; background:#efefef;">
+											</td>
+											
+											<td style="width:160px"><label style="font-size: 12px; font-weight:bold">Mes Declarado:</label></td>
+											<td>											 
+											  <input id="mesObs" readonly="readonly" style="border:none; background:#efefef;">	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Etapa:</label></td>
+											<td>										  
+											  <input id="etapaObs" readonly="readonly" style="border:none; background:#efefef;">	 	
+											</td>
+											
+										</tr>										
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										
+										<tr>
+											<td><label style="font-size: 12px; font-weight:bold">Año Ejecución:</label></td>
+											<td>										  
+											  <input id="anioEjecObs" readonly="readonly" style="border:none; background:#efefef;">	 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Mes Ejecución:</label></td>
+											<td>										  
+											  <input id="mesEjecObs" readonly="readonly" style="border:none; background:#efefef;">	 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
+											<td>										  
+											  <input id="AnioIniVigObs" readonly="readonly" style="border:none; background:#efefef;">	 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
+											<td>										 
+											  <input id="AnioFinVigObs" readonly="readonly" style="border:none; background:#efefef;">	 	 	
+											</td>
+											
+										</tr>
+										
+																			
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										
+										<tr>
+											<td><label style="font-size: 12px; font-weight:bold">Zona:</label></td>
+											<td>						 
+											  <input id="zonaObs" readonly="readonly" style="border:none; background:#efefef;"> 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Etapa Ejecución:</label></td>
+											<td>											 
+											  <input id="etapaEjecObs" readonly="readonly" style="border:none; background:#efefef;">	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Num. Item Etapa:</label></td>
+											<td>											  
+											  <input id="itemEtapaObs" readonly="readonly" style="border:none; background:#efefef;">	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Codigo Ubigeo:</label></td>
+											<td>											  
+											  <input id="ubigeoObs" readonly="readonly" style="border:none; background:#efefef;">	
+											</td>
+											
+										</tr>	
+										
+										<tr height="10px">
+											<td colspan="6"></td>
+										</tr>
+										
+										<tr>
+											<td><label style="font-size: 12px; font-weight:bold">Sector Típico:</label></td>
+											<td>						 
+											  <input id="sectorObs" readonly="readonly" style="border:none; background:#efefef;"> 	
+											</td>
+											
+											<td><label style="font-size: 12px; font-weight:bold">Tipo Personal:</label></td>
+											<td>											 
+											  <input id="tipoPersonalObs" readonly="readonly" style="border:none; background:#efefef;">	
+											</td>
+											
+											<td></td>
+											<td>											  
+											 
+											</td>
+											
+											<td></td>
+											<td>										  
+											 
+											</td>
+											
+										</tr>					
+											
 																										
 									</table>
 								</fieldset>

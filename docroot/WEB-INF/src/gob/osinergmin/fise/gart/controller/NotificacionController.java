@@ -331,7 +331,8 @@ public class NotificacionController {
   			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpreCompleta, 
   					optionFormato, etapa, idGrupo,FiseConstants.PROCESAR_VALIDACION);
   			
-  			logger.info("tamaño de la lista notificacion al procesar   :"+lista.size());
+  			logger.info("tamaño de la lista notificacion al procesar   :"+lista.size()); 			 
+  			 
   			for(NotificacionBean not:lista){
   				
   				if(FiseConstants.NOMBRE_FORMATO_12A.equals(not.getFormato())){ 
@@ -380,6 +381,7 @@ public class NotificacionController {
   	  		        Formato12C12D13Generic formato13Generic = new Formato12C12D13Generic(formato12C);
 				    int i = commonService.validarFormatos_12C12D13A(formato13Generic, FiseConstants.NOMBRE_FORMATO_12C,
 				    		themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
+				    logger.info("Valor del item de procesar notificacion 12C: "+i);
 				    if(i!=0){
 				    	valor = false;
 				    	 logger.info("Valor de procesar notificacion 12C: "+valor);
@@ -396,6 +398,7 @@ public class NotificacionController {
   					Formato12C12D13Generic formato12Generic = new Formato12C12D13Generic(formato12D);
   					int i = commonService.validarFormatos_12C12D13A(formato12Generic, FiseConstants.NOMBRE_FORMATO_12D,
   							themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
+  					 logger.info("Valor del item de procesar notificacion 12D: "+i);
   					if (i != 0) {
   						valor = false;
   						 logger.info("Valor de procesar notificacion 12D: "+valor);
@@ -472,8 +475,10 @@ public class NotificacionController {
   			}//fin del for de la lista		
   			
   			if(valor && lista.size()>0){
+  				logger.info("si hay datos");
   				jsonObj.put("resultado", "OK");	   
   			}else if(lista.size()==0){
+  				logger.info("ningun dato para procesar"); 
   				jsonObj.put("resultado", "NINGUNO");	  	
   			}else{
   				jsonObj.put("resultado", "ERROR");	   	
