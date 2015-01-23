@@ -769,7 +769,7 @@ var notificarValidar= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaObsF12ABF14AB.jqGrid('getRowData',cl);	      			
-		      			edit = "<a href='#'><img border='0' title='Editar.' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.editarObservacionManual('"+ret.idObservacion+"','"+ret.desObservacion+"','"+ret.origenObs+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.editarObservacionManual('"+ret.idObservacion+"','"+ret.desObservacion+"','"+ret.origenObs+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"notificarValidar.confirmarEliminarObs('"+ret.idObservacion+"','"+ret.itemObs+"','"+ret.origenObs+"');\" /></a> ";
 		      			notificarValidar.tablaObsF12ABF14AB.jqGrid('setRowData',ids[i],{edit:edit});
 		      			notificarValidar.tablaObsF12ABF14AB.jqGrid('setRowData',ids[i],{elim:elim});
@@ -811,7 +811,7 @@ var notificarValidar= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaObsF12CD.jqGrid('getRowData',cl);	      			
-		      			edit = "<a href='#'><img border='0' title='Editar.' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.editarObservacionManual('"+ret.idObservacion+"','"+ret.desObservacion+"','"+ret.origenObs+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.editarObservacionManual('"+ret.idObservacion+"','"+ret.desObservacion+"','"+ret.origenObs+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"notificarValidar.confirmarEliminarObs('"+ret.idObservacion+"','"+ret.itemObs+"','"+ret.origenObs+"');\" /></a> ";
 		      			notificarValidar.tablaObsF12CD.jqGrid('setRowData',ids[i],{edit:edit});
 		      			notificarValidar.tablaObsF12CD.jqGrid('setRowData',ids[i],{elim:elim});
@@ -855,7 +855,7 @@ var notificarValidar= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaObsF13A.jqGrid('getRowData',cl);	      			
-		      			edit = "<a href='#'><img border='0' title='Editar.' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.editarObservacionManual('"+ret.idObservacion+"','"+ret.desObservacion+"','"+ret.origenObs+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.editarObservacionManual('"+ret.idObservacion+"','"+ret.desObservacion+"','"+ret.origenObs+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"notificarValidar.confirmarEliminarObs('"+ret.idObservacion+"','"+ret.itemObs+"','"+ret.origenObs+"');\" /></a> ";
 		      			notificarValidar.tablaObsF13A.jqGrid('setRowData',ids[i],{edit:edit});
 		      			notificarValidar.tablaObsF13A.jqGrid('setRowData',ids[i],{elim:elim});
@@ -898,7 +898,7 @@ var notificarValidar= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = notificarValidar.tablaObsF14C.jqGrid('getRowData',cl);	      			
-		      			edit = "<a href='#'><img border='0' title='Editar.' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.editarObservacionManual('"+ret.idObservacion+"','"+ret.desObservacion+"','"+ret.origenObs+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.editarObservacionManual('"+ret.idObservacion+"','"+ret.desObservacion+"','"+ret.origenObs+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"notificarValidar.confirmarEliminarObs('"+ret.idObservacion+"','"+ret.itemObs+"','"+ret.origenObs+"');\" /></a> ";
 		      			notificarValidar.tablaObsF14C.jqGrid('setRowData',ids[i],{edit:edit});
 		      			notificarValidar.tablaObsF14C.jqGrid('setRowData',ids[i],{elim:elim});
