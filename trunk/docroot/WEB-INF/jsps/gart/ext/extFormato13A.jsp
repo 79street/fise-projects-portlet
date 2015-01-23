@@ -761,7 +761,7 @@ var formato13A= {
 		   	 multiselect: false,
 				rowNum:10,
 			   	rowList:[10,20,50],
-				height: 200,
+				height: 'auto',
 			   	autowidth: true,
 				rownumbers: true,
 				shrinkToFit:true,
@@ -884,7 +884,7 @@ var formato13A= {
 		   	 multiselect: false,
 				rowNum:10,
 			   	rowList:[10,20,50],
-				height: 200,
+				height: 'auto',
 			   	autowidth: true,
 				rownumbers: true,
 				shrinkToFit:true,
@@ -935,7 +935,7 @@ var formato13A= {
 	    		   });	
 	      },
   	      loadComplete: function(){
-	    	  var $grid=formato13A.tablaDeclaracionView;
+	    	  var $grid=formato13A.tablaDeclaracion;
 	    	  //ST1
 	    	  var colSum=$grid.jqGrid('getCol','st1',false,'sum');
 	    	  $grid.jqGrid('footerData','set',{descripcionLocalidad:"Total:",st1:colSum});
@@ -1004,7 +1004,7 @@ var formato13A= {
 		   	 multiselect: false,
 				rowNum:10,
 			   	rowList:[10,20,50],
-				height: 200,
+				height: 'auto',
 			   	autowidth: true,
 				rownumbers: true,
 				shrinkToFit:true,
@@ -1539,7 +1539,7 @@ var formato13A= {
 			},
 			success : function(data) {
 				if(data.resultado == "OK"){
-					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+datacorreo;					
+					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;					
 					formato13A.dialogMessageReportContent.html(addhtml);
 					formato13A.dialogMessageReport.dialog("open");
 					formato13A.unblockUI();				

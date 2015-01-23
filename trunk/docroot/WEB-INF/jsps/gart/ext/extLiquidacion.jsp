@@ -322,7 +322,7 @@ var liquidacionVar= {
 			   	 multiselect: false,
 					rowNum:10,
 				   	rowList:[10,20,50],
-					height: 200,
+					height: 225,
 				   	autowidth: true,
 					rownumbers: true,
 					shrinkToFit:true,
