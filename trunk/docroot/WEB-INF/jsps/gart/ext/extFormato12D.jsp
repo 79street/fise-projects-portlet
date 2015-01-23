@@ -861,7 +861,11 @@ var formato12D= {
 				pager: formato12D.paginadoImplementacion,
 			    viewrecords: true,
 			   	caption: "Actividades Extraordinarias de Implementación",
-			    sortorder: "asc",	   	    	   	   
+			    sortorder: "asc",	
+			   //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    //
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato12D.tablaImplementacion.jqGrid('getDataIDs');
@@ -909,6 +913,15 @@ var formato12D= {
 		  	      			formato12D.tablaImplementacion.jqGrid('setRowData',ids[i],{elim:elem});
 		  	      		}
 	    		   });	
+	      },
+	      loadComplete: function(){
+	    	  var $grid=formato12D.tablaImplementacion;
+	    	  //CANTIDAD
+	    	  var colSum=$grid.jqGrid('getCol','cantidad', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{nroDocAuto:"Total:",cantidad:colSum});
+	    	  //COSTO UNITARIO
+	    	  var colSum=$grid.jqGrid('getCol','costoUnitario', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{costoUnitario:colSum});
 	      }
 	  	});
 		formato12D.tablaImplementacion.jqGrid('navGrid',formato12D.paginadoImplementacion,{add:false,edit:false,del:false,search: false,refresh: false});	
@@ -962,7 +975,11 @@ var formato12D= {
 				pager: formato12D.paginadoMensual,
 			    viewrecords: true,
 			   	caption: "Actividades Extraordinarias Operativas",
-			    sortorder: "asc",	   	    	   	   
+			    sortorder: "asc",	
+			    //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    //
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato12D.tablaMensual.jqGrid('getDataIDs');
@@ -1010,6 +1027,15 @@ var formato12D= {
 		  	      			formato12D.tablaMensual.jqGrid('setRowData',ids[i],{elim:elem});
 		  	      		}
 	    		   });	
+	      },
+	      loadComplete: function(){
+	    	  var $grid=formato12D.tablaMensual;
+	    	  //CANTIDAD
+	    	  var colSum=$grid.jqGrid('getCol','cantidad', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{nroDocAuto:"Total:",cantidad:colSum});
+	    	  //COSTO UNITARIO
+	    	  var colSum=$grid.jqGrid('getCol','costoUnitario', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{costoUnitario:colSum});
 	      }
 	  	});
 		formato12D.tablaMensual.jqGrid('navGrid',formato12D.paginadoMensual,{add:false,edit:false,del:false,search: false,refresh: false});	
@@ -1062,7 +1088,11 @@ var formato12D= {
 				pager: formato12D.paginadoImplementacionView,
 			    viewrecords: true,
 			   	caption: "Actividades Extraordinarias de Implementación",
-			    sortorder: "asc",	   	    	   	  
+			    sortorder: "asc",	   	
+			    //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    //
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato12D.tablaImplementacionView.jqGrid('getDataIDs');
@@ -1091,6 +1121,15 @@ var formato12D= {
 		  	      			formato12D.tablaImplementacionView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
+	      },
+	      loadComplete: function(){
+	    	  var $grid=formato12D.tablaImplementacionView;
+	    	  //CANTIDAD
+	    	  var colSum=$grid.jqGrid('getCol','cantidad', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{nroDocAuto:"Total:",cantidad:colSum});
+	    	  //COSTO UNITARIO
+	    	  var colSum=$grid.jqGrid('getCol','costoUnitario', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{costoUnitario:colSum});
 	      }
 	  	});
 		formato12D.tablaImplementacionView.jqGrid('navGrid',formato12D.paginadoImplementacionView,{add:false,edit:false,del:false,search: false,refresh: false});	
@@ -1143,6 +1182,10 @@ var formato12D= {
 			    viewrecords: true,
 			   	caption: "Actividades Extraordinarias Operativas",
 			    sortorder: "asc",	   	    	   	   
+			    //add
+			    footerrow: true,
+			    userDataOnFooter: true,
+			    //
 	       gridComplete: function(){
 	    	   AUI().use('liferay-portlet-url', function(A) {
 	    		      var ids = formato12D.tablaMensualView.jqGrid('getDataIDs');
@@ -1171,6 +1214,15 @@ var formato12D= {
 		  	      			formato12D.tablaMensualView.jqGrid('setRowData',ids[i],{view:view});
 		  	      		}
 	    		   });	
+	      },
+	      loadComplete: function(){
+	    	  var $grid=formato12D.tablaMensualView;
+	    	  //CANTIDAD
+	    	  var colSum=$grid.jqGrid('getCol','cantidad', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{nroDocAuto:"Total:",cantidad:colSum});
+	    	  //COSTO UNITARIO
+	    	  var colSum=$grid.jqGrid('getCol','costoUnitario', false,'sum');
+	    	  $grid.jqGrid('footerData','set',{costoUnitario:colSum});
 	      }
 	  	});
 		formato12D.tablaMensualView.jqGrid('navGrid',formato12D.paginadoMensualView,{add:false,edit:false,del:false,search: false,refresh: false});	
