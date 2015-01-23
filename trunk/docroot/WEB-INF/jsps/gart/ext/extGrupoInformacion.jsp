@@ -384,12 +384,12 @@ var fiseGrupoInformacion= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarGrupoInformacion : function(idGrupoInf,desEstado){
 			if(desEstado=='Inactivo'){			
-				var addhtml2='Su estado es Inactivo no se puede desactivar.';					
+				var addhtml2='El registro seleccionado ya se encuentra Desactivado';					
 				fiseGrupoInformacion.dialogInfoContent.html(addhtml2);
 				fiseGrupoInformacion.dialogInfo.dialog("open");
 			}else{
 				console.debug("entranado a eliminar confirmar:  "+idGrupoInf);
-				var addhtml='¿Está seguro que desea desactivar el Grupo de Información seleccionado.?';
+				var addhtml='¿Está seguro que desea Desactivar el Grupo de Información seleccionado.?';
 				fiseGrupoInformacion.dialogConfirmContent.html(addhtml);
 				fiseGrupoInformacion.dialogConfirm.dialog("open");	
 				id_GrupoInf=idGrupoInf;
@@ -409,7 +409,7 @@ var fiseGrupoInformacion= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Grupo de Información desactivado con éxito.';					
+						var addhtml2='El Grupo de Información fue Desactivado con éxito.';					
 						fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 						fiseGrupoInformacion.dialogMessage.dialog("open");
 						fiseGrupoInformacion.buscarGrupoInformacion();

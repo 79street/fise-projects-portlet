@@ -476,7 +476,7 @@ var periodoEnvio= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarPeriodoEnvio : function(secuencia){
 			console.debug("entranado a eliminar confirmar:  "+secuencia);
-			var addhtml='¿Está seguro que desea eliminar el Control de Remisión seleccionado.?';
+			var addhtml='¿Está seguro que desea Desactivar el Control de Remisión seleccionado.?';
 			periodoEnvio.dialogConfirmContent.html(addhtml);
 			periodoEnvio.dialogConfirm.dialog("open");	
 			cod_secuencia=secuencia;
@@ -494,14 +494,14 @@ var periodoEnvio= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='El Control de Remisión fue eliminado con éxito';					
+						var addhtml2='El Control de Remisión fue Desactivado satisfactoriamente';					
 						periodoEnvio.dialogMessageContent.html(addhtml2);
 						periodoEnvio.dialogMessage.dialog("open");
 						periodoEnvio.buscarPeriodoEnvio();
 						periodoEnvio.initBlockUI();
 					}
 					else{						
-						var addhtmError='Error al eliminar el registro de Control de Remisión.';					
+						var addhtmError='Error al Desactivar el registro de Control de Remisión.';					
 						periodoEnvio.dialogErrorContent.html(addhtmError);
 						periodoEnvio.dialogError.dialog("open");	
 						periodoEnvio.initBlockUI();

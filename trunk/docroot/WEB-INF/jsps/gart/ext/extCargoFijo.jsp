@@ -227,7 +227,7 @@ var fiseCargoFijo= {
 		buildGrids : function () {	
 			fiseCargoFijo.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Año Reportado','Mes Reportado','Monto Cargo Fijo Rural','Monto Cargo Fijo Urbano Provincias','Monto Cargo Fijo Urbano Lima','Glosa','Estado','Ver','Editar','Anular','',''],
+		       colNames: ['Dist. Eléct.','Año Reportado','Mes Reportado','Monto Cargo Fijo Rural','Monto Cargo Fijo Urbano Provincias','Monto Cargo Fijo Urbano Lima','Glosa','Estado','Ver','Editar','Desactivar','',''],
 		       colModel: [
 						   { name: 'desEmpresa', index: 'desEmpresa', width: 50},
 			               { name: 'anioReporte', index: 'anioReporte', width: 40 },   
@@ -261,7 +261,7 @@ var fiseCargoFijo= {
 			      			var ret = fiseCargoFijo.tablaResultados.jqGrid('getRowData',cl);           
 			      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseCargoFijo.verCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
 			      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseCargoFijo.editarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"');\" /></a> ";
-			      			elim = "<a href='#'><img border='0' title='' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"','"+ret.desEstado+"');\" /></a> ";              			
+			      			elim = "<a href='#'><img border='0' title='Desactivar' src='/net-theme/images/img-net/bulb-off.png'  align='center' onclick=\"fiseCargoFijo.confirmarEliminarCargoFijo('"+ret.codigoEmpresa+"','"+ret.anioReporte+"','"+ret.mesReporte+"','"+ret.desEstado+"');\" /></a> ";              			
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 			      			fiseCargoFijo.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -799,11 +799,11 @@ var fiseCargoFijo= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarCargoFijo : function(codEmpresa, anioRep, mesRep,estado){	
 			if(estado=='Inactivo'){
-				var addhtml='El registro de Datos del Proyecto FISE seleccionado ya se encuentra Inactivo.';
+				var addhtml='El registro de Datos del Proyecto FISE seleccionado ya se encuentra Desactivado';
 				fiseCargoFijo.dialogInfoContent.html(addhtml);
 				fiseCargoFijo.dialogInfo.dialog("open");
 			}else{
-				var addhtml='¿Está seguro que desea cambiar el estado del registro seleccionado a Inactivo?';
+				var addhtml='¿Está seguro que desea Desactivar el estado del registro seleccionado?';
 				fiseCargoFijo.dialogConfirmContent.html(addhtml);
 				fiseCargoFijo.dialogConfirm.dialog("open");	
 				console.debug("codigo empresa: "+codEmpresa);
@@ -829,14 +829,14 @@ var fiseCargoFijo= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='El registro de Datos del Proyecto FISE fue inactivado satisfactoriamente.';					
+						var addhtml2='El registro de Datos del Proyecto FISE fue Desactivado satisfactoriamente.';					
 						fiseCargoFijo.dialogMessageContent.html(addhtml2);
 						fiseCargoFijo.dialogMessage.dialog("open");
 						fiseCargoFijo.botonBuscar.trigger('click');
 						fiseCargoFijo.initBlockUI();
 					}
 					else{					
-						var addhtmError='Error al eliminar el registro de Datos del Proyecto FISE.';					
+						var addhtmError='Error al Desactivar el registro de Datos del Proyecto FISE.';					
 						fiseCargoFijo.dialogErrorContent.html(addhtmError);
 						fiseCargoFijo.dialogError.dialog("open");
 						fiseCargoFijo.initBlockUI();
