@@ -47,7 +47,10 @@ var resumenCosto= {
 	    urlVerF12A:null,
 	    urlVerF12AExcel:null,
 	    urlVerF12B:null,	
-	    urlVerF12BExcel:null,		
+	    urlVerF12BExcel:null,	
+	    //comparativo de costos
+	    urlVerCostoCompF14AB:null,	
+	    urlVerCostoCompF14ABExcel:null,
 		
 		//botones
 		botonGenerarBienal:null,
@@ -106,7 +109,11 @@ var resumenCosto= {
 			this.urlVerF12A='<portlet:resourceURL id="verResumenCostoF12A" />'; 
 			this.urlVerF12AExcel='<portlet:resourceURL id="verResumenCostoF12AExcel" />'; 	
 			this.urlVerF12B='<portlet:resourceURL id="verResumenCostoF12B" />'; 
-			this.urlVerF12BExcel='<portlet:resourceURL id="verResumenCostoF12BExcel" />'; 
+			this.urlVerF12BExcel='<portlet:resourceURL id="verResumenCostoF12BExcel" />';
+			//costos comparativos
+			this.urlVerCostoCompF14AB='<portlet:resourceURL id="verResumenCostoComF14AB" />'; 
+			this.urlVerCostoCompF14ABExcel='<portlet:resourceURL id="verResumenCostoCompF14ABExcel" />';
+		
 					
 			//botones			
 			this.botonGenerarBienal=$("#<portlet:namespace/>btnGenerarF14AB");
@@ -143,6 +150,14 @@ var resumenCosto= {
 					resumenCosto.mostrarReporteCostoF14B();
 				}else if(valorExcel && resumenCosto.i_cboBienal.val()=='F14B'){
 					resumenCosto.mostrarReporteCostoF14BExcel();
+				}else if(valorPdf && resumenCosto.i_cboBienal.val()=='F14A_COMP'){
+					resumenCosto.mostrarReporteCostoComparativosF14AB();
+				}else if(valorExcel && resumenCosto.i_cboBienal.val()=='F14A_COMP'){
+					resumenCosto.mostrarReporteCostoF14BExcel();
+				}else if(valorPdf && resumenCosto.i_cboBienal.val()=='F14B_COMP'){
+					resumenCosto.mostrarReporteCostoComparativosF14AB();
+				}else if(valorExcel && resumenCosto.i_cboBienal.val()=='F14B_COMP'){
+					resumenCosto.mostrarReporteCostoComparativosF14ABExcel();
 				}else{					
 				}				
 			});
@@ -524,6 +539,87 @@ var resumenCosto= {
 				});	
 			}		
 		}, 
+				
+	    //funcion para ver reporte de resumen de costos comparativos Formatos 14A y 14B			
+		mostrarReporteCostoComparativosF14AB : function(){
+			console.debug("entranado a  ver el reporte resumen costo comparativos F14AB");
+			if (resumenCosto.validarBusqueda()){
+				$.blockUI({ message: resumenCosto.mensajeReporte});
+				jQuery.ajax({
+					url: resumenCosto.urlVerCostoCompF14AB+'&'+resumenCosto.formCommand.serialize(),
+					type : 'post',
+					dataType : 'json',
+					data : {					
+						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />optionZona: resumenCosto.i_cboZonas.val(),
+						   <portlet:namespace />optionBienal: resumenCosto.i_cboBienal.val()
+					},
+					success : function(data) {
+						if(data.resultado=='OK'){
+							resumenCosto.verReporteCostos();	
+							resumenCosto.initBlockUI();
+						}else if(data.resultado=='VACIO'){							
+							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							resumenCosto.dialogInfoContent.html(addhtmInfo);
+							resumenCosto.dialogInfo.dialog("open");	
+							resumenCosto.initBlockUI();
+						}else{							
+							var addhtmError='Error al mostrar el reporte del resumen de costos comparativos.';					
+							resumenCosto.dialogErrorContent.html(addhtmError);
+							resumenCosto.dialogError.dialog("open");	
+							resumenCosto.initBlockUI();
+						}
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						resumenCosto.dialogErrorContent.html(addhtmError);
+						resumenCosto.dialogError.dialog("open");
+						resumenCosto.initBlockUI();
+					}
+				});	
+			}		
+		}, 
+		
+		//funcion para ver reporte de resumen de costos comparativos Formatos 14A y 14B excel	
+		mostrarReporteCostoComparativosF14ABExcel : function(){
+			console.debug("entranado a  ver el reporte resumen costo comparativos F14AB excel");
+			if (resumenCosto.validarBusqueda()){
+				$.blockUI({ message: resumenCosto.mensajeReporte});
+				jQuery.ajax({
+					url: resumenCosto.urlVerCostoCompF14ABExcel+'&'+resumenCosto.formCommand.serialize(),
+					type : 'post',
+					dataType : 'json',
+					data : {					
+						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />optionZona: resumenCosto.i_cboZonas.val(),
+						   <portlet:namespace />optionBienal: resumenCosto.i_cboBienal.val()
+					},
+					success : function(data) {
+						if(data.resultado=='OK'){
+							resumenCosto.verReporteCostos();	
+							resumenCosto.initBlockUI();
+						}else if(data.resultado=='VACIO'){							
+							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							resumenCosto.dialogInfoContent.html(addhtmInfo);
+							resumenCosto.dialogInfo.dialog("open");	
+							resumenCosto.initBlockUI();
+						}else{							
+							var addhtmError='Error al mostrar el reporte del resumen de costos comparativos.';					
+							resumenCosto.dialogErrorContent.html(addhtmError);
+							resumenCosto.dialogError.dialog("open");	
+							resumenCosto.initBlockUI();
+						}
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						resumenCosto.dialogErrorContent.html(addhtmError);
+						resumenCosto.dialogError.dialog("open");
+						resumenCosto.initBlockUI();
+					}
+				});	
+			}		
+		}, 		
+		
 		
 		//funcion para validar los datos de la busqueda para el procesamiento del reporte
 		validarBusqueda : function() {			
