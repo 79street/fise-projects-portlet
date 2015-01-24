@@ -113,7 +113,9 @@ $(document).ready(function () {
 													     
 													<form:select path="optionBienal" cssClass="select" cssStyle="width: 150px;">														
 														<form:option value="F14A">F14A</form:option>
-														<form:option value="F14B">F14B</form:option>														
+														<form:option value="F14B">F14B</form:option>
+														<form:option value="F14A_COMP">F14A-COMP</form:option>
+														<form:option value="F14B_COMP">F14B-COMP</form:option>														
 													</form:select>
 																						     											     
 												   </div>

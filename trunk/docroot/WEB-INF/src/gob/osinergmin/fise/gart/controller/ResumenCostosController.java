@@ -680,4 +680,197 @@ public class ResumenCostosController {
 		}
     }
 	
+	/**Metodos para ver reportes de resumen de costos comparativos formatos 14A y 14B*/
+	
+	@ResourceMapping("verResumenCostoComF14AB")
+	public void verResumenCostoCompF14AB(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> listaResumen =null;
+		byte[] bytesLista = null;
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();		    
+		    
+			logger.info("Entrando a ver reporte de resumen de costos comparativos de F14A y F14B"); 	
+			
+			long idGrupoInf = 0;
+			long idZona = 0;
+			String formato = "";
+			String desZona = "";
+			
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
+					"RURAL".equals(r.getOptionZona())){
+				idZona = FiseConstants.ZONABENEF_RURAL;
+				desZona = "ZONA RURAL";
+			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
+					"PROVINCIA".equals(r.getOptionZona())){
+				idZona = FiseConstants.ZONABENEF_PROVINCIA;
+				desZona = "ZONA URBANO PROVINCIAS";
+			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
+					"LIMA".equals(r.getOptionZona())){
+				idZona = FiseConstants.ZONABENEF_LIMA_COD;
+				desZona = "ZONA URBANO LIMA";
+			}
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);		
+			logger.info("periocidad:  "+r.getOptionFormato());	
+			logger.info("formato:  "+r.getOptionBienal());//formato seleccionado de los bienales
+			logger.info("zona:  "+r.getOptionZona());//zona
+		   		    
+            String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    mapa.put("IMG", rutaImg);
+		    if("F14A_COMP".equals(r.getOptionBienal())){
+		    	 mapa.put("FORMATO", FiseConstants.NOMBRE_F14A_COMP+ " - " +desZona);
+		    	 formato ="F14A";		    	 
+		    }else if("F14B_COMP".equals(r.getOptionBienal())){
+		    	 mapa.put("FORMATO", FiseConstants.NOMBRE_F14B_COMP+ " - " +desZona);
+		    	 formato ="F14B";		    	
+		    }			   
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
+		   
+		    JSONObject jsonObj = new JSONObject();	   
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS_COMP;
+		    String tipoArchivo = "3";//PDF		   
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);	    
+		    
+		    String nombreReporte = "resumenCostos14AB_Comp";   		    	
+		    String directorio = "/reports/" + nombreReporte + ".jasper";   
+		    
+		    listaResumen = resumenCostosService.buscarResumenCostoCompF14AB(r.getCodEmpresaBusq(),
+		    		idGrupoInf, idZona, formato);
+		    
+		    if(listaResumen!=null && listaResumen.size()>0){
+		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));
+		    	bytesLista = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+		    			new JRBeanCollectionDataSource(listaResumen));
+		    	if (bytesLista != null) {				  	  		    		
+		    		session.setAttribute("bytesFormato", bytesLista);
+		    		jsonObj.put("resultado", "OK");	   	
+		    	}else{
+		    		jsonObj.put("resultado", "ERROR");	   
+		    	}
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		   
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver el reporte de resumen de costos F12B:  "+e); 
+			e.printStackTrace();
+		}finally{
+			if(listaResumen!=null){
+				listaResumen =null;
+			}
+			if(bytesLista!=null){
+				bytesLista=null;
+			}
+		}
+    }
+	
+	
+	@ResourceMapping("verResumenCostoCompF14ABExcel")
+	public void verResumenCostoCompF14ABExcel(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> listaResumen =null;		
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();		    
+		    
+			logger.info("Entrando a ver reporte de resumen de costos comparativos de F1A y F14B Excel"); 	
+			
+			
+			long idGrupoInf = 0;
+			long idZona = 0;
+			String formato = "";
+			String nombreArchivo= "";
+			String desZona = "";
+			
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
+					"RURAL".equals(r.getOptionZona())){
+				idZona = FiseConstants.ZONABENEF_RURAL;
+				desZona = "ZONA RURAL";
+			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
+					"PROVINCIA".equals(r.getOptionZona())){
+				idZona = FiseConstants.ZONABENEF_PROVINCIA;
+				desZona = "ZONA URBANO PROVINCIAS";
+			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
+					"LIMA".equals(r.getOptionZona())){
+				idZona = FiseConstants.ZONABENEF_LIMA_COD;
+				desZona = "ZONA URBANO LIMA";
+			}
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);		
+			logger.info("periocidad:  "+r.getOptionFormato());	
+			logger.info("formato:  "+r.getOptionBienal());//formato seleccionado de los bienales
+			logger.info("zona:  "+r.getOptionZona());//zona
+		   		    
+            String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    mapa.put("IMG", rutaImg);
+		    if("F14A_COMP".equals(r.getOptionBienal())){
+		    	 mapa.put("FORMATO", FiseConstants.NOMBRE_F14A_COMP+ " - " +desZona);
+		    	 formato ="F14A";
+		    	 nombreArchivo ="RESUMEN_COSTO_COMP_F12A";  
+		    }else if("F14B_COMP".equals(r.getOptionBienal())){
+		    	 mapa.put("FORMATO", FiseConstants.NOMBRE_F14B_COMP+ " - " +desZona);
+		    	 formato ="F14B";
+		    	 nombreArchivo ="RESUMEN_COSTO_COMP_F12B";  
+		    }	   
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
+		   
+		    JSONObject jsonObj = new JSONObject();    
+		    
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS_COMP;
+		    String tipoArchivo = "1";//exel		
+		    String nombreReporte = "resumenCostos14AB_Comp";        
+		    
+		    listaResumen = resumenCostosService.buscarResumenCostoCompF14AB(r.getCodEmpresaBusq(),
+		    		idGrupoInf, idZona, formato);
+		    
+		    if(listaResumen!=null && listaResumen.size()>0){
+		    	session.setAttribute("tipoFormato",tipoFormato);
+		    	session.setAttribute("tipoArchivo",tipoArchivo);
+		    	session.setAttribute("nombreReporte",nombreReporte);
+		    	session.setAttribute("nombreArchivo",nombreArchivo);
+		    	session.setAttribute("lista", listaResumen);
+		    	session.setAttribute("mapa", mapa);
+		    	jsonObj.put("resultado", "OK");	 
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver reporte resumen costos comparativos 14A y 14B Excel: "+e); 
+			e.printStackTrace();
+		}finally{
+			if(listaResumen!=null){
+				listaResumen =null;
+			}		
+		}
+    }
+	
+	
+	
 }
