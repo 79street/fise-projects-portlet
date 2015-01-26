@@ -2788,27 +2788,27 @@ public Formato12DMensajeBean readTxtFile(FileEntry archivo,UploadPortletRequest 
 										cont++;
 										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3560));
 									}*/
-									if( !FormatoUtil.validarCampoLongTxt(anioEjecucion) ){
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(anioEjecucion) ){
 										//el campo anioEjecucion no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3566));
 									}
-									if( !FormatoUtil.validarCampoLongTxt(mesEjecucion) ){
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(mesEjecucion) ){
 										//el campo mesEjecucion no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3568));
 									}
-									if( !FormatoUtil.validarCampoLongTxt(zonaBenef) ){
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(zonaBenef) ){
 										//el campo Zona benef no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3575));
 									}
-									if( !FormatoUtil.validarCampoLongTxt(cantidad) ){
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(cantidad) ){
 										//el campo cantidad no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3600));
 									}
-									if( !FormatoUtil.validarCampoBigDecimalTxt(costoUnitario) ){
+									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(costoUnitario) ){
 										//el campo costoUnitario no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3602));

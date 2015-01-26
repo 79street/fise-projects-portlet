@@ -1689,57 +1689,119 @@ public class Formato12AGartController {
 									String nroAgent=s.substring(posicionTotalEmpad, posicionNroAgent).trim();
 									String desplazPersonal=s.substring(posicionTotalAgent, posicionDesplPersonal).trim();
 									String activExtraord=s.substring(posicionDesplPersonal, posicionActivExtraord).trim();
-									FiseFormato14AD detalle = formato14Service.obtenerFormato14ADVigente(key1, Long.parseLong(key2), Long.parseLong(zonaBenef));
-									if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
-										formulario.setNroEmpadR(Long.parseLong(nroEmpad));
-										formulario.setNroAgentR(Long.parseLong(nroAgent));
-										formulario.setDesplPersonalR(new BigDecimal(desplazPersonal));
-										formulario.setActivExtraordR(new BigDecimal(activExtraord));
-										if(detalle!=null){
-											formulario.setCostoUnitEmpadR(detalle.getCostoUnitarioEmpadronamiento());
-											formulario.setCostoUnitAgentR(detalle.getCostoUntitarioAgenteGlp());
-										}else{
-											formulario.setCostoUnitEmpadR(new BigDecimal(0.00));
-											formulario.setCostoUnitAgentR(new BigDecimal(0.00));
-										}
-									}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
-										formulario.setNroEmpadP(Long.parseLong(nroEmpad));
-										formulario.setNroAgentP(Long.parseLong(nroAgent));
-										formulario.setDesplPersonalP(new BigDecimal(desplazPersonal));
-										formulario.setActivExtraordP(new BigDecimal(activExtraord));
-										if(detalle!=null){
-											formulario.setCostoUnitEmpadP(detalle.getCostoUnitarioEmpadronamiento());
-											formulario.setCostoUnitAgentP(detalle.getCostoUntitarioAgenteGlp());
-										}else{
-											formulario.setCostoUnitEmpadP(new BigDecimal(0.00));
-											formulario.setCostoUnitAgentP(new BigDecimal(0.00));
-										}
-									}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
-										
-										if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
-											formulario.setNroEmpadL(Long.parseLong(nroEmpad));
-											formulario.setNroAgentL(Long.parseLong(nroAgent));
-											formulario.setDesplPersonalL(new BigDecimal(desplazPersonal));
-											formulario.setActivExtraordL(new BigDecimal(activExtraord));
-											if(detalle!=null){
-												formulario.setCostoUnitEmpadL(detalle.getCostoUnitarioEmpadronamiento());
-												formulario.setCostoUnitAgentL(detalle.getCostoUntitarioAgenteGlp());
-											}else{
-												formulario.setCostoUnitEmpadL(new BigDecimal(0.00));
-												formulario.setCostoUnitAgentL(new BigDecimal(0.00));
-											}
-										}else{
-											//aseguramos archivos en blanco
-											formulario.setNroEmpadL(0);
-											formulario.setNroAgentL(0);
-											formulario.setDesplPersonalL(new BigDecimal(0));
-											formulario.setActivExtraordL(new BigDecimal(0));
-											formulario.setCostoUnitEmpadL(new BigDecimal(0));
-											formulario.setCostoUnitAgentL(new BigDecimal(0));
-										}
-										
-										
+									
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(zonaBenef) ){
+										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + "La Zona Beneficiario no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										process=false;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
+										error.setDescripcion("La Zona Beneficiario no corresponde al formato requerido");
+										listaError.add(error);
 									}
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroEmpad) ){
+										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + "El número de Empadronados no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										process=false;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
+										error.setDescripcion("La Zona Beneficiario no corresponde al formato requerido");
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroAgent) ){
+										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + "El número de Agentes no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										process=false;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
+										error.setDescripcion("El número de Agentes no corresponde al formato requerido");
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(desplazPersonal) ){
+										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + "El Desplazamiento de Personal no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										process=false;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
+										error.setDescripcion("El Desplazamiento de Personal no corresponde al formato requerido");
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(activExtraord) ){
+										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + "Las Actividades Extraordinarias no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										process=false;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
+										error.setDescripcion("Las Actividades Extraordinarias no corresponde al formato requerido");
+										listaError.add(error);
+									}
+									
+									if( FiseConstants.BLANCO.equals(sMsg) ){
+										FiseFormato14AD detalle = formato14Service.obtenerFormato14ADVigente(key1, Long.parseLong(key2), Long.parseLong(zonaBenef));
+										if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
+											formulario.setNroEmpadR(Long.parseLong(nroEmpad));
+											formulario.setNroAgentR(Long.parseLong(nroAgent));
+											formulario.setDesplPersonalR(new BigDecimal(desplazPersonal));
+											formulario.setActivExtraordR(new BigDecimal(activExtraord));
+											if(detalle!=null){
+												formulario.setCostoUnitEmpadR(detalle.getCostoUnitarioEmpadronamiento());
+												formulario.setCostoUnitAgentR(detalle.getCostoUntitarioAgenteGlp());
+											}else{
+												formulario.setCostoUnitEmpadR(new BigDecimal(0.00));
+												formulario.setCostoUnitAgentR(new BigDecimal(0.00));
+											}
+										}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
+											formulario.setNroEmpadP(Long.parseLong(nroEmpad));
+											formulario.setNroAgentP(Long.parseLong(nroAgent));
+											formulario.setDesplPersonalP(new BigDecimal(desplazPersonal));
+											formulario.setActivExtraordP(new BigDecimal(activExtraord));
+											if(detalle!=null){
+												formulario.setCostoUnitEmpadP(detalle.getCostoUnitarioEmpadronamiento());
+												formulario.setCostoUnitAgentP(detalle.getCostoUntitarioAgenteGlp());
+											}else{
+												formulario.setCostoUnitEmpadP(new BigDecimal(0.00));
+												formulario.setCostoUnitAgentP(new BigDecimal(0.00));
+											}
+										}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
+											
+											if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+												formulario.setNroEmpadL(Long.parseLong(nroEmpad));
+												formulario.setNroAgentL(Long.parseLong(nroAgent));
+												formulario.setDesplPersonalL(new BigDecimal(desplazPersonal));
+												formulario.setActivExtraordL(new BigDecimal(activExtraord));
+												if(detalle!=null){
+													formulario.setCostoUnitEmpadL(detalle.getCostoUnitarioEmpadronamiento());
+													formulario.setCostoUnitAgentL(detalle.getCostoUntitarioAgenteGlp());
+												}else{
+													formulario.setCostoUnitEmpadL(new BigDecimal(0.00));
+													formulario.setCostoUnitAgentL(new BigDecimal(0.00));
+												}
+											}else{
+												//aseguramos archivos en blanco
+												formulario.setNroEmpadL(0);
+												formulario.setNroAgentL(0);
+												formulario.setDesplPersonalL(new BigDecimal(0));
+												formulario.setActivExtraordL(new BigDecimal(0));
+												formulario.setCostoUnitEmpadL(new BigDecimal(0));
+												formulario.setCostoUnitAgentL(new BigDecimal(0));
+											}
+											
+										}
+									}
+									
+									
+									
+									
 								}
 								//
 								formulario.setUsuario(user.getLogin());
@@ -1750,20 +1812,24 @@ public class Formato12AGartController {
 								formulario.setEtapa(etapaEdit);
 								//
 								
-								if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
-									objeto = formatoService.registrarFormato12AC(formulario);
-								}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
-									FiseFormato12AC formatoModif = new FiseFormato12AC();
-									FiseFormato12ACPK id = new FiseFormato12ACPK();
-									id.setCodEmpresa(formulario.getCodigoEmpresa());
-									id.setAnoPresentacion(formulario.getAnioPresent());
-									id.setMesPresentacion(formulario.getMesPresent());
-									id.setAnoEjecucionGasto(formulario.getAnioPresent());
-									id.setMesEjecucionGasto(formulario.getMesPresent());
-									id.setEtapa(formulario.getEtapa());
-									formatoModif = formatoService.obtenerFormato12ACByPK(id);
-									objeto = formatoService.modificarFormato12AC(formulario, formatoModif);
+								if( FiseConstants.BLANCO.equals(sMsg) ){
+									if( FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO.equals(flagCarga) ){
+										objeto = formatoService.registrarFormato12AC(formulario);
+									}else if( FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION.equals(flagCarga) ){
+										FiseFormato12AC formatoModif = new FiseFormato12AC();
+										FiseFormato12ACPK id = new FiseFormato12ACPK();
+										id.setCodEmpresa(formulario.getCodigoEmpresa());
+										id.setAnoPresentacion(formulario.getAnioPresent());
+										id.setMesPresentacion(formulario.getMesPresent());
+										id.setAnoEjecucionGasto(formulario.getAnioPresent());
+										id.setMesEjecucionGasto(formulario.getMesPresent());
+										id.setEtapa(formulario.getEtapa());
+										formatoModif = formatoService.obtenerFormato12ACByPK(id);
+										objeto = formatoService.modificarFormato12AC(formulario, formatoModif);
+									}
 								}
+								
+								
 							}else{
 								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_270)+FiseConstants.SALTO_LINEA;
 								cont++;

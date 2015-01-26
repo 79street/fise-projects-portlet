@@ -1407,7 +1407,7 @@ public class Formato14CGartController {
 							sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 									listaError, cont, FiseConstants.COD_ERROR_F12_50);
-						}else if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getAnioPres())){						
+						}else if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getAnioPres())){						
 							cont++;
 							sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1428,7 +1428,7 @@ public class Formato14CGartController {
 							sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 									listaError, cont, FiseConstants.COD_ERROR_F12_70);
-						}else if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getMesPres())){ 						
+						}else if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getMesPres())){ 						
 							cont++;
 							sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1458,7 +1458,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F14C_380);
 						}else */
 						if(FormatoUtil.isNotBlank(bean.getNumRural()) &&
-								!FormatoUtil.validarCampoBigDecimalTxt(bean.getNumRural())){ 						
+								!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getNumRural())){ 						
 							cont++;
 							sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1475,7 +1475,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F14C_400);
 						}else */
 						if(FormatoUtil.isNotBlank(bean.getNumUrbProv()) &&
-								!FormatoUtil.validarCampoBigDecimalTxt(bean.getNumUrbProv())){ 						
+								!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getNumUrbProv())){ 						
 							cont++;
 							sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1498,7 +1498,7 @@ public class Formato14CGartController {
 										listaError, cont, FiseConstants.COD_ERROR_F14C_420);
 							}else */
 						    if(FormatoUtil.isNotBlank(bean.getNumUrbLima())&&
-						    		!FormatoUtil.validarCampoBigDecimalTxt(bean.getNumUrbLima())){ 						
+						    		!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getNumUrbLima())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1516,7 +1516,7 @@ public class Formato14CGartController {
 										listaError, cont, FiseConstants.COD_ERROR_F14C_480);
 							}else*/
 							if(FormatoUtil.isNotBlank(bean.getCostoPromUrbLima())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbLima())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostoPromUrbLima())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1532,7 +1532,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F14C_440);
 						}else*/
 						if(FormatoUtil.isNotBlank(bean.getCostoPromRural()) &&
-								!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromRural())){ 						
+								!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostoPromRural())){ 						
 							cont++;
 							sMsg="ERROR";
 							fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1547,7 +1547,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F14C_460);
 						}else */
 						if(FormatoUtil.isNotBlank(bean.getCostoPromUrbProv()) &&
-								!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbProv())){ 						
+								!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostoPromUrbProv())){ 						
 							cont++;
 							sMsg="ERROR";
 							fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1568,7 +1568,7 @@ public class Formato14CGartController {
 										listaError, cont, FiseConstants.COD_ERROR_F14C_500);
 							}else */
 							if(FormatoUtil.isNotBlank(bean.getCanDRCoord()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1583,7 +1583,7 @@ public class Formato14CGartController {
 										listaError, cont, FiseConstants.COD_ERROR_F14C_520);
 							}else */
 							if(FormatoUtil.isNotBlank(bean.getCostDRCoord()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1597,7 +1597,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_580);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDRSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1611,7 +1611,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_600);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDRSupe()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1625,7 +1625,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_660);
 							}else */if(FormatoUtil.isNotBlank(bean.getCanDRGest()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1639,7 +1639,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_680);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDRGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1653,7 +1653,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_740);
 							}else */if(FormatoUtil.isNotBlank(bean.getCanDRAsist()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1667,7 +1667,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_760);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDRAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1682,7 +1682,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_820);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDPCoord()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1696,7 +1696,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_840);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDPCoord()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1710,7 +1710,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_900);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDPSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1724,7 +1724,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_920);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDPSupe()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1738,7 +1738,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_980);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDPGest()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1752,7 +1752,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1000);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDPGest()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1766,7 +1766,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1060);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDPAsist()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1780,7 +1780,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1080);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDPAsist()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1798,7 +1798,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1140);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanDLCoord())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLCoord())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLCoord())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1812,7 +1812,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1160);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostDLCoord())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLCoord())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1826,7 +1826,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1220);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanDLSupe())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLSupe())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLSupe())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1840,7 +1840,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1240);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostDLSupe())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLSupe())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1854,7 +1854,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1300);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanDLGest())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLGest())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLGest())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1868,7 +1868,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1320);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostDLGest())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLGest())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1882,7 +1882,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1380);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanDLAsist())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLAsist())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLAsist())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1896,7 +1896,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1400);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostDLAsist())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLAsist())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1913,7 +1913,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_540);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIRCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1927,7 +1927,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_560);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIRCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1941,7 +1941,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_620);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIRSupe()) &&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1955,7 +1955,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_640);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIRSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1969,7 +1969,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_700);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIRGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1983,7 +1983,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_720);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIRGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -1997,7 +1997,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_780);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIRAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2011,7 +2011,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_800);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIRAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2026,7 +2026,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_860);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIPCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2040,7 +2040,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_880);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIPCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2054,7 +2054,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_940);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIPSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2068,7 +2068,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_960);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIPSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2082,7 +2082,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1020);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIPGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2096,7 +2096,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1040);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIPGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2110,7 +2110,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1110);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIPAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2124,7 +2124,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1120);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIPAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2143,7 +2143,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1180);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanILCoord())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILCoord())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILCoord())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2157,7 +2157,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1200);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostILCoord())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILCoord())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2171,7 +2171,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1260);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanILSupe())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILSupe())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILSupe())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2185,7 +2185,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1280);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostILSupe())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILSupe())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2199,7 +2199,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1340);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanILGest())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILGest())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILGest())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2213,7 +2213,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1360);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostILGest())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILGest())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2227,7 +2227,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1420);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanILAsist())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILAsist())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILAsist())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2241,7 +2241,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1440);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostILAsist())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILAsist())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2261,7 +2261,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_500);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDRCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2275,7 +2275,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_520);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDRCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2289,7 +2289,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_580);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDRSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2303,7 +2303,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_600);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDRSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2317,7 +2317,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_660);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDRGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2331,7 +2331,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_680);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDRGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2345,7 +2345,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_740);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDRAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2359,7 +2359,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_760);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDRAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2374,7 +2374,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_820);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDPCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2388,7 +2388,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_840);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDPCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2402,7 +2402,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_900);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDPSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2416,7 +2416,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_920);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDPSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2430,7 +2430,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_980);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDPGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2444,7 +2444,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1000);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDPGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2458,7 +2458,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1060);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanDPAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2472,7 +2472,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1080);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostDPAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2487,7 +2487,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_540);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIRCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2501,7 +2501,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_560);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIRCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2515,7 +2515,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_620);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIRSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2529,7 +2529,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_640);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIRSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2543,7 +2543,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_700);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIRGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2557,7 +2557,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_720);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIRGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2571,7 +2571,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_780);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIRAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2585,7 +2585,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_800);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIRAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2600,7 +2600,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_860);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIPCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2614,7 +2614,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_880);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIPCoord())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPCoord())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2628,7 +2628,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_940);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIPSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2642,7 +2642,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_960);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIPSupe())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPSupe())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2656,7 +2656,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1020);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIPGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2670,7 +2670,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1040);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIPGest())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPGest())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2684,7 +2684,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1110);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCanIPAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2698,7 +2698,7 @@ public class Formato14CGartController {
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 										listaError, cont, FiseConstants.COD_ERROR_F14C_1120);
 							}else*/ if(FormatoUtil.isNotBlank(bean.getCostIPAsist())&&
-									!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist())){ 						
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPAsist())){ 						
 								cont++;
 								sMsg="ERROR";
 								fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2718,7 +2718,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1140);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanDLCoord())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLCoord())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLCoord())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2732,7 +2732,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1160);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostDLCoord())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLCoord())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2746,7 +2746,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1220);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanDLSupe())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLSupe())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLSupe())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2760,7 +2760,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1240);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostDLSupe())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLSupe())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2774,7 +2774,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1300);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanDLGest())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLGest())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLGest())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2788,7 +2788,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1320);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostDLGest())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLGest())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2802,7 +2802,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1380);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanDLAsist())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLAsist())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLAsist())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2816,7 +2816,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1400);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostDLAsist())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLAsist())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2831,7 +2831,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1180);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanILCoord())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILCoord())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILCoord())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2845,7 +2845,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1200);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostILCoord())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILCoord())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2859,7 +2859,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1260);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanILSupe())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILSupe())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILSupe())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2873,7 +2873,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1280);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostILSupe())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILSupe())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2887,7 +2887,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1340);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanILGest())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILGest())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILGest())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2901,7 +2901,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostILGest())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILGest())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2915,7 +2915,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1420);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCanILAsist())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILAsist())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILAsist())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -2929,7 +2929,7 @@ public class Formato14CGartController {
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 											listaError, cont, FiseConstants.COD_ERROR_F14C_1440);
 								}else*/ if(FormatoUtil.isNotBlank(bean.getCostILAsist())&&
-										!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist())){ 						
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILAsist())){ 						
 									cont++;
 									sMsg="ERROR";
 									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -3409,25 +3409,25 @@ public class Formato14CGartController {
 	    		   /*****validaciones de consistencia***/
 	    			if(process && FiseConstants.BLANCO.equals(sMsg)){
 	    				/**CABECERA**/
-	    				if(!FormatoUtil.validarCampoLongTxt(bean.getAnioPres())){    				
+	    				if(!FormatoUtil.validarCampoLongEnteroPositivoTxt(bean.getAnioPres())){    				
 	    					cont++;
 	    					sMsg="ERROR";    
 	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	    							listaError, cont, FiseConstants.COD_ERROR_F12_60);
 	    				}
-	    				if(!FormatoUtil.validarCampoLongTxt(bean.getMesPres())){    				
+	    				if(!FormatoUtil.validarCampoLongEnteroPositivoTxt(bean.getMesPres())){    				
 	    					cont++;
 	    					sMsg="ERROR";    
 	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	    							listaError, cont, FiseConstants.COD_ERROR_F12_80);
 	    				}
-	    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumRural())){    				
+	    				if(!FormatoUtil.validarCampoLongEnteroPositivoTxt(bean.getNumRural())){    				
 	    					cont++;
 	    					sMsg="ERROR";    
 	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	    							listaError, cont, FiseConstants.COD_ERROR_F14C_390);
 	    				}
-	    				if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbProv())){    				
+	    				if(!FormatoUtil.validarCampoLongEnteroPositivoTxt(bean.getNumUrbProv())){    				
 	    					cont++;
 	    					sMsg="ERROR";    
 	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -3437,26 +3437,26 @@ public class Formato14CGartController {
 	    				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
 								FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
 						{
-	    					if(!FormatoUtil.validarCampoLongTxt(bean.getNumUrbLima())){    				
+	    					if(!FormatoUtil.validarCampoLongEnteroPositivoTxt(bean.getNumUrbLima())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_430);
 	        				}
-	    					if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbLima()) ){    				
+	    					if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostoPromUrbLima()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_490);
 	        				}
 						} //fin habilita lima   				
-	    				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromRural()) ){    				
+	    				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostoPromRural()) ){    				
 	    					cont++;
 	    					sMsg="ERROR";    
 	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	    							listaError, cont, FiseConstants.COD_ERROR_F14C_450);
 	    				}
-	    				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostoPromUrbProv()) ){    				
+	    				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostoPromUrbProv()) ){    				
 	    					cont++;
 	    					sMsg="ERROR";    
 	    					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -3466,98 +3466,98 @@ public class Formato14CGartController {
 	    				///VERIFICACION DE COSTO DIRECTO O INDIRECTO
 	    				if(FiseConstants.COSTO_DIRECTO_F14C.equals(flagCosto)){
 	    					/*****RURAL*****/     
-	    					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRCoord())){    					
+	    					if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRCoord())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_510);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRSupe())){   				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRSupe())){   				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_590);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRGest())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRGest())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_670);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRAsist())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRAsist())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_750);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRCoord()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					 fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_530);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRSupe()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_610);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){    					
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRGest()) ){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_690);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){    					
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRAsist()) ){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_770);
 	        				}
 	        				/*****PROVINCIA*****/    
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPCoord())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPCoord())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_830);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPSupe())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPSupe())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_910);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPGest())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPGest())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_990);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPAsist())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPAsist())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1070);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPCoord()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_850);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPSupe()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_930);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPGest()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1010);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPAsist()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -3567,49 +3567,49 @@ public class Formato14CGartController {
 	        				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
 	    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
 	    					{
-	        					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLCoord())){    		
+	        					if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLCoord())){    		
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1150);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLSupe())){    				
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLSupe())){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1230);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLGest())){    			
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLGest())){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1310);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLAsist())){    			
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLAsist())){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1390);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){    					
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLCoord()) ){    					
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1170);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLSupe()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1250);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLGest()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1330);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLAsist()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores,
@@ -3618,98 +3618,98 @@ public class Formato14CGartController {
 	    					}       				
 	    				}else if(FiseConstants.COSTO_INDIRECTO_F14C.equals(flagCosto)){
 	    					/*****RURAL*****/     
-	    					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRCoord())){    					
+	    					if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRCoord())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_550);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRSupe())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRSupe())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_630);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRGest())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRGest())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_710);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRAsist())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRAsist())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_790);
 	        				}  
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRCoord()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_570);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){    					
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRSupe()) ){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_650);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRGest()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_730);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){    					
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRAsist()) ){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_810);
 	        				}    					
 	    					/*****PROVINCIA*****/ 
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPCoord())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPCoord())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_870);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPSupe())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPSupe())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_950);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPGest())){    			
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPGest())){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1030);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPAsist())){    			
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPAsist())){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1530);
 	        				}    	
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPCoord()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_890);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){    		
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPSupe()) ){    		
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_970);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPGest()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1050);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPAsist()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -3719,49 +3719,49 @@ public class Formato14CGartController {
 	        				if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codigoEmpresa) || 
 	    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
 	    					{
-	        					if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILCoord())){    				
+	        					if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILCoord())){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1190);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILSupe())){    			
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILSupe())){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1270);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILGest())){    			
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILGest())){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILAsist())){    				
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILAsist())){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1430);
 	            				}	
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILCoord()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1210);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){    			
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILSupe()) ){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1290);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILGest()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1370);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILAsist()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -3771,100 +3771,100 @@ public class Formato14CGartController {
 	    				}else{
 	    					/************COSTO DIRECTO E INDIRECTO***********/
 	    					/*****RURAL*****/     				
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRCoord())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRCoord())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_510);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRSupe())){   				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRSupe())){   				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_590);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRGest())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRGest())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_670);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDRAsist())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDRAsist())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_750);
 	        				}
 	        				
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRCoord())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRCoord())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_550);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRSupe())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRSupe())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_630);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRGest())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRGest())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_710);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIRAsist())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIRAsist())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_790);
 	        				}    				
 
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRCoord()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRCoord()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_530);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRSupe()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRSupe()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_610);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRGest()) ){    					
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRGest()) ){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_690);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDRAsist()) ){    					
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDRAsist()) ){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_770);
 	        				}
 	        				
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRCoord()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRCoord()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_570);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRSupe()) ){    					
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRSupe()) ){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_650);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRGest()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRGest()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_730);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIRAsist()) ){    					
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIRAsist()) ){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -3872,100 +3872,100 @@ public class Formato14CGartController {
 	        				}
 	        				
 	        				/*******PROVINCIAS******/
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPCoord())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPCoord())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_830);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPSupe())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPSupe())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_910);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPGest())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPGest())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_990);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDPAsist())){    					
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDPAsist())){    					
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1070);
 	        				}
 	        				
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPCoord())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPCoord())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_870);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPSupe())){    				
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPSupe())){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_950);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPGest())){    			
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPGest())){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1030);
 	        				}
-	        				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanIPAsist())){    			
+	        				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanIPAsist())){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1530);
 	        				}    				
 
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPCoord()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPCoord()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_850);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPSupe()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPSupe()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_930);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPGest()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPGest()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1010);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDPAsist()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDPAsist()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1090);
 	        				}
 	        				
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPCoord()) ){    				
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPCoord()) ){    				
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_890);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPSupe()) ){    		
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPSupe()) ){    		
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_970);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPGest()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPGest()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	        							listaError, cont, FiseConstants.COD_ERROR_F14C_1050);
 	        				}
-	        				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostIPAsist()) ){    			
+	        				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostIPAsist()) ){    			
 	        					cont++;
 	        					sMsg="ERROR";    
 	        					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
@@ -3976,99 +3976,99 @@ public class Formato14CGartController {
 	    							FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codigoEmpresa))
 	    					{
 	        					/**LIMA***/
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLCoord())){    		
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLCoord())){    		
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1150);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLSupe())){    				
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLSupe())){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1230);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLGest())){    			
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLGest())){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1310);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanDLAsist())){    			
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanDLAsist())){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1390);
 	            				}
 	            				
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILCoord())){    				
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILCoord())){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1190);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILSupe())){    			
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILSupe())){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1270);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILGest())){    			
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILGest())){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1350);
 	            				}
-	            				if(!FormatoUtil.validarCampoBigDecimalTxt(bean.getCanILAsist())){    				
+	            				if(!FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCanILAsist())){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1430);
 	            				}        				
 
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLCoord()) ){    					
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLCoord()) ){    					
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1170);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLSupe()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLSupe()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1250);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLGest()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLGest()) ){    				
 	            					cont++;
 	            					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1330);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostDLAsist()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostDLAsist()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores,
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1410);
 	            				}
 	            				
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILCoord()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILCoord()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1210);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILSupe()) ){    			
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILSupe()) ){    			
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1290);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILGest()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILGest()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	            							listaError, cont, FiseConstants.COD_ERROR_F14C_1370);
 	            				}
-	            				if( !FormatoUtil.validarCampoBigDecimalTxt(bean.getCostILAsist()) ){    				
+	            				if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(bean.getCostILAsist()) ){    				
 	            					cont++;
 	            					sMsg="ERROR";    
 	            					fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
