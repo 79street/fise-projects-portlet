@@ -705,15 +705,15 @@ public class ResumenCostosController {
 			if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
 					"RURAL".equals(r.getOptionZona())){
 				idZona = FiseConstants.ZONABENEF_RURAL;
-				desZona = "ZONA RURAL";
+				desZona = "Zona Rural";
 			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
 					"PROVINCIA".equals(r.getOptionZona())){
 				idZona = FiseConstants.ZONABENEF_PROVINCIA;
-				desZona = "ZONA URBANO PROVINCIAS";
+				desZona = "Zona Urbano Provincias";
 			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
 					"LIMA".equals(r.getOptionZona())){
 				idZona = FiseConstants.ZONABENEF_LIMA_COD;
-				desZona = "ZONA URBANO LIMA";
+				desZona = "Zona Urbano Lima";
 			}
 			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
 			logger.info("grupo inf:  "+idGrupoInf);		
@@ -804,15 +804,15 @@ public class ResumenCostosController {
 			if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
 					"RURAL".equals(r.getOptionZona())){
 				idZona = FiseConstants.ZONABENEF_RURAL;
-				desZona = "ZONA RURAL";
+				desZona = "Zona Rural";
 			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
 					"PROVINCIA".equals(r.getOptionZona())){
 				idZona = FiseConstants.ZONABENEF_PROVINCIA;
-				desZona = "ZONA URBANO PROVINCIAS";
+				desZona = "Zona Urbano Provincias";
 			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
 					"LIMA".equals(r.getOptionZona())){
 				idZona = FiseConstants.ZONABENEF_LIMA_COD;
-				desZona = "ZONA URBANO LIMA";
+				desZona = "Zona Urbano Lima";
 			}
 			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
 			logger.info("grupo inf:  "+idGrupoInf);		
@@ -837,12 +837,14 @@ public class ResumenCostosController {
 		   
 		    JSONObject jsonObj = new JSONObject();    
 		    
-		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS_COMP;
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
 		    String tipoArchivo = "1";//exel		
 		    String nombreReporte = "resumenCostos14AB_Comp";        
 		    
 		    listaResumen = resumenCostosService.buscarResumenCostoCompF14AB(r.getCodEmpresaBusq(),
 		    		idGrupoInf, idZona, formato);
+		    
+		    logger.info("tamaño de la lista de resumen de costos comparativos 14A y 14B exel:  "+listaResumen.size()); 
 		    
 		    if(listaResumen!=null && listaResumen.size()>0){
 		    	session.setAttribute("tipoFormato",tipoFormato);
