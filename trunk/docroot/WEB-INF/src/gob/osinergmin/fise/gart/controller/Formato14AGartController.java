@@ -1764,92 +1764,92 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 								String nroAgentes = s.substring(posicionTotalCostoGestion, posicionNroAgentes).trim();
 								
 								//validaciones de consistencia
-								if( !FormatoUtil.validarCampoLongTxt(zonaBenef) ){
+								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(zonaBenef) ){
 									//el campo Zona benef no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2300);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(impEsqInvit) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(impEsqInvit) ){
 									//el campo impEsqInvit no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2310);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(impDeclJurada) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(impDeclJurada) ){
 									//el campo impDeclJurada no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2320);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(impFichaVerif) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(impFichaVerif) ){
 									//el campo impFichaVerif no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2330);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(repEsqInvit) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(repEsqInvit) ){
 									//el campo repEsqInvit no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2340);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(verifInfo) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(verifInfo) ){
 									//el campo verifInfo no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2350);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(elabArch) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(elabArch) ){
 									//el campo elabArch no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2360);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(digitFicha) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(digitFicha) ){
 									//el campo digitFicha no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2370);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(impVolantes) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(impVolantes) ){
 									//el campo impVolantes no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2380);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(impAfiches) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(impAfiches) ){
 									//el campo impAfiches no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2390);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(repFolletos) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(repFolletos) ){
 									//el campo repFolletos no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2400);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(spotPublicTv) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(spotPublicTv) ){
 									//el campo spotPublicTv no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(spotPublicRad) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(spotPublicRad) ){
 									//el campo spotPublicRad no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
 								}
-								if( !FormatoUtil.validarCampoLongTxt(nroBenef) ){
+								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroBenef) ){
 									//el campo nroBenef no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2420);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(promConv) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(promConv) ){
 									//el campo promConv no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2430);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(regConv) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(regConv) ){
 									//el campo regConv no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2440);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(impBander) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(impBander) ){
 									//el campo impBander no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2450);
 								}
-								if( !FormatoUtil.validarCampoLongTxt(nroAgentes) ){
+								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroAgentes) ){
 									//el campo nroAgentes no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2460);

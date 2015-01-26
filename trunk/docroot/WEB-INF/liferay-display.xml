@@ -22,5 +22,6 @@
 		<portlet id="gartLiquidacion"/>
 		<portlet id="gartCargoFijo"/>
 		<portlet id="gartResumenCostos"/>
+		<portlet id="gartVariacionCostos"/>
 	</category>
 </display>

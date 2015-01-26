@@ -1700,82 +1700,82 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 								String utilMatOfic = s.substring(posicionCapacAgent, posicionUtilMatOfic).trim();
 								
 								//validaciones de consistencia
-								if( !FormatoUtil.validarCampoBigDecimalTxt(impValesEde) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(impValesEde) ){
 									//el campo impValesEde no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3100);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(impValesNoEde) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(impValesNoEde) ){
 									//el campo impValesNoEde no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3110);
 								}
-								if( !FormatoUtil.validarCampoLongTxt(nroValesImp) ){
+								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroValesImp) ){
 									//el campo nroValesImp no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3120);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(totalRepValesDescto) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(totalRepValesDescto) ){
 									//el campo totalRepValesDescto no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3130);
 								}
-								if( !FormatoUtil.validarCampoLongTxt(nroValesRep) ){
+								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroValesRep) ){
 									//el campo nroValesRep no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3140);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(totalRepValesOfic) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(totalRepValesOfic) ){
 									//el campo totalRepValesOfic no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3150);
 								}
-								if( !FormatoUtil.validarCampoLongTxt(nroValesEntr) ){
+								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroValesEntr) ){
 									//el campo nroValesEntr no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3160);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(totalEnvPadron) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(totalEnvPadron) ){
 									//el campo totalEnvPadron no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3170);
 								}
-								if( !FormatoUtil.validarCampoLongTxt(nroValesFis) ){
+								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroValesFis) ){
 									//el campo nroValesFis no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3180);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(costoUnitValesDigit) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(costoUnitValesDigit) ){
 									//el campo costoUnitValesDigit no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3190);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(costoAtenSolic) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(costoAtenSolic) ){
 									//el campo costoAtenSolic no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3200);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(costoAtenConsul) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(costoAtenConsul) ){
 									//el campo costoAtenConsul no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3210);
 								}
-								if( !FormatoUtil.validarCampoLongTxt(nroAten) ){
+								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroAten) ){
 									//el campo nroAten no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3220);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(costoPers) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(costoPers) ){
 									//el campo costoPers no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3230);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(capacAgent) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(capacAgent) ){
 									//el campo capacAgent no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3240);
 								}
-								if( !FormatoUtil.validarCampoBigDecimalTxt(utilMatOfic) ){
+								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(utilMatOfic) ){
 									//el campo utilMatOfic no corresponde al tipo de dato correcto
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3250);

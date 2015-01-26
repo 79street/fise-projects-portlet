@@ -2819,37 +2819,37 @@ public class Formato12CGartController {
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357));
 									}*/
-									if( !FormatoUtil.validarCampoLongTxt(anioEjecucion) ){
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(anioEjecucion) ){
 										//el campo anioEjecucion no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3440));
 									}
-									if( !FormatoUtil.validarCampoLongTxt(mesEjecucion) ){
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(mesEjecucion) ){
 										//el campo mesEjecucion no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3442));
 									}
-									if( !FormatoUtil.validarCampoLongTxt(zonaBenef) ){
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(zonaBenef) ){
 										//el campo Zona benef no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3454));
 									}
-									if( !FormatoUtil.validarCampoLongTxt(nroDias) ){
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroDias) ){
 										//el campo nroDias no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3471));
 									}
-									if( !FormatoUtil.validarCampoBigDecimalTxt(alimentacion) ){
+									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(alimentacion) ){
 										//el campo alimentacion no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3473));
 									}
-									if( !FormatoUtil.validarCampoBigDecimalTxt(alojamiento) ){
+									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(alojamiento) ){
 										//el campo alojamiento no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3475));
 									}
-									if( !FormatoUtil.validarCampoBigDecimalTxt(movilidad) ){
+									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(movilidad) ){
 										//el campo movilidad no corresponde al tipo de dato correcto
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3477));

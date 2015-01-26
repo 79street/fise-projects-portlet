@@ -452,7 +452,7 @@ var formato14C= {
 		buildGrids : function () {	
 			formato14C.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Estado','Visualizar','Editar','Anular','','','',''],
+		       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ini. Vig.','Año Fin Vig.','Grupo Inf','Estado','Visualizar','Editar','Eliminar','','','',''],
 		       colModel: [
 					   { name: 'descEmpresa', index: 'descEmpresa', width: 50},
 		               { name: 'anoPresentacion', index: 'anoPresentacion', width: 30 },   
