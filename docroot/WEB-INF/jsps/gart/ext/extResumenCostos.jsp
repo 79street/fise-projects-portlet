@@ -153,7 +153,7 @@ var resumenCosto= {
 				}else if(valorPdf && resumenCosto.i_cboBienal.val()=='F14A_COMP'){
 					resumenCosto.mostrarReporteCostoComparativosF14AB();
 				}else if(valorExcel && resumenCosto.i_cboBienal.val()=='F14A_COMP'){
-					resumenCosto.mostrarReporteCostoF14BExcel();
+					resumenCosto.mostrarReporteCostoComparativosF14ABExcel();
 				}else if(valorPdf && resumenCosto.i_cboBienal.val()=='F14B_COMP'){
 					resumenCosto.mostrarReporteCostoComparativosF14AB();
 				}else if(valorExcel && resumenCosto.i_cboBienal.val()=='F14B_COMP'){
