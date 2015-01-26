@@ -465,6 +465,15 @@ $(document).ready(function () {
 			<label class="labelCentrado" id="<portlet:namespace/>dialog-info-content">Error..</label>
 		</p>
 	</div>
+	
+	<!-- DIALOGO PARA CONFIRMAR ELIMAR MOTIVO -->
+	<div id="<portlet:namespace/>dialog-confirm-eliminar_motivo" title="Mensaje de Confirmaci&oacute;n">
+		<p>	
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content-eliminar_motivo">¿Está seguro?</label>
+		</p>
+	</div>
 		
 		
 		<!-- HIDENN -->
