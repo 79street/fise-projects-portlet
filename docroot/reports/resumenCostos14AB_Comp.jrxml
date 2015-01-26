@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="3.5369215365000213"/>
-	<property name="ireport.x" value="3461"/>
+	<property name="ireport.x" value="178"/>
 	<property name="ireport.y" value="396"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="FORMATO" class="java.lang.String"/>
@@ -80,14 +80,14 @@
 				<text><![CDATA[Codigo Empresa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="181" y="3" width="23" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="177" y="3" width="36" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Item]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="54" y="3" width="126" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="54" y="3" width="122" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -129,7 +129,7 @@
 				<text><![CDATA[Solicitud]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="205" y="3" width="532" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="214" y="3" width="523" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -140,7 +140,7 @@
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="54" y="0" width="126" height="20"/>
+				<reportElement x="54" y="0" width="122" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -154,14 +154,14 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{codEmpresa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="181" y="0" width="23" height="20"/>
+				<reportElement x="177" y="0" width="36" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="205" y="0" width="532" height="20"/>
+				<reportElement x="214" y="0" width="523" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
