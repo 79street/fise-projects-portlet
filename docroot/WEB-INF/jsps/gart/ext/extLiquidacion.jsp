@@ -90,7 +90,7 @@ var liquidacionVar= {
 		i_codEmpresaBusq:null,
 		i_grupoInfBusq:null,		
 		i_tipoBienal:null,
-		i_tipoMensual:null,
+		i_tipoMensual:null,	
 		
 		//variables 
 		f_empresa:null,
@@ -143,8 +143,8 @@ var liquidacionVar= {
 			this.dialogConfirmLiquidar=$("#<portlet:namespace/>dialog-confirm-liquidar");
 			this.dialogConfirmLiquidarContent=$("#<portlet:namespace/>dialog-confirm-content-liquidar");
 			
-			this.dialogConfirmMotivo=$("#<portlet:namespace/>dialog-confirm-eliminar");//para elimar
-			this.dialogConfirmContentMotivo=$("#<portlet:namespace/>dialog-confirm-content-eliminar");//para eliminar
+			this.dialogConfirmMotivo=$("#<portlet:namespace/>dialog-confirm-eliminar_motivo");//para elimar
+			this.dialogConfirmContentMotivo=$("#<portlet:namespace/>dialog-confirm-content-eliminar_motivo");//para eliminar
 			
 			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
 			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
@@ -626,7 +626,7 @@ var liquidacionVar= {
 		
 		/**Function para confirmar para eliminar.*/
 		confirmarEliminar : function(correlativo,liquidado){
-			console.debug("entranado a eliminar");
+			console.debug("entranado a eliminar de lista general o sea a excluir");
 			if(liquidado=='NO'){
 				var addhtml='¿Está seguro que desea excluir el registro seleccionado?';
 				liquidacionVar.dialogConfirmContent.html(addhtml);
@@ -987,23 +987,23 @@ var liquidacionVar= {
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarMotivo : function(cod_item,cod_correlativo){
-			console.debug("entranado a eliminar confirmar:  "+cod_item);
+			console.debug("entranado a eliminar confirmar motivo:  "+cod_item);
 			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 			liquidacionVar.dialogConfirmContentMotivo.html(addhtml);
-			liquidacionVar.dialogConfirmMotivo.dialog("open");	
-			codItem=cod_item;
-			codCorrelativo=cod_correlativo;
+			liquidacionVar.dialogConfirmMotivo.dialog("open");				
+			codMotivo= cod_item; 
+			codCorrelativo= cod_correlativo;
 		},
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
-		eliminarMotivo : function(codItem,codCorrelativo){
-			console.debug("entranado a eliminar:  "+codItem);
+		eliminarMotivo : function(codMotivo,codCorrelativo){
+			console.debug("entranado a eliminar motivo:  "+codMotivo);
 			$.blockUI({ message: liquidacionVar.mensajeEliminando });
 			jQuery.ajax({
 				url: liquidacionVar.urlEliminarMotivo+'&'+liquidacionVar.formCommand.serialize(),
 				type: 'post',
 				dataType: 'json',
 				data: {				
-					   <portlet:namespace />itemMotivoEdit: codItem,
+					   <portlet:namespace />itemMotivoEdit: codMotivo,
 					   <portlet:namespace />correlativoEdit: codCorrelativo				  
 					},
 				success: function(data) {
@@ -1147,8 +1147,8 @@ var liquidacionVar= {
 					width: 450,			
 					autoOpen: false,
 					buttons: {
-						"Si": function() {
-							liquidacionVar.eliminarMotivo(codItem,codCorrelativo);
+						"Si": function() {							
+							liquidacionVar.eliminarMotivo(codMotivo,codCorrelativo);
 							$( this ).dialog("close");
 						},
 						"No": function() {				
