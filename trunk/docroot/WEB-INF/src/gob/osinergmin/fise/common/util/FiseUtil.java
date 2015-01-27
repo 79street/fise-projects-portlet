@@ -615,7 +615,7 @@ public class FiseUtil {
 				MailServiceUtil.sendEmail(mailMessage);
 				for(CorreoBean c:listaCorreoDestino){
 					if(FormatoUtil.isNotBlank(correoMostrar)){
-						correoMostrar = correoMostrar +","+ c.getDireccionCorreo();		
+						correoMostrar = correoMostrar +", "+ c.getDireccionCorreo();		
 					}else{
 						correoMostrar = c.getDireccionCorreo();	
 					}					
@@ -734,7 +734,7 @@ public class FiseUtil {
 				MailServiceUtil.sendEmail(mailMessage);
 				for(CorreoBean c:listaCorreoDestino){
 					if(FormatoUtil.isNotBlank(correoMostrar)){
-						correoMostrar = correoMostrar +","+ c.getDireccionCorreo();		
+						correoMostrar = correoMostrar +", "+ c.getDireccionCorreo();		
 					}else{
 						correoMostrar = c.getDireccionCorreo();	
 					}					
@@ -811,7 +811,7 @@ public class FiseUtil {
 				MailServiceUtil.sendEmail(mailMessage);	
 				for(CorreoBean c:listaCorreoDestino){
 					if(FormatoUtil.isNotBlank(correoMostrar)){
-						correoMostrar = correoMostrar +","+ c.getDireccionCorreo();		
+						correoMostrar = correoMostrar +", "+ c.getDireccionCorreo();		
 					}else{
 						correoMostrar = c.getDireccionCorreo();	
 					}					

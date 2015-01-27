@@ -1217,9 +1217,13 @@
 			}
 			
             if(show){
-				formato12B.dlgConfirmacion.html(msj);
+				//formato12B.dlgConfirmacion.html(msj);
 				if(numModal == 1){
-					formato12B.dlgConfirmacion.dialog({ 
+					
+					formato12B.dialogMessageConfirmContent.html(msj);
+					formato12B.dialogMessageConfirm.dialog("open");	
+					
+					/*formato12B.dlgConfirmacion.dialog({ 
 				     	title:"Mensaje de Confirmaci&oacute;n",
 				     	height:150,
 						width: 500,	
@@ -1236,7 +1240,8 @@
 				        	 }
 				         },
 				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
-				     }).load();
+				     }).load();*/
+					
 				}else{
 					/*titulo="Mensaje de Informaci&oacute;n";
 					formato12B.dlgConfirmacion.dialog({ 
@@ -1744,8 +1749,12 @@
 				autoOpen: false,
 				width: 450,
 				buttons: {
-					Ok: function() {
-						$( this ).dialog("close");
+					"Si": function() {
+						formato12B.deleteFormato(emp, mes, anio, etapa,mesEjec,anioEjec, formato12B.dlgConfirmacion);
+						$(this).dialog("close");
+					},
+					"No": function() {				
+						$(this).dialog("close");
 					}
 				}
 			});
