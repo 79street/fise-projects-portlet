@@ -500,7 +500,14 @@ var formato14C= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {			          
-			          location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			    	   var ids = formato14C.tablaResultados.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				
+						formato14C.dialogInfoContent.html(addhtmInfo);
+						formato14C.dialogInfo.dialog("open");
+				       }
 			       } 
 			}); 
 		},
@@ -531,14 +538,29 @@ var formato14C= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			    	   var ids = formato14C.tablaObservacion.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				
+						formato14C.dialogInfoContent.html(addhtmInfo);
+						formato14C.dialogInfo.dialog("open");
+				       }  		            
 			       } 
 			}); 
 			formato14C.tablaObservacion.jqGrid('navButtonAdd',formato14C.paginadoObservacion,{
 			       caption:"Exportar a Pdf",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			    	   formato14C.<portlet:namespace/>mostrarReporteValidacionF14C();
+			    	   var ids = formato14C.tablaObservacion.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    	   formato14C.<portlet:namespace/>mostrarReporteValidacionF14C();
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Pdf';				
+						formato14C.dialogInfoContent.html(addhtmInfo);
+						formato14C.dialogInfo.dialog("open");
+				       }  
+			    	   
 			       } 
 			});
 		},		

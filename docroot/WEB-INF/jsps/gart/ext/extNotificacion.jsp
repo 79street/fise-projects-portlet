@@ -417,14 +417,29 @@ var notificarValidar= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			    	   var ids = notificarValidar.tablaObservacion.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				
+				    	notificarValidar.dialogInfoContent.html(addhtmInfo);
+				    	notificarValidar.dialogInfo.dialog("open");
+				       }  		           
 			       } 
 			}); 
 		    notificarValidar.tablaObservacion.jqGrid('navButtonAdd',notificarValidar.paginadoObservacion,{
 			       caption:"Exportar a Pdf",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			    	   notificarValidar.<portlet:namespace/>mostrarReporteObservaciones();
+			    	   var ids = notificarValidar.tablaObservacion.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    	   notificarValidar.<portlet:namespace/>mostrarReporteObservaciones();
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Pdf';				
+				    	notificarValidar.dialogInfoContent.html(addhtmInfo);
+				    	notificarValidar.dialogInfo.dialog("open");
+				       }  	 
+			    	  
 			       } 
 			});
 		},
@@ -457,14 +472,28 @@ var notificarValidar= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			    	   var ids = notificarValidar.tablaObservacion12.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				
+				    	notificarValidar.dialogInfoContent.html(addhtmInfo);
+				    	notificarValidar.dialogInfo.dialog("open");
+				       } 		            
 			       } 
 			}); 
 		    notificarValidar.tablaObservacion12.jqGrid('navButtonAdd',notificarValidar.paginadoObservacion12,{
 			       caption:"Exportar a Pdf",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			    	   notificarValidar.<portlet:namespace/>mostrarReporteObservaciones();
+			    	   var ids = notificarValidar.tablaObservacion12.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    	   notificarValidar.<portlet:namespace/>mostrarReporteObservaciones();
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Pdf';				
+				    	notificarValidar.dialogInfoContent.html(addhtmInfo);
+				    	notificarValidar.dialogInfo.dialog("open");
+				       }  		    	  
 			       } 
 			});
 		},
@@ -497,14 +526,28 @@ var notificarValidar= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			            location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			    	   var ids = notificarValidar.tablaObservacion13.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				
+				    	notificarValidar.dialogInfoContent.html(addhtmInfo);
+				    	notificarValidar.dialogInfo.dialog("open");
+				       } 	             
 			       } 
 			}); 
 		    notificarValidar.tablaObservacion13.jqGrid('navButtonAdd',notificarValidar.paginadoObservacion13,{
 			       caption:"Exportar a Pdf",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			    	   notificarValidar.<portlet:namespace/>mostrarReporteObservaciones();
+			    	   var ids = notificarValidar.tablaObservacion13.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    	   notificarValidar.<portlet:namespace/>mostrarReporteObservaciones();
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Pdf';				
+				    	notificarValidar.dialogInfoContent.html(addhtmInfo);
+				    	notificarValidar.dialogInfo.dialog("open");
+				       } 		    	   
 			       } 
 			});
 		},

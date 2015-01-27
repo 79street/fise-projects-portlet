@@ -196,7 +196,14 @@ var fiseObservacion= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			      location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			    	   var ids = fiseObservacion.tablaResultados.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				
+				    	fiseObservacion.dialogInfoContent.html(addhtmInfo);
+				    	fiseObservacion.dialogInfo.dialog("open");
+				       }  		       
 			       } 
 			});  
 		},
