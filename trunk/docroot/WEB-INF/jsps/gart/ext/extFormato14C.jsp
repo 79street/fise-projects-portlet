@@ -807,7 +807,7 @@ var formato14C= {
 				formato14C.dialogInfoContent.html(addhtmInfo);
 				formato14C.dialogInfo.dialog("open");	
 			}else{				
-				var addhtmInfo='El formato ya fue enviado a OSINERGMIN-GART.';				
+				var addhtmInfo='El registro seleccionado del Formato 14C ya fue enviado a OSINERGMIN-GART.';				
 				formato14C.dialogInfoContent.html(addhtmInfo);
 				formato14C.dialogInfo.dialog("open");	
 			}	
@@ -3146,7 +3146,7 @@ var formato14C= {
 		},
 		//funcion para confirmar envio denifitivo
 		confirmarEnvioDefinitivoF14C : function(){	
-			var addhtml='¿Está seguro que desea realizar el envío definitivo del Formato 14C?';
+			var addhtml='¿Está seguro que desea realizar el Envío Definitivo del Formato 14C?';
 			formato14C.dialogConfirmEnvioContent.html(addhtml);
 			formato14C.dialogConfirmEnvio.dialog("open");
 		},
