@@ -1069,7 +1069,7 @@
 			+parseFloat($('#totalDesplazamientoPersonalProv').val().length>0?$('#totalDesplazamientoPersonalProv').val():'0'));
 	
 	$('#porActividadExtra').val(parseFloat($('#totalActividadesExtraord').val().length>0?$('#totalActividadesExtraord').val():'0')
-			+parseFloat($('#totalActividadesExtraordProv').val().length>0?$('#totalActividadesExtraord').val():'0'));
+			+parseFloat($('#totalActividadesExtraordProv').val().length>0?$('#totalActividadesExtraordProv').val():'0'));
 
 			
 			}
