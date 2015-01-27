@@ -218,7 +218,7 @@ var periodoEnvio= {
 		      			var ret = periodoEnvio.tablaResultados.jqGrid('getRowData',cl);           
 		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"periodoEnvio.verPeriodoEnvio('"+ret.secuencia+"');\" /></a> ";
 		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"periodoEnvio.editarPeriodoEnvio('"+ret.secuencia+"');\" /></a> ";
-		      			elim = "<a href='#'><img border='0' title='Desactivar' src='/net-theme/images/img-net/bulb-off.png'  align='center' onclick=\"periodoEnvio.confirmarEliminarPeriodoEnvio('"+ret.secuencia+"');\" /></a> ";              			
+		      			elim = "<a href='#'><img border='0' title='Desactivar' src='/net-theme/images/img-net/bulb-off.png'  align='center' onclick=\"periodoEnvio.confirmarEliminarPeriodoEnvio('"+ret.secuencia+"','"+ret.descEstado+"');\" /></a> ";              			
 		      			periodoEnvio.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			periodoEnvio.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
 		      			periodoEnvio.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
@@ -474,12 +474,18 @@ var periodoEnvio= {
 			 }
 		},
 		/**Function para confirmar si quiere eliminar el registro o no*/
-		confirmarEliminarPeriodoEnvio : function(secuencia){
-			console.debug("entranado a eliminar confirmar:  "+secuencia);
-			var addhtml='¿Está seguro que desea Desactivar el Control de Remisión seleccionado.?';
-			periodoEnvio.dialogConfirmContent.html(addhtml);
-			periodoEnvio.dialogConfirm.dialog("open");	
-			cod_secuencia=secuencia;
+		confirmarEliminarPeriodoEnvio : function(secuencia,estado){
+			if(estado=='Vigente'){
+				console.debug("entranado a eliminar confirmar:  "+secuencia);
+				var addhtml='¿Está seguro que desea Desactivar el Control de Remisión seleccionado.?';
+				periodoEnvio.dialogConfirmContent.html(addhtml);
+				periodoEnvio.dialogConfirm.dialog("open");	
+				cod_secuencia=secuencia;	
+			}else{				
+				var addhtmInfo='El registro seleccionado del Control de Remisión ya se encuentra Desactivado.';					
+				periodoEnvio.dialogInfoContent.html(addhtmInfo);
+				periodoEnvio.dialogInfo.dialog("open");				
+			}			
 		},
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
 		eliminarPeriodoEnvio : function(cod_secuencia){
@@ -529,7 +535,7 @@ var periodoEnvio= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El Control de Remisión se guardó satisfactoriamente';
+							var addhtml2='El Detalle de Control de Remisión se guardó satisfactoriamente';
 							periodoEnvio.dialogMessageContent.html(addhtml2);
 							periodoEnvio.dialogMessage.dialog("open");							
 							periodoEnvio.initBlockUI();	
@@ -550,7 +556,7 @@ var periodoEnvio= {
 							periodoEnvio.dialogInfo.dialog("open");	
 							periodoEnvio.f_desde.focus();	
 						}else if(data.resultado == "Error"){						
-							var addhtmError='Se produjo un error al guardar el Control de Remisión.';					
+							var addhtmError='Se produjo un error al guardar el Detalle del Control de Remisión.';					
 							periodoEnvio.dialogErrorContent.html(addhtmError);
 							periodoEnvio.dialogError.dialog("open");												
 							periodoEnvio.initBlockUI();
@@ -580,7 +586,7 @@ var periodoEnvio= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='El Control de Remisión se actualizó satisfactoriamente';
+							var addhtml2='El Detalle del Control de Remisión se actualizó satisfactoriamente';
 							periodoEnvio.dialogMessageContent.html(addhtml2);
 							periodoEnvio.dialogMessage.dialog("open");						
 							periodoEnvio.initBlockUI();								
@@ -590,7 +596,7 @@ var periodoEnvio= {
 							periodoEnvio.dialogInfo.dialog("open");
 							periodoEnvio.f_fechaAmpl.focus();	
 						}else if(data.resultado == "Error"){							
-							var addhtmError='Se produjo un error al actualizar el Control de Remisión.';					
+							var addhtmError='Se produjo un error al actualizar el Detalle del Control de Remisión.';					
 							periodoEnvio.dialogErrorContent.html(addhtmError);
 							periodoEnvio.dialogError.dialog("open");
 							periodoEnvio.initBlockUI();
