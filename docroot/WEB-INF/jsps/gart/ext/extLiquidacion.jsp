@@ -653,7 +653,7 @@ var liquidacionVar= {
 			}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
 				msg = 'costos estándares';
 			}
-			var addhtml='¿Está seguro que desea procesar los '+msg+'?';
+			var addhtml='¿Está seguro que desea Procesar los '+msg+'?';
 			liquidacionVar.dialogConfirmEstablecerContent.html(addhtml);
 			liquidacionVar.dialogConfirmEstablecer.dialog("open");
 		},
@@ -661,9 +661,9 @@ var liquidacionVar= {
 			console.debug("entranado a liquidar");
 			var msg;
 			if( liquidacionVar.i_tipoMensual.prop('checked')){
-				msg = 'liquidar los gastos operativos';
+				msg = 'Liquidar los gastos operativos';
 			}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
-				msg = 'aprobar los costos estándares';
+				msg = 'Aprobar los costos estándares';
 			}
 			var addhtml='¿Está seguro que desea '+msg+'?';
 			liquidacionVar.dialogConfirmLiquidarContent.html(addhtml);
