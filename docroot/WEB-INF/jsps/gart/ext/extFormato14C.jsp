@@ -3167,8 +3167,9 @@ var formato14C= {
 				},
 				success : function(data) {
 					if(data.resultado == "OK"){
-						var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.Correo;					
-						formato14C.dialogMessageContent.html(addhtml);
+						var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;					
+						//formato14C.dialogMessageContent.html(addhtml);
+						$("#<portlet:namespace/>dialog-message-report-content").html(addhtml);
 						formato14C.dialogMessageReport.dialog("open");
 						formato14C.initBlockUI();					
 					}else if(data.resultado == "EMAIL"){						
@@ -3929,6 +3930,7 @@ var formato14C= {
 			formato14C.dialogMessageReport.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 450,	
 				buttons: {
 					'Ver Acta': function() {
 						formato14C.<portlet:namespace/>mostrarReporteEnvioDefinitivoF14C();
