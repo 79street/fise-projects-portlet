@@ -308,7 +308,7 @@ $(document).ready(function () {
 											     										
 											 </td>
 											 
-											 <td><label style="font-size: 12px; font-weight: bold">Mostrar Año/Mes Ejecución:</label>
+											 <td><label style="font-size: 12px; font-weight: bold">Habilita Año/Mes Ejecución(F12):</label>
 											 </td>
 											 <td>											
 												<input type="radio"	name="flagAnioMesEjec"
