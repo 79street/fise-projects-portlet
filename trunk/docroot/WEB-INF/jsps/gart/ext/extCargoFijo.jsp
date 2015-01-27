@@ -273,7 +273,14 @@ var fiseCargoFijo= {
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			      location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>'; 
+			    	   var ids = fiseCargoFijo.tablaResultados.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				
+				    	fiseCargoFijo.dialogInfoContent.html(addhtmInfo);
+						fiseCargoFijo.dialogInfo.dialog("open");
+				       }	              
 			       } 
 			}); 
 		},
