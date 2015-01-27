@@ -177,7 +177,7 @@ $(document).ready(function () {
 	</div>
 	<div id="dialogMessageGeneralInicio" title="Mensaje de &Eacute;xito">
 		<p>
-			<<!-- span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+			<!-- span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span> -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
