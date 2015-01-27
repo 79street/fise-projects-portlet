@@ -799,11 +799,11 @@ var fiseCargoFijo= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarCargoFijo : function(codEmpresa, anioRep, mesRep,estado){	
 			if(estado=='Inactivo'){
-				var addhtml='El registro de Datos del Proyecto FISE seleccionado ya se encuentra Desactivado';
+				var addhtml='El registro seleccionado de Datos del Proyecto FISE ya se encuentra Desactivado';
 				fiseCargoFijo.dialogInfoContent.html(addhtml);
 				fiseCargoFijo.dialogInfo.dialog("open");
 			}else{
-				var addhtml='¿Está seguro que desea Desactivar el estado del registro seleccionado?';
+				var addhtml='¿Está seguro que desea Desactivar los Datos del Proyecto FISE seleccionado?';
 				fiseCargoFijo.dialogConfirmContent.html(addhtml);
 				fiseCargoFijo.dialogConfirm.dialog("open");	
 				console.debug("codigo empresa: "+codEmpresa);
