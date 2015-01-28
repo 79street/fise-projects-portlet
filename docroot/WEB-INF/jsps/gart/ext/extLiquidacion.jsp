@@ -682,7 +682,7 @@ var liquidacionVar= {
 					},
 				success: function(data) {
 					if(data.resultado == "OK"){
-						var addhtml2='Registro excluido satisfactoriamente. Ese registro no será considerado para la aprobación de los costos estándares o la liquidación de los gastos operativos según sea el caso.';				
+						var addhtml2='Registro excluido satisfactoriamente. Ese registro no será considerado para la Aprobación de los costos estándares o la Liquidación de los gastos operativos según sea el caso.';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');
