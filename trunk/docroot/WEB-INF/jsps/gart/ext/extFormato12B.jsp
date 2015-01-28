@@ -321,7 +321,14 @@
 				       caption:"Exportar a Excel",
 				       buttonicon: "ui-icon-bookmark",
 				       onClickButton : function () {
-				           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+				    	   var ids = formato12B.tablaBusqueda.jqGrid('getDataIDs');
+					       if(ids!=0){
+					    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+					       }else{
+					    	var addhtmInfo='No existe información para exportar a Excel';				    	
+					    	formato12B.dialogMessageInfoContent.html(addhtmInfo);
+							formato12B.dialogMessageInfo.dialog("open");
+					       }		           
 				       } 
 				}); 
 			},
@@ -1562,14 +1569,28 @@
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+			    	   var ids = formato12B.tablaObservacion.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				    	
+				    	formato12B.dialogMessageInfoContent.html(addhtmInfo);
+						formato12B.dialogMessageInfo.dialog("open");
+				       }		           
 			       } 
 			}); 
 			formato12B.tablaObservacion.jqGrid('navButtonAdd',formato12B.paginadoObservacion,{
 			       caption:"Exportar a Pdf",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			    	   formato12B.showReporteValidacion();
+			    	   var ids = formato12B.tablaObservacion.jqGrid('getDataIDs');
+				       if(ids!=0){
+				    	   formato12B.showReporteValidacion();   
+				       }else{
+				    	var addhtmInfo='No existe información para exportar a Excel';				    	
+				    	formato12B.dialogMessageInfoContent.html(addhtmInfo);
+						formato12B.dialogMessageInfo.dialog("open");
+				       }		    	  
 			       } 
 			});
 		},
