@@ -1217,7 +1217,7 @@ var notificarValidar= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro excluido satisfactoriamente. Ese registro no será considerado para la validación ni tampoco para la notificación.';					
+						var addhtml2='Registro excluido satisfactoriamente. Ese registro no será considerado para la Validación ni para la Notificación.';					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessageEliminar.dialog("open");
 						notificarValidar.buscarNotificacion();
