@@ -5,7 +5,7 @@
 
 <script type="text/javascript">
 
-var variacionCostos= {
+var historicoCostos= {
 		
 	    //decalaracion de los elementos del html	
 		formCommand : null,	
@@ -36,21 +36,21 @@ var variacionCostos= {
 		divBuscar:null,	
 		//urls
 		urlBusqueda: null,			
-		urlCargaConceptos: null,
+		//urlCargaConceptos: null,
 	   //botones		
 		botonGenerar:null,
 		
 		//varibales de busqueda
-		i_grupoInfoBusq:null,
+		i_codEmpresaBusq:null,
 		i_formatoBusq:null,
-		i_zonaBusq:null,
-		i_conceptoBusq:null,
+		//i_zonaBusq:null,
+		//i_conceptoBusq:null,
 		
 		
 		
 		init : function() {
 			
-			this.formCommand=$('#variacionCostosBean');	
+			this.formCommand=$('#historicoCostosBean');	
 			
 			//dialogos
 			this.dialogMessage=$("#<portlet:namespace/>dialog-message-notificacion");
@@ -79,29 +79,27 @@ var variacionCostos= {
 			
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="generarGrafico" />';					
-			this.urlCargaConceptos='<portlet:resourceURL id="cargarConceptos" />';
+			//this.urlCargaConceptos='<portlet:resourceURL id="cargarConceptos" />';
 			
 			//botones
 			this.botonGenerar=$("#<portlet:namespace/>btnGenerar");	
 			
 			//variables de busqueda
-			this.i_grupoInfoBusq=$('#grupoInfoBusq');
+			this.i_codEmpresaBusq=$('#codEmpresaBusq');
 			this.i_formatoBusq=$('#formatoBusq');	
-			this.i_zonaBusq=$('#zonaBusq');	
-			this.i_conceptoBusq=$('#conceptoBusq');
 			
-			variacionCostos.initDialogs();
+			historicoCostos.initDialogs();
 		    
-			variacionCostos.i_formatoBusq.change(function(){variacionCostos.<portlet:namespace/>loadConceptos();});
-			variacionCostos.i_zonaBusq.change(function(){variacionCostos.<portlet:namespace/>loadConceptos();});
-			variacionCostos.botonGenerar.click(function(){
-				variacionCostos.generarGrafico();
-				//location.href=urlPlot+'&grupoInfoBusq='+variacionCostos.i_grupoInfoBusq.val()+'&formatoBusq='+variacionCostos.i_formatoBusq.val()+'&zonaBusq='+variacionCostos.i_zonaBusq.val()+'&conceptoBusq='+variacionCostos.i_conceptoBusq.val();
+			//historicoCostos.i_formatoBusq.change(function(){historicoCostos.<portlet:namespace/>loadConceptos();});
+			//historicoCostos.i_zonaBusq.change(function(){historicoCostos.<portlet:namespace/>loadConceptos();});
+			historicoCostos.botonGenerar.click(function(){
+				historicoCostos.generarGrafico();
+				//location.href=urlPlot+'&grupoInfoBusq='+historicoCostos.i_grupoInfoBusq.val()+'&formatoBusq='+historicoCostos.i_formatoBusq.val()+'&zonaBusq='+historicoCostos.i_zonaBusq.val()+'&conceptoBusq='+historicoCostos.i_conceptoBusq.val();
 			});
 		    
 		    //eventos por defecto			    
-			//variacionCostos.botonBuscar.trigger('click');
-		    variacionCostos.initBlockUI();
+			//historicoCostos.botonBuscar.trigger('click');
+		    historicoCostos.initBlockUI();
 		},
 		
 		/*fin cambios para ingresar observaciones manuales**/	
@@ -109,31 +107,31 @@ var variacionCostos= {
 		//funcion para generar grafico
 		generarGrafico : function () {	
 			console.debug("entranado a generar grafico");
-			variacionCostos.blockUI();
+			historicoCostos.blockUI();
 			jQuery.ajax({			
-					url: variacionCostos.urlBusqueda+'&'+variacionCostos.formCommand.serialize(),
+					url: historicoCostos.urlBusqueda+'&'+historicoCostos.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',				
 					success: function(data) {			
 						if (data.resultado == "OK"){
 							//alert(data.cadena);
-							//variacionCostos.i_cadenaVariacion.val(data.cadena);
-							variacionCostos.plotearImagen(data.cadena, data.promedio);
+							//historicoCostos.i_cadenaVariacion.val(data.cadena);
+							historicoCostos.plotearImagen(data.cadena, data.titulo);
 						}
-						variacionCostos.initBlockUI();
+						historicoCostos.initBlockUI();
 					},error : function(){
 						var addhtmError='Error de conexión.';					
-						variacionCostos.dialogErrorContent.html(addhtmError);
-						variacionCostos.dialogError.dialog("open");
-						variacionCostos.initBlockUI();
+						historicoCostos.dialogErrorContent.html(addhtmError);
+						historicoCostos.dialogError.dialog("open");
+						historicoCostos.initBlockUI();
 					}
 				});			
 		},			
 		//function para el evento onchange en empresa para cargar el periodo
-		<portlet:namespace/>loadConceptos : function(){	
+		/*<portlet:namespace/>loadConceptos : function(){	
 			console.debug("entranado a cargar conceptos");
 			jQuery.ajax({
-					url: variacionCostos.urlCargaConceptos+'&'+variacionCostos.formCommand.serialize(),
+					url: historicoCostos.urlCargaConceptos+'&'+historicoCostos.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					success: function(data) {		
@@ -141,18 +139,18 @@ var variacionCostos= {
 						dwr.util.addOptions("conceptoBusq", data,"codigoItem","descripcionItem");														
 					},error : function(){
 						var addhtmError='Error de conexión.';					
-						variacionCostos.dialogErrorContent.html(addhtmError);
-						variacionCostos.dialogError.dialog("open");
-						variacionCostos.initBlockUI();
+						historicoCostos.dialogErrorContent.html(addhtmError);
+						historicoCostos.dialogError.dialog("open");
+						historicoCostos.initBlockUI();
 					}
 			});
-		},		
+		},	*/	
 		
-		plotearImagen : function(valor,promedio){
+		plotearImagen : function(valor,titulo){
 			//n="[[['ADIL', 7], ['ELNO', 9], ['EDLN', 15],['LDS', 12], ['ELS', 3],['ABC', 6], ['XXX', 18]]]";
 			var plot1 = $.jqplot('chkDispersionHid', eval(valor), {
 				 //seriesColors: ["#4177C9","#C94E41" ],
-				     //title:'Grafico de prueba',
+				     title: titulo,
 				      //series:[{color:'#5FAB78'}],
 				      series:[ 
 				              {
@@ -174,11 +172,11 @@ var variacionCostos= {
 				      axes: {
 				    	  xaxis: {
 				    		  renderer: $.jqplot.CategoryAxisRenderer,
-				    		  label:'Distribuidora Eléctrica',
+				    		  //label:'Distribuidora Eléctrica',
 				    		  fontSize: '6pt'
 				    	  },
 				    	  yaxis: {
-				    		  label:'Costo Unitario (S/.)',
+				    		  //label:'Costo Unitario (S/.)',
 				    		  fontSize: '6pt'
 				    	  }
 				      },/*,
@@ -187,22 +185,7 @@ var variacionCostos= {
 				            location: 'e',
 				            placement: 'outside'
 				      }*/
-				      //grid: grid,
-				      canvasOverlay: {
-				            show: true,
-				            objects: [
-				                {dashedHorizontalLine: {
-				                    name: 'promedio',
-				                    y: promedio,
-				                    //y: '1.5',
-				                    lineCap: 'butt',
-				                    lineWidth: 1,
-				                    xOffset: 0,
-				                    color: 'rgb(255, 0, 0)',
-				                    shadow: false
-				                }}
-				            ]
-				        }
+				      
 				    }
 			);
 			plot1.replot( { resetAxes: true } );
@@ -210,7 +193,7 @@ var variacionCostos= {
 		
 		//DIALOGOS
 		initDialogs : function(){		
-			variacionCostos.dialogMessage.dialog({
+			historicoCostos.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
 				width: 450,
@@ -220,7 +203,7 @@ var variacionCostos= {
 					}
 				}
 			});
-			variacionCostos.dialogValidacion.dialog({
+			historicoCostos.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
 				width: 450,
@@ -230,7 +213,7 @@ var variacionCostos= {
 					}
 				}
 			});
-			variacionCostos.dialogError.dialog({
+			historicoCostos.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
 				width: 450,
@@ -241,7 +224,7 @@ var variacionCostos= {
 				}
 			});
 			
-			variacionCostos.dialogInfo.dialog({
+			historicoCostos.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
 				width: 450,

@@ -3,13 +3,13 @@ package gob.osinergmin.fise.gart.controller;
 import gob.osinergmin.fise.bean.VariacionCostosBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
-import gob.osinergmin.fise.gart.json.VariacionJSON;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -18,9 +18,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import net.sf.sojo.interchange.Serializer;
-import net.sf.sojo.interchange.json.JsonSerializer;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -142,17 +139,19 @@ public class VariacionCostosController {
   		}
 	}
 	
-	@ResourceMapping("generarGrafico")
-  	public void generarGrafico(ModelMap model, ResourceRequest request,ResourceResponse response, @ModelAttribute("variacionCostosBean")VariacionCostosBean bean){
-		
-		try{
-			response.setContentType("application/json");
-			
-			JSONObject jsonObj = new JSONObject();
-			
-			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-			
-			long idGrupo=0;
+	@RequestMapping(params="action=plot")
+	public String cargarImagen(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("variacionCostosBean")VariacionCostosBean bean){
+        try {           	
+    			
+        	long idGrupo=0;
+        	
+        	/*String idGrupoInfo = bean.getGrupoInfoBusq();				
+			String formato = bean.getFormatoBusq();
+			String zona = bean.getZonaBusq();
+			String concepto = bean.getConceptoBusq();*/
+        	
+        	PortletRequest pRequest = (PortletRequest) renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+        	
 			String idGrupoInfo = bean.getGrupoInfoBusq();				
 			String formato = bean.getFormatoBusq();
 			String zona = bean.getZonaBusq();
@@ -161,7 +160,6 @@ public class VariacionCostosController {
 			if(FormatoUtil.isNotBlank(bean.getGrupoInfoBusq())){ 
 		    	idGrupo = new Long(idGrupoInfo);
 		    }
-			String data ="";
 			
 			String valorConceptoConcatenado = "";
 			
@@ -193,16 +191,86 @@ public class VariacionCostosController {
   			
   			String listaValores = convertirListaValores(listaCostos);
   			
-  			VariacionJSON obj = new VariacionJSON();
-  			//pRequest.getPortletSession().setAttribute("listaValores", listaValores, PortletSession.APPLICATION_SCOPE);
+  			//VariacionJSON obj = new VariacionJSON();
+  			pRequest.getPortletSession().setAttribute("cadenaValorVariacion", listaValores, PortletSession.APPLICATION_SCOPE);
+  			
+  			//obj.setCadenaVariacion(listaValores);
+  			
+  			model.addAttribute("cadenaValorVariacion", listaValores);
+        	
+        	
+    		/*bean.setAdmin(fiseUtil.esAdministrador(renderRequest));
+    		bean.setListaGrupoInfo(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL));
+    		//vamos a cargar por defecto los conceptos para rural
+    		
+    		model.addAttribute("model", bean);*/
+    		
+		} catch (Exception e) {
+			logger.info("Ocurrio un errror al caragar la pagina notificacion-validacion"); 
+			e.printStackTrace();
+		}		
+		return "variacionCostos";
+	}
+	
+	@ResourceMapping("generarGrafico")
+  	public void generarGrafico(ModelMap model, ResourceRequest request,ResourceResponse response, @ModelAttribute("variacionCostosBean")VariacionCostosBean bean){
+		
+		try{
+			response.setContentType("application/json");
+			
+			JSONObject jsonObj = new JSONObject();
+			
+			long idGrupo=0;
+			String idGrupoInfo = bean.getGrupoInfoBusq();				
+			String formato = bean.getFormatoBusq();
+			String zona = bean.getZonaBusq();
+			String concepto = bean.getConceptoBusq();
+			
+			if(FormatoUtil.isNotBlank(bean.getGrupoInfoBusq())){ 
+		    	idGrupo = new Long(idGrupoInfo);
+		    }
+			
+			String valorConceptoConcatenado = "";
+			
+			if( "R".equals(zona) ){
+				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
+					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_RURAL_F14A;
+				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
+					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_RURAL_F14B;
+				}
+			}else if( "P".equals(zona) ){
+				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
+					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_PROVINCIA_F14A;
+				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
+					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_PROVINCIA_F14B;
+				}
+			}else if( "L".equals(zona) ){
+				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
+					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_LIMA_F14A;
+				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
+					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_LIMA_F14B;
+				}
+			}
+  			
+  			List<VariacionCostosBean> listaCostos =commonService.obtenerVariacionCostosByGrupoinfoFormatoConceptofinal(idGrupo, formato, valorConceptoConcatenado);
+  			
+  			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
+  			
+  			//List<VariacionCostosBean> listaVariacionCostos = new ArrayList<VariacionCostosBean>();
+  			
+  			String listaValores = convertirListaValores(listaCostos);
+  			
   			
   			//obj.setCadenaVariacion(listaValores);
   			
   			model.addAttribute("cadenaValorVariacion", listaValores);
   			
-  			
   			jsonObj.put("resultado", "OK");
+  			
+  			//listaValores = "[[[1,2],[3,4],[5,6]]]";
+  			
   			jsonObj.put("cadena", listaValores);
+  			jsonObj.put("promedio",promedio(listaCostos));
   			
   			PrintWriter pw = response.getWriter();
 		    pw.write(jsonObj.toString());
@@ -214,13 +282,6 @@ public class VariacionCostosController {
 			logger.error(e.getMessage());
 		}
 	}	
-	
-	private String toStringListJSON(List<VariacionCostosBean> lista) {
-		Serializer serializer = new JsonSerializer();
-		Object result = serializer.serialize(lista);
-		String data = String.valueOf(result);
-		return data;
-	}
 	
 	public String convertirListaValores(List<VariacionCostosBean> lista){
 		String cadena="";
@@ -245,4 +306,21 @@ public class VariacionCostosController {
 		cadena = cadena + fin;
 		return cadena;
 	}
+	
+	public String promedio(List<VariacionCostosBean> lista){
+		String promedio = "";
+		BigDecimal suma = new BigDecimal(0);
+		
+		if(lista!=null && lista.size()>0){
+			for (VariacionCostosBean var : lista) {
+				suma = suma.add(new BigDecimal(var.getValor()));
+			}
+			promedio = suma.divide(new BigDecimal(lista.size()),2,RoundingMode.HALF_UP).toString();
+		}
+		if( "".equals(promedio) ){
+			promedio = "0";
+		}
+		return promedio;
+	}
+	
 }
