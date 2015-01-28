@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/jsps/gart/ext/extVariacionCostos.jsp"%>
+<%@include file="/WEB-INF/jsps/gart/ext/extHistoricoCostos.jsp"%>
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/fise-projects-portlet/js/fise.js"></script>
@@ -54,7 +54,8 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Distribuidora Eléctrica:</output></td>
 											<td>
-												 <form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 300px;">															
+												 <form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 300px;">	
+												 	<form:option value="NAC">Nacional</form:option>														
 												    <form:options items="${historicoCostosBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 												</form:select>	
 											</td>

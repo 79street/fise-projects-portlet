@@ -154,10 +154,11 @@ var historicoCostos= {
 				      //series:[{color:'#5FAB78'}],
 				      series:[ 
 				              {
-				                showLine:false, 
+				                //showLine:false, 
+				                showMarker:false,
 				                //markerOptions: { size: 8, style:'diamond' },
 				                pointLabels:{
-					                  show: true,
+					                  show: false,
 					                  //labels:['ADIL', 'ELNO', 'EDLN', 'LDS', 'ELS','ABC','XXX']
 					            }
 				              }
