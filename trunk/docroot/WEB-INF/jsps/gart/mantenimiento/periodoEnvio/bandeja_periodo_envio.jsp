@@ -296,7 +296,7 @@ $(document).ready(function () {
 										     </tr>
 																						
 											<tr>
-											 <td><label style="font-size: 12px; font-weight: bold">Envío con Obs:</label>
+											 <td><label style="font-size: 12px; font-weight: bold">Envío Def. con Obs:</label>
 											 </td>
 											 <td>											 
 											     <input type="radio"	name="flagEnvioObs"
