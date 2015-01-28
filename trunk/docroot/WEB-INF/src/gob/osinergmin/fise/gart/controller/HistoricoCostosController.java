@@ -109,7 +109,7 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
 		String inicio="[[";
 		String fin="]]";
 		String coma=",";
-		//String apostrofe="'";
+		String apostrofe="'";
 		String corcheteInicio="[";
 		String corcheteFin="]";
 		cadena = cadena + inicio;
@@ -125,9 +125,9 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
 				
 				if(primero){
 					primero=false;
-					cadena=cadena+corcheteInicio+hist.getPeriodo()+coma+cociente+corcheteFin;
+					cadena=cadena+corcheteInicio+apostrofe+hist.getPeriodo()+apostrofe+coma+cociente+corcheteFin;
 				}else{
-					cadena=cadena+coma+corcheteInicio+hist.getPeriodo()+coma+cociente+corcheteFin;
+					cadena=cadena+coma+corcheteInicio+apostrofe+hist.getPeriodo()+apostrofe+coma+cociente+corcheteFin;
 				}
 			}
 		}
