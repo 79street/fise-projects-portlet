@@ -23,5 +23,6 @@
 		<portlet id="gartCargoFijo"/>
 		<portlet id="gartResumenCostos"/>
 		<portlet id="gartVariacionCostos"/>
+		<portlet id="gartHistoricoCostos"/>
 	</category>
 </display>

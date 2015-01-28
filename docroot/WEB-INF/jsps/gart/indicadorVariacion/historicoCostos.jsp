@@ -16,15 +16,14 @@
 
 <script type="text/javascript">
 $(document).ready(function () {	
-	variacionCostos.init();
+	historicoCostos.init();
 });
 </script>
            
 
            
-<form:form method="POST" style="padding:17px;padding-top:0px;" modelAttribute="variacionCostosBean">
+<form:form method="POST" style="padding:17px;padding-top:0px;" modelAttribute="historicoCostosBean">
             
-             	
 <div id="d_filtro" class="net-frame-listado"> 
 		<div id="d_filtro">
 			<div id="div_contenido" >
@@ -53,41 +52,22 @@ $(document).ready(function () {
 											<td colspan="4"></td>
 										</tr>
 										<tr>
-											<td><output>Grupo de Información:</output></td>
+											<td><output>Distribuidora Eléctrica:</output></td>
 											<td>
-												 <form:select path="grupoInfoBusq" cssClass="select" cssStyle="width: 200px;">															
-												    <form:options items="${variacionCostosBean.listaGrupoInfo}"  itemLabel="descripcion" itemValue="idGrupoInformacion"/>
+												 <form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 300px;">															
+												    <form:options items="${historicoCostosBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 												</form:select>	
 											</td>
 											
 											<td><output>Formato:</output></td>
 											<td>
 												<form:select path="formatoBusq" cssClass="select" cssStyle="width: 200px;">
-													<form:option value="F14A">F14A</form:option>
-													<form:option value="F14B">F14B</form:option>
+													<form:option value="F12A">F12A</form:option>
+													<form:option value="F12B">F12B</form:option>
 												</form:select>
 											</td>							
 										</tr>
-										<tr height="10px">
-											<td colspan="4"></td>
-										</tr>
-										<tr>
-										   <td><output>Zona:</output></td>											
-										    <td>
-												<form:select path="zonaBusq" cssClass="select" cssStyle="width: 200px;">
-													<form:option value="R">Rural</form:option>
-													<form:option value="P">Urbano Provincias</form:option>
-													<form:option value="L">Urbano Lima</form:option>
-												</form:select>
-											</td>		
 										
-											<td><output>Concepto:</output></td>
-											<td>												
-												 <form:select path="conceptoBusq" cssClass="select" cssStyle="width: 373px;">	
-												</form:select>													
-											</td>		
-																													
-										</tr>
 										<tr height="10px">
 											<td colspan="4"></td>
 										</tr>
