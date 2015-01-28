@@ -1007,13 +1007,13 @@ var notificarValidar= {
 					},
 					success: function(data) {				
 						if (data.resultado == 'OK'){
-							var addhtml2='Datos procesados satisfactoriamente';
+							var addhtml2='Validación Procesada satisfactoriamente';
 							notificarValidar.dialogMessageContent.html(addhtml2);
 							notificarValidar.dialogMessage.dialog("open");
 							notificarValidar.botonBuscar.trigger('click');
 							notificarValidar.initBlockUI();					
 					    }else if(data.resultado == 'NINGUNO'){
-					    	var addhtmNinguno='No existe ningún registro para procesar los datos';					
+					    	var addhtmNinguno='No existe ningún registro para Procesar la Validación de los datos';					
 							notificarValidar.dialogInfoContent.html(addhtmNinguno);
 							notificarValidar.dialogInfo.dialog("open");					    	
 					    	notificarValidar.botonBuscar.trigger('click');
