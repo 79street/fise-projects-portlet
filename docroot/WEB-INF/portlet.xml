@@ -633,7 +633,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>INDICADOR: VARIACIÓN DE COSTOS ESTÁNDARES RESPECTO AL PROMEDIO</title>
+			<title>VARIACIÓN DE COSTOS</title>
 			<short-title>GartVariacionCostos</short-title>
 			<keywords>GartVariacionCostos</keywords>
 		</portlet-info>
