@@ -409,7 +409,7 @@ var fiseGrupoInformacion= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='El Grupo de Información fue Desactivado con éxito.';					
+						var addhtml2='El Grupo de Información fue Desactivado satisfactoriamente.';					
 						fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 						fiseGrupoInformacion.dialogMessage.dialog("open");
 						fiseGrupoInformacion.buscarGrupoInformacion();
