@@ -446,7 +446,13 @@ var formato14A= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		    	   var ids = formato14A.tablaResultados.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+			       }else{			    	
+			    	formato14A.dialogMessageInfoContent.html('No existe información para exportar a Excel');
+					formato14A.dialogMessageInfo.dialog("open");
+			       }    	   
 		       } 
 		}); 
 	},
@@ -2121,14 +2127,26 @@ var formato14A= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		    	   var ids = formato14A.tablaObservacion.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+			       }else{			    	
+			    	formato14A.dialogMessageInfoContent.html('No existe información para exportar a Excel');
+					formato14A.dialogMessageInfo.dialog("open");
+			       }   	    	   
 		       } 
 		}); 
 		formato14A.tablaObservacion.jqGrid('navButtonAdd',formato14A.paginadoObservacion,{
 		       caption:"Exportar a Pdf",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		    	   formato14A.<portlet:namespace/>mostrarReporteValidacion();
+		    	   var ids = formato14A.tablaObservacion.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   formato14A.<portlet:namespace/>mostrarReporteValidacion();   
+			       }else{			    	
+			    	formato14A.dialogMessageInfoContent.html('No existe información para exportar a Pdf');
+					formato14A.dialogMessageInfo.dialog("open");
+			       }     	   
 		       } 
 		});
 	},

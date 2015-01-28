@@ -886,7 +886,13 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		    	   var ids = formato12C.tablaResultados.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+			       }else{			    	
+			    	formato12C.dialogMessageInfoCrudContent.html('No existe información para exportar a Excel');
+					formato12C.dialogMessageInfoCrud.dialog("open");
+			       }		    	   
 		       } 
 		}); 
 	},
@@ -1007,7 +1013,13 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=0")%>';
+		    	   var ids = formato12C.tablaImplementacion.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=0")%>';  
+			       }else{			    	
+			    	formato12C.dialogMessageInfoCrudContent.html('No existe información para exportar a Excel');
+					formato12C.dialogMessageInfoCrud.dialog("open");
+			       }    	   
 		       } 
 		}); 
 	},
@@ -1128,7 +1140,13 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=1")%>';
+		    	   var ids = formato12C.tablaMensual.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=1")%>';  
+			       }else{			    	
+			    	formato12C.dialogMessageInfoCrudContent.html('No existe información para exportar a Excel');
+					formato12C.dialogMessageInfoCrud.dialog("open");
+			       }    	   
 		       } 
 		}); 
 	},
@@ -1229,7 +1247,13 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=0")%>';
+		    	   var ids = formato12C.tablaImplementacionView.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=0")%>';  
+			       }else{			    	
+			    	formato12C.dialogMessageInfoCrudContent.html('No existe información para exportar a Excel');
+					formato12C.dialogMessageInfoCrud.dialog("open");
+			       }    	   
 		       } 
 		}); 
 	},
@@ -1329,7 +1353,13 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=1")%>';
+		    	   var ids = formato12C.tablaMensualView.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus"+"?etapaEjec=1")%>';  
+			       }else{			    	
+			    	formato12C.dialogMessageInfoCrudContent.html('No existe información para exportar a Excel');
+					formato12C.dialogMessageInfoCrud.dialog("open");
+			       }  	   
 		       } 
 		}); 
 	},
@@ -2024,14 +2054,26 @@ var formato12C= {
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		    	   var ids = formato12C.tablaObservacion.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';  
+			       }else{			    	
+			    	formato12C.dialogMessageInfoCrudContent.html('No existe información para exportar a Excel');
+					formato12C.dialogMessageInfoCrud.dialog("open");
+			       }    	   
 		       } 
 		}); 
 		formato12C.tablaObservacion.jqGrid('navButtonAdd',formato12C.paginadoObservacion,{
 		       caption:"Exportar a Pdf",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		    	   formato12C.<portlet:namespace/>mostrarReporteValidacion();
+		    	   var ids = formato12C.tablaObservacion.jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   formato12C.<portlet:namespace/>mostrarReporteValidacion();  
+			       }else{			    	
+			    	formato12C.dialogMessageInfoCrudContent.html('No existe información para exportar a Pdf');
+					formato12C.dialogMessageInfoCrud.dialog("open");
+			       }   	   
 		       } 
 		});
 	},

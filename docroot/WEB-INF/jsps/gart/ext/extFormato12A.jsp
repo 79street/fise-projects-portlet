@@ -1014,7 +1014,13 @@ function buildGrids() {
 	       caption:"Exportar a Excel",
 	       buttonicon: "ui-icon-bookmark",
 	       onClickButton : function () {
-	           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+	    	   var ids = jQuery("#grid_formato").jqGrid('getDataIDs');
+		       if(ids!=0){
+		    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+		       }else{	
+				$("#dialog-message-info-content").html('No existe información para exportar a Excel');
+				$("#dialog-message-info").dialog( "open" );
+		       }	          
 	       } 
 	}); 
 }
@@ -1764,14 +1770,26 @@ function buidGridsObservacion(){
 		       caption:"Exportar a Excel",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		           location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';
+		    	   var ids = jQuery("#grid_observacion").jqGrid('getDataIDs');
+			       if(ids!=0){
+			    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
+			       }else{	
+					$("#dialog-message-info-content").html('No existe información para exportar a Excel');
+					$("#dialog-message-info").dialog( "open" );
+			       }	          
 		       } 
 		});
 		jQuery("#grid_observacion").jqGrid('navButtonAdd','#pager_observacion',{
 		       caption:"Exportar a Pdf",
 		       buttonicon: "ui-icon-bookmark",
 		       onClickButton : function () {
-		    	   <portlet:namespace/>mostrarReporteValidacion();
+		    	   var ids = jQuery("#grid_observacion").jqGrid('getDataIDs');
+			       if(ids!=0){
+			    	   <portlet:namespace/>mostrarReporteValidacion();   
+			       }else{	
+					$("#dialog-message-info-content").html('No existe información para exportar a Pdf');
+					$("#dialog-message-info").dialog( "open" );
+			       }	   	   
 		       } 
 		});
 }
