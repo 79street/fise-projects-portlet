@@ -1225,11 +1225,15 @@
 			
             if(show){
 				//formato12B.dlgConfirmacion.html(msj);
-				if(numModal == 1){
-					
+				if(numModal == 1){					
 					formato12B.dialogMessageConfirmContent.html(msj);
-					formato12B.dialogMessageConfirm.dialog("open");	
-					
+					formato12B.dialogMessageConfirm.dialog("open");
+					codEmp = emp;
+					mesPre = mes;
+					anioPre= anio;
+					codEtapa = etapa;
+					mesEjecu= mesEjec;
+					anioEjecu = anioEjec;				
 					/*formato12B.dlgConfirmacion.dialog({ 
 				     	title:"Mensaje de Confirmaci&oacute;n",
 				     	height:150,
@@ -1473,7 +1477,7 @@
 			
 		},
 		
-		deleteFormato:function(emp,mes,anio,etapa,mesEjec,anioEjec,dlg){
+		deleteFormato:function(emp,mes,anio,etapa,mesEjec,anioEjec){
 		
 			jQuery.ajax({	
 				url: formato12B.urlDeleteFormato,
@@ -1493,7 +1497,7 @@
 					
 					if(data == '1' ){
 						//formato12B.btnBuscar.trigger('click');
-						formato12B.lblMessageInicial.html("El registro selecionado para el Formato 12B se eliminó satisfactoriamente");
+						formato12B.lblMessageInicial.html("El registro seleccionado del Formato 12B se eliminó satisfactoriamente.");
 						formato12B.dialogMessageGeneralInicial.dialog("open");
 						
 						
@@ -1770,8 +1774,8 @@
 				autoOpen: false,
 				width: 450,
 				buttons: {
-					"Si": function() {
-						formato12B.deleteFormato(emp, mes, anio, etapa,mesEjec,anioEjec, formato12B.dlgConfirmacion);
+					"Si": function() {						
+						formato12B.deleteFormato(codEmp, mesPre, anioPre, codEtapa,mesEjecu,anioEjecu);
 						$(this).dialog("close");
 					},
 					"No": function() {				

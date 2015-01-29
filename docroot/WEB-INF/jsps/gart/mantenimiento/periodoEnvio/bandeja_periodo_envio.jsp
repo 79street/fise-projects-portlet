@@ -103,10 +103,10 @@ $(document).ready(function () {
 											<td>
 												<form:select path="etapaBusq" cssClass="select" cssStyle="width: 140px;">
 													<form:option value="SOLICITUD">SOLICITUD</form:option>
-													<form:option value="LEV.OBS">LEV.OBS</form:option>
-													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
+													<form:option value="LEV.OBS">LEV.OBS</form:option>													
 													<form:option value="RECONOCIDO">RECONOCIDO</form:option>
 													<form:option value="ESTABLECIDO">ESTABLECIDO</form:option>
+													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
 												</form:select>
 											</td>
 											<td><output>Habilitado Envio:</output></td>
