@@ -1844,6 +1844,11 @@ function <portlet:namespace/>envioDefinitivo(){
 				$("#dialog-message-error-content").html(addhtmEmail);
 				$("#dialog-message-error").dialog( "open" );					
 				initBlockUI();
+			}else if(data.resultado == "OBSERVACION"){						
+				var addhtmObs = 'No se puede relizar el Envío Definitivo del Formato 12A, primero debe subsanar las observaciones.';				
+				$("#dialog-message-info-content").html(addhtmObs);
+				$("#dialog-message-info").dialog( "open" );					
+				initBlockUI();	
 			}else{						
 				var addhtmError='Error al realizar el Envio Definitivo del Formato 12A.';					
 				$("#dialog-message-error-content").html(addhtmError);

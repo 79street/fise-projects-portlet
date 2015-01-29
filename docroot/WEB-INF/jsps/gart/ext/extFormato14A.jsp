@@ -2077,7 +2077,7 @@ var formato14A= {
 				<portlet:namespace />nombreReporte: 'formato14A',
 				<portlet:namespace />nombreArchivo: 'formato14A',
 				<portlet:namespace />tipoArchivo: '0'//PDF
-			},
+			},			
 			success : function(data) {
 				if(data.resultado == "OK"){
 					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;					
@@ -2088,6 +2088,11 @@ var formato14A= {
 					var addhtmEmail = data.correo;					
 					formato14A.dialogMessageErrorContent.html(addhtmEmail);
 					formato14A.dialogMessageError.dialog("open");
+					formato14A.initBlockUI();
+				}else if(data.resultado == "OBSERVACION"){						
+					var addhtmObs = 'No se puede relizar el Envío Definitivo del Formato 14A, primero debe subsanar las observaciones.';				
+					formato14A.dialogMessageInfoContent.html(addhtmObs);
+					formato14A.dialogMessageInfo.dialog("open");
 					formato14A.initBlockUI();
 				}else{								
 					var addhtmError='Error al realizar el Envío Definitivo del Formato 14A.';					

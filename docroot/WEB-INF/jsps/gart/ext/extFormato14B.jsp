@@ -2193,7 +2193,7 @@ var formato14B= {
 				<portlet:namespace />nombreReporte: 'formato14B',
 				<portlet:namespace />nombreArchivo: 'formato14B',
 				<portlet:namespace />tipoArchivo: '0'//PDF
-			},
+			},			
 			success : function(data) {
 				if(data.resultado == "OK"){
 					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;
@@ -2205,6 +2205,11 @@ var formato14B= {
 					formato14B.dialogMessageErrorContent.html(addhtmEmail);
 					formato14B.dialogMessageError.dialog("open");
 					formato14B.initBlockUI();					
+				}else if(data.resultado == "OBSERVACION"){						
+					var addhtmObs = 'No se puede relizar el Envío Definitivo del Formato 14B, primero debe subsanar las observaciones.';				
+					formato14B.dialogMessageInfoContent.html(addhtmObs);
+					formato14B.dialogMessageInfo.dialog("open");
+					formato14B.initBlockUI();
 				}else{								
 					var addhtmError='Error al realizar el Envio Definitivo del Formato 14B.';					
 					formato14B.dialogMessageErrorContent.html(addhtmError);

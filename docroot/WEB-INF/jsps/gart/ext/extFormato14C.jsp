@@ -395,7 +395,9 @@ var formato14C= {
 				formato14C.confirmarEnvioDefinitivoF14C();
 			});
 			
-			formato14C.botonActaEnvio.click(function() {formato14C.<portlet:namespace/>mostrarReporteActaEnvio();});
+			formato14C.botonActaEnvio.click(function() {
+				formato14C.<portlet:namespace/>mostrarReporteActaEnvio();
+			});
 			
 			formato14C.botonReportePdf.click(function() {
 				formato14C.<portlet:namespace/>mostrarReportePdfF14C();
@@ -3195,8 +3197,13 @@ var formato14C= {
 						formato14C.dialogMessageReport.dialog("open");
 						formato14C.initBlockUI();					
 					}else if(data.resultado == "EMAIL"){						
-						var addhtmEmail = data.Correo;				
-						formato14C.dialogInfoContent.html(addhtmEmail);
+						var addhtmEmail = data.correo;				
+						formato14C.dialogErrorContentF14C.html(addhtmEmail);
+						formato14C.dialogErrorF14C.dialog("open");					
+						formato14C.initBlockUI();	
+					}else if(data.resultado == "OBSERVACION"){						
+						var addhtmObs = 'No se puede relizar el Envío Definitivo del Formato 14C, primero debe subsanar las observaciones.';				
+						formato14C.dialogInfoContent.html(addhtmObs);
 						formato14C.dialogInfo.dialog("open");					
 						formato14C.initBlockUI();	
 					}else{						

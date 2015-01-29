@@ -1665,6 +1665,11 @@
 						formato12B.dialogMessageErrorDetalleContent.html(addhtmEmail);
 						formato12B.dialogMessageErrorDetalle.dialog("open");
 						formato12B.initBlockUI();
+					}else if(data.resultado == "OBSERVACION"){						
+						var addhtmObs = 'No se puede relizar el Envío Definitivo del Formato 12B, primero debe subsanar las observaciones.';				
+						formato12B.dialogMessageInfoContent.html(addhtmObs);
+						formato12B.dialogMessageInfo.dialog("open");				
+						formato12B.initBlockUI();
 					}else{						
 						var addhtmError='Error al realizar el Envio Definitivo del Formato 12B.';					
 						formato12B.dialogMessageErrorDetalleContent.html(addhtmError);
