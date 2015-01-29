@@ -12,6 +12,7 @@
 <script type="text/javascript" src="/fise-projects-portlet/js/third-party/jqplot/jqplot.canvasTextRenderer.min.js"></script>
 <script type="text/javascript" src="/fise-projects-portlet/js/third-party/jqplot/jqplot.canvasOverlay.min.js"></script>
 <script type="text/javascript" src="/fise-projects-portlet/js/third-party/jqplot/jqplot.canvasAxisTickRenderer.min.js"></script>
+<script type="text/javascript" src="/fise-projects-portlet/js/third-party/jqplot/jqplot.canvasAxisLabelRenderer.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/fise-projects-portlet/css/third-party/jquery.jqplot.min.css" />
 
 <script type="text/javascript">
@@ -93,7 +94,7 @@ $(document).ready(function () {
 							<td align="center">
 								<!-- nuevo div para mostrar la grafica -->
 								<div id="divDispersionHid" style="overflow: auto; width: 100%; height:400px; padding: 4px;">
-					            	<div id="chkDispersionHid" style="width:700px; height:400px;">
+					            	<div id="chkDispersionHid" style="width:1000px; height:400px;">
 					            	</div>
 				           		</div>
 								

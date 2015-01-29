@@ -393,7 +393,7 @@
 				</c:if>
 				<!-- dialogo upload txt -->
 
-				<div id="<portlet:namespace/>Formato13AGartController"
+				<div id="<portlet:namespace/>dialog-form-cargaTxt"
 					class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable"
 					style="display: none; z-index: 1002; position: absolute; width: 400px;">
 					<div

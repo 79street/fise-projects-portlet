@@ -116,7 +116,7 @@ var historicoCostos= {
 						if (data.resultado == "OK"){
 							//alert(data.cadena);
 							//historicoCostos.i_cadenaVariacion.val(data.cadena);
-							historicoCostos.plotearImagen(data.cadena, data.titulo);
+							historicoCostos.plotearImagen(data.cadena, data.titulo, data.tituloEjeY);
 						}
 						historicoCostos.initBlockUI();
 					},error : function(){
@@ -146,50 +146,78 @@ var historicoCostos= {
 			});
 		},	*/	
 		
-		plotearImagen : function(valor,titulo){
+		plotearImagen : function(valor,titulo,tituloEjeY){
 			//n="[[['ADIL', 7], ['ELNO', 9], ['EDLN', 15],['LDS', 12], ['ELS', 3],['ABC', 6], ['XXX', 18]]]";
-			var plot1 = $.jqplot('chkDispersionHid', eval(valor), {
-				 //seriesColors: ["#4177C9","#C94E41" ],
-				     title: titulo,
-				      //series:[{color:'#5FAB78'}],
-				      series:[ 
-				              {
-				                //showLine:false, 
-				                showMarker:false,
-				                //markerOptions: { size: 8, style:'diamond' },
-				                pointLabels:{
-					                  show: false,
-					                  //labels:['ADIL', 'ELNO', 'EDLN', 'LDS', 'ELS','ABC','XXX']
-					            }
-				              }
-				       ],
-				      axesDefaults: {
-				          tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
-				          tickOptions: {
-				            //angle: -30,
-				            fontSize: '8pt'
-				          }
-				      },
-				      axes: {
-				    	  xaxis: {
-				    		  renderer: $.jqplot.CategoryAxisRenderer,
-				    		  //label:'Distribuidora Eléctrica',
-				    		  fontSize: '6pt'
-				    	  },
-				    	  yaxis: {
-				    		  //label:'Costo Unitario (S/.)',
-				    		  fontSize: '6pt'
-				    	  }
-				      },/*,
-				      legend: {
-				    	    show: true,
-				            location: 'e',
-				            placement: 'outside'
-				      }*/
-				      
-				    }
-			);
-			plot1.replot( { resetAxes: true } );
+			//var salto="\n";
+			if( valor=="[[]]" ){
+				var addhtmError='No hay información disponible para generar el gráfico';					
+				historicoCostos.dialogValidacionContent.html(addhtmError);
+				historicoCostos.dialogValidacion.dialog("open");
+			}else{
+				var plot1 = $.jqplot('chkDispersionHid', eval(valor), {
+					 //seriesColors: ["#4177C9","#C94E41" ],
+					     title: 'Histórico de Costos: '+titulo,
+					      //series:[{color:'#5FAB78'}],
+					      series:[ 
+					              {
+					                //showLine:false, 
+					                showMarker:false,
+					                //markerOptions: { size: 8, style:'diamond' },
+					                pointLabels:{
+						                  show: false,
+						                  //labels:['ADIL', 'ELNO', 'EDLN', 'LDS', 'ELS','ABC','XXX']
+						            }
+					              }
+					       ],
+					      /*axesDefaults: {
+					          tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+					          tickOptions: {
+					            //angle: -30,
+					            fontSize: '8pt'
+					          }
+					      },*/
+					      axes: {
+					    	  xaxis: {
+					    		  //renderer: $.jqplot.CategoryAxisRenderer,
+					    		  //label:'Distribuidora Eléctrica',
+					    		  //fontSize: '6pt'
+					    		  fontSize: '7pt',
+				    			  renderer: $.jqplot.CategoryAxisRenderer,
+				    	          label: 'Periodo',
+				    	          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+				    	          tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+				    	          tickOptions: {
+				    	              angle: -90,
+				    	              //fontFamily: 'Courier New',
+				    	              fontSize: '7pt'
+				    	          }
+					      
+					    	  },
+					    	  yaxis: {
+					    		  //label:'Costo Unitario (S/.)',
+					    		  //fontSize: '6pt'
+					    		  fontSize: '7pt',
+					    		  label: tituloEjeY,
+					              labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+					              tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+				    	          tickOptions: {
+				    	              //angle: -90,
+				    	              //fontFamily: 'Courier New',
+				    	              fontSize: '7pt'
+				    	          }
+					    	  }
+					      },/*,
+					      legend: {
+					    	    show: true,
+					            location: 'e',
+					            placement: 'outside'
+					      }*/
+					      
+					    }
+				);
+				plot1.replot( { resetAxes: true } );
+			}
+			
 		},
 		
 		//DIALOGOS
