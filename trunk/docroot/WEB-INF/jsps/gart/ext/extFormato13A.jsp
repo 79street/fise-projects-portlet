@@ -384,7 +384,7 @@ var formato13A= {
 		 this.dialogMessageGeneral=$("#dialogMessageGeneral");
          this.lblMessage=$("#lblMessage");
          
-         this.dialogMessageInfoCrud=$("#<portlet:namespace/>dialog-message-info-crud");
+        this.dialogMessageInfoCrud=$("#<portlet:namespace/>dialog-message-info-crud");
  		this.dialogMessageInfoCrudContent=$("#<portlet:namespace/>dialog-message-info-content-crud");
  		this.dialogMessageWarningCrud=$("#<portlet:namespace/>dialog-message-warning-crud");
  		this.dialogMessageWarningCrudContent=$("#<portlet:namespace/>dialog-message-warning-content-crud");
@@ -1548,13 +1548,13 @@ var formato13A= {
 			dataType : 'json',
 			data : {
 				//<portlet:namespace />codEmpresa: formato13A.f_empresa.val(),
-				//<portlet:namespace />periodoEnvio: formato13A.f_periodoEnvio.val(),
+				<portlet:namespace />peridoDeclaracion: formato13A.peridoDeclaracion.val(),
 				//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
 				//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato13A',
 				<portlet:namespace />nombreArchivo: 'formato13A',
 				<portlet:namespace />tipoArchivo: '0'//PDF
-			},
+			},			
 			success : function(data) {
 				if(data.resultado == "OK"){
 					var addhtml='El Envío Definitivo se realizó satisfactoriamente a los siguientes correos electrónicos: '+data.correo;					
@@ -1566,6 +1566,11 @@ var formato13A= {
 					formato13A.dialogMessageErrorCrudContent.html(addhtmEmail);
 					formato13A.dialogMessageErrorCrud.dialog("open");
 					formato13A.unblockUI();
+				}else if(data.resultado == "OBSERVACION"){						
+					var addhtmObs = 'No se puede relizar el Envío Definitivo del Formato 13A, primero debe subsanar las observaciones.';				
+					formato13A.dialogMessageInfoCrudContent.html(addhtmObs);
+					formato13A.dialogMessageInfoCrud.dialog("open");
+					formato13A.unblockUI();				
 				}else{								
 					var addhtmError='Error al realizar el Envío Definitivo del Formato 13A.';					
 					formato13A.dialogMessageErrorCrudContent.html(addhtmError);

@@ -1999,7 +1999,7 @@ var formato12C= {
 			dataType : 'json',
 			data : {
 				//<portlet:namespace />codEmpresa: formato12C.f_empresa.val(),
-				//<portlet:namespace />periodoEnvio: formato12C.f_periodoEnvio.val(),
+				<portlet:namespace />periodoEnvioHidden: formato12C.periodoEnvio.val(),
 				//<portlet:namespace />anoInicioVigencia: $('#anioInicioVigencia').val(),
 				//<portlet:namespace />anoFinVigencia: $('#anioFinVigencia').val(),
 				<portlet:namespace />nombreReporte: 'formato12C',
@@ -2017,6 +2017,11 @@ var formato12C= {
 					formato12C.dialogMessageErrorCrudContent.html(addhtmEmail);
 					formato12C.dialogMessageErrorCrud.dialog("open");
 					formato12C.unblockUI();
+				}else if(data.resultado == "OBSERVACION"){						
+					var addhtmObs = 'No se puede relizar el Envío Definitivo del Formato 12C, primero debe subsanar las observaciones.';				
+					formato12C.dialogMessageInfoCrudContent.html(addhtmObs);
+					formato12C.dialogMessageInfoCrud.dialog("open");
+					formato12C.unblockUI();					
 				}else{								
 					var addhtmError='Error al realizar el Envío Definitivo del Formato 12C.';					
 					formato12C.dialogMessageErrorCrudContent.html(addhtmError);
