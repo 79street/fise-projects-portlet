@@ -47,7 +47,7 @@ function completarDecimal(id,decimal){
 		}
 	}
 
-  function soloNumerosDecimales(e, tipo, id,entero,decimal){
+  function soloNumerosDecimales_original(e, tipo, id,entero,decimal){
 	var TIPO_NUMERO_ENTERO  = 1;
 	var TIPO_NUMERO_DECIMAL = 2;
 	var charCode;
@@ -132,6 +132,122 @@ function completarDecimal(id,decimal){
 		return true;
 	}              
 }
+  
+  function soloNumerosDecimalescopia(e, tipo, id,entero,decimal) {
+	   console.debug('ingresando a decimales formateo');
+	    var field = document.getElementById(id);
+	    key = e.keyCode ? e.keyCode : e.which;	   
+	    // backspace
+	    if (key == 8) {
+	    	 console.debug('hola 1:  ');
+	    	return true;
+	    }	  
+	    // 0-9 a partir del .decimal  
+	    if (field.value != "") {
+	        if ((field.value.indexOf(".")) > 0) {
+	            //si tiene un punto valida dos digitos en la parte decimal
+	            if (key > 47 && key < 58 ) {
+	                if (field.value == ""){
+	                	 console.debug('hola 1');
+	                	return true;
+	                }              
+	                regexp = /[0-9]{2}$/;
+	                return !(regexp.test(field.value));
+	            }         
+	        }        
+	    }
+	    // 0-9 
+	    if (key > 47 && key < 58) {
+	        if (field.value == "") return true;
+	        regexp = /[0-9]{7}/;      
+	        return !(regexp.test(field.value));
+	    } 
+	    // .
+	    if (key == 46) {
+	        if (field.value == "") return false;
+	        regexp = /^[0-9]+$/;
+	        return regexp.test(field.value);
+	    }
+	    if(key==9){
+	    	//tab cambia focus
+	    	return true;
+	    }else{
+	    	 // other key
+		    return false;	
+	    }	   
+	}  
+  
+  function soloNumerosDecimales(e, tipo, id,entero,decimal) {
+	   console.debug('ingresando a decimales formateo');
+	    var field = document.getElementById(id);
+	    var TIPO_NUMERO_ENTERO  = 1;		
+	    key = e.keyCode ? e.keyCode : e.which;
+	    console.debug('KEY : '+key);
+	    // backspace
+	    if (key == 8) {	    	 
+	    	return true;
+	    }
+	    //teclas flecha izquierza y flecha derecha
+	    if (key == 37 || key == 39) {	    	 
+	    	return true;
+	    }	
+	    
+		if( tipo==TIPO_NUMERO_ENTERO ){
+			// 0-9 
+		    if (key > 47 && key < 58) {
+		        if (field.value == "") return true;
+		        regexp = /[0-9]{7}/;      
+		        return !(regexp.test(field.value));
+		    } 
+		    // .
+		    if (key == 46) {
+		         return false;	       
+		    }
+		    if(key==9){
+		    	//tab cambia focus
+		    	return true;
+		    }else{
+		    	 // other key
+			    return false;	
+		    }	   
+		}else{
+			// 0-9 a partir del .decimal  
+		    if (field.value != "") {
+		        if ((field.value.indexOf(".")) > 0) {
+		            //si tiene un punto valida dos digitos en la parte decimal
+		            if (key > 47 && key < 58 ) {
+		                if (field.value == ""){	                	
+		                	return true;
+		                }              
+		                regexp = /[0-9]{2}$/;
+		                return !(regexp.test(field.value));
+		            }         
+		        }        
+		    }
+		    // 0-9 
+		    if (key > 47 && key < 58) {
+		        if (field.value == "") return true;
+		        regexp = /[0-9]{7}/;      
+		        return !(regexp.test(field.value));
+		    } 
+		    // .
+		    if (key == 46) {
+		        if (field.value == "") return false;
+		        regexp = /^[0-9]+$/;
+		        return regexp.test(field.value);
+		    }
+		    if(key==9){
+		    	//tab cambia focus
+		    	return true;
+		    }else{
+		    	 // other key
+			    return false;	
+		    }	   	
+		}    
+	}  
+  
+  
+  
 function trim( cadena ){
 	return cadena.replace(/^\s*|\s*$/g, "");
 }
