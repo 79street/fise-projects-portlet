@@ -272,6 +272,11 @@ public class VariacionCostosController {
   			jsonObj.put("cadena", listaValores);
   			jsonObj.put("promedio",promedio(listaCostos));
   			
+  			String mensajeTitulo = "";
+  			mensajeTitulo = tituloPlot(formato);
+  			
+  			jsonObj.put("titulo",mensajeTitulo);
+  			
   			PrintWriter pw = response.getWriter();
 		    pw.write(jsonObj.toString());
 		    pw.flush();
@@ -303,7 +308,9 @@ public class VariacionCostosController {
 				}
 			}
 		}
-		cadena = cadena + fin;
+		//anadimos una serie vacia para el promedio
+		//cadena = cadena + fin;
+		cadena = cadena + "],[]]";
 		return cadena;
 	}
 	
@@ -321,6 +328,17 @@ public class VariacionCostosController {
 			promedio = "0";
 		}
 		return promedio;
+	}
+	
+	public String tituloPlot(String formato){
+		String titulo = "Variación de Costos Estándares respecto al promedio:";
+		
+		if(FiseConstants.TIPO_FORMATO_14A.equals(formato)){
+			titulo = titulo + "<br> Costos Estándares de Implementación";
+		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
+			titulo = titulo + "<br> Costos Estándares Operativos - Mensual";
+		}
+		return titulo;
 	}
 	
 }

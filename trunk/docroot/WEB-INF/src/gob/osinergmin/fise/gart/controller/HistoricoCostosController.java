@@ -2,8 +2,11 @@ package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.HistoricoCostosBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
+import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
+import gob.osinergmin.fise.util.FechaUtil;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -80,11 +83,16 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
   			String listaValores = convertirListaValores(listaCostos);
   			model.addAttribute("cadenaValorVariacion", listaValores);
   			
-  			
   			jsonObj.put("resultado", "OK");
-  			
   			jsonObj.put("cadena", listaValores);
-  			jsonObj.put("titulo",mapaEmpresa.get(codEmpresa));
+  			
+  			String mensajeTitulo = "";
+  			mensajeTitulo = tituloPlot(codEmpresa, formato);
+  			String mensajeTituloY = "";
+  			mensajeTituloY = tituloEjeYPlot(formato);
+  			
+  			jsonObj.put("titulo",mensajeTitulo);
+  			jsonObj.put("tituloEjeY",mensajeTituloY);
   			
   			PrintWriter pw = response.getWriter();
 		    pw.write(jsonObj.toString());
@@ -125,14 +133,49 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
 				
 				if(primero){
 					primero=false;
-					cadena=cadena+corcheteInicio+apostrofe+hist.getPeriodo()+apostrofe+coma+cociente+corcheteFin;
+					//cadena=cadena+corcheteInicio+apostrofe+hist.getPeriodo()+apostrofe+coma+cociente+corcheteFin;
+					cadena=cadena+corcheteInicio+apostrofe+descripcionPeriodo(hist.getPeriodo())+apostrofe+coma+cociente+corcheteFin;
 				}else{
-					cadena=cadena+coma+corcheteInicio+apostrofe+hist.getPeriodo()+apostrofe+coma+cociente+corcheteFin;
+					//cadena=cadena+coma+corcheteInicio+apostrofe+hist.getPeriodo()+apostrofe+coma+cociente+corcheteFin;
+					cadena=cadena+coma+corcheteInicio+apostrofe+descripcionPeriodo(hist.getPeriodo())+apostrofe+coma+cociente+corcheteFin;
 				}
 			}
 		}
 		cadena = cadena + fin;
 		return cadena;
+	}
+	
+	public String tituloPlot(String codEmpresa, String formato){
+		String titulo = "";
+		if( "NAC".equals(codEmpresa) ){
+			titulo = "NACIONAL";
+		}else{
+			titulo = mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4));
+		}
+		if(FiseConstants.TIPO_FORMATO_12A.equals(formato)){
+			titulo = titulo + "<br> Costo Unitario de Implementación";
+		}else if(FiseConstants.TIPO_FORMATO_12B.equals(formato)){
+			titulo = titulo + "<br> Costo Promedio de Operación";
+		}
+		return titulo;
+	}
+	
+	public String tituloEjeYPlot(String formato){
+		String titulo = "";
+		if(FiseConstants.TIPO_FORMATO_12A.equals(formato)){
+			titulo = titulo + "Costo Unitario";
+		}else if(FiseConstants.TIPO_FORMATO_12B.equals(formato)){
+			titulo = titulo + "Costo Promedio";
+		}
+		return titulo;
+	}
+	
+	public String descripcionPeriodo(String valorPeriodo){
+		String periodo = "";
+		if(valorPeriodo.length()==7){
+			periodo = periodo + FechaUtil.mesLetras(valorPeriodo.substring(5,7))+"-"+valorPeriodo.substring(2,4);
+		}
+		return periodo;
 	}
 	
 	/*public String promedio(List<VariacionCostosBean> lista){
