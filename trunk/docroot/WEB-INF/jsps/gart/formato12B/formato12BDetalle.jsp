@@ -130,7 +130,7 @@
 																				</c:forEach>
 																			</form:select> 
 																			<input id="txtPeriodo" value="${formato12BGartCommand.descMes} - ${formato12BGartCommand.anoPresentacion} / ${formato12BGartCommand.etapa}"
-																		       	type="text" style="display: none; border-radius: 7px; width: 200px;" readonly="readonly" /> 
+																		       	type="text" style="display: none; border-radius: 7px; width: 200px;" disabled="disabled" /> 
 																		       	<form:input path="mesPresentacion" type="hidden" /> 
 																		       	<form:input path="anoPresentacion" type="hidden" /> 
 																				<form:input path="etapa" type="hidden" /> 
@@ -154,7 +154,7 @@
 																				style="width: 50px" maxlength="4" /> <input
 																			id="txtanoEjecucionGasto" type="hidden"
 																			value="${formato12BGartCommand.anoEjecucionGasto}"
-																			style="width: 50px" maxlength="4" readonly="readonly" />
+																			style="width: 50px" maxlength="4" disabled="disabled" />
 																		</td>
 																		<td width="10px"></td>
 																		<td width="110px">Mes de ejecución:</td>
@@ -252,19 +252,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValeImpre" class=""
 											value="${formato12BGartCommand.costoEstandarUnitValeImpre}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled"/></td> 
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValeImpreProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValeImpreProv"
 											value="${formato12BGartCommand.costoEstandarUnitValeImpreProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValeImpreLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValeImpreLim"
 											value="${formato12BGartCommand.costoEstandarUnitValeImpreLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -277,19 +277,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalImpresionVale"
 											value="${formato12BGartCommand.costoTotalImpresionVale}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalImpresionValeProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalImpresionValeProv"
 											value="${formato12BGartCommand.costoTotalImpresionValeProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalImpresionValeLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalImpresionValeLim"
 											value="${formato12BGartCommand.costoTotalImpresionValeLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>
@@ -338,19 +338,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValeRepar"
 											value="${formato12BGartCommand.costoEstandarUnitValeRepar}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValeReparProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValeReparProv"
 											value="${formato12BGartCommand.costoEstandarUnitValeReparProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValeReparLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValeReparLim"
 											value="${formato12BGartCommand.costoEstandarUnitValeReparLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -363,19 +363,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalRepartoValesDomi"
 											value="${formato12BGartCommand.costoTotalRepartoValesDomi}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalRepartoValesDomiProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalRepartoValesDomiProv"
 											value="${formato12BGartCommand.costoTotalRepartoValesDomiProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalRepartoValesDomiLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalRepartoValesDomiLim"
 											value="${formato12BGartCommand.costoTotalRepartoValesDomiLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 
 									<tr>
@@ -428,19 +428,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValDisEl"
 											value="${formato12BGartCommand.costoEstandarUnitValDisEl}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValDisElProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValDisElProv"
 											value="${formato12BGartCommand.costoEstandarUnitValDisElProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValDisElLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValDisElLim"
 											value="${formato12BGartCommand.costoEstandarUnitValDisElLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -453,19 +453,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalEntregaValDisEl"
 											value="${formato12BGartCommand.costoTotalEntregaValDisEl}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalEntregaValDisElProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalEntregaValDisElProv"
 											value="${formato12BGartCommand.costoTotalEntregaValDisElProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalEntregaValDisElLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalEntregaValDisElLim"
 											value="${formato12BGartCommand.costoTotalEntregaValDisElLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 
 									<tr>
@@ -514,19 +514,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValFiCan"
 											value="${formato12BGartCommand.costoEstandarUnitValFiCan}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValFiCanProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValFiCanProv"
 											value="${formato12BGartCommand.costoEstandarUnitValFiCanProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValFiCanLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValFiCanLim"
 											value="${formato12BGartCommand.costoEstandarUnitValFiCanLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -540,19 +540,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalCanjeLiqValeFis"
 											value="${formato12BGartCommand.costoTotalCanjeLiqValeFis}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalCanjeLiqValeFisProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalCanjeLiqValeFisProv"
 											value="${formato12BGartCommand.costoTotalCanjeLiqValeFisProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalCanjeLiqValeFisLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalCanjeLiqValeFisLim"
 											value="${formato12BGartCommand.costoTotalCanjeLiqValeFisLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 
 									<tr>
@@ -601,19 +601,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValDgCan"
 											value="${formato12BGartCommand.costoEstandarUnitValDgCan}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValDgCanProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValDgCanProv"
 											value="${formato12BGartCommand.costoEstandarUnitValDgCanProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitValDgCanLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitValDgCanLim"
 											value="${formato12BGartCommand.costoEstandarUnitValDgCanLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -626,19 +626,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalCanjeLiqValeDig"
 											value="${formato12BGartCommand.costoTotalCanjeLiqValeDig}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalCanjeLiqValeDigProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalCanjeLiqValeDigProv"
 											value="${formato12BGartCommand.costoTotalCanjeLiqValeDigProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalCanjeLiqValeDigLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalCanjeLiqValeDigLim"
 											value="${formato12BGartCommand.costoTotalCanjeLiqValeDigLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>
@@ -686,19 +686,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitAtencion"
 											value="${formato12BGartCommand.costoEstandarUnitAtencion}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitAtencionProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitAtencionProv"
 											value="${formato12BGartCommand.costoEstandarUnitAtencionProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoEstandarUnitAtencionLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoEstandarUnitAtencionLim"
 											value="${formato12BGartCommand.costoEstandarUnitAtencionLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -711,19 +711,19 @@
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalAtencionConsRecl"
 											value="${formato12BGartCommand.costoTotalAtencionConsRecl}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalAtencionConsReclProv" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalAtencionConsReclProv"
 											value="${formato12BGartCommand.costoTotalAtencionConsReclProv}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 										<td align="center"><form:input type="hidden"
 												path="costoTotalAtencionConsReclLim" /> <input
 											style="width: 100px; text-align: right;"
 											id="txtcostoTotalAtencionConsReclLim"
 											value="${formato12BGartCommand.costoTotalAtencionConsReclLim}"
-											type="text" readonly="readonly" /></td>
+											type="text" disabled="disabled" /></td>
 									</tr>
 
 									<tr>

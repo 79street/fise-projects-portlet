@@ -147,9 +147,9 @@
 													<select id="s_etapa" name="s_etapa" style="width:140px;" class="select" >
 														<!-- <option value="">-Seleccione-</option> -->
 														<option value="SOLICITUD">SOLICITUD</option>
-														<option value="LEV.OBS">LEV.OBS</option>
-														<option value="RECONSIDERACION">RECONSIDERACION</option>
+														<option value="LEV.OBS">LEV.OBS</option>														
 														<option value="RECONOCIDO">RECONOCIDO</option>
+														<option value="RECONSIDERACION">RECONSIDERACION</option>
 													</select>
 												</td>
 											</tr>

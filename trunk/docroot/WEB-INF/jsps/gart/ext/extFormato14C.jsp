@@ -1035,7 +1035,7 @@ var formato14C= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='El registro seleccionado del Formato 14C se eliminó con éxito.';					
+						var addhtml2='El registro seleccionado del Formato 14C se eliminó satisfactoriamente.';					
 						formato14C.dialogMessageContent.html(addhtml2);
 						formato14C.dialogMessage.dialog("open");
 						formato14C.buscarF14C();
