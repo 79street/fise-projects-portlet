@@ -1398,139 +1398,155 @@ public class Formato12CGartController {
 				if (i == 0) {
 					cargarListaObservaciones(formato.getFiseFormato12CDs());
 				}
-				if (mapa != null) {
-					mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
-					mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
-					// verificar si ponerlo aca o no
-					mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-					mapa.put("NOMBRE_FORMATO", descripcionFormato);
-					mapa.put("FECHA_ENVIO", FechaUtil.obtenerFechaActual());
-					mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
-					mapa.put("NRO_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
-					mapa.put("MSG_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? FiseConstants.MSG_OBSERVACION_REPORTE_LLENO : FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
-					mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
-					mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
-					// prueba de envio definitivo
-					String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
-					String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
-					mapa.put("CHECKED", dirCheckedImage);
-					mapa.put("UNCHECKED", dirUncheckedImage);
-					boolean cumplePlazo = false;
-					cumplePlazo = commonService.fechaEnvioCumplePlazo(FiseConstants.TIPO_FORMATO_12C, 
-							formato.getId().getCodEmpresa(), 
-							formato.getId().getAnoPresentacion(), 
-							formato.getId().getMesPresentacion(), 
-							formato.getId().getEtapa(), 
-							FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
-					if (cumplePlazo) {
-						mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
-					} else {
-						mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
+				//cambios flag observacion
+				String flagEnvioObs = "";
+				String periodoEnvio = bean.getPeriodoEnvioHidden();
+				logger.info("Periodo para comparar :" +periodoEnvio);
+				List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_12C);
+				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+					if(periodoEnvio.equals(p.getCodigoItem()) ){
+						 flagEnvioObs = p.getFlagEnvioConObservaciones();
+						break;
 					}
-					if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
-					}else{
-						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-					}
-					mapa.put("ETAPA", formato.getId().getEtapa());
 				}
+				if(listaObservaciones!=null && listaObservaciones.size()>0 &&
+			    		FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagEnvioObs)){
+			    	 jsonObj.put("resultado", "OBSERVACION");	
+			    }else{
+			    	if (mapa != null) {
+						mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+						mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+						// verificar si ponerlo aca o no
+						mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+						mapa.put("NOMBRE_FORMATO", descripcionFormato);
+						mapa.put("FECHA_ENVIO", FechaUtil.obtenerFechaActual());
+						mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
+						mapa.put("NRO_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
+						mapa.put("MSG_OBSERVACIONES", (listaObservaciones != null && !listaObservaciones.isEmpty()) ? FiseConstants.MSG_OBSERVACION_REPORTE_LLENO : FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
+						mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
+						mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
+						// prueba de envio definitivo
+						String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
+						String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
+						mapa.put("CHECKED", dirCheckedImage);
+						mapa.put("UNCHECKED", dirUncheckedImage);
+						boolean cumplePlazo = false;
+						cumplePlazo = commonService.fechaEnvioCumplePlazo(FiseConstants.TIPO_FORMATO_12C, 
+								formato.getId().getCodEmpresa(), 
+								formato.getId().getAnoPresentacion(), 
+								formato.getId().getMesPresentacion(), 
+								formato.getId().getEtapa(), 
+								FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
+						if (cumplePlazo) {
+							mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
+						} else {
+							mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
+						}
+						if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+						}else{
+							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
+						}
+						mapa.put("ETAPA", formato.getId().getEtapa());
+					}
 
-				/** REPORTE FORMATO 12C */
-				nombreReporte = "formato12C";
-				nombreArchivo = nombreReporte;
-				directorio = "/reports/" + nombreReporte + ".jasper";
-				File reportFile = new File(session.getServletContext().getRealPath(directorio));
-				byte[] bytes = null;
-				
-				bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
-				
-				if (bytes != null) {
-					// session.setAttribute("bytes1", bytes);
-					//String nombre = nombreArchivo + FiseConstants.EXTENSIONARCHIVO_PDF;
-					String nombre = FormatoUtil.nombreIndividualFormato(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12C);
-					FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
-					if (archivo != null) {
-						FileEntryJSP fileEntryJsp = new FileEntryJSP();
-						fileEntryJsp.setNombreArchivo(nombre);
-						fileEntryJsp.setFileEntry(archivo);
-						listaArchivo.add(fileEntryJsp);
-						valorFormato = true;
-					}
-				}
-				/** REPORTE OBSERVACIONES */
-				if (listaObservaciones != null && listaObservaciones.size() > 0) {
-					nombreReporte = "validacion12";
+					/** REPORTE FORMATO 12C */
+					nombreReporte = "formato12C";
 					nombreArchivo = nombreReporte;
 					directorio = "/reports/" + nombreReporte + ".jasper";
-					File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
-					byte[] bytes2 = null;
-					bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
-					if (bytes2 != null) {
+					File reportFile = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes = null;
+					
+					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
+					
+					if (bytes != null) {
+						// session.setAttribute("bytes1", bytes);
 						//String nombre = nombreArchivo + FiseConstants.EXTENSIONARCHIVO_PDF;
-						String nombre = FormatoUtil.nombreIndividualAnexoObs(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12C);
-						FileEntry archivo2 = fiseUtil.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
-						if (archivo2 != null) {
+						String nombre = FormatoUtil.nombreIndividualFormato(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12C);
+						FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
+						if (archivo != null) {
 							FileEntryJSP fileEntryJsp = new FileEntryJSP();
 							fileEntryJsp.setNombreArchivo(nombre);
-							fileEntryJsp.setFileEntry(archivo2);
+							fileEntryJsp.setFileEntry(archivo);
 							listaArchivo.add(fileEntryJsp);
+							valorFormato = true;
 						}
 					}
-				}
-				/** REPORTE ACTA DE ENVIO */
-				nombreReporte = "gastoMensualIndividualCD";
-				nombreArchivo = nombreReporte;
-				directorio = "/reports/" + nombreReporte + ".jasper";
-				File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
-				byte[] bytes3 = null;
-				bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
-				if (bytes3 != null) {
-					session.setAttribute("bytesActaEnvio", bytes3);
-					//String nombre = nombreArchivo + FiseConstants.EXTENSIONARCHIVO_PDF;
-					String nombre = FormatoUtil.nombreIndividualActaRemision(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12C);
-					FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
-					if (archivo != null) {
-						FileEntryJSP fileEntryJsp = new FileEntryJSP();
-						fileEntryJsp.setNombreArchivo(nombre);
-						fileEntryJsp.setFileEntry(archivo);
-						listaArchivo.add(fileEntryJsp);
-						valorActa = true;
+					/** REPORTE OBSERVACIONES */
+					if (listaObservaciones != null && listaObservaciones.size() > 0) {
+						nombreReporte = "validacion12";
+						nombreArchivo = nombreReporte;
+						directorio = "/reports/" + nombreReporte + ".jasper";
+						File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
+						byte[] bytes2 = null;
+						bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
+						if (bytes2 != null) {
+							//String nombre = nombreArchivo + FiseConstants.EXTENSIONARCHIVO_PDF;
+							String nombre = FormatoUtil.nombreIndividualAnexoObs(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12C);
+							FileEntry archivo2 = fiseUtil.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
+							if (archivo2 != null) {
+								FileEntryJSP fileEntryJsp = new FileEntryJSP();
+								fileEntryJsp.setNombreArchivo(nombre);
+								fileEntryJsp.setFileEntry(archivo2);
+								listaArchivo.add(fileEntryJsp);
+							}
+						}
 					}
-				}
-			    /**actualizamos  la fecha de envio*/
-				String valorActuaizar = "0";
-				if(valorFormato && valorActa){
-					//formatoActualizar =  formatoService.modificarEnvioDefinitivoFormato12CC(bean, formato);
-					valorActuaizar =  formatoService.modificarEnvioDefinitivoFormato12CC(
-							themeDisplay.getUser().getLogin(),
-		    			    themeDisplay.getUser().getLoginIP(), formato);
-				}
-				if(valorActuaizar.equals("1")){
-					if (listaArchivo != null && listaArchivo.size() > 0) {					
-						respuestaEmail= fiseUtil.enviarMailsAdjunto(
-				    			   request,
-				    			   listaArchivo, 
-				    			   fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()),
-				    			   formato.getId().getAnoPresentacion(),
-				    			   formato.getId().getMesPresentacion(),
-				    			   FiseConstants.TIPO_FORMATO_12C,
-				    			   descripcionFormato,
-				    			   FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION,
-				    			   null,
-				    			   null);
+					/** REPORTE ACTA DE ENVIO */
+					nombreReporte = "gastoMensualIndividualCD";
+					nombreArchivo = nombreReporte;
+					directorio = "/reports/" + nombreReporte + ".jasper";
+					File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
+					byte[] bytes3 = null;
+					bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
+					if (bytes3 != null) {
+						session.setAttribute("bytesActaEnvio", bytes3);
+						//String nombre = nombreArchivo + FiseConstants.EXTENSIONARCHIVO_PDF;
+						String nombre = FormatoUtil.nombreIndividualActaRemision(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_12C);
+						FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
+						if (archivo != null) {
+							FileEntryJSP fileEntryJsp = new FileEntryJSP();
+							fileEntryJsp.setNombreArchivo(nombre);
+							fileEntryJsp.setFileEntry(archivo);
+							listaArchivo.add(fileEntryJsp);
+							valorActa = true;
+						}
 					}
-					String[] msnId = respuestaEmail.split("/");
-					if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
-						jsonObj.put("resultado", "OK");	
-						jsonObj.put("correo",msnId[1]);		
+				    /**actualizamos  la fecha de envio*/
+					String valorActuaizar = "0";
+					if(valorFormato && valorActa){
+						//formatoActualizar =  formatoService.modificarEnvioDefinitivoFormato12CC(bean, formato);
+						valorActuaizar =  formatoService.modificarEnvioDefinitivoFormato12CC(
+								themeDisplay.getUser().getLogin(),
+			    			    themeDisplay.getUser().getLoginIP(), formato);
+					}
+					if(valorActuaizar.equals("1")){
+						if (listaArchivo != null && listaArchivo.size() > 0) {					
+							respuestaEmail= fiseUtil.enviarMailsAdjunto(
+					    			   request,
+					    			   listaArchivo, 
+					    			   fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()),
+					    			   formato.getId().getAnoPresentacion(),
+					    			   formato.getId().getMesPresentacion(),
+					    			   FiseConstants.TIPO_FORMATO_12C,
+					    			   descripcionFormato,
+					    			   FiseConstants.FRECUENCIA_MENSUAL_DESCRIPCION,
+					    			   null,
+					    			   null);
+						}
+						String[] msnId = respuestaEmail.split("/");
+						if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
+							jsonObj.put("resultado", "OK");	
+							jsonObj.put("correo",msnId[1]);		
+						}else{
+							jsonObj.put("resultado", "EMAIL");//error al enviar al email	
+							jsonObj.put("correo",msnId[1]);		
+						}	
 					}else{
-						jsonObj.put("resultado", "EMAIL");//error al enviar al email	
-						jsonObj.put("correo",msnId[1]);		
-					}	
-				}else{
-					 jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio o al formar
-		    		   //los reportes del formato o del acta de envio
-				}				
+						 jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio o al formar
+			    		   //los reportes del formato o del acta de envio
+					}
+				}	//fin del else flag observacion NO					
 			}else{
 				 jsonObj.put("resultado", "ERROR"); //formato null  	
 			}
