@@ -112,7 +112,7 @@ public class Formato14CGartController {
 	private CfgCampoGartService campoService;
 	
 		
-	private List<FisePeriodoEnvio> listaPeriodoEnvio;
+	//private List<FisePeriodoEnvio> listaPeriodoEnvio;
 	
 	private Map<String, String> mapaEmpresa;	
 	
@@ -176,7 +176,7 @@ public class Formato14CGartController {
     			model.addAttribute("listaError", listaError);
     		}       	
         	
-        	listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
+        	//listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
         	
         	f.setListaMes(fiseUtil.getMapaMeses());
     		f.setAnioDesde(fiseUtil.obtenerNroAnioFechaAnterior());
@@ -324,19 +324,16 @@ public class Formato14CGartController {
 			String desPeriodoEnvio = mesLetras+"-"+f.getAnioPres()+" / "+f.getEtapa();
 			
 			f.setDesperiodoEnvio(desPeriodoEnvio);
-			/**Para verificar el flag costo del registro seleccionado*/
-			List<FisePeriodoEnvio> listaPeriodo =null;
-			if(listaPeriodoEnvio.size()==0){
-			    listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
-					FiseConstants.TIPO_FORMATO_14C);
-			    listaPeriodoEnvio =listaPeriodo;
-			}		
+			/**Para verificar el flag costo del registro seleccionado*/				
+			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+					FiseConstants.TIPO_FORMATO_14C);		
 			logger.info("Periodo envio al editar un registro:  "+codigoPeriodoEnvio); 
 			logger.info("tamaño de la lista periodo al editar o visualizar :  "+listaPeriodoEnvio.size()); 				
 			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				logger.info("periodo codigo:  "+p.getCodigoItem()); 
 				if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){
-				    f.setFlagCosto(p.getFlagHabilitaCostos());				
+				    f.setFlagCosto(p.getFlagHabilitaCostos());	
+				    logger.info("flag envio con observaciones editar:  "+p.getFlagEnvioConObservaciones()); 
 					break;
 				}
 			}			
@@ -349,7 +346,7 @@ public class Formato14CGartController {
 		    pRequest.getPortletSession().setAttribute("anoIniVigenciaEdit",f.getAnoIniVigencia(), PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anoFinVigenciaEdit", f.getAnoFinVigencia(), PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("etapaEdit", f.getEtapa(), PortletSession.APPLICATION_SCOPE);
-						
+		  //  pRequest.getPortletSession().setAttribute("listaPeriodoEditar", listaPeriodoEnvio, PortletSession.APPLICATION_SCOPE);						
 			data = toStringJSON(f);						
 			response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
@@ -388,7 +385,10 @@ public class Formato14CGartController {
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 				
-				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+				List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+						FiseConstants.TIPO_FORMATO_14C);
+				
+				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){					
 					logger.info("Tamanio de la lista periodo al grabar nuevo: "+listaPeriodoEnvio.size()); 
 					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
@@ -397,10 +397,7 @@ public class Formato14CGartController {
 							break;
 						}
 					}
-				}			
-				/*List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
-	  					FiseConstants.TIPO_FORMATO_14C);*/
-				logger.info("tamaño de la lista periodo al grabar nuevo:  "+listaPeriodoEnvio.size()); 				
+				}			 				
 				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 					logger.info("periodo codigo:  "+p.getCodigoItem()); 
 					if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){
@@ -452,7 +449,10 @@ public class Formato14CGartController {
 			if( f.getPeriodoEnvio().length()>6 ){
 				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
-				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));				
+				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));	
+				
+				List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+						FiseConstants.TIPO_FORMATO_14C);
 				
 				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
 					logger.info("Tamanio de la lista periodo al actualizar : "+listaPeriodoEnvio.size()); 
@@ -463,10 +463,7 @@ public class Formato14CGartController {
 							break;
 						}
 					}
-				}			
-				/*List<FisePeriodoEnvio> listaPeriodo = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
-	  					FiseConstants.TIPO_FORMATO_14C);
-				logger.info("tamaño de la lista periodo:  "+listaPeriodo.size()); */
+				}						
 				logger.info("Periodo al momento de actualizar un registro:  "+f.getPeriodoEnvio()); 
 				logger.info("tamaño de la lista periodo al actualizar :  "+listaPeriodoEnvio.size()); 				
 				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
@@ -542,8 +539,8 @@ public class Formato14CGartController {
   			String codEmpresa = f.getCodEmpresa();
   			logger.info("Codigo Empresa para cargar el periodo:  "+codEmpresa);
   			//String periodoEnvio = f.getPeriodoEnvio();
-  			//lo pongo en la lista porque no persiste las colecciones en el command
-  			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, 
+  			//lo pongo en la lista porque no persiste las colecciones en el command  			
+  			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, 
   					FiseConstants.TIPO_FORMATO_14C);  		
   			logger.info("Tamaño de lista de periodo de envio:  "+listaPeriodoEnvio.size()); 
   			JSONArray jsonArray = new JSONArray();
@@ -554,10 +551,13 @@ public class Formato14CGartController {
 				jsonObj.put("flagPeriodoEjecucion", periodo.getFlagPeriodoEjecucion());	
 				jsonObj.put("flagCosto", periodo.getFlagHabilitaCostos());
 				logger.info("Flag habilita costos al momento de cargar el periodo mes anio y etapa: "
-				+periodo.getFlagHabilitaCostos());
+				+periodo.getFlagHabilitaCostos());	
+				logger.info("flag envio con observaciones peridodo: "+periodo.getFlagEnvioConObservaciones());
 				jsonArray.put(jsonObj);		
 			}
-  			
+  			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+			pRequest.getPortletSession().setAttribute("listaCargarPeriodo",listaPeriodoEnvio, PortletSession.APPLICATION_SCOPE);
+			
   		    PrintWriter pw = response.getWriter();
   		    logger.info(jsonArray.toString());
   		    pw.write(jsonArray.toString());
@@ -567,7 +567,7 @@ public class Formato14CGartController {
   			e.printStackTrace();
   		}
 	}
-	
+	@SuppressWarnings("unchecked")
 	@ResourceMapping("cargaFlagPeriodoF14C")
   	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,
   			@ModelAttribute("formato14CBean")Formato14CBean f){
@@ -576,17 +576,24 @@ public class Formato14CGartController {
   			String periodoEnvio = f.getPeriodoEnvio();
   			logger.info("Flag periodo formato controller: "+f.getPeriodoEnvio()); 
   			JSONObject jsonObj = new JSONObject();
+  			
+  			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+  			
+  			List<FisePeriodoEnvio> listaPeriodoEnvio = (List<FisePeriodoEnvio>)pRequest.getPortletSession().getAttribute("listaCargarPeriodo", 
+ 		    		PortletSession.APPLICATION_SCOPE);  
+  			
   			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				if(periodoEnvio.equals(p.getCodigoItem()) ){
 					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
 					jsonObj.put("flagCosto", p.getFlagHabilitaCostos());
+					logger.info("flag habilita costos flag cargar : "+p.getFlagHabilitaCostos()); 
 					//agreamos los campos de ano inicio y fin de vigencia
 					jsonObj.put("anoIniVigencia", p.getAnioInicioVig());
-					jsonObj.put("anoFinVigencia", p.getAnioFinVig());
+					jsonObj.put("anoFinVigencia", p.getAnioFinVig());					 
 					break;
 				}
-			}
-  			System.out.println(jsonObj.toString());
+			}  			
+			//pRequest.getPortletSession().setAttribute("listaCargarPeriodo",null, PortletSession.APPLICATION_SCOPE);
   			PrintWriter pw = response.getWriter();
   		    pw.write(jsonObj.toString());
   		    pw.flush();
@@ -627,6 +634,8 @@ public class Formato14CGartController {
 		
 		
 		if(FormatoUtil.isBlank(anioIniVigNew) && FormatoUtil.isBlank(anioFinVigNew)){
+			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresaNew, 
+  					FiseConstants.TIPO_FORMATO_14C); 
 			logger.info("Tamanio de la lista periodo al cargar archivo: "+listaPeriodoEnvio.size()); 
 			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				if(periodoEnvioPresNew.equals(p.getCodigoItem()) ){					
@@ -766,6 +775,8 @@ public class Formato14CGartController {
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
                
 				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+					List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+		  					FiseConstants.TIPO_FORMATO_14C);
 					logger.info("Tamanio de la lista periodo al reporte: "+listaPeriodoEnvio.size()); 
 					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
@@ -819,6 +830,8 @@ public class Formato14CGartController {
 			f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 
 			if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+				List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+	  					FiseConstants.TIPO_FORMATO_14C);
 				logger.info("Tamanio de la lista periodo al validar: "+listaPeriodoEnvio.size()); 
 				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 					if(f.getPeriodoEnvio().equals(p.getCodigoItem())){					
@@ -976,8 +989,7 @@ public class Formato14CGartController {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
-	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		  
+	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	      
 	        JSONObject jsonObj = new JSONObject(); 
 		  
 		    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 	    
@@ -988,6 +1000,7 @@ public class Formato14CGartController {
 		    String respuestaEmail = "";
 		    boolean valorFormato = false;
 		    boolean valorActa = false;
+		    String flagEnvioObs = "";
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
@@ -996,18 +1009,24 @@ public class Formato14CGartController {
 		    if( f.getPeriodoEnvio().length()>6 ){
 				f.setAnioPres(f.getPeriodoEnvio().substring(0, 4));
 				f.setMesPres(f.getPeriodoEnvio().substring(4, 6));
-				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
+				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));		
+	  			
+				List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+						FiseConstants.TIPO_FORMATO_14C);
 				
-				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
-					logger.info("Tamanio de la lista periodo al envio definitivo: "+listaPeriodoEnvio.size()); 
-					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
-						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
+				logger.info("Tamanio de la lista periodo al envio definitivo: "+listaPeriodoEnvio.size()); 
+				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+					logger.info("Flag con observacion si o no:  "+p.getFlagEnvioConObservaciones());					
+					if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){
+						flagEnvioObs = p.getFlagEnvioConObservaciones();
+						if(FormatoUtil.isBlank(f.getAnoIniVigencia()) &&
+								FormatoUtil.isBlank(f.getAnoFinVigencia())){
 							f.setAnoIniVigencia(p.getAnioInicioVig());
-							f.setAnoIniVigencia(p.getAnioFinVig());
-							break;
-						}
+							f.setAnoIniVigencia(p.getAnioFinVig());	
+						}					
+						break;
 					}
-				}	
+				}				
 			}	
 		    f.setUsuario(themeDisplay.getUser().getLogin());
 			f.setTerminal(themeDisplay.getUser().getLoginIP());	
@@ -1025,47 +1044,7 @@ public class Formato14CGartController {
 	        	String descripcionFormato = "";
 	        	if( tabla!=null ){
 	        		descripcionFormato = tabla.getDescripcionTabla();
-	        	}         	
-	        	if(mapa!=null){	        	
-	        		mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
-	        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
-	        		//verificar si ponerlo aca o no
-	        		mapa.put("USUARIO", themeDisplay.getUser().getLogin());
-	        		mapa.put("NOMBRE_FORMATO", descripcionFormato);
-	        		mapa.put("FECHA_ENVIO", FechaUtil.obtenerFechaActual());
-	        		mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
-	        		mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
-	        		mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
-	        		 //add para acta envio
-	     		    mapa.put("ANO_INICIO_VIGENCIA", formato.getId().getAnoInicioVigencia());
-	     		    mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
-	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
-	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
-	     		   //prueba de envio definitivo
-	     		   String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
-	     		   String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
-	     		   mapa.put("CHECKED", dirCheckedImage);
-	     		   mapa.put("UNCHECKED", dirUncheckedImage);
-	     		   boolean cumplePlazo = false;
-	     		   cumplePlazo = commonService.fechaEnvioCumplePlazo(
-	     				   FiseConstants.TIPO_FORMATO_14C, 
-	     				   formato.getId().getCodEmpresa(), 
-	     				   formato.getId().getAnoPresentacion(), 
-	     				   formato.getId().getMesPresentacion(), 
-	     				   formato.getId().getEtapa(), 
-	     				   FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
-	     		   if( cumplePlazo ){
-	     			   mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
-	     	   	   }else{
-	     			   mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
-	     	   	   }
-	     		  if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
-						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
-					}else{
-						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
-					}
-	     		   mapa.put("ETAPA", formato.getId().getEtapa());
-	 			}
+	        	} 
 	        	Formato14Generic formato14Generic = new Formato14Generic(formato);
 	        	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14C,
 	        			themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
@@ -1073,108 +1052,153 @@ public class Formato14CGartController {
 			    	logger.info("entrando a cargar las observaciones de envio."); 
 			    	cargarListaObservaciones(formato.getListaDetalle14cDs());
 			    	logger.info("Cargo correctamente las observaciones de envio."); 
-			    } 
-		        /**REPORTE FORMATO 14C*/
-		       nombreReporte = "formato14C";
-		       nombreArchivo = nombreReporte;
-		       directorio =  "/reports/"+nombreReporte+".jasper";
-		       File reportFile = new File(session.getServletContext().getRealPath(directorio));
-		       byte[] bytes = null;
-		       bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
-		       logger.info("Tamaño del arreglo de bytes del formato 14C envio defi."+bytes.length); 
-		       if (bytes != null) {
-		    	   String nombre = FormatoUtil.nombreIndividualFormato(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
-		    	   logger.info("subiendo archivo al repositorio del formato 14c"); 
-		    	   FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
-		    	   logger.info("Archivo subido correctamente  formato 14c envio."+archivo); 
-		    	   if(archivo!=null ){
-		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-		    		   fileEntryJsp.setNombreArchivo(nombre);
-		    		   fileEntryJsp.setFileEntry(archivo);
-		    		   listaArchivo.add(fileEntryJsp);
-		    		   valorFormato = true;
-		    	   }
-		       }
-		       /**REPORTE OBSERVACIONES*/
-		       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
-		    	   nombreReporte = "validacion";
-		    	   nombreArchivo = nombreReporte;
+			    }
+			    if(listaObservaciones!=null && listaObservaciones.size()>0 &&
+			    		FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagEnvioObs)){
+			    	 jsonObj.put("resultado", "OBSERVACION");	
+			    }else{
+		        	if(mapa!=null){	        	
+		        		mapa.put("IMG", session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg"));
+		        		mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
+		        		//verificar si ponerlo aca o no
+		        		mapa.put("USUARIO", themeDisplay.getUser().getLogin());
+		        		mapa.put("NOMBRE_FORMATO", descripcionFormato);
+		        		mapa.put("FECHA_ENVIO", FechaUtil.obtenerFechaActual());
+		        		mapa.put("CORREO", themeDisplay.getUser().getEmailAddress());
+		        		mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
+		        		mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
+		        		 //add para acta envio
+		     		    mapa.put("ANO_INICIO_VIGENCIA", formato.getId().getAnoInicioVigencia());
+		     		    mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
+		     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
+		     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
+		     		   //prueba de envio definitivo
+		     		   String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
+		     		   String dirUncheckedImage = session.getServletContext().getRealPath("/reports/unchecked.jpg");
+		     		   mapa.put("CHECKED", dirCheckedImage);
+		     		   mapa.put("UNCHECKED", dirUncheckedImage);
+		     		   boolean cumplePlazo = false;
+		     		   cumplePlazo = commonService.fechaEnvioCumplePlazo(
+		     				   FiseConstants.TIPO_FORMATO_14C, 
+		     				   formato.getId().getCodEmpresa(), 
+		     				   formato.getId().getAnoPresentacion(), 
+		     				   formato.getId().getMesPresentacion(), 
+		     				   formato.getId().getEtapa(), 
+		     				   FechaUtil.fecha_DD_MM_YYYY(FechaUtil.obtenerFechaActual()));
+		     		   if( cumplePlazo ){
+		     			   mapa.put("CHECKED_CUMPLEPLAZO", dirCheckedImage);
+		     	   	   }else{
+		     			   mapa.put("CHECKED_CUMPLEPLAZO", dirUncheckedImage);
+		     	   	   }
+		     		  if( listaObservaciones!=null && !listaObservaciones.isEmpty() ){
+							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirCheckedImage);
+						}else{
+							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
+						}
+		     		   mapa.put("ETAPA", formato.getId().getEtapa());
+		 			}	        	
+			        /**REPORTE FORMATO 14C*/
+			       nombreReporte = "formato14C";
+			       nombreArchivo = nombreReporte;
 			       directorio =  "/reports/"+nombreReporte+".jasper";
-			       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
-		    	   byte[] bytes2 = null;
-			       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
-			       logger.info("Tamaño del arreglo de bytes del observaciones envio defi."+bytes2.length); 
+			       File reportFile = new File(session.getServletContext().getRealPath(directorio));
+			       byte[] bytes = null;
+			       bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
+			       logger.info("Tamaño del arreglo de bytes del formato 14C envio defi."+bytes.length); 
 			       if (bytes != null) {
-			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
-			    	   logger.info("subiendo archivo al repositorio del observaciones envio defi.");
-			    	   FileEntry archivo2 = fiseUtil.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
-			    	   logger.info("Archivo subido correctamente  observaciones envio."+archivo2); 
-			    	   if( archivo2!=null ){
+			    	   String nombre = FormatoUtil.nombreIndividualFormato(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
+			    	   logger.info("subiendo archivo al repositorio del formato 14c"); 
+			    	   FileEntry archivo = fiseUtil.subirDocumentoBytes(request, bytes, "application/pdf", nombre);
+			    	   logger.info("Archivo subido correctamente  formato 14c envio."+archivo); 
+			    	   if(archivo!=null ){
 			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
 			    		   fileEntryJsp.setNombreArchivo(nombre);
-			    		   fileEntryJsp.setFileEntry(archivo2);
+			    		   fileEntryJsp.setFileEntry(archivo);
 			    		   listaArchivo.add(fileEntryJsp);
+			    		   valorFormato = true;
 			    	   }
 			       }
-		       }
-		       /**REPORTE ACTA DE ENVIO*/
-		       nombreReporte = "actaEnvio";
-		       nombreArchivo = nombreReporte;
-		       directorio =  "/reports/"+nombreReporte+".jasper";
-		       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
-		       byte[] bytes3 = null;
-		       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
-		       logger.info("Tamaño del arreglo de bytes del acta de envio defi."+bytes3.length); 
-		       if (bytes3 != null) {
-		    	   session.setAttribute("bytesActaEnvio", bytes3);
-		    	   String nombre = FormatoUtil.nombreIndividualActaRemision(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
-		    	   logger.info("subiendo archivo al repositorio del acta de envio defi.");
-		    	   FileEntry archivo3 = fiseUtil.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
-		    	   logger.info("Archivo subido correctamente  del acta de envio."+archivo3); 
-		    	   if( archivo3!=null ){
-		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-		    		   fileEntryJsp.setNombreArchivo(nombre);
-		    		   fileEntryJsp.setFileEntry(archivo3);
-		    		   listaArchivo.add(fileEntryJsp);
-		    		   valorActa = true;
-		    	   }
-		       }
-		       /**actualizamos  la fecha de envio*/
-		       String valorActuaizar = "0";
-		       if(valorFormato && valorActa){
-		    	   valorActuaizar = formato14CGartService.actualizarDatosEnvioFormato14C(f);   
-		       }
-	    	   if(valorActuaizar.equals("1")){
-	    		   if(listaArchivo!=null && listaArchivo.size()>0){ 	 	    	  
-			    	   logger.info("Entrando a enviar email envio defi."); 
-			    	   respuestaEmail = fiseUtil.enviarMailsAdjunto(
-			    			   request,
-			    			   listaArchivo, 
-			    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
-			    			   formato.getId().getAnoPresentacion(),
-			    			   formato.getId().getMesPresentacion(),
-			    			   FiseConstants.TIPO_FORMATO_14C,
-			    			   descripcionFormato,
-			    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
-			    			   formato.getId().getAnoInicioVigencia(),
-			    			   formato.getId().getAnoFinVigencia());
-			    	   logger.info("El envio de email fue correctamente envio defi.");			    	   
+			       /**REPORTE OBSERVACIONES*/
+			       if( listaObservaciones!=null && listaObservaciones.size()>0 ){
+			    	   nombreReporte = "validacion";
+			    	   nombreArchivo = nombreReporte;
+				       directorio =  "/reports/"+nombreReporte+".jasper";
+				       File reportFile2 = new File(session.getServletContext().getRealPath(directorio));
+			    	   byte[] bytes2 = null;
+				       bytes2 = JasperRunManager.runReportToPdf(reportFile2.getPath(), mapa, new JRBeanCollectionDataSource(listaObservaciones));
+				       logger.info("Tamaño del arreglo de bytes del observaciones envio defi."+bytes2.length); 
+				       if (bytes != null) {
+				    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
+				    	   logger.info("subiendo archivo al repositorio del observaciones envio defi.");
+				    	   FileEntry archivo2 = fiseUtil.subirDocumentoBytes(request, bytes2, "application/pdf", nombre);
+				    	   logger.info("Archivo subido correctamente  observaciones envio."+archivo2); 
+				    	   if( archivo2!=null ){
+				    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+				    		   fileEntryJsp.setNombreArchivo(nombre);
+				    		   fileEntryJsp.setFileEntry(archivo2);
+				    		   listaArchivo.add(fileEntryJsp);
+				    	   }
+				       }
 			       }
-	    		   String[] msnId = respuestaEmail.split("/");
-	    		   if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
-	    			   jsonObj.put("resultado", "OK");	
-	    			   jsonObj.put("correo",msnId[1]);		
-	    		   }else{
-	    			   jsonObj.put("resultado", "EMAIL");//error al enviar al email	
-	    			   jsonObj.put("correo",msnId[1]);		
-	    		   }	 		
-	    	   }else{
-	    		   jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio o al formar
-	    		   //los reportes del formato o del acta de envio
-	    	   }		       
+			       /**REPORTE ACTA DE ENVIO*/
+			       nombreReporte = "actaEnvio";
+			       nombreArchivo = nombreReporte;
+			       directorio =  "/reports/"+nombreReporte+".jasper";
+			       File reportFile3 = new File(session.getServletContext().getRealPath(directorio));
+			       byte[] bytes3 = null;
+			       bytes3 = JasperRunManager.runReportToPdf(reportFile3.getPath(), mapa, new JREmptyDataSource());
+			       logger.info("Tamaño del arreglo de bytes del acta de envio defi."+bytes3.length); 
+			       if (bytes3 != null) {
+			    	   session.setAttribute("bytesActaEnvio", bytes3);
+			    	   String nombre = FormatoUtil.nombreIndividualActaRemision(formato.getId().getCodEmpresa(), formato.getId().getAnoPresentacion(), formato.getId().getMesPresentacion(), FiseConstants.TIPO_FORMATO_14C);
+			    	   logger.info("subiendo archivo al repositorio del acta de envio defi.");
+			    	   FileEntry archivo3 = fiseUtil.subirDocumentoBytes(request, bytes3, "application/pdf", nombre);
+			    	   logger.info("Archivo subido correctamente  del acta de envio."+archivo3); 
+			    	   if( archivo3!=null ){
+			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+			    		   fileEntryJsp.setNombreArchivo(nombre);
+			    		   fileEntryJsp.setFileEntry(archivo3);
+			    		   listaArchivo.add(fileEntryJsp);
+			    		   valorActa = true;
+			    	   }
+			       }
+			       /**actualizamos  la fecha de envio*/
+			       String valorActuaizar = "0";
+			       if(valorFormato && valorActa){
+			    	   valorActuaizar = formato14CGartService.actualizarDatosEnvioFormato14C(f);   
+			       }
+		    	   if(valorActuaizar.equals("1")){
+		    		   if(listaArchivo!=null && listaArchivo.size()>0){ 	 	    	  
+				    	   logger.info("Entrando a enviar email envio defi."); 
+				    	   respuestaEmail = fiseUtil.enviarMailsAdjunto(
+				    			   request,
+				    			   listaArchivo, 
+				    			   mapaEmpresa.get(formato.getId().getCodEmpresa()),
+				    			   formato.getId().getAnoPresentacion(),
+				    			   formato.getId().getMesPresentacion(),
+				    			   FiseConstants.TIPO_FORMATO_14C,
+				    			   descripcionFormato,
+				    			   FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION,
+				    			   formato.getId().getAnoInicioVigencia(),
+				    			   formato.getId().getAnoFinVigencia());
+				    	   logger.info("El envio de email fue correctamente envio defi.");			    	   
+				       }
+		    		   String[] msnId = respuestaEmail.split("/");
+		    		   if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
+		    			   jsonObj.put("resultado", "OK");	
+		    			   jsonObj.put("correo",msnId[1]);			    			  
+		    		   }else{
+		    			   jsonObj.put("resultado", "EMAIL");//error al enviar al email	
+		    			   jsonObj.put("correo",msnId[1]);		
+		    		   }	 		
+		    	   }else{
+		    		   jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio o al formar
+		    		   //los reportes del formato o del acta de envio
+		    	   }	
+			    }//	fin del else lista observacion si tiene y flag osb SI	       
 	        }else{
 	        	 jsonObj.put("resultado", "ERROR"); //formato null  	
-	        }
+	        }	     
 	       response.setContentType("application/json");
 	       logger.info("arreglo json:"+jsonObj);
 	       PrintWriter pw = response.getWriter();
@@ -4222,6 +4246,8 @@ public class Formato14CGartController {
 				f.setEtapa(f.getPeriodoEnvio().substring(6, f.getPeriodoEnvio().length()));
 				
 				if(FormatoUtil.isBlank(f.getAnoIniVigencia()) && FormatoUtil.isBlank(f.getAnoFinVigencia())){
+					List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(f.getCodEmpresa(), 
+		  					FiseConstants.TIPO_FORMATO_14C);
 					logger.info("Tamanio de la lista periodo al envio definitivo: "+listaPeriodoEnvio.size()); 
 					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
