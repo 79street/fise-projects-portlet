@@ -420,8 +420,8 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "EMAIL"){						
 						var addhtmEmail = data.correo;					
-						envioDefinitivoGlobal.dialogInfoContent.html(addhtmEmail);
-						envioDefinitivoGlobal.dialogInfo.dialog("open");		
+						envioDefinitivoGlobal.dialogErrorContent.html(addhtmEmail);
+						envioDefinitivoGlobal.dialogError.dialog("open");		
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "CERRADO"){
@@ -429,6 +429,11 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
 						envioDefinitivoGlobal.dialogInfo.dialog("open");	
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
+						envioDefinitivoGlobal.initBlockUI();	
+					}else if(data.resultado == "OBSERVACION"){						
+						var addhtmInfo='No se puede relizar el Envío Definitivo debido a que uno de los Formatos tiene observaciones, primero debe subsanar las observaciones.';					
+						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
+						envioDefinitivoGlobal.dialogInfo.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "ERROR"){						
 						var addhtmError='Error al realizar el Envío General Definitivo de los formatos presentados.';					

@@ -563,7 +563,7 @@ var periodoEnvio= {
 							periodoEnvio.dialogInfo.dialog("open");	
 							periodoEnvio.f_desde.focus();	
 						}else if(data.resultado == "Duplicado"){				
-							var addhtmInfo='Ya existe un Detalle de Control de Remisión con los datos ingresados.';					
+							var addhtmInfo='Ya existe un registro para el Formato y Periodo en estado Vigente. Desactívelo y vuelva a intentar.';					
 							periodoEnvio.dialogInfoContent.html(addhtmInfo);
 							periodoEnvio.dialogInfo.dialog("open");
 							periodoEnvio.initBlockUI();	
@@ -613,7 +613,7 @@ var periodoEnvio= {
 							periodoEnvio.dialogInfo.dialog("open");
 							periodoEnvio.f_fechaAmpl.focus();	
 						}else if(data.resultado == "Duplicado"){				
-							var addhtmInfo='Ya existe un Control de Remisión con estado Vigente.';					
+							var addhtmInfo='Ya existe un registro para el Formato y Periodo en estado Vigente. Desactívelo y vuelva a intentar.';					
 							periodoEnvio.dialogInfoContent.html(addhtmInfo);
 							periodoEnvio.dialogInfo.dialog("open");
 							periodoEnvio.initBlockUI();	

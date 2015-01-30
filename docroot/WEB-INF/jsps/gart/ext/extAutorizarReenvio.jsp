@@ -18,6 +18,8 @@ var autorizarReenvio= {
 		
 		dialogError:null,
 		dialogErrorContent:null,
+		dialogInfo:null,
+		dialogInfoContent:null,
 		
 		//mensajes		
 		mensajeReenvio:null,		
@@ -55,7 +57,9 @@ var autorizarReenvio= {
 			
 			this.dialogError=$("#<portlet:namespace/>dialog-error");
 			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
-			
+			this.dialogInfo=$("#<portlet:namespace/>dialog-info");
+		    this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");	
+		    
 			//mensajes						
 			this.mensajeReenvio='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando Autorización de Reenvío </h3>';			
 			
@@ -201,8 +205,12 @@ var autorizarReenvio= {
 					    autorizarReenvio.dialogMessage.dialog("open");						
 						autorizarReenvio.buscarAutorizarReenvio();
 						autorizarReenvio.initBlockUI();
-					}
-					else{					
+					}else if (data.resultado == "ETAPA"){
+						var addhtmlInfo='No se puede Autorizar el Reenvío debido a que el Formato se encuentra en una etapa avanzada.';					
+						autorizarReenvio.dialogInfoContent.html(addhtmlInfo);
+					    autorizarReenvio.dialogInfo.dialog("open");						
+						autorizarReenvio.initBlockUI();
+					}else{					
 						var addhtmError='Error al Autorizar el Reenvío del registro seleccionado.';					
 						autorizarReenvio.dialogErrorContent.html(addhtmError);
 						autorizarReenvio.dialogError.dialog("open");	
@@ -257,6 +265,17 @@ var autorizarReenvio= {
 					}
 				}
 			});	
+			
+			autorizarReenvio.dialogInfo.dialog({
+				modal: true,
+				autoOpen: false,
+				width: 450,		
+				buttons: {
+					OK: function() {
+						$( this ).dialog("close");
+					}
+				}
+			});
 		
 			
 		}, /***fin de inicializar los dialogos**/	
