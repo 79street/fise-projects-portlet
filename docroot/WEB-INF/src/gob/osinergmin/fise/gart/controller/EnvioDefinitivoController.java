@@ -55,6 +55,7 @@ import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
+import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.service.Formato12CGartService;
@@ -161,7 +162,11 @@ public class EnvioDefinitivoController {
 	
 	@Autowired
 	@Qualifier("cfgTablaGartServiceImpl")
-	private CfgTablaGartService tablaService;
+	private CfgTablaGartService tablaService;	
+	
+	@Autowired
+	@Qualifier("fisePeriodoEnvioGartServiceImpl")
+	private FisePeriodoEnvioGartService fisePeriodoEnvioGartService;
 	
 	
 	
@@ -1632,6 +1637,7 @@ public class EnvioDefinitivoController {
 			boolean valorValidacion = false;
 			boolean actaEnvio = false;
 			boolean actualizar = false;
+			boolean flagEnvioObs= true;
 			
 			String f12A = "0";
 			String f12B = "0";
@@ -1669,462 +1675,465 @@ public class EnvioDefinitivoController {
   	  	  					break;
   	  	  				}				
   	  	  			}  				
-  	  				if(estadoCerrado){  				
-  	  	  				if(FiseConstants.MENSUAL.equals(optionFormato)){ 
-  	  	  				/**PERIODO MENSUAL*/
-  		  	  			   for(EnvioDefinitivoBean m:lista){
-  		  	  				    /****Procesamos las observaciones***/
-  		  	  				   valorValidacion=procesarValidacionObs(lista,usuario,terminal);	
-  			  	  			    
-  		  	  				   /******FORMATO 12A**************/
-  			  	  			   if(FiseConstants.NOMBRE_FORMATO_12A.equals(m.getFormato())&&valorValidacion){
-  			  	  				  /*****Obtenemos los parametros del map*******/
-  			  	  			      mapa = parametros12A(codEmpresa, m.getAnioPres(), m.getMesPres(), 
-  			  	  			    		   m.getAnioEjec(), m.getMesEjec(), etapa, rutaImg, usuario, terminal, email);		  	  			     
-  			  	  				/*REPORTE FORMATO 12A*/
-  			  	  			      if(mapa!=null){
-  			  	  			       nombreReporte = "formato12A";	  	  			       
-  			  	  			       directorio =  "/reports/"+nombreReporte+".jasper";
-  			  	  			       File reportFile12A = new File(session.getServletContext().getRealPath(directorio));
-  			  	  			       byte[] bytes12A = null;		  	  			       
-  			  	  			       bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa, new JREmptyDataSource());
-  			  	  			       if (bytes12A != null) {	  	  			    	 
-  			  	  			    	   String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
-  			  	  			    			Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-  			  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  			    	  
-  			  	  			    	   FileEntry archivo12A = fiseUtil.subirDocumentoBytes(request, bytes12A, "application/pdf", nombre);
-  			  	  			    	   if( archivo12A!=null ){
-  			  	  			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			  	  			    		   fileEntryJsp.setNombreArchivo(nombre);
-  			  	  			    		   fileEntryJsp.setFileEntry(archivo12A);
-  			  	  			    		   listaArchivo.add(fileEntryJsp);
-  			  	  			    	   }
-  			  	  			       }
-  			  	  			      /*REPORTE OBSERVACIONES 12A*/
-  				  	  		       if(listaObs12A!=null && listaObs12A.size()>0 ){
-  				  	  		    	   nombreReporte = "validacion";		  	  		    	 
-  				  	  			       directorio =  "/reports/"+nombreReporte+".jasper";
-  				  	  			       File reportFile12AObs = new File(session.getServletContext().getRealPath(directorio));
-  				  	  		    	   byte[] bytes12AObs = null;		  	  			      
-  				  	  		    	   bytes12AObs = JasperRunManager.runReportToPdf(reportFile12AObs.getPath(), 
-  				  	  		    			   mapa, new JRBeanCollectionDataSource(listaObs12A));		  	  		    	 
-  				  	  			       if (bytes12AObs != null) {	  			    	   
-  				  	  			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
-  				  	  			    			Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-  				  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  				  	  			    	   FileEntry archivo12AObs = fiseUtil.subirDocumentoBytes(request, bytes12AObs, "application/pdf", nombre);
-  				  	  			    	   if( bytes12AObs!=null ){
-  				  	  			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  				  	  			    		   fileEntryJsp.setNombreArchivo(nombre);
-  				  	  			    		   fileEntryJsp.setFileEntry(archivo12AObs);
-  				  	  			    		   listaArchivo.add(fileEntryJsp);
-  				  	  			    	   }
-  				  	  			       }
-  				  	  		       }
-  				  	  		        f12A = "1";
-  			  	  			      }//fin if mapa ! null		  	  			     	  		   
-  			  	  			   }  	  				   			
-  		  	  				/******FORMATO 12B**************/
-  			  	  			if(FiseConstants.NOMBRE_FORMATO_12B.equals(m.getFormato())&&valorValidacion){
-  			  	  				mapa = parametros12B(codEmpresa, m.getAnioPres(), m.getMesPres(),
-  			  	  						m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);
-  			  	  				if(mapa!=null){
-  			  	  					nombreReporte = "formato12B";		 		      
-  			  	  					directorio =  "/reports/"+nombreReporte+".jasper";
-  			  	  					File reportFile12B = new File(session.getServletContext().getRealPath(directorio));
-  			  	  					byte[] bytes12B = null;
-  			  	  				    bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), 
-  			  	  							mapa, new JREmptyDataSource());
-  			  	  					if (bytes12B != null) {		  	  					
-  			  	  						String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
-  			  	  								Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-  			  	  								FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  			  	  						FileEntry archivo12B = fiseUtil.subirDocumentoBytes(request, bytes12B, "application/pdf", nombre);
-  			  	  						if(archivo12B!=null ){
-  			  	  							FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			  	  							fileEntryJsp.setNombreArchivo(nombre);
-  			  	  							fileEntryJsp.setFileEntry(archivo12B);
-  			  	  							listaArchivo.add(fileEntryJsp);
-  			  	  						}
-  			  	  					}
-  			  	  					/**REPORTE OBSERVACIONES*/
-  			  	  					if(listaObs12B!=null && listaObs12B.size()>0 ){
-  			  	  						nombreReporte = "validacion";		  	  					
-  			  	  						directorio =  "/reports/"+nombreReporte+".jasper";
-  			  	  						File reportFile12BObs = new File(session.getServletContext().getRealPath(directorio));
-  			  	  						byte[] bytes12BObs = null;
-  			  	  						bytes12BObs = JasperRunManager.runReportToPdf(reportFile12BObs.getPath(), 
-  			  	  								mapa, new JRBeanCollectionDataSource(listaObs12B));		  	  					
-  			  	  						if (bytes12BObs != null) {		  	  						
-  			  	  							String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
-  			  	  									Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-  			  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  			  	  							FileEntry archivo12BObs = fiseUtil.subirDocumentoBytes(request, bytes12BObs, "application/pdf", nombre);
-  			  	  							if(archivo12BObs!=null ){
-  			  	  								FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			  	  								fileEntryJsp.setNombreArchivo(nombre);
-  			  	  								fileEntryJsp.setFileEntry(archivo12BObs);
-  			  	  								listaArchivo.add(fileEntryJsp);
-  			  	  							}
-  			  	  						}
-  			  	  					}
-  			  	  				  f12B = "1";
-  			  	  				}//fin if mapa ! null			  	  				
-  			  	  			}
-  		  	  				/******FORMATO 12C**************/
-  			  	  		    if(FiseConstants.NOMBRE_FORMATO_12C.equals(m.getFormato())&&valorValidacion){
-  			  	  		    	mapa = parametros12C(codEmpresa, m.getAnioPres(), m.getMesPres(),
-  			  	  		    			m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);	
-  			  	  		    	
-  			  	  		    	FiseFormato12CCPK pk = new FiseFormato12CCPK();
-  			  	  		    	pk.setCodEmpresa(codEmpresa);
-  			  	  		    	pk.setAnoPresentacion(new Long(m.getAnioPres()));
-  			  	  		    	pk.setMesPresentacion(new Long(m.getMesPres()));
-  			  	  		    	pk.setEtapa(etapa);
-  			  	  		        FiseFormato12CC formato = formatoService12C.obtenerFormato12CCByPK(pk);	
-  			  	  		        if(mapa!=null && formato!=null){
-  			  	  		        	nombreReporte = "formato12C";		  	  		    	
-  			  	  		        	directorio = "/reports/" + nombreReporte + ".jasper";
-  			  	  		        	File reportFile = new File(session.getServletContext().getRealPath(directorio));
-  			  	  		        	byte[] bytes12C = null;
-  			  	  		        	bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-  			  	  		        			new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
-  			  	  		        	if (bytes12C != null) {				  	  		    		
-  			  	  		        		String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
-  			  	  		        				Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-  			  	  		        				FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  	
-  			  	  		        		FileEntry archivo12C = fiseUtil.subirDocumentoBytes(request, bytes12C, "application/pdf", nombre);
-  			  	  		        		if (archivo12C != null) {
-  			  	  		        			FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			  	  		        			fileEntryJsp.setNombreArchivo(nombre);
-  			  	  		        			fileEntryJsp.setFileEntry(archivo12C);
-  			  	  		        			listaArchivo.add(fileEntryJsp);
-  			  	  		        		}
-  			  	  		        	}
-  			  	  		        	/** REPORTE OBSERVACIONES */
-  			  	  		        	if (listaObs12C != null && listaObs12C.size() > 0) {
-  			  	  		        		nombreReporte = "validacion12";		  	  		    		
-  			  	  		        		directorio = "/reports/" + nombreReporte + ".jasper";
-  			  	  		        		File reportFile12CObs = new File(session.getServletContext().getRealPath(directorio));
-  			  	  		        		byte[] bytes12CObs = null;
-  			  	  		        		bytes12CObs = JasperRunManager.runReportToPdf(reportFile12CObs.getPath(), mapa, 
-  			  	  		        				new JRBeanCollectionDataSource(listaObs12C));
-  			  	  		        		if (bytes12CObs != null) {	  	  		    			
-  			  	  		        			String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
-  			  	  		        					Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-  			  	  		        					FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  			  	  		        			FileEntry archivo12CObs = fiseUtil.subirDocumentoBytes(request, bytes12CObs, "application/pdf", nombre);
-  			  	  		        			if (archivo12CObs != null) {
-  			  	  		        				FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			  	  		        				fileEntryJsp.setNombreArchivo(nombre);
-  			  	  		        				fileEntryJsp.setFileEntry(archivo12CObs);
-  			  	  		        				listaArchivo.add(fileEntryJsp);
-  			  	  		        			}
-  			  	  		        		}
-  			  	  		        	}
-  			  	  		            f12C = "1";
-  			  	  		        }//fin del if map!=null		  	  		    	
-  		  	  			    }	
-  		  	  			    /******FORMATO 12D**************/
-  			  	  		   if(FiseConstants.NOMBRE_FORMATO_12D.equals(m.getFormato())&&valorValidacion){
-  			  	  			   mapa = parametros12D(codEmpresa, m.getAnioPres(), m.getMesPres(),
-  			  	  					   m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);	
+  	  				if(estadoCerrado){
+  	  				   if(FiseConstants.MENSUAL.equals(optionFormato)){ 
+  	  						valorValidacion = procesarValidacionObs(lista,usuario,terminal);
+  	  						boolean valorObs = verificarFlagObs(lista);  	  	  				   
+  	  						if(valorObs){
+  	  						 for(EnvioDefinitivoBean m:lista){ 		  	  				   
+    		  	  				   /******FORMATO 12A**************/
+    			  	  			   if(FiseConstants.NOMBRE_FORMATO_12A.equals(m.getFormato())
+    			  	  					    && valorValidacion){  			  	  				 
+    			  	  			      mapa = parametros12A(codEmpresa, m.getAnioPres(), m.getMesPres(), 
+    			  	  			    		   m.getAnioEjec(), m.getMesEjec(), etapa, rutaImg, usuario, terminal, email);		  	  			     
+    			  	  				   //REPORTE FORMATO 12A*/
+    			  	  			      if(mapa!=null){
+    			  	  			       nombreReporte = "formato12A";	  	  			       
+    			  	  			       directorio =  "/reports/"+nombreReporte+".jasper";
+    			  	  			       File reportFile12A = new File(session.getServletContext().getRealPath(directorio));
+    			  	  			       byte[] bytes12A = null;		  	  			       
+    			  	  			       bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa, new JREmptyDataSource());
+    			  	  			       if (bytes12A != null) {	  	  			    	 
+    			  	  			    	   String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+    			  	  			    			Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+    			  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  			    	  
+    			  	  			    	   FileEntry archivo12A = fiseUtil.subirDocumentoBytes(request, bytes12A, "application/pdf", nombre);
+    			  	  			    	   if( archivo12A!=null ){
+    			  	  			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+    			  	  			    		   fileEntryJsp.setNombreArchivo(nombre);
+    			  	  			    		   fileEntryJsp.setFileEntry(archivo12A);
+    			  	  			    		   listaArchivo.add(fileEntryJsp);
+    			  	  			    	   }
+    			  	  			       }
+    			  	  			      /*REPORTE OBSERVACIONES 12A*/
+    				  	  		       if(listaObs12A!=null && listaObs12A.size()>0 ){
+    				  	  		    	   nombreReporte = "validacion";		  	  		    	 
+    				  	  			       directorio =  "/reports/"+nombreReporte+".jasper";
+    				  	  			       File reportFile12AObs = new File(session.getServletContext().getRealPath(directorio));
+    				  	  		    	   byte[] bytes12AObs = null;		  	  			      
+    				  	  		    	   bytes12AObs = JasperRunManager.runReportToPdf(reportFile12AObs.getPath(), 
+    				  	  		    			   mapa, new JRBeanCollectionDataSource(listaObs12A));		  	  		    	 
+    				  	  			       if (bytes12AObs != null) {	  			    	   
+    				  	  			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+    				  	  			    			Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+    				  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    				  	  			    	   FileEntry archivo12AObs = fiseUtil.subirDocumentoBytes(request, bytes12AObs, "application/pdf", nombre);
+    				  	  			    	   if( bytes12AObs!=null ){
+    				  	  			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+    				  	  			    		   fileEntryJsp.setNombreArchivo(nombre);
+    				  	  			    		   fileEntryJsp.setFileEntry(archivo12AObs);
+    				  	  			    		   listaArchivo.add(fileEntryJsp);
+    				  	  			    	   }
+    				  	  			       }
+    				  	  		       }
+    				  	  		        f12A = "1";
+    			  	  			      }//fin if mapa ! null		  	  			     	  		   
+    			  	  			   }  	  				   			
+    		  	  				/******FORMATO 12B**************/
+    			  	  			if(FiseConstants.NOMBRE_FORMATO_12B.equals(m.getFormato())&&valorValidacion){
+    			  	  				mapa = parametros12B(codEmpresa, m.getAnioPres(), m.getMesPres(),
+    			  	  						m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);
+    			  	  				if(mapa!=null){
+    			  	  					nombreReporte = "formato12B";		 		      
+    			  	  					directorio =  "/reports/"+nombreReporte+".jasper";
+    			  	  					File reportFile12B = new File(session.getServletContext().getRealPath(directorio));
+    			  	  					byte[] bytes12B = null;
+    			  	  				    bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), 
+    			  	  							mapa, new JREmptyDataSource());
+    			  	  					if (bytes12B != null) {		  	  					
+    			  	  						String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+    			  	  								Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+    			  	  								FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    			  	  						FileEntry archivo12B = fiseUtil.subirDocumentoBytes(request, bytes12B, "application/pdf", nombre);
+    			  	  						if(archivo12B!=null ){
+    			  	  							FileEntryJSP fileEntryJsp = new FileEntryJSP();
+    			  	  							fileEntryJsp.setNombreArchivo(nombre);
+    			  	  							fileEntryJsp.setFileEntry(archivo12B);
+    			  	  							listaArchivo.add(fileEntryJsp);
+    			  	  						}
+    			  	  					}
+    			  	  					/**REPORTE OBSERVACIONES*/
+    			  	  					if(listaObs12B!=null && listaObs12B.size()>0 ){
+    			  	  						nombreReporte = "validacion";		  	  					
+    			  	  						directorio =  "/reports/"+nombreReporte+".jasper";
+    			  	  						File reportFile12BObs = new File(session.getServletContext().getRealPath(directorio));
+    			  	  						byte[] bytes12BObs = null;
+    			  	  						bytes12BObs = JasperRunManager.runReportToPdf(reportFile12BObs.getPath(), 
+    			  	  								mapa, new JRBeanCollectionDataSource(listaObs12B));		  	  					
+    			  	  						if (bytes12BObs != null) {		  	  						
+    			  	  							String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+    			  	  									Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+    			  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    			  	  							FileEntry archivo12BObs = fiseUtil.subirDocumentoBytes(request, bytes12BObs, "application/pdf", nombre);
+    			  	  							if(archivo12BObs!=null ){
+    			  	  								FileEntryJSP fileEntryJsp = new FileEntryJSP();
+    			  	  								fileEntryJsp.setNombreArchivo(nombre);
+    			  	  								fileEntryJsp.setFileEntry(archivo12BObs);
+    			  	  								listaArchivo.add(fileEntryJsp);
+    			  	  							}
+    			  	  						}
+    			  	  					}
+    			  	  				  f12B = "1";
+    			  	  				}//fin if mapa ! null			  	  				
+    			  	  			}
+    		  	  				/******FORMATO 12C**************/
+    			  	  		    if(FiseConstants.NOMBRE_FORMATO_12C.equals(m.getFormato())&&valorValidacion){
+    			  	  		    	mapa = parametros12C(codEmpresa, m.getAnioPres(), m.getMesPres(),
+    			  	  		    			m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);	
+    			  	  		    	
+    			  	  		    	FiseFormato12CCPK pk = new FiseFormato12CCPK();
+    			  	  		    	pk.setCodEmpresa(codEmpresa);
+    			  	  		    	pk.setAnoPresentacion(new Long(m.getAnioPres()));
+    			  	  		    	pk.setMesPresentacion(new Long(m.getMesPres()));
+    			  	  		    	pk.setEtapa(etapa);
+    			  	  		        FiseFormato12CC formato = formatoService12C.obtenerFormato12CCByPK(pk);	
+    			  	  		        if(mapa!=null && formato!=null){
+    			  	  		        	nombreReporte = "formato12C";		  	  		    	
+    			  	  		        	directorio = "/reports/" + nombreReporte + ".jasper";
+    			  	  		        	File reportFile = new File(session.getServletContext().getRealPath(directorio));
+    			  	  		        	byte[] bytes12C = null;
+    			  	  		        	bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+    			  	  		        			new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
+    			  	  		        	if (bytes12C != null) {				  	  		    		
+    			  	  		        		String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+    			  	  		        				Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+    			  	  		        				FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  	
+    			  	  		        		FileEntry archivo12C = fiseUtil.subirDocumentoBytes(request, bytes12C, "application/pdf", nombre);
+    			  	  		        		if (archivo12C != null) {
+    			  	  		        			FileEntryJSP fileEntryJsp = new FileEntryJSP();
+    			  	  		        			fileEntryJsp.setNombreArchivo(nombre);
+    			  	  		        			fileEntryJsp.setFileEntry(archivo12C);
+    			  	  		        			listaArchivo.add(fileEntryJsp);
+    			  	  		        		}
+    			  	  		        	}
+    			  	  		        	/** REPORTE OBSERVACIONES */
+    			  	  		        	if (listaObs12C != null && listaObs12C.size() > 0) {
+    			  	  		        		nombreReporte = "validacion12";		  	  		    		
+    			  	  		        		directorio = "/reports/" + nombreReporte + ".jasper";
+    			  	  		        		File reportFile12CObs = new File(session.getServletContext().getRealPath(directorio));
+    			  	  		        		byte[] bytes12CObs = null;
+    			  	  		        		bytes12CObs = JasperRunManager.runReportToPdf(reportFile12CObs.getPath(), mapa, 
+    			  	  		        				new JRBeanCollectionDataSource(listaObs12C));
+    			  	  		        		if (bytes12CObs != null) {	  	  		    			
+    			  	  		        			String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+    			  	  		        					Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+    			  	  		        					FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    			  	  		        			FileEntry archivo12CObs = fiseUtil.subirDocumentoBytes(request, bytes12CObs, "application/pdf", nombre);
+    			  	  		        			if (archivo12CObs != null) {
+    			  	  		        				FileEntryJSP fileEntryJsp = new FileEntryJSP();
+    			  	  		        				fileEntryJsp.setNombreArchivo(nombre);
+    			  	  		        				fileEntryJsp.setFileEntry(archivo12CObs);
+    			  	  		        				listaArchivo.add(fileEntryJsp);
+    			  	  		        			}
+    			  	  		        		}
+    			  	  		        	}
+    			  	  		            f12C = "1";
+    			  	  		        }//fin del if map!=null		  	  		    	
+    		  	  			    }	
+    		  	  			    /******FORMATO 12D**************/
+    			  	  		   if(FiseConstants.NOMBRE_FORMATO_12D.equals(m.getFormato())&&valorValidacion){
+    			  	  			   mapa = parametros12D(codEmpresa, m.getAnioPres(), m.getMesPres(),
+    			  	  					   m.getAnioEjec(), m.getMesEjec(),  etapa, rutaImg, usuario, terminal, email);	
 
-  			  	  			   FiseFormato12DCPK pk = new FiseFormato12DCPK();
-  			  	  			   pk.setCodEmpresa(codEmpresa);
-  			  	  			   pk.setAnoPresentacion(new Long(m.getAnioPres()));
-  			  	  			   pk.setMesPresentacion(new Long(m.getMesPres()));
-  			  	  			   pk.setEtapa(etapa);
-  			  	  			   FiseFormato12DC formato = formatoService12D.obtenerFormato12DCByPK(pk);
-  			  	  			   if(mapa!=null && formato!=null){
-  			  	  				   nombreReporte = "formato12D";	  	  		    	
-  			  	  				   directorio = "/reports/" + nombreReporte + ".jasper";
-  			  	  				   File reportFile = new File(session.getServletContext().getRealPath(directorio));
-  			  	  				   byte[] bytes12D = null;
-  			  	  				   bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-  			  	  						   new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
-  			  	  				   if (bytes12D != null) {				  	  		    		
-  			  	  					   String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
-  			  	  							   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-  			  	  							   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  	
-  			  	  					   FileEntry archivo12D = fiseUtil.subirDocumentoBytes(request, bytes12D, "application/pdf", nombre);
-  			  	  					   if (archivo12D != null) {
-  			  	  						   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			  	  						   fileEntryJsp.setNombreArchivo(nombre);
-  			  	  						   fileEntryJsp.setFileEntry(archivo12D);
-  			  	  						   listaArchivo.add(fileEntryJsp);
-  			  	  					   }
-  			  	  				   }
-  			  	  				   /** REPORTE OBSERVACIONES */
-  			  	  				   if (listaObs12D != null && listaObs12D.size() > 0) {
-  			  	  					   nombreReporte = "validacion12";		  	  		    		
-  			  	  					   directorio = "/reports/" + nombreReporte + ".jasper";
-  			  	  					   File reportFile12DObs = new File(session.getServletContext().getRealPath(directorio));
-  			  	  					   byte[] bytes12DObs = null;
-  			  	  					   bytes12DObs = JasperRunManager.runReportToPdf(reportFile12DObs.getPath(), mapa, 
-  			  	  							   new JRBeanCollectionDataSource(listaObs12D));
-  			  	  					   if (bytes12DObs != null) {	  	  		    			
-  			  	  						   String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
-  			  	  								   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-  			  	  								   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  			  	  						   FileEntry archivo12DObs = fiseUtil.subirDocumentoBytes(request, bytes12DObs, "application/pdf", nombre);
-  			  	  						   if (archivo12DObs != null) {
-  			  	  							   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			  	  							   fileEntryJsp.setNombreArchivo(nombre);
-  			  	  							   fileEntryJsp.setFileEntry(archivo12DObs);
-  			  	  							   listaArchivo.add(fileEntryJsp);
-  			  	  						   }
-  			  	  					   }
-  			  	  				   }
-  			  	  				   f12D = "1";
-  			  	  			   }//fin del if map!=null			  	  				
-  		  	  			   }		  	  		       
-  		  	  			 }/*fin del for para mensual*/	  	  				
-  		  	  			 /**********ACTA CONSOLIDADO MENSUAL*********/ 
-  		  	  			   mapa = parametrosActaMensual(lista, rutaImg, 
-  		  	  					   rutaImgCheck, rutaImgUncheck, usuario, n.getDescGrupoInf(), etapa,rutaImgRelleno);	  	  			 
-  		  	  			   if(mapa!=null){
-  		  	  				nombreReporte = "gastosMensual";	  	  			 
-  			  	  			   directorio =  "/reports/"+nombreReporte+".jasper";
-  			  	  			   File reportFileActa = new File(session.getServletContext().getRealPath(directorio));
-  			  	  			   byte[] bytesActa = null;
-  			  	  			   bytesActa = JasperRunManager.runReportToPdf(reportFileActa.getPath(), mapa, new JREmptyDataSource());
-  			  	  			   if (bytesActa != null) {
-  			  	  				   session.setAttribute("bytesActaEnvio", bytesActa);	  	  				  
-  			  	  				   String nombre = FormatoUtil.nombreIndividualActaRemisionGeneral(codEmpresa,	  	  			    			
-  			  	  						   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 	    		    	   
-  			  	  				   FileEntry archivoActa = fiseUtil.subirDocumentoBytes(request, bytesActa, "application/pdf", nombre);
-  			  	  				   if(archivoActa!=null ){
-  			  	  					   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			  	  					   fileEntryJsp.setNombreArchivo(nombre);
-  			  	  					   fileEntryJsp.setFileEntry(archivoActa);
-  			  	  					   listaArchivo.add(fileEntryJsp);
-  			  	  				   }
-  			  	  			   }
-  			  	  			   actaEnvio = true;
-  		  	  			   }//fin if mapa!null	  	  			   
-  		  	  				
-  	  	  				}else if(FiseConstants.BIENAL.equals(optionFormato)){
-  	  	  				/**PERIODO BIENAL*/
-  		                   for(EnvioDefinitivoBean b:lista){
-  		                	  /****Procesamos las observaciones***/
-  		                	  valorValidacion= procesarValidacionObs(lista,usuario,terminal);
-  			  	  			  
-  		                      /******FORMATO 13A**************/
-  		                	  if(FiseConstants.NOMBRE_FORMATO_13A.equals(b.getFormato())&&valorValidacion){
-  		                		   /*****Obtenemos los parametros del map*******/
-  			  	  			        mapa = parametros13A(codEmpresa, b.getAnioPres(), b.getMesPres(), etapa, 
-  			  	  			    		   rutaImg, usuario, terminal, email); 
-  			  	  			       /* REPORTE FORMATO 13A */
-  			  	  			       if(mapa!=null){
-  			  	  			    	nombreReporte = "formato13A";	       				
-  				       				directorio = "/reports/" + nombreReporte + ".jasper";
-  				       				File reportFile13A = new File(session.getServletContext().getRealPath(directorio));
-  				       				byte[] bytes13A = null;	       				  				
-  				       				bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, new JRBeanCollectionDataSource(listaZonas13A));	       				
-  				       				if (bytes13A != null) {	        					
-  				       				    String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
-  				  	  			    			Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-  				  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
-  				       					FileEntry archivo13A = fiseUtil.subirDocumentoBytes(request, bytes13A, "application/pdf", nombre);
-  				       					if (archivo13A != null) {
-  				       						FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  				       						fileEntryJsp.setNombreArchivo(nombre);
-  				       						fileEntryJsp.setFileEntry(archivo13A);
-  				       						listaArchivo.add(fileEntryJsp);
-  				       					}
-  				       				}
-  				       				/*REPORTE OBSERVACIONES */
-  				       				if (listaObs13A != null && listaObs13A.size() > 0) {
-  				       					nombreReporte = "validacion13";	       					
-  				       					directorio = "/reports/" + nombreReporte + ".jasper";
-  				       					File reportFile13AObs = new File(session.getServletContext().getRealPath(directorio));
-  				       					byte[] bytes13Obs = null;
-  				       					bytes13Obs = JasperRunManager.runReportToPdf(reportFile13AObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs13A));
-  				       					if (bytes13Obs != null) {		  						
-  				       					    String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
-  					  	  			    			Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-  					  	  			    			FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  				       						FileEntry archivo13Obs = fiseUtil.subirDocumentoBytes(request, bytes13Obs, "application/pdf", nombre);
-  				       						if (archivo13Obs != null) {
-  				       							FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  				       							fileEntryJsp.setNombreArchivo(nombre);
-  				       							fileEntryJsp.setFileEntry(archivo13Obs);
-  				       							listaArchivo.add(fileEntryJsp);
-  				       						}
-  				       					}
-  				       				   f13A = "1";
-  				       				}//fin del if map !null   
-  			  	  			       }
-  				       				
-  		                	  }                	
-  			                  /******FORMATO 14A**************/
-  			                  if(FiseConstants.NOMBRE_FORMATO_14A.equals(b.getFormato())&&valorValidacion){
-  			                	 /*****Obtenemos los parametros del map*******/
-  			                	  mapa = parametros14A(codEmpresa, b.getAnioPres(), b.getMesPres(),  
-  			  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(),etapa,rutaImg, usuario, terminal, email);
-  			                	  /* REPORTE FORMATO 14A */
-  			                	    if(mapa!=null){
-  			                	    	nombreReporte = "formato14A";	       				
-  					       				directorio = "/reports/" + nombreReporte + ".jasper";
-  					       				File reportFile14A = new File(session.getServletContext().getRealPath(directorio));
-  					       				byte[] bytes14A = null;	       				  				
-  					       				bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa, new JREmptyDataSource());	       				
-  					       				if (bytes14A != null) {	        					
-  					       				    String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
-  					  	  			    			Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-  					  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
-  					       					FileEntry archivo14A = fiseUtil.subirDocumentoBytes(request, bytes14A, "application/pdf", nombre);
-  					       					if (archivo14A != null) {
-  					       						FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  					       						fileEntryJsp.setNombreArchivo(nombre);
-  					       						fileEntryJsp.setFileEntry(archivo14A);
-  					       						listaArchivo.add(fileEntryJsp);
-  					       					}
-  					       				}
-  					       				/*REPORTE OBSERVACIONES */
-  					       				if (listaObs14A != null && listaObs14A.size() > 0) {
-  					       					nombreReporte = "validacion";	       					
-  					       					directorio = "/reports/" + nombreReporte + ".jasper";
-  					       					File reportFile14AObs = new File(session.getServletContext().getRealPath(directorio));
-  					       					byte[] bytes14AObs = null;
-  					       					bytes14AObs = JasperRunManager.runReportToPdf(reportFile14AObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14A));
-  					       					if (bytes14AObs != null) {		  						
-  					       					    String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
-  						  	  			    			Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-  						  	  			    			FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  					       						FileEntry archivo14AObs = fiseUtil.subirDocumentoBytes(request, bytes14AObs, "application/pdf", nombre);
-  					       						if (archivo14AObs != null) {
-  					       							FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  					       							fileEntryJsp.setNombreArchivo(nombre);
-  					       							fileEntryJsp.setFileEntry(archivo14AObs);
-  					       							listaArchivo.add(fileEntryJsp);
-  					       						}
-  					       					}
-  					       					f14A = "1";
-  					       				}//fin del if map ! null	
-  			                	    }
-  				       				
-  			                  }
-  			                  /******FORMATO 14B**************/
-  			                  if(FiseConstants.NOMBRE_FORMATO_14B.equals(b.getFormato())&&valorValidacion){
-  				                	 /*****Obtenemos los parametros del map*******/
-  				                	  mapa = parametros14B(codEmpresa, b.getAnioPres(), b.getMesPres(),  
-  				  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(),etapa, rutaImg, usuario, terminal, email);
-  				                	  /* REPORTE FORMATO 14B */
-  				                	  if(mapa!=null){
-  				                		  nombreReporte = "formato14B";	       				
-  						       				directorio = "/reports/" + nombreReporte + ".jasper";
-  						       				File reportFile14B = new File(session.getServletContext().getRealPath(directorio));
-  						       				byte[] bytes14B = null;	       				  				
-  						       				bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa, new JREmptyDataSource());	       				
-  						       				if (bytes14B != null) {	        					
-  						       				    String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
-  						  	  			    			Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-  						  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
-  						       					FileEntry archivo14B = fiseUtil.subirDocumentoBytes(request, bytes14B, "application/pdf", nombre);
-  						       					if (archivo14B != null) {
-  						       						FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  						       						fileEntryJsp.setNombreArchivo(nombre);
-  						       						fileEntryJsp.setFileEntry(archivo14B);
-  						       						listaArchivo.add(fileEntryJsp);
-  						       					}
-  						       				}
-  						       				/*REPORTE OBSERVACIONES */
-  						       				if (listaObs14B != null && listaObs14B.size() > 0) {
-  						       					nombreReporte = "validacion";	       					
-  						       					directorio = "/reports/" + nombreReporte + ".jasper";
-  						       					File reportFile14BObs = new File(session.getServletContext().getRealPath(directorio));
-  						       					byte[] bytes14BObs = null;
-  						       					bytes14BObs = JasperRunManager.runReportToPdf(reportFile14BObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14B));
-  						       					if (bytes14BObs != null) {		  						
-  						       					    String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
-  							  	  			    			Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-  							  	  			    			FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  						       						FileEntry archivo14BObs = fiseUtil.subirDocumentoBytes(request, bytes14BObs, "application/pdf", nombre);
-  						       						if (archivo14BObs != null) {
-  						       							FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  						       							fileEntryJsp.setNombreArchivo(nombre);
-  						       							fileEntryJsp.setFileEntry(archivo14BObs);
-  						       							listaArchivo.add(fileEntryJsp);
-  						       						}
-  						       					}
-  						       				}
-  						       				f14B = "1";
-  				                	  }//fin del if map!null				       				
-  				                  }
-  			                  /******FORMATO 14C**************/                	   
-  			                  if(FiseConstants.NOMBRE_FORMATO_14C.equals(b.getFormato())&&valorValidacion){
-  				                	 /*****Obtenemos los parametros del map*******/
-  				                	  mapa = parametros14C(codEmpresa, b.getAnioPres(), b.getMesPres(),  
-  				  	  			    		   b.getAnioIniVig(), b.getAnioFinVig(), etapa,rutaImg,usuario, terminal, email);
-  				                	  /* REPORTE FORMATO 14C */
-  				                	   if(mapa!=null){
-  				                		   nombreReporte = "formato14C";	       				
-  						       				directorio = "/reports/" + nombreReporte + ".jasper";
-  						       				File reportFile14C = new File(session.getServletContext().getRealPath(directorio));
-  						       				byte[] bytes14C = null;	       				  				
-  						       				bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa, new JREmptyDataSource());	       				
-  						       				if (bytes14C != null) {	        					
-  						       				    String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
-  						  	  			    			Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-  						  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
-  						       					FileEntry archivo14C = fiseUtil.subirDocumentoBytes(request, bytes14C, "application/pdf", nombre);
-  						       					if (archivo14C != null) {
-  						       						FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  						       						fileEntryJsp.setNombreArchivo(nombre);
-  						       						fileEntryJsp.setFileEntry(archivo14C);
-  						       						listaArchivo.add(fileEntryJsp);
-  						       					}
-  						       				}
-  						       				/*REPORTE OBSERVACIONES */
-  						       				if (listaObs14C != null && listaObs14C.size() > 0) {
-  						       					nombreReporte = "validacion";	       					
-  						       					directorio = "/reports/" + nombreReporte + ".jasper";
-  						       					File reportFile14CObs = new File(session.getServletContext().getRealPath(directorio));
-  						       					byte[] bytes14CObs = null;
-  						       					bytes14CObs = JasperRunManager.runReportToPdf(reportFile14CObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14C));
-  						       					if (bytes14CObs != null) {		  						
-  						       					    String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
-  							  	  			    			Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-  							  	  			    			FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
-  						       						FileEntry archivo14CObs = fiseUtil.subirDocumentoBytes(request, bytes14CObs, "application/pdf", nombre);
-  						       						if (archivo14CObs != null) {
-  						       							FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  						       							fileEntryJsp.setNombreArchivo(nombre);
-  						       							fileEntryJsp.setFileEntry(archivo14CObs);
-  						       							listaArchivo.add(fileEntryJsp);
-  						       						}
-  						       					}
-  						       				} 
-  						       				f14C = "1";
-  				                	   }//fin del if map !null				       				
-  				                  }	                  
-  		  	  				}/*fin del for para bienal*/ 	                   
-  		                /**********ACTA CONSOLIDADO BIENAL*********/ 
-  		                   mapa = parametrosActaBienal(lista, rutaImg, 
-  		  	  					   rutaImgCheck, rutaImgUncheck, usuario, n.getDescGrupoInf(), etapa,rutaImgRelleno);
-  		  	  			   if(mapa!=null){
-  		  	  				nombreReporte = "actaEnvioCosto";	    		     
-  			    		       directorio =  "/reports/"+nombreReporte+".jasper";
-  			    		       File reportFileActa = new File(session.getServletContext().getRealPath(directorio));
-  			    		       byte[] bytesActa = null;
-  			    		       bytesActa = JasperRunManager.runReportToPdf(reportFileActa.getPath(), mapa, new JREmptyDataSource());	    		      
-  			    		       if (bytesActa != null) {
-  			    		    	   session.setAttribute("bytesActaEnvio", bytesActa);	    		    	  
-  			    		    	   String nombre = FormatoUtil.nombreIndividualActaRemisionGeneral(codEmpresa,	  	  			    			
-  			  	  			    			FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 	    		    	   
-  			    		    	   FileEntry archivoActa = fiseUtil.subirDocumentoBytes(request, bytesActa, "application/pdf", nombre);	    		    	   
-  			    		    	   if( archivoActa!=null ){
-  			    		    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
-  			    		    		   fileEntryJsp.setNombreArchivo(nombre);
-  			    		    		   fileEntryJsp.setFileEntry(archivoActa);
-  			    		    		   listaArchivo.add(fileEntryJsp);
-  			    		    	   }
-  			    		       }
-  			    		       actaEnvio = true;
-  		  	  			   }//fin if mapa!null
-  		  	  			   
+    			  	  			   FiseFormato12DCPK pk = new FiseFormato12DCPK();
+    			  	  			   pk.setCodEmpresa(codEmpresa);
+    			  	  			   pk.setAnoPresentacion(new Long(m.getAnioPres()));
+    			  	  			   pk.setMesPresentacion(new Long(m.getMesPres()));
+    			  	  			   pk.setEtapa(etapa);
+    			  	  			   FiseFormato12DC formato = formatoService12D.obtenerFormato12DCByPK(pk);
+    			  	  			   if(mapa!=null && formato!=null){
+    			  	  				   nombreReporte = "formato12D";	  	  		    	
+    			  	  				   directorio = "/reports/" + nombreReporte + ".jasper";
+    			  	  				   File reportFile = new File(session.getServletContext().getRealPath(directorio));
+    			  	  				   byte[] bytes12D = null;
+    			  	  				   bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+    			  	  						   new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+    			  	  				   if (bytes12D != null) {				  	  		    		
+    			  	  					   String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+    			  	  							   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+    			  	  							   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  	
+    			  	  					   FileEntry archivo12D = fiseUtil.subirDocumentoBytes(request, bytes12D, "application/pdf", nombre);
+    			  	  					   if (archivo12D != null) {
+    			  	  						   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+    			  	  						   fileEntryJsp.setNombreArchivo(nombre);
+    			  	  						   fileEntryJsp.setFileEntry(archivo12D);
+    			  	  						   listaArchivo.add(fileEntryJsp);
+    			  	  					   }
+    			  	  				   }
+    			  	  				   /** REPORTE OBSERVACIONES */
+    			  	  				   if (listaObs12D != null && listaObs12D.size() > 0) {
+    			  	  					   nombreReporte = "validacion12";		  	  		    		
+    			  	  					   directorio = "/reports/" + nombreReporte + ".jasper";
+    			  	  					   File reportFile12DObs = new File(session.getServletContext().getRealPath(directorio));
+    			  	  					   byte[] bytes12DObs = null;
+    			  	  					   bytes12DObs = JasperRunManager.runReportToPdf(reportFile12DObs.getPath(), mapa, 
+    			  	  							   new JRBeanCollectionDataSource(listaObs12D));
+    			  	  					   if (bytes12DObs != null) {	  	  		    			
+    			  	  						   String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+    			  	  								   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
+    			  	  								   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    			  	  						   FileEntry archivo12DObs = fiseUtil.subirDocumentoBytes(request, bytes12DObs, "application/pdf", nombre);
+    			  	  						   if (archivo12DObs != null) {
+    			  	  							   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+    			  	  							   fileEntryJsp.setNombreArchivo(nombre);
+    			  	  							   fileEntryJsp.setFileEntry(archivo12DObs);
+    			  	  							   listaArchivo.add(fileEntryJsp);
+    			  	  						   }
+    			  	  					   }
+    			  	  				   }
+    			  	  				   f12D = "1";
+    			  	  			   }//fin del if map!=null			  	  				
+    		  	  			   }		  	  		       
+    		  	  			 }/*fin del for para mensual*/	 	  						 
+  	  						 /**********ACTA CONSOLIDADO MENSUAL*********/ 
+  	  						 mapa = parametrosActaMensual(lista, rutaImg, 
+  	  								 rutaImgCheck, rutaImgUncheck, usuario, n.getDescGrupoInf(), etapa,rutaImgRelleno);	  	  			 
+  	  						 if(mapa!=null){
+  	  							 nombreReporte = "gastosMensual";	  	  			 
+  	  							 directorio =  "/reports/"+nombreReporte+".jasper";
+  	  							 File reportFileActa = new File(session.getServletContext().getRealPath(directorio));
+  	  							 byte[] bytesActa = null;
+  	  							 bytesActa = JasperRunManager.runReportToPdf(reportFileActa.getPath(), mapa, new JREmptyDataSource());
+  	  							 if (bytesActa != null) {
+  	  								 session.setAttribute("bytesActaEnvio", bytesActa);	  	  				  
+  	  								 String nombre = FormatoUtil.nombreIndividualActaRemisionGeneral(codEmpresa,	  	  			    			
+  	  										 FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 	    		    	   
+  	  								 FileEntry archivoActa = fiseUtil.subirDocumentoBytes(request, bytesActa, "application/pdf", nombre);
+  	  								 if(archivoActa!=null ){
+  	  									 FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  	  									 fileEntryJsp.setNombreArchivo(nombre);
+  	  									 fileEntryJsp.setFileEntry(archivoActa);
+  	  									 listaArchivo.add(fileEntryJsp);
+  	  								 }
+  	  							 }
+  	  							 actaEnvio = true;
+  	  						 }//fin if mapa!null	 						 
+  	  						}else{
+  	  						  flagEnvioObs = false;
+  	  						}//fin else flag observacion S  			   
+
+  	  					}else if(FiseConstants.BIENAL.equals(optionFormato)){  	  
+  	  					    valorValidacion = procesarValidacionObs(lista,usuario,terminal);
+  	  					    boolean valorObs = verificarFlagObs(lista);  	  	  				   
+	  						if(valorObs){
+	  							for(EnvioDefinitivoBean b:lista){			  	  			  
+	  								/******FORMATO 13A**************/
+	  								if(FiseConstants.NOMBRE_FORMATO_13A.equals(b.getFormato())&&valorValidacion){
+	  									/*****Obtenemos los parametros del map*******/
+	  									mapa = parametros13A(codEmpresa, b.getAnioPres(), b.getMesPres(), etapa, 
+	  											rutaImg, usuario, terminal, email); 
+	  									/* REPORTE FORMATO 13A */
+	  									if(mapa!=null){
+	  										nombreReporte = "formato13A";	       				
+	  										directorio = "/reports/" + nombreReporte + ".jasper";
+	  										File reportFile13A = new File(session.getServletContext().getRealPath(directorio));
+	  										byte[] bytes13A = null;	       				  				
+	  										bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, new JRBeanCollectionDataSource(listaZonas13A));	       				
+	  										if (bytes13A != null) {	        					
+	  											String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
+	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
+	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
+	  											FileEntry archivo13A = fiseUtil.subirDocumentoBytes(request, bytes13A, "application/pdf", nombre);
+	  											if (archivo13A != null) {
+	  												FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  												fileEntryJsp.setNombreArchivo(nombre);
+	  												fileEntryJsp.setFileEntry(archivo13A);
+	  												listaArchivo.add(fileEntryJsp);
+	  											}
+	  										}
+	  										/*REPORTE OBSERVACIONES */
+	  										if (listaObs13A != null && listaObs13A.size() > 0) {
+	  											nombreReporte = "validacion13";	       					
+	  											directorio = "/reports/" + nombreReporte + ".jasper";
+	  											File reportFile13AObs = new File(session.getServletContext().getRealPath(directorio));
+	  											byte[] bytes13Obs = null;
+	  											bytes13Obs = JasperRunManager.runReportToPdf(reportFile13AObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs13A));
+	  											if (bytes13Obs != null) {		  						
+	  												String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
+	  														Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
+	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+	  												FileEntry archivo13Obs = fiseUtil.subirDocumentoBytes(request, bytes13Obs, "application/pdf", nombre);
+	  												if (archivo13Obs != null) {
+	  													FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  													fileEntryJsp.setNombreArchivo(nombre);
+	  													fileEntryJsp.setFileEntry(archivo13Obs);
+	  													listaArchivo.add(fileEntryJsp);
+	  												}
+	  											}
+	  											f13A = "1";
+	  										}//fin del if map !null   
+	  									}
+
+	  								}                	
+	  								/******FORMATO 14A**************/
+	  								if(FiseConstants.NOMBRE_FORMATO_14A.equals(b.getFormato())&&valorValidacion){
+	  									/*****Obtenemos los parametros del map*******/
+	  									mapa = parametros14A(codEmpresa, b.getAnioPres(), b.getMesPres(),  
+	  											b.getAnioIniVig(), b.getAnioFinVig(),etapa,rutaImg, usuario, terminal, email);
+	  									/* REPORTE FORMATO 14A */
+	  									if(mapa!=null){
+	  										nombreReporte = "formato14A";	       				
+	  										directorio = "/reports/" + nombreReporte + ".jasper";
+	  										File reportFile14A = new File(session.getServletContext().getRealPath(directorio));
+	  										byte[] bytes14A = null;	       				  				
+	  										bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa, new JREmptyDataSource());	       				
+	  										if (bytes14A != null) {	        					
+	  											String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
+	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
+	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
+	  											FileEntry archivo14A = fiseUtil.subirDocumentoBytes(request, bytes14A, "application/pdf", nombre);
+	  											if (archivo14A != null) {
+	  												FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  												fileEntryJsp.setNombreArchivo(nombre);
+	  												fileEntryJsp.setFileEntry(archivo14A);
+	  												listaArchivo.add(fileEntryJsp);
+	  											}
+	  										}
+	  										/*REPORTE OBSERVACIONES */
+	  										if (listaObs14A != null && listaObs14A.size() > 0) {
+	  											nombreReporte = "validacion";	       					
+	  											directorio = "/reports/" + nombreReporte + ".jasper";
+	  											File reportFile14AObs = new File(session.getServletContext().getRealPath(directorio));
+	  											byte[] bytes14AObs = null;
+	  											bytes14AObs = JasperRunManager.runReportToPdf(reportFile14AObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14A));
+	  											if (bytes14AObs != null) {		  						
+	  												String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
+	  														Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
+	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+	  												FileEntry archivo14AObs = fiseUtil.subirDocumentoBytes(request, bytes14AObs, "application/pdf", nombre);
+	  												if (archivo14AObs != null) {
+	  													FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  													fileEntryJsp.setNombreArchivo(nombre);
+	  													fileEntryJsp.setFileEntry(archivo14AObs);
+	  													listaArchivo.add(fileEntryJsp);
+	  												}
+	  											}
+	  											f14A = "1";
+	  										}//fin del if map ! null	
+	  									}
+
+	  								}
+	  								/******FORMATO 14B**************/
+	  								if(FiseConstants.NOMBRE_FORMATO_14B.equals(b.getFormato())&&valorValidacion){
+	  									/*****Obtenemos los parametros del map*******/
+	  									mapa = parametros14B(codEmpresa, b.getAnioPres(), b.getMesPres(),  
+	  											b.getAnioIniVig(), b.getAnioFinVig(),etapa, rutaImg, usuario, terminal, email);
+	  									/* REPORTE FORMATO 14B */
+	  									if(mapa!=null){
+	  										nombreReporte = "formato14B";	       				
+	  										directorio = "/reports/" + nombreReporte + ".jasper";
+	  										File reportFile14B = new File(session.getServletContext().getRealPath(directorio));
+	  										byte[] bytes14B = null;	       				  				
+	  										bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa, new JREmptyDataSource());	       				
+	  										if (bytes14B != null) {	        					
+	  											String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
+	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
+	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
+	  											FileEntry archivo14B = fiseUtil.subirDocumentoBytes(request, bytes14B, "application/pdf", nombre);
+	  											if (archivo14B != null) {
+	  												FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  												fileEntryJsp.setNombreArchivo(nombre);
+	  												fileEntryJsp.setFileEntry(archivo14B);
+	  												listaArchivo.add(fileEntryJsp);
+	  											}
+	  										}
+	  										/*REPORTE OBSERVACIONES */
+	  										if (listaObs14B != null && listaObs14B.size() > 0) {
+	  											nombreReporte = "validacion";	       					
+	  											directorio = "/reports/" + nombreReporte + ".jasper";
+	  											File reportFile14BObs = new File(session.getServletContext().getRealPath(directorio));
+	  											byte[] bytes14BObs = null;
+	  											bytes14BObs = JasperRunManager.runReportToPdf(reportFile14BObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14B));
+	  											if (bytes14BObs != null) {		  						
+	  												String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
+	  														Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
+	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+	  												FileEntry archivo14BObs = fiseUtil.subirDocumentoBytes(request, bytes14BObs, "application/pdf", nombre);
+	  												if (archivo14BObs != null) {
+	  													FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  													fileEntryJsp.setNombreArchivo(nombre);
+	  													fileEntryJsp.setFileEntry(archivo14BObs);
+	  													listaArchivo.add(fileEntryJsp);
+	  												}
+	  											}
+	  										}
+	  										f14B = "1";
+	  									}//fin del if map!null				       				
+	  								}
+	  								/******FORMATO 14C**************/                	   
+	  								if(FiseConstants.NOMBRE_FORMATO_14C.equals(b.getFormato())&&valorValidacion){
+	  									/*****Obtenemos los parametros del map*******/
+	  									mapa = parametros14C(codEmpresa, b.getAnioPres(), b.getMesPres(),  
+	  											b.getAnioIniVig(), b.getAnioFinVig(), etapa,rutaImg,usuario, terminal, email);
+	  									/* REPORTE FORMATO 14C */
+	  									if(mapa!=null){
+	  										nombreReporte = "formato14C";	       				
+	  										directorio = "/reports/" + nombreReporte + ".jasper";
+	  										File reportFile14C = new File(session.getServletContext().getRealPath(directorio));
+	  										byte[] bytes14C = null;	       				  				
+	  										bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa, new JREmptyDataSource());	       				
+	  										if (bytes14C != null) {	        					
+	  											String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
+	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
+	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
+	  											FileEntry archivo14C = fiseUtil.subirDocumentoBytes(request, bytes14C, "application/pdf", nombre);
+	  											if (archivo14C != null) {
+	  												FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  												fileEntryJsp.setNombreArchivo(nombre);
+	  												fileEntryJsp.setFileEntry(archivo14C);
+	  												listaArchivo.add(fileEntryJsp);
+	  											}
+	  										}
+	  										/*REPORTE OBSERVACIONES */
+	  										if (listaObs14C != null && listaObs14C.size() > 0) {
+	  											nombreReporte = "validacion";	       					
+	  											directorio = "/reports/" + nombreReporte + ".jasper";
+	  											File reportFile14CObs = new File(session.getServletContext().getRealPath(directorio));
+	  											byte[] bytes14CObs = null;
+	  											bytes14CObs = JasperRunManager.runReportToPdf(reportFile14CObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14C));
+	  											if (bytes14CObs != null) {		  						
+	  												String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
+	  														Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
+	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+	  												FileEntry archivo14CObs = fiseUtil.subirDocumentoBytes(request, bytes14CObs, "application/pdf", nombre);
+	  												if (archivo14CObs != null) {
+	  													FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  													fileEntryJsp.setNombreArchivo(nombre);
+	  													fileEntryJsp.setFileEntry(archivo14CObs);
+	  													listaArchivo.add(fileEntryJsp);
+	  												}
+	  											}
+	  										} 
+	  										f14C = "1";
+	  									}//fin del if map !null				       				
+	  								}	                  
+	  							}/*fin del for para bienal*/ 
+	  							/**********ACTA CONSOLIDADO BIENAL*********/ 
+	  							mapa = parametrosActaBienal(lista, rutaImg, 
+	  									rutaImgCheck, rutaImgUncheck, usuario, n.getDescGrupoInf(), etapa,rutaImgRelleno);
+	  							if(mapa!=null){
+	  								nombreReporte = "actaEnvioCosto";	    		     
+	  								directorio =  "/reports/"+nombreReporte+".jasper";
+	  								File reportFileActa = new File(session.getServletContext().getRealPath(directorio));
+	  								byte[] bytesActa = null;
+	  								bytesActa = JasperRunManager.runReportToPdf(reportFileActa.getPath(), mapa, new JREmptyDataSource());	    		      
+	  								if (bytesActa != null) {
+	  									session.setAttribute("bytesActaEnvio", bytesActa);	    		    	  
+	  									String nombre = FormatoUtil.nombreIndividualActaRemisionGeneral(codEmpresa,	  	  			    			
+	  											FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 	    		    	   
+	  									FileEntry archivoActa = fiseUtil.subirDocumentoBytes(request, bytesActa, "application/pdf", nombre);	    		    	   
+	  									if( archivoActa!=null ){
+	  										FileEntryJSP fileEntryJsp = new FileEntryJSP();
+	  										fileEntryJsp.setNombreArchivo(nombre);
+	  										fileEntryJsp.setFileEntry(archivoActa);
+	  										listaArchivo.add(fileEntryJsp);
+	  									}
+	  								}
+	  								actaEnvio = true;
+	  							}//fin if mapa!null						 
+	  						}else{
+	  						   flagEnvioObs= false;	
+	  						}//fin del else flag observacion S  	  			   
   	  	  			   }//fin del if formatos bienales y Mensuales  	  			 
   	  	  			 /**********ECTUALIZACION DE FECHA ENVIO*********/
   	  	  				Map<String, Object> paramts = new HashMap<String, Object>();				
@@ -2142,32 +2151,36 @@ public class EnvioDefinitivoController {
   	  	  				paramts.put("codEmpresa", codEmpresa);	
   	  	  				paramts.put("etapa", etapa);
   	  	  				paramts.put("periocidad", optionFormato);
-  	  	  				paramts.put("idGrupo", idgrupoInf);  	  			
-  	  	  				actualizar = commonService.actualizarFechaEnvioGeneral(paramts);
-  	  	  				if(actualizar){
-  	  	  					/**********ENVIO DE EMAIL*********/
-  	  	  					logger.info("Valor del acta envio:  "+actaEnvio ); 
-  	  	  					if(listaArchivo!=null && listaArchivo.size()>0 && actaEnvio){		    	  
-  	  	  						logger.info("Entrando a enviar email envio general."); 
-  	  	  					    String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4);
-  	  	  					    respuestaEmail = fiseUtil.enviarMailsAdjuntoEnvioGeneral(
-  	  	  								request,
-  	  	  								listaArchivo, 
-  	  	  								mapaEmpresa.get(codEmpreCompleta),		    			  
-  	  	  								n.getDescGrupoInf(),optionFormato);//option formato es la periocidad
-  	  	  						logger.info("El envio de email fue correctamente envio general.");	    	  
-  	  	  					} 
-  	  	  				    String[] msnId = respuestaEmail.split("/");
-  	  	  				    if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
-  	  	  				    	jsonObj.put("resultado", "OK");	
-  	  	  				    	jsonObj.put("Correo",msnId[1]);		
-  	  	  				    }else{
-  	  	  				    	jsonObj.put("resultado", "EMAIL");//error al enviar al email	
-  	  	  				    	jsonObj.put("Correo",msnId[1]);		
-  	  	  				    }  	  	  					
+  	  	  				paramts.put("idGrupo", idgrupoInf); 
+  	  	  				if(flagEnvioObs){
+  	  	  				   actualizar = commonService.actualizarFechaEnvioGeneral(paramts);	
+  	  	  				   if(actualizar){
+  	  	  					   /**********ENVIO DE EMAIL*********/
+  	  	  					   logger.info("Valor del acta envio:  "+actaEnvio ); 
+  	  	  					   if(listaArchivo!=null && listaArchivo.size()>0 && actaEnvio){		    	  
+  	  	  						   logger.info("Entrando a enviar email envio general."); 
+  	  	  						   String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4);
+  	  	  						   respuestaEmail = fiseUtil.enviarMailsAdjuntoEnvioGeneral(
+  	  	  								   request,
+  	  	  								   listaArchivo, 
+  	  	  								   mapaEmpresa.get(codEmpreCompleta),		    			  
+  	  	  								   n.getDescGrupoInf(),optionFormato);//option formato es la periocidad
+  	  	  						   logger.info("El envio de email fue correctamente envio general.");	    	  
+  	  	  					   } 
+  	  	  					   String[] msnId = respuestaEmail.split("/");
+  	  	  					   if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnId[0])){
+  	  	  						   jsonObj.put("resultado", "OK");	
+  	  	  						   jsonObj.put("Correo",msnId[1]);		
+  	  	  					   }else{
+  	  	  						   jsonObj.put("resultado", "EMAIL");//error al enviar al email	
+  	  	  						   jsonObj.put("Correo",msnId[1]);		
+  	  	  					   }  	  	  					
+  	  	  				   }else{
+  	  	  					   jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio
+  	  	  				   }
   	  	  				}else{
-  	  	  					jsonObj.put("resultado", "ERROR");//ocurrio un error al actualizar fecha envio
-  	  	  				}	  			 
+  	  	  				   jsonObj.put("resultado", "OBSERVACION");//no se puede enviar ya que flag envio con obs es N
+  	  	  				}  	  	  				  	  	  				
   	  	  			}else{
   	  	  				jsonObj.put("resultado", "CERRADO");
   	  	  				jsonObj.put("mensaje", mensajeCerrado);
@@ -2439,7 +2452,84 @@ public class EnvioDefinitivoController {
 				listaZonas13A=null;	
 			}						
 		}
-    }			
+    }	
+	
+	
+	/**Metodo para validar si el flag envio con observaciones es en N**/
+
+  	public boolean verificarFlagObs(List<EnvioDefinitivoBean> lista){	
+  		boolean valor = true;
+  		try{ 			
+  			logger.info("tamaño de la lista envio general para validar flag obs :"+lista.size());
+  			String flagObs = "";
+  			for(EnvioDefinitivoBean not:lista){  
+  				
+  				flagObs = fisePeriodoEnvioGartService.obtenerFlagEnvioConObs(not.getCodEmpresa(),
+  						Integer.valueOf(not.getAnioPres()), Integer.valueOf(not.getMesPres()),
+  						not.getFormato(), not.getEtapa(), FiseConstants.PERIODO_ENVIO_ESTADO_VIGENTE); 
+  				logger.info("flag envio con observacion :  "+flagObs); 
+  				if(FiseConstants.NOMBRE_FORMATO_12A.equals(not.getFormato())){ 
+  					if(FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagObs)  
+  							&& listaObs12A!=null && listaObs12A.size()>0){
+  						valor = false;
+  						break;
+  					}
+  				}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(not.getFormato())){  					
+  					if(FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagObs)  
+  							&& listaObs12B!=null && listaObs12B.size()>0){
+  						valor = false;
+  						break;
+  					}
+  				}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(not.getFormato())){   					
+  					if(FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagObs)  
+  							&& listaObs12C!=null && listaObs12C.size()>0){
+  						valor = false;
+  						break;
+  					}
+  				}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(not.getFormato())){   					
+  					if(FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagObs)  
+  							&& listaObs12D!=null && listaObs12D.size()>0){
+  						valor = false;
+  						break;
+  					}
+  				}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(not.getFormato())){   					
+  					if(FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagObs)  
+  							&& listaObs13A!=null && listaObs13A.size()>0){
+  						valor = false;
+  						break;
+  					}  
+  				}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(not.getFormato())){   					
+  					if(FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagObs)  
+  							&& listaObs14A!=null && listaObs14A.size()>0){ 
+  						valor = false;
+  						break; 
+  					}
+  				}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(not.getFormato())){ 
+  					if(FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagObs)  
+  							&& listaObs14B!=null && listaObs14B.size()>0){
+  						valor = false;
+  						break;
+  					}  		    	   
+  				}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(not.getFormato())){ 
+  					if(FiseConstants.PERIODO_CON_ENVIO_OBS_NO.equals(flagObs)  
+  							&& listaObs14C!=null && listaObs14C.size()>0){
+  						valor = false;
+  						break;
+  					}
+  				}				
+  			}//fin del for de la lista	 				
+		} catch (Exception e) {
+			valor = false;
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+  		return valor;
+	}
+	
+	
+	
+	
+	
 	
 	
 
