@@ -562,6 +562,11 @@ var periodoEnvio= {
 							periodoEnvio.dialogInfoContent.html(addhtmInfo);
 							periodoEnvio.dialogInfo.dialog("open");	
 							periodoEnvio.f_desde.focus();	
+						}else if(data.resultado == "Duplicado"){				
+							var addhtmInfo='Ya existe un Detalle de Control de Remisión con los datos ingresados.';					
+							periodoEnvio.dialogInfoContent.html(addhtmInfo);
+							periodoEnvio.dialogInfo.dialog("open");
+							periodoEnvio.initBlockUI();	
 						}else if(data.resultado == "Error"){						
 							var addhtmError='Se produjo un error al guardar el Detalle del Control de Remisión.';					
 							periodoEnvio.dialogErrorContent.html(addhtmError);
@@ -586,6 +591,11 @@ var periodoEnvio= {
 					type: 'post',
 					dataType: 'json',
 					data: {
+						<portlet:namespace />codEmpresa: periodoEnvio.f_codEmpresa.val(),
+						<portlet:namespace />anioPres: periodoEnvio.f_anoPres.val(),
+						<portlet:namespace />mesPres: periodoEnvio.f_mesPres.val(),
+						<portlet:namespace />formato: periodoEnvio.f_formato.val(),
+						<portlet:namespace />etapa: periodoEnvio.f_etapa.val(),						
 						<portlet:namespace />secuencial: periodoEnvio.f_secuencia.val(),
 						<portlet:namespace />diasNotifCierre: periodoEnvio.f_dias.val(),
 						<portlet:namespace />hasta: periodoEnvio.f_hasta.val(), 
@@ -602,6 +612,11 @@ var periodoEnvio= {
 							periodoEnvio.dialogInfoContent.html(addhtmInfo);
 							periodoEnvio.dialogInfo.dialog("open");
 							periodoEnvio.f_fechaAmpl.focus();	
+						}else if(data.resultado == "Duplicado"){				
+							var addhtmInfo='Ya existe un Control de Remisión con estado Vigente.';					
+							periodoEnvio.dialogInfoContent.html(addhtmInfo);
+							periodoEnvio.dialogInfo.dialog("open");
+							periodoEnvio.initBlockUI();	
 						}else if(data.resultado == "Error"){							
 							var addhtmError='Se produjo un error al actualizar el Detalle del Control de Remisión.';					
 							periodoEnvio.dialogErrorContent.html(addhtmError);
