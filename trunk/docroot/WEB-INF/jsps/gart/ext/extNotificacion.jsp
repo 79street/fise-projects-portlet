@@ -1013,7 +1013,7 @@ var notificarValidar= {
 							notificarValidar.botonBuscar.trigger('click');
 							notificarValidar.initBlockUI();					
 					    }else if(data.resultado == 'NINGUNO'){
-					    	var addhtmNinguno='No existe ningún registro para Procesar la Validación de los datos';					
+					    	var addhtmNinguno='No existe registro para Procesar la Validación de los datos';					
 							notificarValidar.dialogInfoContent.html(addhtmNinguno);
 							notificarValidar.dialogInfo.dialog("open");					    	
 					    	notificarValidar.botonBuscar.trigger('click');
