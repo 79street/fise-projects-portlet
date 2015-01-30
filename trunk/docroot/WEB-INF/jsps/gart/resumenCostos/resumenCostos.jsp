@@ -185,7 +185,7 @@ $(document).ready(function () {
 
    <!-- DIVS PARA MENSAJES -->
    
-   	<div id="<portlet:namespace/>dialog-message-resumen_costos" title="Mensaje de Informaci&oacute;n">
+   	<div id="<portlet:namespace/>dialog-message-resumen_costos" title="Mensaje de &Eacute;xito">
 		<p>
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>

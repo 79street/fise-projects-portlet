@@ -4,6 +4,7 @@ import gob.osinergmin.fise.bean.AutorizarReenvioBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.gart.service.CommonGartService;
+import gob.osinergmin.fise.gart.service.FiseLiquidacionService;
 import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.PrintWriter;
@@ -46,6 +47,10 @@ public class AutorizarReenvioController {
 	@Autowired
 	@Qualifier("fiseUtil")
 	private FiseUtil fiseUtil;
+	
+	@Autowired
+	@Qualifier("fiseLiquidacionServiceImpl")
+	private FiseLiquidacionService liquidacionService;
 	
 	
 	private Map<String, String> mapaEmpresa;	
@@ -149,6 +154,11 @@ public class AutorizarReenvioController {
 		JSONObject jsonObj = new JSONObject();
 		try {		
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);				
+			String etapaGrilla = "ETAPA";
+			long anioEjecucion = 0;
+			long mesEjecucion =0;
+			long anioInicioVig = 0;
+			long anioFinVig =0;
 			
 			logger.info("Entrando a actualizar reenvio"); 				
 			logger.info("Codigo empresa:  "+ r.getCodEmpresa()); 
@@ -161,14 +171,41 @@ public class AutorizarReenvioController {
 			logger.info("anio ini vige:  "+ r.getAnioIniVig());
 			logger.info("anio fin vige:  "+ r.getAnioFinVig());	
 			
-			r.setUsuario(themeDisplay.getUser().getLogin());
-			r.setTerminal(themeDisplay.getUser().getLoginIP());		
 			
-			String valor = commonService.actualizarFormatoReenvio(r);
-			if(valor.equals("1")){ 
-				jsonObj.put("resultado", "OK");					
+			r.setUsuario(themeDisplay.getUser().getLogin());
+			r.setTerminal(themeDisplay.getUser().getLoginIP());	
+			
+			if(FormatoUtil.isNotBlank(r.getEtapa())){ 
+				etapaGrilla = r.getEtapa();
+			}
+			if(FormatoUtil.isNotBlank(r.getAnioEjec())){ 
+				anioEjecucion =Long.valueOf(r.getAnioEjec());
+			}
+			if(FormatoUtil.isNotBlank(r.getMesEjec())){ 
+				mesEjecucion = Long.valueOf(r.getMesEjec());
+			}
+			if(FormatoUtil.isNotBlank(r.getAnioIniVig())){ 
+				anioInicioVig = Long.valueOf(r.getAnioIniVig());
+			}
+			if(FormatoUtil.isNotBlank(r.getAnioFinVig())){ 
+				anioFinVig = Long.valueOf(r.getAnioFinVig());
+			}			
+			String ultimaEtapa = liquidacionService.obtenerUltimaEtapa(r.getFormato(), r.getCodEmpresa(), 
+					Long.valueOf(r.getAnioPres()), Long.valueOf(r.getMesPres()),
+					anioEjecucion, mesEjecucion,anioInicioVig,anioFinVig );
+			
+			logger.info("Etapa de la grilla a autorizar el reenvio:  "+etapaGrilla);
+			logger.info("Ultima Etapa :  "+ultimaEtapa); 
+			
+			if(etapaGrilla.equals(ultimaEtapa)){ 
+				String valor = commonService.actualizarFormatoReenvio(r);
+				if(valor.equals("1")){ 
+					jsonObj.put("resultado", "OK");					
+				}else{
+					jsonObj.put("resultado", "Error");	
+				}	
 			}else{
-				jsonObj.put("resultado", "Error");	
+				jsonObj.put("resultado", "ETAPA");//etapas diferentes no se puede hacer el reenvio	
 			}			
 			response.setContentType("application/json");
 			PrintWriter pw = response.getWriter();

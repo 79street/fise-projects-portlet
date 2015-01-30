@@ -144,7 +144,7 @@ $(document).ready(function () {
 
    <!-- DIVS PARA MENSAJES -->
    
-   	<div id="<portlet:namespace/>dialog-message-reenvio" title="Mensaje de Informaci&oacute;n">
+   	<div id="<portlet:namespace/>dialog-message-reenvio" title="Mensaje de &Eacute;xito">
 		<p>
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>
@@ -168,6 +168,17 @@ $(document).ready(function () {
 			<br/>
 			<label class="labelCentrado" id="<portlet:namespace/>dialog-error-content">Error..</label>
 		</p>
-	</div>		
+	</div>	
+	
+	<!-- DIALOGO PARA INFORMAR UN MENSAJE -->
+	
+	<div id="<portlet:namespace/>dialog-info" title="Mensaje de Informaci&oacute;n">
+		<p>	
+			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-info-content">Error..</label>
+		</p>
+	</div>
+		
 	
 </form:form>

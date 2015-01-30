@@ -655,7 +655,7 @@ $(document).ready(function () {
    
     <!-- DIALOGO PARA INFORMACION -->
    
-   	<div id="<portlet:namespace/>dialog-message-notificacion" title="Mensaje de Informaci&oacute;n">
+   	<div id="<portlet:namespace/>dialog-message-notificacion" title="Mensaje de &Eacute;xito">
 		<p>
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>
