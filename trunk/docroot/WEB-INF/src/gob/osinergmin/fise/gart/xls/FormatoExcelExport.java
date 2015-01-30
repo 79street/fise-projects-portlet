@@ -1597,8 +1597,8 @@ public class FormatoExcelExport {
 				HSSFCell ax8 = fila.createCell(8);
 				ax8.setCellValue(new HSSFRichTextString(""+periodo.getHasta()));
 				ax8.setCellStyle(dateCellStyle);
-				HSSFCell ax9 = fila.createCell(9);
-				ax9.setCellValue(new HSSFRichTextString(periodo.getEstado()));
+				HSSFCell ax9 = fila.createCell(9);				
+				ax9.setCellValue(new HSSFRichTextString(periodo.getEstado().equals("V")? "Vigente" :"Anulado"));
 				ax9.setCellStyle(dateCellStyle);
 				HSSFCell ax10 = fila.createCell(10);
 				ax10.setCellValue(new HSSFRichTextString(""+periodo.getDiasNotificacionAntesCierre()));
@@ -1609,14 +1609,20 @@ public class FormatoExcelExport {
 				HSSFCell ax12 = fila.createCell(12);
 				ax12.setCellValue(new HSSFRichTextString(""+periodo.getAnoFinVigencia()));
 				ax12.setCellStyle(dateCellStyle);
-				HSSFCell ax13 = fila.createCell(13);
-				ax13.setCellValue(new HSSFRichTextString(periodo.getFlagEnvioConObservaciones()));
+				HSSFCell ax13 = fila.createCell(13); 			
+				ax13.setCellValue(new HSSFRichTextString(periodo.getFlagEnvioConObservaciones().equals("S")? "SI" :"NO"));
 				ax13.setCellStyle(dateCellStyle);
 				HSSFCell ax14 = fila.createCell(14);
-				ax14.setCellValue(new HSSFRichTextString(periodo.getFlagMostrarAnoMesEjec()));
+				ax14.setCellValue(new HSSFRichTextString(periodo.getFlagMostrarAnoMesEjec().equals("S")? "SI" :"NO"));
 				ax14.setCellStyle(dateCellStyle);
 				HSSFCell ax15 = fila.createCell(15);
-				ax15.setCellValue(new HSSFRichTextString(periodo.getFlagHabilitaCostosDIF14c()));
+				String flagHabCosto = "Ambos";
+				if(periodo.getFlagHabilitaCostosDIF14c().equals("I")){
+					flagHabCosto = "Indirecto";
+				}else if(periodo.getFlagHabilitaCostosDIF14c().equals("D")){
+					flagHabCosto = "Directo";
+				}
+				ax15.setCellValue(new HSSFRichTextString(flagHabCosto));
 				ax15.setCellStyle(dateCellStyle);
 			}
 		}		
