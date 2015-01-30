@@ -2720,16 +2720,20 @@ public class Formato12CGartController {
 								cont++;
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3434);
 							}
-						}else{
+						}/*else{
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3435);
-						}
+						}*/
 						sCurrentLine = br.readLine();
 						/*if( cont>3 ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_240);
 							break;
 						}*/
+					}
+					if(cont==0){
+						cont++;
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3435);
 					}
 					
 					String key1,key2,key3,key4,key5="";//,key6="";
@@ -2853,22 +2857,22 @@ public class Formato12CGartController {
 									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroDias) ){
 										//el campo nroDias no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3471));
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3470));
 									}
 									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(alimentacion) ){
 										//el campo alimentacion no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3473));
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3472));
 									}
 									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(alojamiento) ){
 										//el campo alojamiento no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3475));
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3474));
 									}
 									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(movilidad) ){
 										//el campo movilidad no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3477));
+										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3476));
 									}
 									
 									if( ( !FiseConstants.BLANCO.equals(anioEjecucion.trim()) && !FiseConstants.CERO.equals(anioEjecucion.trim()) ) ||

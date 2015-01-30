@@ -3138,12 +3138,12 @@ public class Formato14CGartController {
 	    					    fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	    								listaError, cont, FiseConstants.COD_ERROR_F12_220);//error datos incompletos
 	    					}
-	    				}else{
+	    				}/*else{
 	    					cont++;
 	    					sMsg="ERROR";     
 	    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
 	    							listaError, cont, FiseConstants.COD_ERROR_F12_230);//error archivo sin datos
-	    				}
+	    				}*/
 	    				sCurrentLine = br.readLine();
 	    				if( cont>24 ){
 	    					cont++;
@@ -3152,6 +3152,12 @@ public class Formato14CGartController {
 	    							listaError, cont, FiseConstants.COD_ERROR_F14C_1460);//no debe pasar las 24 lineas 
 	    					break;
 	    				}
+	    			}
+	    			if(cont==0){
+	    				cont++;
+    					sMsg="ERROR";     
+    						fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+    							listaError, cont, FiseConstants.COD_ERROR_F12_230);//error archivo sin datos
 	    			}
 	    			logger.info("TOTAL DE FILAS DEL TEXTO:  "+listaDetalleTxt.size()); 
 	    			

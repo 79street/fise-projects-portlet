@@ -1611,16 +1611,20 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3030);
 						}
-					}else{
+					}/*else{
 						cont++;
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3040);
-					}
+					}*/
 					sCurrentLine = br.readLine();
 					if( cont>3 ){
 						cont++;
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3050);
 						break;
 					}
+				}
+				if(cont==0){
+					cont++;
+					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3040);
 				}
 				
 				String key1,key2,key3,key4,key5="";//,key6="";

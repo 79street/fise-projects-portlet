@@ -2586,7 +2586,7 @@ public class Formato12DGartController {
 								}
 							}else{
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3433);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3559);
 							}
 							
 						}
@@ -2690,16 +2690,20 @@ public Formato12DMensajeBean readTxtFile(FileEntry archivo,UploadPortletRequest 
 								cont++;
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3560);
 							}
-						}else{
+						}/*else{
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3561);
-						}
+						}*/
 						sCurrentLine = br.readLine();
 						/*if( cont>3 ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_240);
 							break;
 						}*/
+					}
+					if(cont==0){
+						cont++;
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3561);
 					}
 					
 					String key1,key2,key3,key4,key5="";//,key6="";
@@ -2822,12 +2826,12 @@ public Formato12DMensajeBean readTxtFile(FileEntry archivo,UploadPortletRequest 
 									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(cantidad) ){
 										//el campo cantidad no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3600));
+										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3599));
 									}
 									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(costoUnitario) ){
 										//el campo costoUnitario no corresponde al tipo de dato correcto
 										cont++;
-										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3602));
+										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3601));
 									}
 									
 									if( ( !FiseConstants.BLANCO.equals(anioEjecucion.trim()) && !FiseConstants.CERO.equals(anioEjecucion.trim()) ) ||
@@ -3021,7 +3025,7 @@ public Formato12DMensajeBean readTxtFile(FileEntry archivo,UploadPortletRequest 
 								
 							}else{
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3560);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3565);
 							}
 							
 						}

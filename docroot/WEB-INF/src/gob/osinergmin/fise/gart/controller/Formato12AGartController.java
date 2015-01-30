@@ -1600,14 +1600,14 @@ public class Formato12AGartController {
 								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_220));
 								listaError.add(error);
 							}
-						}else{
+						}/*else{
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_230)+FiseConstants.SALTO_LINEA;
 							cont++;
 							MensajeErrorBean error = new MensajeErrorBean();
 							error.setId(cont);
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_230));
 							listaError.add(error);
-						}
+						}*/
 						sCurrentLine = br.readLine();
 						if( cont>3 ){
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_240)+FiseConstants.SALTO_LINEA;
@@ -1619,6 +1619,16 @@ public class Formato12AGartController {
 							break;
 						}
 					}
+					
+					if( cont==0 ){
+						sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_230)+FiseConstants.SALTO_LINEA;
+						cont++;
+						MensajeErrorBean error = new MensajeErrorBean();
+						error.setId(cont);
+						error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_230));
+						listaError.add(error);
+					}
+					
 					
 					String key1,key2,key3="";//,key4,key5,key6="";
 					if( listaDetalleTxt.size()>0 ){
@@ -1691,58 +1701,58 @@ public class Formato12AGartController {
 									String activExtraord=s.substring(posicionDesplPersonal, posicionActivExtraord).trim();
 									
 									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(zonaBenef) ){
-										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
-										sMsg = sMsg + "La Zona Beneficiario no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_351)+FiseConstants.SALTO_LINEA;
+										//sMsg = sMsg + "La Zona Beneficiario no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
 										process=false;
 										cont++;
 										MensajeErrorBean error = new MensajeErrorBean();
 										error.setId(cont);
-										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
-										error.setDescripcion("La Zona Beneficiario no corresponde al formato requerido");
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_351));
+										//error.setDescripcion("La Zona Beneficiario no corresponde al formato requerido");
 										listaError.add(error);
 									}
 									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroEmpad) ){
-										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
-										sMsg = sMsg + "El número de Empadronados no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_352)+FiseConstants.SALTO_LINEA;
+										//sMsg = sMsg + "El número de Empadronados no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
 										process=false;
 										cont++;
 										MensajeErrorBean error = new MensajeErrorBean();
 										error.setId(cont);
-										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
-										error.setDescripcion("La Zona Beneficiario no corresponde al formato requerido");
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_352));
+										//error.setDescripcion("El número de Empadronados no corresponde al formato requerido");
 										listaError.add(error);
 									}
 									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroAgent) ){
-										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
-										sMsg = sMsg + "El número de Agentes no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_353)+FiseConstants.SALTO_LINEA;
+										//sMsg = sMsg + "El número de Agentes no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
 										process=false;
 										cont++;
 										MensajeErrorBean error = new MensajeErrorBean();
 										error.setId(cont);
-										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
-										error.setDescripcion("El número de Agentes no corresponde al formato requerido");
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_353));
+										//error.setDescripcion("El número de Agentes no corresponde al formato requerido");
 										listaError.add(error);
 									}
 									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(desplazPersonal) ){
-										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
-										sMsg = sMsg + "El Desplazamiento de Personal no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_354)+FiseConstants.SALTO_LINEA;
+										//sMsg = sMsg + "El Desplazamiento de Personal no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
 										process=false;
 										cont++;
 										MensajeErrorBean error = new MensajeErrorBean();
 										error.setId(cont);
-										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
-										error.setDescripcion("El Desplazamiento de Personal no corresponde al formato requerido");
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_354));
+										//error.setDescripcion("El Desplazamiento de Personal no corresponde al formato requerido");
 										listaError.add(error);
 									}
 									if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(activExtraord) ){
-										//sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
-										sMsg = sMsg + "Las Actividades Extraordinarias no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_355)+FiseConstants.SALTO_LINEA;
+										//sMsg = sMsg + "Las Actividades Extraordinarias no corresponde al formato requerido"+FiseConstants.SALTO_LINEA;
 										process=false;
 										cont++;
 										MensajeErrorBean error = new MensajeErrorBean();
 										error.setId(cont);
-										//error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
-										error.setDescripcion("Las Actividades Extraordinarias no corresponde al formato requerido");
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_355));
+										//error.setDescripcion("Las Actividades Extraordinarias no corresponde al formato requerido");
 										listaError.add(error);
 									}
 									
