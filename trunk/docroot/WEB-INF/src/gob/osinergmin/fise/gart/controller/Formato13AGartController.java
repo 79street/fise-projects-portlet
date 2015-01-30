@@ -585,7 +585,9 @@ public class Formato13AGartController {
 					if (cab.getFiseFormato13ADs() != null && !cab.getFiseFormato13ADs().isEmpty()) {
 						for (FiseFormato13AD d : cab.getFiseFormato13ADs()) {
 
-							if (Long.parseLong(idZonaBenef) == d.getId().getIdZonaBenef()) {
+							if (Long.parseLong(idZonaBenef) == d.getId().getIdZonaBenef() &&
+									codUbigeo.equals(d.getId().getCodUbigeo())
+									) {
 								if (FiseConstants.SECTOR_TIPICO_1_COD.equals(d.getId().getCodSectorTipico().trim())) {
 									modificarSectorTipico(themeDisplay, FiseConstants.SECTOR_TIPICO_1_COD, command, d);
 								} else if (FiseConstants.SECTOR_TIPICO_2_COD.equals(d.getId().getCodSectorTipico().trim())) {

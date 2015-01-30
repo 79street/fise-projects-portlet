@@ -1131,7 +1131,7 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						}else{
 							formulario.setSpotPublRadioR(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1790);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1791);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadR.getCellType()  ){
 							formulario.setNroBenefEmpadR(new Double(celdaNroEmpadR.getNumericCellValue()).longValue());
@@ -1288,7 +1288,7 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						}else{
 							formulario.setSpotPublRadioP(new BigDecimal(0.00));
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1950);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1951);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadP.getCellType()  ){
 							formulario.setNroBenefEmpadP(new Double(celdaNroEmpadP.getNumericCellValue()).longValue());
@@ -1445,7 +1445,7 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							}else{
 								formulario.setSpotPublRadioL(new BigDecimal(0.00));
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2110);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2111);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroEmpadL.getCellType()  ){
 								formulario.setNroBenefEmpadL(new Double(celdaNroEmpadL.getNumericCellValue()).longValue());
@@ -1674,16 +1674,20 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2240);
 						}
-					}else{
+					}/*else{
 						cont++;
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2250);
-					}
+					}*/
 					sCurrentLine = br.readLine();
 					if( cont>3 ){
 						cont++;
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2260);
 						break;
 					}
+				}
+				if(cont==0){
+					cont++;
+					sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2250);
 				}
 				
 				String key1,key2,key3,key4,key5="";//,key6="";
@@ -1827,7 +1831,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 								if( !FormatoUtil.validarCampoBigDecimalPositivoTxt(spotPublicRad) ){
 									//el campo spotPublicRad no corresponde al tipo de dato correcto
 									cont++;
-									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2411);
 								}
 								if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroBenef) ){
 									//el campo nroBenef no corresponde al tipo de dato correcto

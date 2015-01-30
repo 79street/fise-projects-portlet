@@ -890,8 +890,8 @@ var formato12C= {
 			       if(ids!=0){
 			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
 			       }else{			    	
-			    	formato12C.dialogMessageInfoCrudContent.html('No existe información para exportar a Excel');
-					formato12C.dialogMessageInfoCrud.dialog("open");
+			    	formato12C.dialogMessageInfoContent.html('No existe información para exportar a Excel');
+					formato12C.dialogMessageInfo.dialog("open");
 			       }		    	   
 		       } 
 		}); 
