@@ -186,10 +186,7 @@ function completarDecimal(id,decimal){
 	    // backspace
 	    if (key == 8) {	    	 
 	    	return true;
-	    }
-	    if (key > 47 && key < 58 && key==46) {	    	 
-	    	return true;
-	    }
+	    }	   
 	    //teclas flecha izquierza y flecha derecha
 	    if (key == 37 || key == 39) {	    	 
 	    	return true;
@@ -216,19 +213,31 @@ function completarDecimal(id,decimal){
 		}else{
 			// 0-9 a partir del .decimal  
 		    if (field.value != "") {
+		    	console.debug('ingrensado a field !=');
 		        if ((field.value.indexOf(".")) > 0) {
 		            //si tiene un punto valida dos digitos en la parte decimal
-		            if (key > 47 && key < 58 ) {
-		                if (field.value == ""){	                	
+		            if (key > 47 && key < 58 ) {		            	
+		                if (field.value == ""){		                	
 		                	return true;
 		                }              
 		                regexp = /[0-9]{2}$/;
-		                return !(regexp.test(field.value));
+		                if(!(regexp.test(field.value))){		                	
+		                	return true;
+		                }else{
+		                	var elem = field.value.split('.');	
+		                	var suma = parseInt(elem[1].length);
+		                	console.debug('ingrensado value: '+ suma);
+	                	    if(suma ==2 && field.value=='0.00'){	              		  
+	                	 	  return true;
+	                	    }	                	   
+		                	return false;	
+		                }             
 		            }         
 		        }        
 		    }
 		    // 0-9 
 		    if (key > 47 && key < 58) {
+		    	console.debug('ingrensado a bloque numeros 1');
 		        if (field.value == "") return true;
 		        regexp = /[0-9]{7}/;      
 		        return !(regexp.test(field.value));
@@ -241,6 +250,10 @@ function completarDecimal(id,decimal){
 		    }
 		    if(key==9){
 		    	//tab cambia focus
+		    	console.debug('ingrensado a cambio de focus');
+		    	return true;
+		    }else if (key ==50){
+		    	console.debug('ingrensado a bloque de numeros');
 		    	return true;
 		    }else{
 		    	 // other key
