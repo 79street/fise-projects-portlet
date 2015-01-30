@@ -550,7 +550,7 @@ public class Formato12BGartController {
 							
 
 						} else {
-							throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
+							throw new Exception("La Distribuidora Eléctrica y/o el Año Mes no coinciden con lo seleccionado");
 						}
 					}
 				}/* else {
@@ -558,26 +558,26 @@ public class Formato12BGartController {
 				}*/
 
 			} else {
-				throw new Exception("Archvivo vacio");
+				throw new Exception("El archivo cargado no contiene datos para ser procesado");
 			}
-		}catch(ConstraintViolationException c){
+		}/*catch(ConstraintViolationException c){
 			c.printStackTrace();
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
 			msg.setDescripcion("El formato ya existe");
 			listaError.add(msg);
 			
-		} catch (DataIntegrityViolationException ex) {
+		}*/ catch (DataIntegrityViolationException ex) {
 			ex.printStackTrace();
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			msg.setDescripcion(ex.toString());
+			msg.setDescripcion("El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar");
 			listaError.add(msg);
 			
 		} catch (Exception ex) {
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			msg.setDescripcion(ex.toString());
+			msg.setDescripcion("Se produjo un error al guardar los datos del Formato 12B");
 			listaError.add(msg);
 
 		}
@@ -876,7 +876,7 @@ public class Formato12BGartController {
 								   
 								   
 						}else{
-							throw new Exception("La empresa y/o mes año no coinciden con el seleccionado");
+							throw new Exception("La Distribuidora Eléctrica y/o el Año Mes no coinciden con lo seleccionado");
 						}
 							
 					}
@@ -933,7 +933,7 @@ public class Formato12BGartController {
 						}
 						 
 					}else{
-						throw new Exception("Archivo vacio");
+						throw new Exception("El archivo cargado no contiene datos para ser procesado");
 					}
 					//---
 				}else{
@@ -944,30 +944,33 @@ public class Formato12BGartController {
 			
 			
 			
-		}catch(ConstraintViolationException c){
+		}/*catch(ConstraintViolationException c){
 			c.printStackTrace();
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
 			msg.setDescripcion("El formato ya existe");
 			listaError.add(msg);
 			
-		} catch (DataIntegrityViolationException ex) {
+		} */catch (DataIntegrityViolationException ex) {
 			ex.printStackTrace();
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			msg.setDescripcion(ex.toString());
+			//msg.setDescripcion(ex.toString());
+			msg.setDescripcion("El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar");
 			listaError.add(msg);
 			
 		}catch (NumberFormatException ex) {
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			msg.setDescripcion(ex.toString());
+			//msg.setDescripcion(ex.toString());
+			msg.setDescripcion("El formato no es válido");
 			listaError.add(msg);
 
 		} catch (Exception ex) {
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			msg.setDescripcion(ex.toString());
+			//msg.setDescripcion(ex.toString());
+			msg.setDescripcion("Se produjo un error al guardar los datos del Formato 12B");
 			listaError.add(msg);
 
 		}
