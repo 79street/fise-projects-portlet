@@ -187,6 +187,9 @@ function completarDecimal(id,decimal){
 	    if (key == 8) {	    	 
 	    	return true;
 	    }
+	    if (key > 47 && key < 58 && key==46) {	    	 
+	    	return true;
+	    }
 	    //teclas flecha izquierza y flecha derecha
 	    if (key == 37 || key == 39) {	    	 
 	    	return true;
