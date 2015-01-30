@@ -215,9 +215,11 @@ public class PeriodoEnvioController {
 						
 						String valor = fisePeriodoEnvioGartService.insertarDatosFisePeriodoEnvio(p);
 						logger.info("valor de la transaccion al insertar:  "+valor); 
-						if(!valor.equals("0")){ 
+						if(!valor.equals("0") && !valor.equals("D")){ 
 							jsonObj.put("resultado", "OK");	
 							jsonObj.put("secuencia", valor);	
+						}else if(valor.equals("D")){ 
+							jsonObj.put("resultado", "Duplicado");							
 						}else{
 							jsonObj.put("resultado", "Error");	
 						}					
@@ -227,9 +229,11 @@ public class PeriodoEnvioController {
 				}else{				
 					String valor = fisePeriodoEnvioGartService.insertarDatosFisePeriodoEnvio(p);
 					logger.info("valor de la transaccion al insertar:  "+valor); 
-					if(!valor.equals("0")){ 
+					if(!valor.equals("0") && !valor.equals("D")){ 
 						jsonObj.put("resultado", "OK");	
 						jsonObj.put("secuencia", valor);	
+					}else if(valor.equals("D")){ 
+						jsonObj.put("resultado", "Duplicado");							
 					}else{
 						jsonObj.put("resultado", "Error");	
 					}					
@@ -290,9 +294,11 @@ public class PeriodoEnvioController {
 					p.setFechaAmpl(fechaAmpl);			
 					String valor = fisePeriodoEnvioGartService.actualizarDatosFisePeriodoEnvio(p);
 					logger.info("valor de la transaccion al actualizar:  "+valor); 
-					if(!valor.equals("0")){ 
+					if(!valor.equals("0") && !valor.equals("D")){ 
 						jsonObj.put("resultado", "OK");	
 						jsonObj.put("secuencia", valor);	
+					}else if(valor.equals("D")){ 
+						jsonObj.put("resultado", "Duplicado");							
 					}else{
 						jsonObj.put("resultado", "Error");	
 					}			
@@ -302,9 +308,11 @@ public class PeriodoEnvioController {
 			}else{				
 				String valor = fisePeriodoEnvioGartService.actualizarDatosFisePeriodoEnvio(p);
 				logger.info("valor de la transaccion al actualizar:  "+valor); 
-				if(!valor.equals("0")){ 
+				if(!valor.equals("0") && !valor.equals("D")){ 
 					jsonObj.put("resultado", "OK");	
 					jsonObj.put("secuencia", valor);	
+				}else if(valor.equals("D")){ 
+					jsonObj.put("resultado", "Duplicado");							
 				}else{
 					jsonObj.put("resultado", "Error");	
 				}				
