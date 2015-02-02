@@ -710,18 +710,26 @@ var liquidacionVar= {
 				type: 'post',
 				dataType: 'json',				
 				success: function(data) {
-					if(data.resultado == "OK"){
-						var msgFinal;
-						if( liquidacionVar.i_tipoMensual.prop('checked')){
-							msgFinal = 'Reconocimiento de los gastos operativos';
-						}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
-							msgFinal = 'Establecimiento de los costos estándares';
-						}
+					var msgFinal;
+					var formatoDes;
+					if( liquidacionVar.i_tipoMensual.prop('checked')){
+						msgFinal = 'Reconocimiento de los gastos operativos';
+						formatoDes ='Mensuales';
+					}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+						msgFinal = 'Establecimiento de los costos estándares';
+						formatoDes= 'Bienales';
+					}
+					if(data.resultado == "OK"){						
 						var addhtml2='El '+msgFinal+' se procesó satisfactoriamente.';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');
 						liquidacionVar.initBlockUI();						
+					}else if(data.resultado == "NODATOS"){
+						var addhtmNoDatos='Para Procesar el '+msgFinal+', se requiere realizar el Envío Definitivo de los Formatos '+formatoDes+' de la Dist. Eléctrica seleccionada.';					
+						liquidacionVar.dialogInfoContent.html(addhtmNoDatos);
+						liquidacionVar.dialogInfo.dialog("open");
+						liquidacionVar.initBlockUI();
 					}else{						
 						var addhtmError='Error al Procesar '+msgFinal+' para realizar la liquidación';					
 						liquidacionVar.dialogErrorContent.html(addhtmError);
@@ -745,18 +753,34 @@ var liquidacionVar= {
 				type: 'post',
 				dataType: 'json',				
 				success: function(data) {
-					if(data.resultado == "OK"){
-						var msgFinal;
-						if( liquidacionVar.i_tipoMensual.prop('checked')){
-							msgFinal = 'liquidación de los gastos operativos';
-						}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
-							msgFinal = 'aprobación de los costos estándares';
-						}
+					var msgFinal;
+					var formatoDes;
+					var desAterior;				
+					if( liquidacionVar.i_tipoMensual.prop('checked')){
+						msgFinal = 'liquidación de los gastos operativos';
+						desAterior = 'Reconocimiento de los gastos operativos';
+						formatoDes= 'Mensuales';
+					}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+						msgFinal = 'aprobación de los costos estándares';
+						desAterior = 'Establecimiento de los costos estándares';
+						formatoDes ='Bienales';
+					}
+					if(data.resultado == "OK"){						
 						var addhtml2='La '+msgFinal+' se realizó satisfactoriamente';				
 						liquidacionVar.dialogMessageContent.html(addhtml2);
 						liquidacionVar.dialogMessage.dialog("open");
 						liquidacionVar.buscarLiquidacion('B');//valor que se envia al controler en la busqueda
 						liquidacionVar.initBlockUI();						
+					}else if(data.resultado == "NODATOS"){
+						var addhtmNoDatos='Para realizar la '+msgFinal+', se requiere realizar el Envío Definitivo de los Formatos '+formatoDes+' de la Dist. Eléctrica seleccionada.';	
+						liquidacionVar.dialogInfoContent.html(addhtmNoDatos);
+						liquidacionVar.dialogInfo.dialog("open");
+						liquidacionVar.initBlockUI();
+					}else if(data.resultado == "NOAPTO"){
+						var addhtmNoApto='La Información no está preparada para realizar la '+msgFinal+'. Primero debe Procesar el '+desAterior+' de la Dist. Eléctrica seleccionada.';	
+						liquidacionVar.dialogInfoContent.html(addhtmNoApto);
+						liquidacionVar.dialogInfo.dialog("open");
+						liquidacionVar.initBlockUI();
 					}else{						
 						var addhtmError='Error al realizar la '+msgFinal+' ';					
 						liquidacionVar.dialogErrorContent.html(addhtmError);
