@@ -758,13 +758,33 @@ public class FiseUtil {
 		
 		String admin= enviarMailAdjuntoAdmEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
 				descGrupoInf, frecuencia);
-		String[] msnIdAdmin = admin.split("/");
+		
+		/*String[] msnIdAdmin = admin.split("/");
+		
 		if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnIdAdmin[0])){
 			return enviarMailAdjuntoUsuEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
 					descGrupoInf, frecuencia);
 		}else{
 			return admin;
-		}		
+		}*/
+		
+		/*cambio 02/02/2015*/
+        String[] msnIdAdmin = admin.split("/");
+		
+		if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnIdAdmin[0])){
+			String user = enviarMailAdjuntoUsuEnvioGeneral(themeDisplay, listaArchivo, descEmpresa, 
+					descGrupoInf, frecuencia);			
+			String[] msnIdUser = user.split("/");
+			if(FiseConstants.PROCESO_ENVIO_EMAIL_OK.equals(msnIdUser[0])){
+				String correos = msnIdAdmin[1] + " y " + msnIdUser[1].toString();
+				String valor = FiseConstants.PROCESO_ENVIO_EMAIL_OK+"/"+correos;
+				return valor;
+			}else{
+				return user;
+			}		 
+		}else{
+			return admin;
+		}
 	}
 	
 	private String enviarMailAdjuntoAdmEnvioGeneral(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
