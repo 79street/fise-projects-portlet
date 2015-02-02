@@ -774,6 +774,7 @@ var periodoEnvio= {
 				dwr.util.removeAllOptions("etapa");				
 				var dataEtapa = ['SOLICITUD', 'LEV.OBS', 'RECONSIDERACION', 'RECONOCIDO'];			
 				dwr.util.addOptions("etapa", dataEtapa);
+				document.getElementById('rbtMesSi').checked = true;
 			}else{
 				periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
 			    periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
@@ -782,6 +783,7 @@ var periodoEnvio= {
 				dwr.util.removeAllOptions("etapa");				
 				var dataEtapa = ['SOLICITUD', 'LEV.OBS', 'RECONSIDERACION', 'ESTABLECIDO'];			
 				dwr.util.addOptions("etapa", dataEtapa);
+				document.getElementById('rbtMesNo').checked = true;				
 		   }
 		},
 		
