@@ -349,12 +349,16 @@ public class LiquidacionController {
 		    
 		    List<LiquidacionBean> lista = (List<LiquidacionBean>)pRequest.getPortletSession().getAttribute("listaLiquidacion", 
 		    		PortletSession.APPLICATION_SCOPE);
-		    
+		   // logger.info("tamanio lista para procesar:  "+lista.size());
 		    if(lista!=null && lista.size()>0){
 		        valor = liquidacionService.prepararLiquidacion(lista, usuario, terminal);
-		    }		
+		    }else{
+		    	valor ="NODATOS";
+		    }
 			if(valor.equals("1")){ 
 				jsonObj.put("resultado", "OK");	   	
+			}else if(valor.equals("NODATOS")){
+				jsonObj.put("resultado", "NODATOS");//no hay datos en la lista primero debe hacer el envio definitivo	
 			}else{
 				jsonObj.put("resultado", "Error");	
 			}
@@ -380,18 +384,36 @@ public class LiquidacionController {
 			String valor ="0";
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
 			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-			
-			String usuario = themeDisplay.getUser().getLogin();
+			logger.info("Entrando a liquidar formatos");
+			String usuario = themeDisplay.getUser().getLogin(); 
 		    String terminal = themeDisplay.getUser().getLoginIP();
+		    boolean valorProcesar= true;
 			
 		    List<LiquidacionBean> lista = (List<LiquidacionBean>)pRequest.getPortletSession().getAttribute("listaLiquidacion", 
-		    		PortletSession.APPLICATION_SCOPE);
+		    		PortletSession.APPLICATION_SCOPE);		   	    
 		    if(lista!=null && lista.size()>0){
-		        valor = liquidacionService.liquidarFormatos(lista, usuario, terminal);
-		    }	
-			
-			if(valor.equals("1")){ 
-				jsonObj.put("resultado", "OK");	   	
+		    	for(LiquidacionBean bean :lista){
+		    		logger.info("etapa final:  "+bean.getEtapaReconocido()); 
+		    		if(!validarEtapaFinal(bean.getEtapaReconocido(),bean.getFormato())){
+		    			valorProcesar = false; 
+		    			logger.info("etapa diferente a reconocido o establecido"); 
+		    			valor = "NOAPTO";
+		    			break;
+		    		}	    		
+		    	}
+		    	if(valorProcesar){
+		    		valor = liquidacionService.liquidarFormatos(lista, usuario, terminal);	
+		    	}		    	
+		    }else{
+		    	valor = "NODATOS";
+		    } 
+		    
+			if(valor.equals("1") ){ 				
+				jsonObj.put("resultado", "OK");		   			   	
+			}else if(valor.equals("NODATOS")){
+				jsonObj.put("resultado", "NODATOS");//no hay datos en la lista primero debe hacer el envio definitivo	
+			}else if(valor.equals("NOAPTO")){
+				jsonObj.put("resultado", "NOAPTO");	//primero debe ser procesado para porder hacer la liquidacion	
 			}else{
 				jsonObj.put("resultado", "Error");	
 			}
@@ -405,7 +427,25 @@ public class LiquidacionController {
 			e.printStackTrace();				
 			logger.error("Error al liquidar formatos: "+e.getMessage());
 		}  			
-	}		
+	}	
+	
+	private boolean validarEtapaFinal(String etapaFinal,String formato){
+		boolean valor = true;
+		if(FiseConstants.NOMBRE_FORMATO_12A.equals(formato)||
+				FiseConstants.NOMBRE_FORMATO_12B.equals(formato)||
+				FiseConstants.NOMBRE_FORMATO_12C.equals(formato)||
+				FiseConstants.NOMBRE_FORMATO_12D.equals(formato)){ 
+			if(!FiseConstants.ETAPA_RECONOCIDO.equals(etapaFinal)){
+				valor = false;
+			}
+		}else {
+			if(!FiseConstants.ETAPA_ESTABLECIDO.equals(etapaFinal)){
+				valor = false;
+			}
+		}
+		return valor;
+	}
+	
 	
 	
 	@ResourceMapping("verObservacionesFormatos")

@@ -1129,7 +1129,7 @@ public class NotificacionController {
   			List<NotificacionBean> lista = (List<NotificacionBean>)pRequest.getPortletSession().getAttribute("listaNotificacion", 
 		    		PortletSession.APPLICATION_SCOPE);
   			
-  			if(lista!=null){  				
+  			if(lista!=null && lista.size()>0){  				
   				String mensaje = commonService.notificarValidacionMensual(codEmpresa,
   						etapa, Long.valueOf(idgrupoInf), optionFormato, themeDisplay.getUser().getLogin(),
   						themeDisplay.getUser().getLoginIP());			
@@ -1505,7 +1505,7 @@ public class NotificacionController {
   		    	    		  listaArchivo, 
   		    	    		  mapaEmpresa.get(codEmpreCompleta), 
   		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--",codEmpreCompleta);
-  		    	       logger.info("El envio de email fue correctamente al realizar notificacion."); 		    	       
+  		    	       logger.info("El envio de email fue correctamente al realizar notificacion."+respuestaEmail); 		    	       
   		    	       valor = true;
   		           }  	  		     	 	   
   				}//fin del if mensaje 

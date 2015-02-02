@@ -1661,7 +1661,7 @@ public class EnvioDefinitivoController {
   			List<EnvioDefinitivoBean> lista = (List<EnvioDefinitivoBean>)pRequest.getPortletSession().getAttribute("listaEnvioDefinitivo", 
 		    		PortletSession.APPLICATION_SCOPE);
   			
-  			if(lista!=null){ 
+  			if(lista!=null && lista.size()>0){ 
   				/****Verificamos si este grupo ya ha sido enviado********/
   				FiseControlEnvioPorGrupo fiseGrupo = commonService.obtenerFiseControlEnvioByPK(codEmpresa,
   						etapa, new Long(idgrupoInf), optionFormato);
