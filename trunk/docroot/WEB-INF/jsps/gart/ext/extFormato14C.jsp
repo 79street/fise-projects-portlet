@@ -1382,48 +1382,48 @@ var formato14C= {
 		//function para validar solo numeros decimales
 		soloNumerosDecimales : function(){
 			/**cabecera*/
-			formato14C.f_costoPromRural.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoPromRural',7,2)");
-			formato14C.f_costoPromUrbProv.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoPromUrbProv',7,2)");
-			formato14C.f_costoPromUrbLima.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoPromUrbLima',7,2)");
+			formato14C.f_costoPromRural.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoPromRural',7,2)");
+			formato14C.f_costoPromUrbProv.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoPromUrbProv',7,2)");
+			formato14C.f_costoPromUrbLima.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoPromUrbLima',7,2)");
 			/**detalle*/
 			//RURAL
-			formato14C.f_costDRCoord.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDRCoord',7,2)");
-			formato14C.f_costIRCoord.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costIRCoord',7,2)");
+			formato14C.f_costDRCoord.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDRCoord',7,2)");
+			formato14C.f_costIRCoord.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costIRCoord',7,2)");
 			
-			formato14C.f_costDRSupe.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDRSupe',7,2)");
-			formato14C.f_costIRSupe.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costIRSupe',7,2)");
+			formato14C.f_costDRSupe.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDRSupe',7,2)");
+			formato14C.f_costIRSupe.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costIRSupe',7,2)");
 			
-			formato14C.f_costDRGest.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDRGest',7,2)");
-			formato14C.f_costIRGest.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costIRGest',7,2)");
+			formato14C.f_costDRGest.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDRGest',7,2)");
+			formato14C.f_costIRGest.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costIRGest',7,2)");
 			
-			formato14C.f_costDRAsist.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDRAsist',7,2)");
-			formato14C.f_costIRAsist.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costIRAsist',7,2)");
+			formato14C.f_costDRAsist.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDRAsist',7,2)");
+			formato14C.f_costIRAsist.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costIRAsist',7,2)");
 			
 			//PROVINCIA
-			formato14C.f_costDPCoord.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDPCoord',7,2)");
-			formato14C.f_costIPCoord.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costIPCoord',7,2)");
+			formato14C.f_costDPCoord.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDPCoord',7,2)");
+			formato14C.f_costIPCoord.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costIPCoord',7,2)");
 			
-			formato14C.f_costDPSupe.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDPSupe',7,2)");
-			formato14C.f_costIPSupe.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costIPSupe',7,2)");
+			formato14C.f_costDPSupe.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDPSupe',7,2)");
+			formato14C.f_costIPSupe.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costIPSupe',7,2)");
 			
-			formato14C.f_costDPGest.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDPGest',7,2)");
-			formato14C.f_costIPGest.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costIPGest',7,2)");
+			formato14C.f_costDPGest.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDPGest',7,2)");
+			formato14C.f_costIPGest.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costIPGest',7,2)");
 			
-			formato14C.f_costDPAsist.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDPAsist',7,2)");
-			formato14C.f_costIPAsist.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costIPAsist',7,2)");
+			formato14C.f_costDPAsist.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDPAsist',7,2)");
+			formato14C.f_costIPAsist.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costIPAsist',7,2)");
 			
 			//LIMA
-			formato14C.f_costDLCoord.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDLCoord',7,2)");
-			formato14C.f_costILCoord.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costILCoord',7,2)");
+			formato14C.f_costDLCoord.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDLCoord',7,2)");
+			formato14C.f_costILCoord.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costILCoord',7,2)");
 			
-			formato14C.f_costDLSupe.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDLSupe',7,2)");
-			formato14C.f_costILSupe.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costILSupe',7,2)");
+			formato14C.f_costDLSupe.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDLSupe',7,2)");
+			formato14C.f_costILSupe.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costILSupe',7,2)");
 			
-			formato14C.f_costDLGest.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDLGest',7,2)");
-			formato14C.f_costILGest.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costILGest',7,2)");
+			formato14C.f_costDLGest.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDLGest',7,2)");
+			formato14C.f_costILGest.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costILGest',7,2)");
 			
-			formato14C.f_costDLAsist.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costDLAsist',7,2)");
-			formato14C.f_costILAsist.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costILAsist',7,2)");
+			formato14C.f_costDLAsist.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costDLAsist',7,2)");
+			formato14C.f_costILAsist.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costILAsist',7,2)");
 		},
 		//function para realizar los calculos totales
 		calculoTotal : function(){
