@@ -177,7 +177,7 @@ function completarDecimal(id,decimal){
 	    }	   
 	}  
   
-  function soloNumerosDecimales(e, tipo, id,entero,decimal) {
+  function soloNumerosDecimales2(e, tipo, id,entero,decimal) {
 	   console.debug('ingresando a decimales formateo');
 	    var field = document.getElementById(id);
 	    var TIPO_NUMERO_ENTERO  = 1;		
@@ -263,6 +263,67 @@ function completarDecimal(id,decimal){
 	}  
   
   
+  //cambios 02/02/2015 euclides
+  //VARIABLE GLOBAL
+  var textoAnterior = '';
+  //ESTA FUNCIÓN DEFINE LAS REGLAS DEL JUEGO
+  function cumpleReglas(simpleTexto)
+      {
+          //la pasamos por una poderosa expresión regular
+          var expresion = new RegExp("^(|([0-9]{1,7}(\\.([0-9]{1,2})?)?))$");
+
+          //si pasa la prueba, es válida
+          if(expresion.test(simpleTexto))
+              return true;
+          return false;
+      }//end function checaReglas
+
+  //ESTA FUNCIÓN REVISA QUE TODO LO QUE SE ESCRIBA ESTÉ EN ORDEN  
+  //function revisaCadena(textItem)
+  function soloNumerosDecimales(e, tipo, id,entero,decimal)
+      {
+	    var textItem = document.getElementById(id);
+	    var TIPO_NUMERO_ENTERO  = 1;
+	    key = e.keyCode ? e.keyCode : e.which;
+	    if( tipo==TIPO_NUMERO_ENTERO ){
+	    	 // backspace
+		    if (key == 8) {	    	 
+		    	return true;
+		    }	   
+		    //teclas flecha izquierza y flecha derecha
+		    if (key == 37 || key == 39) {	    	 
+		    	return true;
+		    }	
+			// 0-9 
+		    if (key > 47 && key < 58) {
+		        if (textItem.value == "") return true;
+		        regexp = /[0-9]{7}/;      
+		        return !(regexp.test(textItem.value));
+		    } 
+		    // .
+		    if (key == 46) {
+		         return false;	       
+		    }
+		    if(key==9){
+		    	//tab cambia focus
+		    	return true;
+		    }else{
+		    	 // other key
+			    return false;	
+		    }	   
+		}else{
+			  //si comienza con un punto, le agregamos un cero
+	          if(textItem.value.substring(0,1) == '.') 
+	              textItem.value = '0' + textItem.value;
+
+	          //si no cumples las reglas, no te dejo escribir
+	          if(!cumpleReglas(textItem.value))
+	              textItem.value = textoAnterior;
+	          else //todo en orden
+	              textoAnterior = textItem.value;
+		}       
+      }//end function revisaCadena  
+   
   
 function trim( cadena ){
 	return cadena.replace(/^\s*|\s*$/g, "");
