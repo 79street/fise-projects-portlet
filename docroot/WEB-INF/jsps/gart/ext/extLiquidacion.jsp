@@ -777,7 +777,7 @@ var liquidacionVar= {
 						liquidacionVar.dialogInfo.dialog("open");
 						liquidacionVar.initBlockUI();
 					}else if(data.resultado == "NOAPTO"){
-						var addhtmNoApto='La Información no está preparada para realizar la '+msgFinal+'. Primero debe Procesar el '+desAterior+' de la Dist. Eléctrica seleccionada.';	
+						var addhtmNoApto='La información no está preparada para realizar la '+msgFinal+'. Primero debe Procesar el '+desAterior+' de la Dist. Eléctrica seleccionada.';	
 						liquidacionVar.dialogInfoContent.html(addhtmNoApto);
 						liquidacionVar.dialogInfo.dialog("open");
 						liquidacionVar.initBlockUI();
