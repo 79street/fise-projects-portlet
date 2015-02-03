@@ -250,21 +250,21 @@ $(document).ready(function () {
 												<td width="40%">																							
 												 <div id="<portlet:namespace/>divPeriodoEjecucion">
 																<fieldset class="net-frame-border">
-																	<table style="width:80%;">
+																	<table style="width:100%;">
 																		<tr style="text-align: center;"> 
-																			<td colspan="5"><label style="font-size: 12px; font-weight:bold">Periodo de Vigencia</label></td>
+																			<td colspan="5" align="center"><label style="font-size: 12px; font-weight:bold">Periodo de Vigencia</label></td>
 																			<form:input path="anioInicioVigenciaHidden" cssStyle="display:none;" />	 
 																			<form:input path="anioFinVigenciaHidden" cssStyle="display:none;" />
 																			
 																			<form:input path="idGrupoInfo" cssStyle="display:none;" />
 																		</tr>
 																		<tr>
-																			<td width="120px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
+																			<td width="150px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
 																			<td style="text-align: center;">
 																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" onblur="isNumeric(this);" />
 																			</td>
 																			<td width="20px"></td>
-																			<td width="110px"><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
+																			<td width="140px"><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
 																			<td style="text-align: center;">
 																				<form:input path="anoFinVigencia" style="width: 50px" maxlength="4" onblur="isNumeric(this);"/>	
 																			</td>
@@ -288,7 +288,7 @@ $(document).ready(function () {
 											<table class="" style="width: 100%;" border="0">
 											    <tr>
 													<td colspan="2" style="text-align:center"> 
-													 <label style="font-size: 12px; font-weight:bold">Actividades</label>
+													 <label style="font-size: 12px; font-weight:bold" class="net-titulo">Actividades</label>
 													</td>
 													<td colspan="5" style="text-align:center"> 
 													 <label style="font-size: 12px; font-weight:bold">Zona Rural</label>
