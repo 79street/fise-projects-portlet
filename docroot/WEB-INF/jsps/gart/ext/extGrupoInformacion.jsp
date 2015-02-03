@@ -389,7 +389,7 @@ var fiseGrupoInformacion= {
 				fiseGrupoInformacion.dialogInfo.dialog("open");
 			}else{
 				console.debug("entranado a eliminar confirmar:  "+idGrupoInf);
-				var addhtml='¿Está seguro que desea Desactivar el Grupo de Información seleccionado.?';
+				var addhtml='¿Está seguro que desea Desactivar el Grupo de Información seleccionado?';
 				fiseGrupoInformacion.dialogConfirmContent.html(addhtml);
 				fiseGrupoInformacion.dialogConfirm.dialog("open");	
 				id_GrupoInf=idGrupoInf;
