@@ -2,6 +2,7 @@ package gob.osinergmin.fise.gart.json;
 
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato14CC;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,11 +58,13 @@ public class Formato14CJSON {
 		}else{
 			jsonObj.put("grupoInfo", "---");	
 		}
-		if(f.getFechaEnvioDefinitivo()!=null){
+		/*if(f.getFechaEnvioDefinitivo()!=null){
 			jsonObj.put("estado", FiseConstants.ESTADO_ENVIADO_F14C);	
 		}else{
 			jsonObj.put("estado", FiseConstants.ESTADO_POR_ENVIAR_F14C);	
-		}
+		}*/
+		
+		jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flag, 0));
 		
 		jsonObj.put("flagOperacion", flag);	
 		

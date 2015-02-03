@@ -4,6 +4,7 @@ import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
 import gob.osinergmin.fise.domain.FiseFormato13AD;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,12 +43,12 @@ public class Formato13AGartJSON {
 			jsonObj.put("grupoInfo", FiseConstants.BLANCO);	
 		}
 		
-		if(fiseFormato13AC.getFechaEnvioDefinitivo()!=null){
+		/*if(fiseFormato13AC.getFechaEnvioDefinitivo()!=null){
 			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
 		}else{
 			jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-		}
-		
+		}*/
+		jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
 		
 		jsonObj.put("anioInicioVigencia", inicioVig);
 		jsonObj.put("anioFinVigencia", finVig);

@@ -10,6 +10,7 @@ import gob.osinergmin.fise.domain.FiseFormato12BDPK;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
 import gob.osinergmin.fise.gart.service.CommonGartService;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -255,6 +256,8 @@ public class Formato12BGartCommand implements Serializable {
 		if (bean != null) {
 			jsonObj = new JSONObject();
 
+			String estadoProceso = commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa());
+			
 			jsonObj.put("anoEjecucionGasto", bean.getId().getAnoEjecucionGasto());
 			jsonObj.put("anoPresentacion", bean.getId().getAnoPresentacion());
 			jsonObj.put("codEmpresa", bean.getId().getCodEmpresa());
@@ -268,15 +271,18 @@ public class Formato12BGartCommand implements Serializable {
 			jsonObj.put("nombreArchivoExcel", bean.getNombreArchivoExcel());
 			jsonObj.put("nombreArchivoTexto", bean.getNombreArchivoTexto());
 			jsonObj.put("totalReconocer", bean.getTotalReconocer());
-			jsonObj.put("descEstado", bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_FECHAENVIO_ENVIADO : FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+			//jsonObj.put("descEstado", bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_FECHAENVIO_ENVIADO : FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+			jsonObj.put("descEstado", FormatoUtil.cambiaTextoAMinusculas(estadoProceso, 0));
 			jsonObj.put("descMes", (bean.getId().getMesPresentacion() != null && bean.getId().getMesPresentacion() > 0) ? FiseUtil.descripcionMes(bean.getId().getMesPresentacion()) : "");
 			jsonObj.put("estadoEnvio", bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_ENVIADO : FiseConstants.ESTADO_POR_ENVIAR);
-			jsonObj.put("estadoProceso", commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa()));
+			//jsonObj.put("estadoProceso", commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa()));
+			jsonObj.put("estadoProceso", estadoProceso);
 			jsonObj.put("mesEjecucionGasto", bean.getId().getMesEjecucionGasto());
 			jsonObj.put("descMesEjec", (bean.getId().getMesEjecucionGasto() != null && bean.getId().getMesEjecucionGasto() > 0) ? FiseUtil.descripcionMes(bean.getId().getMesEjecucionGasto()) : "");
 			jsonObj.put("anoEjecucionGasto", bean.getId().getAnoEjecucionGasto());
 
-			System.out.println("estado:" + commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa()));
+			//System.out.println("estado:" + commonService.obtenerEstadoProceso(bean.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B, bean.getId().getAnoPresentacion(), bean.getId().getMesPresentacion(), bean.getId().getEtapa()));
+			System.out.println("estado:" + estadoProceso);
 		}
 		return jsonObj;
 

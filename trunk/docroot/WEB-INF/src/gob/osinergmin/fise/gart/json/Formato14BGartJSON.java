@@ -3,6 +3,7 @@ package gob.osinergmin.fise.gart.json;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato14BC;
 import gob.osinergmin.fise.domain.FiseFormato14BD;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.math.BigDecimal;
 
@@ -75,11 +76,12 @@ public class Formato14BGartJSON {
 				}else{
 					jsonObj.put("grupoInfo",FiseConstants.BLANCO);
 				}
-				if(fiseFormato14BC.getFechaEnvioDefinitivo()!=null){
+				/*if(fiseFormato14BC.getFechaEnvioDefinitivo()!=null){
 					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
 				}else{
 					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-				}
+				}*/
+				jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
 		}else{
 			jsonObj.put("grupoInfo", fiseFormato14BC.getDescGrupoInformacion());
 			jsonObj.put("estado", fiseFormato14BC.getDescEstado());

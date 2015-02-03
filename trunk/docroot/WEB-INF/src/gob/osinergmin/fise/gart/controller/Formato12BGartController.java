@@ -551,7 +551,8 @@ public class Formato12BGartController {
 								}
 								fise12BC.setFiseGrupoInformacion(grupoInfo);
 
-								nameEstado = FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR;
+								//nameEstado = FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR;
+								nameEstado = "Abierto";
 								fise12BC = formatoService.saveFormatoCabecera(fise12BC);
 								System.out.println("fise12BC" + fise12BC);
 								if (fise12BC != null) {
@@ -1207,7 +1208,8 @@ public class Formato12BGartController {
 				result = formatoService.saveFormatoCabecera(Formato12BGartCommand.toBeanCabecera(command));
 
 				if (result != null) {
-					command.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+					//command.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+					command.setDescEstado("Abierto");
 					List<FiseFormato12BD> lstDetalle = Formato12BGartCommand.toBeanDetalle(command);
 					if (lstDetalle != null && !lstDetalle.isEmpty()) {
 						for (FiseFormato12BD dtll : lstDetalle) {

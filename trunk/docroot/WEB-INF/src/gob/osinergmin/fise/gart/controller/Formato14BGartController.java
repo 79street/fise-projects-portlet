@@ -191,6 +191,8 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
 		command.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
 		command.setEtapaB(FiseConstants.ETAPA_SOLICITUD);*/
 		
+		command.setEtapaB(FiseConstants.ETAPA_SOLICITUD);
+		
 		//valores constantes para las empresas edelnor y luz del sur
 		command.setCodEdelnor(FiseConstants.COD_EMPRESA_EDELNOR);
 		command.setCodLuzSur(FiseConstants.COD_EMPRESA_LUZ_SUR);
@@ -256,16 +258,18 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
   				}else{
   					fiseFormato14BC.setDescGrupoInformacion(FiseConstants.BLANCO);
   				}
-  				if(fiseFormato14BC.getFechaEnvioDefinitivo()!=null){
+  				/*if(fiseFormato14BC.getFechaEnvioDefinitivo()!=null){
   					fiseFormato14BC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
   				}else{
   					fiseFormato14BC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-  				}
+  				}*/
   				
   				/**Obteniendo el flag de la operacion*/
   				String flagOper = commonService.obtenerEstadoProceso(fiseFormato14BC.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_14B,fiseFormato14BC.getId().getAnoPresentacion(),
   						fiseFormato14BC.getId().getMesPresentacion(), fiseFormato14BC.getId().getEtapa());
   				logger.info("flag operacion:  "+flagOper);
+  				
+  				fiseFormato14BC.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(flagOper, 0));
   				
   				jsonArray.put(new Formato14BGartJSON().asJSONObject(fiseFormato14BC,"",flagOper));
   			}
