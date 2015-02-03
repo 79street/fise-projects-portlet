@@ -972,7 +972,7 @@ function <portlet:namespace/>buscar() {
 function buildGrids() {	
 	jQuery("#grid_formato").jqGrid({
 		datatype: "local",
-       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Grupo de Información','Estado','Visualizar','Editar','Eliminar','','','','',''],
+       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Grupo de Información','Estado','Ver','Editar','Eliminar','','','','',''],
        colModel: [
 				{ name: 'descEmpresa', index: 'descEmpresa', width: 70},
                { name: 'anoPresentacion', index: 'anoPresentacion', width: 30,align:'right' },   
@@ -1006,7 +1006,7 @@ function buildGrids() {
       		for(var i=0;i < ids.length;i++){
       			var cl = ids[i];
       			var ret = jQuery("#grid_formato").jqGrid('getRowData',cl);           
-      			view = "<a href='#'><img border='0' title='View' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
+      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"verFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"');\" /></a> ";
       			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"editarFormato('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";
       			elem = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"confirmarEliminar('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.anoEjecucion+"','"+ret.mesEjecucion+"','"+ret.etapa+"','"+ret.flagOperacion+"');\" /></a> ";              			
       			jQuery("#grid_formato").jqGrid('setRowData',ids[i],{view:view});
