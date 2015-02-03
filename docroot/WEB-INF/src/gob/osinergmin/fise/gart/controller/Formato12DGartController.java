@@ -223,16 +223,18 @@ public class Formato12DGartController {
   				}else{
   					formato.setDescGrupoInformacion(FiseConstants.BLANCO);
   				}
-  				if(formato.getFechaEnvioDefinitivo()!=null){
+  				/*if(formato.getFechaEnvioDefinitivo()!=null){
   					formato.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
   				}else{
   					formato.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-  				}
+  				}*/
   				
   				/**Obteniendo el flag de la operacion*/
   				String flagOper = commonService.obtenerEstadoProceso(formato.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_12D,formato.getId().getAnoPresentacion(),
   						formato.getId().getMesPresentacion(), formato.getId().getEtapa());
   				logger.info("flag operacion:  "+flagOper);
+  				
+  				formato.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(flagOper, 0));
   				
   				jsonArray.put(new Formato12DGartJSON().asJSONObject(formato,"",flagOper));
 			}
@@ -375,11 +377,16 @@ public class Formato12DGartController {
 				}else{
 					f.setDescGrupoInformacion(FiseConstants.BLANCO);
 				}
-				if(f.getFechaEnvioDefinitivo()!=null){
+				/*if(f.getFechaEnvioDefinitivo()!=null){
 					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
 				}else{
 					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-				}
+				}*/
+	
+				String flagOper = commonService.obtenerEstadoProceso(pk.getCodEmpresa(),FiseConstants.TIPO_FORMATO_12D,pk.getAnoPresentacion(),pk.getMesPresentacion(),pk.getEtapa());
+  				
+  				f.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(flagOper, 0));
+				
 				//ponemos los valores de decripciones
 				if(desGrupoInformacion == null ){
 					bean.setDescGrupoInformacion(f.getDescGrupoInformacion());

@@ -388,16 +388,18 @@ public class Formato12AGartController {
   				}else{
   					fiseFormato12AC.setDescGrupoInformacion(FiseConstants.BLANCO);
   				}
-  				if(fiseFormato12AC.getFechaEnvioDefinitivo()!=null){
+  				/*if(fiseFormato12AC.getFechaEnvioDefinitivo()!=null){
   					fiseFormato12AC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
   				}else{
   					fiseFormato12AC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-  				}
+  				}*/
   				
   				/**Obteniendo el flag de la operacion*/
   				String flagOper = commonService.obtenerEstadoProceso(fiseFormato12AC.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_12A,fiseFormato12AC.getId().getAnoPresentacion(),
   						fiseFormato12AC.getId().getMesPresentacion(), fiseFormato12AC.getId().getEtapa());
   				logger.info("flag operacion:  "+flagOper);
+  				
+  				fiseFormato12AC.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(flagOper, 0));
   				
   				jsonArray.put(new Formato12AGartJSON().asJSONObject(fiseFormato12AC,"", flagOper));
   			}

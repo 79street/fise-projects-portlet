@@ -222,15 +222,17 @@ public class Formato13AGartController {
 					
 				}
 				
-				if(fiseFormato13AC.getFechaEnvioDefinitivo()!=null){
+				/*if(fiseFormato13AC.getFechaEnvioDefinitivo()!=null){
 					fiseFormato13AC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
 				}else{
 					fiseFormato13AC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-					
-				}
+				}*/
 
 				/** Obteniendo el flag de la operacion */
 				String flagOper = commonService.obtenerEstadoProceso(fiseFormato13AC.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_13A, fiseFormato13AC.getId().getAnoPresentacion(), fiseFormato13AC.getId().getMesPresentacion(), fiseFormato13AC.getId().getEtapa());
+				
+				fiseFormato13AC.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(flagOper, 0));
+				
 				String inicioVig="";
 				String finVig="";
 				String periodo=fiseFormato13AC.getId().getAnoPresentacion()+""+fiseFormato13AC.getId().getMesPresentacion()+fiseFormato13AC.getId().getEtapa();
@@ -1794,11 +1796,16 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 				}else{
 					f.setDescGrupoInformacion(FiseConstants.BLANCO);
 				}
-				if(f.getFechaEnvioDefinitivo()!=null){
+				/*if(f.getFechaEnvioDefinitivo()!=null){
 					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
 				}else{
 					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-				}
+				}*/
+				
+				String flagOper = commonService.obtenerEstadoProceso(pk.getCodEmpresa(), FiseConstants.TIPO_FORMATO_13A, pk.getAnoPresentacion(), pk.getMesPresentacion(), pk.getEtapa());
+				
+				f.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(flagOper, 0));
+				
 				//ponemos los valores de decripciones
 				if(desgrupo == null ){
 					command.setDescGrupoInformacion(f.getDescGrupoInformacion());

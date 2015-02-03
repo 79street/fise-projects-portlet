@@ -3,6 +3,7 @@ package gob.osinergmin.fise.gart.json;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato12CC;
 import gob.osinergmin.fise.domain.FiseFormato12CD;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,11 +64,12 @@ public class Formato12CGartJSON {
 				}else{
 					jsonObj.put("grupoInfo",FiseConstants.BLANCO);
 				}
-				if(fiseFormato12CC.getFechaEnvioDefinitivo()!=null){
+				/*if(fiseFormato12CC.getFechaEnvioDefinitivo()!=null){
 					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
 				}else{
 					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-				}
+				}*/
+				jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
 		}else{
 			jsonObj.put("grupoInfo", fiseFormato12CC.getDescGrupoInformacion());
 			jsonObj.put("estado", fiseFormato12CC.getDescEstado());
