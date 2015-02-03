@@ -125,7 +125,7 @@ $(document).ready(function () {
 											<div id="d_opc_notificar">
 												<input type="button" class="net-button-small"
 													id="<portlet:namespace/>btnEnvioDefinitivo"
-													name="<portlet:namespace/>btnEnvioDefinitivo" value="Envio General" />
+													name="<portlet:namespace/>btnEnvioDefinitivo" value="Env&iacute;o General" />
 											</div>
 										</td>
 										<td align="right" width="90px">											
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
    <!-- DIVS PARA MENSAJES -->
    
-   	<div id="<portlet:namespace/>dialog-message-envio" title="Mensaje de Informaci&oacute;n">
+   	<div id="<portlet:namespace/>dialog-message-envio" title="Mensaje de &Eacute;xito">
 		<p>
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>
