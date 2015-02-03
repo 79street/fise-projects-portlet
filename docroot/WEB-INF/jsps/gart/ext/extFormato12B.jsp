@@ -1898,8 +1898,9 @@
 			formato12B.dialogMessageReport.dialog({
 				modal: true,
 				autoOpen: false,
+				width: 450,
 				buttons: {
-					'Imprimir Pdf': function() {
+					'Ver Acta': function() {
 						formato12B.mostrarReporteEnvioDefinitivo();
 						$( this ).dialog("close");
 						formato12B.urlRetornar;
