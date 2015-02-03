@@ -259,7 +259,7 @@ $(document).ready(function () {
 																			<form:input path="idGrupoInfo" cssStyle="display:none;" />
 																		</tr>
 																		<tr>
-																			<td width="115px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
+																			<td width="120px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
 																			<td style="text-align: center;">
 																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" onblur="isNumeric(this);" />
 																			</td>
@@ -466,7 +466,7 @@ $(document).ready(function () {
 													 <label  style="margin-left: 0.5cm;">2.1  Costo de Coordinador</label> 
 													</td>
 													<!-- RURAL -->
-													<td style="text-align:center"><form:input id="canDRCoord" path="canDRCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
+													<td style="text-align:center"><form:input id="canDRCoord" path="canDRCoord" size="5" cssClass="target" cssStyle="text-align: right;" /></td> 
 													<td style="text-align:center"><form:input id="costDRCoord" path="costDRCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
 													<td style="text-align:center"><form:input id="canIRCoord" path="canIRCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
 													<td style="text-align:center"><form:input id="costIRCoord" path="costIRCoord" size="5" cssClass="target" cssStyle="text-align: right;"/></td> 
