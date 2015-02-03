@@ -250,7 +250,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -289,7 +289,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -328,7 +328,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -367,7 +367,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -405,7 +405,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -444,7 +444,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -482,7 +482,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -520,7 +520,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -560,7 +560,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
@@ -600,7 +600,7 @@ var resumenCosto= {
 							resumenCosto.verReporteCostos();	
 							resumenCosto.initBlockUI();
 						}else if(data.resultado=='VACIO'){							
-							var addhtmInfo='No existe ningún dato para los criterios seleccionados.';					
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
 							resumenCosto.dialogInfoContent.html(addhtmInfo);
 							resumenCosto.dialogInfo.dialog("open");	
 							resumenCosto.initBlockUI();
