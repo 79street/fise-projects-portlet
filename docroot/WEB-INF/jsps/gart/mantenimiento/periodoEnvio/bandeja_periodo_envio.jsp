@@ -214,7 +214,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Año Decl.:</label>
 											   </td>
 											   <td>
-												<form:input path="anioPres"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>
+												<form:input path="anioPres"  cssStyle="width: 50px; text-align: right;" maxlength="4" onKeyPress="return isNumeric(event)"/>
 											   </td>
 											   
 											   <td><label style="font-size: 12px; font-weight: bold">Mes Decl.:</label>
@@ -344,21 +344,21 @@ $(document).ready(function () {
 											     <label style="font-size: 12px; font-weight: bold">Año Ini. Vig.:</label>
 											 </td>
 											 <td>
-											    <form:input path="anoIniVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>									
+											    <form:input path="anoIniVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4" onKeyPress="return isNumeric(event)"/>									
 											 </td>
 											 
 											 <td>
 											     <label style="font-size: 12px; font-weight: bold">Año Fin Vig.:</label>
 											 </td>
 											 <td>
-											   <form:input path="anoFinVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this)"/>								
+											   <form:input path="anoFinVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4" onKeyPress="return isNumeric(event)"/>								
 											 </td>											 
 											 
 											 <td>
 											     <label style="font-size: 12px; font-weight: bold">Días a notificar antes de cierre:</label>
 											  </td>
 											  <td>											   
-											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2" onblur="isNumeric(this)"/>											
+											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2" onKeyPress="return isNumeric(event)"/>											
 											  </td>	
 											  										 											 
 											</tr>																									  					

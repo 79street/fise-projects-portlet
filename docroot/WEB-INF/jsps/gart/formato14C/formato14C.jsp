@@ -64,7 +64,7 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Desde Año Decl.:</output></td>
 											<td>
-												<form:input path="anioDesde" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this);"/>
+												<form:input path="anioDesde" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onKeyPress="return isNumeric(event)"/>
 											</td>
 											<td><output>Mes Decl.:</output></td>
 											<td>
@@ -76,7 +76,7 @@ $(document).ready(function () {
 											</td>
 											<td><output>Hasta Año Decl.:</output></td>
 											<td>
-												<form:input path="anioHasta" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onblur="isNumeric(this);"/>
+												<form:input path="anioHasta" cssClass="" cssStyle="width: 50px; text-align: right;" maxlength="4" onKeyPress="return isNumeric(event)"/>
 											</td>
 											<td><output>Mes Decl.:</output></td>
 											<td>
@@ -261,12 +261,12 @@ $(document).ready(function () {
 																		<tr>
 																			<td width="150px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>
 																			<td style="text-align: center;">
-																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" onblur="isNumeric(this);" />
+																				<form:input path="anoIniVigencia" style="width: 50px" maxlength="4" onKeyPress="return isNumeric(event)" />
 																			</td>
 																			<td width="20px"></td>
 																			<td width="140px"><label style="font-size: 12px; font-weight:bold">Año Fin Vigencia:</label></td>
 																			<td style="text-align: center;">
-																				<form:input path="anoFinVigencia" style="width: 50px" maxlength="4" onblur="isNumeric(this);"/>	
+																				<form:input path="anoFinVigencia" style="width: 50px" maxlength="4" onKeyPress="return isNumeric(event)"/>	
 																			</td>
 																		</tr>
 																	</table>
