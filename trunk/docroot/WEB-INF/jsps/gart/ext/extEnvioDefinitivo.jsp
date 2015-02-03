@@ -431,7 +431,7 @@ var envioDefinitivoGlobal= {
 						envioDefinitivoGlobal.botonBuscar.trigger('click');
 						envioDefinitivoGlobal.initBlockUI();	
 					}else if(data.resultado == "OBSERVACION"){						
-						var addhtmInfo='No se puede relizar el Envío Definitivo debido a que uno de los Formatos tiene observaciones, primero debe subsanar las observaciones.';					
+						var addhtmInfo='No se puede realizar el Envío Definitivo debido a que uno de los Formatos tiene observaciones, primero debe subsanar las observaciones.';					
 						envioDefinitivoGlobal.dialogInfoContent.html(addhtmInfo);
 						envioDefinitivoGlobal.dialogInfo.dialog("open");
 						envioDefinitivoGlobal.initBlockUI();	
