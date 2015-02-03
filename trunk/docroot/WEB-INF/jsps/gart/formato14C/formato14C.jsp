@@ -255,6 +255,8 @@ $(document).ready(function () {
 																			<td colspan="5"><label style="font-size: 12px; font-weight:bold">Periodo de Vigencia</label></td>
 																			<form:input path="anioInicioVigenciaHidden" cssStyle="display:none;" />	 
 																			<form:input path="anioFinVigenciaHidden" cssStyle="display:none;" />
+																			
+																			<form:input path="idGrupoInfo" cssStyle="display:none;" />
 																		</tr>
 																		<tr>
 																			<td width="115px"><label style="font-size: 12px; font-weight:bold">Año Inicio Vigencia:</label></td>

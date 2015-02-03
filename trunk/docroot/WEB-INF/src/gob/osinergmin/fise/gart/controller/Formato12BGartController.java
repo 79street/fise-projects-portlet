@@ -2,6 +2,7 @@ package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.Formato12A12BGeneric;
 import gob.osinergmin.fise.bean.Formato12BCBean;
+import gob.osinergmin.fise.bean.Formato12DCBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
@@ -230,6 +231,30 @@ public class Formato12BGartController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@ResourceMapping("loadGrupoInformacion")
+  	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command){
+		try {			
+  			response.setContentType("applicacion/json");
+  			String periodoEnvio = command.getPeridoDeclaracion();
+  			JSONObject jsonObj = new JSONObject();
+  			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
+  				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.MENSUAL);
+  				jsonObj.put("idGrupoInfo", idGrupo);
+  			}else{
+  				jsonObj.put("idGrupoInfo", 0);
+  			}
+  			
+  			System.out.println(jsonObj.toString());
+  			PrintWriter pw = response.getWriter();
+  		    pw.write(jsonObj.toString());
+  		    pw.flush();
+  		    pw.close();							
+  		}catch (Exception e) {
+  			// TODO: handle exception
+  			e.printStackTrace();
+  		}
 	}
 	
 		

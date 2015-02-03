@@ -38,6 +38,9 @@
 		
 		urlLoadPeriodo:null,
 		urlLoadCostosUnitarios:null,
+		
+		urlGrupoInformacion:null,
+		
 		dlgLoadFile:null,
 		divOverlay:null,
 		btnShowLoadExcel:null,
@@ -366,6 +369,9 @@
 			this.urlRetornar=urlBack;
 			this.urlLoadPeriodo='<portlet:resourceURL id="loadPeriodoDeclaracion" />';
 			this.urlLoadCostosUnitarios='<portlet:resourceURL id="loadCostoUnitario" />';
+			
+			this.urlGrupoInformacion='<portlet:resourceURL id="loadGrupoInformacion" />';
+			
 			this.cmbCodEmpresa=$('#cmbEmpresa');
 			
 			this.formNewEdit=$('#frmAddUpdate');
@@ -562,10 +568,23 @@
 			formato12B.divLoadFile.css("display","block");
 			formato12B.btnGuardar.css("display","block");
 			
-			formato12B.btnShowLoadExcel.click(function() {formato12B.showLoadFile('1');});//excel
-			formato12B.btnShowLoadTxt.click(function() {formato12B.showLoadFile('2');});//txt
+			formato12B.btnShowLoadExcel.click(function() {
+				if( formato12B.validarGrupoInformacion() ){
+					formato12B.showLoadFile('1');
+				}
+			});//excel
+			formato12B.btnShowLoadTxt.click(function() {
+				if( formato12B.validarGrupoInformacion() ){
+					formato12B.showLoadFile('2');
+				}	
+			});//txt
 			formato12B.btnUploadExcel.click(function() {formato12B.uploadFile(formato12B.txtTypeFile.val());});
-			formato12B.btnGuardar.click(function(){formato12B.save();});
+			
+			formato12B.btnGuardar.click(function(){
+				if( formato12B.validarGrupoInformacion() ){
+					formato12B.save();
+				}
+			});
 		
 			if(tipo == '1'){//editar
 				formato12B.btnValidacion.css("display","block");
@@ -819,12 +838,40 @@
 					formato12B.unblockUI();
 					formato12B.loadDataCostoUnitario(data);
 					
+					formato12B.<portlet:namespace/>loadGrupoInformacion();
+					
 				},error : function(){
 					alert("Error de conexión.");
 					formato12B.unblockUI();
 				}
 			});
 		},
+		//
+		<portlet:namespace/>loadGrupoInformacion : function() {
+			jQuery.ajax({
+				url: formato12B.urlGrupoInformacion+'&'+formato12B.formNewEdit.serialize(),
+					type: 'post',
+					dataType: 'json',
+					success: function(data) {	
+						//alert(data.idGrupoInfo);
+						dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
+					},error : function(){
+						alert("Error de conexión.");
+						formato12B.unblockUI();
+					}
+			});
+		},
+		validarGrupoInformacion : function(){
+			if( $('#idGrupoInfo').val()=='0' ){
+				//alert('Seleccione una Distribuidora Eléctrica'); 
+				formato12B.dialogMessageWarningDetalleContent.html('Primero debe estar creado el Grupo de Información Mensual para el Año y Mes a declarar');
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;
+			}
+			return true;
+		},
+		//
+		
 		loadDataCostoUnitario: function(data){
 			if(data!=null && data.length>0){
 				$.each(data, function (i, item) {
@@ -1277,16 +1324,16 @@
 
 		},
 		showLoadFile:function(tipoFile){
-			formato12B.txtTypeFile.val(tipoFile);
-			formato12B.divOverlay.show();
-		    formato12B.dlgLoadFile.show();
-		    formato12B.dlgLoadFile.draggable();
-		    formato12B.dlgLoadFile.css({ 
-		        'left': ($(window).width() / 3 - formato12B.dlgLoadFile.width() / 3) + 'px', 
-		        'top': ($(window).height()  - formato12B.dlgLoadFile.height() ) + 'px'
-		    });
-		    $("#msjUploadFile").html("");
 			
+				formato12B.txtTypeFile.val(tipoFile);
+				formato12B.divOverlay.show();
+			    formato12B.dlgLoadFile.show();
+			    formato12B.dlgLoadFile.draggable();
+			    formato12B.dlgLoadFile.css({ 
+			        'left': ($(window).width() / 3 - formato12B.dlgLoadFile.width() / 3) + 'px', 
+			        'top': ($(window).height()  - formato12B.dlgLoadFile.height() ) + 'px'
+			    });
+			    $("#msjUploadFile").html("");
 			
 		},
 		closeLoadFile : function(){
@@ -1342,6 +1389,7 @@
 		},
 		
 		validateSave :function(tipoOperacion){
+			
 			var codemp=formato12B.cmbCodEmpresa.val();
 			
 			if(tipoOperacion=='1'){//edit

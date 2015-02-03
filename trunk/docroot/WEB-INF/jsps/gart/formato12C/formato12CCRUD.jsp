@@ -37,6 +37,8 @@ $(document).ready(function () {
 	<form:hidden path="descGrupoInformacion" />
 	<form:hidden path="descEstado" />
 	
+	<form:hidden path="idGrupoInfo" />
+	
 	<input type="hidden" id="<portlet:namespace/>flagCarga" name="<portlet:namespace/>flagCarga" value="" style="display: none;" />
    
 	<div id="d_listado" class="net-frame-listado">

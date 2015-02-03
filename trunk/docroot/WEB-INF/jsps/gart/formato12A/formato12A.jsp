@@ -315,6 +315,7 @@
 									   						</td>
 									   						<td width="10%">
 									   							<input type="hidden" id="flagPeriodoEjecucion" value="" />
+									   							<input type="hidden" id="idGrupoInfo" value="" />
 									   						</td>
 									   						<td width="45%">
 									   							<div id="divPeriodoEjecucion" >

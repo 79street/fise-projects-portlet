@@ -380,7 +380,9 @@ var formato14C= {
 		    });
 			
 			formato14C.botonGrabar.click(function() {
-				formato14C.<portlet:namespace/>guardarFormato14C();
+				if( formato14C.validarGrupoInformacion() ){
+					formato14C.<portlet:namespace/>guardarFormato14C();
+				}	
 			});
 			
 			formato14C.botonActualizar.click(function() {
@@ -413,11 +415,15 @@ var formato14C= {
 		    
 		    //botones para carga de archivos
 		    formato14C.botonCargaExcel.click(function() {
-		    	formato14C.<portlet:namespace/>mostrarFormularioCargaExcel();
+		    	if( formato14C.validarGrupoInformacion() ){
+		    		formato14C.<portlet:namespace/>mostrarFormularioCargaExcel();
+		    	}
 		    });
 		    
 		    formato14C.botonCargaTxt.click(function() {
-		    	formato14C.<portlet:namespace/>mostrarFormularioCargaTexto();
+		    	if( formato14C.validarGrupoInformacion() ){
+		    		formato14C.<portlet:namespace/>mostrarFormularioCargaTexto();
+		    	}
 		    });
 		    
 		    formato14C.botonCargarFormatoExcel.click(function() {
@@ -1071,6 +1077,8 @@ var formato14C= {
 						console.debug("flag periodo ejecucion al cargar desde el controller: "+data.flagPeriodoEjecucion);
 						console.debug("flag costos al cargar desde el controller: "+data.flagCosto);
 						
+						dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
+						
 						//formato14C.recargarPeriodoEjecucion();
 						
 						//formato14C.mostrarPeriodoEjecucion();
@@ -1105,6 +1113,16 @@ var formato14C= {
 					}
 			});
 		},
+		validarGrupoInformacion : function(){
+			if( $('#idGrupoInfo').val()=='0' ){
+				//alert('Seleccione una Distribuidora Eléctrica'); 
+				formato14C.dialogValidacionContent.html('Primero debe estar creado el Grupo de Información Bienal para el Año y Mes a declarar');
+				formato14C.dialogValidacion.dialog("open");
+				return false;
+			}
+			return true;
+		},
+		//
 		mostrarPeriodoEjecucion : function(){
 			console.debug("flag periodo ejecucion al mostrar:  "+formato14C.f_flagPeriodo.val());
 			console.debug("flag costo al mostrar:  "+formato14C.flagCosto.val());
@@ -2357,6 +2375,7 @@ var formato14C= {
 		},	
 		//function para validad ingreso de datos
 		validarFormulario : function() {	
+			
 			var flagPeriodo = formato14C.f_flagPeriodo.val();
 			var anioInicio =$('#anoIniVigencia').val();
 			var anioFin = $('#anoFinVigencia').val();
@@ -3301,6 +3320,7 @@ var formato14C= {
 			}
 		},		
 		validarArchivoCarga : function() {		
+			
 			if(formato14C.f_empresa.val()==null || 
 					formato14C.f_empresa.val().length == '' ) { 			
 				var addhtmAlert='Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo.';					

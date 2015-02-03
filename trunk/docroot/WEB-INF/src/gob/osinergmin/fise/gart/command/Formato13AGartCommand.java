@@ -84,6 +84,8 @@ public class Formato13AGartCommand {
 	private String anoInicioVigenciaHidden;
 	private String anoFinVigenciaHidden;
 	
+	private String idGrupoInfo;
+	
 	public List<AdmEmpresa> getListaEmpresas() {
 		return listaEmpresas;
 	}
@@ -542,6 +544,14 @@ public class Formato13AGartCommand {
 
 	public void setAnoFinVigenciaHidden(String anoFinVigenciaHidden) {
 		this.anoFinVigenciaHidden = anoFinVigenciaHidden;
+	}
+
+	public String getIdGrupoInfo() {
+		return idGrupoInfo;
+	}
+
+	public void setIdGrupoInfo(String idGrupoInfo) {
+		this.idGrupoInfo = idGrupoInfo;
 	}
 
 	

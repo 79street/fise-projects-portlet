@@ -276,6 +276,8 @@ $(document).ready(function () {
 															<form:input path="flagPeriodoEjecucion" cssStyle="display:none;" />
 															<form:input path="anioInicioVigenciaHidden" cssStyle="display:none;" />	 
 															<form:input path="anioFinVigenciaHidden" cssStyle="display:none;" />
+															
+															<form:input path="idGrupoInfo" cssStyle="display:none;" />
 														</td>
 														<td width="45%">
 															<div id="<portlet:namespace/>divPeriodoEjecucion" >
