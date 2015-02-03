@@ -1364,7 +1364,7 @@ var formato14B= {
 	validarGrupoInformacion : function(){
 		if( $('#idGrupoInfo').val()=='0' ){
 			//alert('Seleccione una Distribuidora Eléctrica'); 
-			formato14B.dialogMessageWarningContent.html('Primero debe estar creado el Grupo de Información Bienal para el Año y Mes a declarar');
+			formato14B.dialogMessageWarningContent.html('Primero debe crear el Grupo de Información Bienal para el Año y Mes a declarar');
 			formato14B.dialogMessageWarning.dialog("open");
 			return false;
 		}
@@ -1669,8 +1669,8 @@ var formato14B= {
 						formato14B.initBlockUI();
 					}
 					else if(data.resultado == "Error"){				
-						//var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
-						var addhtml2='Se produjo un error al guardar los datos del Formato 14B';
+						var addhtml2=data.mensaje;
+						//var addhtml2='Se produjo un error al guardar los datos del Formato 14B';
 						formato14B.dialogMessageErrorContent.html(addhtml2);
 						formato14B.dialogMessageError.dialog("open");
 						formato14B.mostrarUltimoFormato();

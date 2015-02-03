@@ -1116,7 +1116,7 @@ var formato14C= {
 		validarGrupoInformacion : function(){
 			if( $('#idGrupoInfo').val()=='0' ){
 				//alert('Seleccione una Distribuidora Eléctrica'); 
-				formato14C.dialogValidacionContent.html('Primero debe estar creado el Grupo de Información Bienal para el Año y Mes a declarar');
+				formato14C.dialogValidacionContent.html('Primero debe crear el Grupo de Información Bienal para el Año y Mes a declarar');
 				formato14C.dialogValidacion.dialog("open");
 				return false;
 			}
@@ -2314,7 +2314,7 @@ var formato14C= {
 							$('#<portlet:namespace/>envioDefinitivoF14C').css('display','block');
 							
 						}else if(data.resultado == "Duplicado"){				
-							var addhtml2='El periodo declarado ya se encuentra regsitrado.';
+							var addhtml2='El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar seleccionado';
 							formato14C.dialogInfoContent.html(addhtml2);
 							formato14C.dialogInfo.dialog("open");						
 							formato14C.initBlockUI();

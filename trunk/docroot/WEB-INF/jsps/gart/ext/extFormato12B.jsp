@@ -864,7 +864,7 @@
 		validarGrupoInformacion : function(){
 			if( $('#idGrupoInfo').val()=='0' ){
 				//alert('Seleccione una Distribuidora Eléctrica'); 
-				formato12B.dialogMessageWarningDetalleContent.html('Primero debe estar creado el Grupo de Información Mensual para el Año y Mes a declarar');
+				formato12B.dialogMessageWarningDetalleContent.html('Primero debe crear el Grupo de Información Mensual para el Año y Mes a declarar');
 				formato12B.dialogMessageWarningDetalle.dialog("open");
 				return false;
 			}

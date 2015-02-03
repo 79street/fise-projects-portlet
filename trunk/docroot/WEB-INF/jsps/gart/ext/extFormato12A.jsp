@@ -1410,8 +1410,8 @@ function <portlet:namespace/>guardarFormato(){
 					initBlockUI();
 				}
 				else if(data.resultado == "Error"){				
-					//var addhtml2='Se produjo un error al guardar los datos: '+data.mensaje;
-					var addhtml2='Se produjo un error al guardar los datos del Formato 12A ';
+					var addhtml2=data.mensaje;
+					//var addhtml2='Se produjo un error al guardar los datos del Formato 12A ';
 					$("#dialog-message-error-content").html(addhtml2);
 					$("#dialog-message-error").dialog( "open" );
 					//<portlet:namespace/>filtrar();
@@ -1553,7 +1553,7 @@ function <portlet:namespace/>loadCostosUnitarios() {
 }
 function validarGrupoInformacion(){
 	if($('#idGrupoInfo').val() == '0' ) { 	
-    	$("#dialog-message-warning-content").html('Primero debe estar creado el Grupo de Información Mensual para el Año y Mes a declarar');
+    	$("#dialog-message-warning-content").html('Primero debe crear el Grupo de Información Mensual para el Año y Mes a declarar');
 		$("#dialog-message-warning").dialog( "open" );
     	return false; 
 	}
