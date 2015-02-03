@@ -484,7 +484,7 @@ var periodoEnvio= {
 		confirmarEliminarPeriodoEnvio : function(secuencia,estado){
 			if(estado=='Vigente'){
 				console.debug("entranado a eliminar confirmar:  "+secuencia);
-				var addhtml='¿Está seguro que desea Desactivar el Control de Remisión seleccionado.?';
+				var addhtml='¿Está seguro que desea Desactivar el Control de Remisión seleccionado?';
 				periodoEnvio.dialogConfirmContent.html(addhtml);
 				periodoEnvio.dialogConfirm.dialog("open");	
 				cod_secuencia=secuencia;	

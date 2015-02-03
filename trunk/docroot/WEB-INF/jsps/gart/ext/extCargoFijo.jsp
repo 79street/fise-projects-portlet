@@ -441,12 +441,12 @@ var fiseCargoFijo= {
 		
 		//function para validar solo numeros decimales
 		soloNumerosDecimales : function(){			
-			fiseCargoFijo.f_montoMesR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMesR',7,2)");
-			fiseCargoFijo.f_montoMesP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMesP',7,2)");
-			fiseCargoFijo.f_montoMesL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMesL',7,2)");
+			fiseCargoFijo.f_montoMesR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'montoMesR',7,2)");
+			fiseCargoFijo.f_montoMesP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'montoMesP',7,2)");
+			fiseCargoFijo.f_montoMesL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'montoMesL',7,2)");
 			
-			fiseCargoFijo.f_montoCanje.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoCanje',7,2)");
-			fiseCargoFijo.f_igv.attr("onkeypress","return soloNumerosDecimales(event, 2, 'igv',1,2)");	
+			fiseCargoFijo.f_montoCanje.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'montoCanje',7,2)");
+			fiseCargoFijo.f_igv.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'igv',1,2)");	
 			completarDecimal('montoMesR',2);
 			completarDecimal('montoMesP',2);
 			completarDecimal('montoMesL',2);
