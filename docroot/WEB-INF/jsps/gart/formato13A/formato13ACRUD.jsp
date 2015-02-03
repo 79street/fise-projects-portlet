@@ -39,6 +39,8 @@
    
     <form:hidden path="descGrupoInformacion" />
 	<form:hidden path="descestado" />
+	
+	<form:hidden path="idGrupoInfo" />
    
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">

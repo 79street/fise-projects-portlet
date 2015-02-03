@@ -593,6 +593,14 @@ public class Formato14CGartController {
 					break;
 				}
 			}  			
+  			
+  			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
+  				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.BIENAL);
+  				jsonObj.put("idGrupoInfo", idGrupo);
+  			}else{
+  				jsonObj.put("idGrupoInfo", 0);
+  			}
+  			
 			//pRequest.getPortletSession().setAttribute("listaCargarPeriodo",null, PortletSession.APPLICATION_SCOPE);
   			PrintWriter pw = response.getWriter();
   		    pw.write(jsonObj.toString());

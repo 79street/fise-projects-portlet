@@ -591,14 +591,13 @@ public class Formato12DGartController {
   			response.setContentType("applicacion/json");
   			String periodoEnvio = bean.getPeriodoEnvio();
   			JSONObject jsonObj = new JSONObject();
-  			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
-				if( periodoEnvio.equals(p.getCodigoItem()) ){
-					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
-					jsonObj.put("anioInicioVigencia", p.getAnioInicioVig());
-					jsonObj.put("anioFinVigencia", p.getAnioFinVig());
-					break;
-				}
-			}
+  			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
+  				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.MENSUAL);
+  				jsonObj.put("idGrupoInfo", idGrupo);
+  			}else{
+  				jsonObj.put("idGrupoInfo", 0);
+  			}
+  			
   			System.out.println(jsonObj.toString());
   			PrintWriter pw = response.getWriter();
   		    pw.write(jsonObj.toString());

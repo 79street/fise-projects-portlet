@@ -135,6 +135,8 @@
 																		       	<form:input path="anoPresentacion" type="hidden" /> 
 																				<form:input path="etapa" type="hidden" /> 
 																				
+																				<form:input path="idGrupoInfo" type="hidden" /> 
+																				
 																		</td>
 																	</tr>
 																</table>

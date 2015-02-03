@@ -312,13 +312,25 @@ var formato14B= {
 		//eventos
 		formato14B.botonNuevo.click(function() {formato14B.<portlet:namespace/>crearFormato();});
 		formato14B.botonBuscar.click(function() {formato14B.buscar();});
-		formato14B.botonGrabar.click(function() {formato14B.<portlet:namespace/>guardarFormato();});
+		formato14B.botonGrabar.click(function() {
+			if( formato14B.validarGrupoInformacion() ){
+				formato14B.<portlet:namespace/>guardarFormato();
+			}
+		});
 		formato14B.botonRegresar.click(function() {formato14B.<portlet:namespace/>regresar();});
 		formato14B.f_empresa.change(function(){formato14B.<portlet:namespace/>loadPeriodo('');});
 		formato14B.f_periodoEnvio.change(function(){formato14B.<portlet:namespace/>loadPeriodo(this.value);});
 		//cargaarchivos
-		formato14B.botonCargaExcel.click(function() {formato14B.<portlet:namespace/>mostrarFormularioCargaExcel();});
-		formato14B.botonCargaTxt.click(function() {formato14B.<portlet:namespace/>mostrarFormularioCargaTexto();});
+		formato14B.botonCargaExcel.click(function() {
+			if( formato14B.validarGrupoInformacion() ){
+				formato14B.<portlet:namespace/>mostrarFormularioCargaExcel();
+			}
+		});
+		formato14B.botonCargaTxt.click(function() {
+			if( formato14B.validarGrupoInformacion() ){
+				formato14B.<portlet:namespace/>mostrarFormularioCargaTexto();
+			}
+		});
 		formato14B.botonCargarFormatoExcel.click(function() {formato14B.<portlet:namespace/>cargarFormatoExcel();});
 		formato14B.botonCargarFormatoTexto.click(function() {formato14B.<portlet:namespace/>cargarFormatoTexto();});
 		//
@@ -1339,6 +1351,8 @@ var formato14B= {
 					dwr.util.setValue("anioInicioVigencia", data.anioInicioVigencia);
 					dwr.util.setValue("anioFinVigencia", data.anioFinVigencia);
 					//
+					dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
+					
 					formato14B.recargarPeriodoEjecucion(data.anioInicioVigencia,data.anioFinVigencia);
 					formato14B.mostrarPeriodoEjecucion();
 				},error : function(){
@@ -1347,6 +1361,16 @@ var formato14B= {
 				}
 		});
 	},
+	validarGrupoInformacion : function(){
+		if( $('#idGrupoInfo').val()=='0' ){
+			//alert('Seleccione una Distribuidora Eléctrica'); 
+			formato14B.dialogMessageWarningContent.html('Primero debe estar creado el Grupo de Información Bienal para el Año y Mes a declarar');
+			formato14B.dialogMessageWarning.dialog("open");
+			return false;
+		}
+		return true;
+	},
+	//
 	mostrarPeriodoEjecucion : function(){
 		//ahora lo usamos para mostrar o no los componentes
 		//alert(formato14B.f_flagPeriodo.val());
@@ -1774,6 +1798,7 @@ var formato14B= {
 		formato14B.estiloEdicionProvincia();
 	},
 	validarFormulario : function() {		
+		
 		if(formato14B.f_empresa.val().length == '' ) { 	
 			//alert('Seleccione una Distribuidora Eléctrica'); 
 			formato14B.dialogMessageWarningContent.html('Debe seleccionar una Distribuidora Eléctrica');
@@ -1960,6 +1985,7 @@ var formato14B= {
 		return true; 
 	},
 	validarArchivoCarga : function() {		
+
 		if(formato14B.f_empresa.val().length == '' ) { 	
 			//alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
 			formato14B.dialogMessageWarningContent.html('Debe seleccionar una Distribuidora Eléctrica para proceder con la carga del archivo');

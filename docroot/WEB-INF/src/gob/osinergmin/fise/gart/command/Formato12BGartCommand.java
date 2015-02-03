@@ -159,6 +159,8 @@ public class Formato12BGartCommand implements Serializable {
 	
 	private Integer typeFile;
 
+	private String idGrupoInfo;
+	
 	public static FiseFormato12BC toBeanCabecera(Formato12BGartCommand command) {
 
 		FiseFormato12BC bean = null;
@@ -1539,7 +1541,12 @@ public class Formato12BGartCommand implements Serializable {
 	public void setTypeFile(Integer typeFile) {
 		this.typeFile = typeFile;
 	}
-	
+	public String getIdGrupoInfo() {
+		return idGrupoInfo;
+	}
+	public void setIdGrupoInfo(String idGrupoInfo) {
+		this.idGrupoInfo = idGrupoInfo;
+	}
 	
 
 }

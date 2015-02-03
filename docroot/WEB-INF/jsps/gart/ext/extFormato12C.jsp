@@ -379,9 +379,18 @@ var formato12C= {
 		
 		formato12C.initDialogsCRUD();
 		
-		formato12C.btnExcel.click(function() {formato12C.<portlet:namespace/>showUploadExcel();});
+		formato12C.btnExcel.click(function() {
+			if( formato12C.validarGrupoInformacion() ){
+				formato12C.<portlet:namespace/>showUploadExcel();
+			}
+		});
+
 		formato12C.btnCargarFormatoExcel.click(function() {formato12C.<portlet:namespace/>cargarFormatoExcel();});
-		formato12C.btnTxt.click(function() {formato12C.<portlet:namespace/>showUploadTxt();});
+		formato12C.btnTxt.click(function() {
+			if( formato12C.validarGrupoInformacion() ){
+				formato12C.<portlet:namespace/>showUploadTxt();
+			}
+		});
 		formato12C.btnCargarFormatoTexto.click(function() {formato12C.<portlet:namespace/>cargarFormatoTxt();});
 		
 		formato12C.buildGridsImplementacion();
@@ -409,9 +418,11 @@ var formato12C= {
 			formato12C.<portlet:namespace/>loadPeriodo('');
 			
 			formato12C.botonAnadirFormato.click(function(){
-				formato12C.blockUI();
-				//--formato12C.formNuevo.attr('action',urlAnadirFormato+'&codigoEmpresa='+formato12C.codEmpresa.val()+'&periodoEnvio='+formato12C.periodoEnvio.val()+'&strip=0').removeAttr('enctype').submit();
-				formato12C.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
+				if( formato12C.validarGrupoInformacion() ){
+					formato12C.blockUI();
+					//--formato12C.formNuevo.attr('action',urlAnadirFormato+'&codigoEmpresa='+formato12C.codEmpresa.val()+'&periodoEnvio='+formato12C.periodoEnvio.val()+'&strip=0').removeAttr('enctype').submit();
+					formato12C.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
+				}
 			});
 			formato12C.botonRegresarBusqueda.click(function(){
 				formato12C.blockUI();
@@ -1439,6 +1450,7 @@ var formato12C= {
 					if( valPeriodo.length!='' ){
 						dwr.util.setValue("periodoEnvio", valPeriodo);
 					}
+					formato12C.<portlet:namespace/>loadCargaFlagPeriodo();
 					/*
 					formato12C.<portlet:namespace/>loadCargaFlagPeriodo();
 					//validar lima edelnor y luz del sur
@@ -1455,6 +1467,36 @@ var formato12C= {
 				}
 		});
 	},
+	//
+	<portlet:namespace/>loadCargaFlagPeriodo : function() {
+		jQuery.ajax({
+			url: formato12C.urlCargaFlagPeriodo+'&'+formato12C.formNuevo.serialize(),
+				type: 'post',
+				dataType: 'json',
+				success: function(data) {				
+					dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
+					/*alert(data.idGrupoInfo);
+					if(data.idGrupoInfo=='0'){
+						alert('que no pase porque no tiene grupo de informacion');
+					}else{
+						alert('que pase normal');
+					}*/
+				},error : function(){
+					alert("Error de conexión.");
+					formato12C.unblockUI();
+				}
+		});
+	},
+	validarGrupoInformacion : function(){
+		if( $('#idGrupoInfo').val()=='0' ){
+			//alert('Seleccione una Distribuidora Eléctrica'); 
+			formato12C.dialogMessageWarningCrudContent.html('Primero debe estar creado el Grupo de Información Mensual para el Año y Mes a declarar');
+			formato12C.dialogMessageWarningCrud.dialog("open");
+			return false;
+		}
+		return true;
+	},
+	//
 	mostrarPeriodoEjecucion : function(){
 		//if( formato12C.flagPeriodoDetalle.val()==true ){
 		if( formato12C.flagPeriodoDetalle.val()=='false' ){
@@ -1717,6 +1759,7 @@ var formato12C= {
    		dwr.util.addOptions("codDistritoDestino", dataPeriodo,"codigoItem","descripcionItem");
 	},
 	validarArchivoCarga : function() {		
+	
 		if(formato12C.codEmpresa.val().length == '' ) { 	
 			//alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
 			 formato12C.dialogMessageWarningCrudContent.html('Debe seleccionar una Distribuidora Eléctrica para proceder con la carga del archivo');

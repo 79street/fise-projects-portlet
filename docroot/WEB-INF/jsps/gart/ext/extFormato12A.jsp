@@ -599,7 +599,10 @@ function validarBusqueda() {
 	  return true; 
 	}
 	
-function validarFormulario() {		
+function validarFormulario() {	
+	
+	validarGrupoInformacion();
+	
 	  if($('#s_empresa').val().length == '' ) { 	
 	    //alert('Seleccione una Distribuidora Eléctrica'); 
 	    $("#dialog-message-warning-content").html('Debe seleccionar una Distribuidora Eléctrica');
@@ -773,7 +776,10 @@ function validarFormulario() {
 	  
 	  return true; 
 	}
-function validarArchivoCarga() {		
+function validarArchivoCarga() {	
+	
+	validarGrupoInformacion();
+	
   if($('#s_empresa').val().length == '' ) { 	
     //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
     $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
@@ -788,7 +794,7 @@ function validarArchivoCarga() {
 	    document.getElementById('s_periodoenvio_present').focus();
 	    return false; 
   }
-
+    
   return true; 
 }
 	
@@ -1532,6 +1538,9 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				
 				//
 				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
+				//
+				dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
+				
 				recargarPeriodoEjecucion();
 				mostrarPeriodoEjecucion();
 				//---initBlockUI();
@@ -1542,6 +1551,16 @@ function <portlet:namespace/>loadCostosUnitarios() {
 	});	 
 	
 }
+function validarGrupoInformacion(){
+	if($('#idGrupoInfo').val() == '0' ) { 	
+    	$("#dialog-message-warning-content").html('Primero debe estar creado el Grupo de Información Mensual para el Año y Mes a declarar');
+		$("#dialog-message-warning").dialog( "open" );
+    	return false; 
+	}
+	return true;
+}
+
+
 function mostrarPeriodoEjecucion(){
 	if( $('#flagPeriodoEjecucion').val()=='S' ){
 		$('#i_anioejecuc').removeAttr("disabled");

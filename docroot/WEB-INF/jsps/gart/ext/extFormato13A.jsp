@@ -26,6 +26,9 @@ var formato13A= {
 	urlBusqueda: null,
 	urlBusquedaDetalle: null,
 	urlCargaDeclaracion: null,
+	
+	urlCargaFlagPeriodo: null,
+	
 	urlProvincias:null,
 	urlDistritos:null,
 	urlReporte:null,
@@ -305,6 +308,9 @@ var formato13A= {
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
+		
+		this.urlCargaFlagPeriodo='<portlet:resourceURL id="cargaFlagPeriodo" />';
+		
 		this.urlBusquedaDetalle='<portlet:resourceURL id="busquedaDetalle" />';
 		this.formNuevo=$('#formato13AGartCommand');
 		this.codEmpresa=$('#codEmpresa');
@@ -393,9 +399,17 @@ var formato13A= {
 		
 		formato13A.initDialogsCRUD();
 		
-		formato13A.btnExcel.click(function() {formato13A.<portlet:namespace/>showUploadExcel();});
+		formato13A.btnExcel.click(function() {
+			if( formato13A.validarGrupoInformacion() ){
+				formato13A.<portlet:namespace/>showUploadExcel();
+			}
+		});
 		formato13A.btnCargarFormatoExcel.click(function() {formato13A.<portlet:namespace/>cargarFormatoExcel();});
-		formato13A.btnTxt.click(function() {formato13A.<portlet:namespace/>showUploadTxt();});
+		formato13A.btnTxt.click(function() {
+			if( formato13A.validarGrupoInformacion() ){
+				formato13A.<portlet:namespace/>showUploadTxt();
+			}
+		});
 		formato13A.btnCargarFormatoTexto.click(function() {formato13A.<portlet:namespace/>cargarFormatoTxt();});
 		
 		formato13A.btnGuardarCabecera.click(function(){formato13A.savecabecera();});
@@ -418,10 +432,12 @@ var formato13A= {
 			formato13A.codEmpresa.trigger('change');
 
 			formato13A.botonAnadirFormato.click(function(){
-				formato13A.blockUI();
-				//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
-				//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
-				formato13A.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
+				if( formato13A.validarGrupoInformacion() ){
+					formato13A.blockUI();
+					//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
+					//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+					formato13A.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
+				}
 			});
 			
 			formato13A.divInformacion.hide();
@@ -852,6 +868,8 @@ var formato13A= {
 				dwr.util.removeAllOptions("peridoDeclaracion");
 				dwr.util.addOptions("peridoDeclaracion", data,"codigoItem","descripcionItem");
 				
+				formato13A.<portlet:namespace/>loadCargaFlagPeriodo();
+				
 				formato13A.unblockUI();
 			},error : function(){
 				alert("Error de conexión.");
@@ -859,6 +877,32 @@ var formato13A= {
 			}
 		});
 	},
+	//
+	<portlet:namespace/>loadCargaFlagPeriodo : function() {
+		jQuery.ajax({
+			url: formato13A.urlCargaFlagPeriodo+'&'+formato13A.formNuevo.serialize(),
+				type: 'post',
+				dataType: 'json',
+				success: function(data) {				
+					dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
+				},error : function(){
+					alert("Error de conexión.");
+					formato13A.unblockUI();
+				}
+		});
+	},
+	validarGrupoInformacion : function(){
+		if( $('#idGrupoInfo').val()=='0' ){
+			//alert('Seleccione una Distribuidora Eléctrica'); 
+			formato13A.dialogMessageWarningCrudContent.html('Primero debe estar creado el Grupo de Información Bienal para el Año y Mes a declarar');
+			formato13A.dialogMessageWarningCrud.dialog("open");
+			return false;
+		}
+		return true;
+	},
+	//
+	
+	
 	buildGridsDeclaracion : function () {	
 		formato13A.tablaDeclaracion.jqGrid({
 		   datatype: "local",
@@ -1130,13 +1174,15 @@ var formato13A= {
 
 	},
 	<portlet:namespace/>showUploadExcel : function(){
-		formato13A.divOverlay.show();
-		formato13A.dialogCargaExcel.show();
-		formato13A.dialogCargaExcel.draggable();
-		formato13A.dialogCargaExcel.css({ 
-	        'left': ($(window).width() / 2 - formato13A.dialogCargaExcel.width() / 2) + 'px', 
-	        'top': ($(window).height()  - formato13A.dialogCargaExcel.height() ) + 'px'
-	    });
+		
+			formato13A.divOverlay.show();
+			formato13A.dialogCargaExcel.show();
+			formato13A.dialogCargaExcel.draggable();
+			formato13A.dialogCargaExcel.css({ 
+		        'left': ($(window).width() / 2 - formato13A.dialogCargaExcel.width() / 2) + 'px', 
+		        'top': ($(window).height()  - formato13A.dialogCargaExcel.height() ) + 'px'
+		    });
+		
 	},
 	
 	closeDialogCargaExcel : function(){
@@ -1176,13 +1222,16 @@ var formato13A= {
 	},
 	
 	<portlet:namespace/>showUploadTxt : function(){
-		formato13A.divOverlay.show();
-		formato13A.dialogCargaTexto.show();
-		formato13A.dialogCargaTexto.draggable();
-		formato13A.dialogCargaTexto.css({ 
-	        'left': ($(window).width() / 2 - formato13A.dialogCargaTexto.width() / 2) + 'px', 
-	        'top': ($(window).height()  - formato13A.dialogCargaTexto.height() ) + 'px'
-	    });
+		
+			formato13A.divOverlay.show();
+			formato13A.dialogCargaTexto.show();
+			formato13A.dialogCargaTexto.draggable();
+			formato13A.dialogCargaTexto.css({ 
+		        'left': ($(window).width() / 2 - formato13A.dialogCargaTexto.width() / 2) + 'px', 
+		        'top': ($(window).height()  - formato13A.dialogCargaTexto.height() ) + 'px'
+		    });
+		
+		
 	},
 	
 	closeDialogCargaTxt : function(){

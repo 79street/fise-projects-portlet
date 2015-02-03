@@ -869,6 +869,14 @@ public class Formato12AGartController {
 					break;
 				}
 			}
+  			
+  			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
+  				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.MENSUAL);
+  				jsonObj.put("idGrupoInfo", idGrupo);
+  			}else{
+  				jsonObj.put("idGrupoInfo",0);
+  			}
+  			
   			//se anade los periodo de envio
   			/*JSONArray jsonArray = new JSONArray();
   			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
