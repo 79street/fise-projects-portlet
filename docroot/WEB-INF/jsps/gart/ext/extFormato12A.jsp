@@ -202,12 +202,12 @@ function soloNumerosEnteros(){
 }
 function soloNumerosDecimalesFormulario(){
 	//
-	$('#i_despPersonal_r').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_despPersonal_r',7,2)");
-	$('#i_activExtraord_r').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_activExtraord_r',7,2)");
-	$('#i_despPersonal_p').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_despPersonal_p',7,2)");
-	$('#i_activExtraord_p').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_activExtraord_p',7,2)");
-	$('#i_despPersonal_l').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_despPersonal_l',7,2)");
-	$('#i_activExtraord_l').attr("onkeypress","return soloNumerosDecimales(event, 2, 'i_activExtraord_l',7,2)");
+	$('#i_despPersonal_r').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_despPersonal_r',7,2)");
+	$('#i_activExtraord_r').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_activExtraord_r',7,2)");
+	$('#i_despPersonal_p').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_despPersonal_p',7,2)");
+	$('#i_activExtraord_p').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_activExtraord_p',7,2)");
+	$('#i_despPersonal_l').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_despPersonal_l',7,2)");
+	$('#i_activExtraord_l').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_activExtraord_l',7,2)");
 }
 function realizarCalculoCampos(){
 	$('#i_nroEmpad_r').attr("onchange","calculoTotal()");

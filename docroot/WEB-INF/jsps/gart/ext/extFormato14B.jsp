@@ -1218,41 +1218,41 @@ var formato14B= {
 	},
 	soloNumerosDecimales : function(){
 		//RURAL
-		formato14B.f_impValEdeR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'impValDesctoEdeR',7,2)");
-		formato14B.f_impValNoEdeR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'impValDesctoNoEdeR',7,2)");
-		formato14B.f_costoTotalValR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoTotalValDesctoR',7,2)");
-		formato14B.f_costoTotalValOficR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoTotalValOficR',7,2)");
-		formato14B.f_costoEnvPadronR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoEnvPadronR',7,2)");
-		formato14B.f_costoUnitDigitR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoUnitValesDigitR',7,2)");
-		formato14B.f_costoAtenSolicR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoAtenSolicR',7,2)");
-		formato14B.f_costoAtenConsR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoAtenConsR',7,2)");
-		formato14B.f_costoPersonalR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoPersonalR',7,2)");
-		formato14B.f_capacAgentR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'capacAgentR',7,2)");
-		formato14B.f_utilMatOficR.attr("onkeypress","return soloNumerosDecimales(event, 2, 'utilMatOficR',7,2)");
+		formato14B.f_impValEdeR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'impValDesctoEdeR',7,2)");
+		formato14B.f_impValNoEdeR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'impValDesctoNoEdeR',7,2)");
+		formato14B.f_costoTotalValR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoTotalValDesctoR',7,2)");
+		formato14B.f_costoTotalValOficR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoTotalValOficR',7,2)");
+		formato14B.f_costoEnvPadronR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoEnvPadronR',7,2)");
+		formato14B.f_costoUnitDigitR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoUnitValesDigitR',7,2)");
+		formato14B.f_costoAtenSolicR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoAtenSolicR',7,2)");
+		formato14B.f_costoAtenConsR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoAtenConsR',7,2)");
+		formato14B.f_costoPersonalR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoPersonalR',7,2)");
+		formato14B.f_capacAgentR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'capacAgentR',7,2)");
+		formato14B.f_utilMatOficR.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'utilMatOficR',7,2)");
 		//PROVINCIA
-		formato14B.f_impValEdeP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'impValDesctoEdeP',7,2)");
-		formato14B.f_impValNoEdeP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'impValDesctoNoEdeP',7,2)");
-		formato14B.f_costoTotalValP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoTotalValDesctoP',7,2)");
-		formato14B.f_costoTotalValOficP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoTotalValOficP',7,2)");
-		formato14B.f_costoEnvPadronP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoEnvPadronP',7,2)");
-		formato14B.f_costoUnitDigitP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoUnitValesDigitP',7,2)");
-		formato14B.f_costoAtenSolicP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoAtenSolicP',7,2)");
-		formato14B.f_costoAtenConsP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoAtenConsP',7,2)");
-		formato14B.f_costoPersonalP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoPersonalP',7,2)");
-		formato14B.f_capacAgentP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'capacAgentP',7,2)");
-		formato14B.f_utilMatOficP.attr("onkeypress","return soloNumerosDecimales(event, 2, 'utilMatOficP',7,2)");
+		formato14B.f_impValEdeP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'impValDesctoEdeP',7,2)");
+		formato14B.f_impValNoEdeP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'impValDesctoNoEdeP',7,2)");
+		formato14B.f_costoTotalValP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoTotalValDesctoP',7,2)");
+		formato14B.f_costoTotalValOficP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoTotalValOficP',7,2)");
+		formato14B.f_costoEnvPadronP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoEnvPadronP',7,2)");
+		formato14B.f_costoUnitDigitP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoUnitValesDigitP',7,2)");
+		formato14B.f_costoAtenSolicP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoAtenSolicP',7,2)");
+		formato14B.f_costoAtenConsP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoAtenConsP',7,2)");
+		formato14B.f_costoPersonalP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoPersonalP',7,2)");
+		formato14B.f_capacAgentP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'capacAgentP',7,2)");
+		formato14B.f_utilMatOficP.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'utilMatOficP',7,2)");
 		//LIMA
-		formato14B.f_impValEdeL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'impValDesctoEdeL',7,2)");
-		formato14B.f_impValNoEdeL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'impValDesctoNoEdeL',7,2)");
-		formato14B.f_costoTotalValL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoTotalValDesctoL',7,2)");
-		formato14B.f_costoTotalValOficL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoTotalValOficL',7,2)");
-		formato14B.f_costoEnvPadronL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoEnvPadronL',7,2)");
-		formato14B.f_costoUnitDigitL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoUnitValesDigitL',7,2)");
-		formato14B.f_costoAtenSolicL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoAtenSolicL',7,2)");
-		formato14B.f_costoAtenConsL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoAtenConsL',7,2)");
-		formato14B.f_costoPersonalL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'costoPersonalL',7,2)");
-		formato14B.f_capacAgentL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'capacAgentL',7,2)");
-		formato14B.f_utilMatOficL.attr("onkeypress","return soloNumerosDecimales(event, 2, 'utilMatOficL',7,2)");
+		formato14B.f_impValEdeL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'impValDesctoEdeL',7,2)");
+		formato14B.f_impValNoEdeL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'impValDesctoNoEdeL',7,2)");
+		formato14B.f_costoTotalValL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoTotalValDesctoL',7,2)");
+		formato14B.f_costoTotalValOficL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoTotalValOficL',7,2)");
+		formato14B.f_costoEnvPadronL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoEnvPadronL',7,2)");
+		formato14B.f_costoUnitDigitL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoUnitValesDigitL',7,2)");
+		formato14B.f_costoAtenSolicL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoAtenSolicL',7,2)");
+		formato14B.f_costoAtenConsL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoAtenConsL',7,2)");
+		formato14B.f_costoPersonalL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoPersonalL',7,2)");
+		formato14B.f_capacAgentL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'capacAgentL',7,2)");
+		formato14B.f_utilMatOficL.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'utilMatOficL',7,2)");
 	},
 	formularioCompletarDecimales : function(){
 		//RURAL

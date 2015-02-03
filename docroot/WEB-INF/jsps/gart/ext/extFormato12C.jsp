@@ -2643,9 +2643,9 @@ var formato12C= {
 		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroDias',3,0)");
 	},
 	soloNumerosDecimales : function(){
-		formato12C.montoAlimentacionDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlimentacion',7,2)");
-		formato12C.montoAlojamientoDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoAlojamiento',7,2)");
-		formato12C.montoMovilidadDetalle.attr("onkeypress","return soloNumerosDecimales(event, 2, 'montoMovilidad',7,2)");
+		formato12C.montoAlimentacionDetalle.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'montoAlimentacion',7,2)");
+		formato12C.montoAlojamientoDetalle.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'montoAlojamiento',7,2)");
+		formato12C.montoMovilidadDetalle.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'montoMovilidad',7,2)");
 	},
 	//
 	iniciamosValores : function(){
