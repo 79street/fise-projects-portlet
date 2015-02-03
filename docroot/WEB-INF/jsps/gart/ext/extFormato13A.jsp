@@ -894,7 +894,7 @@ var formato13A= {
 	validarGrupoInformacion : function(){
 		if( $('#idGrupoInfo').val()=='0' ){
 			//alert('Seleccione una Distribuidora Eléctrica'); 
-			formato13A.dialogMessageWarningCrudContent.html('Primero debe estar creado el Grupo de Información Bienal para el Año y Mes a declarar');
+			formato13A.dialogMessageWarningCrudContent.html('Primero debe crear el Grupo de Información Bienal para el Año y Mes a declarar');
 			formato13A.dialogMessageWarningCrud.dialog("open");
 			return false;
 		}
