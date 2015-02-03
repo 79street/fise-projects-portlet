@@ -1084,7 +1084,7 @@
 		<p>
 			<!-- <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span> -->
-			<img src="f/ise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
+			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
 			<label class="labelCentrado" id="lblMessageReportContent">Datos grabados exit&oacute;samente.</label>
 		</p>	

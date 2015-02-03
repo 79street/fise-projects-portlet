@@ -271,6 +271,8 @@ public class Formato14CGartController {
   				
   				jsonArray.put(new Formato14CJSON().asJSONObject(formato14c,flagOper));
   				
+  				formato14c.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(flagOper, 0));
+  				
   				/*if(formato14c.getFechaEnvioDefinitivo()!=null){
   					formato14c.setDescEstado(FiseConstants.ESTADO_ENVIADO_F14C);  						
   				}else{

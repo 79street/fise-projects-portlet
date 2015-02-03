@@ -376,7 +376,10 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
 					}
 				}
 		        
-		        JSONObject jsonent = new Formato14BGartJSON().asJSONObject(formato,flagPeriodo,"");
+		        String flagOper = commonService.obtenerEstadoProceso(pk.getCodEmpresa(),FiseConstants.TIPO_FORMATO_14B,pk.getAnoPresentacion(),
+  						pk.getMesPresentacion(), pk.getEtapa());
+		        
+		        JSONObject jsonent = new Formato14BGartJSON().asJSONObject(formato,flagPeriodo,flagOper);
 		        logger.info("jsonformato:"+jsonent);
 		        jsonObj.put("formato",jsonent);
 				jsonObj.put("resultado", "OK");

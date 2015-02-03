@@ -57,24 +57,31 @@ public class Formato12CGartJSON {
 		jsonObj.put("etapa", fiseFormato12CC.getId().getEtapa());
 		jsonObj.put("descMesPresentacion", fiseFormato12CC.getDescMesPresentacion());
 		
-		if( FiseConstants.BLANCO.equals(flagOperacion) ){
-			//grupo informacion y estado
-				if(fiseFormato12CC.getFiseGrupoInformacion()!=null && fiseFormato12CC.getFiseGrupoInformacion().getDescripcion()!=null){
-					jsonObj.put("grupoInfo",fiseFormato12CC.getFiseGrupoInformacion().getDescripcion());
-				}else{
-					jsonObj.put("grupoInfo",FiseConstants.BLANCO);
-				}
-				/*if(fiseFormato12CC.getFechaEnvioDefinitivo()!=null){
-					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
-				}else{
-					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-				}*/
-				jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
-		}else{
-			jsonObj.put("grupoInfo", fiseFormato12CC.getDescGrupoInformacion());
-			jsonObj.put("estado", fiseFormato12CC.getDescEstado());
-		}
+//		if( FiseConstants.BLANCO.equals(flagOperacion) ){
+//			//grupo informacion y estado
+//				if(fiseFormato12CC.getFiseGrupoInformacion()!=null && fiseFormato12CC.getFiseGrupoInformacion().getDescripcion()!=null){
+//					jsonObj.put("grupoInfo",fiseFormato12CC.getFiseGrupoInformacion().getDescripcion());
+//				}else{
+//					jsonObj.put("grupoInfo",FiseConstants.BLANCO);
+//				}
+//				/*if(fiseFormato12CC.getFechaEnvioDefinitivo()!=null){
+//					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+//				}else{
+//					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+//				}*/
+//				jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
+//		}else{
+//			jsonObj.put("grupoInfo", fiseFormato12CC.getDescGrupoInformacion());
+//			jsonObj.put("estado", fiseFormato12CC.getDescEstado());
+//		}
 
+		if(fiseFormato12CC.getFiseGrupoInformacion()!=null && fiseFormato12CC.getFiseGrupoInformacion().getDescripcion()!=null){
+			jsonObj.put("grupoInfo",fiseFormato12CC.getFiseGrupoInformacion().getDescripcion());
+		}else{
+			jsonObj.put("grupoInfo",FiseConstants.BLANCO);
+		}
+		jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
+		
 		jsonObj.put("flagOperacion", flagOperacion);
 
 		return jsonObj;

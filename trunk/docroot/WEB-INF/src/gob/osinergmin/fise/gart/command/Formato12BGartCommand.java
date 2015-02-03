@@ -241,7 +241,8 @@ public class Formato12BGartCommand implements Serializable {
 				command.setTotalReconocer(bean.getTotalReconocer());
 				command.setUsuarioActualizacion(bean.getUsuarioActualizacion());
 				command.setUsuarioCreacion(bean.getUsuarioCreacion());
-				command.setDescEstado(bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_FECHAENVIO_ENVIADO : FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+				//command.setDescEstado(bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_FECHAENVIO_ENVIADO : FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+				command.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(command.getDescEstado(), 0));
 				command.setEstadoEnvio(bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_ENVIADO : FiseConstants.ESTADO_POR_ENVIAR);
 
 			}
