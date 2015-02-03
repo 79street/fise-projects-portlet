@@ -497,7 +497,10 @@ public class Formato12AGartController {
 					}
 				}
 		        
-		        JSONObject jsonent = new Formato12AGartJSON().asJSONObject(formato,flagPeriodo,"");
+		        String flagOper = commonService.obtenerEstadoProceso(formato.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_12A,formato.getId().getAnoPresentacion(),
+		        		formato.getId().getMesPresentacion(), formato.getId().getEtapa());
+		        
+		        JSONObject jsonent = new Formato12AGartJSON().asJSONObject(formato,flagPeriodo,flagOper);
 		        logger.info("jsonformato:"+jsonent);
 		        jsonObj.put("formato",jsonent);
 				jsonObj.put("resultado", "OK");

@@ -1425,9 +1425,8 @@ public class FormatoExcelExport {
 				ax6.setCellValue(new HSSFRichTextString(descGrupoInf));				
 				ax6.setCellStyle(dateCellStyle);
 				HSSFCell ax7 = fila.createCell(7);
-			//	ax7.setCellValue(new HSSFRichTextString(fiseFormato14C.getDescEstado()));
-				ax7.setCellValue(new HSSFRichTextString((fiseFormato14C.getFechaEnvioDefinitivo()==null)?
-						FiseConstants.ESTADO_POR_ENVIAR_F14C:FiseConstants.ESTADO_ENVIADO_F14C));
+				ax7.setCellValue(new HSSFRichTextString(fiseFormato14C.getDescEstado()));
+				//ax7.setCellValue(new HSSFRichTextString((fiseFormato14C.getFechaEnvioDefinitivo()==null)?FiseConstants.ESTADO_POR_ENVIAR_F14C:FiseConstants.ESTADO_ENVIADO_F14C));
 				ax7.setCellStyle(dateCellStyle);
 			}
 		}

@@ -65,23 +65,30 @@ public class Formato14AGartJSON {
 		jsonObj.put("etapa", fiseFormato14AC.getId().getEtapa());
 		jsonObj.put("descMesPresentacion", fiseFormato14AC.getDescMesPresentacion());
 		
-		if( FiseConstants.BLANCO.equals(flagOperacion) ){
-			//grupo informacion y estado
-				if(fiseFormato14AC.getFiseGrupoInformacion()!=null && fiseFormato14AC.getFiseGrupoInformacion().getDescripcion()!=null){
-					jsonObj.put("grupoInfo",fiseFormato14AC.getFiseGrupoInformacion().getDescripcion());
-				}else{
-					jsonObj.put("grupoInfo",FiseConstants.BLANCO);
-				}
-				/*if(fiseFormato14AC.getFechaEnvioDefinitivo()!=null){
-					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
-				}else{
-					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-				}*/
-				jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
+//		if( FiseConstants.BLANCO.equals(flagOperacion) ){
+//			//grupo informacion y estado
+//				if(fiseFormato14AC.getFiseGrupoInformacion()!=null && fiseFormato14AC.getFiseGrupoInformacion().getDescripcion()!=null){
+//					jsonObj.put("grupoInfo",fiseFormato14AC.getFiseGrupoInformacion().getDescripcion());
+//				}else{
+//					jsonObj.put("grupoInfo",FiseConstants.BLANCO);
+//				}
+//				/*if(fiseFormato14AC.getFechaEnvioDefinitivo()!=null){
+//					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
+//				}else{
+//					jsonObj.put("estado",FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+//				}*/
+//				jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
+//		}else{
+//			jsonObj.put("grupoInfo", fiseFormato14AC.getDescGrupoInformacion());
+//			jsonObj.put("estado", fiseFormato14AC.getDescEstado());
+//		}
+		
+		if(fiseFormato14AC.getFiseGrupoInformacion()!=null && fiseFormato14AC.getFiseGrupoInformacion().getDescripcion()!=null){
+			jsonObj.put("grupoInfo",fiseFormato14AC.getFiseGrupoInformacion().getDescripcion());
 		}else{
-			jsonObj.put("grupoInfo", fiseFormato14AC.getDescGrupoInformacion());
-			jsonObj.put("estado", fiseFormato14AC.getDescEstado());
+			jsonObj.put("grupoInfo",FiseConstants.BLANCO);
 		}
+		jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
 
 		jsonObj.put("flagOperacion", flagOperacion);
 		

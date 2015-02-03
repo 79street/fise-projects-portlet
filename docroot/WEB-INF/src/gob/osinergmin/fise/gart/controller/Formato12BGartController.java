@@ -1150,6 +1150,9 @@ public class Formato12BGartController {
 				command.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
 				command.setFechaActualizacion(new Date());
 				
+				
+				
+				
 				pkCbcr.setCodEmpresa(command.getCodEmpresaHidden().trim());
 				pkCbcr.setAnoEjecucionGasto(command.getAnoEjecucionGasto());
 				pkCbcr.setMesEjecucionGasto(command.getMesEjecucionGasto());
@@ -1157,6 +1160,9 @@ public class Formato12BGartController {
 				pkCbcr.setMesPresentacion(command.getMesPresentacion());
 				pkCbcr.setEtapa(command.getEtapa());
 				result = formatoService.getFormatoCabeceraById(pkCbcr);
+				
+				String flagOper = commonService.obtenerEstadoProceso(pkCbcr.getCodEmpresa(),FiseConstants.TIPO_FORMATO_12B,pkCbcr.getAnoPresentacion(),pkCbcr.getMesPresentacion(),pkCbcr.getEtapa());
+				command.setDescEstado(flagOper);
 				
 				Formato12BGartCommand commandCabecera=Formato12BGartCommand.toCommandCabecera(result,command);
 				
