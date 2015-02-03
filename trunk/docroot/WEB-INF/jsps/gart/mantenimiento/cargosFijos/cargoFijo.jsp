@@ -387,13 +387,13 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Recepción Informe.:</label>
 											   </td>
 											  <td>
-												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;" onblur="isNumeric(this)" maxlength="13"/>
+												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;" onKeyPress="return isNumeric(event)" maxlength="13"/>
 											  </td>
 											  
 											  <td><label style="font-size: 12px; font-weight: bold">Número Doc. Informe Sustento:</label>
 											   </td>
 											  <td>
-												 <form:input path="numDoc"  cssStyle="width: 60px; text-align: right;"  onblur="isNumeric(this)" maxlength="13"/> 
+												 <form:input path="numDoc"  cssStyle="width: 60px; text-align: right;"  onKeyPress="return isNumeric(event)" maxlength="13"/> 
 											  </td>
 											
 											 <td><label style="font-size: 12px; font-weight: bold">IGV:</label>
