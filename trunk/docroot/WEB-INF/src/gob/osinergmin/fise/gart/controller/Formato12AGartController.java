@@ -1456,6 +1456,8 @@ public class Formato12AGartController {
 						}
 						//
 						
+						//variacion de periodo de ejecucion
+						
 						if( FiseConstants.BLANCO.equals(sMsg) ){
 							//obtenemos los costos unitarios del formato padre
 							FiseFormato14AD detalleRuralPadre = null;
@@ -1496,9 +1498,9 @@ public class Formato12AGartController {
 							//
 							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
-									Long.parseLong(mesPres) == formulario.getMesPresent() &&
-									anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
-									Long.parseLong(mesEjec)==formulario.getMesPresent()
+									Long.parseLong(mesPres) == formulario.getMesPresent() //&&
+									//anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
+									//Long.parseLong(mesEjec)==formulario.getMesPresent()
 									){
 								if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO.equals(flagCarga) ){
 									objeto = formatoService.registrarFormato12AC(formulario);
@@ -1581,6 +1583,7 @@ public class Formato12AGartController {
 				int posicionCodEmpresa = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_COD_EMPRESA);
 				int posicionAnioPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_PRESENTACION);
 				int posicionMesPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_MES_PRESENTACION);
+				int posicionAnioEjecucion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_EJECUCION);
 				int posicionMesEjecucion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_MES_EJECUCION);
 				int posicionZonaBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ZONA_BENEFICIARIO);
 				int posicionNroEmpad = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NRO_EMPADRONADOS_F12A);
@@ -1643,13 +1646,13 @@ public class Formato12AGartController {
 					}
 					
 					
-					String key1,key2,key3="";//,key4,key5,key6="";
+					String key1,key2,key3,key4,key5="";//,key6="";
 					if( listaDetalleTxt.size()>0 ){
 						key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
 						key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
 						key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
-						//key4 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_MES_PRESENTACION, FiseConstants.POSICION_ANIO_EJECUCION) ;
-						//key5 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION) ;
+						key4 = listaDetalleTxt.get(0).substring(posicionMesPresentacion, posicionAnioEjecucion) ;
+						key5 = listaDetalleTxt.get(0).substring(posicionAnioEjecucion, posicionMesEjecucion) ;
 						//key6 = listaDetalleTxt.get(0).substring(FiseConstants.POSICION_MES_EJECUCION, FiseConstants.POSICION_ZONA_BENEFICIARIO) ;
 						boolean process = true;
 						Set<String> zonaSet = new java.util.HashSet<String>();
@@ -1657,10 +1660,50 @@ public class Formato12AGartController {
 							String codEmp = s.substring(0, posicionCodEmpresa).trim();
 							String anioPres = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
 							String mesPres = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
-							//String anioEje = s.substring(FiseConstants.POSICION_MES_PRESENTACION, FiseConstants.POSICION_ANIO_EJECUCION);
-							//String mesEje = s.substring(FiseConstants.POSICION_ANIO_EJECUCION, FiseConstants.POSICION_MES_EJECUCION);
+							String anioEje = s.substring(posicionMesPresentacion, posicionAnioEjecucion);
+							String mesEje = s.substring(posicionAnioEjecucion, posicionMesEjecucion);
 							String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
-							if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) &&
+							
+							if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) && key4.equals(anioEje) && key5.equals(mesEje) ){
+								if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ||
+										FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ||
+										FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) 
+										){
+									if( zonaSet.contains(zonaBenef) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_280)+FiseConstants.SALTO_LINEA;
+										process=false;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_280));
+										listaError.add(error);
+										break;
+									}else{
+										zonaSet.add(zonaBenef);
+										process=true;
+									}
+								}else{
+									sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_260)+FiseConstants.SALTO_LINEA;
+									process=false;
+									cont++;
+									MensajeErrorBean error = new MensajeErrorBean();
+									error.setId(cont);
+									error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
+									listaError.add(error);
+									break;
+								}
+							}else{
+								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_250)+FiseConstants.SALTO_LINEA;
+								process=false;
+								cont++;
+								MensajeErrorBean error = new MensajeErrorBean();
+								error.setId(cont);
+								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_250));
+								listaError.add(error);
+								break;
+							}
+							
+							/*if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) && key4.equals(anioEje) && key5.equals(mesEje) &&
 									(FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ||
 									FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ||
 									FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) )
@@ -1687,7 +1730,7 @@ public class Formato12AGartController {
 								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_260));
 								listaError.add(error);
 								break;
-							}
+							}*/
 						}
 						if(process){
 							Formato12ACBean formulario = new Formato12ACBean();
@@ -1695,14 +1738,14 @@ public class Formato12AGartController {
 							formulario.setCodigoEmpresa(key1);
 							formulario.setAnioPresent(Long.parseLong(key2));
 							formulario.setMesPresent(Long.parseLong(key3));
-							formulario.setAnioEjecuc(Long.parseLong(key2));
-							formulario.setMesEjecuc(Long.parseLong(key3));
+							formulario.setAnioEjecuc(Long.parseLong(key4));
+							formulario.setMesEjecuc(Long.parseLong(key5));
 
 							if( codEmpresaEdit.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
 									Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
-									anioEjecEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
-									Long.parseLong(mesEjecEdit)==formulario.getMesPresent() 
+									anioEjecEdit.equals(String.valueOf(formulario.getAnioEjecuc())) &&
+									Long.parseLong(mesEjecEdit)==formulario.getMesEjecuc() 
 									){
 								
 								//

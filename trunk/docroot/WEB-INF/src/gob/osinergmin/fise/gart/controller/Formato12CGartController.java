@@ -2010,6 +2010,16 @@ public class Formato12CGartController {
 										cont++;
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3359,i+1));
 									}
+									
+									/**validacion de periodo de ejecucion*/
+									if( detalleBean.getAnioEjecucion()!=null && detalleBean.getMesEjecucion()!=null ){
+										if( (detalleBean.getAnioEjecucion()*100+detalleBean.getMesEjecucion())>(detalleBean.getAnioPresentacion()*100+detalleBean.getMesPresentacion()) ){
+											cont++;
+											sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3631,i+1));
+										}
+									}
+									/***/
+									
 									//NRO ITEM ETAPA
 									/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaItem.getCellType()  ){
 										detalleBean.setNroItemEtapa(new Double(celdaItem.getNumericCellValue()).longValue());
@@ -2331,6 +2341,16 @@ public class Formato12CGartController {
 										cont++;
 										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3397,i+1));
 									}
+									
+									/**validacion de periodo de ejecucion*/
+									if( detalleBean.getAnioEjecucion()!=null && detalleBean.getMesEjecucion()!=null ){
+										if( (detalleBean.getAnioEjecucion()*100+detalleBean.getMesEjecucion())>(detalleBean.getAnioPresentacion()*100+detalleBean.getMesPresentacion()) ){
+											cont++;
+											sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3631,i+1));
+										}
+									}
+									/***/
+									
 									//NRO ITEM ETAPA
 									/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaItem.getCellType()  ){
 										detalleBean.setNroItemEtapa(new Double(celdaItem.getNumericCellValue()).longValue());
@@ -2856,6 +2876,18 @@ public class Formato12CGartController {
 										cont++;
 										sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3442));
 									}
+									
+									/**validacion de periodo de ejecucion*/
+									if( FormatoUtil.validarCampoLongEnteroPositivoTxt(anioEjecucion) && FormatoUtil.validarCampoLongEnteroPositivoTxt(mesEjecucion) ){
+										if( (Long.parseLong(anioEjecucion)*100+Long.parseLong(mesEjecucion))>(detalleBean.getAnioPresentacion()*100+detalleBean.getMesPresentacion()) ){
+											cont++;
+											sMsg12C = sMsg12C.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3631));
+										}
+									}
+									/***/
+									
+									
+									
 									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(zonaBenef) ){
 										//el campo Zona benef no corresponde al tipo de dato correcto
 										cont++;
