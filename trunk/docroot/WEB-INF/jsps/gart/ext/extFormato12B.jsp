@@ -160,6 +160,9 @@
         cmbMesEjecucion:null,
         txtMesEjechidden:null,
         
+        anoPresentacionDetalle:null,
+        mesPresentacionDetalle:null,
+        
         dialogMessageGeneralInicial:null,
         lblMessageInicial:null,
         
@@ -403,7 +406,10 @@
 			
 			 this.cmbMesEjecucion=$('#cmbMesEjecucion');
 			 this.txtMesEjechidden=$('#txtmesEjecucionGasto');
-			
+			 
+			 this.anoPresentacionDetalle=$('#anoPresentacion');
+			 this.mesPresentacionDetalle=$('#Presentacion');
+			 
 			this.txtnroValesImpreso=$('#numeroValesImpreso');
 			this.txtnroValesImpresoProv=$('#numeroValesImpresoProv');
 			this.txtnroValesImpresoLim=$('#numeroValesImpresoLim');
@@ -1523,6 +1529,35 @@
 			}
 			
 			
+		},
+		
+		validarFormulario : function(){
+			if(formato12B.txtAnioEjec.val().length == '' ) {		  
+				formato12B.dialogMessageWarningDetalleContent.html('Debe ingresar el Año de Ejecución');
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				formato12B.txtAnioEjec.focus();
+			    return false; 
+		  	}else{
+			  	var numstr = trim(formato12B.txtAnioEjec.val());
+			 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
+			 		formato12B.dialogMessageWarningDetalleContent.html('Debe Ingresar un Año de Ejecución válido');
+			 		formato12B.dialogMessageWarningDetalle.dialog("open");
+				  	return false;
+			  	}
+		 	 }
+			if(formato12B.cmbMesEjecucion.val().length == '' ) {		  
+				formato12B.dialogMessageWarningDetalleContent.html('Debe ingresar el Mes de Ejecución');
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				formato12B.cmbMesEjecucion.focus();
+			   return false; 
+			}
+			
+			if( parseFloat(formato12B.txtAnioEjec.val())*100 + parseFloat(formato12B.cmbMesEjecucion.val()) > parseFloat(formato12B.cmbPeriodo.val().substring(0,4))*100 + parseFloat(formato12B.cmbPeriodo.val().substring(4,6)) ){
+				formato12B.dialogMessageWarningDetalleContent.html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;
+			}
+			return true;
 		},
 		
 		deleteFormato:function(emp,mes,anio,etapa,mesEjec,anioEjec){
