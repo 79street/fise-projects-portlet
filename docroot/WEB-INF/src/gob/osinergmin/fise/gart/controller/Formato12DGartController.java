@@ -1972,6 +1972,16 @@ public class Formato12DGartController {
 										cont++;
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3487,i+1));
 									}
+									
+									/**validacion de periodo de ejecucion*/
+									if( detalleBean.getAnioEjecucion()!=null && detalleBean.getMesEjecucion()!=null ){
+										if( (detalleBean.getAnioEjecucion()*100+detalleBean.getMesEjecucion())>(detalleBean.getAnioPresentacion()*100+detalleBean.getMesPresentacion()) ){
+											cont++;
+											sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3632,i+1));
+										}
+									}
+									/***/
+									
 									//NRO ITEM ETAPA
 									/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaItem.getCellType()  ){
 										detalleBean.setNroItemEtapa(new Double(celdaItem.getNumericCellValue()).longValue());
@@ -2296,6 +2306,16 @@ public class Formato12DGartController {
 										cont++;
 										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3524,i+1));
 									}
+									
+									/**validacion de periodo de ejecucion*/
+									if( detalleBean.getAnioEjecucion()!=null && detalleBean.getMesEjecucion()!=null ){
+										if( (detalleBean.getAnioEjecucion()*100+detalleBean.getMesEjecucion())>(detalleBean.getAnioPresentacion()*100+detalleBean.getMesPresentacion()) ){
+											cont++;
+											sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3632,i+1));
+										}
+									}
+									/***/
+									
 									//NRO ITEM ETAPA
 									/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaItem.getCellType()  ){
 										detalleBean.setNroItemEtapa(new Double(celdaItem.getNumericCellValue()).longValue());
@@ -2824,6 +2844,16 @@ public Formato12DMensajeBean readTxtFile(FileEntry archivo,UploadPortletRequest 
 										cont++;
 										sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3568));
 									}
+									
+									/**validacion de periodo de ejecucion*/
+									if( FormatoUtil.validarCampoLongEnteroPositivoTxt(anioEjecucion) && FormatoUtil.validarCampoLongEnteroPositivoTxt(mesEjecucion) ){
+										if( (Long.parseLong(anioEjecucion)*100+Long.parseLong(mesEjecucion))>(detalleBean.getAnioPresentacion()*100+detalleBean.getMesPresentacion()) ){
+											cont++;
+											sMsg12D = sMsg12D.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3632));
+										}
+									}
+									/***/
+									
 									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(zonaBenef) ){
 										//el campo Zona benef no corresponde al tipo de dato correcto
 										cont++;

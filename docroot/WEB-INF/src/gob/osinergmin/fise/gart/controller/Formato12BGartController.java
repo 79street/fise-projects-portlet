@@ -838,6 +838,12 @@ public class Formato12BGartController {
 						validarCampos(anioEjec, "Año de Ejecución", 1, 4);//validar tamaño
 						validarCampos(mesEjec, "Mes de Ejecución", 2, 0);//validar rango
 						
+						/**validacion adicional*/
+						/*if( (Long.parseLong(anioEjec)*100+Long.parseLong(mesEjec))>(Long.parseLong(anioPres)*100+Long.parseLong(mesPres)) ){
+							throw new Exception("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
+						}*/
+						
+						
 						validarCampos(numValesImp, "Número de vales Impreso", 4, 0);//number formart
 						validarCampos(numValesRepar, "Número de vales a Domicilio", 4, 0);//number formart
 						validarCampos(numValesEntrDE, "Número de vales de Distribuidora", 4, 0);//number formart
@@ -851,7 +857,9 @@ public class Formato12BGartController {
 							
 						   
 						    
-						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)){
+						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)
+								&& pk.getAnoEjecucionGasto()==Integer.parseInt(anioEjec) && pk.getMesEjecucionGasto()==Integer.parseInt(mesEjec)
+								){
 								
 							FiseFormato12BDPK pkDetalle=new FiseFormato12BDPK();
 							FiseFormato12BD detalle=new FiseFormato12BD();
@@ -902,7 +910,8 @@ public class Formato12BGartController {
 								   
 								   
 						}else{
-							throw new Exception("La Distribuidora Eléctrica y/o el Año Mes no coinciden con lo seleccionado");
+							//El archivo cargado no corresponde a la Distribuidora Eléctrica, Mes o Año de Presentación del registro del formulario
+							throw new Exception("El archivo cargado no corresponde a la Distribuidora Eléctrica, Año de Presentación, Mes de Presentación, Año de Ejecución o Mes de Ejecución del registro del formulario");
 						}
 							
 					}
@@ -995,8 +1004,8 @@ public class Formato12BGartController {
 		} catch (Exception ex) {
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			//msg.setDescripcion(ex.toString());
-			msg.setDescripcion("Se produjo un error al guardar los datos del Formato 12B");
+			msg.setDescripcion(ex.toString());
+			//msg.setDescripcion("Se produjo un error al guardar los datos del Formato 12B");
 			listaError.add(msg);
 
 		}
