@@ -657,13 +657,15 @@ var formato14C= {
 				     var addhtmAlert='Por favor, Ingrese un Año Declarado Desde.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
-				     formato14C.i_anioDesde.focus();
+				     //formato14C.i_anioDesde.focus();
+				     cod_focus=formato14C.i_anioDesde;
 				     return false;		
 				} else if(formato14C.i_anioHasta.val().length == '' ) {				   
 				     var addhtmAlert='Por favor, Ingrese un Año Declarado Hasta.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
-					 formato14C.i_anioHasta.focus();
+					 //formato14C.i_anioHasta.focus();
+					 cod_focus=formato14C.i_anioHasta;
 					 return false;
 				}else if (isNaN(trim(formato14C.i_anioDesde.val())) || 
 						formato14C.i_anioDesde.val().length<4 || 
@@ -671,7 +673,8 @@ var formato14C= {
 				     var addhtmAlert='Ingrese un Año Declarado Desde válido.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
-				     formato14C.i_anioDesde.focus();
+				    // formato14C.i_anioDesde.focus();
+				     cod_focus=formato14C.i_anioDesde;
 				     return false;		
 				}else if (isNaN(trim(formato14C.i_anioHasta.val())) || 
 						formato14C.i_anioDesde.val().length<4 || 
@@ -679,12 +682,14 @@ var formato14C= {
 				     var addhtmAlert='Ingrese un Año Declarado Hasta válido.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
-				     formato14C.i_anioHasta.focus();
+				    // formato14C.i_anioHasta.focus();
+				     cod_focus=formato14C.i_anioHasta;
 				     return false;					 
 			   }else if(parseFloat(formato14C.i_anioDesde.val()) > parseFloat(formato14C.i_anioHasta.val()) ){				   
 				     var addhtmAlert='El Año Declarado Desde no puede exceder al Año Declarado Hasta.';					
 				     formato14C.dialogValidacionContent.html(addhtmAlert);
 					 formato14C.dialogValidacion.dialog("open");
+					 cod_focus=formato14C.i_anioDesde;
 				    return false;					 
 			  }else{
 				  return true;
@@ -693,7 +698,8 @@ var formato14C= {
 				    var addhtmAlert='Seleccione una Etapa.';					
 				    formato14C.dialogValidacionContent.html(addhtmAlert);
 					formato14C.dialogValidacion.dialog("open");
-				    formato14C.i_etapaB.focus();
+				   // formato14C.i_etapaB.focus();
+				    cod_focus=formato14C.i_etapaB;
 				    return false; 
 		   }else{
 			   return true;   
@@ -1118,6 +1124,7 @@ var formato14C= {
 				//alert('Seleccione una Distribuidora Eléctrica'); 
 				formato14C.dialogValidacionContent.html('Primero debe crear el Grupo de Información Bienal para el Año y Mes a declarar');
 				formato14C.dialogValidacion.dialog("open");
+				cod_focus=$('#idGrupoInfo');			
 				return false;
 			}
 			return true;
@@ -2374,8 +2381,7 @@ var formato14C= {
 			}
 		},	
 		//function para validad ingreso de datos
-		validarFormulario : function() {	
-			
+		validarFormulario : function() {			
 			var flagPeriodo = formato14C.f_flagPeriodo.val();
 			var anioInicio =$('#anoIniVigencia').val();
 			var anioFin = $('#anoFinVigencia').val();
@@ -2384,74 +2390,86 @@ var formato14C= {
 				var addhtmAlert='Seleccione una Distribuidora Eléctrica.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_empresa.focus();
+				//formato14C.f_empresa.focus();
+				cod_focus=formato14C.f_empresa;
 			  	return false; 
 			}else if(formato14C.f_periodoEnvio.val()==null || 
 					formato14C.f_periodoEnvio.val().length == '' ) {			
 				var addhtmAlert='No existe un Periodo Declarado para la Dist. Eléctrica seleccionada.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_periodoEnvio.focus();
+				//formato14C.f_periodoEnvio.focus();
+				cod_focus=formato14C.f_periodoEnvio;
 				return false; 
 			}else if(flagPeriodo=='S' && anioInicio.length == ''){			
 				var addhtmAlert='Debe ingresar el Año de Inicio de Vigencia.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				$('#anoIniVigencia').focus();
+				//$('#anoIniVigencia').focus();
+				cod_focus=$('#anoIniVigencia');
 				return false; 				
 			}else if(flagPeriodo=='S' && anioFin.length == ''){				
 				var addhtmAlert='Debe ingresar el Año de Fin de Vigencia.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				$('#anoFinVigencia').focus();
+				//$('#anoFinVigencia').focus();
+				cod_focus=$('#anoFinVigencia');
 				return false; 		
 		    }else if(flagPeriodo=='S' && !validarAnioInicioVig(anioInicio)){			
 				var addhtmAlert='Debe ingresar el Año de Inicio de Vigencia válido.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				anioInicio.focus();
+				//anioInicio.focus();
+				cod_focus=anioInicio;
 				return false; 				
 			}else if(flagPeriodo=='S' && !validarAnioFinVig(anioFin)){					
 				var addhtmAlert='Debe ingresar el Año de Fin de Vigencia válido.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				anioFin.focus();
+				//anioFin.focus();
+				cod_focus=anioFin;
 				return false; 		
 		    }else if(formato14C.f_numRural.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar el Número de Beneficiarios de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_numRural.focus();
+				//formato14C.f_numRural.focus();
+				cod_focus=formato14C.f_numRural;
 				return false; 
 			}else if(formato14C.f_numUrbProv.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar el Número de Beneficiarios de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_numUrbProv.focus();
+				//formato14C.f_numUrbProv.focus();
+				cod_focus=formato14C.f_numUrbProv;
 				return false; 
 			}else if(formato14C.f_numUrbLima.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar el Número de Beneficiarios de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_numUrbLima.focus();
+				//formato14C.f_numUrbLima.focus();
+				cod_focus=formato14C.f_numUrbLima;
 				return false; 
 			}else if(formato14C.f_costoPromRural.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar el Costo Promedio de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costoPromRural.focus();
+				//formato14C.f_costoPromRural.focus();
+				cod_focus=formato14C.f_costoPromRural;
 				return false; 
 			}else if(formato14C.f_costoPromUrbProv.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar el Costo Promedio de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costoPromUrbProv.focus();
+				//formato14C.f_costoPromUrbProv.focus();
+				cod_focus=formato14C.f_costoPromUrbProv;
 				return false; 
 			}else if(formato14C.f_costoPromUrbLima.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar el costo promedio de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costoPromUrbLima.focus();
+				//formato14C.f_costoPromUrbLima.focus();
+				cod_focus=formato14C.f_costoPromUrbLima;
 				return false; 
 			}
 			/*Detalle*/		
@@ -2460,97 +2478,113 @@ var formato14C= {
 				var addhtmAlert='Debe ingresar cantidad Costo Directo Coordinador de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDRCoord.focus();
+				//formato14C.f_canDRCoord.focus();
+				cod_focus=formato14C.f_canDRCoord;
 				return false; 
 			}else if(formato14C.f_costDRCoord.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar Costo Directo Coordinador de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDRCoord.focus();
+				//formato14C.f_costDRCoord.focus();
+				cod_focus=formato14C.f_costDRCoord;
 				return false; 
 			}else if(formato14C.f_canIRCoord.val().length == '' ) {		 			
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Coordinador de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canIRCoord.focus();
+				//formato14C.f_canIRCoord.focus();
+				cod_focus=formato14C.f_canIRCoord;
 				return false; 
 			}else if(formato14C.f_costIRCoord.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar Costo Indirecto Coordinador de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costIRCoord.focus();
+				//formato14C.f_costIRCoord.focus();
+				cod_focus=formato14C.f_costIRCoord;
 				return false; 
 			}else if(formato14C.f_canDRSupe.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar cantidad Costo Directo Supervisor de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDRSupe.focus();
+				//formato14C.f_canDRSupe.focus();
+				cod_focus=formato14C.f_canDRSupe;
 				return false; 
 			}else if(formato14C.f_costDRSupe.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar Costo Directo Supervisor de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDRSupe.focus();
+				//formato14C.f_costDRSupe.focus();
+				cod_focus=formato14C.f_costDRSupe;
 				return false; 
 			}else if(formato14C.f_canIRSupe.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Supervisor de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canIRSupe.focus();
+				//formato14C.f_canIRSupe.focus();
+				cod_focus=formato14C.f_canIRSupe;
 				return false; 
 			}else if(formato14C.f_costIRSupe.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar Costo Indirecto Supervisor de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costIRSupe.focus();
+				//formato14C.f_costIRSupe.focus();
+				cod_focus=formato14C.f_costIRSupe;
 				return false; 
 			}else if(formato14C.f_canDRGest.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Directo Gestor de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDRGest.focus();
+				//formato14C.f_canDRGest.focus();
+				cod_focus=formato14C.f_canDRGest;
 				return false; 
 			}else if(formato14C.f_costDRGest.val().length == '' ) {		  			
 				var addhtmAlert='Debe ingresar Costo Directo Gestor de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDRGest.focus();
+				//formato14C.f_costDRGest.focus();
+				cod_focus=formato14C.f_costDRGest;
 				return false; 
 			}else if(formato14C.f_canIRGest.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Gestor de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canIRGest.focus();
+				//formato14C.f_canIRGest.focus();
+				cod_focus=formato14C.f_canIRGest;
 				return false; 
 			}else if(formato14C.f_costIRGest.val().length == '' ) {						
 				var addhtmAlert='Debe ingresar Costo Indirecto Gestor de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costIRGest.focus();
+				//formato14C.f_costIRGest.focus();
+				cod_focus=formato14C.f_costIRGest;
 				return false; 
 			}else if(formato14C.f_canDRAsist.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Directo Asistente de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDRAsist.focus();
+				//formato14C.f_canDRAsist.focus();
+				cod_focus=formato14C.f_canDRAsist;
 				return false; 
 			}else if(formato14C.f_costDRAsist.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar  Costo Directo Asistente de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDRAsist.focus();
+				//formato14C.f_costDRAsist.focus();
+				cod_focus=formato14C.f_costDRAsist;
 				return false; 
 			}else if(formato14C.f_canIRAsist.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Asistente de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canIRAsist.focus();
+				//formato14C.f_canIRAsist.focus();
+				cod_focus=formato14C.f_canIRAsist;
 				return false; 
 			}else if(formato14C.f_costIRAsist.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar  Costo Indirecto Asistente de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costIRAsist.focus();
+				//formato14C.f_costIRAsist.focus();
+				cod_focus=formato14C.f_costIRAsist;
 				return false; 
 			}				
 			/*PROVINCIAS*/
@@ -2558,97 +2592,113 @@ var formato14C= {
 				var addhtmAlert='Debe ingresar  cantidad Costo Directo Coordinador de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDPCoord.focus();
+				//formato14C.f_canDPCoord.focus();
+				cod_focus=formato14C.f_canDPCoord;
 				return false; 
 			}else if(formato14C.f_costDPCoord.val().length == '' ) {			
 				var addhtmAlert='Debe ingresar  Costo Directo Coordinador de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDPCoord.focus();
+				//formato14C.f_costDPCoord.focus();
+				cod_focus=formato14C.f_costDPCoord;
 				return false; 
 			}else if(formato14C.f_canIPCoord.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar  cantidad Costo Indirecto Coordinador de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canIPCoord.focus();
+				//formato14C.f_canIPCoord.focus();
+				cod_focus=formato14C.f_canIPCoord;
 				return false; 
 			}else if(formato14C.f_costIPCoord.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar  Costo Indirecto Coordinador de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costIPCoord.focus();
+				//formato14C.f_costIPCoord.focus();
+				cod_focus=formato14C.f_costIPCoord;
 				return false; 
 			}else if(formato14C.f_canDPSupe.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Directo Supervisor de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDPSupe.focus();
+				//formato14C.f_canDPSupe.focus();
+				cod_focus=formato14C.f_canDPSupe;
 				return false; 
 			}else if(formato14C.f_costDPSupe.val().length == '' ) {			
 				var addhtmAlert='Debe ingresar  Costo Indirecto Coordinador de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDPSupe.focus();
+				//formato14C.f_costDPSupe.focus();
+				cod_focus=formato14C.f_costDPSupe;
 				return false; 
 			}else if(formato14C.f_canIPSupe.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Supervisor de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canIPSupe.focus();
+				//formato14C.f_canIPSupe.focus();
+				cod_focus=formato14C.f_canIPSupe;
 				return false; 
 			}else if(formato14C.f_costIPSupe.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Coordinador de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costIPSupe.focus();
+				//formato14C.f_costIPSupe.focus();
+				cod_focus=formato14C.f_costIPSupe;
 				return false; 
 			}else if(formato14C.f_canDPGest.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Directo Gestor de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDPGest.focus();
+				//formato14C.f_canDPGest.focus();
+				cod_focus=formato14C.f_canDPGest;
 				return false; 
 			}else if(formato14C.f_costDPGest.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar  Costo Directo Gestor de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDPGest.focus();
+				//formato14C.f_costDPGest.focus();
+				cod_focus=formato14C.f_costDPGest;
 				return false; 
 			}else if(formato14C.f_canIPGest.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Gestor de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canIPGest.focus();
+				//formato14C.f_canIPGest.focus();
+				cod_focus=formato14C.f_canIPGest;
 				return false; 
 			}else if(formato14C.f_costIPGest.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar  Costo Indirecto Gestor de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costIPGest.focus();
+				//formato14C.f_costIPGest.focus();
+				cod_focus=formato14C.f_costIPGest;
 				return false; 
 			}else if(formato14C.f_canDPAsist.val().length == '' ) {		  			
 				var addhtmAlert='Debe ingresar cantiad Costo Directo Asistente de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDPAsist.focus();
+				//formato14C.f_canDPAsist.focus();
+				cod_focus=formato14C.f_canDPAsist;
 				return false; 
 			}else if(formato14C.f_costDPAsist.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar  Costo Indirecto Gestor de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDPAsist.focus();
+				//formato14C.f_costDPAsist.focus();
+				cod_focus=formato14C.f_costDPAsist;
 				return false; 
 			}else if(formato14C.f_canIPAsist.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Asistente de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canIPAsist.focus();
+				//formato14C.f_canIPAsist.focus();
+				cod_focus=formato14C.f_canIPAsist;
 				return false; 
 			}else if(formato14C.f_costIPAsist.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar  Costo Indirecto Asistente de la Zona Urbano Provincias.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costIPAsist.focus();
+				//formato14C.f_costIPAsist.focus();
+				cod_focus=formato14C.f_costIPAsist;
 				return false; 
 			}			
 			/*LIMA*/
@@ -2656,97 +2706,113 @@ var formato14C= {
 				var addhtmAlert='Debe ingresar cantidad Costo Directo Coordinador de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDLCoord.focus();
+				//formato14C.f_canDLCoord.focus();
+				cod_focus=formato14C.f_canDLCoord;
 				return false; 
 			}else if(formato14C.f_costDLCoord.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar Costo Directo Coordinador de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDLCoord.focus();
+				//formato14C.f_costDLCoord.focus();
+				cod_focus=formato14C.f_costDLCoord;
 				return false; 
 			}else if(formato14C.f_canILCoord.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Coordinador de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canILCoord.focus();
+				//formato14C.f_canILCoord.focus();
+				cod_focus=formato14C.f_canILCoord;
 				return false; 
 			}else if(formato14C.f_costILCoord.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar  Costo Indirecto Coordinador de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costILCoord.focus();
+				//formato14C.f_costILCoord.focus();
+				cod_focus=formato14C.f_costILCoord;
 				return false; 
 			}else if(formato14C.f_canDLSupe.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Coordinador de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDLSupe.focus();
+				//formato14C.f_canDLSupe.focus();
+				cod_focus=formato14C.f_canDLSupe;
 				return false; 
 			}else if(formato14C.f_costDLSupe.val().length == '' ) {						
 				var addhtmAlert='Debe ingresar  Costo Indirecto Coordinador de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDLSupe.focus();
+				//formato14C.f_costDLSupe.focus();
+				cod_focus=formato14C.f_costDLSupe;
 				return false; 
 			}else if(formato14C.f_canILSupe.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Coordinador de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canILSupe.focus();
+				//formato14C.f_canILSupe.focus();
+				cod_focus=formato14C.f_canILSupe;
 				return false; 
 			}else if(formato14C.f_costILSupe.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar  Costo Indirecto Coordinador de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costILSupe.focus();
+				//formato14C.f_costILSupe.focus();
+				cod_focus=formato14C.f_costILSupe;
 				return false; 
 			}else if(formato14C.f_canDLGest.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Directo Gestor de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDLGest.focus();
+				//formato14C.f_canDLGest.focus();
+				cod_focus=formato14C.f_canDLGest;
 				return false; 
 			}else if(formato14C.f_costDLGest.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar  Costo Directo Gestor de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDLGest.focus();
+				//formato14C.f_costDLGest.focus();
+				cod_focus=formato14C.f_costDLGest;
 				return false; 
 			}else if(formato14C.f_canILGest.val().length == '' ) {					
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Gestor de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canILGest.focus();
+				//formato14C.f_canILGest.focus();
+				cod_focus=formato14C.f_canILGest;
 				return false; 
 			}else if(formato14C.f_costILGest.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar  Costo Indirecto Gestor de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costILGest.focus();
+				//formato14C.f_costILGest.focus();
+				cod_focus=formato14C.f_costILGest;
 				return false; 
 			}else if(formato14C.f_canDLAsist.val().length == '' ) {		  
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Gestor de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canDLAsist.focus();
+				//formato14C.f_canDLAsist.focus();
+				cod_focus=formato14C.f_canDLAsist;
 				return false; 
 			}else if(formato14C.f_costDLAsist.val().length == '' ) {		  
 				var addhtmAlert='Debe ingresar Costo Indirecto Gestor de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costDLAsist.focus();
+				//formato14C.f_costDLAsist.focus();
+				cod_focus=formato14C.f_costDLAsist;
 				return false; 
 			}else if(formato14C.f_canILAsist.val().length == '' ) {			
 				var addhtmAlert='Debe ingresar cantidad Costo Indirecto Asistente de la Zona Urbano Lima';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_canILAsist.focus();
+				//formato14C.f_canILAsist.focus();
+				cod_focus=formato14C.f_canILAsist;
 				return false; 
 			}else if(formato14C.f_costILAsist.val().length == '' ) {			
 				var addhtmAlert='DDebe ingresar  Costo Indirecto Asistente de la Zona Urbano Lima.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_costILAsist.focus();
+				//formato14C.f_costILAsist.focus();
+				cod_focus=formato14C.f_costILAsist;
 				return false; 
 			}else{
 				return true; 	
@@ -3326,7 +3392,8 @@ var formato14C= {
 				var addhtmAlert='Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_empresa.focus();
+				//formato14C.f_empresa.focus();
+				cod_focus=formato14C.f_empresa;
 				return false; 
 			}
 			if(formato14C.f_periodoEnvio.val()==null || 
@@ -3334,7 +3401,8 @@ var formato14C= {
 				var addhtmAlert='Debe ingresar el Periodo a Declarar.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");
-				formato14C.f_periodoEnvio.focus();
+				//formato14C.f_periodoEnvio.focus();
+				cod_focus=formato14C.f_periodoEnvio;
 				return false; 
 			}
 			return true; 
@@ -3884,6 +3952,10 @@ var formato14C= {
 			}
 		},
 		
+		ponerFocus : function(cadena){		
+			cadena.focus();
+		},	
+		
 		//funcion cargar la imagen al momento de buscar
 		blockUI : function(){
 			$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
@@ -4008,6 +4080,7 @@ var formato14C= {
 				width: 450,		
 				buttons: {
 					Aceptar: function() {
+						formato14C.ponerFocus(cod_focus);
 						$( this ).dialog("close");
 					}
 				}
