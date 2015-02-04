@@ -511,36 +511,45 @@ var fiseGrupoInformacion= {
 				var addhtmAlert='Debe ingresar descripción.';					
 				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
 				fiseGrupoInformacion.dialogValidacion.dialog("open");
-				fiseGrupoInformacion.f_descripcion.focus();
+				//fiseGrupoInformacion.f_descripcion.focus();
+				cod_focus=fiseGrupoInformacion.f_descripcion;
 			  	return false; 
 			}else if(fiseGrupoInformacion.f_descripcion.val().length > 100){				
 				var addhtmAlert='La  descripción acepta como máximo 100 caracteres.';					
 				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
 				fiseGrupoInformacion.dialogValidacion.dialog("open");
-				fiseGrupoInformacion.f_descripcion.focus();
+				//fiseGrupoInformacion.f_descripcion.focus();
+				cod_focus=fiseGrupoInformacion.f_descripcion;
 			  	return false; 
 			}else if(fiseGrupoInformacion.f_anoPres.val().length == ''){				
 				var addhtmAlert='Debe ingresar año a declarar.';					
 				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
 				fiseGrupoInformacion.dialogValidacion.dialog("open");
-				fiseGrupoInformacion.f_anoPres.focus();
+				//fiseGrupoInformacion.f_anoPres.focus();
+				cod_focus=fiseGrupoInformacion.f_anoPres;
 			  	return false; 
 			}else if(fiseGrupoInformacion.f_anoPres.val().length != 4){				
 				var addhtmAlert='Debe ingresar año a declarar válido.';					
 				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
 				fiseGrupoInformacion.dialogValidacion.dialog("open");
-				fiseGrupoInformacion.f_anoPres.focus();
+				//fiseGrupoInformacion.f_anoPres.focus();
+				cod_focus=fiseGrupoInformacion.f_anoPres;
 			  	return false; 
 			}else if(fiseGrupoInformacion.f_mesPres.val().length == ''){				
 				var addhtmAlert='Debe seleccionar mes a declarar.';					
 				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
 				fiseGrupoInformacion.dialogValidacion.dialog("open");
-				fiseGrupoInformacion.f_mesPres.focus();
+				//fiseGrupoInformacion.f_mesPres.focus();
+				cod_focus=fiseGrupoInformacion.f_mesPres;
 			  	return false; 
 			}else{
 				return true;
 			}		
 		},
+		
+		ponerFocus : function(cadena){		
+			cadena.focus();
+		},	
 		
 		//funcion para regresar
 		<portlet:namespace/>regresarGrupoInformacion : function(){			
@@ -584,6 +593,7 @@ var fiseGrupoInformacion= {
 				width: 450,		
 				buttons: {
 					Aceptar: function() {
+						fiseGrupoInformacion.ponerFocus(cod_focus);
 						$( this ).dialog("close");
 					}
 				}

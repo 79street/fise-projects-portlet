@@ -950,13 +950,15 @@ var liquidacionVar= {
 				var addhtmAlert='Debe ingresar una Descripción del Motivo.';					
 				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
 				liquidacionVar.dialogValidacion.dialog("open");		
-				liquidacionVar.f_descMotivo.focus();
+				//liquidacionVar.f_descMotivo.focus();
+				cod_focus=liquidacionVar.f_descMotivo;
 			  	return false; 
 			}else if(liquidacionVar.f_descMotivo.val().length > 499){				
 				var addhtmAlert='La descripción del Motivo no debe exceder a los 500 caracteres.';					
 				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
 				liquidacionVar.dialogValidacion.dialog("open");	
-				liquidacionVar.f_descMotivo.focus();
+				//liquidacionVar.f_descMotivo.focus();
+				cod_focus=liquidacionVar.f_descMotivo;
 			  	return false; 
 			}else{
 				return true;
@@ -1067,6 +1069,10 @@ var liquidacionVar= {
 			liquidacionVar.divBuscarLiq.hide();	
 			liquidacionVar.divBuscarMotivo.show();
 			liquidacionVar.buscarMotivos($('#coMotivo').val());
+		},
+		
+		ponerFocus : function(cadena){		
+			cadena.focus();
 		},
 		
 		//DIALOGOS
@@ -1187,6 +1193,7 @@ var liquidacionVar= {
 					width:450,
 					buttons: {
 						Aceptar: function() {
+							liquidacionVar.ponerFocus(cod_focus);
 							$( this ).dialog("close");
 						}
 					}
