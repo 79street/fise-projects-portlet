@@ -640,106 +640,123 @@ var periodoEnvio= {
 				var addhtmAlert='Seleccione una Distribuidora Eléctrica.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_codEmpresa.focus();
+				cod_focus=periodoEnvio.f_codEmpresa;
+				//periodoEnvio.f_codEmpresa.focus();
 			  	return false; 
 			}else if(periodoEnvio.f_anoPres.val().length == ''){				
 				var addhtmAlert='Debe ingresar año a declarar.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_anoPres.focus();
+				//periodoEnvio.f_anoPres.focus();
+				cod_focus=periodoEnvio.f_anoPres;
 			  	return false; 
 			}else if(periodoEnvio.f_anoPres.val().length < 4 ||
 					parseFloat(periodoEnvio.f_anoPres.val())<1900){				
 				var addhtmAlert='Debe ingresar año a declarar válido.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_anoPres.focus();
+				//periodoEnvio.f_anoPres.focus();
+				cod_focus=periodoEnvio.f_anoPres;
 			  	return false; 
 			}else if(periodoEnvio.f_mesPres.val().length == ''){				
 				var addhtmAlert='Debe seleccionar mes a declarar.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_mesPres.focus();
+				//periodoEnvio.f_mesPres.focus();
+				cod_focus=periodoEnvio.f_mesPres;
 			  	return false; 
 			}else if(periodoEnvio.f_formato.val().length == ''){				
 				var addhtmAlert='Debe seleccionar un formato.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_formato.focus();
+				//periodoEnvio.f_formato.focus();
+				cod_focus=periodoEnvio.f_formato;
 			  	return false; 
 			}else if(periodoEnvio.f_etapa.val().length == ''){				
 				var addhtmAlert='Debe seleccionar una etapa.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_etapa.focus();
+				//periodoEnvio.f_etapa.focus();
+				cod_focus=periodoEnvio.f_etapa;
 			  	return false; 
 			}else if(periodoEnvio.f_estado.val().length == ''){				
 				var addhtmAlert='Debe seleccionar un estado.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_estado.focus();
+				//periodoEnvio.f_estado.focus();
+				cod_focus=periodoEnvio.f_estado;
 			  	return false; 
 			}else if(periodoEnvio.f_desde.val().length == ''){				
 				var addhtmAlert='Debe ingresar una fecha desde.';					
-				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
+				periodoEnvio.dialogValidacionContent.html(addhtmAlert);				
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_desde.focus();
+				cod_focus=periodoEnvio.f_desde;
+				//periodoEnvio.f_desde.focus();
 			  	return false; 
 			}else if(!validaFechaDDMMAAAA(periodoEnvio.f_desde.val())){
 				var addhtmAlert='Debe ingresar una fecha desde válida.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_desde.focus();
+				//periodoEnvio.f_desde.focus();
+				cod_focus=periodoEnvio.f_desde;
 			  	return false; 
 			}else if(periodoEnvio.f_hasta.val().length == ''){				
 				var addhtmAlert='Debe ingresar una fecha hasta.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_hasta.focus();
+				//periodoEnvio.f_hasta.focus();
+				cod_focus=periodoEnvio.f_hasta;
 			  	return false; 
 			}else if(!validaFechaDDMMAAAA(periodoEnvio.f_hasta.val())){				
 				var addhtmAlert='Debe ingresar una fecha hasta válida.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_desde.focus();
+				//periodoEnvio.f_desde.focus();
+				cod_focus=periodoEnvio.f_desde;
 			  	return false; 
 			}else if(!periodoEnvio.f_fechaAmpl.val().length == '' && 
 					!validaFechaDDMMAAAA(periodoEnvio.f_fechaAmpl.val())){				
 				var addhtmAlert='Debe ingresar fecha ampliacion válida.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_fechaAmpl.focus();
+				//periodoEnvio.f_fechaAmpl.focus();
+				cod_focus=periodoEnvio.f_fechaAmpl;
 			  	return false; 			
 			}else if(periodoEnvio.f_dias.val().length == ''){				
 				var addhtmAlert='Debe ingresar el número de dias de notificación antes del cierre.';					
 				periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 				periodoEnvio.dialogValidacion.dialog("open");
-				periodoEnvio.f_dias.focus();
+				//periodoEnvio.f_dias.focus();
+				cod_focus=periodoEnvio.f_dias;
 			  	return false; 
 			}else if(periodoEnvio.verificarFormato(form)==true){
 				if(periodoEnvio.f_anoIniVigencia.val().length == ''){					
 					var addhtmAlert='Debe ingresar el año de inicio de vigencia.';					
 					periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 					periodoEnvio.dialogValidacion.dialog("open");
-					periodoEnvio.f_anoIniVigencia.focus();
+					//periodoEnvio.f_anoIniVigencia.focus();
+					cod_focus=periodoEnvio.f_anoIniVigencia;
 				  	return false; 
 				}else if(periodoEnvio.f_anoIniVigencia.val().length != 4){					
 					var addhtmAlert='Debe ingresar el año de inicio de vigencia válido.';					
 					periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 					periodoEnvio.dialogValidacion.dialog("open");
-					periodoEnvio.f_anoIniVigencia.focus();
+					//periodoEnvio.f_anoIniVigencia.focus();
+					cod_focus=periodoEnvio.f_anoIniVigencia;
 				  	return false; 
 				}else if(periodoEnvio.f_anoFinVigencia.val().length == ''){					
 					var addhtmAlert='Debe ingresar el año fin de vigencia.';					
 					periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 					periodoEnvio.dialogValidacion.dialog("open");
-					periodoEnvio.f_anoFinVigencia.focus();
+					//periodoEnvio.f_anoFinVigencia.focus();
+					cod_focus=periodoEnvio.f_anoFinVigencia;
 				  	return false; 
 				}else if(periodoEnvio.f_anoFinVigencia.val().length != 4){				
 					var addhtmAlert='Debe ingresar el año fin de vigencia válido.';					
 					periodoEnvio.dialogValidacionContent.html(addhtmAlert);
 					periodoEnvio.dialogValidacion.dialog("open");
-					periodoEnvio.f_anoFinVigencia.focus();
+					//periodoEnvio.f_anoFinVigencia.focus();
+					cod_focus=periodoEnvio.f_anoFinVigencia;
 				  	return false; 
 				}else{
 					return true;
@@ -860,6 +877,10 @@ var periodoEnvio= {
 			periodoEnvio.botonBuscar.trigger('click');
 		},
 		
+		ponerFocus : function(cadena){		
+			cadena.focus();
+		},		
+		
 		//DIALOGOS
 		initDialogs : function(){	
 			periodoEnvio.dialogMessage.dialog({
@@ -894,7 +915,8 @@ var periodoEnvio= {
 				autoOpen: false,
 				width: 450,		
 				buttons: {
-					Aceptar: function() {
+					Aceptar: function() {						
+						periodoEnvio.ponerFocus(cod_focus);
 						$( this ).dialog("close");
 					}
 				}
