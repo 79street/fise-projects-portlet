@@ -494,13 +494,15 @@ var formato14A= {
 				  //alert('Ingrese un año desde válido');
 				  formato14A.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Desde válido');
 				  formato14A.dialogMessageWarning.dialog("open");
-				  formato14A.i_anioDesde.focus();
+				 // formato14A.i_anioDesde.focus();
+				  cod_focus=formato14A.i_anioDesde;
 				  return false;
 			  }
 		  }else if( formato14A.i_anioDesde.val() == '' ){
 			  formato14A.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Desde');
 			  formato14A.dialogMessageWarning.dialog("open");
-			  formato14A.i_anioDesde.focus();
+			  //formato14A.i_anioDesde.focus();
+			  cod_focus=formato14A.i_anioDesde;
 			  return false;
 		  }
 		  if(formato14A.i_anioHasta.val().length != '' ) {		  
@@ -509,13 +511,15 @@ var formato14A= {
 				  //alert('Ingrese un año hasta válido');
 				  formato14A.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Hasta válido');
 				  formato14A.dialogMessageWarning.dialog("open");
-				  formato14A.i_anioHasta.focus();
+				  //formato14A.i_anioHasta.focus();
+				  cod_focus=formato14A.i_anioHasta;
 				  return false;
 			  }
 		  }else if( formato14A.i_anioHasta.val() == '' ){
 			  formato14A.dialogMessageWarningContent.html('Debe ingresar un Año Declarado Hasta');
 			  formato14A.dialogMessageWarning.dialog("open");
-			  formato14A.i_anioHasta.focus();
+			  //formato14A.i_anioHasta.focus();
+			  cod_focus=formato14A.i_anioHasta;
 			  return false;
 		  }
 		  if(formato14A.i_anioDesde.val().length != '' && formato14A.i_anioHasta.val().length != '' ) {
@@ -523,6 +527,7 @@ var formato14A= {
 					//alert('El año desde no puede exceder al año hasta');
 					formato14A.dialogMessageWarningContent.html('El Año Declarado Desde no puede exceder al Año Declarado Hasta');
 					formato14A.dialogMessageWarning.dialog("open");
+					cod_focus=formato14A.i_anioDesde;
 					return false;
 			  }
 		  }
@@ -530,7 +535,8 @@ var formato14A= {
 			    //alert('Seleccione una etapa');
 			    formato14A.dialogMessageWarningContent.html('Debe seleccionar una Etapa');
 				formato14A.dialogMessageWarning.dialog("open");
-			    formato14A.i_etapaB.focus();
+			   // formato14A.i_etapaB.focus();
+			    cod_focus=formato14A.i_etapaB;
 			    return false; 
 		  }
 		 return true; 
@@ -1312,6 +1318,7 @@ var formato14A= {
 			//alert('Seleccione una Distribuidora Eléctrica'); 
 			formato14A.dialogMessageWarningContent.html('Primero debe crear el Grupo de Información Bienal para el Año y Mes a declarar');
 			formato14A.dialogMessageWarning.dialog("open");
+			cod_focus=$('#idGrupoInfo');
 			return false;
 		}
 		return true;
@@ -1744,7 +1751,8 @@ var formato14A= {
 			//alert('Seleccione una Distribuidora Eléctrica'); 
 			formato14A.dialogMessageWarningContent.html('Debe seleccionar una Distribuidora Eléctrica');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_empresa.focus();
+			//formato14A.f_empresa.focus();
+			cod_focus=formato14A.f_empresa;
 		  	return false; 
 		}
 		/*if(formato14A.f_periodoEnvio.val().length == '' ) {		  
@@ -1758,7 +1766,8 @@ var formato14A= {
 			//alert('Debe seleccionar el periodo a declarar');
 			formato14A.dialogMessageWarningContent.html('Debe ingresar el Periodo a Declarar');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_periodoEnvio.focus();
+			//formato14A.f_periodoEnvio.focus();
+			cod_focus=formato14A.f_periodoEnvio;
 			return false; 
 		}
 		if( formato14A.f_flagPeriodo.val()=='S' ){
@@ -1766,7 +1775,8 @@ var formato14A= {
 				//alert('Debe ingresar el año de inicio de vigencia');
 				formato14A.dialogMessageWarningContent.html('Debe ingresar el Año de Inicio de Vigencia');
 				formato14A.dialogMessageWarning.dialog("open");
-				$('#anioInicioVigencia').focus();
+				//$('#anioInicioVigencia').focus();
+				cod_focus=$('#anioInicioVigencia');
 				return false; 
 			}else{
 				var numstr = trim($('#anioInicioVigencia').val());
@@ -1774,6 +1784,7 @@ var formato14A= {
 					//alert('Ingrese un año de inicio de inicio de vigencia válido');
 					formato14A.dialogMessageWarningContent.html('Debe Ingresar un Año de Inicio de Vigencia válido');
 					formato14A.dialogMessageWarning.dialog("open");
+					cod_focus=$('#anioInicioVigencia');
 					return false;
 			 	}
 		 	}
@@ -1781,7 +1792,8 @@ var formato14A= {
 				//alert('Debe ingresar el año de fin de vigencia');
 				formato14A.dialogMessageWarningContent.html('Debe ingresar el Año de Fin de Vigencia');
 				formato14A.dialogMessageWarning.dialog("open");
-				$('#anioFinVigencia').focus();
+				//$('#anioFinVigencia').focus();
+				cod_focus=$('#anioFinVigencia');
 				return false; 
 			}else{
 				var numstr = trim($('#anioFinVigencia').val());
@@ -1789,6 +1801,7 @@ var formato14A= {
 					//alert('Ingrese un año de fin de vigencia válido');
 					formato14A.dialogMessageWarningContent.html('Debe ingresar un Año de Fin de Vigencia válido');
 					formato14A.dialogMessageWarning.dialog("open");
+					cod_focus=$('#anioFinVigencia');
 					return false;
 				}
 		 	}
@@ -1798,14 +1811,16 @@ var formato14A= {
 			//alert('Debe ingresar el número de empadronados para Rural');
 			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Empadronados para la Zona Rural');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_nroBenefR.focus();
+			//formato14A.f_nroBenefR.focus();
+			cod_focus=formato14A.f_nroBenefR;
 			return false; 
 		}
 		if(formato14A.f_nroAgentR.val().length == '' ) {		  
 			//alert('Debe ingresar el número de agentes para Rural');
 			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Agentes para la Zona Rural');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_nroAgentR.focus();
+			//formato14A.f_nroAgentR.focus();
+			cod_focus=formato14A.f_nroAgentR;
 			return false; 
 		}
 		////////////////////
@@ -1813,14 +1828,16 @@ var formato14A= {
 			//alert('Debe ingresar el número de empadronados para Provincia');
 			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Empadronados para la Zona Urbano Provincias');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_nroBenefP.focus();
+			//formato14A.f_nroBenefP.focus();
+			cod_focus=formato14A.f_nroBenefP;
 			return false; 
 		}
 		if(formato14A.f_nroAgentP.val().length == '' ) {		  
 			//alert('Debe ingresar el número de agentes para Provincia');
 			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Agentes para la Zona Urbano Provincias');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_nroAgentP.focus();
+			//formato14A.f_nroAgentP.focus();
+			cod_focus=formato14A.f_nroAgentP;
 			return false; 
 		}
 		///////////////////
@@ -1828,14 +1845,16 @@ var formato14A= {
 			//alert('Debe ingresar el número de empadronados para Lima');
 			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Empadronados para la Zona Lima');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_nroBenefL.focus();
+			//formato14A.f_nroBenefL.focus();
+			cod_focus=formato14A.f_nroBenefL;
 			return false; 
 		}
 		if(formato14A.f_nroAgentL.val().length == '' ) {		  
 			//alert('Debe ingresar el número de agentes para Lima');
 			formato14A.dialogMessageWarningContent.html('Debe ingresar el Número de Agentes para la Zona Lima');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_nroAgentL.focus();
+			//formato14A.f_nroAgentL.focus();
+			cod_focus=formato14A.f_nroAgentL;
 			return false; 
 		}
 		//validacion para no grabacion de ceros
@@ -1863,6 +1882,7 @@ var formato14A= {
 		){
 			formato14A.dialogMessageWarningContent.html('Debe ingresar al menos un valor para poder guardar un formato');
 			formato14A.dialogMessageWarning.dialog("open");
+			cod_focus=formato14A.f_impEsqInvR;
 			return false; 
 		}
 		
@@ -1874,14 +1894,16 @@ var formato14A= {
 			//alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
 			formato14A.dialogMessageWarningContent.html('Debe seleccionar una Distribuidora Eléctrica para proceder con la carga del archivo');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_empresa.focus();
+			//formato14A.f_empresa.focus();
+			cod_focus=formato14A.f_empresa;
 			return false; 
 		}
 		if(formato14A.f_periodoEnvio==null || formato14A.f_periodoEnvio.val().length == '' ) {		  
 			//alert('Debe seleccionar el periodo a declarar');
 			formato14A.dialogMessageWarningContent.html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
 			formato14A.dialogMessageWarning.dialog("open");
-			formato14A.f_periodoEnvio.focus();
+			//formato14A.f_periodoEnvio.focus();
+			cod_focus=formato14A.f_periodoEnvio;
 			return false; 
 		}
 		return true; 
@@ -2402,6 +2424,12 @@ var formato14A= {
 		formato14A.f_impBandL.removeClass("fise-editable");
 		formato14A.f_nroAgentL.removeClass("fise-editable");
 	},
+	
+	ponerFocus : function(cadena){		
+		cadena.focus();
+	},
+	
+	
 	//
 	blockUI : function(){
 		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
@@ -2531,6 +2559,7 @@ var formato14A= {
 			width: 450,
 			buttons: {
 				Ok: function() {
+					formato14A.ponerFocus(cod_focus);
 					$( this ).dialog("close");
 				}
 			}
