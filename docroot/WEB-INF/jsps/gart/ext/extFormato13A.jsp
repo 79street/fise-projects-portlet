@@ -242,11 +242,13 @@ var formato13A= {
 		if( inicio.val()=='' ){
 			formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde");
 			formato13A.dialogMessageWarning.dialog("open");
+			cod_focus=inicio;
 			 return false; 
 		}
 		if( fin.val()=='' ){
 			formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
+			cod_focus=fin;
 			 return false; 
 		}
 		
@@ -255,6 +257,7 @@ var formato13A= {
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");
 			 formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde válido");
 			 formato13A.dialogMessageWarning.dialog("open");
+			 cod_focus=inicio;
    		
    	 }else if(inicio.val().length>0){
    		 if(parseFloat(fin.val())<parseFloat(inicio.val())){
@@ -262,6 +265,7 @@ var formato13A= {
    			//formato13A.dialogMessageGeneralInicial.dialog("open");
    			formato13A.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
+			cod_focus=inicio;
    		 }
    	 }else if(fin.val().length>0){
    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
@@ -269,6 +273,7 @@ var formato13A= {
    			//formato13A.dialogMessageGeneralInicial.dialog("open");
    			formato13A.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
+			cod_focus=fin;
    		 }
    		 
    	 }
@@ -280,6 +285,7 @@ var formato13A= {
 			 //formato13A.dialogMessageGeneralInicial.dialog("open");
 			 formato13A.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde válido");
 			 formato13A.dialogMessageWarning.dialog("open");
+			 cod_focus=inicio;
 			 return false; 
    		
    	 }else if(inicio.val().length>0){
@@ -289,7 +295,8 @@ var formato13A= {
    			//formato13A.dialogMessageGeneralInicial.dialog("open"); 
    			formato13A.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
-				 return false; 
+			cod_focus=inicio;
+		    return false; 
    		 }
    	 }else if(fin.val().length>0){
    		 if(parseFloat(inicio.val())>parseFloat(fin.val())){
@@ -298,7 +305,8 @@ var formato13A= {
    			//formato13A.dialogMessageGeneralInicial.dialog("open"); 
    			formato13A.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 			formato13A.dialogMessageWarning.dialog("open");
-				 return false; 
+			cod_focus=fin;
+			return false; 
    		 }
    		 
    	 }
@@ -896,6 +904,7 @@ var formato13A= {
 			//alert('Seleccione una Distribuidora Eléctrica'); 
 			formato13A.dialogMessageWarningCrudContent.html('Primero debe crear el Grupo de Información Bienal para el Año y Mes a declarar');
 			formato13A.dialogMessageWarningCrud.dialog("open");
+			cod_focus=$('#idGrupoInfo');
 			return false;
 		}
 		return true;
@@ -1727,6 +1736,19 @@ var formato13A= {
 			formato13A.dialogMessageInfoCrud.dialog("open");
 		}
 	},
+	
+	ponerFocus : function(cadena){		
+		cadena.focus();
+	},
+	
+	ponerFocusCRUD : function(cadena){		
+		cadena.focus();
+	},
+	
+	ponerFocusDetalle : function(cadena){		
+		cadena.focus();
+	},
+	
 	//inicializar dialogs
 	initDialogs : function(){	
 		formato13A.dialogMessageGeneralInicial.dialog({
@@ -1772,6 +1794,7 @@ var formato13A= {
 			width: 450,
 			buttons: {
 				Ok: function() {
+					formato13A.ponerFocus(cod_focus);
 					$( this ).dialog("close");
 				}
 			}
@@ -1867,6 +1890,7 @@ var formato13A= {
 			width: 450,
 			buttons: {
 				Ok: function() {
+					formato13A.ponerFocusCRUD(cod_focus);
 					$( this ).dialog("close");
 				}
 			}
@@ -1900,6 +1924,7 @@ var formato13A= {
 			width: 450,
 			buttons: {
 				Ok: function() {
+					formato13A.ponerFocusDetalle(cod_focus);
 					$( this ).dialog("close");
 				}
 			}
@@ -2139,7 +2164,8 @@ var formato13A= {
 		    //alert('Debe ingresar el año inicio vigencia');
 		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el Año Inicio Vigencia");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
-		    formato13A.anoIniVigenciaDetalle.focus();
+		   // formato13A.anoIniVigenciaDetalle.focus();
+		    cod_focus=formato13A.anoIniVigenciaDetalle;
 		    return false; 
 	  	}else{
 		  	var numstr = trim(formato13A.anoIniVigenciaDetalle.val());
@@ -2147,6 +2173,7 @@ var formato13A= {
 			  	//alert('Ingrese un año inicio vigencia válido');
 			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un Año Inicio Vigencia válido");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
+				cod_focus=formato13A.anoIniVigenciaDetalle;
 			  	return false;
 		  	}
 	 	 }
@@ -2154,7 +2181,8 @@ var formato13A= {
 		    //alert('Debe ingresar el año fin vigencia');
 		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el Año Fin Vigencia");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
-		    formato13A.anoFinVigenciaDetalle.focus();
+		   // formato13A.anoFinVigenciaDetalle.focus();
+		    cod_focus=formato13A.anoFinVigenciaDetalle;
 		    return false; 
 	  	}else{
 		  	var numstr = trim(formato13A.anoFinVigenciaDetalle.val());
@@ -2162,6 +2190,7 @@ var formato13A= {
 			  	//alert('Ingrese un año fin vigencia válido');
 			  	formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar un Año Fin Vigencia válido");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
+				cod_focus=formato13A.anoFinVigenciaDetalle;
 			  	return false;
 		  	}
 	 	 }
@@ -2172,6 +2201,7 @@ var formato13A= {
 			  	//alert('Ingrese un año alta válido');
 			  	formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar un Año Alta válido");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
+				cod_focus=formato13A.anoAltaDetalle;
 			  	return false;
 		  	}
 	 	 }
@@ -2180,6 +2210,7 @@ var formato13A= {
 			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
 			formato13A.dialogMessageWarningDetalleContent.html("El Periodo de Alta no puede ser mayor al Periodo a Declarar");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
+			cod_focus=formato13A.anoAltaDetalle;
 			return false;
 		}
 		
@@ -2198,15 +2229,17 @@ var formato13A= {
 			if(formato13A.codProv.val().length == '' ) {		  
 			   //alert('Debe seleccionar la provincia');
 			   formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar la Provincia");
-				formato13A.dialogMessageWarningDetalle.dialog("open");
-			   formato13A.codProv.focus();
+			   formato13A.dialogMessageWarningDetalle.dialog("open");
+			  // formato13A.codProv.focus();
+			   cod_focus=formato13A.codProv;
 			   return false; 
 			}else{
 				if(formato13A.codDist.val().length == '' ) {		  
 				   //alert('Debe seleccionar el distrito');
 				   formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar el Distrito");
 					formato13A.dialogMessageWarningDetalle.dialog("open");
-				   formato13A.codDist.focus();
+				   //formato13A.codDist.focus();
+				   cod_focus=formato13A.codDist;
 				   return false; 
 				}
 			}
@@ -2214,7 +2247,8 @@ var formato13A= {
 			//alert('Debe seleccionar el departamento');
 			formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar el Departamento");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
-			formato13A.codDepa.focus();
+			//formato13A.codDepa.focus();
+			cod_focus=formato13A.codDepa;
 			return false;
 		}
 		
@@ -2222,7 +2256,8 @@ var formato13A= {
 			//alert('Debe seleccionar la Zona Beneficiario');
 			formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar la Zona Beneficiario");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
-		    formato13A.idZonaBenefDetalle.focus();
+		    //formato13A.idZonaBenefDetalle.focus();
+		    cod_focus=formato13A.idZonaBenefDetalle;
 		   	return false; 
 		}else{
 			if(formato13A.cod_empresa_edelnor.val()!=formato13A.codEmpresaDetalle.val() && formato13A.cod_empresa_luz_sur.val()!=formato13A.codEmpresaDetalle.val()){
@@ -2230,7 +2265,8 @@ var formato13A= {
 					//alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
 					formato13A.dialogMessageWarningDetalleContent.html("No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica seleccionada");
 					formato13A.dialogMessageWarningDetalle.dialog("open");
-				    formato13A.idZonaBenefDetalle.focus();
+				    //formato13A.idZonaBenefDetalle.focus();
+				    cod_focus=formato13A.idZonaBenefDetalle;
 				   	return false;
 				}
 			}
@@ -2246,7 +2282,8 @@ var formato13A= {
 				formato13A.stespDetalle.val()==0 ){
 			formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar al menos una cantidad para los Sectores Típicos");
 			formato13A.dialogMessageWarningDetalle.dialog("open");
-		    formato13A.idZonaBenefDetalle.focus();
+		   // formato13A.idZonaBenefDetalle.focus();
+		    cod_focus=formato13A.st1Detalle;
 		    return false;
 		}
 		
