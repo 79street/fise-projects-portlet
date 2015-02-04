@@ -1847,13 +1847,15 @@ var notificarValidar= {
 				var addhtmAlert='Debe ingresar una Descripción de la Observación.';					
 				notificarValidar.dialogValidacionContent.html(addhtmAlert);
 				notificarValidar.dialogValidacion.dialog("open");		
-				notificarValidar.f_descObservacion.focus();
+				//notificarValidar.f_descObservacion.focus();
+				cod_focus=notificarValidar.f_descObservacion;
 			  	return false; 
 			}else if(notificarValidar.f_descObservacion.val().length > 499){				
 				var addhtmAlert='La descripción de la Observación no debe exceder a los 500 caracteres.';					
 				notificarValidar.dialogValidacionContent.html(addhtmAlert);
 				notificarValidar.dialogValidacion.dialog("open");	
-				notificarValidar.f_descObservacion.focus();
+				//notificarValidar.f_descObservacion.focus();
+				cod_focus=notificarValidar.f_descObservacion;
 			  	return false; 
 			}else{
 				return true;
@@ -1984,6 +1986,10 @@ var notificarValidar= {
 			notificarValidar.divBuscar.hide();
 			notificarValidar.divListaObs.show();
 			notificarValidar.divNuevoObs.hide();	
+		},
+		
+		ponerFocus : function(cadena){		
+			cadena.focus();
 		},	
 		
 		//DIALOGOS
@@ -2083,6 +2089,7 @@ var notificarValidar= {
 				width: 450,
 				buttons: {
 					Aceptar: function() {
+						notificarValidar.ponerFocus(cod_focus);
 						$( this ).dialog("close");
 					}
 				}

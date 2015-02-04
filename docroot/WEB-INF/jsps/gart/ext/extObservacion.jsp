@@ -470,19 +470,22 @@ var fiseObservacion= {
 				var addhtmAlert='Debe ingresar el id de Observación.';					
 				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
 				fiseObservacion.dialogValidacion.dialog("open");
-				fiseObservacion.f_id.focus();
+				//fiseObservacion.f_id.focus();
+				cod_focus=fiseObservacion.f_id;
 			  	return false; 
 			}else if(fiseObservacion.f_descripcion.val().length == ''){				
 				var addhtmAlert='Debe ingresar descripción.';					
 				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
 				fiseObservacion.dialogValidacion.dialog("open");
-				fiseObservacion.f_descripcion.focus();
+				//fiseObservacion.f_descripcion.focus();
+				cod_focus=fiseObservacion.f_descripcion;
 			  	return false; 
 			}else if(fiseObservacion.f_descripcion.val().length > 499){				
 				var addhtmAlert='La  descripción acepta como máximo 500 caracteres.';					
 				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
 				fiseObservacion.dialogValidacion.dialog("open");
-				fiseObservacion.f_descripcion.focus();
+				//fiseObservacion.f_descripcion.focus();
+				cod_focus=fiseObservacion.f_descripcion;
 			  	return false; 
 			}else{
 				return true;
@@ -496,6 +499,10 @@ var fiseObservacion= {
 					
 			fiseObservacion.botonBuscar.trigger('click');
 		},
+		
+		ponerFocus : function(cadena){		
+			cadena.focus();
+		},	
 		
 		//DIALOGOS
 		initDialogs : function(){	
@@ -532,6 +539,7 @@ var fiseObservacion= {
 				width: 450,		
 				buttons: {
 					Aceptar: function() {
+						fiseObservacion.ponerFocus(cod_focus);
 						$( this ).dialog("close");
 					}
 				}
