@@ -4079,7 +4079,7 @@ var formato14C= {
 				autoOpen: false,
 				width: 450,		
 				buttons: {
-					Aceptar: function() {
+					OK: function() {
 						formato14C.ponerFocus(cod_focus);
 						$( this ).dialog("close");
 					}
@@ -4091,7 +4091,7 @@ var formato14C= {
 				autoOpen: false,
 				width: 450,		
 				buttons: {
-					Aceptar: function() {
+					OK: function() {
 						$( this ).dialog("close");
 					}
 				}
