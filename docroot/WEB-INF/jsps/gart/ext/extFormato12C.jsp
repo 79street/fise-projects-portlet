@@ -2553,6 +2553,14 @@ var formato12C= {
 		   formato12C.etapaEjecucionDetalle.focus();
 		   return false; 
 		}
+		
+		if( parseFloat(formato12C.anoEjecucionDetalle.val())*100 + parseFloat(formato12C.mesEjecucionDetalle.val()) > parseFloat(formato12C.anoPresentacionDetalle.val())*100 + parseFloat(formato12C.mesPresentacionDetalle.val()) ){
+			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
+			formato12C.dialogMessageWarningDetalleContent.html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
+			formato12C.dialogMessageWarningDetalle.dialog("open");
+			return false;
+		}
+		
 		//validamos ubigeo origen
 		if(formato12C.codDepaOrigen.val().length != '' ) {
 			if(formato12C.codProvOrigen.val().length == '' ) {		  

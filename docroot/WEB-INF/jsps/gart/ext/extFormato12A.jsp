@@ -647,6 +647,16 @@ function validarFormulario() {
 			    document.getElementById('s_mes_ejecuc').focus();
 			    return false; 
 		  }
+		  //validamos el periodo de ejecución
+		  
+		if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').substring(0,4).val())*100 + parseFloat($('#s_periodoenvio_present').substring(4,6).val()) ){
+			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
+			$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
+			$("#dialog-message-warning").dialog("open");
+			return false;
+		}
+		  
+		  
 	  }
 	  //valores de formulario
 	  if($('#i_nroEmpad_r').val().length == '' ) {		  
@@ -794,6 +804,32 @@ function validarArchivoCarga() {
 	    document.getElementById('s_periodoenvio_present').focus();
 	    return false; 
   }
+  
+  function validarArchivoCargaTexto() {	
+		
+		validarGrupoInformacion();
+		
+	  if($('#s_empresa').val().length == '' ) { 	
+	    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+	    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
+		$("#dialog-message-warning").dialog( "open" );
+	    document.getElementById('s_empresa').focus();
+	    return false; 
+	  }
+	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
+		    //alert('Debe seleccionar el periodo a declarar');
+		    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
+			$("#dialog-message-warning").dialog( "open" );
+		    document.getElementById('s_periodoenvio_present').focus();
+		    return false; 
+	  }
+	  
+	  if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){
+			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
+			$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
+			$("#dialog-message-warning").dialog("open");
+			return false;
+		}
     
   return true; 
 }
