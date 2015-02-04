@@ -2171,7 +2171,7 @@ var formato13A= {
 		  	var numstr = trim(formato13A.anoIniVigenciaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
 			  	//alert('Ingrese un año inicio vigencia válido');
-			  	formato13A.dialogMessageWarningDetalleContent.html("Ingrese un Año Inicio Vigencia válido");
+			  	formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar un Año Inicio Vigencia válido");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
 				cod_focus=formato13A.anoIniVigenciaDetalle;
 			  	return false;
@@ -2195,16 +2195,28 @@ var formato13A= {
 		  	}
 	 	 }
 		//
-		if(formato13A.anoAltaDetalle.val().length != '' ) {		  
-		   	var numstr = trim(formato13A.anoAltaDetalle.val());
+		if(formato13A.anoAltaDetalle.val().length == '' ) {		  
+		    formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar el Año Alta");
+			formato13A.dialogMessageWarningDetalle.dialog("open");
+		    cod_focus=formato13A.anoAltaDetalle;
+		    return false; 
+	  	}else{
+		  	var numstr = trim(formato13A.anoAltaDetalle.val());
 		 	 if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  	//alert('Ingrese un año alta válido');
 			  	formato13A.dialogMessageWarningDetalleContent.html("Debe ingresar un Año Alta válido");
 				formato13A.dialogMessageWarningDetalle.dialog("open");
 				cod_focus=formato13A.anoAltaDetalle;
 			  	return false;
 		  	}
 	 	 }
+		
+		if(formato13A.mesAltaDetalle.val().length == '' ) {		  
+			   formato13A.dialogMessageWarningDetalleContent.html('Debe ingresar el Mes de Alta');
+			   formato13A.dialogMessageWarningDetalle.dialog( "open" );
+			   cod_focus=formato13A.mesAltaDetalle;
+			    return false; 
+		  }
+	
 		//periodo de alta
 		if( parseFloat(formato13A.anoAltaDetalle.val())*100 + parseFloat(formato13A.mesAltaDetalle.val()) > parseFloat(formato13A.anoPresentacionDetalle.val())*100 + parseFloat(formato13A.mesPresentacionDetalle.val()) ){
 			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
@@ -2213,6 +2225,8 @@ var formato13A= {
 			cod_focus=formato13A.anoAltaDetalle;
 			return false;
 		}
+		
+		 
 		
 		//anio alta
 		/*if( parseFloat(formato13A.anoAltaDetalle.val()) < parseFloat(formato13A.anoPresentacionDetalle.val()) ){
