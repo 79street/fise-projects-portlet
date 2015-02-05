@@ -578,7 +578,7 @@ public class Formato13AGartController {
 
 						agregarFormato13Detalle(listaDetalle);
 						
-						msg = "OK";
+						msg = "OK1";
 					}
 
 					
@@ -614,7 +614,7 @@ public class Formato13AGartController {
 						modificarFormato13Detalle(cab.getFiseFormato13ADs());
 					}
 					
-					msg = "OK";
+					msg = "OK2";
 
 				}
 
@@ -652,13 +652,13 @@ public class Formato13AGartController {
 
 				agregarFormato13(themeDisplay, cabecera, listaDetalle);
 				
-				msg = "OK";
+				msg = "OK1";
 			}
 
 			
 		}
 		
-		if( "OK".equals(msg) ){
+		if( "OK1".equals(msg) || "OK2".equals(msg) ){
 			response.setRenderParameter("crud", CRUD_UPDATE);
 		}else if( "ERROR1".equals(msg) || "ERROR2".equals(msg) ){
 			if( CRUD_CREATE.equals(crud) ){
@@ -801,7 +801,7 @@ public class Formato13AGartController {
 			}
 		}
 		
-		if( "OK".equals(msg) || "DONE".equals(msg) ){
+		if( "OK1".equals(msg) || "OK2".equals(msg) || "DONE".equals(msg) ){
 			//--
 			if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud) || CRUD_UPDATE.equals(crud)) {
 
