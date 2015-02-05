@@ -2,7 +2,6 @@ package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.Formato12A12BGeneric;
 import gob.osinergmin.fise.bean.Formato12BCBean;
-import gob.osinergmin.fise.bean.Formato12DCBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
@@ -56,7 +55,6 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.hibernate.exception.ConstraintViolationException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -603,7 +601,8 @@ public class Formato12BGartController {
 		} catch (Exception ex) {
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			msg.setDescripcion("Se produjo un error al guardar los datos del Formato 12B");
+			//msg.setDescripcion("Se produjo un error al guardar los datos del Formato 12B");
+			msg.setDescripcion(ex.toString());
 			listaError.add(msg);
 
 		}

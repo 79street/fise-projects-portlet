@@ -647,7 +647,7 @@ var formato12C= {
 			
 			//alert(formato12C.msgTransaccion.val());
 			//mostramos el mensaje de informacion
-			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
+			if( formato12C.msgTransaccionDetalle.val()=='OK1' ){
 				var addhtml='El Detalle de Gastos de Desplazamiento de Personal se guardó satisfactoriamente';
 				formato12C.dialogMessageDetalleContent.html(addhtml);
 				formato12C.dialogMessageDetalle.dialog("open");
@@ -707,7 +707,7 @@ var formato12C= {
 			
 			//alert(formato12C.msgTransaccion.val());
 			//mostramos el mensaje de informacion
-			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
+			if( formato12C.msgTransaccionDetalle.val()=='OK1' ){
 				var addhtml='El Detalle de Gastos de Desplazamiento de Personal se guardó satisfactoriamente';
 				formato12C.dialogMessageDetalleContent.html(addhtml);
 				formato12C.dialogMessageDetalle.dialog("open");
@@ -794,6 +794,8 @@ var formato12C= {
 			});
 			//
 		
+			$('#<portlet:namespace/>guardarDetalle').val('Actualizar');
+			
 			formato12C.botonGuardarDetalle.click(function(){
 				if( formato12C.validarFormatoDetalle() ){
 					//---formato12C.formDetalle.attr('action',urlGuardarDetalle+'&crud='+operacion+'&codEmpresa='+formato12C.codEmpresaDetalle.val()+'&anoEjecucionHidden='+formato12C.anoEjecucionDetalle.val()+'&mesEjecucionHidden='+formato12C.mesEjecucionDetalle.val()+'&etapaEjecucionHidden='+formato12C.etapaEjecucionDetalle.val()).submit();
@@ -833,8 +835,12 @@ var formato12C= {
 			formato12C.estiloEdicionDetalle();
 			
 			//mostramos el mensaje de informacion
-			if( formato12C.msgTransaccionDetalle.val()=='OK' ){
+			if( formato12C.msgTransaccionDetalle.val()=='OK1' ){
 				var addhtml='El Detalle de Gastos de Desplazamiento de Personal se guardó satisfactoriamente';
+				formato12C.dialogMessageDetalleContent.html(addhtml);
+				formato12C.dialogMessageDetalle.dialog("open");
+			}else if( formato12C.msgTransaccionDetalle.val()=='OK2' ){
+				var addhtml='El Detalle de Gastos de Desplazamiento de Personal se actualizó satisfactoriamente';
 				formato12C.dialogMessageDetalleContent.html(addhtml);
 				formato12C.dialogMessageDetalle.dialog("open");
 			}else if( formato12C.msgTransaccionDetalle.val()=='ERROR' ){

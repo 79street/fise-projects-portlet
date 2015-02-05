@@ -554,6 +554,8 @@ var formato14A= {
 			$("#anioInicioVigencia").val(formato14A.i_anioDesde.val());
 			$("#anioFinVigencia").val(formato14A.i_anioDesde.val());
 		}*/
+		$('#<portlet:namespace/>guardarFormato').val('Grabar');
+		
 		formato14A.botonValidacion.css('display','none');
 		formato14A.botonEnvioDefinitivo.css('display','none');
 		formato14A.<portlet:namespace/>loadPeriodo('');
@@ -1429,6 +1431,8 @@ var formato14A= {
 								//dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
 								formato14A.FillEditformato(data.formato);
 								
+								$('#<portlet:namespace/>guardarFormato').val('Actualizar');
+								
 								formato14A.estiloEdicionRural();
 								formato14A.estiloEdicionProvincia();
 								
@@ -1609,8 +1613,15 @@ var formato14A= {
 					<portlet:namespace />etapa: formato14A.etapaEdit.val()
 					},
 				success: function(data) {			
-					if (data.resultado == "OK"){				
+					if (data.resultado == "OK1"){				
 						var addhtml2='El Formato 14A se guardó satisfactoriamente';
+						formato14A.dialogMessageContent.html(addhtml2);
+						formato14A.dialogMessage.dialog("open");
+						formato14A.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
+						formato14A.mostrarFormularioModificado();
+						formato14A.initBlockUI();
+					}else if (data.resultado == "OK2"){				
+						var addhtml2='El Formato 14A se actualizó satisfactoriamente';
 						formato14A.dialogMessageContent.html(addhtml2);
 						formato14A.dialogMessage.dialog("open");
 						formato14A.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
@@ -1720,6 +1731,8 @@ var formato14A= {
 		 }*/
 		 var flagOpera = 'ABIERTO';
 		 
+		 $('#<portlet:namespace/>guardarFormato').val('Actualizar');
+		 
 		 var anioIniVigM = $("#anioInicioVigencia").val();
 		 var anioFinVigM = $("#anioFinVigencia").val();
 		 //var etapaM = "SOLICITUD";
@@ -1742,6 +1755,8 @@ var formato14A= {
 		formato14A.divHome.hide();
 		formato14A.flagCarga.val('0');
 		//
+		$('#<portlet:namespace/>guardarFormato').val('Grabar');
+		
 		formato14A.estiloEdicionRural();
 		formato14A.estiloEdicionProvincia();
 	},

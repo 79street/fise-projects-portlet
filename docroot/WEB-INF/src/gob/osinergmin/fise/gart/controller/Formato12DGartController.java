@@ -729,7 +729,7 @@ public class Formato12DGartController {
 			}
 		}
 
-		if( "OK".equals(msg) || "DONE".equals(msg) ){
+		if( "OK1".equals(msg) || "OK2".equals(msg) || "DONE".equals(msg) ){
 			//----
 			if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud) || CRUD_UPDATE.equals(crud)) {
 
@@ -997,16 +997,19 @@ public class Formato12DGartController {
 				//para modificar registros
 				if( CRUD_CREATE.equals(crud) || CRUD_CREATEUPDATE.equals(crud) ){
 					f = formatoService.modificarFormato12DCregistrarFormato12DD(bean, formato);
+					msg = "OK1";
 				}else if( CRUD_UPDATE.equals(crud) ){
 					f = formatoService.modificarFormato12DCmodificarFormato12DD(bean, formato);
+					msg = "OK2";
 				}
 				
 			} else {
 				//para nuevos registros
 				f = formatoService.registrarFormato12DCregistrarFormato12DD(bean);
+				msg = "OK1";
 			}
 			
-			msg = "OK";
+			//-----msg = "OK";
 			
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -1017,7 +1020,9 @@ public class Formato12DGartController {
 			periodoEnvio = ""+anoPresentacion+FormatoUtil.rellenaIzquierda(""+mesPresentacion, '0', 2)+etapa;
 		}
 		
-		if( "OK".equals(msg) ){
+		if( "OK1".equals(msg) ){
+			response.setRenderParameter("crud", CRUD_UPDATE);
+		}else if( "OK2".equals(msg) ){
 			response.setRenderParameter("crud", CRUD_UPDATE);
 		}else if( "ERROR".equals(msg) ){
 			if( CRUD_CREATE.equals(crud) ){

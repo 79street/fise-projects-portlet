@@ -649,7 +649,7 @@ function validarFormulario() {
 		  }
 		  //validamos el periodo de ejecución
 		  
-		if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').substring(0,4).val())*100 + parseFloat($('#s_periodoenvio_present').substring(4,6).val()) ){
+		if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){
 			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
 			$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
 			$("#dialog-message-warning").dialog("open");
@@ -804,35 +804,37 @@ function validarArchivoCarga() {
 	    document.getElementById('s_periodoenvio_present').focus();
 	    return false; 
   }
-  
-  function validarArchivoCargaTexto() {	
-		
-		validarGrupoInformacion();
-		
-	  if($('#s_empresa').val().length == '' ) { 	
-	    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
-	    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
-		$("#dialog-message-warning").dialog( "open" );
-	    document.getElementById('s_empresa').focus();
-	    return false; 
-	  }
-	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
-		    //alert('Debe seleccionar el periodo a declarar');
-		    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
-			$("#dialog-message-warning").dialog( "open" );
-		    document.getElementById('s_periodoenvio_present').focus();
-		    return false; 
-	  }
-	  
-	  if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){
-			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
-			$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
-			$("#dialog-message-warning").dialog("open");
-			return false;
-		}
-    
-  return true; 
+  return true;
 }
+function validarArchivoCargaTexto() {	
+	
+	validarGrupoInformacion();
+	
+  if($('#s_empresa').val().length == '' ) { 	
+    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
+	$("#dialog-message-warning").dialog( "open" );
+    document.getElementById('s_empresa').focus();
+    return false; 
+  }
+  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
+	    //alert('Debe seleccionar el periodo a declarar');
+	    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
+		$("#dialog-message-warning").dialog( "open" );
+	    document.getElementById('s_periodoenvio_present').focus();
+	    return false; 
+  }
+  
+  if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){
+		//alert('El periodo de alta no puede ser mayor al periodo a declarar');
+		$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
+		$("#dialog-message-warning").dialog("open");
+		return false;
+	}
+
+return true; 
+}
+
 	
 function initBlockUI(){
 	$(document).ajaxStop($.unblockUI); 		
@@ -1151,6 +1153,8 @@ function <portlet:namespace/>crearFormato(){
 	$('#<portlet:namespace/>envioDefinitivo').css('display','none');
 	cargarPeriodoYCostos('','');
 	
+	$('#<portlet:namespace/>guardarFormato').val('Grabar');
+	
 	estiloEdicionRural();
 	estiloEdicionProvincia();
 	
@@ -1161,6 +1165,8 @@ function mostrarUltimoFormato(){
 	$("#div_formato").show();
 	$("#div_home").hide();
 	$('#flagCarga').val('0');
+	
+	$('#<portlet:namespace/>guardarFormato').val('Grabar');
 	
 	estiloEdicionRural();
 	estiloEdicionProvincia();
@@ -1242,6 +1248,8 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 							dwr.util.removeAllOptions("s_periodoenvio_present");
 							dwr.util.addOptions("s_periodoenvio_present", data.periodoEnvio,"codigoItem","descripcionItem");
 							FillEditformato(data.formato);
+							
+							$('#<portlet:namespace/>guardarFormato').val('Actualizar');
 							
 							estiloEdicionRural();
 							estiloEdicionProvincia();
@@ -1436,8 +1444,16 @@ function <portlet:namespace/>guardarFormato(){
 				<portlet:namespace />activExtraordL: $('#i_activExtraord_l').val()
 				},
 			success: function(data) {			
-				if (data.resultado == "OK"){				
+				if (data.resultado == "OK1"){				
 					var addhtml2='El Formato 12A se guardó satisfactoriamente';
+					$("#dialog-message-content").html(addhtml2);
+					$("#dialog-message").dialog( "open" );
+					//limpiar();		
+					$('#flagCarga').val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
+					mostrarFormularioModificado();
+					initBlockUI();
+				}else if (data.resultado == "OK2"){				
+					var addhtml2='El Formato 12A se actualizó satisfactoriamente';
 					$("#dialog-message-content").html(addhtml2);
 					$("#dialog-message").dialog( "open" );
 					//limpiar();		
@@ -1482,6 +1498,8 @@ function mostrarFormularioModificado(){
 		 mesEjeM = mesPresM;
 	 }
 	 //var etapaM = "SOLICITUD";
+	 $('#<portlet:namespace/>guardarFormato').val('Actualizar');
+	 
 	 var etapaM = $("#s_periodoenvio_present").val().substring(6,$("#s_periodoenvio_present").val().length);
 	 if( $('#flagCarga').val()=='0' ){
 		 mostrarUltimoFormato();

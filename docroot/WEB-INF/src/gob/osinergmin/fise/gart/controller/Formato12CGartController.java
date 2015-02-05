@@ -726,7 +726,7 @@ public class Formato12CGartController {
 			}
 		}
 		
-		if( "OK".equals(msg) || "DONE".equals(msg) ){
+		if( "OK1".equals(msg) || "OK2".equals(msg) || "DONE".equals(msg) ){
 			//----
 			if (CRUD_READ.equals(crud) || CRUD_READ_CREATEUPDATE.equals(crud) || CRUD_UPDATE.equals(crud)) {
 
@@ -1035,16 +1035,19 @@ public class Formato12CGartController {
 				//para modificar registros
 				if( CRUD_CREATE.equals(crud) || CRUD_CREATEUPDATE.equals(crud) ){
 					f = formatoService.modificarFormato12CCregistrarFormato12CD(bean, formato);
+					msg = "OK1";
 				}else if( CRUD_UPDATE.equals(crud) ){
 					f = formatoService.modificarFormato12CCmodificarFormato12CD(bean, formato);
+					msg = "OK2";
 				}
 				
 			} else {
 				//para nuevos registros
 				f = formatoService.registrarFormato12CCregistrarFormato12CD(bean);
+				msg = "OK1";
 			}
 			
-			msg = "OK";
+			//----msg = "OK";
 			
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -1055,7 +1058,9 @@ public class Formato12CGartController {
 			periodoEnvio = ""+anoPresentacion+FormatoUtil.rellenaIzquierda(""+mesPresentacion, '0', 2)+etapa;
 		}
 		
-		if( "OK".equals(msg) ){
+		if( "OK1".equals(msg) ){
+			response.setRenderParameter("crud", CRUD_UPDATE);
+		}else if( "OK2".equals(msg) ){
 			response.setRenderParameter("crud", CRUD_UPDATE);
 		}else if( "ERROR".equals(msg) ){
 			if( CRUD_CREATE.equals(crud) ){

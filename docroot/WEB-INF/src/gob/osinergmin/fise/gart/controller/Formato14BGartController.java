@@ -489,7 +489,7 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
 					formulario.setTerminal(themeDisplay.getUser().getLoginIP());
 					
 					formato14Service.registrarFormato14BC(formulario);
-					jsonObj.put("resultado", "OK");
+					jsonObj.put("resultado", "OK1");
 	   				
 				} catch (Exception e) {
 					jsonObj.put("resultado", "Error");
@@ -617,7 +617,7 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
 					formulario.setTerminal(themeDisplay.getUser().getLoginIP());
 					
 			        formato14Service.modificarFormato14BC(formulario, formato);
-					jsonObj.put("resultado", "OK"); 	
+					jsonObj.put("resultado", "OK2"); 	
 				} catch (Exception e) {
 					jsonObj.put("resultado", "Error");
 					jsonObj.put("mensaje", e.getMessage());
@@ -1659,26 +1659,36 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 						String anioFin = s.substring(posicionAnioInicioVigencia, posicionAnioFinVigencia) ;
 						
 						String zonaBenef = s.substring(posicionAnioFinVigencia, posicionZonaBenef).trim();
-						if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) && key4.equals(anioIni) && key5.equals(anioFin) &&
-								(FiseConstants.ZONABENEF_RURAL_COD_STRING.equals(zonaBenef) ||
-								FiseConstants.ZONABENEF_PROVINCIA_COD_STRING.equals(zonaBenef) ||
-								FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(zonaBenef) )
-								){
-							if( zonaSet.contains(zonaBenef) ){
+						
+						if( key1.equals(codEmp) && key2.equals(anioPres) && key3.equals(mesPres) && key4.equals(anioIni) && key5.equals(anioFin) ){
+							
+							if( FiseConstants.ZONABENEF_RURAL_COD_STRING.equals(zonaBenef) ||
+									FiseConstants.ZONABENEF_PROVINCIA_COD_STRING.equals(zonaBenef) ||
+									FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(zonaBenef) 
+									){
+								if( zonaSet.contains(zonaBenef) ){
+									process=false;
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3060);
+									break;
+								}else{
+									zonaSet.add(zonaBenef);
+									process=true;
+								}
+							}else{
 								process=false;
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3060);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3070);
 								break;
-							}else{
-								zonaSet.add(zonaBenef);
-								process=true;
 							}
+							
 						}else{
 							process=false;
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3070);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3051);
 							break;
 						}
+						
 					}
 					if(process){
 						

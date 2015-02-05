@@ -551,6 +551,8 @@ var formato14B= {
 			$("#anioInicioVigencia").val(formato14B.i_anioDesde.val());
 			$("#anioFinVigencia").val(formato14B.i_anioDesde.val());
 		}*/
+		$('#<portlet:namespace/>guardarFormato').val('Grabar');
+		
 		formato14B.botonValidacion.css('display','none');
 		formato14B.botonEnvioDefinitivo.css('display','none');
 		formato14B.<portlet:namespace/>loadPeriodo('');
@@ -1485,6 +1487,8 @@ var formato14B= {
 								//dwr.util.addOptions("periodoEnvio", data.periodoEnvio,"codigoItem","descripcionItem");
 								formato14B.FillEditformato(data.formato);
 								
+								$('#<portlet:namespace/>guardarFormato').val('Actualizar');
+								
 								formato14B.estiloEdicionRural();
 								formato14B.estiloEdicionProvincia();
 								
@@ -1667,8 +1671,15 @@ var formato14B= {
 					<portlet:namespace />etapa: formato14B.etapaEdit.val()
 					},
 				success: function(data) {			
-					if (data.resultado == "OK"){				
+					if (data.resultado == "OK1"){				
 						var addhtml2='El Formato 14B se guardó satisfactoriamente';
+						formato14B.dialogMessageContent.html(addhtml2);
+						formato14B.dialogMessage.dialog("open");
+						formato14B.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
+						formato14B.mostrarFormularioModificado();
+						formato14B.initBlockUI();
+					}else if (data.resultado == "OK2"){				
+						var addhtml2='El Formato 14B se actualizó satisfactoriamente';
 						formato14B.dialogMessageContent.html(addhtml2);
 						formato14B.dialogMessage.dialog("open");
 						formato14B.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
@@ -1778,6 +1789,8 @@ var formato14B= {
 		 }*/
 		 var flagOpera = 'ABIERTO';
 		 
+		 $('#<portlet:namespace/>guardarFormato').val('Actualizar');
+		 
 		 var anioIniVigM = $("#anioInicioVigencia").val();
 		 var anioFinVigM = $("#anioFinVigencia").val();
 		 //var etapaM = "SOLICITUD";
@@ -1801,6 +1814,8 @@ var formato14B= {
 		formato14B.divHome.hide();
 		formato14B.flagCarga.val('0');
 		//
+		$('#<portlet:namespace/>guardarFormato').val('Grabar');
+		
 		formato14B.estiloEdicionRural();
 		formato14B.estiloEdicionProvincia();
 	},

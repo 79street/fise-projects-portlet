@@ -604,8 +604,8 @@ var formato12D= {
 			formato12D.estiloEdicionDetalle();
 			
 			//mostramos el mensaje de informacion
-			if( formato12D.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='El Detalle de los Gastos se guardó satisfactoriamente';
+			if( formato12D.msgTransaccionDetalle.val()=='OK1' ){
+				var addhtml='El Detalle de los Gastos por Actividades Extraordinarias se guardó satisfactoriamente';
 				formato12D.dialogMessageDetalleContent.html(addhtml);
 				formato12D.dialogMessageDetalle.dialog("open");
 			}else if( formato12D.msgTransaccionDetalle.val()=='ERROR' ){
@@ -656,8 +656,8 @@ var formato12D= {
 			formato12D.estiloEdicionDetalle();
 			
 			//mostramos el mensaje de informacion
-			if( formato12D.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='El Detalle de los Gastos se guardó satisfactoriamente';
+			if( formato12D.msgTransaccionDetalle.val()=='OK1' ){
+				var addhtml='El Detalle de los Gastos por Actividades Extraordinarias se guardó satisfactoriamente';
 				formato12D.dialogMessageDetalleContent.html(addhtml);
 				formato12D.dialogMessageDetalle.dialog("open");
 			}else if( formato12D.msgTransaccionDetalle.val()=='ERROR' ){
@@ -725,6 +725,7 @@ var formato12D= {
 				formato12D.listarDistritos(formato12D.codProv.val());
 			});
 			//
+			$('#<portlet:namespace/>guardarDetalle').val('Actualizar');
 		
 			formato12D.botonGuardarDetalle.click(function(){
 				if( formato12D.validarFormatoDetalle() ){
@@ -761,12 +762,16 @@ var formato12D= {
 			formato12D.estiloEdicionDetalle();
 			
 			//mostramos el mensaje de informacion
-			if( formato12D.msgTransaccionDetalle.val()=='OK' ){
-				var addhtml='El Detalle de los Gastos se guardó satisfactoriamente';
+			if( formato12D.msgTransaccionDetalle.val()=='OK1' ){
+				var addhtml='El Detalle de los Gastos por Actividades Extraordinarias se guardó satisfactoriamente';
+				formato12D.dialogMessageDetalleContent.html(addhtml);
+				formato12D.dialogMessageDetalle.dialog("open");
+			}else if( formato12D.msgTransaccionDetalle.val()=='OK2' ){
+				var addhtml='El Detalle de los Gastos por Actividades Extraordinarias se actualizó satisfactoriamente';
 				formato12D.dialogMessageDetalleContent.html(addhtml);
 				formato12D.dialogMessageDetalle.dialog("open");
 			}else if( formato12D.msgTransaccionDetalle.val()=='ERROR' ){
-				var addhtml='Se produjo un error al guardar el Detalle de Gastos';
+				var addhtml='Se produjo un error al actualizar el Detalle de Gastos';
 				formato12D.dialogMessageErrorDetalleContent.html(addhtml);
 				formato12D.dialogMessageErrorDetalle.dialog("open");
 			}

@@ -546,6 +546,8 @@
 				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 				formato12B.buildGridsObservacion();
 				formato12B.loadTotales($("#codEmpresaHidden").val());
+				
+				$('#<portlet:namespace/>guardarFormato').val('Actualizar');
 			
 			}else if(formato12B.tpOperacion.val()=='2'){
 				formato12B.cmbCodEmpresa.change(function(){
@@ -580,7 +582,7 @@
 				}
 			});//excel
 			formato12B.btnShowLoadTxt.click(function() {
-				if( formato12B.validarGrupoInformacion() ){
+				if( formato12B.validarGrupoInformacionTxt() ){
 					formato12B.showLoadFile('2');
 				}	
 			});//txt
@@ -597,6 +599,8 @@
 				formato12B.btnEnvioDefinitivo.css("display","block");
 				formato12B.btnValidacion.click(function() {formato12B.showValidacion();});
 				formato12B.btnEnvioDefinitivo.click(function() {formato12B.confirmarEnvioDefinitivo();});
+		
+				$('#<portlet:namespace/>guardarFormato').val('Actualizar');
 			
 			}else if(tipo == '2'){//nuevo
 				formato12B.btnValidacion.css("display","none");
@@ -876,11 +880,29 @@
 			}
 			return true;
 		},
+		validarGrupoInformacionTxt : function(){
+			if( $('#idGrupoInfo').val()=='0' ){
+				//alert('Seleccione una Distribuidora Eléctrica'); 
+				formato12B.dialogMessageWarningDetalleContent.html('Primero debe crear el Grupo de Información Mensual para el Año y Mes a declarar');
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;
+			}
+			
+			if( parseFloat(formato12B.txtAnioEjec.val())*100 + parseFloat(formato12B.cmbMesEjecucion.val()) > parseFloat(formato12B.cmbPeriodo.val().substring(0,4))*100 + parseFloat(formato12B.cmbPeriodo.val().substring(4,6)) ){
+				formato12B.dialogMessageWarningDetalleContent.html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;
+			}
+			
+			return true;
+		},
 		//
 		
 		loadDataCostoUnitario: function(data){
 			if(data!=null && data.length>0){
 				$.each(data, function (i, item) {
+					
+					formato12B.inicializarValoresCostos();
 					
 					 if(item.idZonaBenef == '1'){
 						 formato12B.txtEtndrUnitValeImpre.val(item.costoUnitarioImpresionVales);
@@ -1017,6 +1039,48 @@
 			formato12B.loadCostoTotal(formato12B.cmbCodEmpresa.val());
 			
 		},
+		inicializarValoresCostos:function(){
+			 formato12B.txtEtndrUnitValeImpre.val("0");
+			 $('#costoEstandarUnitValeImpre').val("0");
+			 formato12B.txtEtndrUnitValeRepar.val("0");
+			 $('#costoEstandarUnitValeRepar').val("0");
+			 formato12B.txtEtndrUnitValDisEl.val("0");
+			 $('#costoEstandarUnitValDisEl').val("0");
+			 formato12B.txtEtndrUnitValFiCan.val("0");
+			 $('#costoEstandarUnitValFiCan').val("0");
+			 formato12B.txtEtndrUnitValDgCan.val("0");
+			 $('#costoEstandarUnitValDgCan').val("0");
+			 formato12B.txtEtndrUnitAtencion.val("0");
+			 $('#costoEstandarUnitAtencion').val("0");
+			 
+			 formato12B.txtEtndrUnitValeImpreProv.val("0");
+			 $('#costoEstandarUnitValeImpreProv').val("0");
+			 formato12B.txtEtndrUnitValeReparProv.val("0");
+			 $('#costoEstandarUnitValeReparProv').val("0");
+			 formato12B.txtEtndrUnitValDisElProv.val("0");
+			 $('#costoEstandarUnitValDisElProv').val("0");
+			 formato12B.txtEtndrUnitValFiCanProv.val("0");
+			 $('#costoEstandarUnitValFiCanProv').val("0");
+			 formato12B.txtEtndrUnitValDgCanProv.val("0");
+			 $('#costoEstandarUnitValDgCanProv').val("0");
+			 formato12B.txtEtndrUnitAtencionProv.val("0");
+			 $('#costoEstandarUnitAtencionProv').val("0");
+			 				
+			 formato12B.txtEtndrUnitValeImpreLim.val("0");
+			 $('#costoEstandarUnitValeImpreLim').val("0");
+			 formato12B.txtEtndrUnitValeReparLim.val("0");
+			 $('#costoEstandarUnitValeReparLim').val("0");
+			 formato12B.txtEtndrUnitValDisElLim.val("0");
+			 $('#costoEstandarUnitValDisElLim').val("0");
+			 formato12B.txtEtndrUnitValFiCanLim.val("0");
+			 $('#costoEstandarUnitValFiCanLim').val("0");
+			 formato12B.txtEtndrUnitValDgCanLim.val("0");
+			 $('#costoEstandarUnitValDgCanLim').val("0");
+			 formato12B.txtEtndrUnitAtencionLim.val("0");
+			 $('#costoEstandarUnitAtencionLim').val("0");
+			
+		},
+		
 		loadCostoTotal:function(emp){
 			formato12B.txtTotalImpresionVale.val((formato12B.txtnroValesImpreso.val()!=null && formato12B.txtnroValesImpreso.length>0)?(formato12B.txtnroValesImpreso.val()*formato12B.txtEtndrUnitValeImpre.val()):'0.00');
 			formato12B.txtTotalImpresionValeProv.val((formato12B.txtnroValesImpresoProv.val()!=null && formato12B.txtnroValesImpresoProv.length>0)?(formato12B.txtnroValesImpresoProv.val()*formato12B.txtEtndrUnitValeImpreProv.val()):'0.00');
@@ -1482,11 +1546,24 @@
 										$("#etapa").val(item.etapa);
 										
 										formato12B.showCamposOculto();
+										
+										//bloque para mostrar cuando se graba un formato
+										formato12B.btnValidacion.css("display","block");
+										formato12B.btnEnvioDefinitivo.css("display","block");
+										formato12B.btnValidacion.click(function() {formato12B.showValidacion();});
+										formato12B.btnEnvioDefinitivo.click(function() {formato12B.confirmarEnvioDefinitivo();});
+										
+										formato12B.lblMessage.html("El Formato 12B se guardó satisfactoriamente");
+										formato12B.dialogMessageGeneral.dialog("open");
 									}else{
 										formato12B.tpOperacion.val('1');
+										
+										formato12B.lblMessage.html("El Formato 12B se actualizó satisfactoriamente");
+										formato12B.dialogMessageGeneral.dialog("open");
 									}
-									formato12B.lblMessage.html("El Formato 12B se guardó satisfactoriamente");
-									formato12B.dialogMessageGeneral.dialog("open");
+									
+									//bloque para mostrar cuando se graba un formato
+									$('#<portlet:namespace/>guardarFormato').val('Actualizar');
 									
 								}else if(item.msg == "-1"){
 									//formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");

@@ -293,10 +293,16 @@ public class Formato12AGartController {
 			logger.info("es administrador"+bAdministrador);
 			if(bAdministrador){
 				logger.info("genera un item TODOS al inicio");
-				AdmEmpresa admEmpresaTodos = new AdmEmpresa();
-				admEmpresaTodos.setCodEmpresa(FiseConstants.ITEM_TODOS_VALUE);
-				admEmpresaTodos.setDscEmpresa(FiseConstants.ITEM_TODOS_DESCRIPCION);
-				listaEmpresa.add(admEmpresaTodos);
+				
+				//validamos si es administrador fise
+				boolean esAdminFise = fiseUtil.esAdministrador(renderRequest);
+				if(esAdminFise){
+					AdmEmpresa admEmpresaTodos = new AdmEmpresa();
+					admEmpresaTodos.setCodEmpresa(FiseConstants.ITEM_TODOS_VALUE);
+					admEmpresaTodos.setDscEmpresa(FiseConstants.ITEM_TODOS_DESCRIPCION);
+					listaEmpresa.add(admEmpresaTodos);
+				}
+				
 				List<AdmEmpresa> lista = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,"");
 				if( lista!=null ){
 					listaEmpresa.addAll(lista);
@@ -591,7 +597,7 @@ public class Formato12AGartController {
 					formulario.setTerminal(themeDisplay.getUser().getLoginIP());
 					
 					formatoService.registrarFormato12AC(formulario);
-					jsonObj.put("resultado", "OK");
+					jsonObj.put("resultado", "OK1");
 	   				
 				} catch (Exception e) {
 					jsonObj.put("resultado", "Error");
@@ -709,7 +715,7 @@ public class Formato12AGartController {
 			        logger.info("objeto "+formato);
 			        
 					formatoService.modificarFormato12AC(formulario, formato);
-					jsonObj.put("resultado", "OK"); 	
+					jsonObj.put("resultado", "OK2"); 	
 				} catch (Exception e) {
 					jsonObj.put("resultado", "Error");
 					jsonObj.put("mensaje", e.getMessage());

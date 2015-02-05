@@ -617,7 +617,7 @@ var formato13A= {
 			formato13A.calculoTotal();
 			
 			//mostramos el mensaje de informacion
-			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
+			if( formato13A.msgTransaccionDetalle.val()=='OK1' ){
 				var addhtml='El Detalle de Localidades de la Zona de Beneficiarios seleccionado se guardó satisfactoriamente';
 				formato13A.dialogMessageDetalleContent.html(addhtml);
 				formato13A.dialogMessageDetalle.dialog("open");
@@ -667,7 +667,7 @@ var formato13A= {
 			formato13A.calculoTotal();
 			
 			//mostramos el mensaje de informacion
-			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
+			if( formato13A.msgTransaccionDetalle.val()=='OK1' ){
 				var addhtml='El Detalle de Localidades de la Zona de Beneficiarios seleccionado se guardó satisfactoriamente';
 				formato13A.dialogMessageDetalleContent.html(addhtml);
 				formato13A.dialogMessageDetalle.dialog("open");
@@ -717,6 +717,8 @@ var formato13A= {
 		
 		<c:if test="${crud =='UPDATE'}">
 		
+			$('#<portlet:namespace/>guardarDetalle').val('Actualizar');
+		
 			formato13A.botonGuardarDetalle.click(function(){
 				
 				if( formato13A.validarFormatoDetalle() ){
@@ -740,8 +742,12 @@ var formato13A= {
 			formato13A.estiloEdicionDetalle();
 			
 			//mostramos el mensaje de informacion
-			if( formato13A.msgTransaccionDetalle.val()=='OK' ){
+			if( formato13A.msgTransaccionDetalle.val()=='OK1' ){
 				var addhtml='El Detalle de Localidades de la Zona de Beneficiarios seleccionado se guardó satisfactoriamente';
+				formato13A.dialogMessageDetalleContent.html(addhtml);
+				formato13A.dialogMessageDetalle.dialog("open");
+			}else if( formato13A.msgTransaccionDetalle.val()=='OK2' ){
+				var addhtml='El Detalle de Localidades de la Zona de Beneficiarios seleccionado se actualizó satisfactoriamente';
 				formato13A.dialogMessageDetalleContent.html(addhtml);
 				formato13A.dialogMessageDetalle.dialog("open");
 			}else if( formato13A.msgTransaccionDetalle.val()=='ERROR1' ){
