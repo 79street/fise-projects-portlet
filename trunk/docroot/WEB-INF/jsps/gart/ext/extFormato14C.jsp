@@ -3954,6 +3954,7 @@ var formato14C= {
 		
 		ponerFocus : function(cadena){		
 			cadena.focus();
+			
 		},	
 		
 		//funcion cargar la imagen al momento de buscar
