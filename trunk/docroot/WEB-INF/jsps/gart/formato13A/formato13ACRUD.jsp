@@ -127,7 +127,7 @@
 															<fieldset class="net-frame-border">
 																<table>
 																	<tr>
-																		<td colspan="5" ><output class="net-titulo">Periodo a declarar</output></td>
+																		<td colspan="5" ><output class="net-titulo">Periodo a declarar:</output></td>
 																		<td colspan="5" style="padding-left: 20px;">
 																			<!-- <output class="net-titulo" style="display: none;" id="lblGrupo">Grupo de Informacion</output> -->
 																		</td>

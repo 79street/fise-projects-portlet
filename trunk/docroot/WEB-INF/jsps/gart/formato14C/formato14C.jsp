@@ -228,7 +228,7 @@ $(document).ready(function () {
 													  </td>	  
 													  </tr>	
 													  <tr>
-													   <td> <label style="font-size: 12px; font-weight:bold">Periodo Declarado:</label></td>
+													   <td> <label style="font-size: 12px; font-weight:bold">Periodo a declarar:</label></td>
 													   <td colspan="2">
 													     <form:select path="periodoEnvio" cssClass="select" cssStyle="width: 200px;">
 															<c:forEach items="${listaPeriodoEnvio}" var="periodo">
