@@ -117,7 +117,7 @@
 																<table>
 																	<tr>
 																		<td colspan="5"><output class="net-titulo">Periodo
-																				a declarar</output></td>
+																				a declarar:</output></td>
 
 
 																	</tr>

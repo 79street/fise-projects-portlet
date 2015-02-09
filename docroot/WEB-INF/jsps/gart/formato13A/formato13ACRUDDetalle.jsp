@@ -59,7 +59,7 @@ $(document).ready(function () {
 															<form:input path="descEmpresa" disabled="true"/>
 															<form:hidden path="codEmpresa" />
 															</td>
-															<td><output class="net-titulo">Periodo a declarar</output></td>
+															<td><output class="net-titulo">Periodo a declarar:</output></td>
 															<td>
 																<input type="text" value="${formato13AGartCommand.mesPresentacion}/${formato13AGartCommand.anioPresentacion } - ${formato13AGartCommand.etapa}" disabled="true" />
 																<form:hidden path="peridoDeclaracion" />
