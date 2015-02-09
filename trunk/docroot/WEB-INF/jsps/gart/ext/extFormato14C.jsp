@@ -2321,7 +2321,7 @@ var formato14C= {
 							$('#<portlet:namespace/>envioDefinitivoF14C').css('display','block');
 							
 						}else if(data.resultado == "Duplicado"){				
-							var addhtml2='El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar seleccionado';
+							var addhtml2='El Formato ya existe para la Distribuidora Eléctrica y Periodo a declarar seleccionado';
 							formato14C.dialogInfoContent.html(addhtml2);
 							formato14C.dialogInfo.dialog("open");						
 							formato14C.initBlockUI();
