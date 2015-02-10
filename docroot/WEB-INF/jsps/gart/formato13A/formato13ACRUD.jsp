@@ -337,6 +337,8 @@
 						</tr>
 					</table>
 
+					<form:input type="hidden" path="typeFile"/>
+
 				</div>
 
 				<c:if test="${not readonly}">

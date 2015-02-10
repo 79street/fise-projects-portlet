@@ -234,6 +234,8 @@ public class Formato12AGartController {
 		//admin
 		obj.setAdmin(fiseUtil.esAdministrador(renderRequest));
 		
+		model.addAttribute("esAdministrador", fiseUtil.esAdministrador(renderRequest));
+		
 		model.addAttribute("model", obj);
 		
 		return "formato12A";
@@ -291,17 +293,20 @@ public class Formato12AGartController {
 				cadenaEmpresas="'XXX'";
 			
 			logger.info("es administrador"+bAdministrador);
+			
+			//validamos si es administrador fise
+			/*boolean esAdminFise = fiseUtil.esAdministrador(renderRequest);
+			if(esAdminFise){
+				AdmEmpresa admEmpresaTodos = new AdmEmpresa();
+				admEmpresaTodos.setCodEmpresa(FiseConstants.ITEM_TODOS_VALUE);
+				admEmpresaTodos.setDscEmpresa(FiseConstants.ITEM_TODOS_DESCRIPCION);
+				listaEmpresa.add(admEmpresaTodos);
+			}*/
+			
 			if(bAdministrador){
 				logger.info("genera un item TODOS al inicio");
 				
-				//validamos si es administrador fise
-				boolean esAdminFise = fiseUtil.esAdministrador(renderRequest);
-				if(esAdminFise){
-					AdmEmpresa admEmpresaTodos = new AdmEmpresa();
-					admEmpresaTodos.setCodEmpresa(FiseConstants.ITEM_TODOS_VALUE);
-					admEmpresaTodos.setDscEmpresa(FiseConstants.ITEM_TODOS_DESCRIPCION);
-					listaEmpresa.add(admEmpresaTodos);
-				}
+				
 				
 				List<AdmEmpresa> lista = admEmpresaService.getEmpresaFise(cod_proceso,cod_funcion,"");
 				if( lista!=null ){

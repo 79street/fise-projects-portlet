@@ -15,9 +15,11 @@
 <script type="text/javascript" src="/fise-projects-portlet/js/third-party/jqplot/jqplot.canvasAxisLabelRenderer.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/fise-projects-portlet/css/third-party/jquery.jqplot.min.css" />
 
+<script type="text/javascript" src="/fise-projects-portlet/js/jsPDF/jspdf.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function () {	
-	historicoCostos.init();
+	historicoCostos.init();	
 });
 </script>
            
@@ -98,10 +100,15 @@ $(document).ready(function () {
 					            	</div>
 				           		</div>
 								
-								
+								<div id="chartImgDiv" style="display:none; direction:ltr; height:400px; width:1000px"></div>
 								
 								<div>
 								</div>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td align="left">
+								<input id="exportarPdf" type="button" value="Exportar a PDF" style="display:none;" />
 							</td>
 						</tr>
 						<tr height="10px">

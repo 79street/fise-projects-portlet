@@ -10,6 +10,9 @@
 
 <script type="text/javascript">
 var formato13A= {
+		
+	typeFile:null,
+		
 	tablaResultados:null,
 	paginadoResultados:null,
 	tablaDeclaracion:null,
@@ -316,6 +319,8 @@ var formato13A= {
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
+		
+		this.typeFile=$("#typeFile");
 		
 		this.urlCargaFlagPeriodo='<portlet:resourceURL id="cargaFlagPeriodo" />';
 		
@@ -652,7 +657,7 @@ var formato13A= {
 			
 			botonRegresarDetalle.click(function(){
 				formato13A.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipoOperacion=1';
 				//--location.href=urlRegresarNuevo+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val();
 			});
 			
@@ -686,7 +691,7 @@ var formato13A= {
 		<c:if test="${crud =='READ'}">
 			botonRegresarDetalle.click(function(){
 				formato13A.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=0';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipoOperacion=0';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=0';
 			});
 			
@@ -702,7 +707,7 @@ var formato13A= {
 		<c:if test="${crud =='READCREATEUPDATE'}">
 			botonRegresarDetalle.click(function(){
 				formato13A.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipoOperacion=1';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=0';
 			});
 			
@@ -729,7 +734,7 @@ var formato13A= {
 		
 			botonRegresarDetalle.click(function(){
 				formato13A.blockUI();
-				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipo=1';
+				location.href=urlRegresarDetalle+'&crud='+operacion+'&codEmpresa='+formato13A.codEmpresaDetalle.val()+'&anioPresentacion='+formato13A.anoPresentacionDetalle.val()+'&mesPresentacion='+formato13A.mesPresentacionDetalle.val()+'&etapa='+formato13A.etapaDetalle.val()+'&tipoOperacion=1';
 				//location.href=urlRegresarDetalle+'&crud='+operacion+'&'+formato13A.formDetalle.serialize()+'&tipo=1';
 			});
 			
@@ -806,7 +811,7 @@ var formato13A= {
 	      			var ret = formato13A.tablaResultados.jqGrid('getRowData',cl); 
 	      			
 
-	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&descGrupoInformacion="+ret.grupoInfo+"&descestado="+ret.estado+"&anioInicioVigencia="+ret.anioInicioVigencia+"&anioFinVigencia="+ret.anioFinVigencia+"&tipo=0' ><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
+	      			view = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&descGrupoInformacion="+ret.grupoInfo+"&descestado="+ret.estado+"&anioInicioVigencia="+ret.anioInicioVigencia+"&anioFinVigencia="+ret.anioFinVigencia+"&tipoOperacion=0' ><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' /></a> ";
 	      			//edit = "<a href='"+formato13A.urlACrud+"&codEmpresa="+ret.codEmpresa+"&anioPresentacion="+ret.anoPresentacion+"&mesPresentacion="+ret.mesPresentacion+"&etapa="+ret.etapa+"&descripcionPeriodo="+ret.descripcionPeriodo+"&tipo=1'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' /></a> ";
 	      			
 	      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"formato13A.confirmarEditCabecera('"+ret.codEmpresa+"','"+ret.anoPresentacion+"','"+ret.mesPresentacion+"','"+ret.etapa+"','"+ret.descripcionPeriodo+"','"+ret.grupoInfo+"','"+ret.estado+"','"+ret.anioInicioVigencia+"','"+ret.anioFinVigencia+"','"+ret.flagOperacion+"');\" /></a> ";
@@ -1206,6 +1211,9 @@ var formato13A= {
 	},
 	
 	<portlet:namespace/>cargarFormatoExcel : function(){
+		
+		formato13A.typeFile.val('1');
+		
 		var nameFile=$("#archivoExcel").val();
 		var isSubmit=true;
 		
@@ -1255,6 +1263,9 @@ var formato13A= {
 	},
 
 	<portlet:namespace/>cargarFormatoTxt : function(){
+		
+		formato13A.typeFile.val('2');
+		
 		var nameFile=$("#archivoTxt").val();
 		var isSubmit=true;
 		
@@ -1400,7 +1411,7 @@ var formato13A= {
 	//FORMULARIOS DE VIEW Y EDICION
 	verFormato : function(codEmpresa,anoPresentacion,mesPresentacion,etapa,tipo){	
 		$.blockUI({ message: formato13A.mensajeObteniendoDatos });
-		location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anoPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&tipo='+tipo;
+		location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anoPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&tipoOperacion='+tipo;
 		
 	},
 
@@ -2062,7 +2073,7 @@ var formato13A= {
 				process = false;
 			}
 			if(process){
-				location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descripcionPeriodo='+descripcionPeriodo+'&descGrupoInformacion='+descGrupo+'&descestado='+descEstado+'&anioInicioVigencia='+anioInicioVigencia+'&anioFinVigencia='+anioFinVigencia+'&tipo=1';	
+				location.href=formato13A.urlACrud+'&codEmpresa='+codEmpresa+'&anioPresentacion='+anoPresentacion+'&mesPresentacion='+mesPresentacion+'&etapa='+etapa+'&descripcionPeriodo='+descripcionPeriodo+'&descGrupoInformacion='+descGrupo+'&descestado='+descEstado+'&anioInicioVigencia='+anioInicioVigencia+'&anioFinVigencia='+anioFinVigencia+'&tipoOperacion=1';	
 			}else{
 				//alert(" No tiene autorización para realizar esta operación");
 				formato13A.dialogMessageInfoContent.html("No tiene autorización para realizar esta operación");

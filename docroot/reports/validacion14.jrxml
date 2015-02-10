@@ -211,22 +211,22 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="24" y="1" width="80" height="16" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement stretchType="RelativeToBandHeight" x="24" y="1" width="80" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Top">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descZonaBenef}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="104" y="1" width="46" height="16" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement stretchType="RelativeToBandHeight" x="104" y="1" width="46" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" x="150" y="1" width="380" height="16" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement stretchType="RelativeToTallestObject" x="150" y="1" width="380" height="16" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Top">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcion}.trim()]]></textFieldExpression>
