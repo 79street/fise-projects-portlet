@@ -1178,6 +1178,8 @@ public class Formato13AGartController {
 		String codEmpresaNew = null;
 		String periodo = null;
 		String tipoaccion = uploadPortletRequest.getParameter("tipoOperacion");
+		String typeFile = uploadPortletRequest.getParameter("typeFile");
+		
 		System.out.println("command UPLOAD tipoaccion::" + tipoaccion);
 		if (tipoaccion != null && tipoaccion.endsWith(String.valueOf(FiseConstants.UPDATE))) {
 			codEmpresaNew = uploadPortletRequest.getParameter("codEmpresaHidden");
@@ -1205,25 +1207,53 @@ public class Formato13AGartController {
 			command.setDescripcionPeriodo(FiseUtil.descripcionPeriodo(cabecerapk.getMesPresentacion(), cabecerapk.getAnoPresentacion(), cabecerapk.getEtapa()));
 			command.setDescripcionPeriodoHidden(periodo);
 		}
-		FileEntry fileEntry=null;
-  try{
-		 fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 		
-  }catch (Exception e) {
+		List<MensajeErrorBean> lstErrores=new ArrayList<MensajeErrorBean>();
+		
+		try{
+			if(typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"")){
+				FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+				lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk, tipoaccion);
+			}else if(typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"")){
+				FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+				lstErrores = readTxtFile(fileEntry, themeDisplay, cabecerapk, tipoaccion);
+		   }
+			
+		}catch(FileMimeTypeException ex){
+			ex.printStackTrace();
+			MensajeErrorBean msg = new MensajeErrorBean();
+			msg.setId(1);
+			msg.setDescripcion("Debe seleccionar una archivo");
+			lstErrores.add(msg);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		/*FileEntry fileEntry=null;
+		try{
+			fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+		}catch (Exception e) {
 		// TODO: handle exception
-	}
-  List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk, tipoaccion);
-		System.out.println("tipo de errores::" + lstErrores.size());
+		}
+		List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk, tipoaccion);
+		System.out.println("tipo de errores::" + lstErrores.size());*/
 
 		if (lstErrores != null && !lstErrores.isEmpty()) {
 			if (tipoaccion != null && tipoaccion != null && tipoaccion.endsWith(String.valueOf(FiseConstants.UPDATE))) {
 				response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.UPDATE));
 				response.setRenderParameter("crud", "UPDATE");
 				response.setRenderParameter("readonly", "true");
+				response.setRenderParameter("action", "view");
 			} else {
 				response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.ADD));
 				response.setRenderParameter("crud", "CREATE");
 				response.setRenderParameter("readonly", "false");
+				response.setRenderParameter("action", "nuevo");
 			}
 			response.setRenderParameter("error", lstErrores.get(0).getDescripcion());
 
@@ -1232,10 +1262,11 @@ public class Formato13AGartController {
 			response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.UPDATE));
 			response.setRenderParameter("crud", "UPDATE");
 			response.setRenderParameter("readonly", "true");
+			response.setRenderParameter("action", "view");
 
 		}
 
-		response.setRenderParameter("action", "nuevo");
+		//response.setRenderParameter("action", "nuevo");
 		response.setRenderParameter("codEmpresa", command.getCodEmpresa().trim());
 		response.setRenderParameter("anioPresentacion", cabecerapk.getAnoPresentacion() + "");
 		response.setRenderParameter("mesPresentacion", cabecerapk.getMesPresentacion() + "");
@@ -1316,7 +1347,8 @@ public class Formato13AGartController {
 										nameGrupo=grupoInfo.getDescripcion();
 									}
 									cabecera.setFiseGrupoInformacion(grupoInfo);
-                                    nameEstado=FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR;
+                                    //nameEstado=FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR;
+									nameEstado="Abierto";
                                     
                                     List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(cabecera.getId().getCodEmpresa(), FiseConstants.TIPO_FORMATO_13A);
     								for (FisePeriodoEnvio prd : listaPeriodoEnvio) {
@@ -1403,7 +1435,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			}
 		}else if(tipo == 3){//campo vacio
 			if(valor.length()==0){
-				throw new Exception("El campo "+nameCampo+ "no acepta valores vacios");
+				throw new Exception("El campo "+nameCampo+ " no acepta valores vacios");
 			}
 		}else if(tipo == 4){
 			try{
@@ -1422,7 +1454,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 		}
 	}
 
-	public List<MensajeErrorBean> readTxtFile(FileEntry archivo, ThemeDisplay themeDisplay, FiseFormato13ACPK pk, String tipoOperacion, FiseUtil util) {
+	public List<MensajeErrorBean> readTxtFile(FileEntry archivo, ThemeDisplay themeDisplay, FiseFormato13ACPK pk, String tipoOperacion) {
 		InputStream is = null;
 		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
 		int cont = 0;
@@ -1490,6 +1522,9 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_SECTOR_TIPICO.trim())){
 								isAdd=true;
 								lenghtCodSector=campo.getLongitud().intValue();
+							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ID_ZONA_BENEF.trim())){
+								isAdd=true;
+								lenghtZona=campo.getLongitud().intValue();
 							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_NOMBRE_SEDE_ATIENDE.trim())){
 								isAdd=true;
 								lenghtNombSedeAt=campo.getLongitud().intValue();
@@ -1585,9 +1620,9 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 							
 							validarCampos(idUbig, "Número de ubigeo", 4, 0);//number formart
 							//validarCampos(desLoc, "Descripciòn de localidad", 4, 0);//number formart
-							validarCampos(codSector, "Còdigo de sector", 3, 0);//validar vacio
+							validarCampos(codSector, "Código de sector", 3, 0);//validar vacio
 							//validarCampos(codSector, "Còdigo de sector", 4, 0);//number formart
-							validarCampos(idzon, "Còdigo de zona", 3, 0);//validar vacio
+							validarCampos(idzon, "Código de zona", 3, 0);//validar vacio
 							//validarCampos(idzon, "Còdigo de zona", 4, 0);//number formart
 						//	validarCampos(nombSede, "Nombre de Sede", 4, 0);//number formart
 							validarCampos(numBenef, "Número de beneficiario", 4, 0);//number formart
@@ -1598,26 +1633,43 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 						    
 							if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)){
 								
-								 FiseFormato13ADPK pkDetalle=new FiseFormato13ADPK();
-								   FiseFormato13AD detalle=new FiseFormato13AD();
-								   pkDetalle.setCodEmpresa(codEm);
-								   pkDetalle.setAnoPresentacion(Integer.parseInt(anioPres));
-								   pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
-								   pkDetalle.setEtapa(pk.getEtapa());
-								   pkDetalle.setCodUbigeo(idUbig);
-								   pkDetalle.setCodSectorTipico(codSector);
-								   pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
-								   
-								   detalle.setAnoAlta(anioAlta!=null && !anioAlta.trim().isEmpty()?Long.valueOf(anioAlta.trim()):null);
-								   detalle.setMesAlta(mesAlta!=null && !mesAlta.trim().isEmpty()?Long.valueOf(mesAlta.trim()):null);
-								   detalle.setAnoInicioVigencia(anioIniVig!=null && !anioIniVig.trim().isEmpty()?Long.valueOf(anioIniVig.trim()):null);
-								   detalle.setAnoFinVigencia(anioFinVig!=null && !anioFinVig.trim().isEmpty()?Long.valueOf(anioFinVig.trim()):null);
-								   detalle.setDescripcionLocalidad(desLoc!=null?desLoc.trim():"");
-								   detalle.setNombreSedeAtiende(nombSede!=null?nombSede.trim():"");
-								   detalle.setNumeroBenefiPoteSectTipico(numBenef!=null && !numBenef.trim().isEmpty()?Long.valueOf(numBenef.trim()):null);
+								//validamos edelnor o luz del sur
+							    boolean process = true;
+								
+								if( FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(idzon.trim()) ){
+									if( FiseConstants.COD_EMPRESA_EDELNOR.equalsIgnoreCase(pk.getCodEmpresa().trim()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equalsIgnoreCase(pk.getCodEmpresa().trim()) ){
+										process = true;
+									}else{
+										process = false;
+									}
+								}else{
+									process = true;
+								}
+								
+								if(process){
+									FiseFormato13ADPK pkDetalle=new FiseFormato13ADPK();
+									FiseFormato13AD detalle=new FiseFormato13AD();
+									pkDetalle.setCodEmpresa(codEm);
+								    pkDetalle.setAnoPresentacion(Integer.parseInt(anioPres));
+								    pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
+								    pkDetalle.setEtapa(pk.getEtapa());
+								    pkDetalle.setCodUbigeo(idUbig.trim());//trim
+								    pkDetalle.setCodSectorTipico(codSector);
+								    pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
+								    
+								    detalle.setAnoAlta(anioAlta!=null && !anioAlta.trim().isEmpty()?Long.valueOf(anioAlta.trim()):null);
+								    detalle.setMesAlta(mesAlta!=null && !mesAlta.trim().isEmpty()?Long.valueOf(mesAlta.trim()):null);
+								    detalle.setAnoInicioVigencia(anioIniVig!=null && !anioIniVig.trim().isEmpty()?Long.valueOf(anioIniVig.trim()):null);
+								    detalle.setAnoFinVigencia(anioFinVig!=null && !anioFinVig.trim().isEmpty()?Long.valueOf(anioFinVig.trim()):null);
+								    detalle.setDescripcionLocalidad(desLoc!=null?desLoc.trim():"");
+								    detalle.setNombreSedeAtiende(nombSede!=null?nombSede.trim():"");
+								    detalle.setNumeroBenefiPoteSectTipico(numBenef!=null && !numBenef.trim().isEmpty()?Long.valueOf(numBenef.trim()):null);
 								 
 								    detalle.setId(pkDetalle);
-								   lstDetalle.add(detalle);
+								    lstDetalle.add(detalle);
+								}
+								
+								 
 								   
 								   
 							}else{
@@ -1638,14 +1690,16 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 						 cabecera.setId(pkCabecera);
 						 cabecera.setNombreArchivoTexto(archivo.getTitle());
 						 FiseGrupoInformacion grupoInfo = null;
-							long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion(), cabecera.getId().getMesPresentacion(),FiseConstants.MENSUAL.trim());
+							long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion(), cabecera.getId().getMesPresentacion(),FiseConstants.BIENAL.trim());
 							if (idGrupoInf != 0) {
 								grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
 								nameGrupo = grupoInfo.getDescripcion();
 							}
 							cabecera.setFiseGrupoInformacion(grupoInfo);
 						 
-						 
+							
+                            //nameEstado=FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR;
+							nameEstado="Abierto";
 						
 						 if(tipoOperacion.equalsIgnoreCase(FiseConstants.ADD+"")){
 							 cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
@@ -1690,24 +1744,24 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			
 			
 			
-		}catch(ConstraintViolationException c){
+		}/*catch(ConstraintViolationException c){
 			c.printStackTrace();
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
 			msg.setDescripcion("El formato ya existe");
 			listaError.add(msg);
 			
-		} catch (DataIntegrityViolationException ex) {
+		} */catch (DataIntegrityViolationException ex) {
 			ex.printStackTrace();
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			msg.setDescripcion(ex.toString());
+			msg.setDescripcion("El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar");
 			listaError.add(msg);
 			
 		}catch (NumberFormatException ex) {
 			MensajeErrorBean msg = new MensajeErrorBean();
 			msg.setId(cont);
-			msg.setDescripcion(ex.toString());
+			msg.setDescripcion("El Formato no es válido");
 			listaError.add(msg);
 
 		} catch (Exception ex) {
@@ -1729,7 +1783,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 
 		try {
 
-			String tipo = request.getParameter("tipo");
+			String tipo = request.getParameter("tipoOperacion");
 			String codEmp = request.getParameter("codEmpresa");
 			String anio = request.getParameter("anioPresentacion");
 			String mes = request.getParameter("mesPresentacion");

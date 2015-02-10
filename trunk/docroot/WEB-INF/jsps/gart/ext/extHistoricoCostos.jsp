@@ -97,6 +97,10 @@ var historicoCostos= {
 				//location.href=urlPlot+'&grupoInfoBusq='+historicoCostos.i_grupoInfoBusq.val()+'&formatoBusq='+historicoCostos.i_formatoBusq.val()+'&zonaBusq='+historicoCostos.i_zonaBusq.val()+'&conceptoBusq='+historicoCostos.i_conceptoBusq.val();
 			});
 		    
+			$("#exportarPdf").click(function() {
+				historicoCostos.exportarPdf();
+			});
+			
 		    //eventos por defecto			    
 			//historicoCostos.botonBuscar.trigger('click');
 		    historicoCostos.initBlockUI();
@@ -216,8 +220,34 @@ var historicoCostos= {
 					    }
 				);
 				plot1.replot( { resetAxes: true } );
+				
+				//mostramos el boton de exportar a PDF
+				$('#exportarPdf').css('display','');
 			}
 			
+		},
+		
+		exportarPdf : function(){
+		         try {
+		             var aaa = $('#chkDispersionHid');
+		             try {
+		                 var img = aaa.jqplotToImageElem();
+		             }catch(e){
+		                 //alert('eeee > ' + e);
+		             }
+		             try {
+		                 if($('#chartImgDiv').children().length > 0){
+		                     $('#chartImgDiv').children().remove();
+		                 }
+		             } catch (e) {
+		                // alert('11 ' + e);
+		             }
+		             var doc = new jsPDF("l", "pt", [800, 500]);
+					doc.addImage(img, 'PNG',20,80);
+					doc.save('historicoCostos.pdf');
+				 } catch (e) {
+		             //alert('22 ' + e);
+		         }
 		},
 		
 		//DIALOGOS

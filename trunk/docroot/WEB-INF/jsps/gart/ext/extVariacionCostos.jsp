@@ -84,6 +84,10 @@ var variacionCostos= {
 			//botones
 			this.botonGenerar=$("#<portlet:namespace/>btnGenerar");	
 			
+			$("#exportarPdf").click(function() {
+				variacionCostos.exportarPdf();
+			});
+			
 			//variables de busqueda
 			this.i_grupoInfoBusq=$('#grupoInfoBusq');
 			this.i_formatoBusq=$('#formatoBusq');	
@@ -276,10 +280,36 @@ var variacionCostos= {
 				$('.jqplot-point-label.jqplot-series-1.jqplot-point-0').html('Promedio = '+promedio);
 				//plot1.replot( { resetAxes: true } );
 				
+				//mostramos el boton de exportar a PDF
+				$('#exportarPdf').css('display','');
+				
 			}
 			
 			
 		},
+		
+		exportarPdf : function(){
+	         try {
+	             var aaa = $('#chkDispersionHid');
+	             try {
+	                 var img = aaa.jqplotToImageElem();
+	             }catch(e){
+	                 //alert('eeee > ' + e);
+	             }
+	             try {
+	                 if($('#chartImgDiv').children().length > 0){
+	                     $('#chartImgDiv').children().remove();
+	                 }
+	             } catch (e) {
+	                // alert('11 ' + e);
+	             }
+	             var doc = new jsPDF("l", "pt", [800, 500]);
+				doc.addImage(img, 'PNG',20,80);
+				doc.save('variacionCostos.pdf');
+			 } catch (e) {
+	             //alert('22 ' + e);
+	         }
+	},
 		
 		//DIALOGOS
 		initDialogs : function(){		

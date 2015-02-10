@@ -125,6 +125,13 @@ public class FormatoExcelImport {
 				FiseFormato13AD fise13=new FiseFormato13AD();
 			    FiseFormato13ADPK pk=new FiseFormato13ADPK();
 				
+			  
+			    
+			    
+			    
+			    
+			    
+			    
 				HSSFRow row= hojaF13A.getRow(r);
 				
                 if(c==FiseConstants.COLUMN_K ){
@@ -144,6 +151,9 @@ public class FormatoExcelImport {
 				HSSFCell cellBeneficiario = row.getCell(FiseConstants.COLUMN_N);
 				HSSFCell cellAtiende = row.getCell(FiseConstants.COLUMN_O);
 				HSSFCell cellValor = row.getCell(c);
+				
+				
+				
 				
 				boolean isread=true;
 				if(cellFecha.getCellType() == HSSFCell.CELL_TYPE_STRING && cellFecha.getCellType() != HSSFCell.CELL_TYPE_BLANK ){
@@ -248,7 +258,25 @@ public class FormatoExcelImport {
 					pk.setEtapa(cabecera.getId().getEtapa());
 					
 					fise13.setId(pk);
-					lstDetalle.add(fise13);
+					
+					//validamos edelnor o luz del sur
+				    boolean process = true;
+					
+					if( FiseConstants.ZONABENEF_LIMA == pk.getIdZonaBenef() ){
+						if( FiseConstants.COD_EMPRESA_EDELNOR.equalsIgnoreCase(pk.getCodEmpresa().trim()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equalsIgnoreCase(pk.getCodEmpresa().trim()) ){
+							process = true;
+						}else{
+							process = false;
+						}
+					}else{
+						process = true;
+					}
+					
+					if(process){
+						lstDetalle.add(fise13);
+					}
+					
+					
 				}
 				
 				
@@ -289,7 +317,7 @@ public class FormatoExcelImport {
 					}
 					 System.out.println("CODEMPRESA :::=> "+pk.getCodEmpresa());
 				}else{
-					throw new Exception("Distribuidora Eléctrica no valida ");
+					throw new Exception("Distribuidora Eléctrica no válida ");
 				}
 				
 				
@@ -301,7 +329,7 @@ public class FormatoExcelImport {
 						pk.setMesPresentacion((int)Double.parseDouble(cellF.toString()));
 						
 					}catch(NumberFormatException n){
-						throw new Exception("Año / mes no valido");
+						throw new Exception("Año / mes no válido");
 					}
 					
 			}
@@ -439,9 +467,9 @@ public class FormatoExcelImport {
 				 
 			}catch(NumberFormatException n){
 				numfilallenas=0;
-						throw new Exception("Formato no valido en fila nro :"+(row+1));
+						throw new Exception("Formato no válido en fila nro :"+(row+1));
 			}catch(Exception n1){
-						throw new Exception("Formato no valido en fila nro :"+(row+1));
+						throw new Exception("Formato no válido en fila nro :"+(row+1));
 			}
 			
 			}

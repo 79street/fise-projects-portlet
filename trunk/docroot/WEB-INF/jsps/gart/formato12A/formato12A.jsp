@@ -91,6 +91,9 @@
 												<td colspan="7">
 													<select id="s_empresa_b" name="s_empresa_b" style="width:375px;" class="select"  >
 							   							<!-- <option value="">-Seleccione-</option> -->
+							   							<c:if test="${esAdministrador}">
+															<option value="">-Todos-</option>
+														</c:if>
 														<c:forEach items="${listaEmpresa}" var="emp">																
 															<option value="${emp.codEmpresa}">${emp.dscEmpresa}</option>
 														</c:forEach>

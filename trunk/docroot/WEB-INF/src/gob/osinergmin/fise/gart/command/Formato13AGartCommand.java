@@ -84,6 +84,8 @@ public class Formato13AGartCommand {
 	private String anoInicioVigenciaHidden;
 	private String anoFinVigenciaHidden;
 	
+	private Integer typeFile;
+	
 	private String idGrupoInfo;
 	
 	public List<AdmEmpresa> getListaEmpresas() {
@@ -552,6 +554,14 @@ public class Formato13AGartCommand {
 
 	public void setIdGrupoInfo(String idGrupoInfo) {
 		this.idGrupoInfo = idGrupoInfo;
+	}
+
+	public Integer getTypeFile() {
+		return typeFile;
+	}
+
+	public void setTypeFile(Integer typeFile) {
+		this.typeFile = typeFile;
 	}
 
 	
