@@ -1467,6 +1467,137 @@ public class Formato12AGartController {
 						}
 						//
 						
+						/**validaciones de consistencia de estructura de datos*/
+						//CODEMPRESA - 4
+						if( !FormatoUtil.validaCampoString(formulario.getCodigoEmpresa(),4) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_40)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_40));
+							listaError.add(error);
+						}
+						//ANO PRESENTACION - 4
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getAnioPresent(),4) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_60)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_60));
+							listaError.add(error);
+						}
+						//MES PRESENTACION - 2
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getMesPresent(),2) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_80)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_80));
+							listaError.add(error);
+						}
+						//NRO EMPADRONADOS - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroEmpadR(),10) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_90)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_90));
+							listaError.add(error);
+						}
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroEmpadP(),10) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_100)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_100));
+							listaError.add(error);
+						}
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroEmpadL(),10) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_110)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_110));
+							listaError.add(error);
+						}
+						//NRO AGENTES - 6
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentR(),6) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_120)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_120));
+							listaError.add(error);
+						}
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentP(),6) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_130)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_130));
+							listaError.add(error);	
+						}
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentL(),6) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_140)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_140));
+							listaError.add(error);
+						}
+						//DESPLAZAMIENTO PERSONAL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalR(),18,2) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_150)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_150));
+							listaError.add(error);
+						}
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalP(),18,2) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_160)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_160));
+							listaError.add(error);
+						}
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalL(),18,2) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_170)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_170));
+							listaError.add(error);	
+						}
+						//ACTIVIDADES EXTRAORDINARIAS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordP(),18,2) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_180)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_180));
+							listaError.add(error);
+						}
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordP(),18,2) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_190)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_190));
+							listaError.add(error);
+						}
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordL(),18,2) ){
+							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_200)+FiseConstants.SALTO_LINEA;
+							cont++;
+							MensajeErrorBean error = new MensajeErrorBean();
+							error.setId(cont);
+							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_200));
+							listaError.add(error);
+						}
+						
+						/***/
+						
 						//variacion de periodo de ejecucion
 						
 						if( FiseConstants.BLANCO.equals(sMsg) ){
@@ -1553,7 +1684,8 @@ public class Formato12AGartController {
 
 		} catch (Exception e) {
 			logger.error("Error al leer el archivo excel.",e);
-			String error = e.getMessage();
+			//String error = e.getMessage();
+			String error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
 			sMsg = sMsg+error;	        	
 			cont++;
 			MensajeErrorBean errorBean = new MensajeErrorBean();
@@ -1624,7 +1756,7 @@ public class Formato12AGartController {
 								cont++;
 								MensajeErrorBean error = new MensajeErrorBean();
 								error.setId(cont);
-								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_220));
+								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_220)+"en fila "+cont);
 								listaError.add(error);
 							}
 						}/*else{
@@ -1876,7 +2008,136 @@ public class Formato12AGartController {
 										}
 									}
 									
+									/**validaciones de consistencia de estructura de datos*/
+									//CODEMPRESA - 4
+									if( !FormatoUtil.validaCampoString(formulario.getCodigoEmpresa(),4) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_40)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_40));
+										listaError.add(error);
+									}
+									//ANO PRESENTACION - 4
+									if( !FormatoUtil.validaCampoNumeroEntero(formulario.getAnioPresent(),4) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_60)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_60));
+										listaError.add(error);
+									}
+									//MES PRESENTACION - 2
+									if( !FormatoUtil.validaCampoNumeroEntero(formulario.getMesPresent(),2) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_80)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_80));
+										listaError.add(error);
+									}
+									//NRO EMPADRONADOS - 10
+									if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroEmpadR(),10) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_90)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_90));
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroEmpadP(),10) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_100)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_100));
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroEmpadL(),10) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_110)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_110));
+										listaError.add(error);
+									}
+									//NRO AGENTES - 6
+									if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentR(),6) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_120)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_120));
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentP(),6) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_130)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_130));
+										listaError.add(error);	
+									}
+									if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentL(),6) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_140)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_140));
+										listaError.add(error);
+									}
+									//DESPLAZAMIENTO PERSONAL - 18,2
+									if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalR(),18,2) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_150)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_150));
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalP(),18,2) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_160)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_160));
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalL(),18,2) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_170)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_170));
+										listaError.add(error);	
+									}
+									//ACTIVIDADES EXTRAORDINARIAS - 18,2
+									if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordP(),18,2) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_180)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_180));
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordP(),18,2) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_190)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_190));
+										listaError.add(error);
+									}
+									if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordL(),18,2) ){
+										sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_200)+FiseConstants.SALTO_LINEA;
+										cont++;
+										MensajeErrorBean error = new MensajeErrorBean();
+										error.setId(cont);
+										error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_200));
+										listaError.add(error);
+									}
 									
+									/***/
 									
 									
 								}
@@ -1924,6 +2185,10 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_10));
 							listaError.add(error);
 						}*/
+					}else{
+						cont++;
+						sMsg = sMsg + "El archivo cargado debe contener información para el Formato 12A ";
+						throw new Exception("El archivo cargado debe contener información para el Formato 12A ");
 					}
 					is.close();
 					

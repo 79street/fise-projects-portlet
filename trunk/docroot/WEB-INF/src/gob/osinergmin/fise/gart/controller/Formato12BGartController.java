@@ -394,6 +394,9 @@ public class Formato12BGartController {
 		String codEmp = null;
 		String periodo = null;
 		
+		String anoEjecucion = uploadPortletRequest.getParameter("anoEjecucionGasto");
+		String mesEjecucion = uploadPortletRequest.getParameter("mesEjecucionGasto");
+		
 		if(tipoaccion != null && tipoaccion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))){
 			 codEmp = uploadPortletRequest.getParameter("codEmpresaHidden");
 			 periodo = uploadPortletRequest.getParameter("peridoDeclaracionHidden");
@@ -423,6 +426,9 @@ public class Formato12BGartController {
 			command.setPeridoDeclaracion(FiseUtil.descripcionPeriodo(cabeceraPk.getMesPresentacion().longValue(), cabeceraPk.getAnoPresentacion().longValue(), cabeceraPk.getEtapa()));
 
 		}
+		cabeceraPk.setAnoEjecucionGasto(Integer.parseInt(anoEjecucion));
+		cabeceraPk.setMesEjecucionGasto(Integer.parseInt(mesEjecucion));
+		
 		System.out.println("tipoaccion::" + tipoaccion);
 		System.out.println("codEmp::" + codEmp);
 		System.out.println("periodo::" + periodo);
@@ -476,8 +482,8 @@ public class Formato12BGartController {
 		response.setRenderParameter("anoPresentacion", cabeceraPk.getAnoPresentacion() + "");
 		response.setRenderParameter("mesPresentacion", cabeceraPk.getMesPresentacion() + "");
 		response.setRenderParameter("etapa", cabeceraPk.getEtapa());
-		response.setRenderParameter("anoEjecucionGasto", cabeceraPk.getAnoPresentacion() + "");
-		response.setRenderParameter("mesEjecucionGasto", cabeceraPk.getMesPresentacion() + "");
+		response.setRenderParameter("anoEjecucionGasto", cabeceraPk.getAnoEjecucionGasto() + "");
+		response.setRenderParameter("mesEjecucionGasto", cabeceraPk.getMesEjecucionGasto() + "");
 		
 		
 
@@ -859,54 +865,68 @@ public class Formato12BGartController {
 						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)
 								&& pk.getAnoEjecucionGasto()==Integer.parseInt(anioEjec) && pk.getMesEjecucionGasto()==Integer.parseInt(mesEjec)
 								){
+							
+							boolean process = true;
 								
-							FiseFormato12BDPK pkDetalle=new FiseFormato12BDPK();
-							FiseFormato12BD detalle=new FiseFormato12BD();
-							pkDetalle.setCodEmpresa(codEm);
-							pkDetalle.setAnoEjecucionGasto(Integer.parseInt(anioEjec));
-							pkDetalle.setAnoPresentacion(Integer.parseInt(anioEjec));
-							pkDetalle.setEtapa(pk.getEtapa());
-							pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
-							pkDetalle.setMesEjecucionGasto(Integer.parseInt(mesEjec));
-							pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
-								   
-							FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_ESTABLECIDO);
-							// formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
-							detalle.setNumeroValesImpreso(numValesImp.trim()!=null && !numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
-							detalle.setCostoEstandarUnitValeImpre(fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
-							detalle.setCostoTotalImpresionVale(detalle.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(detalle.getNumeroValesImpreso())).setScale(2, BigDecimal.ROUND_DOWN));
-									  
-							detalle.setNumeroValesRepartidosDomi(numValesRepar.trim()!=null && !numValesRepar.trim().isEmpty()?Integer.parseInt(numValesRepar.trim()):0);
-							detalle.setCostoEstandarUnitValeRepar(fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
-							detalle.setCostoTotalRepartoValesDomi(detalle.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(detalle.getNumeroValesRepartidosDomi())).setScale(2, BigDecimal.ROUND_DOWN));
-									  
-							detalle.setNumeroValesEntregadoDisEl(numValesEntrDE.trim()!=null && !numValesEntrDE.trim().isEmpty()?Integer.parseInt(numValesEntrDE.trim()):0);
-							detalle.setCostoEstandarUnitValDisEl(fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
-							detalle.setCostoTotalEntregaValDisEl(detalle.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(detalle.getNumeroValesEntregadoDisEl()) ).setScale(2, BigDecimal.ROUND_DOWN));
-							  
-							detalle.setNumeroValesFisicosCanjeados(numValesFisico.trim()!=null && !numValesFisico.trim().isEmpty()?Integer.parseInt(numValesFisico.trim()):0);
-							detalle.setCostoEstandarUnitValFiCan(fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
-							detalle.setCostoTotalCanjeLiqValeFis(detalle.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(detalle.getNumeroValesFisicosCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
-									  
-							detalle.setNumeroValesDigitalCanjeados(numValesDigital.trim()!=null && !numValesDigital.trim().isEmpty()?Integer.parseInt(numValesDigital.trim()):0);
-							detalle.setCostoEstandarUnitValDgCan(fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
-							detalle.setCostoTotalCanjeLiqValeDig(detalle.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(detalle.getNumeroValesDigitalCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
-							  
-							detalle.setNumeroAtenciones(numValeAtenciones.trim()!=null && !numValeAtenciones.trim().isEmpty()?Integer.parseInt(numValeAtenciones.trim()):0);
-							detalle.setCostoEstandarUnitAtencion(fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0).setScale(2, BigDecimal.ROUND_DOWN));
-							detalle.setCostoTotalAtencionConsRecl(detalle.getCostoEstandarUnitAtencion().multiply(new BigDecimal(detalle.getNumeroAtenciones()) ));
-									  
-							detalle.setTotalGestionAdministrativa(numValeGestion.trim()!=null && !numValeGestion.trim().isEmpty()?new BigDecimal(numValeGestion.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0) );
-							detalle.setTotalDesplazamientoPersonal(numValeDesplazamiento.trim()!=null && !numValeDesplazamiento.trim().isEmpty()?new BigDecimal(numValeDesplazamiento.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-							detalle.setTotalActividadesExtraord(numValeActividad.trim()!=null && !numValeActividad.trim().isEmpty()?new BigDecimal(numValeActividad.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-									  
-							detalle.setTotalReconocer(totalreconocer.trim()!=null && !totalreconocer.trim().isEmpty()?new BigDecimal(totalreconocer.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-								   
-									  
-									  
-							detalle.setId(pkDetalle);
-							lstDetalle.add(detalle);
-								   
+							if( FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(idzon.trim()) ){
+								if( FiseConstants.COD_EMPRESA_EDELNOR.equalsIgnoreCase(pk.getCodEmpresa().trim()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equalsIgnoreCase(pk.getCodEmpresa().trim()) ){
+									process = true;
+								}else{
+									process = false;
+								}
+							}else{
+								process = true;
+							}
+					
+							if(process){
+								FiseFormato12BDPK pkDetalle=new FiseFormato12BDPK();
+								FiseFormato12BD detalle=new FiseFormato12BD();
+								pkDetalle.setCodEmpresa(codEm);
+								pkDetalle.setAnoEjecucionGasto(Integer.parseInt(anioEjec));
+								pkDetalle.setAnoPresentacion(Integer.parseInt(anioEjec));
+								pkDetalle.setEtapa(pk.getEtapa());
+								pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
+								pkDetalle.setMesEjecucionGasto(Integer.parseInt(mesEjec));
+								pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
+									   
+								FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_ESTABLECIDO);
+								// formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
+								detalle.setNumeroValesImpreso(numValesImp.trim()!=null && !numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
+								detalle.setCostoEstandarUnitValeImpre(fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
+								detalle.setCostoTotalImpresionVale(detalle.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(detalle.getNumeroValesImpreso())).setScale(2, BigDecimal.ROUND_DOWN));
+										  
+								detalle.setNumeroValesRepartidosDomi(numValesRepar.trim()!=null && !numValesRepar.trim().isEmpty()?Integer.parseInt(numValesRepar.trim()):0);
+								detalle.setCostoEstandarUnitValeRepar(fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
+								detalle.setCostoTotalRepartoValesDomi(detalle.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(detalle.getNumeroValesRepartidosDomi())).setScale(2, BigDecimal.ROUND_DOWN));
+										  
+								detalle.setNumeroValesEntregadoDisEl(numValesEntrDE.trim()!=null && !numValesEntrDE.trim().isEmpty()?Integer.parseInt(numValesEntrDE.trim()):0);
+								detalle.setCostoEstandarUnitValDisEl(fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
+								detalle.setCostoTotalEntregaValDisEl(detalle.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(detalle.getNumeroValesEntregadoDisEl()) ).setScale(2, BigDecimal.ROUND_DOWN));
+								  
+								detalle.setNumeroValesFisicosCanjeados(numValesFisico.trim()!=null && !numValesFisico.trim().isEmpty()?Integer.parseInt(numValesFisico.trim()):0);
+								detalle.setCostoEstandarUnitValFiCan(fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
+								detalle.setCostoTotalCanjeLiqValeFis(detalle.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(detalle.getNumeroValesFisicosCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
+										  
+								detalle.setNumeroValesDigitalCanjeados(numValesDigital.trim()!=null && !numValesDigital.trim().isEmpty()?Integer.parseInt(numValesDigital.trim()):0);
+								detalle.setCostoEstandarUnitValDgCan(fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
+								detalle.setCostoTotalCanjeLiqValeDig(detalle.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(detalle.getNumeroValesDigitalCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
+								  
+								detalle.setNumeroAtenciones(numValeAtenciones.trim()!=null && !numValeAtenciones.trim().isEmpty()?Integer.parseInt(numValeAtenciones.trim()):0);
+								detalle.setCostoEstandarUnitAtencion(fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0).setScale(2, BigDecimal.ROUND_DOWN));
+								detalle.setCostoTotalAtencionConsRecl(detalle.getCostoEstandarUnitAtencion().multiply(new BigDecimal(detalle.getNumeroAtenciones()) ));
+										  
+								detalle.setTotalGestionAdministrativa(numValeGestion.trim()!=null && !numValeGestion.trim().isEmpty()?new BigDecimal(numValeGestion.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0) );
+								detalle.setTotalDesplazamientoPersonal(numValeDesplazamiento.trim()!=null && !numValeDesplazamiento.trim().isEmpty()?new BigDecimal(numValeDesplazamiento.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+								detalle.setTotalActividadesExtraord(numValeActividad.trim()!=null && !numValeActividad.trim().isEmpty()?new BigDecimal(numValeActividad.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+										  
+								detalle.setTotalReconocer(totalreconocer.trim()!=null && !totalreconocer.trim().isEmpty()?new BigDecimal(totalreconocer.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+									   
+										  
+										  
+								detalle.setId(pkDetalle);
+								lstDetalle.add(detalle);
+							}
+
 								   
 						}else{
 							//El archivo cargado no corresponde a la Distribuidora Eléctrica, Mes o Año de Presentación del registro del formulario
