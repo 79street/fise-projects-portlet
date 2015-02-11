@@ -37,15 +37,15 @@ $(document).ready(function () {
 				
 			     <table style="width: 100%;" border="0">
 						<tr>
-							<td>
+							<td colspan="2">
 								<!-- <output class="net-titulo">Situación actual de la declaración de Gastos</output> -->
 							</td>
 						</tr>
 						<tr height="10px">
-							<td></td>
+							<td colspan="2"></td>
 						</tr>
 						<tr>
-							<td class="filete">
+							<td class="filete" colspan="2">
 								<fieldset class="">
 									<table class="" style="width: 100%;" border="0">
 										<tr>
@@ -90,10 +90,10 @@ $(document).ready(function () {
 							</td>
 						</tr>
 						<tr height="10px">
-							<td></td>
+							<td colspan="2"></td>
 						</tr>
 						<tr>
-							<td align="center">
+							<td align="center" colspan="2">
 								<!-- nuevo div para mostrar la grafica -->
 								<div id="divDispersionHid" style="overflow: auto; width: 100%; height:400px; padding: 4px;">
 					            	<div id="chkDispersionHid" style="width:1000px; height:400px;">
@@ -107,12 +107,15 @@ $(document).ready(function () {
 							</td>
 						</tr>
 						<tr height="10px">
-							<td align="left">
+							<td align="left" width="110px" >
 								<input id="exportarPdf" type="button" value="Exportar a PDF" style="display:none;" />
+							</td>
+							<td align="left">
+								<input id="exportarExcel" type="button" value="Exportar a Excel" style="display:block;" />
 							</td>
 						</tr>
 						<tr height="10px">
-							<td></td>
+							<td colspan="2"></td>
 						</tr>			
 					</table>			
 				</div>								
