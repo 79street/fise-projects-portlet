@@ -1539,8 +1539,290 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2220);
 							}
 						}
+
 						
+						/**validacion de estructura de campos*/
+						//COD EMPRESA - 4
+						if( !FormatoUtil.validaCampoString(formulario.getCodigoEmpresa(),4) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1640);
+						}
+						//ANO PRESENTACION - 4
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getAnioPresent(),4) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1660);
+						}
+						//MES PRESENTACION - 2
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getMesPresent(),2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1680);
+						}
 						
+						//-------RURAL
+						
+						//IMPR ESQUELA INVITACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprEsqInvitR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1690);
+						}
+						//IMPR DECLAR JURADA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprDeclaJuradaR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1700);
+						}
+						//IMPR FICHA VERIFICACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprFichaVerifR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1710);
+						}
+						//REP ESQUELA INVITACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepartoEsqInvitR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1720);
+						}
+						//VERIFI INFORMACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getVerifInfoR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1730);
+						}
+						//ELAB ARCHIVO BENEFICIARIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getElabArchivoBenefR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1740);
+						}
+						//DIGIT FICHA BENEFICIARIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDigitFichaBenefR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1750);
+						}
+						//IMPR VOLANTES - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprVolantesR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1760);
+						}
+						//IMPR AFICHES - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprAfichesR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1770);
+						}
+						//REP FOLLETOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepFolletosR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1780);
+						}
+						//SPOT PUBLIC TV - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublTvR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1790);
+						}
+						//SPOT PUBLIC RADIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublRadioR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1791);
+						}
+						//NRO EMPADRONADOS - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroBenefEmpadR(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1800);
+						}
+						//PROM CONVENIOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getPromConvAgentR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1810);
+						}
+						//REG FIRMA CONVENIOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRegConvAgentR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1820);
+						}
+						//IMPR BANDEROAL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpEntrBandR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1830);
+						}
+						//NRO AGENTES - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentR(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1840);
+						}
+						
+						//-------PROVINCIA
+						
+						//IMPR ESQUELA INVITACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprEsqInvitP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1850);
+						}
+						//IMPR DECLAR JURADA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprDeclaJuradaP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1860);
+						}
+						//IMPR FICHA VERIFICACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprFichaVerifP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1870);
+						}
+						//REP ESQUELA INVITACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepartoEsqInvitP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1880);
+						}
+						//VERIFI INFORMACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getVerifInfoP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1890);
+						}
+						//ELAB ARCHIVO BENEFICIARIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getElabArchivoBenefP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1900);
+						}
+						//DIGIT FICHA BENEFICIARIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDigitFichaBenefP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1910);
+						}
+						//IMPR VOLANTES - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprVolantesP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1920);
+						}
+						//IMPR AFICHES - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprAfichesP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1930);
+						}
+						//REP FOLLETOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepFolletosP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1940);
+						}
+						//SPOT PUBLIC TV - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublTvP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1950);
+						}
+						//SPOT PUBLIC RADIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublRadioP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1951);
+						}
+						//NRO EMPADRONADOS - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroBenefEmpadP(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1960);
+						}
+						//PROM CONVENIOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getPromConvAgentP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1970);
+						}
+						//REG FIRMA CONVENIOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRegConvAgentP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1980);
+						}
+						//IMPR BANDEROAL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpEntrBandP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_1990);
+						}
+						//NRO AGENTES - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentP(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2000);
+						}
+						
+						//-------LIMA
+						
+						//IMPR ESQUELA INVITACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprEsqInvitL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2010);
+						}
+						//IMPR DECLAR JURADA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprDeclaJuradaL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2020);
+						}
+						//IMPR FICHA VERIFICACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprFichaVerifL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2030);
+						}
+						//REP ESQUELA INVITACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepartoEsqInvitL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2040);
+						}
+						//VERIFI INFORMACION - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getVerifInfoL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2050);
+						}
+						//ELAB ARCHIVO BENEFICIARIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getElabArchivoBenefL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2060);
+						}
+						//DIGIT FICHA BENEFICIARIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDigitFichaBenefL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2070);
+						}
+						//IMPR VOLANTES - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprVolantesL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2080);
+						}
+						//IMPR AFICHES - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprAfichesL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2090);
+						}
+						//REP FOLLETOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepFolletosL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2100);
+						}
+						//SPOT PUBLIC TV - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublTvL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2110);
+						}
+						//SPOT PUBLIC RADIO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublRadioL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2111);
+						}
+						//NRO EMPADRONADOS - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroBenefEmpadL(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2120);
+						}
+						//PROM CONVENIOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getPromConvAgentL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2130);
+						}
+						//REG FIRMA CONVENIOS - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRegConvAgentL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2140);
+						}
+						//IMPR BANDEROAL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpEntrBandL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2150);
+						}
+						//NRO AGENTES - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentL(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2160);
+						}
+						
+						/***/
 						///
 						
 						/**verificar*/
@@ -1687,7 +1969,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 							listaDetalleTxt.add(sCurrentLine);
 						}else{
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2240);
+							sMsg = fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2240, cont);
 						}
 					}/*else{
 						cont++;
@@ -1966,6 +2248,273 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 									}
 								}
 								
+								/**validacion de estructura de campos*/
+								
+								//-------RURAL
+								
+								//IMPR ESQUELA INVITACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprEsqInvitR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2310);
+								}
+								//IMPR DECLAR JURADA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprDeclaJuradaR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2320);
+								}
+								//IMPR FICHA VERIFICACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprFichaVerifR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2330);
+								}
+								//REP ESQUELA INVITACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepartoEsqInvitR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2340);
+								}
+								//VERIFI INFORMACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getVerifInfoR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2350);
+								}
+								//ELAB ARCHIVO BENEFICIARIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getElabArchivoBenefR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2360);
+								}
+								//DIGIT FICHA BENEFICIARIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDigitFichaBenefR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2370);
+								}
+								//IMPR VOLANTES - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprVolantesR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2380);
+								}
+								//IMPR AFICHES - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprAfichesR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2390);
+								}
+								//REP FOLLETOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepFolletosR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2400);
+								}
+								//SPOT PUBLIC TV - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublTvR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
+								}
+								//SPOT PUBLIC RADIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublRadioR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2411);
+								}
+								//NRO EMPADRONADOS - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroBenefEmpadR(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2420);
+								}
+								//PROM CONVENIOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getPromConvAgentR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2430);
+								}
+								//REG FIRMA CONVENIOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRegConvAgentR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2440);
+								}
+								//IMPR BANDEROAL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpEntrBandR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2450);
+								}
+								//NRO AGENTES - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentR(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2460);
+								}
+								
+								//-------PROVINCIA
+								
+								//IMPR ESQUELA INVITACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprEsqInvitP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2310);
+								}
+								//IMPR DECLAR JURADA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprDeclaJuradaP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2320);
+								}
+								//IMPR FICHA VERIFICACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprFichaVerifP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2330);
+								}
+								//REP ESQUELA INVITACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepartoEsqInvitP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2340);
+								}
+								//VERIFI INFORMACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getVerifInfoP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2350);
+								}
+								//ELAB ARCHIVO BENEFICIARIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getElabArchivoBenefP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2360);
+								}
+								//DIGIT FICHA BENEFICIARIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDigitFichaBenefP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2370);
+								}
+								//IMPR VOLANTES - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprVolantesP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2380);
+								}
+								//IMPR AFICHES - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprAfichesP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2390);
+								}
+								//REP FOLLETOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepFolletosP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2400);
+								}
+								//SPOT PUBLIC TV - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublTvP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
+								}
+								//SPOT PUBLIC RADIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublRadioP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2411);
+								}
+								//NRO EMPADRONADOS - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroBenefEmpadP(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2420);
+								}
+								//PROM CONVENIOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getPromConvAgentP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2430);
+								}
+								//REG FIRMA CONVENIOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRegConvAgentP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2440);
+								}
+								//IMPR BANDEROAL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpEntrBandP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2450);
+								}
+								//NRO AGENTES - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentP(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2460);
+								}
+								
+								//-------LIMA
+								
+								//IMPR ESQUELA INVITACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprEsqInvitL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2310);
+								}
+								//IMPR DECLAR JURADA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprDeclaJuradaL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2320);
+								}
+								//IMPR FICHA VERIFICACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprFichaVerifL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2330);
+								}
+								//REP ESQUELA INVITACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepartoEsqInvitL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2340);
+								}
+								//VERIFI INFORMACION - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getVerifInfoL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2350);
+								}
+								//ELAB ARCHIVO BENEFICIARIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getElabArchivoBenefL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2360);
+								}
+								//DIGIT FICHA BENEFICIARIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDigitFichaBenefL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2370);
+								}
+								//IMPR VOLANTES - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprVolantesL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2380);
+								}
+								//IMPR AFICHES - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImprAfichesL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2390);
+								}
+								//REP FOLLETOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRepFolletosL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2400);
+								}
+								//SPOT PUBLIC TV - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublTvL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2410);
+								}
+								//SPOT PUBLIC RADIO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getSpotPublRadioL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2411);
+								}
+								//NRO EMPADRONADOS - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroBenefEmpadL(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2420);
+								}
+								//PROM CONVENIOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getPromConvAgentL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2430);
+								}
+								//REG FIRMA CONVENIOS - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getRegConvAgentL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2440);
+								}
+								//IMPR BANDEROAL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpEntrBandL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2450);
+								}
+								//NRO AGENTES - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentL(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2460);
+								}
+								
+								/***/
 								
 							}
 							//
@@ -1999,6 +2548,10 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 						}
 						
 					}
+				}else{
+					cont++;
+					sMsg = sMsg + "El archivo cargado debe contener información para el Formato 14A ";
+					throw new Exception("El archivo cargado debe contener información para el Formato 14A ");
 				}
 				is.close();
 				
@@ -2015,7 +2568,8 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 		
 	}catch (Exception e) {			   
 		  //refer.setCondicion(false);				  
-		String error = e.getMessage();
+		//String error = e.getMessage();
+		String error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
 		sMsg = sMsg+error;	        	
 		System.out.println(error);
 		cont++;

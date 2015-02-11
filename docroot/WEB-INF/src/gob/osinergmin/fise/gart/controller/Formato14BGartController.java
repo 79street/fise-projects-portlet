@@ -1537,7 +1537,8 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 
 		} catch (Exception e) {
 			logger.error("Error al leer el archivo excel.",e);
-			String error = e.getMessage();
+			//String error = e.getMessage();
+			String error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
 			sMsg = sMsg+error;	        	
 			cont++;
 			MensajeErrorBean errorBean = new MensajeErrorBean();
@@ -1624,7 +1625,7 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 							listaDetalleTxt.add(sCurrentLine);
 						}else{
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3030);
+							sMsg = fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3030, cont);
 						}
 					}/*else{
 						cont++;
@@ -1924,6 +1925,10 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 						}
 						
 					}
+				}else{
+					cont++;
+					sMsg = sMsg + "El archivo cargado debe contener información para el Formato 14B ";
+					throw new Exception("El archivo cargado debe contener información para el Formato 14B ");
 				}
 				is.close();
 				
