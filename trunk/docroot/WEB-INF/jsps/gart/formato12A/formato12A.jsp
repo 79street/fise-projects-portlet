@@ -892,6 +892,7 @@
 	<div id="dialog-message-warning" title="Mensaje de Advertencia">
 		<p>
 			<img src="/fise-projects-portlet/images/warning.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
 			<label class="labelCentrado" id="dialog-message-warning-content">Datos grabados exit&oacute;samente.</label>
 		</p>	
 	</div>
