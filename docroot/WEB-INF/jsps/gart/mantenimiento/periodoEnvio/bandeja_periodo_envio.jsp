@@ -109,7 +109,7 @@ $(document).ready(function () {
 													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
 												</form:select>
 											</td>
-											<td><output>Habilitado Envio:</output></td>
+											<td><output>Habilitado Envío:</output></td>
 											<td colspan="4">
 												<form:select path="flagEnvioBusq" cssClass="select" cssStyle="width: 110px;">
 													<form:option value="0">Todos</form:option>

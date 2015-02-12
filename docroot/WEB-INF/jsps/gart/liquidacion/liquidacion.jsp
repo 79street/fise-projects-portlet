@@ -63,7 +63,7 @@ $(document).ready(function () {
 										<tr>										
 											<td><output>Grupo Información:</output></td>
 											<td>												
-												 <form:select path="grupoInfBusq" cssClass="select" cssStyle="width: 200px;">															
+												<form:select path="grupoInfBusq" cssClass="select" cssStyle="width: 200px;">															
 												    <form:options items="${liquidacionBean.listaGrupoInf}"  itemLabel="descripcion" itemValue="idGrupoInformacion"/>
 												</form:select>													
 											</td>		
@@ -302,10 +302,31 @@ $(document).ready(function () {
 											<td></td>
 										</tr>					
 										<tr>
-									     <td>											
-										   <table style="width: 100%;" border="0">
-											  <tr>										   
-											   <td><label style="font-size: 12px; font-weight: bold">Descripción Motivo:</label>
+									     <td>
+									      	
+									       <div id="<portlet:namespace/>div_actividades">
+									        <table style="width: 100%;" border="0">											   
+										     <tr>											      									   
+											   <td style="width:220px"><label style="font-size: 12px; font-weight: bold">Ítem del Formato:</label>
+											   </td>
+											   <td>												
+												<form:select path="itemActividad" cssClass="select" cssStyle="width: 200px;">
+												    <c:forEach items="${listaActividades}" var="actividad">
+												       <option value="${actividad.codigoItem}">${actividad.descripcionItem}</option>
+												    </c:forEach>
+												</form:select>		  
+											   </td>								   
+										     </tr>	
+										     <tr height="10px">
+											   <td></td>
+											   <td></td>
+										    </tr>											
+										    </table>		
+									       </div>	
+									       									
+										   <table style="width: 100%;" border="0">						      
+											 <tr>										   
+											   <td style="width:220px"><label style="font-size: 12px; font-weight: bold">Descripción Motivo:</label>
 											   </td>
 											   <td>
 												 <form:textarea path="descMotivo" cols="80" rows="4" onkeypress="return soloLetras(event)"/>  
