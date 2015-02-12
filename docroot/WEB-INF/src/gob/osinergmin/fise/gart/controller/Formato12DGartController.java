@@ -2228,12 +2228,12 @@ public class Formato12DGartController {
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3494,i+1));
 									}
 									//ANO EJECUCION - 4
-									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getAnioPresentacion(),4) ){
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getAnioEjecucion(),4) ){
 										cont++;
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3485,i+1));
 									}
 									//MES EJECUCION - 2
-									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getMesPresentacion(),2) ){
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getMesEjecucion(),2) ){
 										cont++;
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3487,i+1));
 									}
