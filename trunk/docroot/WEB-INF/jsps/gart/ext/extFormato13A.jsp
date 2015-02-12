@@ -46,6 +46,8 @@ var formato13A= {
 	urlReporteActaEnvio:null,
 	//
 	
+	dialogError:null,
+	
 	//addd
 	dialogMessageInfo:null,
 	dialogMessageInfoContent:null,
@@ -85,6 +87,8 @@ var formato13A= {
 	txtInicioVig:null,
 	txtFinVig:null,
 	
+	msgTransaccion:null,
+	
 	labelEstado:null,
 	labelGrupoInfo:null,
 	estado:null,
@@ -101,6 +105,7 @@ var formato13A= {
 	btnCargarFormatoTexto:null,
 	
 	divOverlay:null,
+	
 	//add
 	dialogObservacion:null,
 	dialogMessageReport:null,
@@ -322,6 +327,8 @@ var formato13A= {
 		
 		this.typeFile=$("#typeFile");
 		
+		this.msgTransaccion=$("#msgTransaccion");
+		
 		this.urlCargaFlagPeriodo='<portlet:resourceURL id="cargaFlagPeriodo" />';
 		
 		this.urlBusquedaDetalle='<portlet:resourceURL id="busquedaDetalle" />';
@@ -334,6 +341,8 @@ var formato13A= {
 		this.divInformacion=$("#<portlet:namespace/>divInformacion");
 		
 		this.emailConfigured='<%=PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER)%>';
+		
+		this.dialogError=$("#<portlet:namespace/>dialog-form-error");
 		
 		//add
 		this.tablaDeclaracionView=$("#<portlet:namespace/>grid_formato_declaracionView");
@@ -460,6 +469,14 @@ var formato13A= {
 				location.href=urlRegresarBusqueda;
 			});
 			
+			//mostramos el mensaje de informacion
+			if( formato13A.msgTransaccion.val()=='OK' ){
+				var addhtml='La carga de información del Formato 13A se realizó satisfactoriamente';
+				formato13A.lblMessage.html(addhtml);
+				formato13A.dialogMessageGeneral.dialog("open");
+			}else if( formato13A.msgTransaccion.val()=='ERROR' ){
+				formato13A.dialogError.dialog( "open" );
+			}
 
 		}if(operacion=='READ'){
 			
@@ -513,6 +530,15 @@ var formato13A= {
 			//validacion y envio definitivo
 			formato13A.botonValidacion.click(function() {formato13A.<portlet:namespace/>validacionFormato();});
 			formato13A.botonEnvioDefinitivo.click(function() {formato13A.confirmarEnvioDefinitivo();});
+			
+			//mostramos el mensaje de informacion
+			if( formato13A.msgTransaccion.val()=='OK' ){
+				var addhtml='La carga de información del Formato 13A se realizó satisfactoriamente';
+				formato13A.lblMessage.html(addhtml);
+				formato13A.dialogMessageGeneral.dialog("open");
+			}else if( formato13A.msgTransaccion.val()=='ERROR' ){
+				formato13A.dialogError.dialog( "open" );
+			}
 			
 		}
 		
@@ -1836,6 +1862,16 @@ var formato13A= {
 			close: function(event,ui){
 				formato13A.botonRegresarBusqueda.trigger('click');
 	       	}
+		});
+		formato13A.dialogError.dialog({
+			modal: true,
+			width: 750,
+			autoOpen: false,
+			buttons: {
+				Cerrar: function() {
+					$(this).dialog("close");
+				}
+			}
 		});
 		formato13A.dialogConfirmEnvio.dialog({
 			modal: true,

@@ -2262,12 +2262,12 @@ public class Formato12CGartController {
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3371,i+1));
 									}
 									//ANO EJECUCION - 4
-									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getAnioPresentacion(),4) ){
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getAnioEjecucion(),4) ){
 										cont++;
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357,i+1));
 									}
 									//MES EJECUCION - 2
-									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getMesPresentacion(),2) ){
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getMesEjecucion(),2) ){
 										cont++;
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3359,i+1));
 									}
