@@ -1481,6 +1481,275 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 //						}
 						///
 						
+						
+						/**validacion de estructura de campos*/
+						//COD EMPRESA - 4
+						if( !FormatoUtil.validaCampoString(formulario.getCodigoEmpresa(),4) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2490);
+						}
+						//ANO PRESENTACION - 4 
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getAnioPresent(),4) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2510);
+						}
+						//MES PRESENTACION - 2
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getMesPresent(),2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2530);
+						}
+						
+						//----RURAL
+						
+						//IMPR VALES EDE - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoEdeR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2540);
+						}
+						//IMPR VALES NO EDE - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoNoEdeR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2550);
+						}
+						//NRO VALES IMPR - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesImpR(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2560);
+						}
+						//TOTAL REP VALES DSCTO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValDesctoR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2570);
+						}
+						//NRO VALES REPART - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesReptR(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2580);
+						}
+						//TOTAL REP VALES OFICINA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValOficR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2590);
+						}
+						//NO VALES ENTR - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesEntrR(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2600);
+						}
+						//TOTAL ENVIO PADRON - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoEnvPadronR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2610);
+						}
+						//NRO VALES FISICOS - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesFisR(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2620);
+						}
+						//COSTO UNIT VALES DIGIT - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoUnitValesDigitR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2630);
+						}
+						//COSTO ATENCION SOLIC - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenSolicR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2640);
+						}
+						//COSTO ATENCION CONSUL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenConsR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2650);
+						}
+						//NRO ATENCIONES - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroTotalAtenR(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2660);
+						}
+						//COSTO PERSONAL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoPersonalR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2670);
+						}
+						//CAPAC AGENT - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCapacAgentR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2680);
+						}
+						//UTIL MAT OFICINA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getUtilMatOficR(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2690);
+						}
+						//-----PROVINCIA
+						
+						//IMPR VALES EDE - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoEdeP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2700);
+						}
+						//IMPR VALES NO EDE - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoNoEdeP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2710);
+						}
+						//NRO VALES IMPR - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesImpP(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2720);
+						}
+						//TOTAL REP VALES DSCTO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValDesctoP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2730);
+						}
+						//NRO VALES REPART - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesReptP(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2740);
+						}
+						//TOTAL REP VALES OFICINA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValOficP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2750);
+						}
+						//NO VALES ENTR - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesEntrP(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2760);
+						}
+						//TOTAL ENVIO PADRON - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoEnvPadronP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2770);
+						}
+						//NRO VALES FISICOS - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesFisP(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2780);
+						}
+						//COSTO UNIT VALES DIGIT - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoUnitValesDigitP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2790);
+						}
+						//COSTO ATENCION SOLIC - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenSolicP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2800);
+						}
+						//COSTO ATENCION CONSUL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenConsP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2810);
+						}
+						//NRO ATENCIONES - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroTotalAtenP(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2820);
+						}
+						//COSTO PERSONAL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoPersonalP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2830);
+						}
+						//CAPAC AGENT - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCapacAgentP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2840);
+						}
+						//UTIL MAT OFICINA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getUtilMatOficP(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2850);
+						}
+						
+						//----LIMA
+						
+						//IMPR VALES EDE - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoEdeL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2860);
+						}
+						//IMPR VALES NO EDE - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoNoEdeL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2870);
+						}
+						//NRO VALES IMPR - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesImpL(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2880);
+						}
+						//TOTAL REP VALES DSCTO - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValDesctoL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2890);
+						}
+						//NRO VALES REPART - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesReptL(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2900);
+						}
+						//TOTAL REP VALES OFICINA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValOficL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2910);
+						}
+						//NO VALES ENTR - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesEntrL(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2920);
+						}
+						//TOTAL ENVIO PADRON - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoEnvPadronL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2930);
+						}
+						//NRO VALES FISICOS - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesFisL(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2940);
+						}
+						//COSTO UNIT VALES DIGIT - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoUnitValesDigitL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2950);
+						}
+						//COSTO ATENCION SOLIC - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenSolicL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2960);
+						}
+						//COSTO ATENCION CONSUL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenConsL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2970);
+						}
+						//NRO ATENCIONES - 10
+						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroTotalAtenL(),10) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2980);
+						}
+						//COSTO PERSONAL - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoPersonalL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2990);
+						}
+						//CAPAC AGENT - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCapacAgentL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3000);
+						}
+						//UTIL MAT OFICINA - 18,2
+						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getUtilMatOficL(),18,2) ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3010);
+						}
+						
+						
+						/***/
+						
 						/**verificar*/
 						formulario.setAnioInicioVigencia(Long.parseLong(anioIniVigencia));
 						formulario.setAnioFinVigencia(Long.parseLong(anioFinVigencia));
@@ -1892,6 +2161,257 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 									}
 								}
 								
+								/**validacion de estructura*/
+								
+								//----RURAL
+								
+								//IMPR VALES EDE - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoEdeR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3100);
+								}
+								//IMPR VALES NO EDE - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoNoEdeR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3110);
+								}
+								//NRO VALES IMPR - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesImpR(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3120);
+								}
+								//TOTAL REP VALES DSCTO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValDesctoR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3130);
+								}
+								//NRO VALES REPART - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesReptR(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3140);
+								}
+								//TOTAL REP VALES OFICINA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValOficR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3150);
+								}
+								//NO VALES ENTR - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesEntrR(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3160);
+								}
+								//TOTAL ENVIO PADRON - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoEnvPadronR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3170);
+								}
+								//NRO VALES FISICOS - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesFisR(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3180);
+								}
+								//COSTO UNIT VALES DIGIT - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoUnitValesDigitR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3190);
+								}
+								//COSTO ATENCION SOLIC - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenSolicR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3200);
+								}
+								//COSTO ATENCION CONSUL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenConsR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3210);
+								}
+								//NRO ATENCIONES - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroTotalAtenR(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3220);
+								}
+								//COSTO PERSONAL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoPersonalR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3230);
+								}
+								//CAPAC AGENT - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCapacAgentR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3240);
+								}
+								//UTIL MAT OFICINA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getUtilMatOficR(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3250);
+								}
+								//-----PROVINCIA
+								
+								//IMPR VALES EDE - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoEdeP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3100);
+								}
+								//IMPR VALES NO EDE - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoNoEdeP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3110);
+								}
+								//NRO VALES IMPR - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesImpP(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3120);
+								}
+								//TOTAL REP VALES DSCTO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValDesctoP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3130);
+								}
+								//NRO VALES REPART - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesReptP(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3140);
+								}
+								//TOTAL REP VALES OFICINA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValOficP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3150);
+								}
+								//NO VALES ENTR - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesEntrP(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3160);
+								}
+								//TOTAL ENVIO PADRON - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoEnvPadronP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3170);
+								}
+								//NRO VALES FISICOS - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesFisP(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3180);
+								}
+								//COSTO UNIT VALES DIGIT - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoUnitValesDigitP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3190);
+								}
+								//COSTO ATENCION SOLIC - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenSolicP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3200);
+								}
+								//COSTO ATENCION CONSUL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenConsP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3210);
+								}
+								//NRO ATENCIONES - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroTotalAtenP(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3220);
+								}
+								//COSTO PERSONAL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoPersonalP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3230);
+								}
+								//CAPAC AGENT - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCapacAgentP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3240);
+								}
+								//UTIL MAT OFICINA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getUtilMatOficP(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3250);
+								}
+								
+								//----LIMA
+								
+								//IMPR VALES EDE - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoEdeL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3100);
+								}
+								//IMPR VALES NO EDE - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getImpValDesctoNoEdeL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3110);
+								}
+								//NRO VALES IMPR - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesImpL(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3120);
+								}
+								//TOTAL REP VALES DSCTO - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValDesctoL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3130);
+								}
+								//NRO VALES REPART - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesReptL(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3140);
+								}
+								//TOTAL REP VALES OFICINA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoTotalValOficL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3150);
+								}
+								//NO VALES ENTR - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesEntrL(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3160);
+								}
+								//TOTAL ENVIO PADRON - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoEnvPadronL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3170);
+								}
+								//NRO VALES FISICOS - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValesFisL(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3180);
+								}
+								//COSTO UNIT VALES DIGIT - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoUnitValesDigitL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3190);
+								}
+								//COSTO ATENCION SOLIC - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenSolicL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3200);
+								}
+								//COSTO ATENCION CONSUL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoAtenConsL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3210);
+								}
+								//NRO ATENCIONES - 10
+								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroTotalAtenL(),10) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3220);
+								}
+								//COSTO PERSONAL - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCostoPersonalL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3230);
+								}
+								//CAPAC AGENT - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getCapacAgentL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3240);
+								}
+								//UTIL MAT OFICINA - 18,2
+								if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getUtilMatOficL(),18,2) ){
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3250);
+								}
+								
+								/***/
 								
 							}
 							//
