@@ -15,6 +15,7 @@ import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.CfgTabla;
+import gob.osinergmin.fise.domain.FiseDescripcionActividade;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
 import gob.osinergmin.fise.domain.FiseFormato12AD;
@@ -1542,7 +1543,8 @@ public class LiquidacionController {
 			
 			logger.info("Entrando a grabar un registro"); 			
 			logger.info("correlativo:  "+ l.getCoMotivo()); 
-			logger.info("item:  "+ l.getDescMotivo());  			
+			logger.info("item:  "+ l.getDescMotivo());
+			logger.info("codigo actividad:  "+ l.getItemActividad());
 			
 			l.setUsuario(themeDisplay.getUser().getLogin());
 			l.setTerminal(themeDisplay.getUser().getLoginIP());		
@@ -1665,7 +1667,40 @@ public class LiquidacionController {
 			e.printStackTrace();				
 			logger.error("Error al eliminar los datos del motivo de la liquidacion: "+e.getMessage());
 		} 	
-	}		
+	}
+	
+	/**Metodo para listar las actividades para los formatos 14A y 14B para 
+	 * un nuevo motivo de la liquidacion*/
+	
+	@ResourceMapping("listarActividades")
+  	public void listarActividades(ModelMap model, ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("liquidacionBean")LiquidacionBean l){
+		try {			
+  			response.setContentType("applicacion/json");
+  			String formatoActiv = l.getFormatoActividad();  			
+  			logger.info("formato actividad:  "+formatoActiv);
+  			
+  			List<FiseDescripcionActividade> listaActiv = liquidacionService.listarDescripcionActividades(formatoActiv);
+  			logger.info("Tamaño de lista de actividades:  "+listaActiv.size()); 
+  			JSONArray jsonArray = new JSONArray();
+  			for (FiseDescripcionActividade a : listaActiv) {
+  				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("codigoActividad", a.getId().getFormato()+"/"+a.getId().getItem());				
+				jsonObj.put("descActividad", a.getId().getItem()+" "+a.getDescripcion());			
+				jsonArray.put(jsonObj);		
+			}  			
+  		    PrintWriter pw = response.getWriter();
+  		    logger.info(jsonArray.toString());
+  		    pw.write(jsonArray.toString());
+  		    pw.flush();
+  		    pw.close();							
+  		}catch (Exception e) {  		
+  			e.printStackTrace();
+  		}
+	}
+	
+	
+	
 	
 	
 }
