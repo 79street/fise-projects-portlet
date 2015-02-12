@@ -1152,7 +1152,7 @@ var notificarValidar= {
 						notificarValidar.dialogMessage.dialog("open");					
 						notificarValidar.initBlockUI();
 					}else if(data.resultado == "NO_DATOS"){						
-						var addhtmInfo='No existe ninguna lista pra realizar la Notificación';					
+						var addhtmInfo='No existe ninguna lista para realizar la Notificación';					
 						notificarValidar.dialogInfoContent.html(addhtmInfo);
 						notificarValidar.dialogInfo.dialog("open");						
 						notificarValidar.initBlockUI();
