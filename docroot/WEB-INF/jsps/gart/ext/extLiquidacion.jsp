@@ -13,7 +13,9 @@ var liquidacionVar= {
 		//divs
 		divBuscarLiq:null,	
 		divBuscarMotivo:null,	
-		divNuevoMotivo:null,	
+		divNuevoMotivo:null,
+		divActividades:null,
+		
 		
 		
 		//dialogos	
@@ -73,7 +75,7 @@ var liquidacionVar= {
 	    urlEliminarMotivo:null,
 	    urlEditarMotivo:null,
 	    urlActualizarMotivo:null,
-		
+	    urlListarActividades:null,
 		
 		//botones		
 		botonBuscar:null,		
@@ -126,6 +128,7 @@ var liquidacionVar= {
 			this.divBuscarLiq=$("#<portlet:namespace/>div_buscar");
 			this.divBuscarMotivo=$("#<portlet:namespace/>div_buscar_motivo");
 			this.divNuevoMotivo=$("#<portlet:namespace/>div_nuevo_motivo");
+			this.divActividades=$("#<portlet:namespace/>div_actividades");
 			
 			
 			//dialogos
@@ -182,7 +185,7 @@ var liquidacionVar= {
 			this.urlEliminarMotivo='<portlet:resourceURL id="eliminarMotivoLiquidacion" />';			
 			this.urlEditarMotivo='<portlet:resourceURL id="editarMotivoLiquidacion" />';
 			this.urlActualizarMotivo='<portlet:resourceURL id="actualizarMotivoLiquidacion" />';
-			
+			this.urlListarActividades='<portlet:resourceURL id="listarActividades" />';			
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarLiquidacion");		
@@ -428,9 +431,10 @@ var liquidacionVar= {
 			var ancho = liquidacionVar.divBuscarLiq.width();
 			liquidacionVar.tablaResultadosMotivo.jqGrid({
 			   datatype: "local",
-		       colNames: ['Item','Descripción del Motivo','Editar','Eliminar',''],
+		       colNames: ['Ítem','Ítem Formato','Descripción del Motivo','Editar','Eliminar',''],
 		       colModel: [
-                       { name: 'itemMotivo', index: 'itemMotivo', width: 50,align:'center'},				   
+                       { name: 'itemMotivo', index: 'itemMotivo', width: 50,align:'center'},
+                       { name: 'desActividad', index: 'desActividad', width: 50,align:'center'},
 					   { name: 'descMotivo', index: 'descMotivo', width: 300},					  	  	           
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },		                
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
@@ -856,18 +860,53 @@ var liquidacionVar= {
 		
 		//funcion para nuevo registro de motivo
 		<portlet:namespace/>nuevoMotivo : function(){
-			console.debug("boton nuevo registro motivo:  ");		
-			liquidacionVar.divNuevoMotivo.show();
-			liquidacionVar.divBuscarLiq.hide();	
-			liquidacionVar.divBuscarMotivo.hide();
-			liquidacionVar.f_descMotivo.val('');
-			if(liquidacionVar.i_tipoMensual.prop('checked')){
-				$('#tituloNuevoMotivo').val('Motivo de no Reconocimiento de Gastos Operativos.');	
-			}else{
-				$('#tituloNuevoMotivo').val('Motivo de no Establecimiento de Costos Estándares.');
-			}	
-		    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
-			$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');			
+			var formatoActiv = $('#formatoMotivo').val();
+			console.debug("boton nuevo registro motivo formato :  "+formatoActiv);	
+			if(formatoActiv=='F14A' || formatoActiv=='F14B'){
+				jQuery.ajax({
+					url: liquidacionVar.urlListarActividades+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data : {
+						   <portlet:namespace />formatoActividad: formatoActiv						  
+					},
+					success: function(data) {		
+						dwr.util.removeAllOptions("itemActividad");
+						dwr.util.addOptions("itemActividad", data,"codigoActividad","descActividad");	
+						liquidacionVar.divActividades.show();
+						liquidacionVar.divNuevoMotivo.show();
+						liquidacionVar.divBuscarLiq.hide();	
+						liquidacionVar.divBuscarMotivo.hide();
+						liquidacionVar.f_descMotivo.val('');
+						if(liquidacionVar.i_tipoMensual.prop('checked')){
+							$('#tituloNuevoMotivo').val('Motivo de no Reconocimiento de Gastos Operativos.');	
+						}else{
+							$('#tituloNuevoMotivo').val('Motivo de no Establecimiento de Costos Estándares.');
+						}	
+					    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
+						$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');
+						
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
+						liquidacionVar.initBlockUI();
+					}
+			    });
+			}else{	
+				liquidacionVar.divActividades.hide();
+				liquidacionVar.divNuevoMotivo.show();
+				liquidacionVar.divBuscarLiq.hide();	
+				liquidacionVar.divBuscarMotivo.hide();
+				liquidacionVar.f_descMotivo.val('');
+				if(liquidacionVar.i_tipoMensual.prop('checked')){
+					$('#tituloNuevoMotivo').val('Motivo de no Reconocimiento de Gastos Operativos.');	
+				}else{
+					$('#tituloNuevoMotivo').val('Motivo de no Establecimiento de Costos Estándares.');
+				}	
+			    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
+				$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');		
+			}				
 		},	
 		
 		//Funcion para Grabar nuevo registro de motivo de liquidacion
@@ -953,7 +992,7 @@ var liquidacionVar= {
 				//liquidacionVar.f_descMotivo.focus();
 				cod_focus=liquidacionVar.f_descMotivo;
 			  	return false; 
-			}else if(liquidacionVar.f_descMotivo.val().length > 499){				
+			}else if(liquidacionVar.f_descMotivo.val().length > 495){				
 				var addhtmAlert='La descripción del Motivo no debe exceder a los 500 caracteres.';					
 				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
 				liquidacionVar.dialogValidacion.dialog("open");	
@@ -1005,10 +1044,39 @@ var liquidacionVar= {
 		},
 		
 		//funcion  para llenar los campos para editar
-		llenarDatosEditar : function(bean){		
-			liquidacionVar.f_descMotivo.val(bean.descMotivo); 
-			$('#itemMotivo').val(bean.itemMotivo);
-			$('#coMotivo').val(bean.coMotivo);
+		llenarDatosEditar : function(bean){	
+			var formatoActiv = $('#formatoMotivo').val();
+			console.debug("boton nuevo registro motivo formato :  "+formatoActiv);
+			console.debug("setando datos cuando edito id actividad "+bean.itemActividad);
+			if(formatoActiv=='F14A' || formatoActiv=='F14B'){
+				jQuery.ajax({
+					url: liquidacionVar.urlListarActividades+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data : {
+						   <portlet:namespace />formatoActividad: formatoActiv						  
+					},
+					success: function(data) {		
+						dwr.util.removeAllOptions("itemActividad");
+						dwr.util.addOptions("itemActividad", data,"codigoActividad","descActividad");	
+						liquidacionVar.divActividades.show();
+						liquidacionVar.f_descMotivo.val(bean.descMotivo); 
+						$('#itemMotivo').val(bean.itemMotivo);
+						$('#coMotivo').val(bean.coMotivo);
+						$('#itemActividad').val(bean.itemActividad);
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
+						liquidacionVar.initBlockUI();
+					}
+			    });
+			}else{	
+				liquidacionVar.divActividades.hide();
+				liquidacionVar.f_descMotivo.val(bean.descMotivo); 
+				$('#itemMotivo').val(bean.itemMotivo);
+				$('#coMotivo').val(bean.coMotivo);		
+			}			
 		},
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
