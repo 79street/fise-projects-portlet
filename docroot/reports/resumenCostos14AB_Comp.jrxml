@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.363636363636374"/>
-	<property name="ireport.x" value="569"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="4.279675059165036"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="481"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="FORMATO" class="java.lang.String"/>
 	<queryString>
@@ -35,6 +35,7 @@
 	<field name="montoSolicitud" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[montoSolicitud]]></fieldDescription>
 	</field>
+	<field name="desMotivo" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -94,113 +95,127 @@
 				<text><![CDATA[Distribuidora Eléctrica ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1084" y="0" width="66" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="885" y="0" width="66" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Final]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="931" y="0" width="76" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="732" y="0" width="76" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Levantamiento Observación]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1008" y="0" width="75" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="809" y="0" width="75" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Histórico]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="738" y="0" width="112" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="539" y="0" width="112" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Grupo de Beneficiarios según Zona]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="851" y="0" width="79" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="652" y="0" width="79" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Solicitud]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="214" y="0" width="523" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="214" y="0" width="324" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Actividad]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="952" y="0" width="195" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Motivo de No Reconocimiento]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="49" y="0" width="128" height="20"/>
+				<reportElement x="49" y="0" width="128" height="27"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{desEmpresa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="49" height="20"/>
+				<reportElement x="0" y="0" width="49" height="27"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{codEmpresa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="177" y="0" width="37" height="20"/>
+				<reportElement x="177" y="0" width="37" height="27"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="214" y="0" width="524" height="20"/>
+				<reportElement x="214" y="0" width="324" height="27"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{actividad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="738" y="0" width="113" height="20"/>
+				<reportElement x="539" y="0" width="113" height="27"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{desZona}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="851" y="0" width="80" height="20"/>
+				<reportElement x="652" y="0" width="80" height="27"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoSolicitud}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="931" y="0" width="77" height="20"/>
+				<reportElement x="732" y="0" width="77" height="27"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoLevObs}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="1008" y="0" width="76" height="20"/>
+				<reportElement x="809" y="0" width="76" height="27"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoHistorico}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="1084" y="0" width="66" height="20"/>
+				<reportElement x="885" y="0" width="66" height="27"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoEstablecido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="952" y="0" width="195" height="27"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{desMotivo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
