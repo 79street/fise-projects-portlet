@@ -1694,9 +1694,9 @@ public class EnvioDefinitivoController {
     			  	  			       byte[] bytes12A = null;		  	  			       
     			  	  			       bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa, new JREmptyDataSource());
     			  	  			       if (bytes12A != null) {	  	  			    	 
-    			  	  			    	   String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+    			  	  			    	   String nombre = FormatoUtil.nombreReporteGeneralFormato(m.getCodEmpresa(),
     			  	  			    			Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-    			  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  			    	  
+    			  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12A);  	  			    	  
     			  	  			    	   FileEntry archivo12A = fiseUtil.subirDocumentoBytes(request, bytes12A, "application/pdf", nombre);
     			  	  			    	   if( archivo12A!=null ){
     			  	  			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1714,9 +1714,9 @@ public class EnvioDefinitivoController {
     				  	  		    	   bytes12AObs = JasperRunManager.runReportToPdf(reportFile12AObs.getPath(), 
     				  	  		    			   mapa, new JRBeanCollectionDataSource(listaObs12A));		  	  		    	 
     				  	  			       if (bytes12AObs != null) {	  			    	   
-    				  	  			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+    				  	  			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(m.getCodEmpresa(),
     				  	  			    			Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-    				  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    				  	  			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12A); 
     				  	  			    	   FileEntry archivo12AObs = fiseUtil.subirDocumentoBytes(request, bytes12AObs, "application/pdf", nombre);
     				  	  			    	   if( bytes12AObs!=null ){
     				  	  			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1741,9 +1741,9 @@ public class EnvioDefinitivoController {
     			  	  				    bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), 
     			  	  							mapa, new JREmptyDataSource());
     			  	  					if (bytes12B != null) {		  	  					
-    			  	  						String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+    			  	  						String nombre = FormatoUtil.nombreReporteGeneralFormato(m.getCodEmpresa(),
     			  	  								Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-    			  	  								FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    			  	  								FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12B); 
     			  	  						FileEntry archivo12B = fiseUtil.subirDocumentoBytes(request, bytes12B, "application/pdf", nombre);
     			  	  						if(archivo12B!=null ){
     			  	  							FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1761,9 +1761,9 @@ public class EnvioDefinitivoController {
     			  	  						bytes12BObs = JasperRunManager.runReportToPdf(reportFile12BObs.getPath(), 
     			  	  								mapa, new JRBeanCollectionDataSource(listaObs12B));		  	  					
     			  	  						if (bytes12BObs != null) {		  	  						
-    			  	  							String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+    			  	  							String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(m.getCodEmpresa(),
     			  	  									Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-    			  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    			  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12B); 
     			  	  							FileEntry archivo12BObs = fiseUtil.subirDocumentoBytes(request, bytes12BObs, "application/pdf", nombre);
     			  	  							if(archivo12BObs!=null ){
     			  	  								FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1795,9 +1795,9 @@ public class EnvioDefinitivoController {
     			  	  		        	bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
     			  	  		        			new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
     			  	  		        	if (bytes12C != null) {				  	  		    		
-    			  	  		        		String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+    			  	  		        		String nombre = FormatoUtil.nombreReporteGeneralFormato(m.getCodEmpresa(),
     			  	  		        				Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-    			  	  		        				FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  	
+    			  	  		        				FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12C);  	  	
     			  	  		        		FileEntry archivo12C = fiseUtil.subirDocumentoBytes(request, bytes12C, "application/pdf", nombre);
     			  	  		        		if (archivo12C != null) {
     			  	  		        			FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1815,9 +1815,9 @@ public class EnvioDefinitivoController {
     			  	  		        		bytes12CObs = JasperRunManager.runReportToPdf(reportFile12CObs.getPath(), mapa, 
     			  	  		        				new JRBeanCollectionDataSource(listaObs12C));
     			  	  		        		if (bytes12CObs != null) {	  	  		    			
-    			  	  		        			String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+    			  	  		        			String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(m.getCodEmpresa(),
     			  	  		        					Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-    			  	  		        					FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    			  	  		        					FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12C); 
     			  	  		        			FileEntry archivo12CObs = fiseUtil.subirDocumentoBytes(request, bytes12CObs, "application/pdf", nombre);
     			  	  		        			if (archivo12CObs != null) {
     			  	  		        				FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1849,9 +1849,9 @@ public class EnvioDefinitivoController {
     			  	  				   bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
     			  	  						   new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
     			  	  				   if (bytes12D != null) {				  	  		    		
-    			  	  					   String nombre = FormatoUtil.nombreIndividualFormato(m.getCodEmpresa(),
+    			  	  					   String nombre = FormatoUtil.nombreReporteGeneralFormato(m.getCodEmpresa(),
     			  	  							   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-    			  	  							   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  	  	
+    			  	  							   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12D);  	  	
     			  	  					   FileEntry archivo12D = fiseUtil.subirDocumentoBytes(request, bytes12D, "application/pdf", nombre);
     			  	  					   if (archivo12D != null) {
     			  	  						   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1869,9 +1869,9 @@ public class EnvioDefinitivoController {
     			  	  					   bytes12DObs = JasperRunManager.runReportToPdf(reportFile12DObs.getPath(), mapa, 
     			  	  							   new JRBeanCollectionDataSource(listaObs12D));
     			  	  					   if (bytes12DObs != null) {	  	  		    			
-    			  	  						   String nombre = FormatoUtil.nombreIndividualAnexoObs(m.getCodEmpresa(),
+    			  	  						   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(m.getCodEmpresa(),
     			  	  								   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
-    			  	  								   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+    			  	  								   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12D); 
     			  	  						   FileEntry archivo12DObs = fiseUtil.subirDocumentoBytes(request, bytes12DObs, "application/pdf", nombre);
     			  	  						   if (archivo12DObs != null) {
     			  	  							   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1930,9 +1930,9 @@ public class EnvioDefinitivoController {
 	  										byte[] bytes13A = null;	       				  				
 	  										bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, new JRBeanCollectionDataSource(listaZonas13A));	       				
 	  										if (bytes13A != null) {	        					
-	  											String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
+	  											String nombre = FormatoUtil.nombreReporteGeneralFormato(b.getCodEmpresa(),
 	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
+	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_13A);  
 	  											FileEntry archivo13A = fiseUtil.subirDocumentoBytes(request, bytes13A, "application/pdf", nombre);
 	  											if (archivo13A != null) {
 	  												FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1949,9 +1949,9 @@ public class EnvioDefinitivoController {
 	  											byte[] bytes13Obs = null;
 	  											bytes13Obs = JasperRunManager.runReportToPdf(reportFile13AObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs13A));
 	  											if (bytes13Obs != null) {		  						
-	  												String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
+	  												String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(b.getCodEmpresa(),
 	  														Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_13A); 
 	  												FileEntry archivo13Obs = fiseUtil.subirDocumentoBytes(request, bytes13Obs, "application/pdf", nombre);
 	  												if (archivo13Obs != null) {
 	  													FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1978,9 +1978,9 @@ public class EnvioDefinitivoController {
 	  										byte[] bytes14A = null;	       				  				
 	  										bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa, new JREmptyDataSource());	       				
 	  										if (bytes14A != null) {	        					
-	  											String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
+	  											String nombre = FormatoUtil.nombreReporteGeneralFormato(b.getCodEmpresa(),
 	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
+	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14A);  
 	  											FileEntry archivo14A = fiseUtil.subirDocumentoBytes(request, bytes14A, "application/pdf", nombre);
 	  											if (archivo14A != null) {
 	  												FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1997,9 +1997,9 @@ public class EnvioDefinitivoController {
 	  											byte[] bytes14AObs = null;
 	  											bytes14AObs = JasperRunManager.runReportToPdf(reportFile14AObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14A));
 	  											if (bytes14AObs != null) {		  						
-	  												String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
+	  												String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(b.getCodEmpresa(),
 	  														Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14A); 
 	  												FileEntry archivo14AObs = fiseUtil.subirDocumentoBytes(request, bytes14AObs, "application/pdf", nombre);
 	  												if (archivo14AObs != null) {
 	  													FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -2026,9 +2026,9 @@ public class EnvioDefinitivoController {
 	  										byte[] bytes14B = null;	       				  				
 	  										bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa, new JREmptyDataSource());	       				
 	  										if (bytes14B != null) {	        					
-	  											String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
+	  											String nombre = FormatoUtil.nombreReporteGeneralFormato(b.getCodEmpresa(),
 	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
+	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14B);  
 	  											FileEntry archivo14B = fiseUtil.subirDocumentoBytes(request, bytes14B, "application/pdf", nombre);
 	  											if (archivo14B != null) {
 	  												FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -2045,9 +2045,9 @@ public class EnvioDefinitivoController {
 	  											byte[] bytes14BObs = null;
 	  											bytes14BObs = JasperRunManager.runReportToPdf(reportFile14BObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14B));
 	  											if (bytes14BObs != null) {		  						
-	  												String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
+	  												String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(b.getCodEmpresa(),
 	  														Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14B); 
 	  												FileEntry archivo14BObs = fiseUtil.subirDocumentoBytes(request, bytes14BObs, "application/pdf", nombre);
 	  												if (archivo14BObs != null) {
 	  													FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -2073,9 +2073,9 @@ public class EnvioDefinitivoController {
 	  										byte[] bytes14C = null;	       				  				
 	  										bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa, new JREmptyDataSource());	       				
 	  										if (bytes14C != null) {	        					
-	  											String nombre = FormatoUtil.nombreIndividualFormato(b.getCodEmpresa(),
+	  											String nombre = FormatoUtil.nombreReporteGeneralFormato(b.getCodEmpresa(),
 	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);  
+	  													FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14C);  
 	  											FileEntry archivo14C = fiseUtil.subirDocumentoBytes(request, bytes14C, "application/pdf", nombre);
 	  											if (archivo14C != null) {
 	  												FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -2092,9 +2092,9 @@ public class EnvioDefinitivoController {
 	  											byte[] bytes14CObs = null;
 	  											bytes14CObs = JasperRunManager.runReportToPdf(reportFile14CObs.getPath(), mapa, new JRBeanCollectionDataSource(listaObs14C));
 	  											if (bytes14CObs != null) {		  						
-	  												String nombre = FormatoUtil.nombreIndividualAnexoObs(b.getCodEmpresa(),
+	  												String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(b.getCodEmpresa(),
 	  														Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
-	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+	  														FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14C); 
 	  												FileEntry archivo14CObs = fiseUtil.subirDocumentoBytes(request, bytes14CObs, "application/pdf", nombre);
 	  												if (archivo14CObs != null) {
 	  													FileEntryJSP fileEntryJsp = new FileEntryJSP();
