@@ -193,7 +193,7 @@ public class LiquidacionController {
     		}     		
     		l.setAdmin(fiseUtil.esAdministrador(renderRequest));
     		
-    		l.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL)); 
+    		l.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL,"")); 
     		
     		mapaEmpresa = fiseUtil.getMapaEmpresa();
     		
@@ -287,7 +287,7 @@ public class LiquidacionController {
   			
   			logger.info("Codigo grupo inf. para cargar grupo de infor.:  "+tipoFormato);
   			
-  			List<FiseGrupoInformacion> listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(tipoFormato);
+  			List<FiseGrupoInformacion> listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(tipoFormato,"");
   			logger.info("Tamaño de lista de grupo inf:  "+listaGrupoInf.size()); 
   			JSONArray jsonArray = new JSONArray();
   			for (FiseGrupoInformacion grupo : listaGrupoInf) {
