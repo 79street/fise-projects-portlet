@@ -1182,9 +1182,9 @@ public class NotificacionController {
   	  	 		    	    bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa,
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes12A != null) {
-  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), 
-  		   			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
+  		   			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12A);	   			    	 
   		   			    	   FileEntry archivo12A = fiseUtil.subirDocumentoBytes(request, bytes12A, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo12A!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1226,9 +1226,9 @@ public class NotificacionController {
   	  					    bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), mapa,
   	  								new JRBeanCollectionDataSource(listaObservaciones));
   	  						if (bytes12B != null) {
-  	  							String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  	  							String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   	  									Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), 
-  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
+  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12B);	   			    	 
   	  							FileEntry archivo12B = fiseUtil.subirDocumentoBytes(request, bytes12B, "application/pdf", nombre);	   			    	   
   	  							if( archivo12B!=null ){
   	  								FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1268,9 +1268,9 @@ public class NotificacionController {
   	  						bytes12C = JasperRunManager.runReportToPdf(reportFile12C.getPath(), mapa, 
   	  								new JRBeanCollectionDataSource(listaObservaciones));
   	  						if (bytes12C != null) {	  	  		    			
-  	  							String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  	  							String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   	  									Long.valueOf(not.getAnioPres()),Long.valueOf(not.getMesPres()),
-  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12C); 
   	  							FileEntry archivo12C = fiseUtil.subirDocumentoBytes(request, bytes12C, "application/pdf", nombre);
   	  							if (archivo12C != null) {
   	  								FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1309,9 +1309,9 @@ public class NotificacionController {
   	  						bytes12D = JasperRunManager.runReportToPdf(reportFile12D.getPath(), mapa, 
   	  								new JRBeanCollectionDataSource(listaObservaciones));
   	  						if (bytes12D != null) {	  	  		    			
-  	  							String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
+  	  							String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   	  									Long.valueOf(not.getAnioPres()),Long.valueOf(not.getMesPres()),
-  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL); 
+  	  									FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_12D); 
   	  							FileEntry archivo12D = fiseUtil.subirDocumentoBytes(request, bytes12D, "application/pdf", nombre);
   	  							if (archivo12D != null) {
   	  								FileEntryJSP fileEntryJsp = new FileEntryJSP();
@@ -1355,11 +1355,13 @@ public class NotificacionController {
   	  	 		    	    bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa,
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes13A != null) {
-  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
+  		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()),
+  		   			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_13A);	   			    	 
   		   			    	   FileEntry archivo13A = fiseUtil.subirDocumentoBytes(request, bytes13A, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo13A!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  		   			    		   logger.info("Nombre del reporte de validacion 13A:  "+nombre); 
   		   			    		   fileEntryJsp.setNombreArchivo(nombre);
   		   			    		   fileEntryJsp.setFileEntry(archivo13A);
   		   			    		   listaArchivo.add(fileEntryJsp);
@@ -1398,11 +1400,13 @@ public class NotificacionController {
   	  	 		    	    bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa,
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes14A != null) {
-  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
+  		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()),
+  		   			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14A);	   			    	 
   		   			    	   FileEntry archivo14A = fiseUtil.subirDocumentoBytes(request, bytes14A, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo14A!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  		   			    		 logger.info("Nombre del reporte de validacion 14A:  "+nombre); 
   		   			    		   fileEntryJsp.setNombreArchivo(nombre);
   		   			    		   fileEntryJsp.setFileEntry(archivo14A);
   		   			    		   listaArchivo.add(fileEntryJsp);
@@ -1441,11 +1445,13 @@ public class NotificacionController {
   	  	 		    	    bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa,
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes14B != null) {
-  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
+  		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()),
+  		   			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14B);	   			    	 
   		   			    	   FileEntry archivo14B = fiseUtil.subirDocumentoBytes(request, bytes14B, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo14B!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
+  		   			    		 logger.info("Nombre del reporte de validacion 14B:  "+nombre); 
   		   			    		   fileEntryJsp.setNombreArchivo(nombre);
   		   			    		   fileEntryJsp.setFileEntry(archivo14B);
   		   			    		   listaArchivo.add(fileEntryJsp);
@@ -1484,12 +1490,14 @@ public class NotificacionController {
   	  	 		    	    bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa,
   	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
   		  	 		    	if (bytes14C != null) {
-  		   			    	   String nombre = FormatoUtil.nombreIndividualAnexoObs(not.getCodEmpresa(),
-  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), FiseConstants.NOMBRE_CONSOLIDADO_EMAIL);	   			    	 
+  		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
+  		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()),
+  		   			    			   FiseConstants.NOMBRE_CONSOLIDADO_EMAIL,FiseConstants.TIPO_FORMATO_14C);	   			    	 
   		   			    	   FileEntry archivo14C = fiseUtil.subirDocumentoBytes(request, bytes14C, "application/pdf", nombre);	   			    	   
   		   			    	   if( archivo14C!=null ){
   		   			    		   FileEntryJSP fileEntryJsp = new FileEntryJSP();
   		   			    		   fileEntryJsp.setNombreArchivo(nombre);
+  		   			    		   logger.info("Nombre del reporte de validacion 14C:  "+nombre); 
   		   			    		   fileEntryJsp.setFileEntry(archivo14C);
   		   			    		   listaArchivo.add(fileEntryJsp);
   		   			    	   }
