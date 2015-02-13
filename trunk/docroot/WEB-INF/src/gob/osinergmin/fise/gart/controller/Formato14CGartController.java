@@ -1500,13 +1500,16 @@ public class Formato14CGartController {
 							}
 						}					
 						
-						/*if(FormatoUtil.isBlank(bean.getNombreSede())){					
-							cont++;						
-							sMsg="ERROR";
-									fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
-									listaError, cont, FiseConstants.COD_ERROR_F14C_360);
-						}*/
-							
+						/*if(FormatoUtil.isNotBlank(bean.getNombreSede())){	
+							 Pattern pat = Pattern.compile("^[a-zA-Z0-9.ñÑÁ-Úá-úÜü- ]{1,60}$");
+						     Matcher mat = pat.matcher(bean.getNombreSede());
+						     if (!mat.matches()) {
+						    	 cont++;						
+									sMsg="ERROR";
+											fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, 
+											listaError, cont, FiseConstants.COD_ERROR_F14C_360);
+						     } 					
+						}*/							
 						/*if(FormatoUtil.isBlank(bean.getNumRural())){					
 							cont++;						
 							sMsg="ERROR";
