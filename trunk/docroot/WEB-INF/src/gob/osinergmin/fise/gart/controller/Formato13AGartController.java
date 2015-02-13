@@ -1235,7 +1235,7 @@ public class Formato13AGartController {
 			if(periodoEnvioPresEdit!=null && periodoEnvioPresEdit.length()>6){
 	    		anioPresEdit = periodoEnvioPresNew.substring(0, 4);
 	    		mesPresEdit = periodoEnvioPresNew.substring(4, 6);
-	    		etapaEdit = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
+	    		etapaEdit = periodoEnvioPresNew.substring(6, periodoEnvioPresEdit.length());
 			}
 			
 			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresaEdit, FiseConstants.TIPO_FORMATO_13A);
