@@ -992,6 +992,13 @@ var liquidacionVar= {
 				//liquidacionVar.f_descMotivo.focus();
 				cod_focus=liquidacionVar.f_descMotivo;
 			  	return false; 
+			}else if(!validarLetra(liquidacionVar.f_descMotivo.val())){				
+				var addhtmAlert='Debe ingresar una Descripción Motivo válida.';				
+				liquidacionVar.dialogValidacionContent.html(addhtmAlert);
+				liquidacionVar.dialogValidacion.dialog("open");	
+				//liquidacionVar.f_descMotivo.focus();
+				cod_focus=liquidacionVar.f_descMotivo;
+			  	return false; 
 			}else if(liquidacionVar.f_descMotivo.val().length > 495){				
 				var addhtmAlert='La descripción del Motivo no debe exceder a los 500 caracteres.';					
 				liquidacionVar.dialogValidacionContent.html(addhtmAlert);

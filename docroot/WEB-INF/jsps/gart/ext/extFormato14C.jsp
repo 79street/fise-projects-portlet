@@ -2429,7 +2429,14 @@ var formato14C= {
 				//anioFin.focus();
 				cod_focus=anioFin;
 				return false; 		
-		    }else if(formato14C.f_numRural.val().length == '' ) {				
+		    }else if(formato14C.f_nombreSede.val().length != '' && !validarLetra(formato14C.f_nombreSede.val())) {				
+				var addhtmAlert='Debe ingresar Nombre de la Sede válido.';					
+				formato14C.dialogValidacionContent.html(addhtmAlert);
+				formato14C.dialogValidacion.dialog("open");
+				//formato14C.f_numRural.focus();
+				cod_focus=formato14C.f_nombreSede;
+				return false; 
+			}else if(formato14C.f_numRural.val().length == '' ) {				
 				var addhtmAlert='Debe ingresar el Número de Beneficiarios de la Zona Rural.';					
 				formato14C.dialogValidacionContent.html(addhtmAlert);
 				formato14C.dialogValidacion.dialog("open");

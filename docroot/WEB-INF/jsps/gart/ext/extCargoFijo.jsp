@@ -1330,6 +1330,20 @@ var fiseCargoFijo= {
 				//fiseCargoFijo.f_fechaSustento.focus();
 				cod_focus=fiseCargoFijo.f_fechaSustento;
 			  	return false; 
+			}else if(fiseCargoFijo.f_gloza.val().length != '' && !validarLetra(fiseCargoFijo.f_gloza.val())){				
+				var addhtmAlert='Debe ingresar una Glosa válida.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmAlert);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				//fiseCargoFijo.f_fechaSustento.focus();
+				cod_focus=fiseCargoFijo.f_gloza;
+			  	return false; 
+			}else if(fiseCargoFijo.f_gloza.val().length > 495){				
+				var addhtmAlert='La  Glosa acepta como máximo 500 caracteres.';					
+				fiseCargoFijo.dialogValidacionContent.html(addhtmAlert);
+				fiseCargoFijo.dialogValidacion.dialog("open");	
+				//fiseCargoFijo.f_fechaSustento.focus();
+				cod_focus=fiseCargoFijo.f_gloza;
+			  	return false; 
 			}else{
 				return true;
 			}		
