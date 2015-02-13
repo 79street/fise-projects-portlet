@@ -481,13 +481,14 @@ function letras(input){
 	});
 }
 
+	
 
 function soloLetras(e){
    key = e.keyCode || e.which;
    tecla = String.fromCharCode(key).toLowerCase();
-   letras = " áéíóúabcdefghijklmnñopqrstuvwxyz1234567890";
+   letras = " áéíU+00F3úabcdefghijklmnñopqrstuvwxyz1234567890";
    especiales = "8-37-39-46";
-
+   console.debug("tecla  :  "+key);
    tecla_especial = false;
    for(var i in especiales){
         if(key == especiales[i]){
@@ -499,6 +500,17 @@ function soloLetras(e){
     if(letras.indexOf(tecla)==-1 && !tecla_especial){
         return false;
     }
+}
+//funcion para validar alfanumeicos
+//\u00f1\u00d1 ñÑ
+//\u00e1-\u00fa\u00c1-\u00da á-úÁ-Ú
+function validarLetra(campo) {	
+	cadena = "^[A-z0-9:;. \u00dc \u00DC \u00FC \u00fc \u0027 \u00f1\u00d1 \u00e1-\u00fa\u00c1-\u00da-]{1,600}$";	
+	var re = new RegExp(cadena);
+	if (campo.match(re))
+		return true;
+	else
+		return false;
 }
 
 function validarCargoFijoNumero(valor){
