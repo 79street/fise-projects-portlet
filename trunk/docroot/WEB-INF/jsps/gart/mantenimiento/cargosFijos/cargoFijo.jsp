@@ -433,7 +433,7 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Glosa:</label>
 											   </td>
 											  <td>
-												 <form:textarea path="gloza" cols="30" rows="4" onkeypress="return soloLetras(event)"/> 
+												 <form:textarea path="gloza" cols="30" rows="4" /> 
 											  </td>										 	
 											  										 											 
 											</tr>	

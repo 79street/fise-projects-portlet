@@ -554,7 +554,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Descripción Observación:</label>
 											   </td>
 											   <td>
-												 <form:textarea path="desObservacion" cols="80" rows="4" onkeypress="return soloLetras(event)"/>  
+												 <form:textarea path="desObservacion" cols="80" rows="4" />  
 											   </td>								   
 										     </tr>						
 										  </table>								 								
