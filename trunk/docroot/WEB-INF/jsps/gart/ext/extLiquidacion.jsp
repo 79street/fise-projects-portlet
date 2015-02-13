@@ -158,7 +158,7 @@ var liquidacionVar= {
 			
 			//mensajes						
 			this.mensajeEliminar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
-			this.mensajePrepara='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Generando Liq. </h3>';
+			this.mensajePrepara='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Aprobando </h3>';
 			this.mensajeLiquidar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Liquidando </h3>';
 			this.mensajeReporte='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo el Reporte </h3>';
 			
