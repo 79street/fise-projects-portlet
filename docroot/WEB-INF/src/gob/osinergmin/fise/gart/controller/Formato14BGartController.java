@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1017,7 +1018,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						//valores
 						//RURAL
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpValesEdeR.getCellType()  ){
-							formulario.setImpValDesctoEdeR(new BigDecimal(celdaImpValesEdeR.getNumericCellValue()));
+							formulario.setImpValDesctoEdeR(new BigDecimal(celdaImpValesEdeR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpValesEdeR.getCellType()  ){
 							formulario.setImpValDesctoEdeR(new BigDecimal(0.00));
 						}else{
@@ -1026,7 +1027,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2540);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpValesNoEdeR.getCellType()  ){
-							formulario.setImpValDesctoNoEdeR(new BigDecimal(celdaImpValesNoEdeR.getNumericCellValue()));
+							formulario.setImpValDesctoNoEdeR(new BigDecimal(celdaImpValesNoEdeR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpValesNoEdeR.getCellType()  ){
 							formulario.setImpValDesctoNoEdeR(new BigDecimal(0.00));
 						}else{
@@ -1044,7 +1045,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2560);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalRepValesDesctoR.getCellType()  ){
-							formulario.setCostoTotalValDesctoR(new BigDecimal(celdaTotalRepValesDesctoR.getNumericCellValue()));
+							formulario.setCostoTotalValDesctoR(new BigDecimal(celdaTotalRepValesDesctoR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalRepValesDesctoR.getCellType()  ){
 							formulario.setCostoTotalValDesctoR(new BigDecimal(0.00));
 						}else{
@@ -1062,7 +1063,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2580);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalRepValesOficR.getCellType()  ){
-							formulario.setCostoTotalValOficR(new BigDecimal(celdaTotalRepValesOficR.getNumericCellValue()));
+							formulario.setCostoTotalValOficR(new BigDecimal(celdaTotalRepValesOficR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalRepValesOficR.getCellType()  ){
 							formulario.setCostoTotalValOficR(new BigDecimal(0.00));
 						}else{
@@ -1080,7 +1081,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2600);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalEnvPadronR.getCellType()  ){
-							formulario.setCostoEnvPadronR(new BigDecimal(celdaTotalEnvPadronR.getNumericCellValue()));
+							formulario.setCostoEnvPadronR(new BigDecimal(celdaTotalEnvPadronR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalEnvPadronR.getCellType()  ){
 							formulario.setCostoEnvPadronR(new BigDecimal(0.00));
 						}else{
@@ -1098,7 +1099,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2620);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitValesDigitR.getCellType()  ){
-							formulario.setCostoUnitValesDigitR(new BigDecimal(celdaCostoUnitValesDigitR.getNumericCellValue()));
+							formulario.setCostoUnitValesDigitR(new BigDecimal(celdaCostoUnitValesDigitR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitValesDigitR.getCellType()  ){
 							formulario.setCostoUnitValesDigitR(new BigDecimal(0.00));
 						}else{
@@ -1107,7 +1108,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2630);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoAtenSolicR.getCellType()  ){
-							formulario.setCostoAtenSolicR(new BigDecimal(celdaCostoAtenSolicR.getNumericCellValue()));
+							formulario.setCostoAtenSolicR(new BigDecimal(celdaCostoAtenSolicR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoAtenSolicR.getCellType()  ){
 							formulario.setCostoAtenSolicR(new BigDecimal(0.00));
 						}else{
@@ -1116,7 +1117,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2640);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoAtenConsulR.getCellType()  ){
-							formulario.setCostoAtenConsR(new BigDecimal(celdaCostoAtenConsulR.getNumericCellValue()));
+							formulario.setCostoAtenConsR(new BigDecimal(celdaCostoAtenConsulR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoAtenConsulR.getCellType()  ){
 							formulario.setCostoAtenConsR(new BigDecimal(0.00));
 						}else{
@@ -1134,7 +1135,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2660);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoPersR.getCellType()  ){
-							formulario.setCostoPersonalR(new BigDecimal(celdaCostoPersR.getNumericCellValue()));
+							formulario.setCostoPersonalR(new BigDecimal(celdaCostoPersR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoPersR.getCellType()  ){
 							formulario.setCostoPersonalR(new BigDecimal(0.00));
 						}else{
@@ -1143,7 +1144,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2670);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCapacAgentR.getCellType()  ){
-							formulario.setCapacAgentR(new BigDecimal(celdaCapacAgentR.getNumericCellValue()));
+							formulario.setCapacAgentR(new BigDecimal(celdaCapacAgentR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCapacAgentR.getCellType()  ){
 							formulario.setCapacAgentR(new BigDecimal(0.00));
 						}else{
@@ -1152,7 +1153,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2680);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaUtilMatOficR.getCellType()  ){
-							formulario.setUtilMatOficR(new BigDecimal(celdaUtilMatOficR.getNumericCellValue()));
+							formulario.setUtilMatOficR(new BigDecimal(celdaUtilMatOficR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaUtilMatOficR.getCellType()  ){
 							formulario.setUtilMatOficR(new BigDecimal(0.00));
 						}else{
@@ -1163,7 +1164,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						
 						//PROVINCIA
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpValesEdeP.getCellType()  ){
-							formulario.setImpValDesctoEdeP(new BigDecimal(celdaImpValesEdeP.getNumericCellValue()));
+							formulario.setImpValDesctoEdeP(new BigDecimal(celdaImpValesEdeP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpValesEdeP.getCellType()  ){
 							formulario.setImpValDesctoEdeP(new BigDecimal(0.00));
 						}else{
@@ -1172,7 +1173,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2700);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpValesNoEdeP.getCellType()  ){
-							formulario.setImpValDesctoNoEdeP(new BigDecimal(celdaImpValesNoEdeP.getNumericCellValue()));
+							formulario.setImpValDesctoNoEdeP(new BigDecimal(celdaImpValesNoEdeP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpValesNoEdeP.getCellType()  ){
 							formulario.setImpValDesctoNoEdeP(new BigDecimal(0.00));
 						}else{
@@ -1190,7 +1191,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2720);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalRepValesDesctoP.getCellType()  ){
-							formulario.setCostoTotalValDesctoP(new BigDecimal(celdaTotalRepValesDesctoP.getNumericCellValue()));
+							formulario.setCostoTotalValDesctoP(new BigDecimal(celdaTotalRepValesDesctoP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalRepValesDesctoP.getCellType()  ){
 							formulario.setCostoTotalValDesctoP(new BigDecimal(0.00));
 						}else{
@@ -1208,7 +1209,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2740);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalRepValesOficP.getCellType()  ){
-							formulario.setCostoTotalValOficP(new BigDecimal(celdaTotalRepValesOficP.getNumericCellValue()));
+							formulario.setCostoTotalValOficP(new BigDecimal(celdaTotalRepValesOficP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalRepValesOficP.getCellType()  ){
 							formulario.setCostoTotalValOficP(new BigDecimal(0.00));
 						}else{
@@ -1226,7 +1227,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2760);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalEnvPadronP.getCellType()  ){
-							formulario.setCostoEnvPadronP(new BigDecimal(celdaTotalEnvPadronP.getNumericCellValue()));
+							formulario.setCostoEnvPadronP(new BigDecimal(celdaTotalEnvPadronP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalEnvPadronP.getCellType()  ){
 							formulario.setCostoEnvPadronP(new BigDecimal(0.00));
 						}else{
@@ -1244,7 +1245,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2780);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitValesDigitP.getCellType()  ){
-							formulario.setCostoUnitValesDigitP(new BigDecimal(celdaCostoUnitValesDigitP.getNumericCellValue()));
+							formulario.setCostoUnitValesDigitP(new BigDecimal(celdaCostoUnitValesDigitP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitValesDigitP.getCellType()  ){
 							formulario.setCostoUnitValesDigitP(new BigDecimal(0.00));
 						}else{
@@ -1253,7 +1254,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2790);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoAtenSolicP.getCellType()  ){
-							formulario.setCostoAtenSolicP(new BigDecimal(celdaCostoAtenSolicP.getNumericCellValue()));
+							formulario.setCostoAtenSolicP(new BigDecimal(celdaCostoAtenSolicP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoAtenSolicP.getCellType()  ){
 							formulario.setCostoAtenSolicP(new BigDecimal(0.00));
 						}else{
@@ -1262,7 +1263,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2800);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoAtenConsulP.getCellType()  ){
-							formulario.setCostoAtenConsP(new BigDecimal(celdaCostoAtenConsulP.getNumericCellValue()));
+							formulario.setCostoAtenConsP(new BigDecimal(celdaCostoAtenConsulP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoAtenConsulP.getCellType()  ){
 							formulario.setCostoAtenConsP(new BigDecimal(0.00));
 						}else{
@@ -1280,7 +1281,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2820);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoPersP.getCellType()  ){
-							formulario.setCostoPersonalP(new BigDecimal(celdaCostoPersP.getNumericCellValue()));
+							formulario.setCostoPersonalP(new BigDecimal(celdaCostoPersP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoPersP.getCellType()  ){
 							formulario.setCostoPersonalP(new BigDecimal(0.00));
 						}else{
@@ -1289,7 +1290,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2830);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaCapacAgentP.getCellType()  ){
-							formulario.setCapacAgentP(new BigDecimal(celdaCapacAgentP.getNumericCellValue()));
+							formulario.setCapacAgentP(new BigDecimal(celdaCapacAgentP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaCapacAgentP.getCellType()  ){
 							formulario.setCapacAgentP(new BigDecimal(0.00));
 						}else{
@@ -1298,7 +1299,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2840);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaUtilMatOficP.getCellType()  ){
-							formulario.setUtilMatOficP(new BigDecimal(celdaUtilMatOficP.getNumericCellValue()));
+							formulario.setUtilMatOficP(new BigDecimal(celdaUtilMatOficP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaUtilMatOficP.getCellType()  ){
 							formulario.setUtilMatOficP(new BigDecimal(0.00));
 						}else{
@@ -1310,7 +1311,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
 							//LIMA
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpValesEdeL.getCellType()  ){
-								formulario.setImpValDesctoEdeL(new BigDecimal(celdaImpValesEdeL.getNumericCellValue()));
+								formulario.setImpValDesctoEdeL(new BigDecimal(celdaImpValesEdeL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpValesEdeL.getCellType()  ){
 								formulario.setImpValDesctoEdeL(new BigDecimal(0.00));
 							}else{
@@ -1319,7 +1320,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2860);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaImpValesNoEdeL.getCellType()  ){
-								formulario.setImpValDesctoNoEdeL(new BigDecimal(celdaImpValesNoEdeL.getNumericCellValue()));
+								formulario.setImpValDesctoNoEdeL(new BigDecimal(celdaImpValesNoEdeL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaImpValesNoEdeL.getCellType()  ){
 								formulario.setImpValDesctoNoEdeL(new BigDecimal(0.00));
 							}else{
@@ -1337,7 +1338,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2880);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalRepValesDesctoL.getCellType()  ){
-								formulario.setCostoTotalValDesctoL(new BigDecimal(celdaTotalRepValesDesctoL.getNumericCellValue()));
+								formulario.setCostoTotalValDesctoL(new BigDecimal(celdaTotalRepValesDesctoL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalRepValesDesctoL.getCellType()  ){
 								formulario.setCostoTotalValDesctoL(new BigDecimal(0.00));
 							}else{
@@ -1355,7 +1356,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2900);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalRepValesOficL.getCellType()  ){
-								formulario.setCostoTotalValOficL(new BigDecimal(celdaTotalRepValesOficL.getNumericCellValue()));
+								formulario.setCostoTotalValOficL(new BigDecimal(celdaTotalRepValesOficL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalRepValesOficL.getCellType()  ){
 								formulario.setCostoTotalValOficL(new BigDecimal(0.00));
 							}else{
@@ -1373,7 +1374,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2920);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaTotalEnvPadronL.getCellType()  ){
-								formulario.setCostoEnvPadronL(new BigDecimal(celdaTotalEnvPadronL.getNumericCellValue()));
+								formulario.setCostoEnvPadronL(new BigDecimal(celdaTotalEnvPadronL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaTotalEnvPadronL.getCellType()  ){
 								formulario.setCostoEnvPadronL(new BigDecimal(0.00));
 							}else{
@@ -1391,7 +1392,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2940);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitValesDigitL.getCellType()  ){
-								formulario.setCostoUnitValesDigitL(new BigDecimal(celdaCostoUnitValesDigitL.getNumericCellValue()));
+								formulario.setCostoUnitValesDigitL(new BigDecimal(celdaCostoUnitValesDigitL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitValesDigitL.getCellType()  ){
 								formulario.setCostoUnitValesDigitL(new BigDecimal(0.00));
 							}else{
@@ -1400,7 +1401,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2950);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoAtenSolicL.getCellType()  ){
-								formulario.setCostoAtenSolicL(new BigDecimal(celdaCostoAtenSolicL.getNumericCellValue()));
+								formulario.setCostoAtenSolicL(new BigDecimal(celdaCostoAtenSolicL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoAtenSolicL.getCellType()  ){
 								formulario.setCostoAtenSolicL(new BigDecimal(0.00));
 							}else{
@@ -1409,7 +1410,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2960);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoAtenConsulL.getCellType()  ){
-								formulario.setCostoAtenConsL(new BigDecimal(celdaCostoAtenConsulL.getNumericCellValue()));
+								formulario.setCostoAtenConsL(new BigDecimal(celdaCostoAtenConsulL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoAtenConsulL.getCellType()  ){
 								formulario.setCostoAtenConsL(new BigDecimal(0.00));
 							}else{
@@ -1427,7 +1428,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2980);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoPersL.getCellType()  ){
-								formulario.setCostoPersonalL(new BigDecimal(celdaCostoPersL.getNumericCellValue()));
+								formulario.setCostoPersonalL(new BigDecimal(celdaCostoPersL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoPersL.getCellType()  ){
 								formulario.setCostoPersonalL(new BigDecimal(0.00));
 							}else{
@@ -1436,7 +1437,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_2990);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaCapacAgentL.getCellType()  ){
-								formulario.setCapacAgentL(new BigDecimal(celdaCapacAgentL.getNumericCellValue()));
+								formulario.setCapacAgentL(new BigDecimal(celdaCapacAgentL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaCapacAgentL.getCellType()  ){
 								formulario.setCapacAgentL(new BigDecimal(0.00));
 							}else{
@@ -1445,7 +1446,7 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3000);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaUtilMatOficL.getCellType()  ){
-								formulario.setUtilMatOficL(new BigDecimal(celdaUtilMatOficL.getNumericCellValue()));
+								formulario.setUtilMatOficL(new BigDecimal(celdaUtilMatOficL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == celdaUtilMatOficL.getCellType()  ){
 								formulario.setUtilMatOficL(new BigDecimal(0.00));
 							}else{
