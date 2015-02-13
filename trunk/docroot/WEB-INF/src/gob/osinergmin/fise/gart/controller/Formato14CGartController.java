@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -711,9 +712,9 @@ public class Formato14CGartController {
 						flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit,flagCostoEdit);
 			}
 		}catch(FileMimeTypeException ex){
-			
+			ex.printStackTrace();
 		}catch (Exception e) {
-			
+			e.printStackTrace();
 		}		
 		if(("1").equals(formatoMensaje.getValor())){
 			String codEmpresa = formatoMensaje.getFormato14CBean().getCodEmpresa();
@@ -1306,11 +1307,11 @@ public class Formato14CGartController {
 					is=archivo.getContentStream();
 					libro = new HSSFWorkbook(is);//Se lee libro xls
 				} catch (Exception e1) {
-					logger.info("Error al leer el archivo"); 					
+					logger.error("Error al leer el archivo"); 					
 					cont++;
 					sMsg="ERROR";
 					mapaErrores.get(FiseConstants.COD_ERROR_F12_20);//error al leer el archivo exel
-					throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+					//throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
 				}
 				int nroHojaSelec=0;
 				
@@ -1469,7 +1470,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F12_60);		
 						}else{
 							BigDecimal anioParse = new BigDecimal(bean.getAnioPres().trim());
-							bean.setAnioPres(String.valueOf(anioParse.setScale(0)));   
+							bean.setAnioPres(String.valueOf(anioParse.setScale(0,RoundingMode.UP)));   
 							if(bean.getAnioPres().length()!=4){
 								cont++;
 								sMsg="ERROR";
@@ -1490,7 +1491,7 @@ public class Formato14CGartController {
 									  listaError, cont, FiseConstants.COD_ERROR_F12_80);		
 						}else{
 							BigDecimal mesParse = new BigDecimal(bean.getMesPres().trim());
-							bean.setMesPres(String.valueOf(mesParse.setScale(0)));
+							bean.setMesPres(String.valueOf(mesParse.setScale(0,RoundingMode.UP)));
 							if(bean.getMesPres().length()>2){
 								cont++;
 								sMsg="ERROR";
@@ -1520,7 +1521,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F14C_390);
 						}else if(FormatoUtil.isNotBlank(bean.getNumRural())){
 							BigDecimal numR = new BigDecimal(bean.getNumRural());
-							bean.setNumRural(String.valueOf(numR.setScale(0)));	
+							bean.setNumRural(String.valueOf(numR.setScale(0,RoundingMode.UP)));	
 						}
 						
 						/*if(FormatoUtil.isBlank(bean.getNumUrbProv())){					
@@ -1537,7 +1538,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F14C_410);
 						}else if(FormatoUtil.isNotBlank(bean.getNumUrbProv())){
 							BigDecimal numP = new BigDecimal(bean.getNumUrbProv());
-							bean.setNumUrbProv(String.valueOf(numP.setScale(0)));	
+							bean.setNumUrbProv(String.valueOf(numP.setScale(0,RoundingMode.UP)));	
 						}				
 							
 						
@@ -1560,7 +1561,7 @@ public class Formato14CGartController {
 										listaError, cont, FiseConstants.COD_ERROR_F14C_430);
 							}else if(FormatoUtil.isNotBlank(bean.getNumUrbLima())){
 								BigDecimal numL = new BigDecimal(bean.getNumUrbLima());
-								bean.setNumUrbLima(String.valueOf(numL.setScale(0)));	
+								bean.setNumUrbLima(String.valueOf(numL.setScale(0,RoundingMode.UP)));	
 							}
 							
 							bean.setCostoPromUrbLima(String.valueOf(celdaCostPromL));		
@@ -3049,7 +3050,7 @@ public class Formato14CGartController {
 							}					
 						}//fin de ambos D e I								
 						/***FIN DE VALIDACION****/				
-					    logger.info("Valor de del mesaje pasando la validacion:  "+sMsg); 
+					    logger.error("Valor de del mesaje pasando la validacion:  "+sMsg); 
 						if("".equals(sMsg) ){	
 							logger.info("Entro a verificar cero errores de validacion"); 
 							bean.setUsuario(user.getLogin());
@@ -3088,7 +3089,7 @@ public class Formato14CGartController {
 										valor=formato14CGartService.insertarDatosFormato14C(bean);			
 									} catch (Exception e) {
 									   valor = "0";	
-									   e.printStackTrace();
+									   //e.printStackTrace();
 									}									
 									logger.info("valor del  agrabar nuevo registro: "+valor); 
 								}else if( FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION.equals(flagCarga) ){
@@ -3104,7 +3105,7 @@ public class Formato14CGartController {
 										valor =formato14CGartService.actualizarDatosFormato14C(bean);
 									} catch (Exception e) {
 									   valor = "0";	
-									   e.printStackTrace();
+									  // e.printStackTrace();
 									}								
 									logger.info("valor del  actualizar nuevo registro: "+valor); 
 									System.out.println("valor del  actualizar nuevo registro: "+valor); 
@@ -3137,7 +3138,7 @@ public class Formato14CGartController {
 			}
 		} catch (Exception e) {
 			logger.error("Error al leer el archivo excel del F14C.",e);
-			String error = e.getMessage();
+			String error = "Error al cargar el archivo excel del Formato 14C.";
 			sMsg="ERROR";       	
 			cont++;
 			MensajeErrorBean errorBean = new MensajeErrorBean();
@@ -4338,7 +4339,7 @@ public class Formato14CGartController {
 		   }    		
     	}catch (Exception e) {	  			  
     		String error = e.getMessage();
-    		sMsg = sMsg+error;	        	
+    		sMsg = sMsg+"Error al cargar el archivo de text del Formato 14C";	        	
     		logger.info(error);
     		cont++;
     		MensajeErrorBean errorBean = new MensajeErrorBean();

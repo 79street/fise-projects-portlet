@@ -78,8 +78,8 @@ public class ResumenCostosController {
     			r.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
     		}     		
     		r.setAdmin(fiseUtil.esAdministrador(renderRequest));
-    		
-    		r.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL)); 
+    		//TODOS = que filtre grupo de informacion activos e inactivos
+    		r.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL,"TODOS")); 
     		
     		//mapaEmpresa = fiseUtil.getMapaEmpresa();   		
     		
@@ -101,8 +101,8 @@ public class ResumenCostosController {
   			String tipoFormato = r.getOptionFormato();
   			
   			logger.info("Codigo grupo inf. para cargar grupo de infor.:  "+tipoFormato);
-  			
-  			List<FiseGrupoInformacion> listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(tipoFormato);
+  			//TODOS = que filtre activos e inactivos
+  			List<FiseGrupoInformacion> listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(tipoFormato,"TODOS");
   			logger.info("Tamaño de lista de grupo inf:  "+listaGrupoInf.size()); 
   			JSONArray jsonArray = new JSONArray();
   			for (FiseGrupoInformacion grupo : listaGrupoInf) {

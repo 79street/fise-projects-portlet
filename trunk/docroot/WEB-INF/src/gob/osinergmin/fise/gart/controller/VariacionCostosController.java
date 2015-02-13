@@ -55,7 +55,8 @@ public class VariacionCostosController {
         try {           	
     			
     		bean.setAdmin(fiseUtil.esAdministrador(renderRequest));
-    		bean.setListaGrupoInfo(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL));
+    		//TODOS= que filtre activos e inactivos
+    		bean.setListaGrupoInfo(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL,"TODOS"));
     		//vamos a cargar por defecto los conceptos para rural
     		
     		model.addAttribute("model", bean);

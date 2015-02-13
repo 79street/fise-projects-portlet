@@ -205,7 +205,7 @@ public class EnvioDefinitivoController {
     		}     		
     		n.setAdmin(fiseUtil.esAdministrador(renderRequest));
     		
-    		n.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL)); 
+    		n.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL,"")); 
     		
     		mapaEmpresa = fiseUtil.getMapaEmpresa();
     		
@@ -295,7 +295,7 @@ public class EnvioDefinitivoController {
   			
   			logger.info("Codigo grupo inf. para cargar grupo de infor.:  "+tipoFormato);
   			
-  			List<FiseGrupoInformacion> listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(tipoFormato);
+  			List<FiseGrupoInformacion> listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(tipoFormato,"");
   			logger.info("Tamaño de lista de grupo inf:  "+listaGrupoInf.size()); 
   			JSONArray jsonArray = new JSONArray();
   			for (FiseGrupoInformacion grupo : listaGrupoInf) {
