@@ -480,6 +480,13 @@ var fiseObservacion= {
 				//fiseObservacion.f_descripcion.focus();
 				cod_focus=fiseObservacion.f_descripcion;
 			  	return false; 
+			}else if(!validarLetra(fiseObservacion.f_descripcion.val())){				
+				var addhtmAlert='Debe ingresar una Descripción válida.';					
+				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
+				fiseObservacion.dialogValidacion.dialog("open");
+				//fiseObservacion.f_descripcion.focus();
+				cod_focus=fiseObservacion.f_descripcion;
+			  	return false; 
 			}else if(fiseObservacion.f_descripcion.val().length > 499){				
 				var addhtmAlert='La  descripción acepta como máximo 500 caracteres.';					
 				fiseObservacion.dialogValidacionContent.html(addhtmAlert);

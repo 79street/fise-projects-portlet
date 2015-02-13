@@ -1850,6 +1850,13 @@ var notificarValidar= {
 				//notificarValidar.f_descObservacion.focus();
 				cod_focus=notificarValidar.f_descObservacion;
 			  	return false; 
+			}else if(!validarLetra(notificarValidar.f_descObservacion.val())){				
+				var addhtmAlert='Debe ingresar una Descripción Observación válida.';					
+				notificarValidar.dialogValidacionContent.html(addhtmAlert);
+				notificarValidar.dialogValidacion.dialog("open");	
+				//notificarValidar.f_descObservacion.focus();
+				cod_focus=notificarValidar.f_descObservacion;
+			  	return false; 
 			}else if(notificarValidar.f_descObservacion.val().length > 499){				
 				var addhtmAlert='La descripción de la Observación no debe exceder a los 500 caracteres.';					
 				notificarValidar.dialogValidacionContent.html(addhtmAlert);

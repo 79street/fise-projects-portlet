@@ -514,7 +514,14 @@ var fiseGrupoInformacion= {
 				//fiseGrupoInformacion.f_descripcion.focus();
 				cod_focus=fiseGrupoInformacion.f_descripcion;
 			  	return false; 
-			}else if(fiseGrupoInformacion.f_descripcion.val().length > 100){				
+			}else if(!validarLetra(fiseGrupoInformacion.f_descripcion.val())){				
+				var addhtmAlert='Debe ingresar una Descripción válida.';					
+				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
+				fiseGrupoInformacion.dialogValidacion.dialog("open");
+				//fiseGrupoInformacion.f_descripcion.focus();
+				cod_focus=fiseGrupoInformacion.f_descripcion;
+			  	return false; 
+			}else if(fiseGrupoInformacion.f_descripcion.val().length > 99){				
 				var addhtmAlert='La  descripción acepta como máximo 100 caracteres.';					
 				fiseGrupoInformacion.dialogValidacionContent.html(addhtmAlert);
 				fiseGrupoInformacion.dialogValidacion.dialog("open");
