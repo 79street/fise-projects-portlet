@@ -44,6 +44,7 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -1032,6 +1033,22 @@ public class FiseUtil {
 			mapaUbigeo.put(ubigeo.getCodUbigeo(), ubigeo.getNomUbigeo());
 		}
 		return mapaUbigeo;
+	}
+	
+	public Map<String, String> getMapaConceptos(){
+		Map<String, String> mapaConceptos = new HashMap<String, String>();
+		//14A
+		mapaConceptos.put(FiseConstants.CONCEPTO_EMP_VALUE, FiseConstants.CONCEPTO_EMP_DESCRIPCION);
+		mapaConceptos.put(FiseConstants.CONCEPTO_GLP_VALUE, FiseConstants.CONCEPTO_GLP_DESCRIPCION);
+		//14B
+		mapaConceptos.put(FiseConstants.CONCEPTO_COSTO_UNIT_IMP_VAL_VALUE, FiseConstants.CONCEPTO_COSTO_UNIT_IMP_VAL_DESCRIPCION);
+		mapaConceptos.put(FiseConstants.CONCEPTO_COSTO_UNIT_VAL_DOMIC_VALUE, FiseConstants.CONCEPTO_COSTO_UNIT_VAL_DOMIC_DESCRIPCION);
+		mapaConceptos.put(FiseConstants.CONCEPTO_COSTO_UNIT_VAL_DIS_ELE_VALUE, FiseConstants.CONCEPTO_COSTO_UNIT_VAL_DIS_ELE_DESCRIPCION);
+		mapaConceptos.put(FiseConstants.CONCEPTO_COSTO_UNIT_CANJ_VAL_FIS_VALUE, FiseConstants.CONCEPTO_COSTO_UNIT_CANJ_VAL_FIS_DESCRIPCION);
+		mapaConceptos.put(FiseConstants.CONCEPTO_COSTO_UNIT_CANJ_VAL_DIG_VALUE, FiseConstants.CONCEPTO_COSTO_UNIT_CANJ_VAL_DIG_DESCRIPCION);
+		mapaConceptos.put(FiseConstants.CONCEPTO_COSTO_UNIT_ATENCION_VALUE, FiseConstants.CONCEPTO_COSTO_UNIT_ATENCION_DESCRIPCION);
+		mapaConceptos.put(FiseConstants.CONCEPTO_COSTO_TOTAL_GEST_ADM_VALUE, FiseConstants.CONCEPTO_COSTO_TOTAL_GEST_ADM_DESCRIPCION);
+		return mapaConceptos;
 	}
 
 }

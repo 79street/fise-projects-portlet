@@ -1555,7 +1555,7 @@ public class Formato13AGartController {
 										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357,i+1));
 									}
 									//validamos la fechaformato
-									if( !FiseConstants.BLANCO.equals(fechaFormato) ){
+									if(FormatoUtil.validarFechaFormato_YYYY_MM(fechaFormato) ){
 										if( fechaFormato.length()==7 ){
 											Long anio=Long.parseLong((fechaFormato.substring(0,fechaFormato.indexOf("-"))).trim());
 											Long mes=Long.parseLong((fechaFormato.substring((fechaFormato.indexOf("-")+1),fechaFormato.length())).trim());
@@ -1565,6 +1565,9 @@ public class Formato13AGartController {
 											cont++;
 											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357,i+1));
 										}
+									}else{
+										cont++;
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357,i+1));
 									}
 									
 									/**validacion de periodo de ejecucion*/
@@ -1582,6 +1585,10 @@ public class Formato13AGartController {
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCodUbigeo.getCellType()  ){
 										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
 										cont++;
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCodUbigeo.getCellType()  ){
+										double d = celdaCodUbigeo.getNumericCellValue();
+										String valor = FormatoUtil.conversion(d);
+										detalleBean.setCodUbigeo(FormatoUtil.eliminaDecimales(valor));
 									}else{
 										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
 										cont++;

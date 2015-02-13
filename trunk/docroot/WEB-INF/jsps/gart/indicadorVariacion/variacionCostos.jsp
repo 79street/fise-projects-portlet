@@ -98,6 +98,26 @@ $(document).ready(function () {
 										</tr>
 										
 										<tr>
+										   <td><output>Etapa:</output></td>											
+										    <td>
+												<form:select path="etapaBusq" cssClass="select" cssStyle="width: 200px;">
+													<form:option value="HISTORICO">HISTÓRICO</form:option>
+													<form:option value="SOLICITUD">SOLICITUD</form:option>
+													<form:option value="LEV.OBS">LEVANTAMIENTO DE OBSERVACIONES</form:option>
+													<form:option value="ESTABLECIDO">ESTABLECIDO</form:option>
+													
+												</form:select>
+											</td>		
+										
+											<td colspan="2">										
+											</td>		
+																													
+										</tr>
+										<tr height="10px">
+											<td colspan="4"></td>
+										</tr>
+										
+										<tr>
 											<td></td>
 											<td></td>	
 											<td></td>												

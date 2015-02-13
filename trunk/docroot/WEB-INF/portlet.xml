@@ -633,7 +633,7 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>VARIACIÓN DE COSTOS</title>
+			<title>VARIACIÓN DE COSTOS ESTÁNDARES</title>
 			<short-title>GartVariacionCostos</short-title>
 			<keywords>GartVariacionCostos</keywords>
 		</portlet-info>

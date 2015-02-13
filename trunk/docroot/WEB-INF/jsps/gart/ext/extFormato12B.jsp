@@ -141,7 +141,9 @@
         txtAnioEjec:null,
         txtAnioEjecCommand:null,
        
+        msgTransaccion:null,
         
+        dialogError:null,
         
         dialogObservacion:null,
         tablaObservacion:null,
@@ -373,6 +375,8 @@
 			this.urlLoadPeriodo='<portlet:resourceURL id="loadPeriodoDeclaracion" />';
 			this.urlLoadCostosUnitarios='<portlet:resourceURL id="loadCostoUnitario" />';
 			
+			this.msgTransaccion=$("#msgTransaccion");
+			
 			this.urlGrupoInformacion='<portlet:resourceURL id="loadGrupoInformacion" />';
 			
 			this.cmbCodEmpresa=$('#cmbEmpresa');
@@ -499,6 +503,8 @@
            this.urlReporteValidacion='<portlet:resourceURL id="showReporteValidacion" />';
            this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="showRptEnvioDefinitivo" />';
            
+           
+           this.dialogError=$("#<portlet:namespace/>dialog-form-error");
             
          this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");   
          this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
@@ -548,6 +554,15 @@
 				formato12B.loadTotales($("#codEmpresaHidden").val());
 				
 				$('#<portlet:namespace/>guardarFormato').val('Actualizar');
+				
+				//update
+				if( formato12B.msgTransaccion.val()=='OK' ){
+					var addhtml='La carga de información del Formato 12B se realizó satisfactoriamente';
+					formato12B.lblMessage.html(addhtml);
+					formato12B.dialogMessageGeneral.dialog("open");
+				}else if( formato12B.msgTransaccion.val()=='ERROR' ){
+					formato12B.dialogError.dialog( "open" );
+				}
 			
 			}else if(formato12B.tpOperacion.val()=='2'){
 				formato12B.cmbCodEmpresa.change(function(){
@@ -567,6 +582,16 @@
 			//	formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 				
 				formato12B.loadTotales(formato12B.cmbCodEmpresa.val());
+				
+				//create
+				if( formato12B.msgTransaccion.val()=='OK' ){
+					var addhtml='La carga de información del Formato 12B se realizó satisfactoriamente';
+					formato12B.lblMessage.html(addhtml);
+					formato12B.dialogMessageGeneral.dialog("open");
+				}else if( formato12B.msgTransaccion.val()=='ERROR' ){
+					formato12B.dialogError.dialog( "open" );
+				}
+				
 			}
 			
 		
@@ -2006,7 +2031,16 @@
 					}
 				}
 			});
-			
+			formato12B.dialogError.dialog({
+				modal: true,
+				width: 750,
+				autoOpen: false,
+				buttons: {
+					Cerrar: function() {
+						$(this).dialog("close");
+					}
+				}
+			});
 			formato12B.dialogMessageReport.dialog({
 				modal: true,
 				autoOpen: false,

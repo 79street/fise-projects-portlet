@@ -27,6 +27,9 @@
 </script>
 <form:form method="POST" modelAttribute="formato12BGartCommand"
 	id="frmAddUpdate" action="${accionURL}" enctype="multipart/form-data">
+	
+	<input type="hidden" id="msgTransaccion" name="msgTransaccion" value="${msgTrans}" />
+	
 	<form:input path="tipoOperacion" type="hidden" id="txtOperacion" />
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">
@@ -1127,5 +1130,23 @@
 	<!--  -->
 	
 	<div id="<portlet:namespace/>divOverlay" class="ui-widget-overlay" style="display: none; width: 100%; height: 100%; z-index: 1001;"></div>
+	
+	<div id="<portlet:namespace/>dialog-form-error" class="net-frame-border" style="display:none;background:#fff;" title=" Errores de archivo de carga ">				
+		<fieldset class="net-frame-border">							
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabla">
+				<tr class="titulo_tabla">
+            		<td width="40">Nro.</td>
+            		<td width="378" height="37">Descripción</td>
+            	</tr>
+               		<c:forEach items="${listaError}" var="error" varStatus="status">															
+				<tr class="detalleTablaContenido">
+                   	<td align="center">${status.count}</td> 
+                   	<td align="left">${error.descripcion}</td>     
+                	 </tr>				
+				</c:forEach>            
+              	</table>
+		</fieldset>
+		<br>
+	</div>
 
 </form:form>
