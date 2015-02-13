@@ -730,7 +730,7 @@ var liquidacionVar= {
 						liquidacionVar.buscarLiquidacion('B');
 						liquidacionVar.initBlockUI();						
 					}else if(data.resultado == "NODATOS"){
-						var addhtmNoDatos='Para Procesar el '+msgFinal+', se requiere realizar el Envío Definitivo de los Formatos '+formatoDes+' de la Dist. Eléctrica seleccionada.';					
+						var addhtmNoDatos='Para Procesar el '+msgFinal+', se requiere realizar el Envío Definitivo de los Formatos '+formatoDes+' de la Distribuidora Eléctrica seleccionada.';					
 						liquidacionVar.dialogInfoContent.html(addhtmNoDatos);
 						liquidacionVar.dialogInfo.dialog("open");
 						liquidacionVar.initBlockUI();
@@ -776,12 +776,12 @@ var liquidacionVar= {
 						liquidacionVar.buscarLiquidacion('B');//valor que se envia al controler en la busqueda
 						liquidacionVar.initBlockUI();						
 					}else if(data.resultado == "NODATOS"){
-						var addhtmNoDatos='Para realizar la '+msgFinal+', se requiere realizar el Envío Definitivo de los Formatos '+formatoDes+' de la Dist. Eléctrica seleccionada.';	
+						var addhtmNoDatos='Para realizar la '+msgFinal+', se requiere realizar el Envío Definitivo de los Formatos '+formatoDes+' de la Distribuidora Eléctrica seleccionada.';	
 						liquidacionVar.dialogInfoContent.html(addhtmNoDatos);
 						liquidacionVar.dialogInfo.dialog("open");
 						liquidacionVar.initBlockUI();
 					}else if(data.resultado == "NOAPTO"){
-						var addhtmNoApto='La información no está preparada para realizar la '+msgFinal+'. Primero debe Procesar el '+desAterior+' de la Dist. Eléctrica seleccionada.';	
+						var addhtmNoApto='La información no está preparada para realizar la '+msgFinal+'. Primero debe Procesar el '+desAterior+' de la Distribuidora Eléctrica seleccionada.';	
 						liquidacionVar.dialogInfoContent.html(addhtmNoApto);
 						liquidacionVar.dialogInfo.dialog("open");
 						liquidacionVar.initBlockUI();
