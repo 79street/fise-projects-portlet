@@ -45,6 +45,7 @@ var variacionCostos= {
 		i_formatoBusq:null,
 		i_zonaBusq:null,
 		i_conceptoBusq:null,
+		i_etapaBusq:null,
 		
 		
 		
@@ -93,6 +94,7 @@ var variacionCostos= {
 			this.i_formatoBusq=$('#formatoBusq');	
 			this.i_zonaBusq=$('#zonaBusq');	
 			this.i_conceptoBusq=$('#conceptoBusq');
+			this.i_etapaBusq=$('#etapaBusq');
 			
 			variacionCostos.initDialogs();
 		    

@@ -2006,6 +2006,10 @@ public class Formato12DGartController {
 										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
 										cont++;
 										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCodUbigeo.getCellType()  ){
+										double d = celdaCodUbigeo.getNumericCellValue();
+										String valor = FormatoUtil.conversion(d);
+										detalleBean.setCodUbigeo(FormatoUtil.eliminaDecimales(valor));
 									}else{
 										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
 										cont++;

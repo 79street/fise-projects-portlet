@@ -2044,6 +2044,10 @@ public class Formato12CGartController {
 										detalleBean.setCodUbigeoOrigen(FiseConstants.BLANCO);
 										cont++;
 										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCodUbigeoOrigen.getCellType()  ){
+										double d = celdaCodUbigeoOrigen.getNumericCellValue();
+										String valor = FormatoUtil.conversion(d);
+										detalleBean.setCodUbigeoOrigen(FormatoUtil.eliminaDecimales(valor));
 									}else{
 										detalleBean.setCodUbigeoOrigen(FiseConstants.BLANCO);
 										cont++;
@@ -2068,6 +2072,10 @@ public class Formato12CGartController {
 										detalleBean.setCodUbigeoDestino(FiseConstants.BLANCO);
 										cont++;
 										//---sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_30));
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCodUbigeoDestino.getCellType()  ){
+										double d = celdaCodUbigeoDestino.getNumericCellValue();
+										String valor = FormatoUtil.conversion(d);
+										detalleBean.setCodUbigeoDestino(FormatoUtil.eliminaDecimales(valor));
 									}else{
 										detalleBean.setCodUbigeoDestino(FiseConstants.BLANCO);
 										cont++;

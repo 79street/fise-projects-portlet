@@ -11,9 +11,8 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -29,8 +28,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
-
-import com.liferay.portal.kernel.util.JavaConstants;
 
 @Controller("variacionCostosController")
 @RequestMapping("VIEW")
@@ -50,6 +47,8 @@ public class VariacionCostosController {
 	@Qualifier("commonGartServiceImpl")
 	private CommonGartService commonService;
 	
+	Map<String, String> mapaConceptos;
+	
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("variacionCostosBean")VariacionCostosBean bean){
         try {           	
@@ -58,6 +57,9 @@ public class VariacionCostosController {
     		//TODOS= que filtre activos e inactivos
     		bean.setListaGrupoInfo(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL,"TODOS"));
     		//vamos a cargar por defecto los conceptos para rural
+    		bean.setEtapaBusq("ESTABLECIDO");
+    		
+    		mapaConceptos = fiseUtil.getMapaConceptos();
     		
     		model.addAttribute("model", bean);
     		
@@ -140,78 +142,78 @@ public class VariacionCostosController {
   		}
 	}
 	
-	@RequestMapping(params="action=plot")
-	public String cargarImagen(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("variacionCostosBean")VariacionCostosBean bean){
-        try {           	
-    			
-        	long idGrupo=0;
-        	
-        	/*String idGrupoInfo = bean.getGrupoInfoBusq();				
-			String formato = bean.getFormatoBusq();
-			String zona = bean.getZonaBusq();
-			String concepto = bean.getConceptoBusq();*/
-        	
-        	PortletRequest pRequest = (PortletRequest) renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-        	
-			String idGrupoInfo = bean.getGrupoInfoBusq();				
-			String formato = bean.getFormatoBusq();
-			String zona = bean.getZonaBusq();
-			String concepto = bean.getConceptoBusq();
-			
-			if(FormatoUtil.isNotBlank(bean.getGrupoInfoBusq())){ 
-		    	idGrupo = new Long(idGrupoInfo);
-		    }
-			
-			String valorConceptoConcatenado = "";
-			
-			if( "R".equals(zona) ){
-				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
-					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_RURAL_F14A;
-				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
-					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_RURAL_F14B;
-				}
-			}else if( "P".equals(zona) ){
-				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
-					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_PROVINCIA_F14A;
-				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
-					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_PROVINCIA_F14B;
-				}
-			}else if( "L".equals(zona) ){
-				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
-					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_LIMA_F14A;
-				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
-					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_LIMA_F14B;
-				}
-			}
-  			
-  			List<VariacionCostosBean> listaCostos =commonService.obtenerVariacionCostosByGrupoinfoFormatoConceptofinal(idGrupo, formato, valorConceptoConcatenado);
-  			
-  			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
-  			
-  			//List<VariacionCostosBean> listaVariacionCostos = new ArrayList<VariacionCostosBean>();
-  			
-  			String listaValores = convertirListaValores(listaCostos);
-  			
-  			//VariacionJSON obj = new VariacionJSON();
-  			pRequest.getPortletSession().setAttribute("cadenaValorVariacion", listaValores, PortletSession.APPLICATION_SCOPE);
-  			
-  			//obj.setCadenaVariacion(listaValores);
-  			
-  			model.addAttribute("cadenaValorVariacion", listaValores);
-        	
-        	
-    		/*bean.setAdmin(fiseUtil.esAdministrador(renderRequest));
-    		bean.setListaGrupoInfo(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL));
-    		//vamos a cargar por defecto los conceptos para rural
-    		
-    		model.addAttribute("model", bean);*/
-    		
-		} catch (Exception e) {
-			logger.info("Ocurrio un errror al caragar la pagina notificacion-validacion"); 
-			e.printStackTrace();
-		}		
-		return "variacionCostos";
-	}
+//	@RequestMapping(params="action=plot")
+//	public String cargarImagen(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("variacionCostosBean")VariacionCostosBean bean){
+//        try {           	
+//    			
+//        	long idGrupo=0;
+//        	
+//        	/*String idGrupoInfo = bean.getGrupoInfoBusq();				
+//			String formato = bean.getFormatoBusq();
+//			String zona = bean.getZonaBusq();
+//			String concepto = bean.getConceptoBusq();*/
+//        	
+//        	PortletRequest pRequest = (PortletRequest) renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+//        	
+//			String idGrupoInfo = bean.getGrupoInfoBusq();				
+//			String formato = bean.getFormatoBusq();
+//			String zona = bean.getZonaBusq();
+//			String concepto = bean.getConceptoBusq();
+//			
+//			if(FormatoUtil.isNotBlank(bean.getGrupoInfoBusq())){ 
+//		    	idGrupo = new Long(idGrupoInfo);
+//		    }
+//			
+//			String valorConceptoConcatenado = "";
+//			
+//			if( "R".equals(zona) ){
+//				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
+//					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_RURAL_F14A;
+//				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
+//					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_RURAL_F14B;
+//				}
+//			}else if( "P".equals(zona) ){
+//				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
+//					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_PROVINCIA_F14A;
+//				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
+//					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_PROVINCIA_F14B;
+//				}
+//			}else if( "L".equals(zona) ){
+//				if( FiseConstants.TIPO_FORMATO_14A.equals(formato) ){
+//					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_LIMA_F14A;
+//				}else if( FiseConstants.TIPO_FORMATO_14B.equals(formato) ){
+//					valorConceptoConcatenado = concepto+FiseConstants.SUFIJO_CONCEPTO_LIMA_F14B;
+//				}
+//			}
+//  			
+//  			List<VariacionCostosBean> listaCostos =commonService.obtenerVariacionCostosByGrupoinfoFormatoConceptofinal(idGrupo, formato, valorConceptoConcatenado);
+//  			
+//  			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
+//  			
+//  			//List<VariacionCostosBean> listaVariacionCostos = new ArrayList<VariacionCostosBean>();
+//  			
+//  			String listaValores = convertirListaValores(listaCostos);
+//  			
+//  			//VariacionJSON obj = new VariacionJSON();
+//  			pRequest.getPortletSession().setAttribute("cadenaValorVariacion", listaValores, PortletSession.APPLICATION_SCOPE);
+//  			
+//  			//obj.setCadenaVariacion(listaValores);
+//  			
+//  			model.addAttribute("cadenaValorVariacion", listaValores);
+//        	
+//        	
+//    		/*bean.setAdmin(fiseUtil.esAdministrador(renderRequest));
+//    		bean.setListaGrupoInfo(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL));
+//    		//vamos a cargar por defecto los conceptos para rural
+//    		
+//    		model.addAttribute("model", bean);*/
+//    		
+//		} catch (Exception e) {
+//			logger.info("Ocurrio un errror al caragar la pagina notificacion-validacion"); 
+//			e.printStackTrace();
+//		}		
+//		return "variacionCostos";
+//	}
 	
 	@ResourceMapping("generarGrafico")
   	public void generarGrafico(ModelMap model, ResourceRequest request,ResourceResponse response, @ModelAttribute("variacionCostosBean")VariacionCostosBean bean){
@@ -226,6 +228,7 @@ public class VariacionCostosController {
 			String formato = bean.getFormatoBusq();
 			String zona = bean.getZonaBusq();
 			String concepto = bean.getConceptoBusq();
+			String etapa = bean.getEtapaBusq();
 			
 			if(FormatoUtil.isNotBlank(bean.getGrupoInfoBusq())){ 
 		    	idGrupo = new Long(idGrupoInfo);
@@ -253,7 +256,7 @@ public class VariacionCostosController {
 				}
 			}
   			
-  			List<VariacionCostosBean> listaCostos =commonService.obtenerVariacionCostosByGrupoinfoFormatoConceptofinal(idGrupo, formato, valorConceptoConcatenado);
+  			List<VariacionCostosBean> listaCostos =commonService.obtenerVariacionCostosByGrupoinfoFormatoConceptofinal(idGrupo, formato, valorConceptoConcatenado, etapa);
   			
   			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
   			
@@ -274,7 +277,7 @@ public class VariacionCostosController {
   			jsonObj.put("promedio",promedio(listaCostos));
   			
   			String mensajeTitulo = "";
-  			mensajeTitulo = tituloPlot(formato);
+  			mensajeTitulo = tituloPlot(formato,concepto,etapa);
   			
   			jsonObj.put("titulo",mensajeTitulo);
   			
@@ -292,7 +295,7 @@ public class VariacionCostosController {
 	public String convertirListaValores(List<VariacionCostosBean> lista){
 		String cadena="";
 		String inicio="[[";
-		String fin="]]";
+		//--String fin="]]";
 		String coma=",";
 		String apostrofe="'";
 		String corcheteInicio="[";
@@ -319,11 +322,16 @@ public class VariacionCostosController {
 		String promedio = "";
 		BigDecimal suma = new BigDecimal(0);
 		
+		int cont=0;
+		
 		if(lista!=null && lista.size()>0){
 			for (VariacionCostosBean var : lista) {
-				suma = suma.add(new BigDecimal(var.getValor()));
+				if(!"0.00".equals(var.getValor())){
+					suma = suma.add(new BigDecimal(var.getValor()));
+					cont++;
+				}
 			}
-			promedio = suma.divide(new BigDecimal(lista.size()),2,RoundingMode.HALF_UP).toString();
+			promedio = suma.divide(new BigDecimal(cont),2,RoundingMode.HALF_UP).toString();
 		}
 		if( "".equals(promedio) ){
 			promedio = "0";
@@ -331,14 +339,43 @@ public class VariacionCostosController {
 		return promedio;
 	}
 	
-	public String tituloPlot(String formato){
-		String titulo = "Variación de Costos Estándares respecto al promedio:";
+	public String tituloPlot(String formato, String concepto, String etapa){
+		String titulo = "";
+		
+		String tituloF14A = "FORMATO FISE-14A: Costos Estándares de Implementación";
+		String tituloF14B = "FORMATO FISE-14B: Costos Estándares Operativos - Mensual";
+		
+		String titulo1="Variación de Costos Unitarios ";
+		String titulo2="respecto al promedio:";
 		
 		if(FiseConstants.TIPO_FORMATO_14A.equals(formato)){
+			titulo = titulo + tituloF14A;
+		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
+			titulo = titulo + tituloF14B;
+		}
+		titulo = titulo + "<br> "+titulo1;
+		
+		if( !FiseConstants.BLANCO.equals(etapa) ){
+			if( FiseConstants.ETAPA_SOLICITUD.equals(etapa) ){
+				titulo = titulo + "Declarados "+titulo2;
+			}else if( FiseConstants.ETAPA_LEVOBS.equals(etapa) ){
+				titulo = titulo + "con Levantamiento de Observaciones "+titulo2;
+			}else if( FiseConstants.ETAPA_ESTABLECIDO.equals(etapa) ){
+				titulo = titulo + "Establecidos "+titulo2;
+			}else if( FiseConstants.ETAPA_HISTORICO.equals(etapa) ){
+				titulo = titulo + "Históricos "+titulo2;
+			}
+		}
+		
+		if( !FiseConstants.BLANCO.equals(concepto) ){
+			titulo = titulo + "<br> "+mapaConceptos.get(concepto);
+		}
+		
+		/*if(FiseConstants.TIPO_FORMATO_14A.equals(formato)){
 			titulo = titulo + "<br> Costos Estándares de Implementación";
 		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
 			titulo = titulo + "<br> Costos Estándares Operativos - Mensual";
-		}
+		}*/
 		return titulo;
 	}
 	
