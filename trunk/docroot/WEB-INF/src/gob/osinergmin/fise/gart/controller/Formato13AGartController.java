@@ -1288,10 +1288,10 @@ public class Formato13AGartController {
 				formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, etapaEdit, anoInicioVigencia, anoFinVigencia);
 			}else if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
 				fileEntry =fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-				//formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, etapaNew, anoInicioVigencia, anoFinVigencia);
+				formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, etapaNew, anoInicioVigencia, anoFinVigencia);
 			}else if( tipoOperacion.equals(""+FiseConstants.UPDATE) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
 				fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-				//formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, etapaEdit, anoInicioVigencia, anoFinVigencia);
+				formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, etapaEdit, anoInicioVigencia, anoFinVigencia);
 			}
 		
 		}catch(FileMimeTypeException ex){
@@ -1385,10 +1385,10 @@ public class Formato13AGartController {
 					is=archivo.getContentStream();
 					libro = new HSSFWorkbook(is);//Se lee libro xls
 				} catch (Exception e1) {
-					logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12C_3350));
+					logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F13A_3634));
 					cont++;
-					sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12C_3350);
-					throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12C_3350));
+					sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F13A_3634);
+					throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F13A_3634));
 				}
 				int nroHojaSelec=0;
 				
@@ -1453,37 +1453,37 @@ public class Formato13AGartController {
 							formulario.setCodigoEmpresa(celdaEmpresa.getRichStringCellValue().toString());
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaEmpresa.getCellType()  ){
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3351);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3635);
 						}else{
 							formulario.setCodigoEmpresa("");
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3352);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3636);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnio.getCellType()  ){
 							formulario.setAnioPresent(new Double(celdaAnio.getNumericCellValue()).longValue());
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnio.getCellType()  ){
 							formulario.setAnioPresent(0L);
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3353);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3637);
 						}else{
 							formulario.setAnioPresent(0L);
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3354);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3638);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaMes.getCellType()  ){
 							formulario.setMesPresent(new Double(celdaMes.getNumericCellValue()).longValue());
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaMes.getCellType()  ){
 							formulario.setMesPresent(0L);
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3355);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3639);
 						}else{
 							formulario.setMesPresent(0L);
 							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3356);
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3640);
 						}
 						
 						if( inicioDetalle!=0  && finRegistros!=0 ){
-							for (int i = (inicioDetalle+1); i<(finRegistros-1); i++) {
+							for (int i = (inicioDetalle+1); i<finRegistros; i++) {
 								
 								Formato13ACBean detalleBean = new Formato13ACBean();
 								
@@ -1526,7 +1526,7 @@ public class Formato13AGartController {
 								}else{
 									detalleBean.setIdZonaBenef(0L);
 									cont++;
-									sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3371,i+1));
+									sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3654,i+1));
 								}
 								
 								boolean target=false;
@@ -1552,29 +1552,32 @@ public class Formato13AGartController {
 										detalleBean.setAnioAlta(0L);
 										detalleBean.setMesAlta(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3641,i+1));
 									}
 									//validamos la fechaformato
-									if(FormatoUtil.validarFechaFormato_YYYY_MM(fechaFormato) ){
-										if( fechaFormato.length()==7 ){
-											Long anio=Long.parseLong((fechaFormato.substring(0,fechaFormato.indexOf("-"))).trim());
-											Long mes=Long.parseLong((fechaFormato.substring((fechaFormato.indexOf("-")+1),fechaFormato.length())).trim());
-											detalleBean.setAnioAlta(anio);
-											detalleBean.setMesAlta(mes);
+									if( !FiseConstants.BLANCO.equals(fechaFormato) ){
+										if(FormatoUtil.validarFechaFormato_YYYY_MM(fechaFormato) ){
+											if( fechaFormato.length()==7 ){
+												Long anio=Long.parseLong((fechaFormato.substring(0,fechaFormato.indexOf("-"))).trim());
+												Long mes=Long.parseLong((fechaFormato.substring((fechaFormato.indexOf("-")+1),fechaFormato.length())).trim());
+												detalleBean.setAnioAlta(anio);
+												detalleBean.setMesAlta(mes);
+											}else{
+												cont++;
+												sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3641,i+1));
+											}
 										}else{
 											cont++;
-											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357,i+1));
+											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3642,i+1));
 										}
-									}else{
-										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357,i+1));
 									}
+
 									
 									/**validacion de periodo de ejecucion*/
 									if( detalleBean.getAnioAlta()!=null && detalleBean.getMesAlta()!=null ){
 										if( (detalleBean.getAnioAlta()*100+detalleBean.getMesAlta())>(detalleBean.getAnioPresent()*100+detalleBean.getMesPresent()) ){
 											cont++;
-											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12D_3632,i+1));
+											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3643,i+1));
 										}
 									}
 									/***/
@@ -1592,7 +1595,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setCodUbigeo(FiseConstants.BLANCO);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3361,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3644,i+1));
 									}
 									//LOCALIDAD
 									if( HSSFCell.CELL_TYPE_STRING == celdaLocalidad.getCellType() ){
@@ -1603,7 +1606,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setLocalidad(FiseConstants.BLANCO);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3364,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3645,i+1));
 									}
 									
 									//ST1
@@ -1615,7 +1618,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setSt1(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3646,i+1));
 									}
 									//ST2
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaST2.getCellType()  ){
@@ -1626,7 +1629,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setSt2(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3647,i+1));
 									}
 									//ST3
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaST3.getCellType()  ){
@@ -1637,7 +1640,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setSt3(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3648,i+1));
 									}
 									//ST4
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaST4.getCellType()  ){
@@ -1648,7 +1651,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setSt4(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3649,i+1));
 									}
 									//ST5
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaST5.getCellType()  ){
@@ -1659,7 +1662,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setSt5(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3650,i+1));
 									}
 									//ST6
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaST6.getCellType()  ){
@@ -1670,7 +1673,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setSt6(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3651,i+1));
 									}
 									//STSER
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaSTSer.getCellType()  ){
@@ -1681,7 +1684,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setStSer(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3652,i+1));
 									}
 									//STESP
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaSTEsp.getCellType()  ){
@@ -1692,7 +1695,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setStEsp(0L);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3653,i+1));
 									}
 									//SEDE
 									if( HSSFCell.CELL_TYPE_STRING == celdaSede.getCellType() ){
@@ -1703,7 +1706,7 @@ public class Formato13AGartController {
 									}else{
 										detalleBean.setSede(FiseConstants.BLANCO);
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3364,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3655,i+1));
 									}
 									
 									
@@ -1726,11 +1729,11 @@ public class Formato13AGartController {
 										/**validar los valores de los inputs correctos*/
 										if( !mapaUbigeo.containsKey(detalleBean.getCodUbigeo()) ){
 											cont++;
-											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3362,i+1));
+											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3658,i+1));
 										}
 										if( !mapaZonaBenef.containsKey(detalleBean.getIdZonaBenef()) ){
 											cont++;
-											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3372,i+1));
+											sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3659,i+1));
 										}
 										
 									}
@@ -1739,72 +1742,72 @@ public class Formato13AGartController {
 									//ZONA BENEFICIARIO - 1
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getIdZonaBenef(),1) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3371,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3654,i+1));
 									}
 									//ANO ALTA - 4
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getAnioAlta(),4) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3357,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3656,i+1));
 									}
 									//MES ALTA - 2
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getMesAlta(),2) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3359,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3657,i+1));
 									}
 									//COD UBIGEO - 6
 									if( !FormatoUtil.validaCampoString(detalleBean.getCodUbigeo(),6) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3361,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3644,i+1));
 									}
 									//LOCALIDAD - 50
 									if( !FormatoUtil.validaCampoString(detalleBean.getLocalidad(),50) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3364,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3645,i+1));
 									}
 									//ST1 - 10
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getSt1(),10) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3646,i+1));
 									}
 									//ST2 - 10
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getSt2(),10) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3647,i+1));
 									}
 									//ST3 - 10
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getSt3(),10) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3648,i+1));
 									}
 									//ST4 - 10
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getSt4(),10) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3649,i+1));
 									}
 									//ST5 - 10
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getSt5(),10) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3650,i+1));
 									}
 									//ST6 - 10
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getSt6(),10) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3651,i+1));
 									}
 									//STSER - 10
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getStSer(),10) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3652,i+1));
 									}
 									//STESP - 10
 									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getStEsp(),10) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3387,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3653,i+1));
 									}
 									//SEDE - 60
 									if( !FormatoUtil.validaCampoString(detalleBean.getSede(),60) ){
 										cont++;
-										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3364,i+1));
+										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3655,i+1));
 									}
 									
 									/***/
@@ -1847,11 +1850,11 @@ public class Formato13AGartController {
 										FiseFormato13AC formatoNuevo = null;
 										for( int i=0; i<listaDetalle.size(); i++ ){
 											if( i==0 ){
-												formatoNuevo = formatoService.registrarFormato13ACregistrarFormato13AD(listaDetalle.get(i));
+												formatoNuevo = formatoService.registrarFormato13ACregistrarFormato13AD(listaDetalle.get(i),null);
 												objeto = formatoNuevo;
 											}else{
 												if( formatoNuevo!=null ){
-													objeto = formatoService.modificarFormato13ACregistrarFormato13AD(listaDetalle.get(i), formatoNuevo);
+													objeto = formatoService.modificarFormato13ACregistrarFormato13AD(listaDetalle.get(i), formatoNuevo,null);
 												}
 											}
 											
@@ -1876,13 +1879,13 @@ public class Formato13AGartController {
 										}
 										//agregamos todos los detalles que se estan cargando
 										for (Formato13ACBean detalle : listaDetalle) {
-											objeto = formatoService.modificarFormato13ACregistrarFormato13AD(detalle, formatoModif);
+											objeto = formatoService.modificarFormato13ACregistrarFormato13AD(detalle, formatoModif,null);
 										}
 									}
 								}
 							}else{
 								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3433);
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3660);
 							}
 							
 						}
@@ -1923,6 +1926,504 @@ public class Formato13AGartController {
 		
 		return formatoMensaje;
 	}
+	
+	public Formato13AMensajeBean readTxtFileNew(FileEntry archivo,UploadPortletRequest uploadPortletRequest, User user, String tipoOperacion, String codEmpresa, 	String anioPres, String mesPres, String etapaEdit, String anoInicioVigencia, String anoFinVigencia) {
+		
+		Formato13AMensajeBean formatoMensaje = new Formato13AMensajeBean();
+		InputStream is=null;
+		FiseFormato13AC objeto = null;
+		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
+		String sMsg = "";
+		
+		StringBuilder sMsg13A = new StringBuilder(FiseConstants.BLANCO);
+		
+		int cont = 0;
+		List<CfgCampo> listaCampo = null;
+		try{
+			CfgTabla tabla = new CfgTabla();
+			tabla.setIdTabla(FiseConstants.ID_TABLA_FORMATO13A);
+			listaCampo = campoService.listarCamposByTabla(tabla);
+			if( listaCampo != null ){
+				int longitudMaxima = campoService.longitudMaximaRegistro(listaCampo);
+				
+				int posicionCodEmpresa = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_COD_EMPRESA);
+				int posicionAnioPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_PRESENTACION);
+				int posicionMesPresentacion = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_MES_PRESENTACION);
+				int posicionAnioAlta = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_ALTA_F13A);
+				int posicionMesAlta = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_MES_ALTA_F13A);
+				int posicionAnioInicioVigencia = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_INICIO_VIGENCIA_F13A);
+				int posicionAnioFinVigencia = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ANO_FIN_VIGENCIA_F13A);
+				int posicionCodUbigeo = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ID_UBIGEO_F13A);
+				int posicionLocalidad = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_DESCRIPCION_LOCALIDAD_F13A);
+				int posicionSectorTipico = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_COD_SECTOR_TIPICO_F13A);
+				int posicionZonaBenef = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_ID_ZONA_BENEF_F13A);
+				int posicionSede = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NOMBRE_SEDE_ATIENDE_F13A);
+				int posicionNroBeneficiarios = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_NUMERO_BENEFI_POTE_SECT_TIPICO_F13A);
+
+				String sCurrentLine;
+				is=uploadPortletRequest.getFileAsStream("archivoTxt");
+				
+				String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPres), Long.parseLong(mesPres), codEmpresa, FiseConstants.TIPO_FORMATO_13A);
+				if( nombreIdeal.trim().equals(archivo.getDescription().trim()) ){
+					
+					int BUFFER_SIZE = 8192;
+					BufferedReader br = new BufferedReader( new InputStreamReader(is),BUFFER_SIZE);
+					List<String> listaDetalleTxt= new ArrayList<String>();
+					sCurrentLine = br.readLine();
+					while(sCurrentLine!=null){
+						cont++;
+						if( sCurrentLine.length()>0 ){
+							if( sCurrentLine.length() == longitudMaxima ){
+								listaDetalleTxt.add(sCurrentLine);
+							}else{
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3661, cont);
+							}
+						}/*else{
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3435);
+						}*/
+						sCurrentLine = br.readLine();
+						/*if( cont>3 ){
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_240);
+							break;
+						}*/
+					}
+					if(cont==0){
+						cont++;
+						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3662);
+					}
+					
+					String key1,key2,key3,key4,key5="";//,key6="";
+					if( listaDetalleTxt.size()>0 ){
+						key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
+						key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+						key3 = listaDetalleTxt.get(0).substring(posicionAnioPresentacion, posicionMesPresentacion).trim();
+						//key4 = listaDetalleTxt.get(0).substring(posicionMesPresentacion, posicionAnioEjecucion).trim();
+						//key5 = listaDetalleTxt.get(0).substring(posicionAnioEjecucion, posicionMesEjecucion).trim();
+						boolean process = true;
+						/*Set<String> etapaSet = new java.util.HashSet<String>();
+						for (String s : listaDetalleTxt) {
+							String codEmp = s.substring(0, posicionCodEmpresa).trim();
+							String anioP = s.substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
+							String mesP = s.substring(posicionAnioPresentacion, posicionMesPresentacion) ;
+							String anioE = s.substring(posicionMesPresentacion, posicionAnioEjecucion).trim();
+							String mesE = s.substring(posicionAnioEjecucion, posicionMesEjecucion).trim();
+							String etapaEjec = s.substring(posicionMesEjecucion, posicionEtapaEjecucion).trim();
+							//--String nroItem = s.substring(posicionEtapaEjecucion, posicionItem).trim();
+							
+							if( key1.equals(codEmp) && key2.equals(anioP) && key3.equals(mesP) && key4.equals(anioE) && key5.equals(mesE) &&
+									(FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD_STRING.equals(etapaEjec) ||
+									FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD_STRING.equals(etapaEjec)  )
+									){
+								if( etapaSet.contains(etapaEjec) ){
+									process=false;
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_280);
+									break;
+								}else{
+									etapaSet.add(etapaEjec);
+									process=true;
+								}
+							}else{
+								process=false;
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_260);
+								break;
+							}
+						}*/
+						if(process){
+							
+							List<Formato13ACBean> listaDetalle = new ArrayList<Formato13ACBean>();
+							
+							Formato13ACBean formulario = new Formato13ACBean();
+							//nuevamente recorremos la lista para armar los objetos
+							formulario.setCodigoEmpresa(key1);
+							formulario.setAnioPresent(Long.parseLong(key2));
+							formulario.setMesPresent(Long.parseLong(key3));
+							//--formulario.setAnioEjecucion(Long.parseLong(key4));
+							//--formulario.setMesEjecucion(Long.parseLong(key5));
+							
+							formulario.setEtapa(etapaEdit);
+
+							if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+									anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
+									Long.parseLong(mesPres)==formulario.getMesPresent() 
+									//anioEjec.equals(String.valueOf(formulario.getAnioPresent())) &&
+									//anioFinVigEdit.equals(String.valueOf(formulario.getAnioPresent())) 
+									){
+								
+								//
+								for (String s : listaDetalleTxt) {
+									
+									Formato13ACBean detalleBean = new Formato13ACBean();
+									
+									detalleBean.setCodigoEmpresa(formulario.getCodigoEmpresa());
+									detalleBean.setAnioPresent(formulario.getAnioPresent());
+									detalleBean.setMesPresent(formulario.getMesPresent());
+									
+									//detalleBean.setEtapaEjecucion(FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD);
+									
+									detalleBean.setUsuario(user.getLogin());
+									detalleBean.setTerminal(user.getLoginIP());
+									detalleBean.setTipoArchivo(FiseConstants.TIPOARCHIVO_TXT);
+									detalleBean.setNombreArchivo(archivo.getTitle());
+									
+									detalleBean.setEtapa(etapaEdit);
+									
+									String anioAlta = s.substring(posicionMesPresentacion, posicionAnioAlta).trim();
+									String mesAlta = s.substring(posicionAnioAlta, posicionMesAlta).trim();
+									String anioInicioVigencia = s.substring(posicionMesAlta, posicionAnioInicioVigencia).trim();
+									String anioFinVigencia = s.substring(posicionAnioInicioVigencia, posicionAnioFinVigencia).trim();
+									String codUbigeo = s.substring(posicionAnioFinVigencia, posicionCodUbigeo).trim();
+									String localidad = s.substring(posicionCodUbigeo, posicionLocalidad).trim();
+									String sectorTipico = s.substring(posicionLocalidad, posicionSectorTipico).trim();
+									String zonaBenef = s.substring(posicionSectorTipico, posicionZonaBenef).trim();
+									String sede = s.substring(posicionZonaBenef, posicionSede).trim();
+									String nroBeneficiarios = s.substring(posicionSede, posicionNroBeneficiarios).trim();
+									
+									//validaciones de consistencia
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(anioAlta) ){
+										//el campo anioEjecucion no corresponde al tipo de dato correcto
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3656));
+									}
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(mesAlta) ){
+										//el campo mesEjecucion no corresponde al tipo de dato correcto
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3657));
+									}
+									
+									/**validacion de periodo de ejecucion*/
+									if( FormatoUtil.validarCampoLongEnteroPositivoTxt(anioAlta) && FormatoUtil.validarCampoLongEnteroPositivoTxt(mesAlta) ){
+										if( (Long.parseLong(anioAlta)*100+Long.parseLong(mesAlta))>(detalleBean.getAnioPresent()*100+detalleBean.getMesPresent()) ){
+											cont++;
+											sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3643));
+										}
+									}
+									/***/
+									
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(anioInicioVigencia) ){
+										//el campo anioEjecucion no corresponde al tipo de dato correcto
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3723));
+									}
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(anioFinVigencia) ){
+										//el campo anioEjecucion no corresponde al tipo de dato correcto
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3724));
+									}
+									
+									
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(zonaBenef) ){
+										//el campo Zona benef no corresponde al tipo de dato correcto
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3654));
+									}
+									if( !FormatoUtil.validarCampoLongEnteroPositivoTxt(nroBeneficiarios) ){
+										//el campo nroDias no corresponde al tipo de dato correcto
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3725));
+									}
+									
+									if( ( !FiseConstants.BLANCO.equals(anioAlta.trim()) && !FiseConstants.CERO.equals(anioAlta.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(mesAlta.trim()) && !FiseConstants.CERO.equals(mesAlta.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(anioInicioVigencia.trim()) && !FiseConstants.CERO.equals(anioInicioVigencia.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(anioFinVigencia.trim()) && !FiseConstants.CERO.equals(anioFinVigencia.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(codUbigeo.trim())  ) ||
+											( !FiseConstants.BLANCO.equals(localidad.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(sectorTipico.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(zonaBenef.trim()) && !FiseConstants.CERO.equals(zonaBenef.trim()) ) ||
+											( !FiseConstants.BLANCO.equals(nroBeneficiarios.trim()) && !FiseConstants.CERO.equals(nroBeneficiarios.trim()) ) 
+											
+											){
+									
+										if( !mapaUbigeo.containsKey(codUbigeo) ){
+											cont++;
+											sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3658));
+										}
+										if( !mapaSectorTipico.containsKey(FormatoUtil.rellenaDerecha(sectorTipico, ' ', 3)) ){
+											cont++;
+											sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3663));
+										}
+										if( !mapaZonaBenef.containsKey(Long.parseLong(zonaBenef)) ){
+											cont++;
+											sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3659));
+										}
+										
+										
+									}
+									
+									if( FiseConstants.BLANCO.equals(sMsg) &&
+											FiseConstants.BLANCO.equals(sMsg13A.toString()) 
+											){
+										
+										if( FiseConstants.ZONABENEF_RURAL_COD == Long.parseLong(zonaBenef) ){
+											detalleBean.setAnioAlta(Long.parseLong(anioAlta));
+											detalleBean.setMesAlta(Long.parseLong(mesAlta));
+											detalleBean.setAnioInicioVigencia(Long.parseLong(anioInicioVigencia));
+											detalleBean.setAnioFinVigencia(Long.parseLong(anioFinVigencia));
+											detalleBean.setCodUbigeo(codUbigeo);
+											detalleBean.setLocalidad(localidad);
+											detalleBean.setCodSectorTipico(sectorTipico);
+											detalleBean.setIdZonaBenef(Long.parseLong(zonaBenef));
+											detalleBean.setSede(sede);
+											detalleBean.setNroBenef(Long.parseLong(nroBeneficiarios));
+										}else if( FiseConstants.ZONABENEF_PROVINCIA_COD == Long.parseLong(zonaBenef) ){
+											detalleBean.setAnioAlta(Long.parseLong(anioAlta));
+											detalleBean.setMesAlta(Long.parseLong(mesAlta));
+											detalleBean.setAnioInicioVigencia(Long.parseLong(anioInicioVigencia));
+											detalleBean.setAnioFinVigencia(Long.parseLong(anioFinVigencia));
+											detalleBean.setCodUbigeo(codUbigeo);
+											detalleBean.setLocalidad(localidad);
+											detalleBean.setCodSectorTipico(sectorTipico);
+											detalleBean.setIdZonaBenef(Long.parseLong(zonaBenef));
+											detalleBean.setSede(sede);
+											detalleBean.setNroBenef(Long.parseLong(nroBeneficiarios));
+											
+										}else if( FiseConstants.ZONABENEF_LIMA_COD == Long.parseLong(zonaBenef) ){
+											if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+												detalleBean.setAnioAlta(Long.parseLong(anioAlta));
+												detalleBean.setMesAlta(Long.parseLong(mesAlta));
+												detalleBean.setAnioInicioVigencia(Long.parseLong(anioInicioVigencia));
+												detalleBean.setAnioFinVigencia(Long.parseLong(anioFinVigencia));
+												detalleBean.setCodUbigeo(codUbigeo);
+												detalleBean.setLocalidad(localidad);
+												detalleBean.setCodSectorTipico(sectorTipico);
+												detalleBean.setIdZonaBenef(Long.parseLong(zonaBenef));
+												detalleBean.setSede(sede);
+												detalleBean.setNroBenef(Long.parseLong(nroBeneficiarios));
+											}else{
+												detalleBean.setAnioAlta(0L);
+												detalleBean.setMesAlta(0L);
+												detalleBean.setAnioInicioVigencia(0L);
+												detalleBean.setAnioFinVigencia(0L);
+												detalleBean.setCodUbigeo("");
+												detalleBean.setLocalidad("");
+												detalleBean.setCodSectorTipico("");
+												detalleBean.setIdZonaBenef(0L);
+												detalleBean.setSede("");
+												detalleBean.setNroBenef(0L);
+											}
+											
+										}
+										
+										listaDetalle.add(detalleBean);
+										
+									}
+									
+									/**validacion de estructura de campos*/
+									
+									//ANO ALTA - 4
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getAnioPresent(),4) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3656));
+									}
+									//MES ALTA - 2
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getMesPresent(),2) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3657));
+									}
+									//ANO INICIO VIGENCIA - 4
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getAnioInicioVigencia(),4) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3723));
+									}
+									//ANO FIN VIGENCIA - 4
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getAnioFinVigencia(),4) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3724));
+									}
+									//COD UBIGEO - 6
+									if( !FormatoUtil.validaCampoString(detalleBean.getCodUbigeo(),6) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3644));
+									}
+									//LOCALIDAD - 50
+									if( !FormatoUtil.validaCampoString(detalleBean.getLocalidad(),50) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3645));
+									}
+									//SECTOR TIPICO - 3
+									if( !FormatoUtil.validaCampoString(detalleBean.getCodSectorTipico(),3) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3726));
+									}
+									//ZONA BENEFICIARIO - 1
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getIdZonaBenef(),1) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3654));
+									}
+									//SEDE - 60
+									if( !FormatoUtil.validaCampoString(detalleBean.getSede(),60) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3655));
+									}
+									//NRO BENEFICIARIOS - 3
+									if( !FormatoUtil.validaCampoNumeroEntero(detalleBean.getNroBenef(),10) ){
+										cont++;
+										sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3725));
+									}
+									
+								}
+								
+								if( !verificarListaDetalle(listaDetalle) ){
+									cont++;
+									sMsg13A = sMsg13A.append(fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3664));
+								}
+								
+								
+								if( FiseConstants.BLANCO.equals(sMsg) &&
+										FiseConstants.BLANCO.equals(sMsg13A.toString()) 
+										){
+									
+									
+									/*if( codEmpresa.equals(formulario.getCodigoEmpresa()) &&
+											anioPres.equals(String.valueOf(formulario.getAnioPresentacion())) &&
+											Long.parseLong(mesPres) == formulario.getMesPresentacion() 
+											){*/
+										//se hace la logica para que cuando sea nuevo se crea la cabecera para el primer detalle y luego sobre eso se agregan las demas
+										//para cuando es una edicion, se borran primero los detalles existentes de la cabecera y se cargan nuevamente todos los detalles
+										
+									if( (""+FiseConstants.ADD).equals(tipoOperacion) ){
+											if( listaDetalle!=null && listaDetalle.size()>0 ){
+												FiseFormato13AC formatoNuevo = null;
+												for( int i=0; i<listaDetalle.size(); i++ ){
+													if( i==0 ){
+														formatoNuevo = formatoService.registrarFormato13ACregistrarFormato13AD(listaDetalle.get(i),listaDetalle);
+														objeto = formatoNuevo;
+													}else{
+														if( formatoNuevo!=null ){
+															objeto = formatoService.modificarFormato13ACregistrarFormato13AD(listaDetalle.get(i), formatoNuevo, listaDetalle);
+														}
+													}
+													
+												}
+											}
+											
+										}else if( (""+FiseConstants.UPDATE).equals(tipoOperacion) ){
+											FiseFormato13AC formatoModif = new FiseFormato13AC();
+											FiseFormato13ACPK id = new FiseFormato13ACPK();
+											id.setCodEmpresa(formulario.getCodigoEmpresa());
+											id.setAnoPresentacion(formulario.getAnioPresent());
+											id.setMesPresentacion(formulario.getMesPresent());
+											id.setEtapa(formulario.getEtapa());
+											formatoModif = formatoService.obtenerFormato13ACByPK(id);
+											
+											if( listaDetalle!=null && listaDetalle.size()>0 ){
+												//borramos todos los detalles
+												for (FiseFormato13AD formato13AD : formatoModif.getFiseFormato13ADs()) {
+													formatoService.eliminarDetalle(formato13AD);
+												}
+												//agregamos todos los detalles que se estan cargando
+												for (Formato13ACBean detalle : listaDetalle) {
+													objeto = formatoService.modificarFormato13ACregistrarFormato13AD(detalle, formatoModif, listaDetalle);
+												}
+											}
+										}
+									/*}else{
+										cont++;
+										sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_210);
+									}*/
+									
+									
+								}
+								
+							}else{
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3665);
+							}
+							
+						}
+					}else{
+						cont++;
+						sMsg = sMsg + "El archivo cargado debe contener información para el Formato 13A ";
+						throw new Exception("El archivo cargado debe contener información para el Formato 13A ");
+					}
+					is.close();
+					
+				}else{
+					cont++;
+					sMsg = sMsg + "El nombre del archivo debe corresponder al periodo a declarar ";
+					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
+				}
+				
+				
+			}else{
+				throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_3669));
+			}
+			
+		}catch (Exception e) {			   
+			  //refer.setCondicion(false);				  
+			String error = e.getMessage();
+			sMsg = sMsg+error;	        	
+			System.out.println(error);
+			cont++;
+			MensajeErrorBean errorBean = new MensajeErrorBean();
+			errorBean.setId(cont);
+			errorBean.setDescripcion(error);
+			listaError.add(errorBean);
+			  //throw new Exception(error); 
+			  			   
+		  }
+		//pRequest.getPortletSession().setAttribute("MensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
+		formatoMensaje.setFiseFormato13AC(objeto);
+		formatoMensaje.setMensajeError(sMsg);
+		if(listaError.size()>0)
+			formatoMensaje.setListaMensajeError(listaError);
+		
+		return formatoMensaje;
+	}
+	
+	public boolean verificarListaDetalle(List<Formato13ACBean> lista){
+		
+		//verificar que cumpla el formato adecuado del txt
+		//que coincidan parte de la llave siempre en grupos de 8
+		boolean paso = false;
+		
+		if( lista!=null && lista.size()>0 ){
+			
+			Long anioAlta = 0L;
+			Long mesAlta = 0L;
+			Long anoInicioVigencia = 0L;
+			Long anoFinVigencia = 0L;
+			String codUbigeo = "";
+			
+			for (int i = 0; i<lista.size();i++) {
+				if( i==0 ){
+					anioAlta = lista.get(i).getAnioAlta();
+					mesAlta = lista.get(i).getMesAlta();
+					anoInicioVigencia = lista.get(i).getAnioInicioVigencia();
+					anoFinVigencia = lista.get(i).getAnioFinVigencia();
+					codUbigeo = lista.get(i).getCodUbigeo();
+				}else if( (i+1)%8==0 ){
+					anioAlta = lista.get(i).getAnioAlta();
+					mesAlta = lista.get(i).getMesAlta();
+					anoInicioVigencia = lista.get(i).getAnioInicioVigencia();
+					anoFinVigencia = lista.get(i).getAnioFinVigencia();
+					codUbigeo = lista.get(i).getCodUbigeo();
+				}
+				if( anioAlta.equals(lista.get(i).getAnioAlta()) &&
+						mesAlta.equals(lista.get(i).getMesAlta()) &&
+						anoInicioVigencia.equals(lista.get(i).getAnioInicioVigencia()) &&
+						anoFinVigencia.equals(lista.get(i).getAnioFinVigencia()) &&
+						codUbigeo.equals(lista.get(i).getCodUbigeo()) 
+						){
+					paso=true;
+				}else{
+					paso=false;
+					break;
+				}
+			}
+			
+		}else{
+			paso=false;
+		}
+		
+		return paso;
+	}
+	
 	/****/
 	
 	@ActionMapping(params = "action=uploadFile2")

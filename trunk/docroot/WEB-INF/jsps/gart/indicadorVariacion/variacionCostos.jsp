@@ -152,7 +152,7 @@ $(document).ready(function () {
 								<input id="exportarPdf" type="button" value="Exportar a PDF" style="display:none;" />
 							</td>
 							<td align="left" >
-								<input id="exportarExcel" type="button" value="Exportar a Excel" style="display:block;" />
+								<input id="exportarExcel" type="button" value="Exportar a Excel" style="display:none;" />
 							</td>
 						</tr>
 						<tr height="10px">

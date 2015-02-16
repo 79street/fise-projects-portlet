@@ -17,6 +17,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -28,6 +30,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
+
+import com.liferay.portal.util.PortalUtil;
 
 @Controller("variacionCostosController")
 @RequestMapping("VIEW")
@@ -219,6 +223,10 @@ public class VariacionCostosController {
   	public void generarGrafico(ModelMap model, ResourceRequest request,ResourceResponse response, @ModelAttribute("variacionCostosBean")VariacionCostosBean bean){
 		
 		try{
+			
+			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
+	        HttpSession session = req.getSession();
+			
 			response.setContentType("application/json");
 			
 			JSONObject jsonObj = new JSONObject();
@@ -259,6 +267,10 @@ public class VariacionCostosController {
   			List<VariacionCostosBean> listaCostos =commonService.obtenerVariacionCostosByGrupoinfoFormatoConceptofinal(idGrupo, formato, valorConceptoConcatenado, etapa);
   			
   			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
+  			
+  			if( listaCostos!=null && listaCostos.size()>0 ){
+  				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VARIACION, FiseConstants.NOMBRE_EXCEL_VARIACION, FiseConstants.NOMBRE_HOJA_VARIACION, listaCostos);
+  			}
   			
   			//List<VariacionCostosBean> listaVariacionCostos = new ArrayList<VariacionCostosBean>();
   			
@@ -331,6 +343,8 @@ public class VariacionCostosController {
 					cont++;
 				}
 			}
+			if(cont==0)
+				cont=1;
 			promedio = suma.divide(new BigDecimal(cont),2,RoundingMode.HALF_UP).toString();
 		}
 		if( "".equals(promedio) ){
@@ -353,7 +367,7 @@ public class VariacionCostosController {
 		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
 			titulo = titulo + tituloF14B;
 		}
-		titulo = titulo + "<br> "+titulo1;
+		titulo = titulo + "<br/> "+titulo1;
 		
 		if( !FiseConstants.BLANCO.equals(etapa) ){
 			if( FiseConstants.ETAPA_SOLICITUD.equals(etapa) ){
@@ -368,7 +382,8 @@ public class VariacionCostosController {
 		}
 		
 		if( !FiseConstants.BLANCO.equals(concepto) ){
-			titulo = titulo + "<br> "+mapaConceptos.get(concepto);
+			titulo = titulo + "<br/> "+mapaConceptos.get(concepto);
+			//titulo = titulo + "\n "+mapaConceptos.get(concepto);
 		}
 		
 		/*if(FiseConstants.TIPO_FORMATO_14A.equals(formato)){

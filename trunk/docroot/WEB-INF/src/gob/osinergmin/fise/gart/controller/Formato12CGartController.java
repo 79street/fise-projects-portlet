@@ -3406,7 +3406,7 @@ public class Formato12CGartController {
 				
 				
 			}else{
-				throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_290));
+				throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_3667));
 			}
 			
 		}catch (Exception e) {			   
