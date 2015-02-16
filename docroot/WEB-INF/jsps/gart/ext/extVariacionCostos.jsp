@@ -89,6 +89,10 @@ var variacionCostos= {
 				variacionCostos.exportarPdf();
 			});
 			
+			$("#exportarExcel").click(function() {
+				variacionCostos.exportarExcel();
+			});
+			
 			//variables de busqueda
 			this.i_grupoInfoBusq=$('#grupoInfoBusq');
 			this.i_formatoBusq=$('#formatoBusq');	
@@ -160,7 +164,7 @@ var variacionCostos= {
 			//n="[[['ADIL', 7], ['ELNO', 9], ['EDLN', 15],['LDS ', 12], ['ELS ', 3],['ABC ', 6], ['XXX ', 18],['XXA ', 2],['XXB ', 15],['XXC ', 12],['XXD ', 13],['XXE ', 8],['XXF ', 5],['XXG ', 4],['XXH ', 8],['XXI ', 18],['XXJ ', 1],['XXL  ', 15],['XXM ', 13],['XXN ', 18],['XXO', 12],['XAP ', 2],['XBP ', 8],['XCP ', 9],['XDP ', 5],['XEP ', 12],['XFP ', 10],['XGP ', 11],['XHP ', 12],['XIP ', 7],['XJP ', 8],['XKP ', 10],['XLP ', 2],['XMP ', 4],['XNP ', 5],['XOP ', 2]]]";
 			//valor="";
 			//alert(valor);
-			if( valor=="[[]]" ){
+			if( valor=="[[],[]]" ){
 				var addhtmError='No hay información disponible para generar el gráfico';					
 				variacionCostos.dialogValidacionContent.html(addhtmError);
 				variacionCostos.dialogValidacion.dialog("open");
@@ -284,6 +288,7 @@ var variacionCostos= {
 				
 				//mostramos el boton de exportar a PDF
 				$('#exportarPdf').css('display','');
+				$('#exportarExcel').css('display','');
 				
 			}
 			
@@ -313,6 +318,10 @@ var variacionCostos= {
 	         }
 	},
 		
+	exportarExcel : function(){
+		location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';  
+	},
+	
 		//DIALOGOS
 		initDialogs : function(){		
 			variacionCostos.dialogMessage.dialog({

@@ -2564,7 +2564,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 			
 			
 		}else{
-			throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F12_290));
+			throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_3670));
 		}
 		
 	}catch (Exception e) {			   
