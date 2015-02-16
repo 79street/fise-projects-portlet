@@ -144,9 +144,11 @@ public class GrupoInformacionController {
 			
 			String valor = grupoInformacionService.insertarDatosGrupoInf(g);
 			logger.info("valor de la transaccion al insertar:  "+valor); 
-			if(!valor.equals("0")){ 
+			if(!"0".equals(valor) && !"-1".equals(valor)){ 
 				jsonObj.put("resultado", "OK");	
 				jsonObj.put("IdGrupoInf", valor);	
+			}else if("-1".equals(valor)){ 
+				jsonObj.put("resultado", "ACTIVO");//ya existe un grupo de inf. bienal con estado activo	
 			}else{
 				jsonObj.put("resultado", "Error");	
 			}		
@@ -182,8 +184,10 @@ public class GrupoInformacionController {
 			
 			String valor = grupoInformacionService.actualizarDatosGrupoInf(g);
 			logger.info("valor de la transaccion al actualizar:  "+valor); 
-			if(!valor.equals("0")){ 
+			if("1".equals(valor)){ 
 				jsonObj.put("resultado", "OK");				
+			}else if("-1".equals(valor)){ 
+				jsonObj.put("resultado", "ACTIVO");//ya existe un grupo de inf. bienal con estado activo	
 			}else{
 				jsonObj.put("resultado", "Error");	
 			}

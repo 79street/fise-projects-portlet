@@ -454,6 +454,11 @@ var fiseGrupoInformacion= {
 							$('#<portlet:namespace/>guardarGrupoInf').css('display','none');
 							$('#<portlet:namespace/>actualizarGrupoInf').css('display','block');
 							
+						}else if(data.resultado == "ACTIVO"){								
+							var addhtmInfo='Ya existe un Grupo de Información Bienal con estado Activo.';					
+							fiseGrupoInformacion.dialogInfoContent.html(addhtmInfo);
+							fiseGrupoInformacion.dialogInfo.dialog("open");											
+							fiseGrupoInformacion.initBlockUI();
 						}else{								
 							var addhtmError='Se produjo un error al guardar el Grupo de Información.';					
 							fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
@@ -488,6 +493,11 @@ var fiseGrupoInformacion= {
 							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 							fiseGrupoInformacion.dialogMessage.dialog("open");						
 							fiseGrupoInformacion.initBlockUI();								
+						}else if(data.resultado == "ACTIVO"){								
+							var addhtmInfo='Ya existe un Grupo de Información Bienal con estado Activo.';					
+							fiseGrupoInformacion.dialogInfoContent.html(addhtmInfo);
+							fiseGrupoInformacion.dialogInfo.dialog("open");											
+							fiseGrupoInformacion.initBlockUI();
 						}else{						
 							var addhtmError='Se produjo un error al actualizar el Grupo de Información.';					
 							fiseGrupoInformacion.dialogErrorContent.html(addhtmError);
