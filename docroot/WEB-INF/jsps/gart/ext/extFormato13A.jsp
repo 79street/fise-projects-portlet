@@ -448,7 +448,11 @@ var formato13A= {
 		if(operacion=='CREATE'){
 			formato13A.tipoOperacion=operacion;
 			formato13A.codEmpresa.change(function(){
-				$.when(formato13A.cargarPeriodoDeclaracion()).then(formato13A.buscarDetalles);
+				$.when(formato13A.cargarPeriodoDeclaracion('')).then(formato13A.buscarDetalles);
+			});
+			
+			formato13A.peridoDeclaracion.change(function(){
+				formato13A.cargarPeriodoDeclaracion(this.value);
 			});
 			
 			formato13A.codEmpresa.trigger('change');
@@ -897,7 +901,7 @@ var formato13A= {
 	unblockUI : function(){
 		$.unblockUI();
 	},
-	cargarPeriodoDeclaracion : function(){
+	cargarPeriodoDeclaracion : function(valPeriodo){
 		return jQuery.ajax({
 			url: formato13A.urlCargaDeclaracion,
 			type: 'post',
@@ -912,6 +916,9 @@ var formato13A= {
 			success: function(data) {		
 				dwr.util.removeAllOptions("peridoDeclaracion");
 				dwr.util.addOptions("peridoDeclaracion", data,"codigoItem","descripcionItem");
+				if( valPeriodo.length!='' ){
+					dwr.util.setValue("peridoDeclaracion", valPeriodo);
+				}
 				
 				formato13A.<portlet:namespace/>loadCargaFlagPeriodo();
 				

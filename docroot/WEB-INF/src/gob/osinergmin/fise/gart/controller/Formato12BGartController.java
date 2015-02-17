@@ -450,9 +450,9 @@ public class Formato12BGartController {
 			codEmpresaEdit = uploadPortletRequest.getParameter("codEmpresaHidden");
 			periodoEnvioPresEdit = uploadPortletRequest.getParameter("peridoDeclaracionHidden");
 			if(periodoEnvioPresEdit!=null && periodoEnvioPresEdit.length()>6){
-	    		anioPresEdit = periodoEnvioPresNew.substring(0, 4);
-	    		mesPresEdit = periodoEnvioPresNew.substring(4, 6);
-	    		etapaEdit = periodoEnvioPresNew.substring(6, periodoEnvioPresEdit.length());
+	    		anioPresEdit = periodoEnvioPresEdit.substring(0, 4);
+	    		mesPresEdit = periodoEnvioPresEdit.substring(4, 6);
+	    		etapaEdit = periodoEnvioPresEdit.substring(6, periodoEnvioPresEdit.length());
 			}
 			periodo = periodoEnvioPresEdit;
 			bean.setCodigoEmpresa(codEmpresaEdit);

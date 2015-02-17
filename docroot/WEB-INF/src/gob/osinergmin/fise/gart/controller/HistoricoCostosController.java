@@ -18,6 +18,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -28,6 +30,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
+
+import com.liferay.portal.util.PortalUtil;
 
 @Controller("historicoCostosController")
 @RequestMapping("VIEW")
@@ -71,6 +75,9 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
   	public void generarGrafico(ModelMap model, ResourceRequest request,ResourceResponse response, @ModelAttribute("historicoCostosBean")HistoricoCostosBean bean){
 		
 		try{
+			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
+	        HttpSession session = req.getSession();
+			
 			response.setContentType("application/json");
 			
 			JSONObject jsonObj = new JSONObject();
@@ -80,6 +87,11 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
 			
   			List<HistoricoCostosBean> listaCostos =commonService.obtenerHistoricoCostosByCodempresaFormato(codEmpresa, formato);
   			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
+  			
+  			if( listaCostos!=null && listaCostos.size()>0 ){
+  				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_HISTORICO, FiseConstants.NOMBRE_EXCEL_HISTORICO, FiseConstants.NOMBRE_HOJA_HISTORICO, listaCostos);
+  			}
+  			
   			String listaValores = convertirListaValores(listaCostos);
   			model.addAttribute("cadenaValorVariacion", listaValores);
   			
