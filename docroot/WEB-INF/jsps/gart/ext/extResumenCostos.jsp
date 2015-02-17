@@ -13,10 +13,7 @@ var resumenCosto= {
 			
 		//dialogos	
 		dialogMessage:null,
-		dialogMessageContent:null,
-		
-		dialogConfirm:null,//para eliminar
-		dialogConfirmContent:null,//para mostrar la confirmacion de eliminar		
+		dialogMessageContent:null,		
 		
 		dialogValidacion:null,
 		dialogValidacionContent:null,
@@ -34,8 +31,7 @@ var resumenCosto= {
 		div_F14AB_zona:null,
 		//divF12B:null,
 		
-		//mensajes			
-		mensajePrepara:null,		
+		//mensajes				
 		mensajeReporte:null,
 			
 		//urls		
@@ -73,10 +69,7 @@ var resumenCosto= {
 			
 			//dialogos
 			this.dialogMessage=$("#<portlet:namespace/>dialog-message-resumen_costos");
-			this.dialogMessageContent=$("#<portlet:namespace/>dialog-message-content-resumen_costos");
-			
-			this.dialogConfirm=$("#<portlet:namespace/>dialog-confirm-eliminar");//para elimar
-			this.dialogConfirmContent=$("#<portlet:namespace/>dialog-confirm-content-eliminar");//para eliminar
+			this.dialogMessageContent=$("#<portlet:namespace/>dialog-message-content-resumen_costos");		
 			
 			this.dialogValidacion=$("#<portlet:namespace/>dialog-alert");	
 			this.dialogValidacionContent=$("#<portlet:namespace/>dialog-alert-content");
@@ -94,9 +87,7 @@ var resumenCosto= {
 			this.div_F14AB_zona=$("#<portlet:namespace/>div_F14B_zonas");
 			
 			
-			//mensajes						
-			
-			this.mensajePrepara='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Generando Liq. </h3>';
+			//mensajes			
 			this.mensajeReporte='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo el Reporte </h3>';
 			
 					
@@ -646,23 +637,7 @@ var resumenCosto= {
 		}, 		
 		
 		//DIALOGOS
-		initDialogs : function(){		
-			//dialogo para eliminar
-			resumenCosto.dialogConfirm.dialog({
-				modal: true,
-				height: 200,
-				width: 450,			
-				autoOpen: false,
-				buttons: {
-					"Si": function() {
-						resumenCosto.eliminarFormato(id_Correlativo);
-						$( this ).dialog("close");
-					},
-					"No": function() {				
-						$( this ).dialog("close");
-					}
-				}
-			});		
+		initDialogs : function(){	
 			
 			resumenCosto.dialogMessage.dialog({
 				modal: true,

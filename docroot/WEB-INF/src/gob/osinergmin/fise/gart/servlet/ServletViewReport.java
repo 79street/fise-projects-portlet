@@ -143,6 +143,22 @@ public class ServletViewReport extends HttpServlet {
 				exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
 				exporter.exportReport();
 			}
+			//para exportar a excel solo con parametros y lista vacia =5
+			else if( FiseConstants.FORMATO_EXPORT_XLS_SIN_LISTA.equals(tipoArchivo) ){
+				//EXPORTAR A EXCEL
+				JasperPrint print = JasperFillManager.fillReport(reportFile.getPath(), parametros, new JREmptyDataSource());
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				response.setHeader("Content-Disposition", "inline;filename=\"" + nombreArchivo + ".xlsx" + "\"");
+				JRXlsxExporter exporter = new JRXlsxExporter();		
+				exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, servletOutputStream);
+				exporter.setParameter(JRXlsExporterParameter.IS_COLLAPSE_ROW_SPAN, Boolean.FALSE);
+				exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.FALSE);
+				exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+				exporter.setParameter(JRXlsExporterParameter.IS_FONT_SIZE_FIX_ENABLED, Boolean.TRUE);
+				exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+				exporter.exportReport();
+			}
 			//
 			else if(FiseConstants.FORMATO_EXPORT_ACTAENVIO.equals(tipoArchivo) ){
 				byte[] bytes3 = (byte[])sesion.getAttribute("bytesActaEnvio");
