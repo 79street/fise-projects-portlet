@@ -1221,11 +1221,11 @@ public class Formato13AGartController {
 		String anoInicioVigencia = "";
 		String anoFinVigencia = "";
 		
-		if(periodoEnvioPresNew!=null && periodoEnvioPresNew.length()>6){
+		/*if(periodoEnvioPresNew!=null && periodoEnvioPresNew.length()>6){
     		anioPresNew = periodoEnvioPresNew.substring(0, 4);
     		mesPresNew = periodoEnvioPresNew.substring(4, 6);
     		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
-		}
+		}*/
 		
 		////adecuando el metodo
 		
@@ -1233,9 +1233,9 @@ public class Formato13AGartController {
 			codEmpresaEdit = uploadPortletRequest.getParameter("codEmpresaHidden");
 			periodoEnvioPresEdit = uploadPortletRequest.getParameter("descripcionPeriodoHidden");
 			if(periodoEnvioPresEdit!=null && periodoEnvioPresEdit.length()>6){
-	    		anioPresEdit = periodoEnvioPresNew.substring(0, 4);
-	    		mesPresEdit = periodoEnvioPresNew.substring(4, 6);
-	    		etapaEdit = periodoEnvioPresNew.substring(6, periodoEnvioPresEdit.length());
+	    		anioPresEdit = periodoEnvioPresEdit.substring(0, 4);
+	    		mesPresEdit = periodoEnvioPresEdit.substring(4, 6);
+	    		etapaEdit = periodoEnvioPresEdit.substring(6, periodoEnvioPresEdit.length());
 			}
 			
 			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresaEdit, FiseConstants.TIPO_FORMATO_13A);

@@ -2,6 +2,7 @@ package gob.osinergmin.fise.gart.xls;
 
 import gob.osinergmin.fise.bean.FiseCargoFijoBean;
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
+import gob.osinergmin.fise.bean.HistoricoCostosBean;
 import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.bean.VariacionCostosBean;
 import gob.osinergmin.fise.constant.FiseConstants;
@@ -21,6 +22,8 @@ import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.xls.XlsTableConfig;
 import gob.osinergmin.fise.xls.XlsWorksheetConfig;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -3112,7 +3115,7 @@ public class FormatoExcelExport {
 
 			HSSFCellStyle dateCellStyle = _wb.createCellStyle();
 			dateCellStyle.cloneStyleFrom(dataCellStyle);
-			dateCellStyle.setDataFormat((short) 15);
+			//dateCellStyle.setDataFormat((short) 15);
 
 			//HSSFRow row = _xlsSheet.createRow(iRow);
 
@@ -3138,7 +3141,8 @@ public class FormatoExcelExport {
 					ax1.setCellValue(new HSSFRichTextString(var.getCodEmpresa()));
 					ax1.setCellStyle(dateCellStyle);
 					HSSFCell ax2 = fila.createCell(2);
-					ax2.setCellValue(new HSSFRichTextString(var.getValor()));//anio Pres
+					ax2.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+					ax2.setCellValue(Double.parseDouble(var.getValor()));//anio Pres
 					ax2.setCellStyle(dateCellStyle);
 					
 				}
@@ -3154,6 +3158,109 @@ public class FormatoExcelExport {
 			return _xlsSheet;
 
 		}
+		
+		//historico de costos
+				public HSSFSheet construirExcelHistorico(List<?> listaHistorico) {
+
+					HSSFFont fuenteH = _wb.createFont();
+					fuenteH.setFontHeightInPoints((short) 10);
+					fuenteH.setFontName(HSSFFont.FONT_ARIAL);
+					fuenteH.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+
+					// Creamos el objto HHSSFeclStyle que aplicara para el estilo a la celda
+					HSSFCellStyle headerCellStyle = _wb.createCellStyle();
+					headerCellStyle.setWrapText(false);
+					headerCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+					headerCellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+					headerCellStyle.setFont(fuenteH);
+
+					// Definimos los bordes de las celdas
+					headerCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+					headerCellStyle.setBottomBorderColor((short) 8);
+					headerCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+					headerCellStyle.setLeftBorderColor((short) 8);
+					headerCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+					headerCellStyle.setRightBorderColor((short) 8);
+					headerCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+					headerCellStyle.setTopBorderColor((short) 8);
+
+					// Establecemos el tipo de sombreado de nuestra celda
+					headerCellStyle.setFillForegroundColor(new HSSFColor.GREY_25_PERCENT().getIndex());
+					headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+					// Para el contenido general
+					HSSFFont fuenteC = _wb.createFont();
+					fuenteC.setFontHeightInPoints((short) 9);
+					fuenteC.setFontName(HSSFFont.FONT_ARIAL);
+					fuenteC.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+
+					// Luego creamos el objeto que se encargara de aplicar el estilo a la
+					// celda
+					HSSFCellStyle dataCellStyle = _wb.createCellStyle();
+					dataCellStyle.setFont(fuenteC);
+
+					// Tambien, podemos establecer bordes...
+					dataCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+					dataCellStyle.setBottomBorderColor((short) 8);
+					dataCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+					dataCellStyle.setLeftBorderColor((short) 8);
+					dataCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+					dataCellStyle.setRightBorderColor((short) 8);
+					dataCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+					dataCellStyle.setTopBorderColor((short) 8);
+
+					HSSFCellStyle dateCellStyle = _wb.createCellStyle();
+					dateCellStyle.cloneStyleFrom(dataCellStyle);
+					//dateCellStyle.setDataFormat((short) 15);
+
+					//HSSFRow row = _xlsSheet.createRow(iRow);
+
+					HSSFRow segundaFila = _xlsSheet.createRow(0);
+					segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+
+					HSSFCell a1 = segundaFila.createCell(1);
+					a1.setCellValue(new HSSFRichTextString("Empresa"));
+					a1.setCellStyle(headerCellStyle);
+					
+					HSSFCell a2 = segundaFila.createCell(2);
+					a2.setCellValue(new HSSFRichTextString("Costo Unitario"));
+					a2.setCellStyle(headerCellStyle);
+					
+
+					if( listaHistorico!=null && listaHistorico.size()>0 ){
+						for( int i=0;i<listaHistorico.size();i++ ){
+							
+							HistoricoCostosBean hist = (HistoricoCostosBean) listaHistorico.get(i);
+							
+							HSSFRow fila = _xlsSheet.createRow(i+1);
+							HSSFCell ax1 = fila.createCell(1);
+							ax1.setCellValue(new HSSFRichTextString(hist.getPeriodo()));
+							ax1.setCellStyle(dateCellStyle);
+							HSSFCell ax2 = fila.createCell(2);
+							
+							String cociente = "0";
+							if( BigDecimal.ZERO.equals(new BigDecimal(hist.getNroBeneficiarios())) ){
+								cociente = hist.getValor();
+							}else{
+								cociente = new BigDecimal(hist.getValor()).divide(new BigDecimal(hist.getNroBeneficiarios()), 2, RoundingMode.HALF_UP).toString();
+							}
+							ax2.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+							ax2.setCellValue(Double.parseDouble(cociente));
+							ax2.setCellStyle(dateCellStyle);
+							
+						}
+					}
+
+					/**
+					 * longitud automatica de columnas
+					 */
+					_xlsSheet.autoSizeColumn((short) 1);
+					_xlsSheet.autoSizeColumn((short) 2);
+
+					
+					return _xlsSheet;
+
+				}
 	
 	public HSSFSheet FillExcelSheet(XlsWorksheetConfig xlsWorksheetConfig, HSSFSheet xlsSheet, HSSFWorkbook wb) {
 		_xlsSheet = xlsSheet;
@@ -3205,6 +3312,9 @@ public class FormatoExcelExport {
 			}//variacion de costos
 			else if( FiseConstants.TIPO_FORMATO_VARIACION.equals(xlsTableConfig.getTipoFormato())){
 				construirExcelVariacion(xlsTableConfig.getLista());
+			}//historico de costos
+			else if( FiseConstants.TIPO_FORMATO_HISTORICO.equals(xlsTableConfig.getTipoFormato())){
+				construirExcelHistorico(xlsTableConfig.getLista());
 			}
 		}
 		return _xlsSheet;

@@ -1,5 +1,7 @@
 package gob.osinergmin.fise.gart.json;
 
+import java.math.BigDecimal;
+
 import gob.osinergmin.fise.bean.Formato13ADReportBean;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato13AC;
@@ -88,14 +90,14 @@ public class Formato13AGartJSON {
 		
 		jsonObj.put("anioMesAlta",fiseFormato13AD.getAnioAlta()+"-"+fiseFormato13AD.getMesAlta());
 		jsonObj.put("descripcionLocalidad",fiseFormato13AD.getDescLocalidad());
-		jsonObj.put("st1",fiseFormato13AD.getNroBenefPoteSecTipico1());
-		jsonObj.put("st2",fiseFormato13AD.getNroBenefPoteSecTipico2());
-		jsonObj.put("st3",fiseFormato13AD.getNroBenefPoteSecTipico3());
-		jsonObj.put("st4",fiseFormato13AD.getNroBenefPoteSecTipico4());
-		jsonObj.put("st5",fiseFormato13AD.getNroBenefPoteSecTipico5());
-		jsonObj.put("st6",fiseFormato13AD.getNroBenefPoteSecTipico6());
-		jsonObj.put("stserv",fiseFormato13AD.getNroBenefPoteSecTipico7());
-		jsonObj.put("stesp",fiseFormato13AD.getNroBenefPoteSecTipico8());
+		jsonObj.put("st1",fiseFormato13AD.getNroBenefPoteSecTipico1()!=null?fiseFormato13AD.getNroBenefPoteSecTipico1():0L);
+		jsonObj.put("st2",fiseFormato13AD.getNroBenefPoteSecTipico2()!=null?fiseFormato13AD.getNroBenefPoteSecTipico2():0L);
+		jsonObj.put("st3",fiseFormato13AD.getNroBenefPoteSecTipico3()!=null?fiseFormato13AD.getNroBenefPoteSecTipico3():0L);
+		jsonObj.put("st4",fiseFormato13AD.getNroBenefPoteSecTipico4()!=null?fiseFormato13AD.getNroBenefPoteSecTipico4():0L);
+		jsonObj.put("st5",fiseFormato13AD.getNroBenefPoteSecTipico5()!=null?fiseFormato13AD.getNroBenefPoteSecTipico5():0L);
+		jsonObj.put("st6",fiseFormato13AD.getNroBenefPoteSecTipico6()!=null?fiseFormato13AD.getNroBenefPoteSecTipico6():0L);
+		jsonObj.put("stserv",fiseFormato13AD.getNroBenefPoteSecTipico7()!=null?fiseFormato13AD.getNroBenefPoteSecTipico7():0L);
+		jsonObj.put("stesp",fiseFormato13AD.getNroBenefPoteSecTipico8()!=null?fiseFormato13AD.getNroBenefPoteSecTipico8():0L);
 		jsonObj.put("total", fiseFormato13AD.getNroBenefPoteSecTipico1()+fiseFormato13AD.getNroBenefPoteSecTipico2()+
 				fiseFormato13AD.getNroBenefPoteSecTipico3()+fiseFormato13AD.getNroBenefPoteSecTipico4()+
 				fiseFormato13AD.getNroBenefPoteSecTipico5()+fiseFormato13AD.getNroBenefPoteSecTipico6()+

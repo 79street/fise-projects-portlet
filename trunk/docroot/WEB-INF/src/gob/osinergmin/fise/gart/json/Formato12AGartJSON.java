@@ -121,23 +121,23 @@ public class Formato12AGartJSON {
 		if( fiseFormato12AC.getFiseFormato12ADs() != null && !fiseFormato12AC.getFiseFormato12ADs().isEmpty() ){
 			for (FiseFormato12AD detalle : fiseFormato12AC.getFiseFormato12ADs()) {
 				if( detalle.getId().getIdZonaBenef()==1 ){//RURAL
-					nroEmpadR = detalle.getNumeroEmpadronados();
+					nroEmpadR = (detalle.getNumeroEmpadronados()!=null)?detalle.getNumeroEmpadronados():0L;
 					costoUnitEmpadR = detalle.getCostoEstandarUnitarioEmpad();
-					nroAgentR = detalle.getNumeroAgentesAutorizGlp();
+					nroAgentR = (detalle.getNumeroAgentesAutorizGlp()!=null)?detalle.getNumeroAgentesAutorizGlp():0L;
 					costoUnitAgentR = detalle.getCostoEstandarUnitAgAutGlp();
 					desplPersonalR = detalle.getTotalDesplazamientoPersonal();
 					activExtraordR = detalle.getTotalActividadesExtraord();
 				}else if( detalle.getId().getIdZonaBenef()==2 ){//PROVINCIA
-					nroEmpadP = detalle.getNumeroEmpadronados();
+					nroEmpadP = (detalle.getNumeroEmpadronados()!=null)?detalle.getNumeroEmpadronados():0L;
 					costoUnitEmpadP = detalle.getCostoEstandarUnitarioEmpad();
-					nroAgentP = detalle.getNumeroAgentesAutorizGlp();
+					nroAgentP = (detalle.getNumeroAgentesAutorizGlp()!=null)?detalle.getNumeroAgentesAutorizGlp():0L;
 					costoUnitAgentP = detalle.getCostoEstandarUnitAgAutGlp();
 					desplPersonalP = detalle.getTotalDesplazamientoPersonal();
 					activExtraordP = detalle.getTotalActividadesExtraord();
 				}else if( detalle.getId().getIdZonaBenef()==3 ){//LIMA
-					nroEmpadL = detalle.getNumeroEmpadronados();
+					nroEmpadL = (detalle.getNumeroEmpadronados()!=null)?detalle.getNumeroEmpadronados():0L;
 					costoUnitEmpadL = detalle.getCostoEstandarUnitarioEmpad();
-					nroAgentL = detalle.getNumeroAgentesAutorizGlp();
+					nroAgentL = (detalle.getNumeroAgentesAutorizGlp()!=null)?detalle.getNumeroAgentesAutorizGlp():0L;
 					costoUnitAgentL = detalle.getCostoEstandarUnitAgAutGlp();
 					desplPersonalL = detalle.getTotalDesplazamientoPersonal();
 					activExtraordL = detalle.getTotalActividadesExtraord();
@@ -146,25 +146,25 @@ public class Formato12AGartJSON {
 		}
 
 		jsonObj.put("nroEmpadR", nroEmpadR);
-		jsonObj.put("costoUnitEmpadR", costoUnitEmpadR);
+		jsonObj.put("costoUnitEmpadR", costoUnitEmpadR!=null?costoUnitEmpadR:new BigDecimal(0));
 		jsonObj.put("nroAgentR", nroAgentR);
-		jsonObj.put("costoUnitAgentR", costoUnitAgentR);
-		jsonObj.put("desplPersonalR", desplPersonalR);
-		jsonObj.put("activExtraordR", activExtraordR);
+		jsonObj.put("costoUnitAgentR", costoUnitAgentR!=null?costoUnitAgentR:new BigDecimal(0));
+		jsonObj.put("desplPersonalR", desplPersonalR!=null?desplPersonalR:new BigDecimal(0));
+		jsonObj.put("activExtraordR", activExtraordR!=null?activExtraordR:new BigDecimal(0));
 		//
 		jsonObj.put("nroEmpadP", nroEmpadP);
-		jsonObj.put("costoUnitEmpadP", costoUnitEmpadP);
+		jsonObj.put("costoUnitEmpadP", costoUnitEmpadP!=null?costoUnitEmpadP:new BigDecimal(0));
 		jsonObj.put("nroAgentP", nroAgentP);
-		jsonObj.put("costoUnitAgentP", costoUnitAgentP);
-		jsonObj.put("desplPersonalP", desplPersonalP);
-		jsonObj.put("activExtraordP", activExtraordP);
+		jsonObj.put("costoUnitAgentP", costoUnitAgentP!=null?costoUnitAgentP:new BigDecimal(0));
+		jsonObj.put("desplPersonalP", desplPersonalP!=null?desplPersonalP:new BigDecimal(0));
+		jsonObj.put("activExtraordP", activExtraordP!=null?activExtraordP:new BigDecimal(0));
 		//
 		jsonObj.put("nroEmpadL", nroEmpadL);
-		jsonObj.put("costoUnitEmpadL", costoUnitEmpadL);
+		jsonObj.put("costoUnitEmpadL", costoUnitEmpadL!=null?costoUnitEmpadL:new BigDecimal(0));
 		jsonObj.put("nroAgentL", nroAgentL);
-		jsonObj.put("costoUnitAgentL", costoUnitAgentL);
-		jsonObj.put("desplPersonalL", desplPersonalL);
-		jsonObj.put("activExtraordL", activExtraordL);
+		jsonObj.put("costoUnitAgentL", costoUnitAgentL!=null?costoUnitAgentL:new BigDecimal(0));
+		jsonObj.put("desplPersonalL", desplPersonalL!=null?desplPersonalL:new BigDecimal(0));
+		jsonObj.put("activExtraordL", activExtraordL!=null?activExtraordL:new BigDecimal(0));
 		//
 		jsonObj.put("totalGeneral", fiseFormato12AC.getTotalAReconocer());
 

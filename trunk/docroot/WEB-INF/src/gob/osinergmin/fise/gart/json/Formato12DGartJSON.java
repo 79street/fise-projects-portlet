@@ -1,5 +1,7 @@
 package gob.osinergmin.fise.gart.json;
 
+import java.math.BigDecimal;
+
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato12DC;
 import gob.osinergmin.fise.domain.FiseFormato12DD;
@@ -115,8 +117,8 @@ public class Formato12DGartJSON {
 		jsonObj.put("nroDoc", fiseFormato12DD.getNumeroDocumentoRefGasto());
 		jsonObj.put("fechaAuto", FechaUtil.fecha_DD_MM_YYYY(fiseFormato12DD.getFechaAutorizacionGasto()));
 		jsonObj.put("nroDocAuto", fiseFormato12DD.getNumeroDocAutorizaGasto());
-		jsonObj.put("cantidad", fiseFormato12DD.getCantidad());
-		jsonObj.put("costoUnitario", fiseFormato12DD.getCostoUnitario());
+		jsonObj.put("cantidad", fiseFormato12DD.getCantidad()!=null?fiseFormato12DD.getCantidad():0L);
+		jsonObj.put("costoUnitario", fiseFormato12DD.getCostoUnitario()!=null?fiseFormato12DD.getCostoUnitario():new BigDecimal(0));
 		
 		return jsonObj;
 		

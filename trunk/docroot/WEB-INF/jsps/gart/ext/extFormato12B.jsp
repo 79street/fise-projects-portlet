@@ -543,6 +543,9 @@
 				formato12B.btnReportePdf.click(function() {formato12B.viewReporte('0');});
 				formato12B.btnReporteExpExcel.click(function() {formato12B.viewReporte('1');});
 				formato12B.btnReporteActaEnvio.click(function() {formato12B.showActaEnvio();});
+				
+				formato12B.inicializarFormularioCeros();
+				
 				formato12B.loadTotales($("#codEmpresaHidden").val());
 				
 			}else if(formato12B.tpOperacion.val()=='1'){
@@ -774,45 +777,45 @@
 		},
 		clearCampoLima :function(){
 			
-			formato12B.txtnroValesImpresoLim.val('');
-			formato12B.txtnroValesRepartidosDomiLim.val('');
-			formato12B.txtnroValesEntregadoDisElLim.val('');
-			formato12B.txtnroValesFisicosCanjeadosLim.val('');
-			formato12B.txtnroValesDigitalCanjeadosLim.val('');
-			formato12B.txtnroAtencionesLim.val('');
-			formato12B.txtTotalGestionAdministrativaLim.val('');
-			formato12B.txtTotalDesplazamientoPersonalLim.val('');
-			formato12B.txtTotalActividadesExtraordLim.val('');
+			formato12B.txtnroValesImpresoLim.val('0');
+			formato12B.txtnroValesRepartidosDomiLim.val('0');
+			formato12B.txtnroValesEntregadoDisElLim.val('0');
+			formato12B.txtnroValesFisicosCanjeadosLim.val('0');
+			formato12B.txtnroValesDigitalCanjeadosLim.val('0');
+			formato12B.txtnroAtencionesLim.val('0');
+			formato12B.txtTotalGestionAdministrativaLim.val('0.00');
+			formato12B.txtTotalDesplazamientoPersonalLim.val('0.00');
+			formato12B.txtTotalActividadesExtraordLim.val('0.00');
 			
 			
-			formato12B.txtEtndrUnitValeImpreLim.val('');
+			formato12B.txtEtndrUnitValeImpreLim.val('0.00');
 			 $('#costoEstandarUnitValeImpreLim').val(formato12B.txtEtndrUnitValeImpreLim.val());
 			 
-			 formato12B.txtEtndrUnitValeReparLim.val('');
+			 formato12B.txtEtndrUnitValeReparLim.val('0.00');
 			 $('#costoEstandarUnitValeReparLim').val(formato12B.txtEtndrUnitValeReparLim.val());
 			 
-			 formato12B.txtEtndrUnitValDisElLim.val('');
+			 formato12B.txtEtndrUnitValDisElLim.val('0.00');
 			 $('#costoEstandarUnitValDisElLim').val(formato12B.txtEtndrUnitValDisElLim.val());
 			 
-			 formato12B.txtEtndrUnitValFiCanLim.val('');
+			 formato12B.txtEtndrUnitValFiCanLim.val('0.00');
 			 $('#costoEstandarUnitValFiCanLim').val(formato12B.txtEtndrUnitValFiCanLim.val());
 			 
-			 formato12B.txtEtndrUnitValDgCanLim.val('');
+			 formato12B.txtEtndrUnitValDgCanLim.val('0.00');
 			 $('#costoEstandarUnitValDgCanLim').val(formato12B.txtEtndrUnitValDgCanLim.val());
 			 
-			 formato12B.txtEtndrUnitAtencionLim.val('');
+			 formato12B.txtEtndrUnitAtencionLim.val('0.00');
 			 $('#costoEstandarUnitAtencionLim').val(formato12B.txtEtndrUnitAtencionLim.val());
 			 
 			
-			 formato12B.txtTotalImpresionValeLim.val('');
-			 formato12B.txtTotalRepartoValesDomiLim.val('');	
-			 formato12B.txtTotalEntregaValDisElLim.val('');
-			 formato12B.txtTotalCanjeLiqValeFisLim.val('');
-			 formato12B.txtTotalCanjeLiqValeDigLim.val('');
-			 formato12B.txtTotalAtencionConsReclLim.val('');
-			 $('#totalGestionAdministrativaLim').val('');
-	$('#totalDesplazamientoPersonalLim').val('');
-	$('#totalActividadesExtraordLim').val('');
+			 formato12B.txtTotalImpresionValeLim.val('0.00');
+			 formato12B.txtTotalRepartoValesDomiLim.val('0.00');	
+			 formato12B.txtTotalEntregaValDisElLim.val('0.00');
+			 formato12B.txtTotalCanjeLiqValeFisLim.val('0.00');
+			 formato12B.txtTotalCanjeLiqValeDigLim.val('0.00');
+			 formato12B.txtTotalAtencionConsReclLim.val('0.00');
+			 $('#totalGestionAdministrativaLim').val('0.00');
+	$('#totalDesplazamientoPersonalLim').val('0.00');
+	$('#totalActividadesExtraordLim').val('0.00');
 
 			 
 		},
@@ -1179,6 +1182,12 @@
 		loadTotales : function(emp){
 			 
 			if(emp.trim() =='EDLN' || emp.trim() =='LDS'){
+				
+				console.debug(parseFloat($('#costoTotalImpresionVale').val()));
+				console.debug(parseFloat($('#costoTotalImpresionValeProv').val()));
+				console.debug(parseFloat($('#costoTotalImpresionValeLim').val()));
+				console.debug(parseFloat($('#costoTotalImpresionVale').val())+parseFloat($('#costoTotalImpresionValeProv').val())+parseFloat($('#costoTotalImpresionValeLim').val()));
+				
 				$('#porImpresionVales').val(parseFloat($('#costoTotalImpresionVale').val())+parseFloat($('#costoTotalImpresionValeProv').val())+parseFloat($('#costoTotalImpresionValeLim').val()));
 				$('#porRepartoDom').val(parseFloat($('#costoTotalRepartoValesDomi').val())+parseFloat($('#costoTotalRepartoValesDomiProv').val())+parseFloat($('#costoTotalRepartoValesDomiLim').val()));
 				$('#porEntregaValesDE').val(parseFloat($('#costoTotalEntregaValDisEl').val())+parseFloat($('#costoTotalEntregaValDisElProv').val())+parseFloat($('#costoTotalEntregaValDisElLim').val()));
@@ -2148,6 +2157,211 @@
 		               
 		            
 			});
+			
+		},
+		inicializarFormularioCeros : function(){
+			
+			/*formato12B.txtnroValesImpreso.val(formato12B.txtnroValesImpreso.val()!=''?formato12B.txtnroValesImpreso.val():'0');
+			formato12B.txtnroValesImpresoProv.val(formato12B.txtnroValesImpresoProv.val()!=''?formato12B.txtnroValesImpresoProv.val():'0');
+			formato12B.txtnroValesImpresoLim.val(formato12B.txtnroValesImpresoLim.val()!=''?formato12B.txtnroValesImpresoLim.val():'0');
+			formato12B.txtEtndrUnitValeImpre.val(formato12B.txtEtndrUnitValeImpre.val()!=''?formato12B.txtEtndrUnitValeImpre.val():'0.00');
+			formato12B.txtEtndrUnitValeImpreProv.val(formato12B.txtEtndrUnitValeImpreProv.val()!=''?formato12B.txtEtndrUnitValeImpreProv.val():'0.00');
+			formato12B.txtEtndrUnitValeImpreLim.val(formato12B.txtEtndrUnitValeImpreLim.val()!=''?formato12B.txtEtndrUnitValeImpreLim.val():'0.00');
+			formato12B.txtTotalImpresionVale.val(formato12B.txtTotalImpresionVale.val()!=''?formato12B.txtTotalImpresionVale.val():'0.00');
+			formato12B.txtTotalImpresionValeProv.val(formato12B.txtTotalImpresionValeProv.val()!=''?formato12B.txtTotalImpresionValeProv.val():'0.00');
+			formato12B.txtTotalImpresionValeLim.val(formato12B.txtTotalImpresionValeLim.val()!=''?formato12B.txtTotalImpresionValeLim.val():'0.00');
+			
+			
+			formato12B.txtnroValesRepartidosDomi.val(formato12B.txtnroValesRepartidosDomi.val()!=''?formato12B.txtnroValesRepartidosDomi.val():'0');
+			formato12B.txtnroValesRepartidosDomiProv.val(formato12B.txtnroValesRepartidosDomiProv.val()!=''?formato12B.txtnroValesRepartidosDomiProv.val():'0');
+			formato12B.txtnroValesRepartidosDomiLim.val(formato12B.txtnroValesRepartidosDomiLim.val()!=''?formato12B.txtnroValesRepartidosDomiLim.val():'0');
+			formato12B.txtTotalRepartoValesDomi.val(formato12B.txtTotalRepartoValesDomi.val()!=''?formato12B.txtTotalRepartoValesDomi.val():'0.00');
+			formato12B.txtTotalRepartoValesDomiProv.val(formato12B.txtTotalRepartoValesDomiProv.val()!=''?formato12B.txtTotalRepartoValesDomiProv.val():'0.00');
+			formato12B.txtTotalRepartoValesDomiLim.val(formato12B.txtTotalRepartoValesDomiLim.val()!=''?formato12B.txtTotalRepartoValesDomiLim.val():'0.00');
+			formato12B.txtEtndrUnitValeRepar.val(formato12B.txtEtndrUnitValeRepar.val()!=''?formato12B.txtEtndrUnitValeRepar.val():'0.00');
+			formato12B.txtEtndrUnitValeReparProv.val(formato12B.txtEtndrUnitValeReparProv.val()!=''?formato12B.txtEtndrUnitValeReparProv.val():'0.00');
+			formato12B.txtEtndrUnitValeReparLim.val(formato12B.txtEtndrUnitValeReparLim.val()!=''?formato12B.txtEtndrUnitValeReparLim.val():'0.00');
+			
+			formato12B.txtnroValesEntregadoDisEl.val(formato12B.txtnroValesEntregadoDisEl.val()!=''?formato12B.txtnroValesEntregadoDisEl.val():'0');
+			formato12B.txtnroValesEntregadoDisElProv.val(formato12B.txtnroValesEntregadoDisElProv.val()!=''?formato12B.txtnroValesEntregadoDisElProv.val():'0');
+			formato12B.txtnroValesEntregadoDisElLim.val(formato12B.txtnroValesEntregadoDisElLim.val()!=''?formato12B.txtnroValesEntregadoDisElLim.val():'0');
+			formato12B.txtEtndrUnitValDisEl.val(formato12B.txtEtndrUnitValDisEl.val()!=''?formato12B.txtEtndrUnitValDisEl.val():'0.00');
+			formato12B.txtEtndrUnitValDisElProv.val(formato12B.txtEtndrUnitValDisElProv.val()!=''?formato12B.txtEtndrUnitValDisElProv.val():'0.00');
+			formato12B.txtEtndrUnitValDisElLim.val(formato12B.txtEtndrUnitValDisElLim.val()!=''?formato12B.txtEtndrUnitValDisElLim.val():'0.00');
+			formato12B.txtTotalEntregaValDisEl.val(formato12B.txtTotalEntregaValDisEl.val()!=''?formato12B.txtTotalEntregaValDisEl.val():'0.00');
+			formato12B.txtTotalEntregaValDisElProv.val(formato12B.txtTotalEntregaValDisElProv.val()!=''?formato12B.txtTotalEntregaValDisElProv.val():'0.00');
+			formato12B.txtTotalEntregaValDisElLim.val(formato12B.txtTotalEntregaValDisElLim.val()!=''?formato12B.txtTotalEntregaValDisElLim.val():'0.00');
+			
+			formato12B.txtnroValesFisicosCanjeados.val(formato12B.txtnroValesFisicosCanjeados.val()!=''?formato12B.txtnroValesFisicosCanjeados.val():'0');
+			formato12B.txtnroValesFisicosCanjeadosProv.val(formato12B.txtnroValesFisicosCanjeadosProv.val()!=''?formato12B.txtnroValesFisicosCanjeadosProv.val():'0');
+			formato12B.txtnroValesFisicosCanjeadosLim.val(formato12B.txtnroValesFisicosCanjeadosLim.val()!=''?formato12B.txtnroValesFisicosCanjeadosLim.val():'0');
+			formato12B.txtEtndrUnitValFiCan.val(formato12B.txtEtndrUnitValFiCan.val()!=''?formato12B.txtEtndrUnitValFiCan.val():'0.00');
+			formato12B.txtEtndrUnitValFiCanProv.val(formato12B.txtEtndrUnitValFiCanProv.val()!=''?formato12B.txtEtndrUnitValFiCanProv.val():'0.00');
+			formato12B.txtEtndrUnitValFiCanLim.val(formato12B.txtEtndrUnitValFiCanLim.val()!=''?formato12B.txtEtndrUnitValFiCanLim.val():'0.00');
+			formato12B.txtTotalCanjeLiqValeFis.val(formato12B.txtTotalCanjeLiqValeFis.val()!=''?formato12B.txtTotalCanjeLiqValeFis.val():'0.00');
+			formato12B.txtTotalCanjeLiqValeFisProv.val(formato12B.txtTotalCanjeLiqValeFisProv.val()!=''?formato12B.txtTotalCanjeLiqValeFisProv.val():'0.00');
+			formato12B.txtTotalCanjeLiqValeFisLim.val(formato12B.txtTotalCanjeLiqValeFisLim.val()!=''?formato12B.txtTotalCanjeLiqValeFisLim.val():'0.00');
+			
+			
+			formato12B.txtnroValesDigitalCanjeados.val(formato12B.txtnroValesDigitalCanjeados.val()!=''?formato12B.txtnroValesDigitalCanjeados.val():'0');
+			formato12B.txtnroValesDigitalCanjeadosProv.val(formato12B.txtnroValesDigitalCanjeadosProv.val()!=''?formato12B.txtnroValesDigitalCanjeadosProv.val():'0');
+			formato12B.txtnroValesDigitalCanjeadosLim.val(formato12B.txtnroValesDigitalCanjeadosLim.val()!=''?formato12B.txtnroValesDigitalCanjeadosLim.val():'0');
+			formato12B.txtEtndrUnitValDgCan.val(formato12B.txtEtndrUnitValDgCan.val()!=''?formato12B.txtEtndrUnitValDgCan.val():'0.00');
+			formato12B.txtEtndrUnitValDgCanProv.val(formato12B.txtEtndrUnitValDgCanProv.val()!=''?formato12B.txtEtndrUnitValDgCanProv.val():'0.00');
+			formato12B.txtEtndrUnitValDgCanLim.val(formato12B.txtEtndrUnitValDgCanLim.val()!=''?formato12B.txtEtndrUnitValDgCanLim.val():'0.00');
+			formato12B.txtTotalCanjeLiqValeDig.val(formato12B.txtTotalCanjeLiqValeDig.val()!=''?formato12B.txtTotalCanjeLiqValeDig.val():'0.00');
+			formato12B.txtTotalCanjeLiqValeDigProv.val(formato12B.txtTotalCanjeLiqValeDigProv.val()!=''?formato12B.txtTotalCanjeLiqValeDigProv.val():'0.00');
+			formato12B.txtTotalCanjeLiqValeDigLim.val(formato12B.txtTotalCanjeLiqValeDigLim.val()!=''?formato12B.txtTotalCanjeLiqValeDigLim.val():'0.00');
+			
+			
+			formato12B.txtnroAtenciones.val(formato12B.txtnroAtenciones.val()!=''?formato12B.txtnroAtenciones.val():'0');
+			formato12B.txtnroAtencionesProv.val(formato12B.txtnroAtencionesProv.val()!=''?formato12B.txtnroAtencionesProv.val():'0');
+			formato12B.txtnroAtencionesLim.val(formato12B.txtnroAtencionesLim.val()!=''?formato12B.txtnroAtencionesLim.val():'0');
+			formato12B.txtEtndrUnitAtencion.val(formato12B.txtEtndrUnitAtencion.val()!=''?formato12B.txtEtndrUnitAtencion.val():'0.00');
+			formato12B.txtEtndrUnitAtencionProv.val(formato12B.txtEtndrUnitAtencionProv.val()!=''?formato12B.txtEtndrUnitAtencionProv.val():'0.00');
+			formato12B.txtEtndrUnitAtencionLim.val(formato12B.txtEtndrUnitAtencionLim.val()!=''?formato12B.txtEtndrUnitAtencionLim.val():'0.00');
+			formato12B.txtTotalAtencionConsRecl.val(formato12B.txtTotalAtencionConsRecl.val()!=''?formato12B.txtTotalAtencionConsRecl.val():'0.00');
+			formato12B.txtTotalAtencionConsReclProv.val(formato12B.txtTotalAtencionConsReclProv.val()!=''?formato12B.txtTotalAtencionConsReclProv.val():'0.00');
+			formato12B.txtTotalAtencionConsReclLim.val(formato12B.txtTotalAtencionConsReclLim.val()!=''?formato12B.txtTotalAtencionConsReclLim.val():'0.00');
+           
+			formato12B.txtTotalGestionAdministrativa.val(formato12B.txtTotalGestionAdministrativa.val()!=''?formato12B.txtTotalGestionAdministrativa.val():'0.00');
+			formato12B.txtTotalGestionAdministrativaProv.val(formato12B.txtTotalGestionAdministrativaProv.val()!=''?formato12B.txtTotalGestionAdministrativaProv.val():'0.00');
+			formato12B.txtTotalGestionAdministrativaLim.val(formato12B.txtTotalGestionAdministrativaLim.val()!=''?formato12B.txtTotalGestionAdministrativaLim.val():'0.00');
+			formato12B.txtTotalDesplazamientoPersonal.val(formato12B.txtTotalDesplazamientoPersonal.val()!=''?formato12B.txtTotalDesplazamientoPersonal.val():'0.00');
+			formato12B.txtTotalDesplazamientoPersonalProv.val(formato12B.txtTotalDesplazamientoPersonalProv.val()!=''?formato12B.txtTotalDesplazamientoPersonalProv.val():'0.00');
+			formato12B.txtTotalDesplazamientoPersonalLim.val(formato12B.txtTotalDesplazamientoPersonalLim.val()!=''?formato12B.txtTotalDesplazamientoPersonalLim.val():'0.00');
+			formato12B.txtTotalActividadesExtraord.val(formato12B.txtTotalActividadesExtraord.val()!=''?formato12B.txtTotalActividadesExtraord.val():'0.00');
+			formato12B.txtTotalActividadesExtraordProv.val(formato12B.txtTotalActividadesExtraordProv.val()!=''?formato12B.txtTotalActividadesExtraordProv.val():'0.00');
+			formato12B.txtTotalActividadesExtraordLim.val(formato12B.txtTotalActividadesExtraordLim.val()!=''?formato12B.txtTotalActividadesExtraordLim.val():'0.00');*/
+			 
+			 
+			
+			formato12B.txtnroValesImpreso.attr('value',(formato12B.txtnroValesImpreso.val()!=''?formato12B.txtnroValesImpreso.val():'0'));
+			formato12B.txtnroValesImpresoProv.attr('value',(formato12B.txtnroValesImpresoProv.val()!=''?formato12B.txtnroValesImpresoProv.val():'0'));
+			formato12B.txtnroValesImpresoLim.attr('value',(formato12B.txtnroValesImpresoLim.val()!=''?formato12B.txtnroValesImpresoLim.val():'0'));
+			formato12B.txtEtndrUnitValeImpre.attr('value',(formato12B.txtEtndrUnitValeImpre.val()!=''?formato12B.txtEtndrUnitValeImpre.val():'0.00'));
+			formato12B.txtEtndrUnitValeImpreProv.attr('value',(formato12B.txtEtndrUnitValeImpreProv.val()!=''?formato12B.txtEtndrUnitValeImpreProv.val():'0.00'));
+			formato12B.txtEtndrUnitValeImpreLim.attr('value',(formato12B.txtEtndrUnitValeImpreLim.val()!=''?formato12B.txtEtndrUnitValeImpreLim.val():'0.00'));
+			formato12B.txtTotalImpresionVale.attr('value',(formato12B.txtTotalImpresionVale.val()!=''?formato12B.txtTotalImpresionVale.val():'0.00'));
+			formato12B.txtTotalImpresionValeProv.attr('value',(formato12B.txtTotalImpresionValeProv.val()!=''?formato12B.txtTotalImpresionValeProv.val():'0.00'));
+			formato12B.txtTotalImpresionValeLim.attr('value',(formato12B.txtTotalImpresionValeLim.val()!=''?formato12B.txtTotalImpresionValeLim.val():'0.00'));
+			
+			
+			formato12B.txtnroValesRepartidosDomi.attr('value',(formato12B.txtnroValesRepartidosDomi.val()!=''?formato12B.txtnroValesRepartidosDomi.val():'0'));
+			formato12B.txtnroValesRepartidosDomiProv.attr('value',(formato12B.txtnroValesRepartidosDomiProv.val()!=''?formato12B.txtnroValesRepartidosDomiProv.val():'0'));
+			formato12B.txtnroValesRepartidosDomiLim.attr('value',(formato12B.txtnroValesRepartidosDomiLim.val()!=''?formato12B.txtnroValesRepartidosDomiLim.val():'0'));
+			formato12B.txtTotalRepartoValesDomi.attr('value',(formato12B.txtTotalRepartoValesDomi.val()!=''?formato12B.txtTotalRepartoValesDomi.val():'0.00'));
+			formato12B.txtTotalRepartoValesDomiProv.attr('value',(formato12B.txtTotalRepartoValesDomiProv.val()!=''?formato12B.txtTotalRepartoValesDomiProv.val():'0.00'));
+			formato12B.txtTotalRepartoValesDomiLim.attr('value',(formato12B.txtTotalRepartoValesDomiLim.val()!=''?formato12B.txtTotalRepartoValesDomiLim.val():'0.00'));
+			formato12B.txtEtndrUnitValeRepar.attr('value',(formato12B.txtEtndrUnitValeRepar.val()!=''?formato12B.txtEtndrUnitValeRepar.val():'0.00'));
+			formato12B.txtEtndrUnitValeReparProv.attr('value',(formato12B.txtEtndrUnitValeReparProv.val()!=''?formato12B.txtEtndrUnitValeReparProv.val():'0.00'));
+			formato12B.txtEtndrUnitValeReparLim.attr('value',(formato12B.txtEtndrUnitValeReparLim.val()!=''?formato12B.txtEtndrUnitValeReparLim.val():'0.00'));
+			
+			formato12B.txtnroValesEntregadoDisEl.attr('value',(formato12B.txtnroValesEntregadoDisEl.val()!=''?formato12B.txtnroValesEntregadoDisEl.val():'0'));
+			formato12B.txtnroValesEntregadoDisElProv.attr('value',(formato12B.txtnroValesEntregadoDisElProv.val()!=''?formato12B.txtnroValesEntregadoDisElProv.val():'0'));
+			formato12B.txtnroValesEntregadoDisElLim.attr('value',(formato12B.txtnroValesEntregadoDisElLim.val()!=''?formato12B.txtnroValesEntregadoDisElLim.val():'0'));
+			formato12B.txtEtndrUnitValDisEl.attr('value',(formato12B.txtEtndrUnitValDisEl.val()!=''?formato12B.txtEtndrUnitValDisEl.val():'0.00'));
+			formato12B.txtEtndrUnitValDisElProv.attr('value',(formato12B.txtEtndrUnitValDisElProv.val()!=''?formato12B.txtEtndrUnitValDisElProv.val():'0.00'));
+			formato12B.txtEtndrUnitValDisElLim.attr('value',(formato12B.txtEtndrUnitValDisElLim.val()!=''?formato12B.txtEtndrUnitValDisElLim.val():'0.00'));
+			formato12B.txtTotalEntregaValDisEl.attr('value',(formato12B.txtTotalEntregaValDisEl.val()!=''?formato12B.txtTotalEntregaValDisEl.val():'0.00'));
+			formato12B.txtTotalEntregaValDisElProv.attr('value',(formato12B.txtTotalEntregaValDisElProv.val()!=''?formato12B.txtTotalEntregaValDisElProv.val():'0.00'));
+			formato12B.txtTotalEntregaValDisElLim.attr('value',(formato12B.txtTotalEntregaValDisElLim.val()!=''?formato12B.txtTotalEntregaValDisElLim.val():'0.00'));
+			
+			formato12B.txtnroValesFisicosCanjeados.attr('value',(formato12B.txtnroValesFisicosCanjeados.val()!=''?formato12B.txtnroValesFisicosCanjeados.val():'0'));
+			formato12B.txtnroValesFisicosCanjeadosProv.attr('value',(formato12B.txtnroValesFisicosCanjeadosProv.val()!=''?formato12B.txtnroValesFisicosCanjeadosProv.val():'0'));
+			formato12B.txtnroValesFisicosCanjeadosLim.attr('value',(formato12B.txtnroValesFisicosCanjeadosLim.val()!=''?formato12B.txtnroValesFisicosCanjeadosLim.val():'0'));
+			formato12B.txtEtndrUnitValFiCan.attr('value',(formato12B.txtEtndrUnitValFiCan.val()!=''?formato12B.txtEtndrUnitValFiCan.val():'0.00'));
+			formato12B.txtEtndrUnitValFiCanProv.attr('value',(formato12B.txtEtndrUnitValFiCanProv.val()!=''?formato12B.txtEtndrUnitValFiCanProv.val():'0.00'));
+			formato12B.txtEtndrUnitValFiCanLim.attr('value',(formato12B.txtEtndrUnitValFiCanLim.val()!=''?formato12B.txtEtndrUnitValFiCanLim.val():'0.00'));
+			formato12B.txtTotalCanjeLiqValeFis.attr('value',(formato12B.txtTotalCanjeLiqValeFis.val()!=''?formato12B.txtTotalCanjeLiqValeFis.val():'0.00'));
+			formato12B.txtTotalCanjeLiqValeFisProv.attr('value',(formato12B.txtTotalCanjeLiqValeFisProv.val()!=''?formato12B.txtTotalCanjeLiqValeFisProv.val():'0.00'));
+			formato12B.txtTotalCanjeLiqValeFisLim.attr('value',(formato12B.txtTotalCanjeLiqValeFisLim.val()!=''?formato12B.txtTotalCanjeLiqValeFisLim.val():'0.00'));
+			
+			
+			formato12B.txtnroValesDigitalCanjeados.attr('value',(formato12B.txtnroValesDigitalCanjeados.val()!=''?formato12B.txtnroValesDigitalCanjeados.val():'0'));
+			formato12B.txtnroValesDigitalCanjeadosProv.attr('value',(formato12B.txtnroValesDigitalCanjeadosProv.val()!=''?formato12B.txtnroValesDigitalCanjeadosProv.val():'0'));
+			formato12B.txtnroValesDigitalCanjeadosLim.attr('value',(formato12B.txtnroValesDigitalCanjeadosLim.val()!=''?formato12B.txtnroValesDigitalCanjeadosLim.val():'0'));
+			formato12B.txtEtndrUnitValDgCan.attr('value',(formato12B.txtEtndrUnitValDgCan.val()!=''?formato12B.txtEtndrUnitValDgCan.val():'0.00'));
+			formato12B.txtEtndrUnitValDgCanProv.attr('value',(formato12B.txtEtndrUnitValDgCanProv.val()!=''?formato12B.txtEtndrUnitValDgCanProv.val():'0.00'));
+			formato12B.txtEtndrUnitValDgCanLim.attr('value',(formato12B.txtEtndrUnitValDgCanLim.val()!=''?formato12B.txtEtndrUnitValDgCanLim.val():'0.00'));
+			formato12B.txtTotalCanjeLiqValeDig.attr('value',(formato12B.txtTotalCanjeLiqValeDig.val()!=''?formato12B.txtTotalCanjeLiqValeDig.val():'0.00'));
+			formato12B.txtTotalCanjeLiqValeDigProv.attr('value',(formato12B.txtTotalCanjeLiqValeDigProv.val()!=''?formato12B.txtTotalCanjeLiqValeDigProv.val():'0.00'));
+			formato12B.txtTotalCanjeLiqValeDigLim.attr('value',(formato12B.txtTotalCanjeLiqValeDigLim.val()!=''?formato12B.txtTotalCanjeLiqValeDigLim.val():'0.00'));
+			
+			
+			formato12B.txtnroAtenciones.attr('value',(formato12B.txtnroAtenciones.val()!=''?formato12B.txtnroAtenciones.val():'0'));
+			formato12B.txtnroAtencionesProv.attr('value',(formato12B.txtnroAtencionesProv.val()!=''?formato12B.txtnroAtencionesProv.val():'0'));
+			formato12B.txtnroAtencionesLim.attr('value',(formato12B.txtnroAtencionesLim.val()!=''?formato12B.txtnroAtencionesLim.val():'0'));
+			formato12B.txtEtndrUnitAtencion.attr('value',(formato12B.txtEtndrUnitAtencion.val()!=''?formato12B.txtEtndrUnitAtencion.val():'0.00'));
+			formato12B.txtEtndrUnitAtencionProv.attr('value',(formato12B.txtEtndrUnitAtencionProv.val()!=''?formato12B.txtEtndrUnitAtencionProv.val():'0.00'));
+			formato12B.txtEtndrUnitAtencionLim.attr('value',(formato12B.txtEtndrUnitAtencionLim.val()!=''?formato12B.txtEtndrUnitAtencionLim.val():'0.00'));
+			formato12B.txtTotalAtencionConsRecl.attr('value',(formato12B.txtTotalAtencionConsRecl.val()!=''?formato12B.txtTotalAtencionConsRecl.val():'0.00'));
+			formato12B.txtTotalAtencionConsReclProv.attr('value',(formato12B.txtTotalAtencionConsReclProv.val()!=''?formato12B.txtTotalAtencionConsReclProv.val():'0.00'));
+			formato12B.txtTotalAtencionConsReclLim.attr('value',(formato12B.txtTotalAtencionConsReclLim.val()!=''?formato12B.txtTotalAtencionConsReclLim.val():'0.00'));
+           
+			formato12B.txtTotalGestionAdministrativa.attr('value',(formato12B.txtTotalGestionAdministrativa.val()!=''?formato12B.txtTotalGestionAdministrativa.val():'0.00'));
+			formato12B.txtTotalGestionAdministrativaProv.attr('value',(formato12B.txtTotalGestionAdministrativaProv.val()!=''?formato12B.txtTotalGestionAdministrativaProv.val():'0.00'));
+			formato12B.txtTotalGestionAdministrativaLim.attr('value',(formato12B.txtTotalGestionAdministrativaLim.val()!=''?formato12B.txtTotalGestionAdministrativaLim.val():'0.00'));
+			formato12B.txtTotalDesplazamientoPersonal.attr('value',(formato12B.txtTotalDesplazamientoPersonal.val()!=''?formato12B.txtTotalDesplazamientoPersonal.val():'0.00'));
+			formato12B.txtTotalDesplazamientoPersonalProv.attr('value',(formato12B.txtTotalDesplazamientoPersonalProv.val()!=''?formato12B.txtTotalDesplazamientoPersonalProv.val():'0.00'));
+			formato12B.txtTotalDesplazamientoPersonalLim.attr('value',(formato12B.txtTotalDesplazamientoPersonalLim.val()!=''?formato12B.txtTotalDesplazamientoPersonalLim.val():'0.00'));
+			formato12B.txtTotalActividadesExtraord.attr('value',(formato12B.txtTotalActividadesExtraord.val()!=''?formato12B.txtTotalActividadesExtraord.val():'0.00'));
+			formato12B.txtTotalActividadesExtraordProv.attr('value',(formato12B.txtTotalActividadesExtraordProv.val()!=''?formato12B.txtTotalActividadesExtraordProv.val():'0.00'));
+			formato12B.txtTotalActividadesExtraordLim.attr('value',(formato12B.txtTotalActividadesExtraordLim.val()!=''?formato12B.txtTotalActividadesExtraordLim.val():'0.00'));
+			
+			//costos unitarios
+			$('#costoEstandarUnitValeImpre').val(formato12B.txtEtndrUnitValeImpre.val());
+			 $('#costoEstandarUnitValeRepar').val(formato12B.txtEtndrUnitValeRepar.val());
+			 $('#costoEstandarUnitValDisEl').val(formato12B.txtEtndrUnitValDisEl.val());
+			 $('#costoEstandarUnitValFiCan').val(formato12B.txtEtndrUnitValFiCan.val());
+			 $('#costoEstandarUnitValDgCan').val(formato12B.txtEtndrUnitValDgCan.val());
+			 $('#costoEstandarUnitAtencion').val(formato12B.txtEtndrUnitAtencion.val());
+			 
+			 $('#costoEstandarUnitValeImpreProv').val(formato12B.txtEtndrUnitValeImpreProv.val());
+			 $('#costoEstandarUnitValeReparProv').val(formato12B.txtEtndrUnitValeReparProv.val());
+			 $('#costoEstandarUnitValDisElProv').val(formato12B.txtEtndrUnitValDisElProv.val());
+			 $('#costoEstandarUnitValFiCanProv').val(formato12B.txtEtndrUnitValFiCanProv.val());
+			 $('#costoEstandarUnitValDgCanProv').val(formato12B.txtEtndrUnitValDgCanProv.val());
+			 $('#costoEstandarUnitAtencionProv').val(formato12B.txtEtndrUnitAtencionProv.val());
+			 				
+			 $('#costoEstandarUnitValeImpreLim').val(formato12B.txtEtndrUnitValeImpreLim.val());
+			 $('#costoEstandarUnitValeReparLim').val(formato12B.txtEtndrUnitValeReparLim.val());
+			 $('#costoEstandarUnitValDisElLim').val(formato12B.txtEtndrUnitValDisElLim.val());
+			 $('#costoEstandarUnitValFiCanLim').val(formato12B.txtEtndrUnitValFiCanLim.val());
+			 $('#costoEstandarUnitValDgCanLim').val(formato12B.txtEtndrUnitValDgCanLim.val());
+			 $('#costoEstandarUnitAtencionLim').val(formato12B.txtEtndrUnitAtencionLim.val());
+			 
+			 //costos totales
+			 	$('#costoTotalImpresionVale').val(formato12B.txtTotalImpresionVale.val());
+				$('#costoTotalImpresionValeProv').val(formato12B.txtTotalImpresionValeProv.val());
+				$('#costoTotalImpresionValeLim').val(formato12B.txtTotalImpresionValeLim.val());
+			
+				$('#costoTotalRepartoValesDomi').val(formato12B.txtTotalRepartoValesDomi.val());
+				$('#costoTotalRepartoValesDomiProv').val(formato12B.txtTotalRepartoValesDomiProv.val());
+				$('#costoTotalRepartoValesDomiLim').val(formato12B.txtTotalRepartoValesDomiLim.val());
+				
+			    $('#costoTotalEntregaValDisEl').val(formato12B.txtTotalEntregaValDisEl.val());
+				$('#costoTotalEntregaValDisElProv').val(formato12B.txtTotalEntregaValDisElProv.val());
+				$('#costoTotalEntregaValDisElLim').val(formato12B.txtTotalEntregaValDisElLim.val());
+				
+			    $('#costoTotalCanjeLiqValeFis').val(formato12B.txtTotalCanjeLiqValeFis.val());
+				$('#costoTotalCanjeLiqValeFisProv').val(formato12B.txtTotalCanjeLiqValeFisProv.val());
+				$('#costoTotalCanjeLiqValeFisLim').val(formato12B.txtTotalCanjeLiqValeFisLim.val());
+				
+				$('#costoTotalCanjeLiqValeDig').val(formato12B.txtTotalCanjeLiqValeDig.val());
+				$('#costoTotalCanjeLiqValeDigProv').val(formato12B.txtTotalCanjeLiqValeDigProv.val());
+				$('#costoTotalCanjeLiqValeDigLim').val(formato12B.txtTotalCanjeLiqValeDigLim.val());
+				
+				$('#costoTotalAtencionConsRecl').val(formato12B.txtTotalAtencionConsRecl.val());
+				$('#costoTotalAtencionConsReclProv').val(formato12B.txtTotalAtencionConsReclProv.val());
+				$('#costoTotalAtencionConsReclLim').val(formato12B.txtTotalAtencionConsReclLim.val());
+				
+				
+			    
+			    
+			   
+			   
+			   
 			
 		}
 		

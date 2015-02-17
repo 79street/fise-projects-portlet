@@ -1,5 +1,7 @@
 package gob.osinergmin.fise.gart.json;
 
+import java.math.BigDecimal;
+
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseFormato12CC;
 import gob.osinergmin.fise.domain.FiseFormato12CD;
@@ -169,10 +171,10 @@ public class Formato12CGartJSON {
 		jsonObj.put("ruc", fiseFormato12CD.getRucEmpresaEmiteDocRef());
 		jsonObj.put("serieDoc", fiseFormato12CD.getSerieDocumentoReferencia());
 		jsonObj.put("nroDoc", fiseFormato12CD.getNumeroDocumentoReferencia());
-		jsonObj.put("nroDias", fiseFormato12CD.getNumeroDias());
-		jsonObj.put("alimentacion", fiseFormato12CD.getMontoAlimentacion());
-		jsonObj.put("alojamiento", fiseFormato12CD.getMontoAlojamiento());
-		jsonObj.put("movilidad", fiseFormato12CD.getMontoMovilidad());
+		jsonObj.put("nroDias", fiseFormato12CD.getNumeroDias()!=null?fiseFormato12CD.getNumeroDias():0L);
+		jsonObj.put("alimentacion", fiseFormato12CD.getMontoAlimentacion()!=null?fiseFormato12CD.getMontoAlimentacion():new BigDecimal(0));
+		jsonObj.put("alojamiento", fiseFormato12CD.getMontoAlojamiento()!=null?fiseFormato12CD.getMontoAlojamiento():new BigDecimal(0));
+		jsonObj.put("movilidad", fiseFormato12CD.getMontoMovilidad()!=null?fiseFormato12CD.getMontoMovilidad():new BigDecimal(0));
 		
 		return jsonObj;
 		

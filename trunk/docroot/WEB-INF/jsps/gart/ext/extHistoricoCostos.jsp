@@ -101,6 +101,10 @@ var historicoCostos= {
 				historicoCostos.exportarPdf();
 			});
 			
+			$("#exportarExcel").click(function() {
+				historicoCostos.exportarExcel();
+			});
+			
 		    //eventos por defecto			    
 			//historicoCostos.botonBuscar.trigger('click');
 		    historicoCostos.initBlockUI();
@@ -223,6 +227,7 @@ var historicoCostos= {
 				
 				//mostramos el boton de exportar a PDF
 				$('#exportarPdf').css('display','');
+				$('#exportarExcel').css('display','');
 			}
 			
 		},
@@ -248,6 +253,10 @@ var historicoCostos= {
 				 } catch (e) {
 		             //alert('22 ' + e);
 		         }
+		},
+		
+		exportarExcel : function(){
+			location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';  
 		},
 		
 		//DIALOGOS
