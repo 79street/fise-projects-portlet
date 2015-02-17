@@ -193,13 +193,13 @@ $(document).ready(function () {
 		</p>	
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-confirm-eliminar" title="Mensaje de Confirmaci&oacute;n">
+	<%-- <div id="<portlet:namespace/>dialog-confirm-eliminar" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>
 			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content-eliminar">¿Está seguro?</label>
 		</p>
-	</div>
+	</div> --%>
 	
 	<!-- DIALOGO PARA ALERTAR DE VALIDACION -->
 	
