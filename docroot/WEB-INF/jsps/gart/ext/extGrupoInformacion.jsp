@@ -433,6 +433,8 @@ var fiseGrupoInformacion= {
 		//Funcion para Grabar nuevo registro
 		<portlet:namespace/>guardarGrupoInformacion: function(){
 			if (fiseGrupoInformacion.validarFormulario()){
+				var valorMensual = document.getElementById('rbtMensual').checked;
+				var valorBienal = document.getElementById('rbtBienal').checked;
 				$.blockUI({ message: fiseGrupoInformacion.mensajeGuardando});
 				 jQuery.ajax({
 					 url: fiseGrupoInformacion.urlGrabar+'&'+fiseGrupoInformacion.formCommand.serialize(),
@@ -454,7 +456,12 @@ var fiseGrupoInformacion= {
 							$('#<portlet:namespace/>guardarGrupoInf').css('display','none');
 							$('#<portlet:namespace/>actualizarGrupoInf').css('display','block');
 							
-						}else if(data.resultado == "ACTIVO"){								
+						}else if(data.resultado == "ACTIVO" && valorMensual){								
+							var addhtmInfo='Ya existe un Grupo de Información Mensual con Año, Mes Declarado y en estado Activo.';					
+							fiseGrupoInformacion.dialogInfoContent.html(addhtmInfo);
+							fiseGrupoInformacion.dialogInfo.dialog("open");											
+							fiseGrupoInformacion.initBlockUI();
+						}else if(data.resultado == "ACTIVO" && valorBienal){								
 							var addhtmInfo='Ya existe un Grupo de Información Bienal con estado Activo.';					
 							fiseGrupoInformacion.dialogInfoContent.html(addhtmInfo);
 							fiseGrupoInformacion.dialogInfo.dialog("open");											
@@ -478,6 +485,8 @@ var fiseGrupoInformacion= {
 		//Funcion para actualizar un registro
 		<portlet:namespace/>actualizarGrupoInformacion : function(){
 			if (fiseGrupoInformacion.validarFormulario()){
+				var valorMensual = document.getElementById('rbtMensual').checked;
+				var valorBienal = document.getElementById('rbtBienal').checked;
 				$.blockUI({ message: fiseGrupoInformacion.mensajeActualizando});
 				 jQuery.ajax({
 					 url: fiseGrupoInformacion.urlActualizar+'&'+fiseGrupoInformacion.formCommand.serialize(),
@@ -493,7 +502,12 @@ var fiseGrupoInformacion= {
 							fiseGrupoInformacion.dialogMessageContent.html(addhtml2);
 							fiseGrupoInformacion.dialogMessage.dialog("open");						
 							fiseGrupoInformacion.initBlockUI();								
-						}else if(data.resultado == "ACTIVO"){								
+						}else if(data.resultado == "ACTIVO" && valorMensual){								
+							var addhtmInfo='Ya existe un Grupo de Información Mensual con Año, Mes Declarado y en estado Activo.';					
+							fiseGrupoInformacion.dialogInfoContent.html(addhtmInfo);
+							fiseGrupoInformacion.dialogInfo.dialog("open");											
+							fiseGrupoInformacion.initBlockUI();
+						}else if(data.resultado == "ACTIVO" && valorBienal){								
 							var addhtmInfo='Ya existe un Grupo de Información Bienal con estado Activo.';					
 							fiseGrupoInformacion.dialogInfoContent.html(addhtmInfo);
 							fiseGrupoInformacion.dialogInfo.dialog("open");											
