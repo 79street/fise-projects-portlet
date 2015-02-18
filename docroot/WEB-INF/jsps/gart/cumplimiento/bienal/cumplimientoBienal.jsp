@@ -206,7 +206,7 @@ function initDialogs(){
 											<td>
 											    <select id="<portlet:namespace/>etapa" name="<portlet:namespace/>etapa" class="select" style="width:150px;" >						   																							
 													<option value="SOLICITUD">SOLICITUD</option>
-													<option value="LEV.OBS">LEV.OBS</option>
+													<option value="LEV.OBS">LEVANTAMIENTO OBSERVACIONES</option>
 													<option value="ESTABLECIDO">ESTABLECIDO</option>													
 													<option value="RECONSIDERACION">RECONSIDERACION</option>		
 												</select>	
