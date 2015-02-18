@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -2175,7 +2176,7 @@ public class Formato12DGartController {
 									}
 									//COSTO UNITARIO
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitario.getCellType()  ){
-										detalleBean.setCostoUnitario(new BigDecimal(celdaCostoUnitario.getNumericCellValue()));
+										detalleBean.setCostoUnitario(new BigDecimal(celdaCostoUnitario.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitario.getCellType()  ){
 										detalleBean.setCostoUnitario(new BigDecimal(0.00));
 									}else{
@@ -2589,7 +2590,7 @@ public class Formato12DGartController {
 									}
 									//COSTO UNITARIO
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaCostoUnitario.getCellType()  ){
-										detalleBean.setCostoUnitario(new BigDecimal(celdaCostoUnitario.getNumericCellValue()));
+										detalleBean.setCostoUnitario(new BigDecimal(celdaCostoUnitario.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCostoUnitario.getCellType()  ){
 										detalleBean.setCostoUnitario(new BigDecimal(0.00));
 									}else{

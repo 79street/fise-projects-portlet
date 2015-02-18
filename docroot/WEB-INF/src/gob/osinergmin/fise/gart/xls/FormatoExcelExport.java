@@ -33,6 +33,7 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.hssf.util.HSSFColor;
 
 public class FormatoExcelExport {
@@ -3119,24 +3120,47 @@ public class FormatoExcelExport {
 
 			//HSSFRow row = _xlsSheet.createRow(iRow);
 
-			HSSFRow segundaFila = _xlsSheet.createRow(0);
-			segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+			HSSFRow quintaFila = _xlsSheet.createRow(5);
+			quintaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
 
-			HSSFCell a1 = segundaFila.createCell(1);
+			HSSFCell a1 = quintaFila.createCell(1);
 			a1.setCellValue(new HSSFRichTextString("Empresa"));
 			a1.setCellStyle(headerCellStyle);
 			
-			HSSFCell a2 = segundaFila.createCell(2);
+			HSSFCell a2 = quintaFila.createCell(2);
 			a2.setCellValue(new HSSFRichTextString("Costo Unitario"));
 			a2.setCellStyle(headerCellStyle);
 			
-
+			boolean primero=false;
 			if( listaVariacion!=null && listaVariacion.size()>0 ){
 				for( int i=0;i<listaVariacion.size();i++ ){
 					
 					VariacionCostosBean var = (VariacionCostosBean) listaVariacion.get(i);
 					
-					HSSFRow fila = _xlsSheet.createRow(i+1);
+					if(!primero){
+						
+						HSSFRow titulo1 = _xlsSheet.createRow(1);//titulo1
+						_xlsSheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 7));
+						HSSFCell at1 = titulo1.createCell(1);
+						at1.setCellValue(new HSSFRichTextString(var.getTitulo1()));
+						//at1.setCellStyle(dateCellStyle);
+						
+						HSSFRow titulo2 = _xlsSheet.createRow(2);//titulo2
+						_xlsSheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 7));
+						HSSFCell at2 = titulo2.createCell(1);
+						at2.setCellValue(new HSSFRichTextString(var.getTitulo2()));
+						//at2.setCellStyle(dateCellStyle);
+						
+						HSSFRow titulo3 = _xlsSheet.createRow(3);//titulo3
+						_xlsSheet.addMergedRegion(new CellRangeAddress(3, 3, 1, 7));
+						HSSFCell at3 = titulo3.createCell(1);
+						at3.setCellValue(new HSSFRichTextString(var.getTitulo3()));
+						//at3.setCellStyle(dateCellStyle);
+						
+						primero=true;
+					}
+					
+					HSSFRow fila = _xlsSheet.createRow(i+6);
 					HSSFCell ax1 = fila.createCell(1);
 					ax1.setCellValue(new HSSFRichTextString(var.getCodEmpresa()));
 					ax1.setCellStyle(dateCellStyle);
@@ -3215,24 +3239,51 @@ public class FormatoExcelExport {
 
 					//HSSFRow row = _xlsSheet.createRow(iRow);
 
-					HSSFRow segundaFila = _xlsSheet.createRow(0);
-					segundaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+					HSSFRow cuartaFila = _xlsSheet.createRow(4);
+					cuartaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
 
-					HSSFCell a1 = segundaFila.createCell(1);
-					a1.setCellValue(new HSSFRichTextString("Empresa"));
+					HSSFCell a1 = cuartaFila.createCell(1);
+					a1.setCellValue(new HSSFRichTextString("Periodo"));
 					a1.setCellStyle(headerCellStyle);
 					
-					HSSFCell a2 = segundaFila.createCell(2);
-					a2.setCellValue(new HSSFRichTextString("Costo Unitario"));
+					HSSFCell a2 = cuartaFila.createCell(2);
+					//a2.setCellValue(new HSSFRichTextString("Costo Unitario"));
 					a2.setCellStyle(headerCellStyle);
 					
 
+					boolean primero = false;
+					
 					if( listaHistorico!=null && listaHistorico.size()>0 ){
 						for( int i=0;i<listaHistorico.size();i++ ){
 							
 							HistoricoCostosBean hist = (HistoricoCostosBean) listaHistorico.get(i);
 							
-							HSSFRow fila = _xlsSheet.createRow(i+1);
+							if(!primero){
+								
+								HSSFRow titulo1 = _xlsSheet.createRow(1);//titulo1
+								_xlsSheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 4));
+								HSSFCell at1 = titulo1.createCell(1);
+								at1.setCellValue(new HSSFRichTextString(hist.getTitulo1()));
+								//at1.setCellStyle(dateCellStyle);
+								
+								HSSFRow titulo2 = _xlsSheet.createRow(2);//titulo2
+								_xlsSheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 4));
+								HSSFCell at2 = titulo2.createCell(1);
+								at2.setCellValue(new HSSFRichTextString(hist.getTitulo2()));
+								//at2.setCellStyle(dateCellStyle);
+								
+								//seteamos el nombre de la primera columna
+								if( FiseConstants.TIPO_FORMATO_12A.equals(hist.getFormato()) ){
+									a2.setCellValue(new HSSFRichTextString("Costo Unitario"));
+								}else if( FiseConstants.TIPO_FORMATO_12B.equals(hist.getFormato()) ){
+									a2.setCellValue(new HSSFRichTextString("Costo Promedio"));
+								}
+								
+								primero=true;
+							}
+							
+							
+							HSSFRow fila = _xlsSheet.createRow(i+5);
 							HSSFCell ax1 = fila.createCell(1);
 							ax1.setCellValue(new HSSFRichTextString(hist.getPeriodo()));
 							ax1.setCellStyle(dateCellStyle);

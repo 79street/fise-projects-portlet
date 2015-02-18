@@ -381,6 +381,11 @@ public class Formato12BGartController {
 			id.setMesEjecucionGasto(mesEjec != null ? Integer.valueOf(mesEjec) : null);
 			id.setMesPresentacion(mes != null ? Integer.valueOf(mes) : null);
 			FiseFormato12BC cabeceraBean = formatoService.getFormatoCabeceraById(id);
+			
+			//
+			String flagOper = commonService.obtenerEstadoProceso(id.getCodEmpresa(),FiseConstants.TIPO_FORMATO_12B,id.getAnoPresentacion(),id.getMesPresentacion(),id.getEtapa());
+			command.setDescEstado(flagOper);
+			
 			command = Formato12BGartCommand.toCommandCabecera(cabeceraBean,command);
 			List<FiseFormato12BD> lstFiseDetalle = formatoService.getLstFormatoDetalle(id);
 			command = Formato12BGartCommand.toCommandDetalle(lstFiseDetalle, command);
@@ -480,10 +485,10 @@ public class Formato12BGartController {
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anoEjecucion, mesEjecucion, etapaEdit);
 		}else if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
-			fileEntry =fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+			fileEntry =fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, anoEjecucion, mesEjecucion, etapaNew);
 		}else if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
-			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+			fileEntry=fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anoEjecucion, mesEjecucion, etapaEdit);
 		}
 		}catch(FileMimeTypeException ex){
@@ -502,7 +507,7 @@ public class Formato12BGartController {
 			response.setRenderParameter("tipoOperacion", FiseConstants.UPDATE+"");
 
 			response.setRenderParameter("codEmpresa", formatoMensaje.getFiseFormato12BC().getId().getCodEmpresa());
-			response.setRenderParameter("anioPresentacion", ""+formatoMensaje.getFiseFormato12BC().getId().getAnoPresentacion());
+			response.setRenderParameter("anoPresentacion", ""+formatoMensaje.getFiseFormato12BC().getId().getAnoPresentacion());
 			response.setRenderParameter("mesPresentacion", ""+formatoMensaje.getFiseFormato12BC().getId().getMesPresentacion());
 			response.setRenderParameter("etapa", formatoMensaje.getFiseFormato12BC().getId().getEtapa());
 			response.setRenderParameter("anoEjecucionGasto", ""+formatoMensaje.getFiseFormato12BC().getId().getAnoEjecucionGasto());
@@ -513,10 +518,10 @@ public class Formato12BGartController {
 			
 			if((""+FiseConstants.ADD).equals(tipoOperacion)){
 		
-				response.setRenderParameter("action", "nuevoFormato");
+				response.setRenderParameter("action", "newFormato");
 				response.setRenderParameter("tipoOperacion", FiseConstants.ADD+"");
 				response.setRenderParameter("codEmpresa", codEmpresaNew);
-				response.setRenderParameter("anioPresentacion", anioPresNew);
+				response.setRenderParameter("anoPresentacion", anioPresNew);
 				response.setRenderParameter("mesPresentacion", mesPresNew);
 				response.setRenderParameter("etapa", etapaNew);
 				response.setRenderParameter("anoEjecucionGasto", anoEjecucion);
@@ -527,7 +532,7 @@ public class Formato12BGartController {
 				response.setRenderParameter("action", "viewFormato");
 				response.setRenderParameter("tipoOperacion", FiseConstants.UPDATE+"");
 				response.setRenderParameter("codEmpresa", codEmpresaEdit);
-				response.setRenderParameter("anioPresentacion", anioPresEdit);
+				response.setRenderParameter("anoPresentacion", anioPresEdit);
 				response.setRenderParameter("mesPresentacion", mesPresEdit);
 				response.setRenderParameter("etapa", etapaEdit);
 				response.setRenderParameter("anoEjecucionGasto", anoEjecucion);
@@ -1294,7 +1299,7 @@ public class Formato12BGartController {
 				int posicionTotalActivExtr = campoService.obtenerPosicionFinalCampo(listaCampo, FiseConstants.NOMBRE_TOTAL_ACTIVIDADES_EXTRAORD_F12B);
 				
 				String sCurrentLine;
-				is=uploadPortletRequest.getFileAsStream("archivoTxt");
+				is=uploadPortletRequest.getFileAsStream("archivoExcel");
 				
 				String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(anioPresEdit), Long.parseLong(mesPresEdit), codEmpresaEdit, FiseConstants.TIPO_FORMATO_12B);
 				if( nombreIdeal.trim().equals(archivo.getDescription().trim()) ){
@@ -1401,7 +1406,7 @@ public class Formato12BGartController {
 									String nroValesRep = s.substring(posicionTotalImpVales, posicionNroValesRep).trim();
 									String nroValesEntr = s.substring(posicionTotalRepVales, posicionNroValesEntr).trim();
 									String nroValesFis = s.substring(posicionTotalEntrVales, posicionNroValesFis).trim();
-									String nroValesDig = s.substring(posicionTotalCanjeValeFis, posicionNroValesFis).trim();
+									String nroValesDig = s.substring(posicionTotalCanjeValeFis, posicionNroValesDig).trim();
 									String nroAten = s.substring(posicionTotalCanjeValeDig, posicionNroAten).trim();
 									String totalGestAdm = s.substring(posicionTotalAten, posicionTotalGestAdm).trim();
 									String totalDesplPers = s.substring(posicionTotalGestAdm, posicionTotalDesplPers).trim();
@@ -2537,6 +2542,10 @@ public class Formato12BGartController {
 		id.setMesEjecucionGasto(command.getMesEjecucionGasto());
 		id.setMesPresentacion(command.getMesPresentacion() != null ? Integer.valueOf(command.getMesPresentacion()) : null);
 		FiseFormato12BC cabeceraBean = formatoService.getFormatoCabeceraById(id);
+		
+		String flagOper = commonService.obtenerEstadoProceso(id.getCodEmpresa(),FiseConstants.TIPO_FORMATO_12B,id.getAnoPresentacion(),id.getMesPresentacion(),id.getEtapa());
+		command.setDescEstado(flagOper);
+		
 		command = Formato12BGartCommand.toCommandCabecera(cabeceraBean,command);
 		List<FiseFormato12BD> lstFiseDetalle = formatoService.getLstFormatoDetalle(id);
 		command = Formato12BGartCommand.toCommandDetalle(lstFiseDetalle, command);

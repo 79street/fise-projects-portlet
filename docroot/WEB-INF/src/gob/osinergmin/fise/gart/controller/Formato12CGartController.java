@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -2194,7 +2195,7 @@ public class Formato12CGartController {
 									}
 									//ALIMENTACION
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaAlimentacion.getCellType()  ){
-										detalleBean.setMontoAlimentacion(new BigDecimal(celdaAlimentacion.getNumericCellValue()));
+										detalleBean.setMontoAlimentacion(new BigDecimal(celdaAlimentacion.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaAlimentacion.getCellType()  ){
 										detalleBean.setMontoAlimentacion(new BigDecimal(0.00));
 									}else{
@@ -2204,7 +2205,7 @@ public class Formato12CGartController {
 									}
 									//ALOJAMIENTO
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaAlojamiento.getCellType()  ){
-										detalleBean.setMontoAlojamiento(new BigDecimal(celdaAlojamiento.getNumericCellValue()));
+										detalleBean.setMontoAlojamiento(new BigDecimal(celdaAlojamiento.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaAlojamiento.getCellType()  ){
 										detalleBean.setMontoAlojamiento(new BigDecimal(0.00));
 									}else{
@@ -2214,7 +2215,7 @@ public class Formato12CGartController {
 									}
 									//MOVILIDAD
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaMovilidad.getCellType()  ){
-										detalleBean.setMontoMovilidad(new BigDecimal(celdaMovilidad.getNumericCellValue()));
+										detalleBean.setMontoMovilidad(new BigDecimal(celdaMovilidad.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaMovilidad.getCellType()  ){
 										detalleBean.setMontoMovilidad(new BigDecimal(0.00));
 									}else{
@@ -2611,7 +2612,7 @@ public class Formato12CGartController {
 									}
 									//ALIMENTACION
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaAlimentacion.getCellType()  ){
-										detalleBean.setMontoAlimentacion(new BigDecimal(celdaAlimentacion.getNumericCellValue()));
+										detalleBean.setMontoAlimentacion(new BigDecimal(celdaAlimentacion.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaAlimentacion.getCellType()  ){
 										detalleBean.setMontoAlimentacion(new BigDecimal(0.00));
 									}else{
@@ -2621,7 +2622,7 @@ public class Formato12CGartController {
 									}
 									//ALOJAMIENTO
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaAlojamiento.getCellType()  ){
-										detalleBean.setMontoAlojamiento(new BigDecimal(celdaAlojamiento.getNumericCellValue()));
+										detalleBean.setMontoAlojamiento(new BigDecimal(celdaAlojamiento.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaAlojamiento.getCellType()  ){
 										detalleBean.setMontoAlojamiento(new BigDecimal(0.00));
 									}else{
@@ -2631,7 +2632,7 @@ public class Formato12CGartController {
 									}
 									//MOVILIDAD
 									if( HSSFCell.CELL_TYPE_NUMERIC == celdaMovilidad.getCellType()  ){
-										detalleBean.setMontoMovilidad(new BigDecimal(celdaMovilidad.getNumericCellValue()));
+										detalleBean.setMontoMovilidad(new BigDecimal(celdaMovilidad.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaMovilidad.getCellType()  ){
 										detalleBean.setMontoMovilidad(new BigDecimal(0.00));
 									}else{
