@@ -134,6 +134,7 @@ public class Formato12BGartController {
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
 	
 	Map<String, String> mapaErrores;
+	Map<String, String> mapaEtapa;
 	
 	private Formato12BGartCommand formato12BBusqueda;
 
@@ -177,6 +178,7 @@ public class Formato12BGartController {
 		model.addAttribute("esAdministrador", fiseUtil.esAdministrador(renderRequest));
 		
 		mapaErrores = fiseUtil.getMapaErrores();
+		mapaEtapa = fiseUtil.getMapaEtapa();
 
 		logger.info("admin1.1 busqueda:" + model.get("esAdministrador"));
 
@@ -2975,7 +2977,7 @@ public class Formato12BGartController {
 		   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 		  //add
 		   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA,formato.getAdmEmpresa().getDscCortaEmpresa() );
-		   	mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
+		   	mapa.put(FiseConstants.PARAM_ETAPA, mapaEtapa.get(formato.getId().getEtapa()));
 		   	
 		   	session.setAttribute("mapa", mapa);
 		    //
@@ -3101,7 +3103,7 @@ public class Formato12BGartController {
 						}else{
 							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 						}
-						mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
+						mapa.put(FiseConstants.PARAM_ETAPA, mapaEtapa.get(formato.getId().getEtapa()));
 		    	   }
 		    	   
 		    	   

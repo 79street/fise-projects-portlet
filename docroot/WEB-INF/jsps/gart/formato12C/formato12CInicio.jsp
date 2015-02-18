@@ -98,9 +98,9 @@ $(document).ready(function () {
 										<tr>
 											<td><output>Etapa:</output></td>
 											<td colspan="7">
-												<form:select path="etapaB" cssClass="select" cssStyle="width: 140px;">
+												<form:select path="etapaB" cssClass="select" cssStyle="width: 220px;">
 													<form:option value="SOLICITUD">SOLICITUD</form:option>
-													<form:option value="LEV.OBS">LEV.OBS</form:option>													
+													<form:option value="LEV.OBS">LEVANTAMIENTO OBSERVACIONES</form:option>													
 													<form:option value="RECONOCIDO">RECONOCIDO</form:option>
 													<form:option value="RECONSIDERACION">RECONSIDERACION</form:option>
 												</form:select>

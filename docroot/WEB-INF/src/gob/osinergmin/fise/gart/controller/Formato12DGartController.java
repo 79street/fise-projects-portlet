@@ -127,6 +127,8 @@ public class Formato12DGartController {
 	Map<String, String> mapaTipoGasto;
 	Map<String, String> mapaUbigeo;
 	
+	Map<String, String> mapaEtapa;
+	
 	Formato12DCBean beanBusqueda;
 	
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
@@ -183,6 +185,8 @@ public class Formato12DGartController {
 		mapaTipoGasto = fiseUtil.getMapTipoGasto();
 		mapaTipoDocumento = fiseUtil.getMapTipoDocumento();
 		mapaUbigeo = fiseUtil.getMapaUbigeo();
+		
+		mapaEtapa = fiseUtil.getMapaEtapa();
 
 		return "formato12DInicio";
 	}
@@ -1303,7 +1307,7 @@ public class Formato12DGartController {
 			mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones != null && !listaObservaciones.isEmpty()) ? listaObservaciones.size() : 0);
 			// add
 			mapa.put("DESC_EMPRESA", fiseUtil.getMapaEmpresa().get(codEmpresa));
-			mapa.put("ETAPA", etapa);
+			mapa.put("ETAPA", mapaEtapa.get(etapa));
 
 			session.setAttribute("mapa", mapa);
 			//
@@ -1420,7 +1424,7 @@ public class Formato12DGartController {
 						}else{
 							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 						}
-						mapa.put("ETAPA", formato.getId().getEtapa());
+						mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 					}
 
 					/** REPORTE FORMATO 12D */

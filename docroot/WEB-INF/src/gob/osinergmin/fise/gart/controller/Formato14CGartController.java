@@ -121,6 +121,8 @@ public class Formato14CGartController {
 	private List<MensajeErrorBean> listaObservaciones;
 	private Map<Long, String> mapaZonaBenef;
 	
+	Map<String, String> mapaEtapa;
+	
 	
 	@ModelAttribute("formato14CBean")
     public Formato14CBean listFiseFormato14CC() {
@@ -198,6 +200,8 @@ public class Formato14CGartController {
     		mapaEmpresa = fiseUtil.getMapaEmpresa();  			
     		mapaErrores = fiseUtil.getMapaErrores();
     		mapaZonaBenef = fiseUtil.getMapaZonaBenef();
+    		
+    		mapaEtapa = fiseUtil.getMapaEtapa();
     		
     		model.addAttribute("model", f);
     		
@@ -993,7 +997,7 @@ public class Formato14CGartController {
 		   	mapa.put(FiseConstants.PARAM_NOMBRE_FORMATO, descripcionFormato);
 		   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 		   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(f.getCodEmpresa().length()==3?f.getCodEmpresa()+" ": f.getCodEmpresa()));
-		   	mapa.put(FiseConstants.PARAM_ETAPA, f.getEtapa());  	 	
+		   	mapa.put(FiseConstants.PARAM_ETAPA, mapaEtapa.get(f.getEtapa()));  	 	
 		   	
 		   	mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (anioInicioVigencia!=null && !anioInicioVigencia.equals("")) ?Long.parseLong(anioInicioVigencia):0);
 			mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVigencia!=null && !anioFinVigencia.equals(""))?Long.parseLong(anioFinVigencia):0);
@@ -1127,7 +1131,7 @@ public class Formato14CGartController {
 						}else{
 							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 						}
-		     		   mapa.put("ETAPA", formato.getId().getEtapa());
+		     		   mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 		 			}	        	
 			        /**REPORTE FORMATO 14C*/
 			       nombreReporte = "formato14C";

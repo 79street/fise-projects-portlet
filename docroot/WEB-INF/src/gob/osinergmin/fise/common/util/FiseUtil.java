@@ -1015,6 +1015,17 @@ public class FiseUtil {
 		return mapaEtapaEjecucion;
 	}
 	
+	public Map<String, String> getMapaEtapa(){
+		Map<String, String> mapaEtapa = new HashMap<String, String>();
+		mapaEtapa.put(FiseConstants.ETAPA_SOLICITUD, FiseConstants.ETAPA_SOLICITUD_DESC);
+		mapaEtapa.put(FiseConstants.ETAPA_LEVOBS, FiseConstants.ETAPA_LEVOBS_DESC);
+		mapaEtapa.put(FiseConstants.ETAPA_RECONSIDERACION, FiseConstants.ETAPA_RECONSIDERACION_DESC);
+		mapaEtapa.put(FiseConstants.ETAPA_RECONOCIDO, FiseConstants.ETAPA_RECONOCIDO_DESC);
+		mapaEtapa.put(FiseConstants.ETAPA_ESTABLECIDO, FiseConstants.ETAPA_ESTABLECIDO_DESC);
+		mapaEtapa.put(FiseConstants.ETAPA_HISTORICO, FiseConstants.ETAPA_HISTORICO_DESC);
+		return mapaEtapa;
+	}
+	
 	public Map<String, String> getMapTipoGasto(){
 		List<FiseTipGasto> listaTipoGasto = tipGastoGartService.listarFiseTipGasto();
 		Map<String, String> mapaTipoGasto = new HashMap<String, String>();

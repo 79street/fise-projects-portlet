@@ -175,6 +175,7 @@ public class EnvioDefinitivoController {
 	private Map<String, String> mapaSectorTipico;
 	private Map<Long, String> mapaEtapaEjecucion;
 	
+	Map<String, String> mapaEtapa;
 	
 	private List<MensajeErrorBean> listaObs12A;
 	private List<MensajeErrorBean> listaObs12B;
@@ -214,6 +215,8 @@ public class EnvioDefinitivoController {
     		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
     		
     		mapaEtapaEjecucion = fiseUtil.getMapaEtapaEjecucion();
+    		
+    		mapaEtapa = fiseUtil.getMapaEtapa();
     		
     		model.addAttribute("model", n);
     		
@@ -667,7 +670,7 @@ public class EnvioDefinitivoController {
 	        		mapa.put("MSG_OBSERVACIONES", (listaObs12A!=null && !listaObs12A.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);	        		
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
-	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	     		    mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 	 			}//fin if map !=null    	
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
@@ -729,7 +732,7 @@ public class EnvioDefinitivoController {
 	        		mapa.put("MSG_OBSERVACIONES", (listaObs12B!=null && !listaObs12B.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);	        		
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
-	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	     		    mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 	 			}//fin if map !=null    	
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
@@ -787,7 +790,7 @@ public class EnvioDefinitivoController {
 	        		mapa.put("MSG_OBSERVACIONES", (listaObs12C!=null && !listaObs12C.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);	        		
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
-	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	     		    mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 	 			}//fin if map !=null    	
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
@@ -844,7 +847,7 @@ public class EnvioDefinitivoController {
 	        		mapa.put("MSG_OBSERVACIONES", (listaObs12D!=null && !listaObs12D.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);	        		
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());
-	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	     		    mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 	 			}//fin if map !=null    	
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
@@ -908,7 +911,7 @@ public class EnvioDefinitivoController {
 					mapa.put("ANO_FIN_VIGENCIA",formato.getAnoFinVigenciaDetalle());
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());	     		 
-	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	     		    mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 	 			}//fin if map !=null    	
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
@@ -970,7 +973,7 @@ public class EnvioDefinitivoController {
 	     		    mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());	     		   
-	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	     		    mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 	 			}//fin if map !=null    	
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
@@ -1032,7 +1035,7 @@ public class EnvioDefinitivoController {
 	     		    mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());	     		  
-	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	     		    mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 	 			}//fin if map !=null    	
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
@@ -1096,7 +1099,7 @@ public class EnvioDefinitivoController {
 	     		    mapa.put("ANO_FIN_VIGENCIA", formato.getId().getAnoFinVigencia());
 	     		    mapa.put("FECHA_REGISTRO", formato.getFechaCreacion());
 	     		    mapa.put("USUARIO_REGISTRO", formato.getUsuarioCreacion());	     		   
-	     		    mapa.put("ETAPA", formato.getId().getEtapa());
+	     		    mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 	 			}//fin if map !=null    	
 		    }//fin del if formato !=null			
 		} catch (Exception e) {
@@ -1125,7 +1128,7 @@ public class EnvioDefinitivoController {
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
 			mapa.put("USUARIO", usuario);
 			mapa.put("FECHA_ENVIO", FechaUtil.obtenerFechaActual());
-			mapa.put("ETAPA", etapa); 
+			mapa.put("ETAPA", mapaEtapa.get(etapa)); 
 			mapa.put("GRUPO_INFORMACION", grupoInf);  
 			String dirCheckedImage = rutaCheck;
 			String dirUncheckedImage = rutaUncheck;	
@@ -1357,7 +1360,7 @@ public class EnvioDefinitivoController {
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);
 			mapa.put("USUARIO", usuario);
 			mapa.put("FECHA_ENVIO", FechaUtil.obtenerFechaActual());
-			mapa.put("ETAPA", etapa); 
+			mapa.put("ETAPA", mapaEtapa.get(etapa)); 
 			mapa.put("GRUPO_INFORMACION", grupoInf);
 			//mapa.put("NRO_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
     		//mapa.put("MSG_OBSERVACIONES", (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
