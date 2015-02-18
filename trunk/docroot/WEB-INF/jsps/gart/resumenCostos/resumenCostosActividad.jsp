@@ -46,23 +46,12 @@ $(document).ready(function () {
 										<tr height="10px">
 											<td colspan="2"></td>
 										</tr>
-										<tr>
-										    <td style="width: 250px;"><output>Periodicidad:</output></td>	 										
-										    <td>
-												<input type="radio"	name="optionFormato"
-												       id="rbtMensual" value="MENSUAL" checked="true"/>Mensual
-												 &nbsp;&nbsp;&nbsp;	
-												 
-												<input type="radio"	name="optionFormato"
-												       id="rbtBienal" value="BIENAL"/>Bienal	
-											</td>										
-																													
-										</tr>
+																				
 										<tr height="10px">
 											<td colspan="2"></td>
 										</tr>
 										<tr>										
-											<td><output>Grupo Información:</output></td>
+											<td style="width:220px"><output>Grupo Información:</output></td>
 											<td>												
 												 <form:select path="grupoInfBusq" cssClass="select" cssStyle="width: 200px;">															
 												    <form:options items="${resumenCostoActividadBean.listaGrupoInf}"  itemLabel="descripcion" itemValue="idGrupoInformacion"/>
@@ -77,6 +66,7 @@ $(document).ready(function () {
 											<td><output>Distribuidora Eléctrica:</output></td>
 											<td>
 												<form:select path="codEmpresaBusq" cssClass="select" cssStyle="width: 375px;">							
+													<form:option value="TODOS">-Todos-</form:option>
 													<form:options items="${resumenCostoActividadBean.listaEmpresas}"  itemLabel="dscEmpresa" itemValue="codEmpresa"/>
 												</form:select>
 											</td>
@@ -95,14 +85,21 @@ $(document).ready(function () {
 												 
 												<input type="radio"	name="formatoExportar"
 												       id="rbtExcel" value="EXCEL" />EXCEL	
-											</td>
+											</td>						
+																																	
+										</tr>
+										
+										<tr height="10px">
+											<td colspan="2"></td>
+										</tr>	
+										
+										<tr>
+										   <td></td>												
 											<td>
-											<input name="<portlet:namespace/>btnGenerarF14AB"
+											   <input name="<portlet:namespace/>btnGenerarF14AB"
 														 id="<portlet:namespace/>btnGenerarF14AB" type="button"
 														 class="net-button-small" value="Generar" style="aling:center" />
-											
-											</td>
-																																	
+											</td>																																																
 										</tr>
 										
 										<tr height="10px">
