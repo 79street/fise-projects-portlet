@@ -789,8 +789,10 @@ var periodoEnvio= {
 				periodoEnvio.f_anoIniVigencia.attr("disabled",true);
 				periodoEnvio.f_anoFinVigencia.attr("disabled",true);				
 				dwr.util.removeAllOptions("etapa");				
-				var dataEtapa = ['SOLICITUD', 'LEV.OBS', 'RECONSIDERACION', 'RECONOCIDO'];			
-				dwr.util.addOptions("etapa", dataEtapa);
+				//var dataEtapa = ['SOLICITUD', 'LEV.OBS', 'RECONSIDERACION', 'RECONOCIDO'];	
+				var descEtapa = [{codigoItem:'SOLICITUD', descripcionItem:'SOLICITUD'},{codigoItem:'LEV.OBS', descripcionItem:'LEVANTAMIENTO OBSERVACIONES'},{codigoItem:'RECONSIDERACION', descripcionItem:'RECONSIDERACION'},{codigoItem:'RECONOCIDO', descripcionItem:'RECONOCIDO'}];   
+				//dwr.util.addOptions("etapa", dataEtapa);
+				dwr.util.addOptions("etapa", descEtapa,"codigoItem","descripcionItem");
 				document.getElementById('rbtMesSi').checked = true;
 			}else{
 				periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
@@ -798,8 +800,10 @@ var periodoEnvio= {
 			    periodoEnvio.f_anoIniVigencia.val(f.getFullYear()+1);
 				periodoEnvio.f_anoFinVigencia.val(f.getFullYear()+3);				
 				dwr.util.removeAllOptions("etapa");				
-				var dataEtapa = ['SOLICITUD', 'LEV.OBS', 'RECONSIDERACION', 'ESTABLECIDO'];			
-				dwr.util.addOptions("etapa", dataEtapa);
+				//var dataEtapa = ['SOLICITUD', 'LEV.OBS', 'RECONSIDERACION', 'ESTABLECIDO'];			
+				var descEtapa = [{codigoItem:'SOLICITUD', descripcionItem:'SOLICITUD'},{codigoItem:'LEV.OBS', descripcionItem:'LEVANTAMIENTO OBSERVACIONES'},{codigoItem:'RECONSIDERACION', descripcionItem:'RECONSIDERACION'},{codigoItem:'ESTABLECIDO', descripcionItem:'ESTABLECIDO'}];
+				//dwr.util.addOptions("etapa", dataEtapa);
+				dwr.util.addOptions("etapa", descEtapa,"codigoItem","descripcionItem");
 				document.getElementById('rbtMesNo').checked = true;				
 		   }
 		},

@@ -251,7 +251,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Etapa:</label>
 											   </td>
 											   <td>
-												<form:select path="etapa" cssClass="select" cssStyle="width: 140px;">																																								
+												<form:select path="etapa" cssClass="select" cssStyle="width: 220px;">																																								
 												</form:select>
 											   </td>
 											   
