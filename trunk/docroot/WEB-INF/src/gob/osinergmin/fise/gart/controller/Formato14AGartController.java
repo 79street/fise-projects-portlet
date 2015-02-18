@@ -112,6 +112,8 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 	List<MensajeErrorBean> listaObservaciones;
 	Map<Long, String> mapaZonaBenef;
 	
+	Map<String, String> mapaEtapa;
+	
 	Formato14ACBean beanBusqueda;
 	
 	@SuppressWarnings("unchecked")
@@ -206,6 +208,8 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 		
 		mapaErrores = fiseUtil.getMapaErrores();
 		mapaZonaBenef = fiseUtil.getMapaZonaBenef();
+		
+		mapaEtapa = fiseUtil.getMapaEtapa();
 		
 		if( listaError!=null && listaError.size()>0){
 			model.addAttribute("listaError", listaError);
@@ -2805,7 +2809,7 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response,
 		mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVigencia!=null && !anioFinVigencia.equals(""))?Long.parseLong(anioFinVigencia):0);
 	   	//add
 	   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4)) );
-	   	mapa.put(FiseConstants.PARAM_ETAPA, etapa);
+	   	mapa.put(FiseConstants.PARAM_ETAPA, mapaEtapa.get(etapa));
 	   	
 	   	session.setAttribute("mapa", mapa);
 	    //
@@ -2947,7 +2951,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 					}else{
 						mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 					}
-	    		   mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
+	    		   mapa.put(FiseConstants.PARAM_ETAPA, mapaEtapa.get(formato.getId().getEtapa()));
 	    	   }
 	    	   
 		        /**REPORTE FORMATO 14A*/

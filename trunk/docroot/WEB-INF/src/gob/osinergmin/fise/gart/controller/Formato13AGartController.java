@@ -137,6 +137,8 @@ public class Formato13AGartController {
 	Map<Long, String> mapaZonaBenef;
 	Map<String, String> mapaUbigeo;
 	
+	Map<String, String> mapaEtapa;
+	
 	private String nameEstado;
 	private String nameGrupo;
 	private String inicioVigencia;
@@ -189,6 +191,8 @@ public class Formato13AGartController {
 		
 		mapaZonaBenef = fiseUtil.getMapaZonaBenef();
 		mapaUbigeo = fiseUtil.getMapaUbigeo();
+		
+		mapaEtapa = fiseUtil.getMapaEtapa();
 
 		logger.info("admin1.1:" + model.get("esAdministrador"));
 
@@ -3329,7 +3333,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA, (anioFinVigencia!=null && !anioFinVigencia.equals(""))?Long.parseLong(anioFinVigencia):0);
 			// add
 			mapa.put("DESC_EMPRESA", fiseUtil.getMapaEmpresa().get(codEmpresa));
-			mapa.put("ETAPA", etapa);
+			mapa.put("ETAPA", mapaEtapa.get(etapa));
 
 			session.setAttribute("mapa", mapa);
 			//
@@ -3448,7 +3452,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 						}else{
 							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 						}
-						mapa.put("ETAPA", formato.getId().getEtapa());
+						mapa.put("ETAPA", mapaEtapa.get(formato.getId().getEtapa()));
 					}
 
 					/** REPORTE FORMATO 13A */

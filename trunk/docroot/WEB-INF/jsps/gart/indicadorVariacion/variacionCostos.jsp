@@ -100,10 +100,10 @@ $(document).ready(function () {
 										<tr>
 										   <td><output>Etapa:</output></td>											
 										    <td>
-												<form:select path="etapaBusq" cssClass="select" cssStyle="width: 200px;">
+												<form:select path="etapaBusq" cssClass="select" cssStyle="width: 220px;">
 													<form:option value="HISTORICO">HISTÓRICO</form:option>
 													<form:option value="SOLICITUD">SOLICITUD</form:option>
-													<form:option value="LEV.OBS">LEVANTAMIENTO DE OBSERVACIONES</form:option>
+													<form:option value="LEV.OBS">LEVANTAMIENTO OBSERVACIONES</form:option>
 													<form:option value="ESTABLECIDO">ESTABLECIDO</form:option>
 													
 												</form:select>

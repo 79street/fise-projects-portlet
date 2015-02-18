@@ -165,6 +165,8 @@ public class Formato12AGartController {
 	//private String flagMostrarPeriodoEjecucion;
 	private List<MensajeErrorBean> listaObservaciones;
 	
+	private Map<String, String> mapaEtapa;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping
 	public  String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse){
@@ -352,6 +354,8 @@ public class Formato12AGartController {
 			logger.info("idZona: "+zonaBenef.getIdZonaBenef()+" descZona: "+zonaBenef.getDescripcion());
 			mapaZonaBenef.put(zonaBenef.getIdZonaBenef(), zonaBenef.getDescripcion());
 		}
+		
+		mapaEtapa = fiseUtil.getMapaEtapa();
 		
 	}
 	
@@ -2445,7 +2449,7 @@ public class Formato12AGartController {
 		   	mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 		  //add
 		   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA, mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4)));
-		   	mapa.put(FiseConstants.PARAM_ETAPA, etapa);
+		   	mapa.put(FiseConstants.PARAM_ETAPA, mapaEtapa.get(etapa));
 		   	
 		   	session.setAttribute("mapa", mapa);
 		    //
@@ -2585,7 +2589,7 @@ public class Formato12AGartController {
 						}else{
 							mapa.put(FiseConstants.PARAM_CHECKED_OBSERVACION, dirUncheckedImage);
 						}
-					   mapa.put(FiseConstants.PARAM_ETAPA, formato.getId().getEtapa());
+					   mapa.put(FiseConstants.PARAM_ETAPA, mapaEtapa.get(formato.getId().getEtapa()));
 		    	      }
 		    	   
 			        /**REPORTE FORMATO 12A*/

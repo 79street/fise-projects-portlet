@@ -147,10 +147,10 @@
 													<output>Etapa:</output>
 												</td>
 												<td colspan="7">
-													<select id="s_etapa" name="s_etapa" style="width:140px;" class="select" >
+													<select id="s_etapa" name="s_etapa" style="width:220px;" class="select" >
 														<!-- <option value="">-Seleccione-</option> -->
 														<option value="SOLICITUD">SOLICITUD</option>
-														<option value="LEV.OBS">LEV.OBS</option>														
+														<option value="LEV.OBS">LEVANTAMIENTO OBSERVACIONES</option>														
 														<option value="RECONOCIDO">RECONOCIDO</option>
 														<option value="RECONSIDERACION">RECONSIDERACION</option>
 													</select>
