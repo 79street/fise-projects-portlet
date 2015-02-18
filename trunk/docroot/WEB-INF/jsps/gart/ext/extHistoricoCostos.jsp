@@ -125,6 +125,10 @@ var historicoCostos= {
 							//alert(data.cadena);
 							//historicoCostos.i_cadenaVariacion.val(data.cadena);
 							historicoCostos.plotearImagen(data.cadena, data.titulo, data.tituloEjeY);
+							
+							$('#<portlet:namespace/>titulo1-imagen').val(data.titulo1);
+							$('#<portlet:namespace/>titulo2-imagen').val(data.titulo2);
+							
 						}
 						historicoCostos.initBlockUI();
 					},error : function(){
@@ -161,10 +165,15 @@ var historicoCostos= {
 				var addhtmError='No hay información disponible para generar el gráfico';					
 				historicoCostos.dialogValidacionContent.html(addhtmError);
 				historicoCostos.dialogValidacion.dialog("open");
+				//
+				$('#<portlet:namespace/>titulo-imagen').html('');
 			}else{
+				
+				$('#<portlet:namespace/>titulo-imagen').html(titulo);
+				
 				var plot1 = $.jqplot('chkDispersionHid', eval(valor), {
 					 //seriesColors: ["#4177C9","#C94E41" ],
-					     title: 'Histórico de Costos: '+titulo,
+					     //--title: 'Histórico de Costos: '+titulo,
 					      //series:[{color:'#5FAB78'}],
 					      series:[ 
 					              {
@@ -248,7 +257,27 @@ var historicoCostos= {
 		                // alert('11 ' + e);
 		             }
 		             var doc = new jsPDF("l", "pt", [800, 500]);
-					doc.addImage(img, 'PNG',20,80);
+		             
+		             doc.setFontSize(10);
+			            
+		             //centramos los textos ingresados
+		             var largo1 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo1-imagen').val());
+		             var largo2 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo2-imagen').val());
+		             
+		             var tamFuente = doc.internal.getFontSize();
+		             var escala = doc.internal.scaleFactor;
+		             var largo = doc.internal.pageSize.width;
+		             
+		             var tam1 = largo1*tamFuente/escala;
+		             var x1= (largo-tam1)/2;
+		             var tam2 = largo2*tamFuente/escala;
+		             var x2= (largo-tam2)/2;
+		            
+		             doc.text(x1, 40, $('#<portlet:namespace/>titulo1-imagen').val());
+		             doc.text(x2, 55, $('#<portlet:namespace/>titulo2-imagen').val());
+		             		             
+		             
+					doc.addImage(img, 'PNG',20,90);
 					doc.save('historicoCostos.pdf');
 				 } catch (e) {
 		             //alert('22 ' + e);

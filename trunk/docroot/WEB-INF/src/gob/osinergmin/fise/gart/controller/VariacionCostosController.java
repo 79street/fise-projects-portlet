@@ -268,7 +268,18 @@ public class VariacionCostosController {
   			
   			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
   			
+  			String msgTitulo1 = tituloPlot1(formato);
+  			String msgTitulo2 = tituloPlot2(etapa);
+  			String msgTitulo3 = tituloPlot3(concepto);
+  			
   			if( listaCostos!=null && listaCostos.size()>0 ){
+  				
+  				for (VariacionCostosBean var : listaCostos) {
+					var.setTitulo1(msgTitulo1);
+					var.setTitulo2(msgTitulo2);
+					var.setTitulo3(msgTitulo3);
+				}
+  				
   				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VARIACION, FiseConstants.NOMBRE_EXCEL_VARIACION, FiseConstants.NOMBRE_HOJA_VARIACION, listaCostos);
   			}
   			
@@ -292,6 +303,11 @@ public class VariacionCostosController {
   			mensajeTitulo = tituloPlot(formato,concepto,etapa);
   			
   			jsonObj.put("titulo",mensajeTitulo);
+  			
+  			//anexamos el titulo en diferentes lineas
+  			jsonObj.put("titulo1",msgTitulo1);
+  			jsonObj.put("titulo2",msgTitulo2);
+  			jsonObj.put("titulo3",msgTitulo3);
   			
   			PrintWriter pw = response.getWriter();
 		    pw.write(jsonObj.toString());
@@ -383,14 +399,56 @@ public class VariacionCostosController {
 		
 		if( !FiseConstants.BLANCO.equals(concepto) ){
 			titulo = titulo + "<br/> "+mapaConceptos.get(concepto);
-			//titulo = titulo + "\n "+mapaConceptos.get(concepto);
 		}
+
+		return titulo;
+	}
+	
+	public String tituloPlot1(String formato){
+		String titulo = "";
 		
-		/*if(FiseConstants.TIPO_FORMATO_14A.equals(formato)){
-			titulo = titulo + "<br> Costos Estándares de Implementación";
+		String tituloF14A = "FORMATO FISE-14A: Costos Estándares de Implementación";
+		String tituloF14B = "FORMATO FISE-14B: Costos Estándares Operativos - Mensual";
+		
+		if(FiseConstants.TIPO_FORMATO_14A.equals(formato)){
+			titulo = titulo + tituloF14A;
 		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
-			titulo = titulo + "<br> Costos Estándares Operativos - Mensual";
-		}*/
+			titulo = titulo + tituloF14B;
+		}
+
+		return titulo;
+	}
+	
+	public String tituloPlot2(String etapa){
+		String titulo = "";
+
+		String titulo1="Variación de Costos Unitarios ";
+		String titulo2="respecto al promedio:";
+		
+		titulo = titulo + titulo1;
+		
+		if( !FiseConstants.BLANCO.equals(etapa) ){
+			if( FiseConstants.ETAPA_SOLICITUD.equals(etapa) ){
+				titulo = titulo + "Declarados "+titulo2;
+			}else if( FiseConstants.ETAPA_LEVOBS.equals(etapa) ){
+				titulo = titulo + "con Levantamiento de Observaciones "+titulo2;
+			}else if( FiseConstants.ETAPA_ESTABLECIDO.equals(etapa) ){
+				titulo = titulo + "Establecidos "+titulo2;
+			}else if( FiseConstants.ETAPA_HISTORICO.equals(etapa) ){
+				titulo = titulo + "Históricos "+titulo2;
+			}
+		}
+
+		return titulo;
+	}
+	
+	public String tituloPlot3(String concepto){
+		String titulo = "";
+		
+		if( !FiseConstants.BLANCO.equals(concepto) ){
+			titulo = titulo + mapaConceptos.get(concepto);
+		}
+
 		return titulo;
 	}
 	

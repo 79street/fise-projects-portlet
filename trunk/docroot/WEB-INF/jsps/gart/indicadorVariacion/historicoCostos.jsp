@@ -95,12 +95,16 @@ $(document).ready(function () {
 						<tr>
 							<td align="center" colspan="2">
 								<!-- nuevo div para mostrar la grafica -->
-								<div id="divDispersionHid" style="overflow: auto; width: 100%; height:400px; padding: 4px;">
-					            	<div id="chkDispersionHid" style="width:1000px; height:400px;">
+								<div id="divDispersionHid" style="overflow: auto; width: 100%; height:550px; padding: 4px;">
+									<label id="<portlet:namespace/>titulo-imagen" style="color: #666; font-family: 'Trebuchet MS',Arial,Helvetica,sans-serif; font-size: 1.2em;"></label>
+					            	<div id="chkDispersionHid" style="width:1000px; height:480px;">
 					            	</div>
 				           		</div>
+				           		
+				           		<input id="<portlet:namespace/>titulo1-imagen" style="display:none" />
+				           		<input id="<portlet:namespace/>titulo2-imagen" style="display:none" />
 								
-								<div id="chartImgDiv" style="display:none; direction:ltr; height:400px; width:1000px"></div>
+								<div id="chartImgDiv" style="display:none; direction:ltr; height:480px; width:1000px"></div>
 								
 								<div>
 								</div>

@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1284,7 +1285,7 @@ public class Formato12AGartController {
 							listaError.add(error);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalR.getCellType()  ){
-							formulario.setDesplPersonalR(new BigDecimal(despPersonalR.getNumericCellValue()));
+							formulario.setDesplPersonalR(new BigDecimal(despPersonalR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == despPersonalR.getCellType()  ){
 							formulario.setDesplPersonalR(new BigDecimal(0.00));
 						}else{
@@ -1297,7 +1298,7 @@ public class Formato12AGartController {
 							listaError.add(error);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordR.getCellType()  ){
-							formulario.setActivExtraordR(new BigDecimal(activExtraordR.getNumericCellValue()));
+							formulario.setActivExtraordR(new BigDecimal(activExtraordR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == activExtraordR.getCellType()  ){
 							formulario.setActivExtraordR(new BigDecimal(0.00));
 						}else{
@@ -1336,7 +1337,7 @@ public class Formato12AGartController {
 							listaError.add(error);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalP.getCellType()  ){
-							formulario.setDesplPersonalP(new BigDecimal(despPersonalP.getNumericCellValue()));
+							formulario.setDesplPersonalP(new BigDecimal(despPersonalP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == despPersonalP.getCellType()  ){
 							formulario.setDesplPersonalP(new BigDecimal(0.00));
 						}else{
@@ -1349,7 +1350,7 @@ public class Formato12AGartController {
 							listaError.add(error);
 						}
 						if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordP.getCellType()  ){
-							formulario.setActivExtraordP(new BigDecimal(activExtraordP.getNumericCellValue()));
+							formulario.setActivExtraordP(new BigDecimal(activExtraordP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == activExtraordP.getCellType()  ){
 							formulario.setActivExtraordP(new BigDecimal(0.00));
 						}else{
@@ -1389,7 +1390,7 @@ public class Formato12AGartController {
 								listaError.add(error);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalL.getCellType()  ){
-								formulario.setDesplPersonalL(new BigDecimal(despPersonalL.getNumericCellValue()));
+								formulario.setDesplPersonalL(new BigDecimal(despPersonalL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == despPersonalL.getCellType()  ){
 								formulario.setDesplPersonalL(new BigDecimal(0.00));
 							}else{
@@ -1402,7 +1403,7 @@ public class Formato12AGartController {
 								listaError.add(error);
 							}
 							if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordL.getCellType()  ){
-								formulario.setActivExtraordL(new BigDecimal(activExtraordL.getNumericCellValue()));
+								formulario.setActivExtraordL(new BigDecimal(activExtraordL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == activExtraordL.getCellType()  ){
 								formulario.setActivExtraordL(new BigDecimal(0.00));
 							}else{

@@ -211,6 +211,7 @@ public class Formato12BGartCommand implements Serializable {
 					command.setMesFin(busqueda.getMesFin());
 					command.setEtapaBusqueda(busqueda.getEtapaBusqueda());
 					command.setCodEmpresaBusqueda(busqueda.getCodEmpresaBusqueda()!=null?busqueda.getCodEmpresaBusqueda().trim():null);
+					command.setDescEstado(busqueda.getDescEstado());
 				}
 
 				command.setAnoEjecucionGasto(bean.getId().getAnoEjecucionGasto());

@@ -88,7 +88,17 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
   			List<HistoricoCostosBean> listaCostos =commonService.obtenerHistoricoCostosByCodempresaFormato(codEmpresa, formato);
   			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
   			
+  			String msgTitulo1 = tituloPlot1(codEmpresa);
+  			String msgTitulo2 = tituloPlot2(formato);
+  			
   			if( listaCostos!=null && listaCostos.size()>0 ){
+  				
+  				for (HistoricoCostosBean var : listaCostos) {
+					var.setTitulo1(msgTitulo1);
+					var.setTitulo2(msgTitulo2);
+					var.setFormato(formato);
+				}
+  				
   				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_HISTORICO, FiseConstants.NOMBRE_EXCEL_HISTORICO, FiseConstants.NOMBRE_HOJA_HISTORICO, listaCostos);
   			}
   			
@@ -105,6 +115,10 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
   			
   			jsonObj.put("titulo",mensajeTitulo);
   			jsonObj.put("tituloEjeY",mensajeTituloY);
+  			
+  			//anexamos el titulo en diferentes lineas
+  			jsonObj.put("titulo1",msgTitulo1);
+  			jsonObj.put("titulo2",msgTitulo2);
   			
   			PrintWriter pw = response.getWriter();
 		    pw.write(jsonObj.toString());
@@ -159,15 +173,45 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
 	
 	public String tituloPlot(String codEmpresa, String formato){
 		String titulo = "";
+		
+		String titulo1="Histórico de Costos: ";
+		titulo = titulo + titulo1;
+		
 		if( "NAC".equals(codEmpresa) ){
-			titulo = "NACIONAL";
+			titulo = titulo + "NACIONAL";
 		}else{
-			titulo = mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4));
+			titulo = titulo + mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4));
 		}
 		if(FiseConstants.TIPO_FORMATO_12A.equals(formato)){
-			titulo = titulo + "<br> Costo Unitario de Implementación";
+			titulo = titulo + "<br/> Costo Unitario de Implementación";
 		}else if(FiseConstants.TIPO_FORMATO_12B.equals(formato)){
-			titulo = titulo + "<br> Costo Promedio de Operación";
+			titulo = titulo + "<br/> Costo Promedio de Operación";
+		}
+		return titulo;
+	}
+	
+	public String tituloPlot1(String codEmpresa){
+		String titulo = "";
+		
+		String titulo1="Histórico de Costos: ";
+		titulo = titulo + titulo1;
+		
+		if( "NAC".equals(codEmpresa) ){
+			titulo = titulo + "NACIONAL";
+		}else{
+			titulo = titulo + mapaEmpresa.get(FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4));
+		}
+
+		return titulo;
+	}
+	
+	public String tituloPlot2(String formato){
+		String titulo = "";
+		
+		if(FiseConstants.TIPO_FORMATO_12A.equals(formato)){
+			titulo = titulo + "Costo Unitario de Implementación";
+		}else if(FiseConstants.TIPO_FORMATO_12B.equals(formato)){
+			titulo = titulo + "Costo Promedio de Operación";
 		}
 		return titulo;
 	}
