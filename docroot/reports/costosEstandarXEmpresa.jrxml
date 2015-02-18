@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenCostoActividad" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.3310000000000282"/>
+	<property name="ireport.x" value="123"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TIPO_FORMATO" class="java.lang.String"/>
+	<parameter name="IMG" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="costUniAL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[costUniAL]]></fieldDescription>
+	</field>
+	<field name="costUniAP" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[costUniAP]]></fieldDescription>
+	</field>
+	<field name="costUniAR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[costUniAR]]></fieldDescription>
+	</field>
+	<field name="desCostoA" class="java.lang.String">
+		<fieldDescription><![CDATA[desCostoA]]></fieldDescription>
+	</field>
+	<field name="desCostoUnitA" class="java.lang.String">
+		<fieldDescription><![CDATA[desCostoUnitA]]></fieldDescription>
+	</field>
+	<field name="desEmpresa" class="java.lang.String">
+		<fieldDescription><![CDATA[desEmpresa]]></fieldDescription>
+	</field>
+	<field name="itemA" class="java.lang.String">
+		<fieldDescription><![CDATA[itemA]]></fieldDescription>
+	</field>
+	<field name="periodo" class="java.lang.String">
+		<fieldDescription><![CDATA[periodo]]></fieldDescription>
+	</field>
+	<field name="tipoFormato" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoFormato]]></fieldDescription>
+	</field>
+	<variable name="subTituloCabecera" class="java.lang.String">
+		<variableExpression><![CDATA[($F{tipoFormato}.equals("F14A"))?
+" de Implementación FISE-14A":
+" Operativas FISE-14B"]]></variableExpression>
+	</variable>
+	<variable name="TituloCabecera" class="java.lang.String">
+		<variableExpression><![CDATA["Costo Estándar de Actividades"+$V{subTituloCabecera}]]></variableExpression>
+	</variable>
+	<variable name="tiuloEmpresa" class="java.lang.String">
+		<variableExpression><![CDATA["Costos Estándar para " +$F{desEmpresa}]]></variableExpression>
+	</variable>
+	<group name="Distribuidora_Electrica">
+		<groupExpression><![CDATA[$F{desEmpresa}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField evaluationTime="Group" evaluationGroup="Distribuidora_Electrica">
+					<reportElement x="9" y="0" width="783" height="20" printWhenGroupChanges="Distribuidora_Electrica">
+						<printWhenExpression><![CDATA[$F{desEmpresa}]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{tiuloEmpresa}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="1"/>
+		</groupFooter>
+	</group>
+	<group name="Tipo_Formato">
+		<groupExpression><![CDATA[$F{tipoFormato}]]></groupExpression>
+		<groupHeader>
+			<band height="62">
+				<staticText>
+					<reportElement mode="Opaque" x="9" y="1" width="33" height="61" forecolor="#FFFFFF" backcolor="#006699"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Ítem]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="638" y="1" width="154" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Grupo de Beneficiarios Según Zona (S/.)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="638" y="30" width="53" height="32" forecolor="#FFFFFF" backcolor="#006699"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Rural]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="691" y="30" width="56" height="32" forecolor="#FFFFFF" backcolor="#006699"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Urbano Provincias]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="747" y="30" width="45" height="32" forecolor="#FFFFFF" backcolor="#006699"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Urbano Lima]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="Tipo_Formato">
+					<reportElement mode="Opaque" x="42" y="1" width="596" height="61" printWhenGroupChanges="Tipo_Formato" forecolor="#FFFFFF" backcolor="#006699"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{TituloCabecera}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="2"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="8" y="2" width="254" height="60"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="541" y="21" width="97" height="16"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement x="638" y="21" width="154" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="6" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="42" y="0" width="220" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{desCostoA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="0" width="376" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{desCostoUnitA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="0" width="34" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{itemA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="638" y="0" width="53" height="20"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{costUniAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="691" y="0" width="56" height="20"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{costUniAP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="747" y="0" width="45" height="20"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{costUniAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>
