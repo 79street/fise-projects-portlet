@@ -107,13 +107,15 @@ public class ResumenCostosActividadController {
 				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
 			}
 			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			//logger.info("lista empresas:  "+fiseUtil.getEmpresaxUsuario(request).size());
 			logger.info("grupo inf:  "+idGrupoInf);
-			logger.info("periocidad:  "+r.getOptionFormato());
+			logger.info("des grupo informacion:  "+r.getDesGrupoInf());
 			
 		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
 		    
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	   
@@ -126,7 +128,13 @@ public class ResumenCostosActividadController {
 		    String nombreReporte = "costosEstandarXEmpresa";   		    	
 		    String directorio = "/reports/" + nombreReporte + ".jasper";
 		    
-		    listaF14AB = resumenCostosService.buscarResumenCostoActividadF14AB(r.getCodEmpresaBusq(), idGrupoInf);    
+		    //para enviar lista primero verifico que sea TODOS
+		    if("TODOS".equals(r.getCodEmpresaBusq())){
+		    	r.setListaEmpresas(fiseUtil.getEmpresaxUsuario(request));
+		    }else{
+		    	r.setListaEmpresas(null);
+		    }
+		    listaF14AB = resumenCostosService.buscarResumenCostoActividadF14AB(r.getCodEmpresaBusq(), idGrupoInf,r.getListaEmpresas());    
 		    
 		    if(listaF14AB!=null && listaF14AB.size()>0){
 		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));
@@ -177,12 +185,13 @@ public class ResumenCostosActividadController {
 			}
 			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
 			logger.info("grupo inf:  "+idGrupoInf);
-			logger.info("periocidad:  "+r.getOptionFormato());
+			logger.info("des grupo informacion:  "+r.getDesGrupoInf());
 			
 		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
 		    
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	   
@@ -190,9 +199,15 @@ public class ResumenCostosActividadController {
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
 		    String tipoArchivo = "1";//exel		
 		    String nombreReporte = "costosEstandarXEmpresa"; //nombre del jasper
-		    String nombreArchivo ="RESUMEN_COSTO_ACTIVIDAD_F14AB";       
+		    String nombreArchivo ="RESUMEN_COSTO_ACTIVIDAD_F14AB";  
 		    
-		    listaF14AB = resumenCostosService.buscarResumenCostoActividadF14AB(r.getCodEmpresaBusq(), idGrupoInf);   
+		    //para enviar lista primero verifico que sea TODOS
+		    if("TODOS".equals(r.getCodEmpresaBusq())){
+		    	r.setListaEmpresas(fiseUtil.getEmpresaxUsuario(request));
+		    }else{
+		    	r.setListaEmpresas(null);
+		    }		    
+		    listaF14AB = resumenCostosService.buscarResumenCostoActividadF14AB(r.getCodEmpresaBusq(), idGrupoInf,r.getListaEmpresas());   
 		    
 		    if(listaF14AB!=null && listaF14AB.size()>0){
 		    	session.setAttribute("tipoFormato",tipoFormato);
