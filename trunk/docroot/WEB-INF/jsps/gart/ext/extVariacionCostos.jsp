@@ -311,14 +311,14 @@ var variacionCostos= {
 	             try {
 	                 var img = aaa.jqplotToImageElem();
 	             }catch(e){
-	                 //alert('eeee > ' + e);
+	            	 console.debug(e);
 	             }
 	             try {
 	                 if($('#chartImgDiv').children().length > 0){
 	                     $('#chartImgDiv').children().remove();
 	                 }
 	             } catch (e) {
-	                // alert('11 ' + e);
+	            	 console.debug(e);
 	             }
 	             var doc = new jsPDF("l", "pt", [800, 500]);
 	            
@@ -348,7 +348,7 @@ var variacionCostos= {
 				doc.addImage(img, 'PNG',20,100);
 				doc.save('variacionCostos.pdf');
 			 } catch (e) {
-	             //alert('22 ' + e);
+				 console.debug(e);
 	         }
 	},
 	

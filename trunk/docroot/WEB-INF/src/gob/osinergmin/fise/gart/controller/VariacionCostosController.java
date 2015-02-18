@@ -3,6 +3,7 @@ package gob.osinergmin.fise.gart.controller;
 import gob.osinergmin.fise.bean.VariacionCostosBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
+import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.util.FormatoUtil;
@@ -238,8 +239,15 @@ public class VariacionCostosController {
 			String concepto = bean.getConceptoBusq();
 			String etapa = bean.getEtapaBusq();
 			
+			String descripcionGrupo = "";
+			
 			if(FormatoUtil.isNotBlank(bean.getGrupoInfoBusq())){ 
 		    	idGrupo = new Long(idGrupoInfo);
+		    	//obtenemos la descripcion del grupo de informacion
+	  			FiseGrupoInformacion fiseGrupo = fiseGrupoInformacionService.obtenerGrupoInf(idGrupo);
+	  			if( fiseGrupo!=null ){
+	  				descripcionGrupo = fiseGrupo.getDescripcion();
+	  			}
 		    }
 			
 			String valorConceptoConcatenado = "";
@@ -268,7 +276,9 @@ public class VariacionCostosController {
   			
   			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
   			
-  			String msgTitulo1 = tituloPlot1(formato);
+  			
+  			
+  			String msgTitulo1 = tituloPlot1(formato,descripcionGrupo);
   			String msgTitulo2 = tituloPlot2(etapa);
   			String msgTitulo3 = tituloPlot3(concepto);
   			
@@ -300,7 +310,7 @@ public class VariacionCostosController {
   			jsonObj.put("promedio",promedio(listaCostos));
   			
   			String mensajeTitulo = "";
-  			mensajeTitulo = tituloPlot(formato,concepto,etapa);
+  			mensajeTitulo = tituloPlot(formato,concepto,etapa,descripcionGrupo);
   			
   			jsonObj.put("titulo",mensajeTitulo);
   			
@@ -369,7 +379,7 @@ public class VariacionCostosController {
 		return promedio;
 	}
 	
-	public String tituloPlot(String formato, String concepto, String etapa){
+	public String tituloPlot(String formato, String concepto, String etapa, String descripcionGrupo){
 		String titulo = "";
 		
 		String tituloF14A = "FORMATO FISE-14A: Costos Estándares de Implementación";
@@ -383,6 +393,11 @@ public class VariacionCostosController {
 		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
 			titulo = titulo + tituloF14B;
 		}
+		
+		if(!FiseConstants.BLANCO.equals(descripcionGrupo) ){
+			titulo = titulo + " ("+descripcionGrupo+")";
+		}
+		
 		titulo = titulo + "<br/> "+titulo1;
 		
 		if( !FiseConstants.BLANCO.equals(etapa) ){
@@ -404,7 +419,7 @@ public class VariacionCostosController {
 		return titulo;
 	}
 	
-	public String tituloPlot1(String formato){
+	public String tituloPlot1(String formato, String descripcionGrupo){
 		String titulo = "";
 		
 		String tituloF14A = "FORMATO FISE-14A: Costos Estándares de Implementación";
@@ -414,6 +429,10 @@ public class VariacionCostosController {
 			titulo = titulo + tituloF14A;
 		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
 			titulo = titulo + tituloF14B;
+		}
+		
+		if(!FiseConstants.BLANCO.equals(descripcionGrupo) ){
+			titulo = titulo + " ("+descripcionGrupo+")";
 		}
 
 		return titulo;

@@ -103,6 +103,7 @@ $(document).ready(function () {
 				           		
 				           		<input id="<portlet:namespace/>titulo1-imagen" style="display:none" />
 				           		<input id="<portlet:namespace/>titulo2-imagen" style="display:none" />
+				           		<input id="<portlet:namespace/>titulo3-imagen" style="display:none" />
 								
 								<div id="chartImgDiv" style="display:none; direction:ltr; height:480px; width:1000px"></div>
 								

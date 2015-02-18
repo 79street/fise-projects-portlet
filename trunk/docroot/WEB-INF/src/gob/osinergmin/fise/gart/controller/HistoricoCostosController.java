@@ -88,14 +88,16 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
   			List<HistoricoCostosBean> listaCostos =commonService.obtenerHistoricoCostosByCodempresaFormato(codEmpresa, formato);
   			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
   			
-  			String msgTitulo1 = tituloPlot1(codEmpresa);
-  			String msgTitulo2 = tituloPlot2(formato);
+  			String msgTitulo1 = tituloPlot1(formato);
+  			String msgTitulo2 = tituloPlot2(codEmpresa);
+  			String msgTitulo3 = tituloPlot3(formato);
   			
   			if( listaCostos!=null && listaCostos.size()>0 ){
   				
   				for (HistoricoCostosBean var : listaCostos) {
 					var.setTitulo1(msgTitulo1);
 					var.setTitulo2(msgTitulo2);
+					var.setTitulo3(msgTitulo3);
 					var.setFormato(formato);
 				}
   				
@@ -119,6 +121,7 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
   			//anexamos el titulo en diferentes lineas
   			jsonObj.put("titulo1",msgTitulo1);
   			jsonObj.put("titulo2",msgTitulo2);
+  			jsonObj.put("titulo3",msgTitulo3);
   			
   			PrintWriter pw = response.getWriter();
 		    pw.write(jsonObj.toString());
@@ -174,7 +177,16 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
 	public String tituloPlot(String codEmpresa, String formato){
 		String titulo = "";
 		
-		String titulo1="Histórico de Costos: ";
+		String tituloF12A = "FORMATO FISE-12A: Remisión de Gastos Operativos - Implementación";
+		String tituloF12B = "FORMATO FISE-12B: Remisión de Gastos Operativos - Mensual";
+		
+		if(FiseConstants.TIPO_FORMATO_12A.equals(formato)){
+			titulo = titulo + tituloF12A;
+		}else if(FiseConstants.TIPO_FORMATO_12B.equals(formato)){
+			titulo = titulo + tituloF12B;
+		}
+		
+		String titulo1="<br/> Histórico de Costos: ";
 		titulo = titulo + titulo1;
 		
 		if( "NAC".equals(codEmpresa) ){
@@ -190,7 +202,22 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
 		return titulo;
 	}
 	
-	public String tituloPlot1(String codEmpresa){
+	public String tituloPlot1(String formato){
+		String titulo = "";
+		
+		String tituloF12A = "FORMATO FISE-12A: Remisión de Gastos Operativos - Implementación";
+		String tituloF12B = "FORMATO FISE-12B: Remisión de Gastos Operativos - Mensual";
+		
+		if(FiseConstants.TIPO_FORMATO_12A.equals(formato)){
+			titulo = titulo + tituloF12A;
+		}else if(FiseConstants.TIPO_FORMATO_12B.equals(formato)){
+			titulo = titulo + tituloF12B;
+		}
+		
+		return titulo;
+	}
+	
+	public String tituloPlot2(String codEmpresa){
 		String titulo = "";
 		
 		String titulo1="Histórico de Costos: ";
@@ -205,7 +232,7 @@ Logger logger = Logger.getLogger(HistoricoCostosController.class);
 		return titulo;
 	}
 	
-	public String tituloPlot2(String formato){
+	public String tituloPlot3(String formato){
 		String titulo = "";
 		
 		if(FiseConstants.TIPO_FORMATO_12A.equals(formato)){
