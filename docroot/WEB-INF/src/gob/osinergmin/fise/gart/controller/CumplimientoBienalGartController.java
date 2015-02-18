@@ -1,6 +1,7 @@
 package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.CumplimientoReportBean;
+import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
@@ -43,6 +44,10 @@ public class CumplimientoBienalGartController {
 	AdmEmpresaGartService admEmpresaService;
 	
 	@Autowired
+	@Qualifier("fiseUtil")
+	FiseUtil fiseUtil;
+	
+	@Autowired
 	FormatoCumplimientoService formatoCumplimientoService;
 	
 	@Autowired
@@ -53,10 +58,15 @@ public class CumplimientoBienalGartController {
 	
 	private Map<Long,String> mapaMeses;
 	
+	Map<String, String> mapaEtapa;
+	
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse){		
 		try {
 			mapaMeses = FechaUtil.cargarMapaMeses();
+			
+			mapaEtapa = fiseUtil.getMapaEtapa();
+			
 			listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL,"TODOS");
 			model.addAttribute("listaGrupoInf", listaGrupoInf);
 		} catch (Exception e) {
@@ -107,7 +117,7 @@ public class CumplimientoBienalGartController {
 		    	Map<String, Object> mapa = new HashMap<String, Object>();
 		    	mapa.put(FiseConstants.PARAM_ANO_CUMPLI, anio);
 		    	mapa.put(FiseConstants.PARAM_MES_CUMPLI, mapaMeses.get(mes));
-		    	mapa.put(FiseConstants.PARAM_ETAPA_CUMPLI, etapa);
+		    	mapa.put(FiseConstants.PARAM_ETAPA_CUMPLI, mapaEtapa.get(etapa));
 		    	 mapa.put("GRUPO_INFORMACION", grupo.getDescripcion());
 		    	session.setAttribute("mapa", mapa);	
 		    	 jsonObj.put("resultado", "OK");	
