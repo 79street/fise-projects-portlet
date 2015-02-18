@@ -128,6 +128,7 @@ var historicoCostos= {
 							
 							$('#<portlet:namespace/>titulo1-imagen').val(data.titulo1);
 							$('#<portlet:namespace/>titulo2-imagen').val(data.titulo2);
+							$('#<portlet:namespace/>titulo3-imagen').val(data.titulo3);
 							
 						}
 						historicoCostos.initBlockUI();
@@ -247,14 +248,14 @@ var historicoCostos= {
 		             try {
 		                 var img = aaa.jqplotToImageElem();
 		             }catch(e){
-		                 //alert('eeee > ' + e);
+		            	 console.debug(e);
 		             }
 		             try {
 		                 if($('#chartImgDiv').children().length > 0){
 		                     $('#chartImgDiv').children().remove();
 		                 }
 		             } catch (e) {
-		                // alert('11 ' + e);
+		                console.debug(e);
 		             }
 		             var doc = new jsPDF("l", "pt", [800, 500]);
 		             
@@ -263,6 +264,7 @@ var historicoCostos= {
 		             //centramos los textos ingresados
 		             var largo1 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo1-imagen').val());
 		             var largo2 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo2-imagen').val());
+		             var largo3 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo3-imagen').val());
 		             
 		             var tamFuente = doc.internal.getFontSize();
 		             var escala = doc.internal.scaleFactor;
@@ -272,15 +274,18 @@ var historicoCostos= {
 		             var x1= (largo-tam1)/2;
 		             var tam2 = largo2*tamFuente/escala;
 		             var x2= (largo-tam2)/2;
+		             var tam3 = largo3*tamFuente/escala;
+		             var x3= (largo-tam3)/2;
 		            
 		             doc.text(x1, 40, $('#<portlet:namespace/>titulo1-imagen').val());
 		             doc.text(x2, 55, $('#<portlet:namespace/>titulo2-imagen').val());
+		             doc.text(x3, 70, $('#<portlet:namespace/>titulo3-imagen').val());
 		             		             
 		             
-					doc.addImage(img, 'PNG',20,90);
+					doc.addImage(img, 'PNG',20,100);
 					doc.save('historicoCostos.pdf');
 				 } catch (e) {
-		             //alert('22 ' + e);
+					 console.debug(e);
 		         }
 		},
 		
