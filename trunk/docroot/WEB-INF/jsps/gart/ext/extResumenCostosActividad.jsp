@@ -133,6 +133,7 @@ var resumenCostoActiv= {
 		//funcion para mostrar reporte de resumen de costos F14A		
 		mostrarReporteCostoF14AB : function(){
 			console.debug("entranado a  ver el reporte resumen costo F14AB");
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			if (resumenCostoActiv.validarBusqueda()){
 				$.blockUI({ message: resumenCostoActiv.mensajeReporte});
 				jQuery.ajax({
@@ -141,7 +142,8 @@ var resumenCostoActiv= {
 					dataType : 'json',
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCostoActiv.i_codEmpresaBusq.val(),
-						   <portlet:namespace />grupoInfBusq: resumenCostoActiv.i_grupoInfBusq.val()				  
+						   <portlet:namespace />grupoInfBusq: resumenCostoActiv.i_grupoInfBusq.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -171,6 +173,7 @@ var resumenCostoActiv= {
 		
 		//funcion para mostrar reporte de resumen de costos F14A		
 		mostrarReporteCostoF14ABExcel : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F14AB Excel");
 			if (resumenCostoActiv.validarBusqueda()){
 				$.blockUI({ message: resumenCostoActiv.mensajeReporte});
@@ -180,7 +183,8 @@ var resumenCostoActiv= {
 					dataType : 'json',
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCostoActiv.i_codEmpresaBusq.val(),
-						   <portlet:namespace />grupoInfBusq: resumenCostoActiv.i_grupoInfBusq.val()				  
+						   <portlet:namespace />grupoInfBusq: resumenCostoActiv.i_grupoInfBusq.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
