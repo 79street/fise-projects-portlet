@@ -225,6 +225,7 @@ var resumenCosto= {
 		},	
 		//funcion para mostrar reporte de resumen de costos F14A		
 		mostrarReporteCostoF14A : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F14A");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -234,7 +235,8 @@ var resumenCosto= {
 					dataType : 'json',
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
-						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val()				  
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -264,6 +266,7 @@ var resumenCosto= {
 		
 		//funcion para mostrar reporte de resumen de costos F14A		
 		mostrarReporteCostoF14AExcel : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F14A Excel");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -273,7 +276,8 @@ var resumenCosto= {
 					dataType : 'json',
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
-						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val()				  
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -302,6 +306,7 @@ var resumenCosto= {
 		
 		//funcion para mostrar reporte de resumen de costos F14B		
 		mostrarReporteCostoF14B : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F14B");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -312,7 +317,8 @@ var resumenCosto= {
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
 						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
-						   <portlet:namespace />optionZona: resumenCosto.i_cboZonas.val()
+						   <portlet:namespace />optionZona: resumenCosto.i_cboZonas.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -341,6 +347,7 @@ var resumenCosto= {
 		
 		//funcion para mostrar reporte de resumen de costos F14B excel		
 		mostrarReporteCostoF14BExcel : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F14B excel");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -351,7 +358,8 @@ var resumenCosto= {
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
 						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
-						   <portlet:namespace />optionZona: resumenCosto.i_cboZonas.val()
+						   <portlet:namespace />optionZona: resumenCosto.i_cboZonas.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -380,6 +388,7 @@ var resumenCosto= {
 		
 		//funcion para mostrar reporte de resumen de costos F12A		
 		mostrarReporteCostoF12A : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F12A");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -389,7 +398,8 @@ var resumenCosto= {
 					dataType : 'json',
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
-						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val()				  
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -419,6 +429,7 @@ var resumenCosto= {
 		
 		//funcion para mostrar reporte de resumen de costos F12A exel		
 		mostrarReporteCostoF12AExcel : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F12A excel");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -428,7 +439,8 @@ var resumenCosto= {
 					dataType : 'json',
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
-						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val()				  
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -457,6 +469,7 @@ var resumenCosto= {
 		
 		//funcion para mostrar reporte de resumen de costos F12B		
 		mostrarReporteCostoF12B : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F12B");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -466,7 +479,8 @@ var resumenCosto= {
 					dataType : 'json',
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
-						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val()				  
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -495,6 +509,7 @@ var resumenCosto= {
 		
 		//funcion para mostrar reporte de resumen de costos F12B excel		
 		mostrarReporteCostoF12BExcel : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo F12B excel");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -504,7 +519,8 @@ var resumenCosto= {
 					dataType : 'json',
 					data : {					
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
-						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val()				  
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -533,6 +549,7 @@ var resumenCosto= {
 				
 	    //funcion para ver reporte de resumen de costos comparativos Formatos 14A y 14B			
 		mostrarReporteCostoComparativosF14AB : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo comparativos F14AB");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -544,7 +561,8 @@ var resumenCosto= {
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
 						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
 						   <portlet:namespace />optionZona: resumenCosto.i_cboZonas.val(),
-						   <portlet:namespace />optionBienal: resumenCosto.i_cboBienal.val()
+						   <portlet:namespace />optionBienal: resumenCosto.i_cboBienal.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
@@ -573,6 +591,7 @@ var resumenCosto= {
 		
 		//funcion para ver reporte de resumen de costos comparativos Formatos 14A y 14B excel	
 		mostrarReporteCostoComparativosF14ABExcel : function(){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
 			console.debug("entranado a  ver el reporte resumen costo comparativos F14AB excel");
 			if (resumenCosto.validarBusqueda()){
 				$.blockUI({ message: resumenCosto.mensajeReporte});
@@ -584,7 +603,8 @@ var resumenCosto= {
 						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
 						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
 						   <portlet:namespace />optionZona: resumenCosto.i_cboZonas.val(),
-						   <portlet:namespace />optionBienal: resumenCosto.i_cboBienal.val()
+						   <portlet:namespace />optionBienal: resumenCosto.i_cboBienal.val(),
+						   <portlet:namespace />desGrupoInf: desGrupo
 					},
 					success : function(data) {
 						if(data.resultado=='OK'){
