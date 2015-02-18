@@ -30,24 +30,36 @@
 var data_funcion = []; 
 
 $(document).ready(function () {	
-	 $("#<portlet:namespace/>reportePdf").click(function() {<portlet:namespace/>mostrarReportePdf();});
-	 $("#<portlet:namespace/>reporteExcel").click(function() {<portlet:namespace/>mostrarReporteExcel();});
- 	//initBlockUI();	
+	 $("#<portlet:namespace/>reportePdf").click(function() {
+		 <portlet:namespace/>mostrarReportePdf();
+	 });
+	 $("#<portlet:namespace/>reporteExcel").click(function() {
+		 <portlet:namespace/>mostrarReporteExcel();
+	 }); 		
  	initDialogs();
 });
 
 function <portlet:namespace/>mostrarReportePdf(){
 	if(<portlet:namespace />validarCumplimientoBienal()){
 		jQuery.ajax({
-			url : '<portlet:resourceURL id="reporte" />',
+			url : '<portlet:resourceURL id="reporteBienal" />',
 			type : 'post',
 			dataType : 'json',
 			data : {
-				<portlet:namespace />periodo: $("#<portlet:namespace/>s_periodo_cump").val(),
+				<portlet:namespace />grupoInf: $("#<portlet:namespace/>grupoInfBusq").val(),
+				<portlet:namespace />etapa: $("#<portlet:namespace/>etapa").val(),
 				<portlet:namespace />tipoArchivo: '0'//PDF
 			},
-			success : function(gridData) {
-				verReporte();
+			success : function(data) {
+				if(data.resultado=='OK'){
+					verReporte();
+				}else if(data.resultado=='VACIO'){							
+					$("#<portlet:namespace/>dialog-info-content").html('No existe ningún registro con los criterios seleccionados');
+					$("#<portlet:namespace/>dialog-info").dialog( "open" );
+			   }else{
+				    $("#<portlet:namespace/>dialog-error-content").html('Error al mostrar Reporte de Cumplimiento Mensual');
+					$("#<portlet:namespace/>dialog-error").dialog( "open" );  
+			   }
 			}
 		});	
 	}	
@@ -56,15 +68,24 @@ function <portlet:namespace/>mostrarReportePdf(){
 function <portlet:namespace/>mostrarReporteExcel(){
 	if(<portlet:namespace />validarCumplimientoBienal()){
 		jQuery.ajax({
-			url : '<portlet:resourceURL id="reporte" />',
+			url : '<portlet:resourceURL id="reporteBienal" />',
 			type : 'post',
 			dataType : 'json',
 			data : {
-				<portlet:namespace />periodo: $("#<portlet:namespace/>s_periodo_cump").val(),
+				<portlet:namespace />grupoInf: $("#<portlet:namespace/>grupoInfBusq").val(),
+				<portlet:namespace />etapa: $("#<portlet:namespace/>etapa").val(),
 				<portlet:namespace />tipoArchivo: '1'//XLS
 			},
-			success : function(gridData) {
-				verReporte();
+			success : function(data) {
+				if(data.resultado=='OK'){
+					verReporte();
+				}else if(data.resultado=='VACIO'){							
+					$("#<portlet:namespace/>dialog-info-content").html('No existe ningún registro con los criterios seleccionados');
+					$("#<portlet:namespace/>dialog-info").dialog( "open" );
+			   }else{
+				    $("#<portlet:namespace/>dialog-error-content").html('Error al mostrar Reporte de Cumplimiento Mensual');
+					$("#<portlet:namespace/>dialog-error").dialog( "open" );  
+			   }
 			}
 		});	
 	}	
@@ -72,10 +93,14 @@ function <portlet:namespace/>mostrarReporteExcel(){
 
 function <portlet:namespace />validarCumplimientoBienal(){
 	console.debug('entrando a validar formulario');
-	if($("#<portlet:namespace/>s_periodo_cump").val()==null || 
-			$("#<portlet:namespace/>s_periodo_cump").val()==''){		
-		//alert('Debe seleccionar un Periodo.'); 	
-		$("#<portlet:namespace/>dialog-alert-content").html('Debe seleccionar un Periodo');
+	if($("#<portlet:namespace/>grupoInfBusq").val()==null || 
+			$("#<portlet:namespace/>grupoInfBusq").val()==''){		
+		$("#<portlet:namespace/>dialog-alert-content").html('Debe seleccionar un Grupo de Información');
+		$("#<portlet:namespace/>dialog-alert").dialog( "open" );
+	 	return false;
+	}else if($("#<portlet:namespace/>etapa").val()==null || 
+			$("#<portlet:namespace/>etapa").val()==''){			
+		$("#<portlet:namespace/>dialog-alert-content").html('Debe seleccionar una Etapa');
 		$("#<portlet:namespace/>dialog-alert").dialog( "open" );
 	 	return false;
 	}else{
@@ -98,6 +123,28 @@ function initDialogs(){
 			}
 		}
 	});
+	
+	$( "#<portlet:namespace/>dialog-error" ).dialog({
+		modal: true,
+		width: 450,	
+		autoOpen: false,
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	
+	$( "#<portlet:namespace/>dialog-info" ).dialog({
+		modal: true,
+		width: 450,	
+		autoOpen: false,
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
 }
 //////////
 </script>
@@ -111,7 +158,8 @@ function initDialogs(){
 }
 </style>
 
-<form id="form-cumplimiento-bienal" name="form-cumplimiento-bienal"  method="POST" style="padding:17px;padding-top:0px;" action="${accionURL}"  >	
+<form id="form-cumplimiento-bienal" name="form-cumplimiento-bienal"  method="POST" style="padding:17px;padding-top:0px;" 
+      action="${accionURL}"  >	
 
 	<div id="d_listado" class="net-frame-listado"> 
 		<div id="d_filtro">
@@ -134,25 +182,46 @@ function initDialogs(){
 									<table class="" style="width: 100%;" border="0">
 										
 										<tr height="10px">
-											<td colspan="8"></td>
+											<td colspan="2"></td>
 										</tr>
 										<tr>
+											<td style="width: 180px">
+												<output>Grupo Información:</output>
+											</td>
 											<td>
-												<output>Periodo:</output>
-											</td>
-											<td colspan="7">
-												<select id="<portlet:namespace/>s_periodo_cump" name="<portlet:namespace/>s_periodo_cump" style="width:375px;" class="select"  >
-						   							<c:forEach items="${listaPeriodo}" var="periodo">																
-														<option value="${periodo.codigoItem}">${periodo.descripcionItem}</option>
+												<select id="<portlet:namespace/>grupoInfBusq" name="<portlet:namespace/>grupoInfBusq" class="select" style="width:200px;" >
+						   							<c:forEach items="${listaGrupoInf}" var="grupo">																
+														<option value="${grupo.idGrupoInformacion}">${grupo.descripcion}</option>
 													</c:forEach>
-												</select>
+												</select>												
 											</td>
 										</tr>
+										
 										<tr height="10px">
-											<td colspan="8"></td>
+											<td colspan="2"></td>
 										</tr>
+										
 										<tr>
-											<td colspan="8" align="center">
+											<td><output>Etapa:</output></td>
+											<td>
+											    <select id="<portlet:namespace/>etapa" name="<portlet:namespace/>etapa" class="select" style="width:150px;" >						   																							
+													<option value="SOLICITUD">SOLICITUD</option>
+													<option value="LEV.OBS">LEV.OBS</option>
+													<option value="ESTABLECIDO">ESTABLECIDO</option>													
+													<option value="RECONSIDERACION">RECONSIDERACION</option>		
+												</select>	
+												
+											</td>											
+										</tr>						
+										
+										<tr height="10px">
+											<td colspan="2"></td>
+										</tr>
+										
+										<tr>
+										   <td>											
+										   </td>
+											<td>
 												<input type="button" class="boton" name="<portlet:namespace/>reportePdf" 
 															id="<portlet:namespace/>reportePdf" class="button net-button-small"  value="PDF"/>
 												<input type="button" class="boton" name="<portlet:namespace/>reporteExcel" 
@@ -185,5 +254,25 @@ function initDialogs(){
 			<label class="labelCentrado" id="<portlet:namespace/>dialog-alert-content">Debe Ingresar..</label>
 		</p>
 	</div>
+	
+	<!-- DIALOGO PARA ERRORES -->
+	
+	<div id="<portlet:namespace/>dialog-error" title="Mensaje de Error">
+		<p>	
+			<img src="/fise-projects-portlet/images/error.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-error-content">Error..</label>
+		</p>
+	</div>	
+	
+	<!-- DIALOGO PARA INFORMAR UN MENSAJE -->
+	
+	<div id="<portlet:namespace/>dialog-info" title="Mensaje de Informaci&oacute;n">
+		<p>	
+			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-info-content">Error..</label>
+		</p>
+	</div>	
 
 </form> 

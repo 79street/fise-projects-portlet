@@ -2,12 +2,12 @@ package gob.osinergmin.fise.gart.controller;
 
 import gob.osinergmin.fise.bean.CumplimientoReportBean;
 import gob.osinergmin.fise.constant.FiseConstants;
-import gob.osinergmin.fise.domain.AdmEmpresa;
-import gob.osinergmin.fise.domain.FisePeriodoEnvio;
+import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.gart.service.AdmEmpresaGartService;
-import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
+import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.gart.service.FormatoCumplimientoService;
 import gob.osinergmin.fise.util.FechaUtil;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -22,8 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,87 +46,87 @@ public class CumplimientoBienalGartController {
 	FormatoCumplimientoService formatoCumplimientoService;
 	
 	@Autowired
-	FisePeriodoEnvioGartService fisePeriodoEnvioGartService;
-	//private Periodo<Long,Long, String> Periodoenvio;
+	@Qualifier("fiseGrupoInformacionGartServiceImpl")
+	private FiseGrupoInformacionGartService fiseGrupoInformacionService;
 	
-	private List<FisePeriodoEnvio> listaPeriodo;
-	private Map<String, String> mapaEmpresa;
+	private List<FiseGrupoInformacion> listaGrupoInf;
+	
 	private Map<Long,String> mapaMeses;
 	
 	@RequestMapping
-	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse){
-		
-		System.out.println("prueba de portlet");
-		
-		//mapaMeses = FechaUtil.cargarMapaMeses();
-		List<AdmEmpresa> listaEmpresa = admEmpresaService.listarAdmEmpresa();
-		mapaEmpresa = new HashMap<String, String>();
-		for (AdmEmpresa admEmpresa : listaEmpresa) {
-			//logger.info("codEmpresa: "+admEmpresa.getCodEmpresa()+" desccortaempresa: "+admEmpresa.getDscCortaEmpresa());
-			mapaEmpresa.put(admEmpresa.getCodEmpresa(), admEmpresa.getDscCortaEmpresa());
-		}
-				
-		mapaMeses = FechaUtil.cargarMapaMeses();
-		
-		listaPeriodo = fisePeriodoEnvioGartService.listarFisePeriodoEnvioMesAnioEtapaCumplimiento(FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
-		model.addAttribute("listaPeriodo", listaPeriodo);
-	
+	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse){		
+		try {
+			mapaMeses = FechaUtil.cargarMapaMeses();
+			listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL,"TODOS");
+			model.addAttribute("listaGrupoInf", listaGrupoInf);
+		} catch (Exception e) {
+			logger.info("Error al cargar reporte cumplimiento bienal:  "+e.getMessage()); 
+			e.printStackTrace();
+		}	
 		return "cumplimientoBienal";
 	}
 
-	@ResourceMapping("reporte")
+	@ResourceMapping("reporteBienal")
 	public void reporte(SessionStatus status, ResourceRequest request,ResourceResponse response) {
+		FiseGrupoInformacion grupo = null;
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
 	        
-		    JSONArray jsonArray = new JSONArray();	
+	        JSONObject jsonObj = new JSONObject();	
 
-		    String periodo = request.getParameter("periodo").trim();
+	        String idGrupoInf = request.getParameter("grupoInf").trim();
+		    logger.info("Id grupo de informacion:   "+idGrupoInf); 
+		    String etapa = request.getParameter("etapa").trim();
+		    logger.info("Etapa:   "+etapa); 
 		    String tipoArchivo = request.getParameter("tipoArchivo").trim();
+		    logger.info("Tipo de archivo:   "+tipoArchivo); 
 		    
 		    session.setAttribute("tipoFormato", FiseConstants.TIPO_FORMATO_CUMPLIMIENTO);
-		    session.setAttribute("tipoArchivo", tipoArchivo);
-		    //cambiar de acuerdo al reporte que estan probando
-		   String nombre = "cumplimientoBienal";
+		    session.setAttribute("tipoArchivo", tipoArchivo);		  
+		    String nombre = "cumplimientoBienal";
 		    session.setAttribute("nombreArchivo", nombre);
 		    session.setAttribute("nombreReporte", nombre);
 		    
 		
-		    /////////////////////// reporte de cumplimientio/////////////
-		    String anio="";
-		    String mes="";
-		    String etapa="";
-		    
-		    if( periodo!=null && periodo.length()>6 ){
-		    	anio=periodo.substring(0,4);
-		    	mes=periodo.substring(4,6);
-		    	etapa=periodo.substring(6,periodo.length());
+		    long anio = 0;
+		    long mes = 0;
+		  
+		    if(FormatoUtil.isNotBlank(idGrupoInf)){ 
+		    	 grupo =  fiseGrupoInformacionService.obtenerGrupoInf(Long.valueOf(idGrupoInf));
+		    }
+		   		    
+		    if(grupo!=null){
+		    	anio = grupo.getAnoPresentacion();
+		    	mes = grupo.getMesPresentacion();  	
 		    }
 		    
-		    List<CumplimientoReportBean> lista = formatoCumplimientoService.listarFormatoCumplimientoReportBean(Long.parseLong(anio), Long.parseLong(mes), etapa);
-		    
-		    session.setAttribute("lista", lista);
-		    
-		    Map<String, Object> mapa = new HashMap<String, Object>();
-		    mapa.put(FiseConstants.PARAM_ANO_CUMPLI, Long.parseLong(anio));
-		    mapa.put(FiseConstants.PARAM_MES_CUMPLI, mapaMeses.get(Long.parseLong(mes)));
-		    mapa.put(FiseConstants.PARAM_ETAPA_CUMPLI, etapa);
-		    session.setAttribute("mapa", mapa);
-		    //System.out.println("jhdhdhdh"+lista);
-		  
+		    List<CumplimientoReportBean> lista = formatoCumplimientoService.listarFormatoCumplimientoReportBean(anio,mes,etapa);
+		    if(lista !=null && lista.size()>0){
+		    	session.setAttribute("lista", lista);		    
+		    	Map<String, Object> mapa = new HashMap<String, Object>();
+		    	mapa.put(FiseConstants.PARAM_ANO_CUMPLI, anio);
+		    	mapa.put(FiseConstants.PARAM_MES_CUMPLI, mapaMeses.get(mes));
+		    	mapa.put(FiseConstants.PARAM_ETAPA_CUMPLI, etapa);
+		    	 mapa.put("GRUPO_INFORMACION", grupo.getDescripcion());
+		    	session.setAttribute("mapa", mapa);	
+		    	 jsonObj.put("resultado", "OK");	
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	
+		    }	  
 		    response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
-		    pw.write(jsonArray.toString());
+		    pw.write(jsonObj.toString());
+		    logger.info(jsonObj.toString());
 		    pw.flush();
-		    pw.close();
-		    
+		    pw.close();		    
 		}catch (Exception e) {
 			e.printStackTrace();
-		}
-		
-		 
-		 
+		}finally{
+			if(grupo!=null){
+				grupo =null;
+			}
+		}	 
 	}
  
 }
