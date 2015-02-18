@@ -145,6 +145,7 @@ public class ResumenCostosController {
 		    
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	   
@@ -215,6 +216,7 @@ public class ResumenCostosController {
 		    
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	   
@@ -279,6 +281,7 @@ public class ResumenCostosController {
 		    
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	   
@@ -357,6 +360,7 @@ public class ResumenCostosController {
 		    
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	   
@@ -431,6 +435,7 @@ public class ResumenCostosController {
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
 		    mapa.put("TIPO_FORMATO", FiseConstants.NOMBRE_F12A);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	   
@@ -503,6 +508,7 @@ public class ResumenCostosController {
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
 		    mapa.put("TIPO_FORMATO", FiseConstants.NOMBRE_F12A);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	       
@@ -570,6 +576,7 @@ public class ResumenCostosController {
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
 		    mapa.put("TIPO_FORMATO", FiseConstants.NOMBRE_F12B);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();	   
@@ -642,6 +649,7 @@ public class ResumenCostosController {
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
 		    mapa.put("TIPO_FORMATO", FiseConstants.NOMBRE_F12B);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
 		    JSONObject jsonObj = new JSONObject();    
@@ -725,6 +733,7 @@ public class ResumenCostosController {
 		    
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 		    if("F14A_COMP".equals(r.getOptionBienal())){
 		    	 mapa.put("FORMATO", FiseConstants.NOMBRE_F14A_COMP+ " - " +desZona);
 		    	 formato ="F14A";		    	 
@@ -824,6 +833,7 @@ public class ResumenCostosController {
 		    
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
 		    if("F14A_COMP".equals(r.getOptionBienal())){
 		    	 mapa.put("FORMATO", FiseConstants.NOMBRE_F14A_COMP+ " - " +desZona);
 		    	 formato ="F14A";
