@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="5.178406821589683"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1016"/>
+	<property name="ireport.zoom" value="1.3636363636363722"/>
+	<property name="ireport.x" value="258"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="IMG" class="java.lang.String"/>
+	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -89,188 +92,195 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="103" splitType="Stretch">
+		<band height="116" splitType="Stretch">
 			<staticText>
-				<reportElement x="558" y="4" width="93" height="16"/>
+				<reportElement x="594" y="25" width="91" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="651" y="4" width="150" height="16"/>
+				<reportElement x="686" y="25" width="91" height="16"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="72" width="802" height="20" forecolor="#006699"/>
+				<reportElement x="21" y="72" width="756" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FORMATO 14A: Resumen de Costos Estándares de Implementación]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="4" y="4" width="188" height="60"/>
+				<reportElement x="21" y="4" width="204" height="60"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="21" y="94" width="756" height="20" forecolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{GRUPO_INFORMACION}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="6" splitType="Stretch"/>
+		<band height="3" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="69" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="126" y="3" width="82" height="65" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="143" y="3" width="82" height="65" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Periodo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="209" y="3" width="275" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="226" y="3" width="275" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Empadronamiento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="4" y="3" width="121" height="65" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="21" y="3" width="121" height="65" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Distribuidora Eléctrica ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="209" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="226" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Rural]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="209" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="226" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Solicitado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="255" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="272" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Aprobado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="301" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="318" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Urbano Provincias]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="301" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="318" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Solicitado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="347" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="364" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Aprobado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="439" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="456" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Aprobado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="393" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="410" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Solicitado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="393" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="410" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Urbano Lima]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="715" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="732" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Aprobado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="623" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="640" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Aprobado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="669" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="686" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Solicitado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="669" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="686" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Urbano Lima]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="485" y="3" width="275" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="502" y="3" width="275" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Red de Agentes GLP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="485" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="502" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Rural]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="485" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="502" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Solicitado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="577" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="594" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Solicitado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="531" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="548" y="47" width="45" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Aprobado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="577" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="594" y="25" width="91" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -281,105 +291,105 @@
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="4" y="0" width="122" height="20"/>
+				<reportElement x="21" y="0" width="122" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{desEmpresa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="126" y="0" width="83" height="20"/>
+				<reportElement x="143" y="0" width="83" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{periodo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="209" y="0" width="46" height="20"/>
+				<reportElement x="226" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empSolicitadoR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="255" y="0" width="46" height="20"/>
+				<reportElement x="272" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empAprobadoR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="301" y="0" width="46" height="20"/>
+				<reportElement x="318" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empSolicitadoP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="347" y="0" width="46" height="20"/>
+				<reportElement x="364" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empAprobadoP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="393" y="0" width="46" height="20"/>
+				<reportElement x="410" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empSolicitadoL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="439" y="0" width="46" height="20"/>
+				<reportElement x="456" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{empAprobadoL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="485" y="0" width="46" height="20"/>
+				<reportElement x="502" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpSolicitadoR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="531" y="0" width="46" height="20"/>
+				<reportElement x="548" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpAprobadoR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="577" y="0" width="46" height="20"/>
+				<reportElement x="594" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpSolicitadoP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="623" y="0" width="46" height="20"/>
+				<reportElement x="640" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpAprobadoP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="669" y="0" width="46" height="20"/>
+				<reportElement x="686" y="0" width="46" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpSolicitadoL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="715" y="0" width="45" height="20"/>
+				<reportElement x="732" y="0" width="45" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{glpAprobadoL}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="4" y="21" width="756" height="1" forecolor="#007DBC" backcolor="#007DBC"/>
+				<reportElement x="21" y="21" width="756" height="1" forecolor="#007DBC" backcolor="#007DBC"/>
 			</line>
 		</band>
 	</detail>
@@ -392,104 +402,104 @@
 	<summary>
 		<band height="41" splitType="Stretch">
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="577" y="3" width="46" height="20"/>
+				<reportElement x="594" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="623" y="3" width="46" height="20"/>
+				<reportElement x="640" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="531" y="3" width="46" height="20"/>
+				<reportElement x="548" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="301" y="3" width="46" height="20"/>
+				<reportElement x="318" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="347" y="3" width="46" height="20"/>
+				<reportElement x="364" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobP}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="255" y="3" width="46" height="20"/>
+				<reportElement x="272" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="439" y="3" width="46" height="20"/>
+				<reportElement x="456" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumEAprobL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="485" y="3" width="46" height="20"/>
+				<reportElement x="502" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="669" y="3" width="46" height="20"/>
+				<reportElement x="686" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGSoliL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="715" y="3" width="45" height="20"/>
+				<reportElement x="732" y="3" width="45" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumGAprobL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="393" y="3" width="46" height="20"/>
+				<reportElement x="410" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="209" y="3" width="46" height="20"/>
+				<reportElement x="226" y="3" width="46" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumESoliR}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="3" width="205" height="20"/>
+				<reportElement x="21" y="3" width="205" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL S/.]]></text>
 			</staticText>
 			<line direction="BottomUp">
-				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="4" y="2" width="756" height="1" forecolor="#006699" backcolor="#006699"/>
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="21" y="2" width="756" height="1" forecolor="#006699" backcolor="#006699"/>
 				<graphicElement>
 					<pen lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line direction="BottomUp">
-				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="4" y="23" width="756" height="1" forecolor="#006699" backcolor="#006699"/>
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="21" y="23" width="756" height="1" forecolor="#006699" backcolor="#006699"/>
 				<graphicElement>
 					<pen lineStyle="Double"/>
 				</graphicElement>

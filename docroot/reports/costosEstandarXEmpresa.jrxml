@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenCostoActividad" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.3310000000000282"/>
-	<property name="ireport.x" value="123"/>
+	<property name="ireport.zoom" value="1.1000000000000272"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIPO_FORMATO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
+	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -46,18 +50,43 @@
 	<variable name="tiuloEmpresa" class="java.lang.String">
 		<variableExpression><![CDATA["Costos Estándar para " +$F{desEmpresa}]]></variableExpression>
 	</variable>
-	<group name="Distribuidora_Electrica">
+	<group name="Distribuidora_Electrica" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{desEmpresa}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="105">
 				<textField evaluationTime="Group" evaluationGroup="Distribuidora_Electrica">
-					<reportElement x="9" y="0" width="783" height="20" printWhenGroupChanges="Distribuidora_Electrica">
+					<reportElement x="9" y="61" width="783" height="25" printWhenGroupChanges="Distribuidora_Electrica">
 						<printWhenExpression><![CDATA[$F{desEmpresa}]]></printWhenExpression>
 					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Top">
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$V{tiuloEmpresa}]]></textFieldExpression>
+				</textField>
+				<image hAlign="Center" vAlign="Middle">
+					<reportElement x="9" y="2" width="254" height="57"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="541" y="28" width="97" height="16"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Fecha de emisión:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy h:mm a">
+					<reportElement x="638" y="28" width="154" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="9" y="85" width="783" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{GRUPO_INFORMACION}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -121,32 +150,13 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="64" splitType="Stretch">
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="8" y="2" width="254" height="60"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="541" y="21" width="97" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[Fecha de emisión:]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="638" y="21" width="154" height="16"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="3" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band height="3" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="6" splitType="Stretch"/>
+		<band height="3" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.196150000000017"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="126"/>
+	<property name="ireport.zoom" value="1.126972201352377"/>
+	<property name="ireport.x" value="54"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="IMG" class="java.lang.String"/>
+	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -185,18 +188,18 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="103" splitType="Stretch">
+		<band height="114" splitType="Stretch">
 			<staticText>
-				<reportElement x="575" y="4" width="93" height="16"/>
+				<reportElement x="630" y="23" width="87" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="668" y="4" width="134" height="16"/>
+				<reportElement x="717" y="23" width="85" height="16"/>
 				<textElement verticalAlignment="Middle">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
@@ -208,13 +211,20 @@
 				<text><![CDATA[FORMATO 14B: Resumen de Costos Estándares Unitarios Zona Rural]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="-1" y="7" width="280" height="60"/>
+				<reportElement x="0" y="7" width="215" height="60"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="0" y="93" width="802" height="20" forecolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{GRUPO_INFORMACION}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="6" splitType="Stretch"/>
+		<band height="2" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="64" splitType="Stretch">
