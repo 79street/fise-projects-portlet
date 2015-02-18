@@ -602,9 +602,21 @@ var formato14C= {
 				formato14C.<portlet:namespace/>loadPeriodo(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
 				formato14C.f_anoIniVigencia.removeClass("fise-editable");
 				formato14C.f_anoFinVigencia.removeClass("fise-editable");
+				//mantener datos en sesion
+				if(formato14C.codEmpresaSes.val()!=''){
+					formato14C.i_codEmpresaBusq.val(formato14C.codEmpresaSes.val());
+				}else{
+					formato14C.i_codEmpresaBusq.val('');
+				}
 			}else{			
 				 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioIniVigSes != '' && anioFinVigSes != '' && etapaSes != ''){
 					 formato14C.editarFormato14C(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes,flagOpera);
+				 }
+				//mantener datos en sesion
+				 if(formato14C.codEmpresaSes.val()!=''){
+						formato14C.i_codEmpresaBusq.val(formato14C.codEmpresaSes.val());
+				 }else{
+						formato14C.i_codEmpresaBusq.val('');
 				 }
 			 }	 
 			 var mensajeInfo = formato14C.mensajeInfo.val();
@@ -1168,7 +1180,8 @@ var formato14C= {
 		},
 		
 		//function para inicializar el formulario
-		inicializarFormulario : function(){			
+		inicializarFormulario : function(){	
+			//para mantener datos en sesion al momento de regresar a la busqueda	
 			if(formato14C.i_codEmpresaBusq.val()!=''){
 				formato14C.f_empresa.val(formato14C.i_codEmpresaBusq.val());
 			}else{
