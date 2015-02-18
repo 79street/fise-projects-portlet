@@ -38,8 +38,7 @@ var resumenCostoActiv= {
 		//varibales de busqueda
 		i_codEmpresaBusq:null,
 		i_grupoInfBusq:null,		
-		i_tipoBienal:null,
-		i_tipoMensual:null,		
+			
 				
 		
 		
@@ -73,10 +72,8 @@ var resumenCostoActiv= {
 			
 			//variables de busqueda
 			this.i_codEmpresaBusq=$('#codEmpresaBusq');
-			this.i_grupoInfBusq=$('#grupoInfBusq');
+			this.i_grupoInfBusq=$('#grupoInfBusq');	
 			
-			this.i_tipoBienal=$('#rbtBienal');
-			this.i_tipoMensual=$('#rbtMensual');	
 			
 						
 			//llamado a la funciones de cada boton
@@ -100,22 +97,22 @@ var resumenCostoActiv= {
 			resumenCostoActiv.initDialogs();		    
 		    
 			//evento change para bienales
-			resumenCostoActiv.i_tipoBienal.change(function(){
+			/* resumenCostoActiv.i_tipoBienal.change(function(){
 				resumenCostoActiv.<portlet:namespace/>loadGrupoInformacion();										
-			});	
+			});	 */
 			
 			//evento change para mensuales
-			resumenCostoActiv.i_tipoMensual.change(function(){
+			/* resumenCostoActiv.i_tipoMensual.change(function(){
 				resumenCostoActiv.<portlet:namespace/>loadGrupoInformacion();								
-			});
+			}); */
 			
 		    		   
-			resumenCostoActiv.i_tipoMensual.trigger('change');
+			//resumenCostoActiv.i_tipoMensual.trigger('change');
 			
 		},			
 		
 		//function para el evento onchange en empresa para cargar el periodo
-		<portlet:namespace/>loadGrupoInformacion : function(){	
+		/*<portlet:namespace/>loadGrupoInformacion : function(){	
 			console.debug("entranado a cargar grupoInfo");
 			jQuery.ajax({
 					url: resumenCostoActiv.urlCargaGrupoInf+'&'+resumenCostoActiv.formCommand.serialize(),
@@ -131,7 +128,7 @@ var resumenCostoActiv= {
 						resumenCostoActiv.initBlockUI();
 					}
 			});
-		},		
+		},	*/	
 		
 		//funcion para mostrar reporte de resumen de costos F14A		
 		mostrarReporteCostoF14AB : function(){

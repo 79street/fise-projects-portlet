@@ -3,13 +3,13 @@ package gob.osinergmin.fise.gart.controller;
 import gob.osinergmin.fise.bean.ResumenCostoActividadBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
-import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.gart.service.ResumenCostosService;
 import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,12 +21,11 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -78,7 +77,7 @@ public class ResumenCostosActividadController {
     		}     		
     		r.setAdmin(fiseUtil.esAdministrador(renderRequest));
     		//TODOS = que filtre grupo de informacion activos e inactivos
-    		r.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL,"TODOS")); 
+    		r.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.BIENAL,"TODOS")); 
     		
     		//mapaEmpresa = fiseUtil.getMapaEmpresa();   		
     		
@@ -89,48 +88,19 @@ public class ResumenCostosActividadController {
 			e.printStackTrace();
 		}		
 		return "resumenCostosActividad";
-	}	
-	
-	
-	@ResourceMapping("cargarGrupoInformacion")
-  	public void cargaGrupoInformacion(ModelMap model, ResourceRequest request,ResourceResponse response,
-  			 @ModelAttribute("resumenCostoActividadBean")ResumenCostoActividadBean r){
-		try {			
-  			response.setContentType("applicacion/json");
-  			String tipoFormato = r.getOptionFormato();
-  			
-  			logger.info("Codigo grupo inf. para cargar grupo de infor.:  "+tipoFormato);
-  			//TODOS = que filtre activos e inactivos
-  			List<FiseGrupoInformacion> listaGrupoInf = fiseGrupoInformacionService.listarGrupoInformacion(tipoFormato,"TODOS");
-  			logger.info("Tamaño de lista de grupo inf:  "+listaGrupoInf.size()); 
-  			JSONArray jsonArray = new JSONArray();
-  			for (FiseGrupoInformacion grupo : listaGrupoInf) {
-  				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("codigoItem", grupo.getIdGrupoInformacion());				
-				jsonObj.put("descripcionItem", grupo.getDescripcion());				
-				jsonArray.put(jsonObj);		
-			}  			
-  		    PrintWriter pw = response.getWriter();
-  		    logger.info(jsonArray.toString());
-  		    pw.write(jsonArray.toString());
-  		    pw.flush();
-  		    pw.close();							
-  		}catch (Exception e) {  		
-  			e.printStackTrace();
-  		}
-	}		
+	}
 	
 	@ResourceMapping("verResumenCostoActividadF14AB")
-	public void verResumenCostosActividadF14AB(ModelMap model, ResourceRequest request,ResourceResponse response,
+	public void verResumenCostosActivF14AB(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("resumenCostoActividadBean")ResumenCostoActividadBean r) {		
-		Map<String, Object> mapa = null;
-		byte[] bytesF14AB = null;
+		List<ResumenCostoActividadBean> listaF14AB =null;
+		byte[] bytesF14A = null;
 		try {	
 			
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();	
 			
-			logger.info("Entrando a ver reporte de resumen costos F14A");
+			logger.info("Entrando a ver reporte de resumen costos F14A y F14B Actividades");
 			
 			long idGrupoInf = 0;
 			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
@@ -140,34 +110,34 @@ public class ResumenCostosActividadController {
 			logger.info("grupo inf:  "+idGrupoInf);
 			logger.info("periocidad:  "+r.getOptionFormato());
 			
-		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");	
+		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
 		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    mapa.put("IMG", rutaImg);
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
+		   
 		    JSONObject jsonObj = new JSONObject();	   
 		    
-		    mapa = resumenCostosService.buscarResumenCostoActividadF14AB(r.getCodEmpresaBusq(), idGrupoInf);
-		    
-		    if(mapa!=null && mapa.size()>0){
-		    	
-		    mapa.put("IMG", rutaImg);
-			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);	    
-		    
-		    String tipoFormato = "RESUMEN DE COSTOS POR ACTIVIDAD F14AB ";
+		    String tipoFormato = "RESUMEN DE COSTOS F14A ";
 		    String tipoArchivo = "3";//PDF		   
 		    session.setAttribute("tipoFormato",tipoFormato);
 		    session.setAttribute("tipoArchivo",tipoArchivo);	    
 		    
-		    String nombreReporte = "costosEstandarActividad";   		    	
-		    String directorio = "/reports/" + nombreReporte + ".jasper"; 
-		   
-		    File reportFile = new File(session.getServletContext().getRealPath(directorio));
-		    bytesF14AB = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-		    		new JREmptyDataSource());		    	
-			    if (bytesF14AB != null) {				  	  		    		
-			    	session.setAttribute("bytesFormato", bytesF14AB);
-			    	jsonObj.put("resultado", "OK");	   	
-			    }else{
-			    	jsonObj.put("resultado", "ERROR");	   
-			    }
+		    String nombreReporte = "costosEstandarXEmpresa";   		    	
+		    String directorio = "/reports/" + nombreReporte + ".jasper";
+		    
+		    listaF14AB = resumenCostosService.buscarResumenCostoActividadF14AB(r.getCodEmpresaBusq(), idGrupoInf);    
+		    
+		    if(listaF14AB!=null && listaF14AB.size()>0){
+		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));
+		    	bytesF14A = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+		    			new JRBeanCollectionDataSource(listaF14AB));
+		    	if (bytesF14A != null) {				  	  		    		
+		    		session.setAttribute("bytesFormato", bytesF14A);
+		    		jsonObj.put("resultado", "OK");	   	
+		    	}else{
+		    		jsonObj.put("resultado", "ERROR");	   
+		    	}
 		    }else{
 		    	jsonObj.put("resultado", "VACIO");	   
 		    }		
@@ -178,29 +148,28 @@ public class ResumenCostosActividadController {
 			pw.flush();
 			pw.close();	    
 		 } catch (Exception e) {
-			logger.error("Error al ver resumen de costos actividad F14AB: "+e); 
+			logger.error("Error al ver  resumen de costos F14A y F14B Actividades pdf: "+e); 
 			e.printStackTrace();
 		}finally{
-			if(mapa!=null){
-				mapa =null;
+			if(listaF14AB!=null){
+				listaF14AB =null;
 			}
-			if(bytesF14AB!=null){
-				bytesF14AB=null;
+			if(bytesF14A!=null){
+				bytesF14A=null;
 			}
 		}
     }
 	
-	
 	@ResourceMapping("verResumenCostoActividadF14ABExcel")
-	public void verResumenCostosActividadF14ABExel(ModelMap model, ResourceRequest request,ResourceResponse response,
+	public void verResumenF14ABActiExel(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("resumenCostoActividadBean")ResumenCostoActividadBean r) {		
-		Map<String, Object> mapa = null;			
+		List<ResumenCostoActividadBean> listaF14AB =null;		
 		try {	
 			
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();	
 			
-			logger.info("Entrando a ver reporte de resumen costos F14A excel");
+			logger.info("Entrando a ver reporte de resumen costos F14A y F14B excel");
 			
 			long idGrupoInf = 0;
 			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
@@ -210,30 +179,29 @@ public class ResumenCostosActividadController {
 			logger.info("grupo inf:  "+idGrupoInf);
 			logger.info("periocidad:  "+r.getOptionFormato());
 			
-			 JSONObject jsonObj = new JSONObject();	   
-			 
 		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
 		    
-		    mapa = resumenCostosService.buscarResumenCostoActividadF14AB(r.getCodEmpresaBusq(), idGrupoInf);		    
-		    
-		    if(mapa!=null && mapa.size()>0){
-		    	
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);
-			mapa.put(JRParameter.REPORT_LOCALE, Locale.US); 
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
 		   
+		    JSONObject jsonObj = new JSONObject();	   
 		    
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
-		    String tipoArchivo = "5";//exel solo con parametros y 		
-		    String nombreReporte = "costosEstandarActividad"; //nombre del jasper
+		    String tipoArchivo = "1";//exel		
+		    String nombreReporte = "costosEstandarXEmpresa"; //nombre del jasper
 		    String nombreArchivo ="RESUMEN_COSTO_ACTIVIDAD_F14AB";       
 		    
-		    session.setAttribute("tipoFormato",tipoFormato);
-		    session.setAttribute("tipoArchivo",tipoArchivo);
-		    session.setAttribute("nombreReporte",nombreReporte);
-		    session.setAttribute("nombreArchivo",nombreArchivo);
-		    session.setAttribute("lista", null);
-		    session.setAttribute("mapa", mapa);
-		    jsonObj.put("resultado", "OK");	 		    
+		    listaF14AB = resumenCostosService.buscarResumenCostoActividadF14AB(r.getCodEmpresaBusq(), idGrupoInf);   
+		    
+		    if(listaF14AB!=null && listaF14AB.size()>0){
+		    	session.setAttribute("tipoFormato",tipoFormato);
+		    	session.setAttribute("tipoArchivo",tipoArchivo);
+		    	session.setAttribute("nombreReporte",nombreReporte);
+		    	session.setAttribute("nombreArchivo",nombreArchivo);
+		    	session.setAttribute("lista", listaF14AB);
+		    	session.setAttribute("mapa", mapa);
+		    	jsonObj.put("resultado", "OK");	 
 		    }else{
 		    	jsonObj.put("resultado", "VACIO");	   
 		    }		
@@ -244,11 +212,11 @@ public class ResumenCostosActividadController {
 			pw.flush();
 			pw.close();	    
 		 } catch (Exception e) {
-			logger.error("Error al ver  resumen de costos Actividad F14AB exel: "+e); 
+			logger.error("Error al ver  resumen de costos F14A y F14B Actividades exel: "+e); 
 			e.printStackTrace();
 		}finally{
-			if(mapa!=null){
-				mapa =null;
+			if(listaF14AB!=null){
+				listaF14AB =null;
 			}		
 		}
     }
