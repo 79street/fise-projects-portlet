@@ -44,7 +44,6 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -1061,5 +1060,22 @@ public class FiseUtil {
 		mapaConceptos.put(FiseConstants.CONCEPTO_COSTO_TOTAL_GEST_ADM_VALUE, FiseConstants.CONCEPTO_COSTO_TOTAL_GEST_ADM_DESCRIPCION);
 		return mapaConceptos;
 	}
+	
+	
+	/**Metodo para verificar si un formato esta en una etapa avanzada para no
+	 * permitir grabar datos*/
+	public String obtenerUltimaEtapaFormato(String formato,String codEmpresa, 
+			long anioPres, long mesPres, long anioEjec,
+			long mesEjec,long anioIniVig,long anioFinVig){
+		String etapa = "";
+		try {
+			etapa =  commonService.obtenerUltimaEtapaFormato(formato, codEmpresa, anioPres, mesPres,
+					anioEjec, mesEjec, anioIniVig, anioFinVig);
+		} catch (Exception e) {
+		   etapa = " ";
+		}
+		return etapa;
+	}
+	
 
 }
