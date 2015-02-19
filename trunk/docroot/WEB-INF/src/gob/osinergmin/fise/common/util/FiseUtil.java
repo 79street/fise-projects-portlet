@@ -1064,16 +1064,16 @@ public class FiseUtil {
 	
 	/**Metodo para verificar si un formato esta en una etapa avanzada para no
 	 * permitir grabar datos*/
-	public boolean obtenerUltimaEtapaFormato(String formato,String codEmpresa, 
+	public boolean bloquearFormatoXEtapa(String formato,String codEmpresa, 
 			long anioPres, long mesPres, long anioEjec,
 			long mesEjec,long anioIniVig,long anioFinVig){
 		boolean  valor = false;
 		try {
 			String etapa =  commonService.obtenerUltimaEtapaFormato(formato, codEmpresa, anioPres, mesPres,
 					anioEjec, mesEjec, anioIniVig, anioFinVig);
-			if(!FiseConstants.ETAPA_ESTABLECIDO.equals(etapa) || 
-					!FiseConstants.ETAPA_RECONOCIDO.equals(etapa) ||
-					!"".equals(etapa)){ 
+			if(FiseConstants.ETAPA_ESTABLECIDO.equals(etapa) || 
+					FiseConstants.ETAPA_RECONOCIDO.equals(etapa) ||
+					"".equals(etapa)){ 
 				valor = true;	
 			}		
 		} catch (Exception e) {
