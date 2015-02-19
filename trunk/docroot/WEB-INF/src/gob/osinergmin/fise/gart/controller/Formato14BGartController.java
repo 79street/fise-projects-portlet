@@ -1811,8 +1811,10 @@ public Formato14BMensajeBean readExcelFile(FileEntry archivo, User user, String 
 
 		} catch (Exception e) {
 			logger.error("Error al leer el archivo excel.",e);
-			//String error = e.getMessage();
-			String error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
+			String error = e.getMessage();
+			if( FiseConstants.BLANCO.equals(error.trim()) ){
+				error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
+			}
 			sMsg = sMsg+error;	        	
 			cont++;
 			MensajeErrorBean errorBean = new MensajeErrorBean();
@@ -2471,6 +2473,9 @@ public Formato14BMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 	}catch (Exception e) {			   
 		  //refer.setCondicion(false);				  
 		String error = e.getMessage();
+		if( FiseConstants.BLANCO.equals(error.trim()) ){
+			error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
+		}
 		sMsg = sMsg+error;	        	
 		System.out.println(error);
 		cont++;
