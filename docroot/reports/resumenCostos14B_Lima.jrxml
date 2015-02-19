@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5000000000000113"/>
-	<property name="ireport.x" value="311"/>
-	<property name="ireport.y" value="14"/>
+	<property name="ireport.zoom" value="6.8924594795358844"/>
+	<property name="ireport.x" value="4386"/>
+	<property name="ireport.y" value="1304"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
 		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
@@ -600,12 +600,12 @@
 	<pageFooter>
 		<band height="22" splitType="Stretch">
 			<textField evaluationTime="Report">
-				<reportElement x="761" y="1" width="40" height="20"/>
+				<reportElement x="759" y="1" width="42" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="693" y="1" width="68" height="20"/>
+				<reportElement x="675" y="1" width="84" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>

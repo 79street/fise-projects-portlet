@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="4.707642565081572"/>
-	<property name="ireport.x" value="4858"/>
-	<property name="ireport.y" value="705"/>
+	<property name="ireport.zoom" value="2.9230756500000417"/>
+	<property name="ireport.x" value="2698"/>
+	<property name="ireport.y" value="209"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="FORMATO" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
@@ -159,7 +159,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="29" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<textField>
 				<reportElement x="54" y="0" width="127" height="27"/>
 				<textElement>
@@ -230,12 +230,6 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{desMotivo}]]></textFieldExpression>
 			</textField>
-			<line direction="BottomUp">
-				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="6" y="27" width="1136" height="1" forecolor="#006699" backcolor="#006699"/>
-				<graphicElement>
-					<pen lineStyle="Solid"/>
-				</graphicElement>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
