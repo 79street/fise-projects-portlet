@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenCostoActividad" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="2.143588810000054"/>
-	<property name="ireport.x" value="909"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="39"/>
 	<parameter name="TIPO_FORMATO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
@@ -53,7 +53,7 @@
 	<group name="Distribuidora_Electrica" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{desEmpresa}]]></groupExpression>
 		<groupHeader>
-			<band height="105">
+			<band height="108">
 				<textField evaluationTime="Group" evaluationGroup="Distribuidora_Electrica">
 					<reportElement x="9" y="61" width="783" height="25" printWhenGroupChanges="Distribuidora_Electrica">
 						<printWhenExpression><![CDATA[$F{desEmpresa}]]></printWhenExpression>
@@ -82,7 +82,7 @@
 					<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="9" y="85" width="783" height="20"/>
+					<reportElement x="9" y="86" width="783" height="20"/>
 					<textElement textAlignment="Center">
 						<font size="10" isBold="true"/>
 					</textElement>

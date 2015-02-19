@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.126972201352377"/>
-	<property name="ireport.x" value="54"/>
+	<property name="ireport.zoom" value="1.2396694214876165"/>
+	<property name="ireport.x" value="33"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
@@ -142,64 +142,148 @@
 	<field name="periodo" class="java.lang.String">
 		<fieldDescription><![CDATA[periodo]]></fieldDescription>
 	</field>
-	<variable name="sumImpSolR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumImpSolR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosImpValSoliR}]]></variableExpression>
 	</variable>
-	<variable name="sumImpAproR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumImpAproR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosImpValAprobR}]]></variableExpression>
 	</variable>
-	<variable name="sumDomiSolR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumDomiSolR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosDomValSoliR}]]></variableExpression>
 	</variable>
-	<variable name="sumDomiAproR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumDomiAproR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosDomValAprobR}]]></variableExpression>
 	</variable>
-	<variable name="sumDistSolR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumDistSolR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosEntDisEleSoliR}]]></variableExpression>
 	</variable>
-	<variable name="sumDistAproR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumDistAproR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosEntDisEleAprobR}]]></variableExpression>
 	</variable>
-	<variable name="sumFisSoliR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumFisSoliR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosValFisSoliR}]]></variableExpression>
 	</variable>
-	<variable name="sumFisAproR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumFisAproR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosValFisAprobR}]]></variableExpression>
 	</variable>
-	<variable name="sumDigSoliR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumDigSoliR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosValDigSoliR}]]></variableExpression>
 	</variable>
-	<variable name="sumDigAproR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumDigAproR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosValDigAprobR}]]></variableExpression>
 	</variable>
-	<variable name="sumAtenSoliR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumAtenSoliR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosAteSoliR}]]></variableExpression>
 	</variable>
-	<variable name="sumAtenAproR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumAtenAproR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosAteAprobR}]]></variableExpression>
 	</variable>
-	<variable name="sumTotalSoliR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumTotalSoliR" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{cosGestAdmSoliR}]]></variableExpression>
 	</variable>
-	<variable name="sumTotalAproR" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+	<variable name="sumTotalAproR" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{cosGestAdmAprobR}]]></variableExpression>
+	</variable>
+	<variable name="maxImpSolR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosImpValSoliR}]]></variableExpression>
+	</variable>
+	<variable name="maxImpAproR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosImpValAprobR}]]></variableExpression>
+	</variable>
+	<variable name="maxDomiSolR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosDomValSoliR}]]></variableExpression>
+	</variable>
+	<variable name="maxDomiAproR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosDomValAprobR}]]></variableExpression>
+	</variable>
+	<variable name="maxDistSolR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosEntDisEleSoliR}]]></variableExpression>
+	</variable>
+	<variable name="maxDistAproR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosEntDisEleAprobR}]]></variableExpression>
+	</variable>
+	<variable name="maxFisSoliR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosValFisSoliR}]]></variableExpression>
+	</variable>
+	<variable name="maxFisAproR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosValFisAprobR}]]></variableExpression>
+	</variable>
+	<variable name="maxDigSoliR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosValDigSoliR}]]></variableExpression>
+	</variable>
+	<variable name="maxDigAproR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosValDigAprobR}]]></variableExpression>
+	</variable>
+	<variable name="maxAtenSoliR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosAteSoliR}]]></variableExpression>
+	</variable>
+	<variable name="maxAtenAproR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosAteAprobR}]]></variableExpression>
+	</variable>
+	<variable name="maxTotalSoliR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosGestAdmSoliR}]]></variableExpression>
+	</variable>
+	<variable name="maxTotalAproR" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{cosGestAdmAprobR}]]></variableExpression>
+	</variable>
+	<variable name="minImpSolR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosImpValSoliR}]]></variableExpression>
+	</variable>
+	<variable name="minImpAproR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosImpValAprobR}]]></variableExpression>
+	</variable>
+	<variable name="minDomiSolR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosDomValSoliR}]]></variableExpression>
+	</variable>
+	<variable name="minDomiAproR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosDomValAprobR}]]></variableExpression>
+	</variable>
+	<variable name="minDistSolR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosEntDisEleSoliR}]]></variableExpression>
+	</variable>
+	<variable name="minDistAproR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosEntDisEleAprobR}]]></variableExpression>
+	</variable>
+	<variable name="minFisSoliR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosValFisSoliR}]]></variableExpression>
+	</variable>
+	<variable name="minFisAproR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosValFisAprobR}]]></variableExpression>
+	</variable>
+	<variable name="minDigSoliR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosValDigSoliR}]]></variableExpression>
+	</variable>
+	<variable name="minDigAproR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosValDigAprobR}]]></variableExpression>
+	</variable>
+	<variable name="minAtenSoliR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosAteSoliR}]]></variableExpression>
+	</variable>
+	<variable name="minAtenAproR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosAteAprobR}]]></variableExpression>
+	</variable>
+	<variable name="minTotalSoliR" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{cosGestAdmSoliR}]]></variableExpression>
+	</variable>
+	<variable name="minTotalAproR" class="java.math.BigDecimal" calculation="Lowest">
 		<variableExpression><![CDATA[$F{cosGestAdmAprobR}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="114" splitType="Stretch">
+		<band height="115" splitType="Stretch">
 			<staticText>
-				<reportElement x="630" y="23" width="87" height="16"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="8"/>
+				<reportElement x="548" y="25" width="125" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="717" y="23" width="85" height="16"/>
+				<reportElement x="674" y="25" width="128" height="16"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
@@ -211,7 +295,7 @@
 				<text><![CDATA[FORMATO 14B: Resumen de Costos Estándares Unitarios Zona Rural]]></text>
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="7" width="215" height="60"/>
+				<reportElement x="-1" y="7" width="217" height="60"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
 			<textField>
@@ -224,7 +308,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="2" splitType="Stretch"/>
+		<band height="4" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="64" splitType="Stretch">
@@ -511,129 +595,356 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="2" splitType="Stretch"/>
+		<band height="1" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="6" splitType="Stretch"/>
+		<band height="22" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="1" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="694" y="1" width="68" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="41" splitType="Stretch">
+		<band height="69" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="4" width="215" height="20"/>
+				<reportElement x="0" y="0" width="215" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL S/.]]></text>
+				<text><![CDATA[PROMEDIO S/.]]></text>
 			</staticText>
 			<line direction="BottomUp">
-				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="2" width="802" height="1" forecolor="#006699" backcolor="#006699"/>
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="20" width="802" height="1" forecolor="#006699" backcolor="#006699"/>
 				<graphicElement>
-					<pen lineStyle="Double"/>
-				</graphicElement>
-			</line>
-			<line direction="BottomUp">
-				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="24" width="802" height="1" forecolor="#006699" backcolor="#006699"/>
-				<graphicElement>
-					<pen lineStyle="Double"/>
+					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="216" y="4" width="40" height="20"/>
+				<reportElement x="216" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumImpSolR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="257" y="4" width="40" height="20"/>
+				<reportElement x="257" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumImpAproR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="298" y="4" width="40" height="20"/>
+				<reportElement x="298" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumDomiSolR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="339" y="4" width="40" height="20"/>
+				<reportElement x="339" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumDomiAproR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="380" y="4" width="40" height="20"/>
+				<reportElement x="380" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumDistSolR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="421" y="4" width="40" height="20"/>
+				<reportElement x="421" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumDistAproR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="462" y="4" width="42" height="20"/>
+				<reportElement x="462" y="0" width="42" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumFisSoliR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="505" y="4" width="42" height="20"/>
+				<reportElement x="505" y="0" width="42" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumFisAproR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="548" y="4" width="40" height="20"/>
+				<reportElement x="548" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumDigSoliR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="589" y="4" width="40" height="20"/>
+				<reportElement x="589" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumDigAproR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="631" y="4" width="42" height="20"/>
+				<reportElement x="631" y="0" width="42" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumAtenSoliR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="674" y="4" width="42" height="20"/>
+				<reportElement x="674" y="0" width="42" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumAtenAproR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="717" y="4" width="42" height="20"/>
+				<reportElement x="717" y="0" width="42" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumTotalSoliR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="760" y="4" width="42" height="20"/>
+				<reportElement x="760" y="0" width="42" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumTotalAproR}]]></textFieldExpression>
+			</textField>
+			<line direction="BottomUp">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="41" width="802" height="1" forecolor="#006699" backcolor="#006699"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line direction="BottomUp">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="62" width="802" height="1" forecolor="#006699" backcolor="#006699"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="21" width="215" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAX. S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="215" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MIN. S/.]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="216" y="21" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxImpSolR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="257" y="21" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxImpAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="298" y="21" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxDomiSolR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="339" y="21" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxDomiAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="380" y="21" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxDistSolR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="421" y="21" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxDistAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="462" y="21" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxFisSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="505" y="21" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxFisAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="548" y="21" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxDigSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="589" y="21" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxDigAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="631" y="21" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxAtenSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="674" y="21" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxAtenAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="717" y="21" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxTotalSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="760" y="21" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{maxTotalAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="216" y="42" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minImpSolR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="257" y="42" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minImpAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="298" y="42" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minDomiSolR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="339" y="42" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minDomiAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="380" y="42" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minDistSolR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="421" y="42" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minDistAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="462" y="42" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minFisSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="505" y="42" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minFisAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="548" y="42" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minDigSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="589" y="42" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minDigAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="631" y="42" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minAtenSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="674" y="42" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minAtenAproR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="717" y="42" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minTotalSoliR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="760" y="42" width="42" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{minTotalAproR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
