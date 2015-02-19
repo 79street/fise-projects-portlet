@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="4.707642565081555"/>
-	<property name="ireport.x" value="3119"/>
-	<property name="ireport.y" value="891"/>
+	<property name="ireport.zoom" value="10.091249923988542"/>
+	<property name="ireport.x" value="7760"/>
+	<property name="ireport.y" value="1981"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
 		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
@@ -311,7 +311,7 @@
 		<band height="2" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="65" splitType="Stretch">
+		<band height="64" splitType="Stretch">
 			<staticText>
 				<reportElement mode="Opaque" x="339" y="43" width="42" height="21" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -476,7 +476,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="126" height="20"/>
 				<textElement verticalAlignment="Middle">
@@ -491,9 +491,6 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{periodo}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="0" y="21" width="801" height="1" forecolor="#007DBC" backcolor="#007DBC"/>
-			</line>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="213" y="0" width="42" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -598,7 +595,7 @@
 		<band height="1" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="22" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField evaluationTime="Report">
 				<reportElement x="759" y="1" width="42" height="20"/>
 				<textElement/>
@@ -612,7 +609,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="96" splitType="Stretch">
+		<band height="65" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="213" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -620,12 +617,6 @@
 				</textElement>
 				<text><![CDATA[PROMEDIO S/.]]></text>
 			</staticText>
-			<line direction="BottomUp">
-				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="20" width="801" height="1" forecolor="#006699" backcolor="#006699"/>
-				<graphicElement>
-					<pen lineStyle="Solid"/>
-				</graphicElement>
-			</line>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="213" y="0" width="42" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -724,18 +715,6 @@
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{sumTotalAproP}]]></textFieldExpression>
 			</textField>
-			<line direction="BottomUp">
-				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="42" width="801" height="1" forecolor="#006699" backcolor="#006699"/>
-				<graphicElement>
-					<pen lineStyle="Solid"/>
-				</graphicElement>
-			</line>
-			<line direction="BottomUp">
-				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="64" width="801" height="1" forecolor="#006699" backcolor="#006699"/>
-				<graphicElement>
-					<pen lineStyle="Solid"/>
-				</graphicElement>
-			</line>
 			<staticText>
 				<reportElement x="0" y="21" width="213" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
