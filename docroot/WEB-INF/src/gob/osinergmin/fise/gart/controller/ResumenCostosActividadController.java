@@ -198,7 +198,7 @@ public class ResumenCostosActividadController {
 		    
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
 		    String tipoArchivo = "1";//exel		
-		    String nombreReporte = "costosEstandarXEmpresa"; //nombre del jasper
+		    String nombreReporte = "costosEstandarXEmpresa_Excel"; 
 		    String nombreArchivo ="RESUMEN_COSTO_ACTIVIDAD_F14AB";  
 		    
 		    //para enviar lista primero verifico que sea TODOS
