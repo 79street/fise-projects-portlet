@@ -223,7 +223,7 @@ public class ResumenCostosController {
 		    
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
 		    String tipoArchivo = "1";//exel		
-		    String nombreReporte = "resumenCostos14A";
+		    String nombreReporte = "resumenCostos14A_Excel";
 		    String nombreArchivo ="RESUMEN_COSTO_F14A";     
 		    
 		    listaF14A = resumenCostosService.buscarResumenCostoF14A(r.getCodEmpresaBusq(), idGrupoInf);	    
@@ -371,11 +371,11 @@ public class ResumenCostosController {
 		    
 		    String nombreReporte = "";  
 		    if(r.getOptionZona()!=null && r.getOptionZona().equals("RURAL")){ 
-		    	nombreReporte = "resumenCostos14B_Rural";  
+		    	nombreReporte = "resumenCostos14B_Rural_Excel";  
 		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("PROVINCIA")){
-		    	nombreReporte = "resumenCostos14B_Prov";  
+		    	nombreReporte = "resumenCostos14B_Prov_Excel";  
 		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("LIMA")){
-		    	nombreReporte = "resumenCostos14B_Lima";  	
+		    	nombreReporte = "resumenCostos14B_Lima_Excel";  	
 		    }
 		    
 		    listaF14B = resumenCostosService.buscarResumenCostoF14B(r.getCodEmpresaBusq(), idGrupoInf);	    
@@ -515,7 +515,7 @@ public class ResumenCostosController {
 		    
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
 		    String tipoArchivo = "1";//exel		
-		    String nombreReporte = "resumenCostos12A_12B";
+		    String nombreReporte = "resumenCostos12A_12B_Excel";
 		    String nombreArchivo ="RESUMEN_COSTO_F12A";     
 		    
 		    listaF12A = resumenCostosService.buscarResumenCostoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12A"); 
@@ -656,7 +656,7 @@ public class ResumenCostosController {
 		    
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
 		    String tipoArchivo = "1";//exel		
-		    String nombreReporte = "resumenCostos12A_12B";
+		    String nombreReporte = "resumenCostos12A_12B_Excel";
 		    String nombreArchivo ="RESUMEN_COSTO_F12B";     
 		    
 		    listaF12B = resumenCostosService.buscarResumenCostoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12B"); 
@@ -849,7 +849,7 @@ public class ResumenCostosController {
 		    
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;
 		    String tipoArchivo = "1";//exel		
-		    String nombreReporte = "resumenCostos14AB_Comp";        
+		    String nombreReporte = "resumenCostos14AB_Comp_Excel";        
 		    
 		    listaResumen = resumenCostosService.buscarResumenCostoCompF14AB(r.getCodEmpresaBusq(),
 		    		idGrupoInf, idZona, formato);
