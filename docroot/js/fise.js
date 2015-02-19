@@ -298,7 +298,11 @@ function completarDecimal(id,decimal){
 		    if (key > 47 && key < 58) {
 		        if (textItem.value == "") return true;
 		        regexp = /[0-9]{7}/;      
-		        return !(regexp.test(textItem.value));
+		        
+		        var sub1 = /[0-9]{/;
+				var sub2 = /}/;
+				
+		        return !((sub1.source+entero+sub2.source).test(textItem.value));
 		    } 
 		    // .
 		    if (key == 46) {
