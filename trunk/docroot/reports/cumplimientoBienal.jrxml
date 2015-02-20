@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cumplimientoBienal" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.6500000000000046"/>
-	<property name="ireport.x" value="83"/>
-	<property name="ireport.y" value="31"/>
+	<property name="ireport.zoom" value="2.415765000000029"/>
+	<property name="ireport.x" value="1205"/>
+	<property name="ireport.y" value="276"/>
 	<subDataset name="dataset1"/>
 	<parameter name="DESC_MES_CUMPLIMIENTO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
@@ -20,9 +20,6 @@
 	<field name="anioPresent" class="java.lang.Long">
 		<fieldDescription><![CDATA[anioPresent]]></fieldDescription>
 	</field>
-	<field name="class" class="java.lang.Class">
-		<fieldDescription><![CDATA[class]]></fieldDescription>
-	</field>
 	<field name="codigoEmpresa" class="java.lang.String">
 		<fieldDescription><![CDATA[codigoEmpresa]]></fieldDescription>
 	</field>
@@ -31,18 +28,6 @@
 	</field>
 	<field name="etapa" class="java.lang.String">
 		<fieldDescription><![CDATA[etapa]]></fieldDescription>
-	</field>
-	<field name="format12A" class="java.lang.String">
-		<fieldDescription><![CDATA[format12A]]></fieldDescription>
-	</field>
-	<field name="format12B" class="java.lang.String">
-		<fieldDescription><![CDATA[format12B]]></fieldDescription>
-	</field>
-	<field name="format12C" class="java.lang.String">
-		<fieldDescription><![CDATA[format12C]]></fieldDescription>
-	</field>
-	<field name="format12D" class="java.lang.String">
-		<fieldDescription><![CDATA[format12D]]></fieldDescription>
 	</field>
 	<field name="format13A" class="java.lang.String">
 		<fieldDescription><![CDATA[format13A]]></fieldDescription>
@@ -69,32 +54,32 @@
 	<title>
 		<band height="115" splitType="Stretch">
 			<image hAlign="Center">
-				<reportElement x="72" y="5" width="244" height="57"/>
+				<reportElement x="18" y="5" width="168" height="57"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="72" y="94" width="623" height="20" forecolor="#006699"/>
+				<reportElement x="18" y="94" width="760" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado de cumplimiento de envío de información Bienal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="463" y="29" width="129" height="16"/>
+				<reportElement x="399" y="29" width="189" height="16"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="594" y="29" width="101" height="16"/>
+				<reportElement x="589" y="29" width="189" height="16"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="72" y="74" width="624" height="20" forecolor="#006699"/>
+				<reportElement x="18" y="74" width="760" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -103,30 +88,30 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="78" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement x="71" y="29" width="115" height="20" forecolor="#000000"/>
+				<reportElement x="19" y="29" width="167" height="20" forecolor="#000000"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Año / Mes declarado: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="49" width="115" height="20" forecolor="#000000"/>
+				<reportElement x="19" y="49" width="167" height="20" forecolor="#000000"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Etapa:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="186" y="49" width="510" height="20"/>
+				<reportElement x="186" y="49" width="592" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_ETAPA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="186" y="29" width="510" height="20"/>
+				<reportElement x="186" y="29" width="592" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -135,51 +120,51 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="52" splitType="Stretch">
+		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="71" y="11" width="80" height="41" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="19" y="2" width="80" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="152" y="11" width="299" height="41" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="99" y="2" width="299" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Empresa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="452" y="32" width="60" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="398" y="22" width="95" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[F13A]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="513" y="32" width="60" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="493" y="22" width="95" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[F14A]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="574" y="32" width="60" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="588" y="22" width="95" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[F14B]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="635" y="32" width="61" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="683" y="22" width="95" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[F14C]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="452" y="11" width="244" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="398" y="2" width="380" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
@@ -190,59 +175,67 @@
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="72" y="0" width="79" height="20"/>
+				<reportElement x="20" y="0" width="78" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoEmpresa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="152" y="0" width="299" height="20"/>
+				<reportElement x="99" y="0" width="269" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descipcionCortaEmpresa}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="19" y="20" width="759" height="1" forecolor="#006699"/>
+			</line>
+			<line>
+				<reportElement x="683" y="0" width="1" height="20" forecolor="#006699"/>
+			</line>
+			<line>
+				<reportElement x="588" y="0" width="1" height="20" forecolor="#006699"/>
+			</line>
+			<line>
+				<reportElement x="777" y="0" width="1" height="20" forecolor="#006699"/>
+			</line>
+			<line>
+				<reportElement x="19" y="0" width="1" height="20" forecolor="#006699"/>
+			</line>
+			<line>
+				<reportElement x="98" y="0" width="1" height="20" forecolor="#006699"/>
+			</line>
+			<line>
+				<reportElement x="493" y="0" width="1" height="20" forecolor="#006699"/>
+			</line>
+			<line>
+				<reportElement x="398" y="0" width="1" height="20" forecolor="#006699"/>
+			</line>
 			<textField>
-				<reportElement x="452" y="0" width="60" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{format13A}=="S")?"X":""]]></textFieldExpression>
+				<reportElement x="398" y="0" width="95" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{format13A}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="513" y="0" width="60" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{format14A}=="S")?"X":""]]></textFieldExpression>
+				<reportElement x="493" y="0" width="95" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{format14A}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="574" y="0" width="60" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{format14B}=="S")?"X":""]]></textFieldExpression>
+				<reportElement x="588" y="0" width="95" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{format14B}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="635" y="0" width="60" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{format14C}=="S")?"X":""]]></textFieldExpression>
+				<reportElement x="683" y="0" width="94" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{format14C}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="71" y="20" width="625" height="1" forecolor="#006699"/>
-			</line>
-			<line>
-				<reportElement x="634" y="0" width="1" height="20" forecolor="#006699"/>
-			</line>
-			<line>
-				<reportElement x="573" y="0" width="1" height="20" forecolor="#006699"/>
-			</line>
-			<line>
-				<reportElement x="512" y="0" width="1" height="20" forecolor="#006699"/>
-			</line>
-			<line>
-				<reportElement x="451" y="0" width="1" height="20" forecolor="#006699"/>
-			</line>
-			<line>
-				<reportElement x="695" y="0" width="1" height="20" forecolor="#006699"/>
-			</line>
-			<line>
-				<reportElement x="71" y="0" width="1" height="20" forecolor="#006699"/>
-			</line>
-			<line>
-				<reportElement x="151" y="0" width="1" height="20" forecolor="#006699"/>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
@@ -251,13 +244,17 @@
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="695" y="0" width="67" height="20"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="589" y="0" width="94" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="762" y="0" width="40" height="20"/>
-				<textElement/>
+				<reportElement x="684" y="0" width="94" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
