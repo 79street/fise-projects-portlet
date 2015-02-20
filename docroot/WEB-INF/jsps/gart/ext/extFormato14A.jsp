@@ -309,8 +309,10 @@ var formato14A= {
 		formato14A.botonNuevo.click(function() {formato14A.<portlet:namespace/>crearFormato();});
 		formato14A.botonBuscar.click(function() {formato14A.buscar();});
 		formato14A.botonGrabar.click(function() {
-			if( formato14A.validarGrupoInformacion() ){
-				formato14A.<portlet:namespace/>guardarFormato();
+			if(formato14A.validarGrupoInformacion()){
+				if(formato14A.validarUltimaEtapaF14A()){
+					formato14A.<portlet:namespace/>guardarFormato();
+				}				
 			}
 		});
 		formato14A.botonRegresar.click(function() {formato14A.<portlet:namespace/>regresar();});
@@ -318,13 +320,17 @@ var formato14A= {
 		formato14A.f_periodoEnvio.change(function(){formato14A.<portlet:namespace/>loadPeriodo(this.value);});
 		//cargaarchivos
 		formato14A.botonCargaExcel.click(function() {
-			if( formato14A.validarGrupoInformacion() ){
-				formato14A.<portlet:namespace/>mostrarFormularioCargaExcel();
+			if(formato14A.validarGrupoInformacion() ){
+				if(formato14A.validarUltimaEtapaF14A()){
+					formato14A.<portlet:namespace/>mostrarFormularioCargaExcel();
+				}				
 			}
 		});
 		formato14A.botonCargaTxt.click(function() {
 			if( formato14A.validarGrupoInformacion() ){
-				formato14A.<portlet:namespace/>mostrarFormularioCargaTexto();
+				if(formato14A.validarUltimaEtapaF14A()){
+					formato14A.<portlet:namespace/>mostrarFormularioCargaTexto();	
+				}				
 			}
 		});
 		formato14A.botonCargarFormatoExcel.click(function() {formato14A.<portlet:namespace/>cargarFormatoExcel();});
@@ -1307,6 +1313,8 @@ var formato14A= {
 					//
 					dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
 					
+					dwr.util.setValue("etapaFinal", data.etapaFinal);		
+					
 					formato14A.recargarPeriodoEjecucion(data.anioInicioVigencia,data.anioFinVigencia);
 					formato14A.mostrarPeriodoEjecucion();
 				},error : function(){
@@ -1442,6 +1450,7 @@ var formato14A= {
 								}else{
 									formato14A.deshabilitarLima();
 								}
+								$('#etapaFinal').val('');//limpiamos la variabel al momento de editar para que no bloquee la etapa final del formato
 								formato14A.initBlockUI();
 							}
 							else{
@@ -2440,12 +2449,28 @@ var formato14A= {
 		formato14A.f_nroAgentL.removeClass("fise-editable");
 	},
 	
+	//funcion para poner focus al momento de validar y campo
 	ponerFocus : function(cadena){		
 		cadena.focus();
 	},
+		
+	//funcion para verificar la ultima etapa del formato		
+	validarUltimaEtapaF14A : function(){
+		var valorObtenido = $('#etapaFinal').val();	
+		console.debug("Entro a etapa final: "+valorObtenido);			
+		if(valorObtenido=='SI'){
+			var addhtmAlert='No se puede realizar esta operación debido a que el Formato se encuentra en una etapa avanzada.';					
+			formato14A.dialogMessageWarningContent.html(addhtmAlert);
+			formato14A.dialogMessageWarning.dialog("open");			
+			cod_focus = $('#etapaFinal');		   
+			return false;
+			
+		}else{			
+			return true;				
+		}			
+	},		
 	
 	
-	//
 	blockUI : function(){
 		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
 	},

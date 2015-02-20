@@ -713,21 +713,33 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
   			response.setContentType("applicacion/json");
   			String periodoEnvio = command.getPeriodoEnvio();
   			JSONObject jsonObj = new JSONObject();
+  			String anioIniV="";
+  			String anioFinV = "";
+  			
   			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				if( periodoEnvio.equals(p.getCodigoItem()) ){
 					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
 					//agreamos los campos de ano inicio y fin de vigencia
 					jsonObj.put("anioInicioVigencia", p.getAnioInicioVig());
 					jsonObj.put("anioFinVigencia", p.getAnioFinVig());
+					anioIniV = p.getAnioInicioVig();
+					anioFinV = p.getAnioFinVig();
 					break;
 				}
 			}
-  			
+  			boolean valorEtapa =false;
   			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
   				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.BIENAL);
   				jsonObj.put("idGrupoInfo", idGrupo);
+  				valorEtapa = true;//si existe grupo de informacion por lo tanto asignamos true a etapa 
   			}else{
   				jsonObj.put("idGrupoInfo", 0);
+  			}
+  			if(valorEtapa && 
+  					obtenerUltimaEtapaFormato(command.getCodigoEmpresa(), periodoEnvio, anioIniV, anioFinV)){
+  				jsonObj.put("etapaFinal", "SI");//SI = bloquea no deje ingresar informacion  				
+  			}else{
+  				jsonObj.put("etapaFinal", "NO");
   			}
   			
   			System.out.println(jsonObj.toString());
@@ -3119,5 +3131,41 @@ public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse resp
 			e.printStackTrace();
 		}
 	}
+	
+	private boolean obtenerUltimaEtapaFormato(String codEmpresa,String periodoEnvio,
+			String anioIniV,String anioFinV) { 	    	
+    	boolean valor = true;
+		try {
+			String anioP ="";
+			String mesP="";
+			long anioEjecucion = 0;
+			long mesEjecucion =0;
+			long anioPres = 0;
+			long mesPres =0;
+			long anioInicioVig = 0;
+			long anioFinVig =0;				
+			if(periodoEnvio.length()>6 ){
+				anioP = periodoEnvio.substring(0, 4);
+				mesP = periodoEnvio.substring(4, 6);				
+			}					
+			if(FormatoUtil.isNotBlank(anioIniV)){ 
+				anioInicioVig = Long.valueOf(anioIniV);
+			}
+			if(FormatoUtil.isNotBlank(anioFinV)){ 
+				anioFinVig = Long.valueOf(anioFinV);
+			}
+			if(FormatoUtil.isNotBlank(anioP)){ 
+				anioPres = Long.valueOf(anioP);
+			}
+			if(FormatoUtil.isNotBlank(mesP)){ 
+				mesPres = Long.valueOf(mesP);
+			}
+			valor = fiseUtil.bloquearFormatoXEtapa(FiseConstants.TIPO_FORMATO_14B,
+					codEmpresa,anioPres, mesPres,anioEjecucion, mesEjecucion,anioInicioVig,anioFinVig );			
+		} catch (Exception e) {
+			valor = true;
+		} 
+		return valor;
+	}	
 
 }

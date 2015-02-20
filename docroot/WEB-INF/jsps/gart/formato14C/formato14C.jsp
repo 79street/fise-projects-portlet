@@ -961,6 +961,8 @@ $(document).ready(function () {
 	
 	 <form:input path="codEdelnor" cssStyle="display:none;" />	 
 	 <form:input path="codLuzSur" cssStyle="display:none;" />
+	 
+	 <form:input path="etapaFinal" cssStyle="display:none;" />
 	
 	
 </form:form>

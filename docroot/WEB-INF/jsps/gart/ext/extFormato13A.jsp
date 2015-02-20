@@ -423,13 +423,17 @@ var formato13A= {
 		
 		formato13A.btnExcel.click(function() {
 			if( formato13A.validarGrupoInformacion() ){
-				formato13A.<portlet:namespace/>showUploadExcel();
+				if(formato13A.validarUltimaEtapaF13A()){
+					formato13A.<portlet:namespace/>showUploadExcel();	
+				}				
 			}
 		});
 		formato13A.btnCargarFormatoExcel.click(function() {formato13A.<portlet:namespace/>cargarFormatoExcel();});
 		formato13A.btnTxt.click(function() {
 			if( formato13A.validarGrupoInformacion() ){
-				formato13A.<portlet:namespace/>showUploadTxt();
+				if(formato13A.validarUltimaEtapaF13A()){
+					formato13A.<portlet:namespace/>showUploadTxt();
+				}				
 			}
 		});
 		formato13A.btnCargarFormatoTexto.click(function() {formato13A.<portlet:namespace/>cargarFormatoTxt();});
@@ -459,10 +463,12 @@ var formato13A= {
 
 			formato13A.botonAnadirFormato.click(function(){
 				if( formato13A.validarGrupoInformacion() ){
-					formato13A.blockUI();
-					//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
-					//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
-					formato13A.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
+					if(formato13A.validarUltimaEtapaF13A()){
+						formato13A.blockUI();
+						//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
+						//---formato13A.formNuevo.attr('action',urlAnadirFormato+'&strip=0').removeAttr('enctype').submit();
+						formato13A.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
+					}					
 				}
 			});
 			
@@ -543,6 +549,8 @@ var formato13A= {
 			}else if( formato13A.msgTransaccion.val()=='ERROR' ){
 				formato13A.dialogError.dialog( "open" );
 			}
+			
+			$('#etapaFinal').val('');//limpiamos la variabel al momento de editar para que no bloquee la etapa final del formato
 			
 		}
 		
@@ -937,6 +945,7 @@ var formato13A= {
 				dataType: 'json',
 				success: function(data) {				
 					dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
+					dwr.util.setValue("etapaFinal", data.etapaFinal);
 				},error : function(){
 					alert("Error de conexión.");
 					formato13A.unblockUI();
@@ -1786,18 +1795,34 @@ var formato13A= {
 			formato13A.dialogMessageInfoCrud.dialog("open");
 		}
 	},
-	
+	//funcion para poner focus al momento de validar y campo
 	ponerFocus : function(cadena){		
 		cadena.focus();
 	},
-	
+	//funcion para poner focus al momento de validar y campo
 	ponerFocusCRUD : function(cadena){		
 		cadena.focus();
 	},
 	
+	//funcion para poner focus al momento de validar y campo
 	ponerFocusDetalle : function(cadena){		
 		cadena.focus();
 	},
+	
+	//funcion para verificar la ultima etapa del formato		
+	validarUltimaEtapaF13A : function(){
+		var valorObtenido = $('#etapaFinal').val();	
+		console.debug("Entro a etapa final: "+valorObtenido);			
+		if(valorObtenido=='SI'){
+			var addhtmAlert='No se puede realizar esta operación debido a que el Formato se encuentra en una etapa avanzada.';					
+			formato13A.dialogMessageWarningCrudContent.html(addhtmAlert);
+			formato13A.dialogMessageWarningCrud.dialog("open");			
+			cod_focus = $('#etapaFinal');			   
+			return false;				
+		}else{				
+			return true;				
+		}			
+	},		
 	
 	//inicializar dialogs
 	initDialogs : function(){	
