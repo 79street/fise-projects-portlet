@@ -402,7 +402,7 @@ public class Formato14CGartController {
 					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
 							f.setAnoIniVigencia(p.getAnioInicioVig());
-							f.setAnoIniVigencia(p.getAnioFinVig());
+							f.setAnoFinVigencia(p.getAnioFinVig());
 							break;
 						}
 					}
@@ -472,7 +472,7 @@ public class Formato14CGartController {
 					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
 							f.setAnoIniVigencia(p.getAnioInicioVig());
-							f.setAnoIniVigencia(p.getAnioFinVig());
+							f.setAnoFinVigencia(p.getAnioFinVig());
 							break;
 						}
 					}
@@ -597,6 +597,8 @@ public class Formato14CGartController {
 		try {			
   			response.setContentType("applicacion/json");
   			String periodoEnvio = f.getPeriodoEnvio();
+  			String anioIniV="";
+  			String anioFinV = "";
   			logger.info("Flag periodo formato controller: "+f.getPeriodoEnvio()); 
   			JSONObject jsonObj = new JSONObject();
   			
@@ -612,18 +614,26 @@ public class Formato14CGartController {
 					logger.info("flag habilita costos flag cargar : "+p.getFlagHabilitaCostos()); 
 					//agreamos los campos de ano inicio y fin de vigencia
 					jsonObj.put("anoIniVigencia", p.getAnioInicioVig());
-					jsonObj.put("anoFinVigencia", p.getAnioFinVig());					 
+					jsonObj.put("anoFinVigencia", p.getAnioFinVig());
+					anioIniV = p.getAnioInicioVig();
+					anioFinV = p.getAnioFinVig();
 					break;
 				}
-			}  			
-  			
-  			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
+			} 
+  			boolean valorEtapa =false;
+  			if(periodoEnvio!=null && periodoEnvio.length()>6 ){
   				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.BIENAL);
   				jsonObj.put("idGrupoInfo", idGrupo);
-  			}else{
+  				valorEtapa = true;//si existe grupo de informacion por lo tanto asignamos true a etapa 
+  			}else{  				
   				jsonObj.put("idGrupoInfo", 0);
+  			}  			 			
+  			if(valorEtapa && 
+  					obtenerUltimaEtapaFormato(f.getCodEmpresa(), periodoEnvio, anioIniV, anioFinV)){
+  				jsonObj.put("etapaFinal", "SI");//SI = bloquea no deje ingresar informacion  				
+  			}else{
+  				jsonObj.put("etapaFinal", "NO");
   			}
-  			
 			//pRequest.getPortletSession().setAttribute("listaCargarPeriodo",null, PortletSession.APPLICATION_SCOPE);
   			PrintWriter pw = response.getWriter();
   		    pw.write(jsonObj.toString());
@@ -698,7 +708,8 @@ public class Formato14CGartController {
 						
 		FileEntry fileEntry=null;
 		try{
-			if(flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO)){				
+			if(flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO)){
+				
 				fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);				
 				formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, 
 						codEmpresaNew, anioPresNew, mesPresNew, anioIniVigNew, anioFinVigNew, etapaNew,flagCosto);				
@@ -817,7 +828,7 @@ public class Formato14CGartController {
 					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
 							f.setAnoIniVigencia(p.getAnioInicioVig());
-							f.setAnoIniVigencia(p.getAnioFinVig());
+							f.setAnoFinVigencia(p.getAnioFinVig());
 							break;
 						}
 					}
@@ -872,7 +883,7 @@ public class Formato14CGartController {
 				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 					if(f.getPeriodoEnvio().equals(p.getCodigoItem())){					
 						f.setAnoIniVigencia(p.getAnioInicioVig());
-						f.setAnoIniVigencia(p.getAnioFinVig());
+						f.setAnoFinVigencia(p.getAnioFinVig());
 						break;
 					}
 				}
@@ -1058,7 +1069,7 @@ public class Formato14CGartController {
 						if(FormatoUtil.isBlank(f.getAnoIniVigencia()) &&
 								FormatoUtil.isBlank(f.getAnoFinVigencia())){
 							f.setAnoIniVigencia(p.getAnioInicioVig());
-							f.setAnoIniVigencia(p.getAnioFinVig());	
+							f.setAnoFinVigencia(p.getAnioFinVig());	
 						}					
 						break;
 					}
@@ -4411,7 +4422,7 @@ public class Formato14CGartController {
 					for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 						if(f.getPeriodoEnvio().equals(p.getCodigoItem()) ){					
 							f.setAnoIniVigencia(p.getAnioInicioVig());
-							f.setAnoIniVigencia(p.getAnioFinVig());
+							f.setAnoFinVigencia(p.getAnioFinVig());
 							break;
 						}
 					}
@@ -4475,8 +4486,42 @@ public class Formato14CGartController {
 			e.printStackTrace();
 		}
 	}
-    
-    
+          
+	private boolean obtenerUltimaEtapaFormato(String codEmpresa,String periodoEnvio,
+			String anioIniV,String anioFinV) { 	    	
+    	boolean valor = true;
+		try {
+			String anioP ="";
+			String mesP="";
+			long anioEjecucion = 0;
+			long mesEjecucion =0;
+			long anioPres = 0;
+			long mesPres =0;
+			long anioInicioVig = 0;
+			long anioFinVig =0;				
+			if(periodoEnvio.length()>6 ){
+				anioP = periodoEnvio.substring(0, 4);
+				mesP = periodoEnvio.substring(4, 6);				
+			}					
+			if(FormatoUtil.isNotBlank(anioIniV)){ 
+				anioInicioVig = Long.valueOf(anioIniV);
+			}
+			if(FormatoUtil.isNotBlank(anioFinV)){ 
+				anioFinVig = Long.valueOf(anioFinV);
+			}
+			if(FormatoUtil.isNotBlank(anioP)){ 
+				anioPres = Long.valueOf(anioP);
+			}
+			if(FormatoUtil.isNotBlank(mesP)){ 
+				mesPres = Long.valueOf(mesP);
+			}
+			valor = fiseUtil.bloquearFormatoXEtapa(FiseConstants.TIPO_FORMATO_14C,
+					codEmpresa,anioPres, mesPres,anioEjecucion, mesEjecucion,anioInicioVig,anioFinVig );			
+		} catch (Exception e) {
+			valor = true;
+		} 
+		return valor;
+	}	
     
 	
 }

@@ -314,7 +314,9 @@ var formato14B= {
 		formato14B.botonBuscar.click(function() {formato14B.buscar();});
 		formato14B.botonGrabar.click(function() {
 			if( formato14B.validarGrupoInformacion() ){
-				formato14B.<portlet:namespace/>guardarFormato();
+				if(formato14B.validarUltimaEtapaF14B()){
+					formato14B.<portlet:namespace/>guardarFormato();
+				}			
 			}
 		});
 		formato14B.botonRegresar.click(function() {formato14B.<portlet:namespace/>regresar();});
@@ -323,12 +325,16 @@ var formato14B= {
 		//cargaarchivos
 		formato14B.botonCargaExcel.click(function() {
 			if( formato14B.validarGrupoInformacion() ){
-				formato14B.<portlet:namespace/>mostrarFormularioCargaExcel();
+				if(formato14B.validarUltimaEtapaF14B()){
+					formato14B.<portlet:namespace/>mostrarFormularioCargaExcel();
+				}
 			}
 		});
 		formato14B.botonCargaTxt.click(function() {
 			if( formato14B.validarGrupoInformacion() ){
-				formato14B.<portlet:namespace/>mostrarFormularioCargaTexto();
+				if(formato14B.validarUltimaEtapaF14B()){
+					formato14B.<portlet:namespace/>mostrarFormularioCargaTexto();	
+				}				
 			}
 		});
 		formato14B.botonCargarFormatoExcel.click(function() {formato14B.<portlet:namespace/>cargarFormatoExcel();});
@@ -1361,6 +1367,8 @@ var formato14B= {
 					//
 					dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
 					
+					dwr.util.setValue("etapaFinal", data.etapaFinal);		
+					
 					formato14B.recargarPeriodoEjecucion(data.anioInicioVigencia,data.anioFinVigencia);
 					formato14B.mostrarPeriodoEjecucion();
 				},error : function(){
@@ -1498,6 +1506,7 @@ var formato14B= {
 								}else{
 									formato14B.deshabilitarLima();
 								}
+								$('#etapaFinal').val('');//limpiamos la variabel al momento de editar para que no bloquee la etapa final del formato
 								formato14B.initBlockUI();
 							}
 							else{
@@ -2557,12 +2566,29 @@ var formato14B= {
 		formato14B.f_utilMatOficL.removeClass("fise-editable");
 	},
 	
+	//funcion para poner focus al momento de validar y campo
 	ponerFocus : function(cadena){		
 		cadena.focus();
 	},	
 	
+	//funcion para verificar la ultima etapa del formato		
+	validarUltimaEtapaF14B : function(){
+		var valorObtenido = $('#etapaFinal').val();	
+		console.debug("Entro a etapa final: "+valorObtenido);			
+		if(valorObtenido=='SI'){
+			var addhtmAlert='No se puede realizar esta operación debido a que el Formato se encuentra en una etapa avanzada.';					
+			formato14B.dialogMessageWarningContent.html(addhtmAlert);
+		    formato14B.dialogMessageWarning.dialog("open");
+			cod_focus = $('#etapaFinal');		   
+			return false;
+			
+		}else{			
+			return true;				
+		}			
+	},		
 	
-	//
+	
+	
 	blockUI : function(){
 		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
 	},

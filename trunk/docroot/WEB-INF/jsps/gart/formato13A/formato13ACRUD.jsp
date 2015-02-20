@@ -44,6 +44,9 @@
 	<form:hidden path="descestado" />
 	
 	<form:hidden path="idGrupoInfo" />
+	
+	<form:hidden path="etapaFinal" />
+	
    
 	<div id="d_listado" class="net-frame-listado">
 		<div id="d_filtro">

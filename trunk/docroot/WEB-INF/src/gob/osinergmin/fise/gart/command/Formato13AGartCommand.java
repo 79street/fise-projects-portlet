@@ -88,6 +88,8 @@ public class Formato13AGartCommand {
 	
 	private String idGrupoInfo;
 	
+	private String etapaFinal;//para controlar si el formato esta en etapa reconocido, establecido y bloque la carga de data
+	
 	public List<AdmEmpresa> getListaEmpresas() {
 		return listaEmpresas;
 	}
@@ -562,6 +564,14 @@ public class Formato13AGartCommand {
 
 	public void setTypeFile(Integer typeFile) {
 		this.typeFile = typeFile;
+	}
+
+	public String getEtapaFinal() {
+		return etapaFinal;
+	}
+
+	public void setEtapaFinal(String etapaFinal) {
+		this.etapaFinal = etapaFinal;
 	}
 
 	

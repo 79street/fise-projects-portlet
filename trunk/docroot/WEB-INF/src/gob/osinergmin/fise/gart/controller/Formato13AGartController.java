@@ -1018,11 +1018,20 @@ public class Formato13AGartController {
   			response.setContentType("applicacion/json");
   			String periodoEnvio = command.getPeridoDeclaracion();
   			JSONObject jsonObj = new JSONObject();
+  			
+  			boolean valorEtapa =false;
   			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
   				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.BIENAL);
   				jsonObj.put("idGrupoInfo", idGrupo);
+  				valorEtapa = true;//si existe grupo de informacion por lo tanto asignamos true a etapa 
   			}else{
   				jsonObj.put("idGrupoInfo", 0);
+  			}
+  			if(valorEtapa && 
+  					obtenerUltimaEtapaFormato(command.getCodEmpresa(), periodoEnvio, "", "")){
+  				jsonObj.put("etapaFinal", "SI");//SI = bloquea no deje ingresar informacion  				
+  			}else{
+  				jsonObj.put("etapaFinal", "NO");
   			}
   			
   			System.out.println(jsonObj.toString());
@@ -1030,8 +1039,7 @@ public class Formato13AGartController {
   		    pw.write(jsonObj.toString());
   		    pw.flush();
   		    pw.close();							
-  		}catch (Exception e) {
-  			// TODO: handle exception
+  		}catch (Exception e) {  			
   			e.printStackTrace();
   		}
 	}
@@ -3974,55 +3982,89 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 
 	//add
 	public void agregarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato, List<FiseFormato13AD> listaDetalle){
-	
-	Date hoy = FechaUtil.obtenerFechaActual();
-	try{
-		formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-		formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-		formato.setFechaActualizacion(hoy);
-		formato.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-		formato.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-		formato.setFechaCreacion(hoy);
-		
-		boolean existe = false;
-		existe = formatoService.existeFormato13AC(formato);
-		if(!existe){
-			formatoService.savecabecera(formato);
-		}
-		//add
-		for (FiseFormato13AD detalle : listaDetalle) {
-			formatoService.savedetalle(detalle);
-		}
-		if( listaDetalle != null && listaDetalle.size()>0 ){
-			formato.setFiseFormato13ADs(listaDetalle);
-		}
-	
-	} catch (Exception e) {
-		// TODO: handle exception
-		e.printStackTrace();
-	}
-}
 
-public void modificarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato){
-	
-	Date hoy = FechaUtil.obtenerFechaActual();
-	try{
-		formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-		formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-		formato.setFechaActualizacion(hoy);
-		
-		formatoService.updatecabecera(formato);
-		
-		if( formato.getFiseFormato13ADs() != null && formato.getFiseFormato13ADs().size()>0 ){
-			for (FiseFormato13AD detalle : formato.getFiseFormato13ADs()) {
-				formatoService.updatedetalle(detalle);
+		Date hoy = FechaUtil.obtenerFechaActual();
+		try{
+			formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+			formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+			formato.setFechaActualizacion(hoy);
+			formato.setUsuarioCreacion(themeDisplay.getUser().getLogin());
+			formato.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
+			formato.setFechaCreacion(hoy);
+
+			boolean existe = false;
+			existe = formatoService.existeFormato13AC(formato);
+			if(!existe){
+				formatoService.savecabecera(formato);
 			}
+			//add
+			for (FiseFormato13AD detalle : listaDetalle) {
+				formatoService.savedetalle(detalle);
+			}
+			if( listaDetalle != null && listaDetalle.size()>0 ){
+				formato.setFiseFormato13ADs(listaDetalle);
+			}
+
+		} catch (Exception e) {			
+			e.printStackTrace();
 		}
-	
-	} catch (Exception e) {
-		// TODO: handle exception
-		e.printStackTrace();
 	}
-}
+
+	public void modificarFormato13(ThemeDisplay themeDisplay, FiseFormato13AC formato){
+		
+		Date hoy = FechaUtil.obtenerFechaActual();
+		try{
+			formato.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+			formato.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
+			formato.setFechaActualizacion(hoy);
+			
+			formatoService.updatecabecera(formato);
+			
+			if( formato.getFiseFormato13ADs() != null && formato.getFiseFormato13ADs().size()>0 ){
+				for (FiseFormato13AD detalle : formato.getFiseFormato13ADs()) {
+					formatoService.updatedetalle(detalle);
+				}
+			}
+		
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
+	}
+
+	private boolean obtenerUltimaEtapaFormato(String codEmpresa,String periodoEnvio,
+			String anioIniV,String anioFinV) { 	    	
+		boolean valor = true;
+		try {
+			String anioP ="";
+			String mesP="";
+			long anioEjecucion = 0;
+			long mesEjecucion =0;
+			long anioPres = 0;
+			long mesPres =0;
+			long anioInicioVig = 0;
+			long anioFinVig =0;				
+			if(periodoEnvio.length()>6 ){
+				anioP = periodoEnvio.substring(0, 4);
+				mesP = periodoEnvio.substring(4, 6);				
+			}					
+			if(FormatoUtil.isNotBlank(anioIniV)){ 
+				anioInicioVig = Long.valueOf(anioIniV);
+			}
+			if(FormatoUtil.isNotBlank(anioFinV)){ 
+				anioFinVig = Long.valueOf(anioFinV);
+			}
+			if(FormatoUtil.isNotBlank(anioP)){ 
+				anioPres = Long.valueOf(anioP);
+			}
+			if(FormatoUtil.isNotBlank(mesP)){ 
+				mesPres = Long.valueOf(mesP);
+			}
+			valor = fiseUtil.bloquearFormatoXEtapa(FiseConstants.TIPO_FORMATO_13A,
+					codEmpresa,anioPres, mesPres,anioEjecucion, mesEjecucion,anioInicioVig,anioFinVig );			
+		} catch (Exception e) {
+			valor = true;
+		} 
+		return valor;
+	}	
 	
 }

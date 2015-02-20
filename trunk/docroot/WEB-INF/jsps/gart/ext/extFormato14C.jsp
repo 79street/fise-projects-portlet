@@ -74,7 +74,7 @@ var formato14C= {
 		urlReporte:null,//url para reporte cuando visualizo el formato		
 		urlEnvioDefinitivo:null,		
 		urlReporteEnvioDefinitivo:null,
-		urlReporteActaEnvio:null,
+		urlReporteActaEnvio:null,		
 		
 		//botones		
 		botonBuscar:null,
@@ -148,7 +148,6 @@ var formato14C= {
 		tablaObservacion:null,		
 		paginadoObservacion:null,
 				
-				
 		//cargar los id de los elementos del html		
 		init : function(){
 			this.formCommand=$('#formato14CBean'); 
@@ -219,7 +218,7 @@ var formato14C= {
 			this.urlReporte='<portlet:resourceURL id="reporteF14C" />';	
 			this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivoF14C" />';			
 			this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivoF14C" />';
-			this.urlReporteActaEnvio='<portlet:resourceURL id="reporteActaEnvioView" />';
+			this.urlReporteActaEnvio='<portlet:resourceURL id="reporteActaEnvioView" />';			
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarF14C");
@@ -379,10 +378,12 @@ var formato14C= {
 				formato14C.<portlet:namespace/>nuevoFormato14C();
 		    });
 			
-			formato14C.botonGrabar.click(function() {
-				if( formato14C.validarGrupoInformacion() ){
-					formato14C.<portlet:namespace/>guardarFormato14C();
-				}	
+			formato14C.botonGrabar.click(function() {				
+				if(formato14C.validarGrupoInformacion()){
+					if(formato14C.validarUltimaEtapaF14C()){
+						formato14C.<portlet:namespace/>guardarFormato14C();	
+					}					
+				}	 
 			});
 			
 			formato14C.botonActualizar.click(function() {
@@ -415,14 +416,18 @@ var formato14C= {
 		    
 		    //botones para carga de archivos
 		    formato14C.botonCargaExcel.click(function() {
-		    	if( formato14C.validarGrupoInformacion() ){
-		    		formato14C.<portlet:namespace/>mostrarFormularioCargaExcel();
+		    	if(formato14C.validarGrupoInformacion()){
+		    		if(formato14C.validarUltimaEtapaF14C() ){
+		    			formato14C.<portlet:namespace/>mostrarFormularioCargaExcel();	
+		    		}	    		
 		    	}
 		    });
 		    
 		    formato14C.botonCargaTxt.click(function() {
-		    	if( formato14C.validarGrupoInformacion() ){
-		    		formato14C.<portlet:namespace/>mostrarFormularioCargaTexto();
+		    	if(formato14C.validarGrupoInformacion()){
+		    		if(formato14C.validarUltimaEtapaF14C()){
+		    			formato14C.<portlet:namespace/>mostrarFormularioCargaTexto();	
+		    		}	    		
 		    	}
 		    });
 		    
@@ -831,6 +836,7 @@ var formato14C= {
 									
 									formato14C.f_anoIniVigencia.removeClass("fise-editable");
 									formato14C.f_anoFinVigencia.removeClass("fise-editable");
+									$('#etapaFinal').val('');//limpiamos la variabel al momento de editar para que no bloquee la etapa final del formato
 						         }
 								else{									
 									var addhtmError='Error al recuperar los datos del registro seleccionado.';					
@@ -1087,7 +1093,8 @@ var formato14C= {
 				url: formato14C.urlCargaFlagPeriodo+'&'+formato14C.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
-					success: function(data) {				
+					success: function(data) {
+						//todas estos id de variables estan declaradas en en bean
 						dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
 						dwr.util.setValue("flagCosto", data.flagCosto);
 						dwr.util.setValue("anoIniVigencia", data.anoIniVigencia);
@@ -1096,7 +1103,8 @@ var formato14C= {
 						console.debug("flag costos al cargar desde el controller: "+data.flagCosto);
 						
 						dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
-						
+						dwr.util.setValue("etapaFinal", data.etapaFinal);
+						console.debug("Entro a poner valor a etapa final del formato al cargar flag periodo");
 						//formato14C.recargarPeriodoEjecucion();
 						
 						//formato14C.mostrarPeriodoEjecucion();
@@ -3969,13 +3977,31 @@ var formato14C= {
 				var addhtmError='Primero debe realizar el envío definitivo del Formato 14C.';					
 				formato14C.dialogInfoContent.html(addhtmError);
 				formato14C.dialogInfo.dialog("open");
+				cod_focus= $('#idGrupoInfo');		
 			}
 		},
 		
+		//funcion para poner focus al momento de validar y campo
 		ponerFocus : function(cadena){		
 			cadena.focus();
 			
 		},	
+		
+		//funcion para verificar la ultima etapa del formato		
+		validarUltimaEtapaF14C : function(){
+			var valorObtenido = $('#etapaFinal').val();	
+			console.debug("Entro a etapa final: "+valorObtenido);			
+			if(valorObtenido=='SI'){
+				var addhtmAlert='No se puede realizar esta operación debido a que el Formato se encuentra en una etapa avanzada.';					
+				formato14C.dialogValidacionContent.html(addhtmAlert);
+				formato14C.dialogValidacion.dialog("open");				
+				cod_focus = $('#etapaFinal');			   
+				return false;				
+			}else{				
+				return true;				
+			}			
+		},		
+		
 		
 		//funcion cargar la imagen al momento de buscar
 		blockUI : function(){
