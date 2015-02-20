@@ -292,16 +292,24 @@ public class ResumenCostosController {
 		    session.setAttribute("tipoArchivo",tipoArchivo);	    
 		    
 		    String nombreReporte = "";  
+		    boolean zona = true;
 		    if(r.getOptionZona()!=null && r.getOptionZona().equals("RURAL")){ 
 		    	nombreReporte = "resumenCostos14B_Rural";  
 		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("PROVINCIA")){
 		    	nombreReporte = "resumenCostos14B_Prov";  
 		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("LIMA")){
 		    	nombreReporte = "resumenCostos14B_Lima";  	
+		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("TODOS")){
+		    	nombreReporte = "resumenCostos14B";
+		    	zona = false;		    	
 		    }
 		    String directorio = "/reports/" + nombreReporte + ".jasper";
 		    
-		    listaF14B = resumenCostosService.buscarResumenCostoF14B(r.getCodEmpresaBusq(), idGrupoInf);	    
+		    if(zona){
+		    	listaF14B = resumenCostosService.buscarResumenCostoF14B(r.getCodEmpresaBusq(), idGrupoInf);		
+		    }else{
+		    	listaF14B = resumenCostosService.buscarResumenCostoF14BRPL(r.getCodEmpresaBusq(), idGrupoInf);		
+		    }        
 		    
 		    if(listaF14B!=null && listaF14B.size()>0 && FormatoUtil.isNotBlank(nombreReporte)){ 
 		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));
@@ -369,16 +377,24 @@ public class ResumenCostosController {
 		    String tipoArchivo = "1";//exel	   
 		    String nombreArchivo ="RESUMEN_COSTO_F14B"; 
 		    
-		    String nombreReporte = "";  
+		    String nombreReporte = ""; 
+		    boolean zona = true;
 		    if(r.getOptionZona()!=null && r.getOptionZona().equals("RURAL")){ 
 		    	nombreReporte = "resumenCostos14B_Rural_Excel";  
 		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("PROVINCIA")){
 		    	nombreReporte = "resumenCostos14B_Prov_Excel";  
 		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("LIMA")){
 		    	nombreReporte = "resumenCostos14B_Lima_Excel";  	
+		    }else if(r.getOptionZona()!=null && r.getOptionZona().equals("TODOS")){
+		    	nombreReporte = "resumenCostos14B_Excel";
+		    	zona = false;		    	
 		    }
 		    
-		    listaF14B = resumenCostosService.buscarResumenCostoF14B(r.getCodEmpresaBusq(), idGrupoInf);	    
+		    if(zona){
+		    	listaF14B = resumenCostosService.buscarResumenCostoF14B(r.getCodEmpresaBusq(), idGrupoInf);		
+		    }else{
+		    	listaF14B = resumenCostosService.buscarResumenCostoF14BRPL(r.getCodEmpresaBusq(), idGrupoInf);		
+		    }  
 		    
 		    if(listaF14B!=null && listaF14B.size()>0 && FormatoUtil.isNotBlank(nombreReporte)){
 		    	session.setAttribute("tipoFormato",tipoFormato);
