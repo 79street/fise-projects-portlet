@@ -124,7 +124,8 @@ $(document).ready(function () {
 												   	
 												   	 <br>  
 												     
-												     <form:select path="optionZona" cssClass="select" cssStyle="width: 150px;">														
+												     <form:select path="optionZona" cssClass="select" cssStyle="width: 150px;">
+												        <form:option value="TODOS">Todos</form:option>														
 														<form:option value="RURAL">RURAL</form:option>
 														<form:option value="PROVINCIA">URBANO PROVINCIAS</form:option>
 														<form:option value="LIMA">URBANO LIMA</form:option>														
