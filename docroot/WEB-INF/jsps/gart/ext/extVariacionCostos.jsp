@@ -134,7 +134,7 @@ var variacionCostos= {
 							$('#<portlet:namespace/>titulo1-imagen').val(data.titulo1);
 							$('#<portlet:namespace/>titulo2-imagen').val(data.titulo2);
 							$('#<portlet:namespace/>titulo3-imagen').val(data.titulo3);
-							
+							$('#<portlet:namespace/>titulo4-imagen').val(data.titulo4);
 						}
 						variacionCostos.initBlockUI();
 					},error : function(){
@@ -328,6 +328,7 @@ var variacionCostos= {
 	             var largo1 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo1-imagen').val());
 	             var largo2 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo2-imagen').val());
 	             var largo3 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo3-imagen').val());
+	             var largo4 = doc.getStringUnitWidth($('#<portlet:namespace/>titulo4-imagen').val());
 	             
 	             var tamFuente = doc.internal.getFontSize();
 	             var escala = doc.internal.scaleFactor;
@@ -339,11 +340,13 @@ var variacionCostos= {
 	             var x2= (largo-tam2)/2;
 	             var tam3 = largo3*tamFuente/escala;
 	             var x3= (largo-tam3)/2;
+	             var tam4 = largo4*tamFuente/escala;
+	             var x4= (largo-tam4)/2;
 	             
 	             doc.text(x1, 40, $('#<portlet:namespace/>titulo1-imagen').val());
 	             doc.text(x2, 55, $('#<portlet:namespace/>titulo2-imagen').val());
 	             doc.text(x3, 70, $('#<portlet:namespace/>titulo3-imagen').val());
-	             
+	             doc.text(x3, 85, $('#<portlet:namespace/>titulo4-imagen').val());
 	             
 				doc.addImage(img, 'PNG',20,100);
 				doc.save('variacionCostos.pdf');

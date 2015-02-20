@@ -334,6 +334,39 @@ public class LiquidacionController {
 		}  			
 	}		
 	
+	//revertir liquidacion
+	@ResourceMapping("revertirLiquidacionFormatos")
+	public void revertirLiquidacion(ModelMap model, ResourceRequest request,ResourceResponse response,@ModelAttribute("liquidacionBean")LiquidacionBean l) { 	
+		
+		JSONObject jsonObj = new JSONObject();
+		try {				
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
+			logger.info("Entrando a liquidar formatos");
+			String usuario = themeDisplay.getUser().getLogin(); 
+		    String terminal = themeDisplay.getUser().getLoginIP();
+			
+			logger.info("Entrando a revertir un registro liquidacion"); 			
+			logger.info("Codigo correlativo:  "+ l.getCorrelativo());
+     			
+			logger.info("Enviando el formulario al service");
+			
+			String valor = liquidacionService.revertirLiquidacion(new Long(l.getCorrelativo()),usuario, terminal);
+			if(valor.equals("1")){ 
+				jsonObj.put("resultado", "OK");	   	
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();				
+		} catch (Exception e) {
+			e.printStackTrace();				
+			logger.error("Error al eliminar los datos de liquidacion: "+e.getMessage());
+		}  			
+	}	
+	
 	@SuppressWarnings("unchecked")
 	@ResourceMapping("preparaLiquidacionFormatos")
 	public void preparaLiquidacion(ModelMap model, ResourceRequest request,ResourceResponse response,

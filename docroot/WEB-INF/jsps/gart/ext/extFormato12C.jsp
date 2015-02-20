@@ -381,14 +381,20 @@ var formato12C= {
 		
 		formato12C.btnExcel.click(function() {
 			if( formato12C.validarGrupoInformacion() ){
-				formato12C.<portlet:namespace/>showUploadExcel();
+				if( formato12C.validarUltimaEtapa() ){
+					formato12C.<portlet:namespace/>showUploadExcel();
+				}
+				
 			}
 		});
 
 		formato12C.btnCargarFormatoExcel.click(function() {formato12C.<portlet:namespace/>cargarFormatoExcel();});
 		formato12C.btnTxt.click(function() {
 			if( formato12C.validarGrupoInformacion() ){
-				formato12C.<portlet:namespace/>showUploadTxt();
+				if( formato12C.validarUltimaEtapa() ){
+					formato12C.<portlet:namespace/>showUploadTxt();
+				}
+				
 			}
 		});
 		formato12C.btnCargarFormatoTexto.click(function() {formato12C.<portlet:namespace/>cargarFormatoTxt();});
@@ -419,9 +425,12 @@ var formato12C= {
 			
 			formato12C.botonAnadirFormato.click(function(){
 				if( formato12C.validarGrupoInformacion() ){
-					formato12C.blockUI();
-					//--formato12C.formNuevo.attr('action',urlAnadirFormato+'&codigoEmpresa='+formato12C.codEmpresa.val()+'&periodoEnvio='+formato12C.periodoEnvio.val()+'&strip=0').removeAttr('enctype').submit();
-					formato12C.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();
+					if( formato12C.validarUltimaEtapa() ){
+						formato12C.blockUI();
+						//--formato12C.formNuevo.attr('action',urlAnadirFormato+'&codigoEmpresa='+formato12C.codEmpresa.val()+'&periodoEnvio='+formato12C.periodoEnvio.val()+'&strip=0').removeAttr('enctype').submit();
+						formato12C.formNuevo.attr('action',urlAnadirFormato+'&origen=0'+'&strip=0').removeAttr('enctype').submit();	
+					}
+					
 				}
 			});
 			formato12C.botonRegresarBusqueda.click(function(){
@@ -494,6 +503,8 @@ var formato12C= {
 			formato12C.botonValidacion.click(function() {formato12C.<portlet:namespace/>validacionFormato();});
 			formato12C.botonEnvioDefinitivo.click(function() {formato12C.confirmarEnvioDefinitivo();});
 
+			$('#etapaFinal').val('');
+			
 			//mostramos el mensaje de informacion
 			if( formato12C.msgTransaccion.val()=='OK' ){
 				var addhtml='La carga de información del Formato 12C se realizó satisfactoriamente';
@@ -1487,6 +1498,7 @@ var formato12C= {
 					}else{
 						alert('que pase normal');
 					}*/
+					dwr.util.setValue("etapaFinal",data.etapaFinal);
 				},error : function(){
 					alert("Error de conexión.");
 					formato12C.unblockUI();
@@ -1494,9 +1506,18 @@ var formato12C= {
 		});
 	},
 	validarGrupoInformacion : function(){
+		
 		if( $('#idGrupoInfo').val()=='0' ){
 			//alert('Seleccione una Distribuidora Eléctrica'); 
 			formato12C.dialogMessageWarningCrudContent.html('Primero debe crear el Grupo de Información Mensual para el Año y Mes a declarar');
+			formato12C.dialogMessageWarningCrud.dialog("open");
+			return false;
+		}
+		return true;
+	},
+	validarUltimaEtapa : function(){
+		if( $('#etapaFinal').val()=='SI' ){
+			formato12C.dialogMessageWarningCrudContent.html('No se puede realizar esta operación debido a que el Formato se encuentra en una etapa avanzada');
 			formato12C.dialogMessageWarningCrud.dialog("open");
 			return false;
 		}

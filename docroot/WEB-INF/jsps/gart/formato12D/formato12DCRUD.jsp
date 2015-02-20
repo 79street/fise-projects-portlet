@@ -38,6 +38,7 @@ $(document).ready(function () {
 	<form:hidden path="descEstado" />
 	
 	<form:hidden path="idGrupoInfo" />
+	<form:hidden path="etapaFinal" />
 	
 	<input type="hidden" id="<portlet:namespace/>flagCarga" name="<portlet:namespace/>flagCarga" value="" style="display: none;" />
    
