@@ -862,7 +862,7 @@ var liquidacionVar= {
 		<portlet:namespace/>nuevoMotivo : function(){
 			var formatoActiv = $('#formatoMotivo').val();
 			console.debug("boton nuevo registro motivo formato :  "+formatoActiv);	
-			if(formatoActiv=='F14A' || formatoActiv=='F14B'){
+			//if(formatoActiv=='F14A' || formatoActiv=='F14B'){
 				jQuery.ajax({
 					url: liquidacionVar.urlListarActividades+'&'+liquidacionVar.formCommand.serialize(),
 					type: 'post',
@@ -893,7 +893,7 @@ var liquidacionVar= {
 						liquidacionVar.initBlockUI();
 					}
 			    });
-			}else{	
+			/* }else{	
 				liquidacionVar.divActividades.hide();
 				liquidacionVar.divNuevoMotivo.show();
 				liquidacionVar.divBuscarLiq.hide();	
@@ -906,7 +906,7 @@ var liquidacionVar= {
 				}	
 			    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
 				$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');		
-			}				
+			}		 */		
 		},	
 		
 		//Funcion para Grabar nuevo registro de motivo de liquidacion
@@ -1055,7 +1055,7 @@ var liquidacionVar= {
 			var formatoActiv = $('#formatoMotivo').val();
 			console.debug("boton nuevo registro motivo formato :  "+formatoActiv);
 			console.debug("setando datos cuando edito id actividad "+bean.itemActividad);
-			if(formatoActiv=='F14A' || formatoActiv=='F14B'){
+			//if(formatoActiv=='F14A' || formatoActiv=='F14B'){
 				jQuery.ajax({
 					url: liquidacionVar.urlListarActividades+'&'+liquidacionVar.formCommand.serialize(),
 					type: 'post',
@@ -1078,12 +1078,12 @@ var liquidacionVar= {
 						liquidacionVar.initBlockUI();
 					}
 			    });
-			}else{	
+			/* }else{	
 				liquidacionVar.divActividades.hide();
 				liquidacionVar.f_descMotivo.val(bean.descMotivo); 
 				$('#itemMotivo').val(bean.itemMotivo);
 				$('#coMotivo').val(bean.coMotivo);		
-			}			
+			} */			
 		},
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
