@@ -28,6 +28,9 @@ var liquidacionVar= {
 		dialogObservacion12:null,
 		dialogObservacion13:null,
 		
+		dialogConfirmRevertir:null,
+		dialogConfirmRevertirContent:null,
+		
 		dialogConfirmEstablecer:null,
 		dialogConfirmEstablecerContent:null,
 		dialogConfirmLiquidar:null,
@@ -52,6 +55,8 @@ var liquidacionVar= {
 		mensajeLiquidar:null,
 		mensajeReporte:null,
 		
+		mensajeRevertir:null,
+		
 		mensajeObteniendoDatos:null,
 		mensajeEliminando:null,
 		mensajeGuardando:null,	
@@ -65,6 +70,9 @@ var liquidacionVar= {
 	    urlLiquidar:null,
 	    urlVerObservaciones:null,
 	    urlVerFormatos:null,
+	    
+	    urlRevertirLiquidacion:null,
+	    
 		//urlReporteObservaciones:null,
 		//urlEnvioDefinitivo:null,
 		//urlReporteEnvioDefinitivo:null,
@@ -141,6 +149,9 @@ var liquidacionVar= {
 			this.dialogObservacion12=$("#<portlet:namespace/>dialog-form-observacion12");
 			this.dialogObservacion13=$("#<portlet:namespace/>dialog-form-observacion13");
 			
+			this.dialogConfirmRevertir=$("#<portlet:namespace/>dialog-confirm-revertir");
+			this.dialogConfirmRevertirContent=$("#<portlet:namespace/>dialog-confirm-content-revertir");
+			
 			this.dialogConfirmEstablecer=$("#<portlet:namespace/>dialog-confirm-establecer");
 			this.dialogConfirmEstablecerContent=$("#<portlet:namespace/>dialog-confirm-content-establecer");
 			this.dialogConfirmLiquidar=$("#<portlet:namespace/>dialog-confirm-liquidar");
@@ -162,6 +173,8 @@ var liquidacionVar= {
 			this.mensajeLiquidar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Liquidando </h3>';
 			this.mensajeReporte='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo el Reporte </h3>';
 			
+			this.mensajeRevertir='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Procesando </h3>';
+			
 			this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Datos </h3>';
 			this.mensajeEliminando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
 			this.mensajeGuardando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>';
@@ -176,6 +189,8 @@ var liquidacionVar= {
 			this.urlLiquidar='<portlet:resourceURL id="liquidarFormatos" />';
 			this.urlVerObservaciones='<portlet:resourceURL id="verObservacionesFormatos" />';
 			this.urlVerFormatos='<portlet:resourceURL id="verFormatosReporte" />'; 
+			
+			this.urlRevertirLiquidacion='<portlet:resourceURL id="revertirLiquidacionFormatos" />';
 			
 			//this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionNotificacion" />';
 			//this.urlReporteEnvioDefinitivo='<portlet:resourceURL id="reporteEnvioDefinitivo" />';
@@ -300,7 +315,7 @@ var liquidacionVar= {
 		buildGrids : function () {	
 			liquidacionVar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','Motivo No Rec./Est.','','','',''],
+		       colNames: ['Dist. Eléct.','Formato','Etapa Orig.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Año Ini. Vig.','Año Fin Vig.','Etapa Final','Aprob./Liquid.','Ver','Ver Obs.','Excluir','Motivo No Rec./Est.','Revertir','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},				   
 					   { name: 'formato', index: 'formato', width: 20,align:'center'},
@@ -317,6 +332,7 @@ var liquidacionVar= {
 		               { name: 'verObs', index: 'verObs', width: 20,align:'center' },	 
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },
 		               { name: 'mostrar', index: 'mostrar', width: 60,align:'center' },	
+		               { name: 'revertir', index: 'revertir', width: 20,align:'center' },	
 		               { name: 'codEmpresa', index: 'codEmpresa', hidden: true},
 		               { name: 'mesPres', index: 'mesPres', hidden: true},             
 		               { name: 'mesEjec', index: 'mesEjec', hidden: true},
@@ -342,10 +358,12 @@ var liquidacionVar= {
 		      			verObs = "<a href='#'><img border='0' title='Ver Obs.' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"liquidacionVar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			elim = "<a href='#'><img border='0' title='Excluir' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"liquidacionVar.confirmarEliminar('"+ret.correlativo+"','"+ret.liquidado+"');\" /></a> ";
 		      			mostrar = "<a href='#'><img border='0' title='Motivo de no Reconocimiento/Establecimiento' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"liquidacionVar.mostrarNoReconocido('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapaReconocido+"','"+ret.formato+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
+		      			revertir = "<a href='#'><img border='0' title='Revertir' src='/fise-projects-portlet/images/revert.png'  align='center' onclick=\"liquidacionVar.revertirEtapa('"+ret.correlativo+"','"+ret.etapaReconocido+"','"+ret.liquidado+"');\" /></a> ";
 		      			liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verF:verF});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{verObs:verObs});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
 		      		    liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{mostrar:mostrar});
+		      		  	liquidacionVar.tablaResultados.jqGrid('setRowData',ids[i],{revertir:revertir});
 		      		}
 		      } 
 		  	});
@@ -705,6 +723,48 @@ var liquidacionVar= {
 				}
 			});
 		},	
+		/*Funcion para revertir la liquidacion de los formatos*/
+		revertirLiquidacion : function(id_Correlativo){
+			console.debug("entranado a revertir liquidacion formatos");					
+			$.blockUI({ message: liquidacionVar.mensajeRevertir});				
+			jQuery.ajax({
+				url: liquidacionVar.urlRevertirLiquidacion+'&'+liquidacionVar.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',	
+				data: {				
+				     <portlet:namespace />correlativo: id_Correlativo				     
+					},
+				success: function(data) {
+					var msgFinal;
+					if( liquidacionVar.i_tipoMensual.prop('checked')){
+						msgFinal = 'Gastos Operativos Reconocidos';
+						formatoDes ='Mensuales';
+					}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+						msgFinal = 'Costos Estándares Establecidos';
+						formatoDes= 'Bienales';
+					}
+					if(data.resultado == "OK"){						
+						var addhtml2='Los '+msgFinal+' del formato se revirtieron satisfactoriamente.';				
+						liquidacionVar.dialogMessageContent.html(addhtml2);
+						liquidacionVar.dialogMessage.dialog("open");
+						liquidacionVar.buscarLiquidacion('P');//para hacer una busqueda normal que incluya los liquidados y no liquidados
+						
+						liquidacionVar.initBlockUI();						
+					}else{						
+						var addhtmError='Error al revertir los '+msgFinal;					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");	
+						liquidacionVar.initBlockUI();
+					}					
+				},error : function(){
+					var addhtmError='Error de conexión.';					
+					liquidacionVar.dialogErrorContent.html(addhtmError);
+					liquidacionVar.dialogError.dialog("open");
+					liquidacionVar.initBlockUI();
+				}
+			});
+		},			
+		
 		/*Funcion para prepara la liquidacion de los formatos*/
 		preparaLiquidacionFormatos : function(){
 			console.debug("entranado a preparar liquidacion formatos");					
@@ -853,6 +913,40 @@ var liquidacionVar= {
 				liquidacionVar.buscarMotivos(cod_correlativo);	
 			}else{
 				var addhtml2='El registro seleccionado no se encuentra Aprobado/Liquidado.';				
+				liquidacionVar.dialogInfoContent.html(addhtml2);
+				liquidacionVar.dialogInfo.dialog("open");
+			}		
+		},
+		//funcion para eliminar y reviertir la ultima etapa y liquidacion
+		revertirEtapa : function(cod_correlativo,reconocido,liquidado){	
+			if((reconocido=='RECONOCIDO' || reconocido=='ESTABLECIDO') && liquidado=='SI'){
+				//$('#empresaMotivo').val(empresa);
+				//$('#anioMotivo').val(anio_pres);
+				//$('#mesMotivo').val(mes_pres);
+				//$('#anioEjecMotivo').val(anio_ejec);
+				//$('#mesEjecMotivo').val(mes_ejec);
+				//$('#anioInicioVigMotivo').val(anio_inicio);
+				//$('#anioFinVigMotivo').val(anio_fin);
+				//$('#etapaFinalMotivo').val(etapa_final);
+				//$('#formatoMotivo').val(formato);					
+				id_Correlativo=cod_correlativo;
+				
+				//if(liquidacionVar.i_tipoMensual.prop('checked')){
+				//	$('#tituloBusquedaMotivo').val('Motivo de no Reconocimiento de Gastos Operativos.');	
+				//}else{
+				//	$('#tituloBusquedaMotivo').val('Motivo de no Establecimiento de Costos Estándares.');
+				//}	
+				var msg;
+				if( liquidacionVar.i_tipoMensual.prop('checked')){
+					msg = 'Gastos Operativos Liquidados';
+				}else if( liquidacionVar.i_tipoBienal.prop('checked') ){
+					msg = 'Costos Estándares Establecidos';
+				}
+				var addhtml='¿Está seguro que desea Revertir los '+msg+' para este Formato?';
+				liquidacionVar.dialogConfirmRevertirContent.html(addhtml);
+				liquidacionVar.dialogConfirmRevertir.dialog("open");
+			}else{
+				var addhtml2='No se puede realizar esta acción debido a que el registro no se encuentra Aprobado/Liquidado.';				
 				liquidacionVar.dialogInfoContent.html(addhtml2);
 				liquidacionVar.dialogInfo.dialog("open");
 			}		
@@ -1170,6 +1264,22 @@ var liquidacionVar= {
 			});
 			
 			//
+			liquidacionVar.dialogConfirmRevertir.dialog({
+				modal: true,
+				height: 200,
+				width: 450,			
+				autoOpen: false,
+				buttons: {
+					"Si": function() {
+						liquidacionVar.revertirLiquidacion(id_Correlativo);
+						$( this ).dialog("close");
+					},
+					"No": function() {				
+						$( this ).dialog("close");
+					}
+				}
+			});
+			
 			liquidacionVar.dialogConfirmEstablecer.dialog({
 				modal: true,
 				height: 200,

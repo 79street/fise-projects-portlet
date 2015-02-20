@@ -601,6 +601,33 @@ public class Formato12CGartController {
   			response.setContentType("applicacion/json");
   			String periodoEnvio = bean.getPeriodoEnvio();
   			JSONObject jsonObj = new JSONObject();
+  			
+  			String anoPresentacion = "";
+  			String mesPresentacion = "";
+  			
+  			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
+  				anoPresentacion = periodoEnvio.substring(0, 4);
+  				mesPresentacion = periodoEnvio.substring(4,6);
+  			}
+  			
+  			long anoP =0;
+  			long mesP =0;
+  			
+  			if(FormatoUtil.isNotBlank(anoPresentacion)){ 
+  				anoP = Long.valueOf(anoPresentacion);
+  			}
+  			if(FormatoUtil.isNotBlank(mesPresentacion)){ 
+  				mesP = Long.valueOf(mesPresentacion);
+  			}
+  			
+  			boolean ultimaEtapaFormato = fiseUtil.bloquearFormatoXEtapa(FiseConstants.TIPO_FORMATO_12C,bean.getCodigoEmpresa(),anoP, mesP,0,0,0,0);
+  			if(ultimaEtapaFormato){
+  				jsonObj.put("etapaFinal","SI");
+  			}else{
+  				jsonObj.put("etapaFinal","NO");
+  			}
+  			
+  			
   			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
   				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.MENSUAL);
   				jsonObj.put("idGrupoInfo", idGrupo);

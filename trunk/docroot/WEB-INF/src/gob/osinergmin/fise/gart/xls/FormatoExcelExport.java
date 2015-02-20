@@ -3120,14 +3120,14 @@ public class FormatoExcelExport {
 
 			//HSSFRow row = _xlsSheet.createRow(iRow);
 
-			HSSFRow quintaFila = _xlsSheet.createRow(5);
-			quintaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
+			HSSFRow sextaFila = _xlsSheet.createRow(6);
+			sextaFila.setHeightInPoints((2*_xlsSheet.getDefaultRowHeightInPoints()));
 
-			HSSFCell a1 = quintaFila.createCell(1);
+			HSSFCell a1 = sextaFila.createCell(1);
 			a1.setCellValue(new HSSFRichTextString("Empresa"));
 			a1.setCellStyle(headerCellStyle);
 			
-			HSSFCell a2 = quintaFila.createCell(2);
+			HSSFCell a2 = sextaFila.createCell(2);
 			a2.setCellValue(new HSSFRichTextString("Costo Unitario"));
 			a2.setCellStyle(headerCellStyle);
 			
@@ -3157,10 +3157,16 @@ public class FormatoExcelExport {
 						at3.setCellValue(new HSSFRichTextString(var.getTitulo3()));
 						//at3.setCellStyle(dateCellStyle);
 						
+						HSSFRow titulo4 = _xlsSheet.createRow(4);//titulo4
+						_xlsSheet.addMergedRegion(new CellRangeAddress(4, 4, 1, 7));
+						HSSFCell at4 = titulo4.createCell(1);
+						at4.setCellValue(new HSSFRichTextString(var.getTitulo4()));
+						//at4.setCellStyle(dateCellStyle);
+						
 						primero=true;
 					}
 					
-					HSSFRow fila = _xlsSheet.createRow(i+6);
+					HSSFRow fila = _xlsSheet.createRow(i+7);
 					HSSFCell ax1 = fila.createCell(1);
 					ax1.setCellValue(new HSSFRichTextString(var.getCodEmpresa()));
 					ax1.setCellStyle(dateCellStyle);

@@ -276,11 +276,10 @@ public class VariacionCostosController {
   			
   			logger.info("tamaño de la lista notificacion   :"+listaCostos.size());
   			
-  			
-  			
-  			String msgTitulo1 = tituloPlot1(formato,descripcionGrupo);
-  			String msgTitulo2 = tituloPlot2(etapa);
-  			String msgTitulo3 = tituloPlot3(concepto);
+  			String msgTitulo1 = tituloPlot1(descripcionGrupo);
+  			String msgTitulo2 = tituloPlot2(formato);
+  			String msgTitulo3 = tituloPlot3(etapa);
+  			String msgTitulo4 = tituloPlot4(concepto);
   			
   			if( listaCostos!=null && listaCostos.size()>0 ){
   				
@@ -288,6 +287,7 @@ public class VariacionCostosController {
 					var.setTitulo1(msgTitulo1);
 					var.setTitulo2(msgTitulo2);
 					var.setTitulo3(msgTitulo3);
+					var.setTitulo4(msgTitulo4);
 				}
   				
   				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VARIACION, FiseConstants.NOMBRE_EXCEL_VARIACION, FiseConstants.NOMBRE_HOJA_VARIACION, listaCostos);
@@ -318,6 +318,7 @@ public class VariacionCostosController {
   			jsonObj.put("titulo1",msgTitulo1);
   			jsonObj.put("titulo2",msgTitulo2);
   			jsonObj.put("titulo3",msgTitulo3);
+  			jsonObj.put("titulo4",msgTitulo4);
   			
   			PrintWriter pw = response.getWriter();
 		    pw.write(jsonObj.toString());
@@ -388,15 +389,18 @@ public class VariacionCostosController {
 		String titulo1="Variación de Costos Unitarios ";
 		String titulo2="respecto al promedio:";
 		
-		if(FiseConstants.TIPO_FORMATO_14A.equals(formato)){
-			titulo = titulo + tituloF14A;
-		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
-			titulo = titulo + tituloF14B;
+		if(!FiseConstants.BLANCO.equals(descripcionGrupo) ){
+			titulo = titulo + descripcionGrupo;
 		}
 		
-		if(!FiseConstants.BLANCO.equals(descripcionGrupo) ){
-			titulo = titulo + " ("+descripcionGrupo+")";
+		
+		if(FiseConstants.TIPO_FORMATO_14A.equals(formato)){
+			titulo = titulo + "<br/> " + tituloF14A;
+		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
+			titulo = titulo + "<br/> " + tituloF14B;
 		}
+		
+		
 		
 		titulo = titulo + "<br/> "+titulo1;
 		
@@ -419,7 +423,17 @@ public class VariacionCostosController {
 		return titulo;
 	}
 	
-	public String tituloPlot1(String formato, String descripcionGrupo){
+	public String tituloPlot1(String descripcionGrupo){
+		String titulo = "";
+		
+		if(!FiseConstants.BLANCO.equals(descripcionGrupo) ){
+			titulo = titulo + descripcionGrupo;
+		}
+
+		return titulo;
+	}
+	
+	public String tituloPlot2(String formato){
 		String titulo = "";
 		
 		String tituloF14A = "FORMATO FISE-14A: Costos Estándares de Implementación";
@@ -430,15 +444,11 @@ public class VariacionCostosController {
 		}else if(FiseConstants.TIPO_FORMATO_14B.equals(formato)){
 			titulo = titulo + tituloF14B;
 		}
-		
-		if(!FiseConstants.BLANCO.equals(descripcionGrupo) ){
-			titulo = titulo + " ("+descripcionGrupo+")";
-		}
 
 		return titulo;
 	}
 	
-	public String tituloPlot2(String etapa){
+	public String tituloPlot3(String etapa){
 		String titulo = "";
 
 		String titulo1="Variación de Costos Unitarios ";
@@ -461,7 +471,7 @@ public class VariacionCostosController {
 		return titulo;
 	}
 	
-	public String tituloPlot3(String concepto){
+	public String tituloPlot4(String concepto){
 		String titulo = "";
 		
 		if( !FiseConstants.BLANCO.equals(concepto) ){

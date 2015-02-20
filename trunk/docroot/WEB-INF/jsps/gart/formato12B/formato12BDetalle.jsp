@@ -139,6 +139,10 @@
 																				<form:input path="etapa" type="hidden" /> 
 																				
 																				<form:input path="idGrupoInfo" type="hidden" /> 
+																				<form:input path="etapaFinal" type="hidden" /> 
+																				
+																				<form:input path="flagPeriodoEjecucion" type="hidden" /> 
+																				
 																				
 																		</td>
 																	</tr>
@@ -155,7 +159,7 @@
 																	</tr>
 																	<tr>
 																		<td width="110px">Año de ejecución:</td>
-																		<td><form:input path="anoEjecucionGasto"
+																		<td><form:input path="anoEjecucionGasto" onBlur="formato12B.cargaPeriodoYGrupo();"
 																				style="width: 50px" maxlength="4" /> <input
 																			id="txtanoEjecucionGasto" type="hidden"
 																			value="${formato12BGartCommand.anoEjecucionGasto}"
@@ -164,7 +168,7 @@
 																		<td width="10px"></td>
 																		<td width="110px">Mes de ejecución:</td>
 																		<td><!--<form:input path="mesEjecucionGasto" style="width: 50px" maxlength="4" /> -->
-																			<form:select path="mesEjecucionGasto" id="cmbMesEjecucion" cssClass="select" cssStyle="width: 104px;" disabled="false">
+																			<form:select path="mesEjecucionGasto" id="cmbMesEjecucion" cssClass="select" cssStyle="width: 104px;" disabled="false" onChange="formato12B.cargaPeriodoYGrupo();" >
 													                          <form:options items="${formato12BGartCommand.listaMes}" />
 												                            </form:select>
 																			<input id="txtmesEjecucionGasto" type="hidden" value="${formato12BGartCommand.mesEjecucionGasto}" />

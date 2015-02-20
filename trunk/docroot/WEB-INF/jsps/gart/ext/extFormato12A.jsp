@@ -600,10 +600,8 @@ function validarBusqueda() {
 	}
 	
 function validarFormulario() {	
-	
-	validarGrupoInformacion();
-	
-	  if($('#s_empresa').val().length == '' ) { 	
+			
+	 if($('#s_empresa').val().length == '' ) { 	
 	    //alert('Seleccione una Distribuidora Eléctrica'); 
 	    $("#dialog-message-warning-content").html('Debe seleccionar una Distribuidora Eléctrica');
 		$("#dialog-message-warning").dialog( "open" );
@@ -783,56 +781,56 @@ function validarFormulario() {
 			$("#dialog-message-warning").dialog( "open" );
 		    return false;
 	  }
+
+	 
 	  
 	  return true; 
 	}
 function validarArchivoCarga() {	
-	
-	validarGrupoInformacion();
-	
-  if($('#s_empresa').val().length == '' ) { 	
-    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
-    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
-	$("#dialog-message-warning").dialog( "open" );
-    document.getElementById('s_empresa').focus();
-    return false; 
-  }
-  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
-	    //alert('Debe seleccionar el periodo a declarar');
-	    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
+			
+	if($('#s_empresa').val().length == '' ) { 	
+	    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+	    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
 		$("#dialog-message-warning").dialog( "open" );
-	    document.getElementById('s_periodoenvio_present').focus();
+	    document.getElementById('s_empresa').focus();
 	    return false; 
-  }
+	  }
+	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
+		    //alert('Debe seleccionar el periodo a declarar');
+		    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
+			$("#dialog-message-warning").dialog( "open" );
+		    document.getElementById('s_periodoenvio_present').focus();
+		    return false; 
+	  }
+
+  
   return true;
 }
 function validarArchivoCargaTexto() {	
-	
-	validarGrupoInformacion();
-	
-  if($('#s_empresa').val().length == '' ) { 	
-    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
-    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
-	$("#dialog-message-warning").dialog( "open" );
-    document.getElementById('s_empresa').focus();
-    return false; 
-  }
-  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
-	    //alert('Debe seleccionar el periodo a declarar');
-	    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
-		$("#dialog-message-warning").dialog( "open" );
-	    document.getElementById('s_periodoenvio_present').focus();
-	    return false; 
-  }
-  
-  if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){
-		//alert('El periodo de alta no puede ser mayor al periodo a declarar');
-		$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
-		$("#dialog-message-warning").dialog("open");
-		return false;
-	}
 
-return true; 
+	if($('#s_empresa').val().length == '' ) { 	
+	    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+	    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
+		$("#dialog-message-warning").dialog( "open" );
+	    document.getElementById('s_empresa').focus();
+	    return false; 
+	  }
+	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
+		    //alert('Debe seleccionar el periodo a declarar');
+		    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
+			$("#dialog-message-warning").dialog( "open" );
+		    document.getElementById('s_periodoenvio_present').focus();
+		    return false; 
+	  }
+	  
+	  if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){
+			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
+			$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
+			$("#dialog-message-warning").dialog("open");
+			return false;
+		}
+
+	return true; 
 }
 
 	
@@ -1260,6 +1258,8 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 								deshabilitarLima();
 							}
 							
+							$('#etapaFinal').val('');
+							
 							initBlockUI();
 						}
 						else{
@@ -1408,76 +1408,85 @@ function deshabiliarControlerView(){
 }
 //////CRUD
 function <portlet:namespace/>guardarFormato(){
-	if (validarFormulario()){
-		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>' });
-		 jQuery.ajax({
-			url: '<portlet:resourceURL id="crud" />',
-			type: 'post',
-			dataType: 'json',
-			data: {
-				<portlet:namespace />tipo: $("#Estado").val(),
-				<portlet:namespace />codEmpresa: $('#s_empresa').val(),
-				<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
-				<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
-				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
-				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
-				<portlet:namespace />etapa: $('#etapaEdit').val(),
-				<portlet:namespace />nroEmpadR: $('#i_nroEmpad_r').val(),
-				<portlet:namespace />costoUnitEmpadR: $('#i_costoUnitEmpad_r').val(),
-				<portlet:namespace />nroAgentR: $('#i_nroAgentGlp_r').val(),
-				<portlet:namespace />costoUnitAgentR: $('#i_costoUnitAgent_r').val(),
-				<portlet:namespace />despPersonalR: $('#i_despPersonal_r').val(),
-				<portlet:namespace />activExtraordR: $('#i_activExtraord_r').val(),
-				//
-				<portlet:namespace />nroEmpadP: $('#i_nroEmpad_p').val(),
-				<portlet:namespace />costoUnitEmpadP: $('#i_costoUnitEmpad_p').val(),
-				<portlet:namespace />nroAgentP: $('#i_nroAgentGlp_p').val(),
-				<portlet:namespace />costoUnitAgentP: $('#i_costoUnitAgent_p').val(),
-				<portlet:namespace />despPersonalP: $('#i_despPersonal_p').val(),
-				<portlet:namespace />activExtraordP: $('#i_activExtraord_p').val(),
-				//
-				<portlet:namespace />nroEmpadL: $('#i_nroEmpad_l').val(),
-				<portlet:namespace />costoUnitEmpadL: $('#i_costoUnitEmpad_l').val(),
-				<portlet:namespace />nroAgentL: $('#i_nroAgentGlp_l').val(),
-				<portlet:namespace />costoUnitAgentL: $('#i_costoUnitAgent_l').val(),
-				<portlet:namespace />despPersonalL: $('#i_despPersonal_l').val(),
-				<portlet:namespace />activExtraordL: $('#i_activExtraord_l').val()
-				},
-			success: function(data) {			
-				if (data.resultado == "OK1"){				
-					var addhtml2='El Formato 12A se guardó satisfactoriamente';
-					$("#dialog-message-content").html(addhtml2);
-					$("#dialog-message").dialog( "open" );
-					//limpiar();		
-					$('#flagCarga').val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
-					mostrarFormularioModificado();
-					initBlockUI();
-				}else if (data.resultado == "OK2"){				
-					var addhtml2='El Formato 12A se actualizó satisfactoriamente';
-					$("#dialog-message-content").html(addhtml2);
-					$("#dialog-message").dialog( "open" );
-					//limpiar();		
-					$('#flagCarga').val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
-					mostrarFormularioModificado();
-					initBlockUI();
-				}
-				else if(data.resultado == "Error"){				
-					var addhtml2=data.mensaje;
-					//var addhtml2='Se produjo un error al guardar los datos del Formato 12A ';
-					$("#dialog-message-error-content").html(addhtml2);
-					$("#dialog-message-error").dialog( "open" );
-					//<portlet:namespace/>filtrar();
-					mostrarUltimoFormato();
-					initBlockUI();
-				}
-			},error : function(){
-				alert("Error de conexión.");
-				initBlockUI();
+	if (validarGrupoInformacion()){
+		
+		if( validarUltimaEtapa() ){
+			if( validarFormulario() ){
+				
+				$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>' });
+				 jQuery.ajax({
+					url: '<portlet:resourceURL id="crud" />',
+					type: 'post',
+					dataType: 'json',
+					data: {
+						<portlet:namespace />tipo: $("#Estado").val(),
+						<portlet:namespace />codEmpresa: $('#s_empresa').val(),
+						<portlet:namespace />periodoEnvio: $('#s_periodoenvio_present').val(),
+						<portlet:namespace />flagPeriodoEjecucion: $('#flagPeriodoEjecucion').val(),
+						<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+						<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val(),
+						<portlet:namespace />etapa: $('#etapaEdit').val(),
+						<portlet:namespace />nroEmpadR: $('#i_nroEmpad_r').val(),
+						<portlet:namespace />costoUnitEmpadR: $('#i_costoUnitEmpad_r').val(),
+						<portlet:namespace />nroAgentR: $('#i_nroAgentGlp_r').val(),
+						<portlet:namespace />costoUnitAgentR: $('#i_costoUnitAgent_r').val(),
+						<portlet:namespace />despPersonalR: $('#i_despPersonal_r').val(),
+						<portlet:namespace />activExtraordR: $('#i_activExtraord_r').val(),
+						//
+						<portlet:namespace />nroEmpadP: $('#i_nroEmpad_p').val(),
+						<portlet:namespace />costoUnitEmpadP: $('#i_costoUnitEmpad_p').val(),
+						<portlet:namespace />nroAgentP: $('#i_nroAgentGlp_p').val(),
+						<portlet:namespace />costoUnitAgentP: $('#i_costoUnitAgent_p').val(),
+						<portlet:namespace />despPersonalP: $('#i_despPersonal_p').val(),
+						<portlet:namespace />activExtraordP: $('#i_activExtraord_p').val(),
+						//
+						<portlet:namespace />nroEmpadL: $('#i_nroEmpad_l').val(),
+						<portlet:namespace />costoUnitEmpadL: $('#i_costoUnitEmpad_l').val(),
+						<portlet:namespace />nroAgentL: $('#i_nroAgentGlp_l').val(),
+						<portlet:namespace />costoUnitAgentL: $('#i_costoUnitAgent_l').val(),
+						<portlet:namespace />despPersonalL: $('#i_despPersonal_l').val(),
+						<portlet:namespace />activExtraordL: $('#i_activExtraord_l').val()
+						},
+					success: function(data) {			
+						if (data.resultado == "OK1"){				
+							var addhtml2='El Formato 12A se guardó satisfactoriamente';
+							$("#dialog-message-content").html(addhtml2);
+							$("#dialog-message").dialog( "open" );
+							//limpiar();		
+							$('#flagCarga').val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
+							mostrarFormularioModificado();
+							initBlockUI();
+						}else if (data.resultado == "OK2"){				
+							var addhtml2='El Formato 12A se actualizó satisfactoriamente';
+							$("#dialog-message-content").html(addhtml2);
+							$("#dialog-message").dialog( "open" );
+							//limpiar();		
+							$('#flagCarga').val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
+							mostrarFormularioModificado();
+							initBlockUI();
+						}
+						else if(data.resultado == "Error"){				
+							var addhtml2=data.mensaje;
+							//var addhtml2='Se produjo un error al guardar los datos del Formato 12A ';
+							$("#dialog-message-error-content").html(addhtml2);
+							$("#dialog-message-error").dialog( "open" );
+							//<portlet:namespace/>filtrar();
+							mostrarUltimoFormato();
+							initBlockUI();
+						}
+					},error : function(){
+						alert("Error de conexión.");
+						initBlockUI();
+					}
+				});
+			   	//se deja el formulario activo
+				$("#div_formato").hide();
+				$("#div_home").show();
+				
 			}
-		});
-	   	//se deja el formulario activo
-		$("#div_formato").hide();
-		$("#div_home").show();
+		}
+		
+		
 	}
 	//
 	 
@@ -1516,6 +1525,10 @@ function cargarPeriodoYCostos(valCodEmpresa, valPeriodo){
 	<portlet:namespace/>loadPeriodo(valPeriodo);
 }
 
+function cargarPeriodoYCostosSinRecarga(valPeriodo){
+	<portlet:namespace/>loadPeriodoSinRecarga(valPeriodo);
+}
+
 function <portlet:namespace/>loadPeriodo(valPeriodo) {
 	jQuery.ajax({
 			url: '<portlet:resourceURL id="request_data" />',
@@ -1532,6 +1545,37 @@ function <portlet:namespace/>loadPeriodo(valPeriodo) {
 					dwr.util.setValue("s_periodoenvio_present", valPeriodo);
 				}
 				<portlet:namespace/>loadCostosUnitarios();
+				
+				if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+					habilitarLima();										
+				}else{
+					deshabilitarLima();
+				}
+				
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
+			}
+	});
+	
+}
+
+function <portlet:namespace/>loadPeriodoSinRecarga(valPeriodo) {
+	jQuery.ajax({
+			url: '<portlet:resourceURL id="request_data" />',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				<portlet:namespace />s_empresa: $('#s_empresa').val(),
+				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val()
+				},
+			success: function(data) {		
+				dwr.util.removeAllOptions("s_periodoenvio_present");
+				dwr.util.addOptions("s_periodoenvio_present", data,"codigoItem","descripcionItem");
+				if( valPeriodo.length!='' ){
+					dwr.util.setValue("s_periodoenvio_present", valPeriodo);
+				}
+				<portlet:namespace/>loadCostosUnitariosSinRecarga();
 				
 				if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
 					habilitarLima();										
@@ -1566,7 +1610,10 @@ function <portlet:namespace/>loadCostosUnitarios() {
 			dataType: 'json',
 			data: {
 				<portlet:namespace />s_empresa: $('#s_empresa').val(),
-				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val()
+				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val(),
+				//
+				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
 				},
 			success: function(data) {		
 				//redondeamos a 2
@@ -1595,7 +1642,10 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				//
 				dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
 				
+				dwr.util.setValue("etapaFinal", data.etapaFinal);
+				
 				recargarPeriodoEjecucion();
+
 				mostrarPeriodoEjecucion();
 				//---initBlockUI();
 			},error : function(){
@@ -1605,15 +1655,78 @@ function <portlet:namespace/>loadCostosUnitarios() {
 	});	 
 	
 }
+
+function <portlet:namespace/>loadCostosUnitariosSinRecarga() {
+	jQuery.ajax({
+			url: '<portlet:resourceURL id="request_data2" />',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				<portlet:namespace />s_empresa: $('#s_empresa').val(),
+				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val(),
+				//
+				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
+				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
+				},
+			success: function(data) {		
+				//redondeamos a 2
+				dwr.util.setValue("i_costoUnitEmpad_r", redondeo(data.costoEmpR,2));
+				dwr.util.setValue("i_costoUnitAgent_r", redondeo(data.costoAgentR,2));
+				dwr.util.setValue("i_costoUnitEmpad_p", redondeo(data.costoEmpP,2));
+				dwr.util.setValue("i_costoUnitAgent_p", redondeo(data.costoAgentP,2));
+				dwr.util.setValue("i_costoUnitEmpad_l", redondeo(data.costoEmpL,2));
+				dwr.util.setValue("i_costoUnitAgent_l", redondeo(data.costoAgentL,2));
+				
+				/*dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
+				dwr.util.setValue("i_costoUnitAgent_r", data.costoAgentR);
+				dwr.util.setValue("i_costoUnitEmpad_p", data.costoEmpP);
+				dwr.util.setValue("i_costoUnitAgent_p", data.costoAgentP);
+				dwr.util.setValue("i_costoUnitEmpad_l", data.costoEmpL);
+				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);*/
+				
+				if( data.costoEmpR == '0' && data.costoAgentR == '0' && data.costoEmpP == '0' && data.costoAgentP == '0' && data.costoEmpL == '0' && data.costoAgentL == '0' ){
+					var addhtml2='No existe Costos Estándares Establecidos en el Formato 14A para la Distribuidora Eléctrica y Periodo a declarar seleccionado';					
+					$("#dialog-message-info-content").html(addhtml2);
+					$("#dialog-message-info").dialog( "open" );	
+				}
+				
+				//
+				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
+				//
+				dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
+				
+				dwr.util.setValue("etapaFinal", data.etapaFinal);
+
+				mostrarPeriodoEjecucion();
+				//---initBlockUI();
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
+			}
+	});	 
+	
+}
+
 function validarGrupoInformacion(){
+	
 	if($('#idGrupoInfo').val() == '0' ) { 	
     	$("#dialog-message-warning-content").html('Primero debe crear el Grupo de Información Mensual para el Año y Mes a declarar');
 		$("#dialog-message-warning").dialog( "open" );
     	return false; 
 	}
+	
 	return true;
 }
 
+function validarUltimaEtapa(){
+	if( $('#etapaFinal').val() == 'SI' ) { 	
+    	$("#dialog-message-warning-content").html('No se puede realizar esta operación debido a que el Formato se encuentra en una etapa avanzada');
+		$("#dialog-message-warning").dialog( "open" );
+    	return false; 
+	}
+	
+	return true;
+}
 
 function mostrarPeriodoEjecucion(){
 	if( $('#flagPeriodoEjecucion').val()=='S' ){
@@ -1688,20 +1801,25 @@ function iniciarMensajeTxt(){
 }
 
 function <portlet:namespace/>mostrarFormularioCargaExcel(){
-	if (validarArchivoCarga()){
-		if( $('#flagCarga').val()=='0' ){
-			$('#flagCarga').val('2');
-		}else if( $('#flagCarga').val()=='1' ){
-			$('#flagCarga').val('3');
+	if (validarGrupoInformacion()){
+		if( validarUltimaEtapa() ){
+			if( validarArchivoCarga() ){
+				if( $('#flagCarga').val()=='0' ){
+					$('#flagCarga').val('2');
+				}else if( $('#flagCarga').val()=='1' ){
+					$('#flagCarga').val('3');
+				}
+			    $('#divOverlay').show();
+			    $("#dialog-form-cargaExcel").show();
+			    $("#dialog-form-cargaExcel").draggable();
+			    $("#dialog-form-cargaExcel").css({ 
+			        'left': ($(window).width() / 2 - $("#dialog-form-cargaExcel").width() / 2) + 'px', 
+			        'top': ($(window).height()  - $("#dialog-form-cargaExcel").height() ) + 'px'
+			    });
+			    iniciarMensajeExcel();
+			}
 		}
-	    $('#divOverlay').show();
-	    $("#dialog-form-cargaExcel").show();
-	    $("#dialog-form-cargaExcel").draggable();
-	    $("#dialog-form-cargaExcel").css({ 
-	        'left': ($(window).width() / 2 - $("#dialog-form-cargaExcel").width() / 2) + 'px', 
-	        'top': ($(window).height()  - $("#dialog-form-cargaExcel").height() ) + 'px'
-	    });
-	    iniciarMensajeExcel();
+		
 	}
 }
 function regresarFormularioCargaExcel(){
@@ -1711,20 +1829,25 @@ function regresarFormularioCargaExcel(){
 	$('#divOverlay').hide();   
 }
 function <portlet:namespace/>mostrarFormularioCargaTexto(){
-	if (validarArchivoCarga()){
-		if( $('#flagCarga').val()=='0' ){
-			$('#flagCarga').val('4');
-		}else if( $('#flagCarga').val()=='1' ){
-			$('#flagCarga').val('5');
+	if (validarGrupoInformacion()){
+		if( validarUltimaEtapa() ){
+			if( validarArchivoCargaTexto() ){
+				if( $('#flagCarga').val()=='0' ){
+					$('#flagCarga').val('4');
+				}else if( $('#flagCarga').val()=='1' ){
+					$('#flagCarga').val('5');
+				}
+			    $('#divOverlay').show();
+			    $("#dialog-form-cargaTexto").show();
+			    $("#dialog-form-cargaTexto").draggable();
+			    $("#dialog-form-cargaTexto").css({ 
+			        'left': ($(window).width() / 2 - $("#dialog-form-cargaTexto").width() / 2) + 'px', 
+			        'top': ($(window).height() - $("#dialog-form-cargaTexto").height() ) + 'px'
+			    });
+			    iniciarMensajeTxt();
+			}
 		}
-	    $('#divOverlay').show();
-	    $("#dialog-form-cargaTexto").show();
-	    $("#dialog-form-cargaTexto").draggable();
-	    $("#dialog-form-cargaTexto").css({ 
-	        'left': ($(window).width() / 2 - $("#dialog-form-cargaTexto").width() / 2) + 'px', 
-	        'top': ($(window).height() - $("#dialog-form-cargaTexto").height() ) + 'px'
-	    });
-	    iniciarMensajeTxt();
+		
 	}
 }
 function regresarFormularioCargaTexto(){

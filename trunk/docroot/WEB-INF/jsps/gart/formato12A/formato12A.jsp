@@ -319,6 +319,8 @@
 									   						<td width="10%">
 									   							<input type="hidden" id="flagPeriodoEjecucion" value="" />
 									   							<input type="hidden" id="idGrupoInfo" value="" />
+									   							
+									   							<input type="hidden" id="etapaFinal" value="" />
 									   						</td>
 									   						<td width="45%">
 									   							<div id="divPeriodoEjecucion" >
@@ -332,12 +334,12 @@
 										   									<tr>
 										   										<td width="40px">Año:</td>
 										   										<td>
-										   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'i_anioejecuc',4,0)" >
+										   											<input type="text" name="i_anioejecuc" id="i_anioejecuc" style="width:50px" maxlength="4" onkeypress="return soloNumerosDecimales(event, 1, 'i_anioejecuc',4,0)" onBlur="cargarPeriodoYCostosSinRecarga('');" >
 										   										</td>
 										   										<td width="10px" ></td>
 										   										<td width="40px">Mes:</td>
 										   										<td>
-										   											<select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width:104px;" >
+										   											<select id="s_mes_ejecuc" name="s_mes_ejecuc" class="select" style="width:104px;" onChange="cargarPeriodoYCostosSinRecarga('');" >
 																						<option value="">-Seleccione-</option>
 																						<c:forEach items="${listaMes}" var="mes">																
 																							<option value="${mes.key}">${mes.value}</option>

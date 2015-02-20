@@ -162,6 +162,10 @@ public class Formato12BGartCommand implements Serializable {
 
 	private String idGrupoInfo;
 	
+	private String etapaFinal;
+	
+	private String flagPeriodoEjecucion;
+	
 	public static FiseFormato12BC toBeanCabecera(Formato12BGartCommand command) {
 
 		FiseFormato12BC bean = null;
@@ -1554,6 +1558,22 @@ public class Formato12BGartCommand implements Serializable {
 	}
 	public void setIdGrupoInfo(String idGrupoInfo) {
 		this.idGrupoInfo = idGrupoInfo;
+	}
+
+	public String getEtapaFinal() {
+		return etapaFinal;
+	}
+
+	public void setEtapaFinal(String etapaFinal) {
+		this.etapaFinal = etapaFinal;
+	}
+
+	public String getFlagPeriodoEjecucion() {
+		return flagPeriodoEjecucion;
+	}
+
+	public void setFlagPeriodoEjecucion(String flagPeriodoEjecucion) {
+		this.flagPeriodoEjecucion = flagPeriodoEjecucion;
 	}
 	
 

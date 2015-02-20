@@ -837,9 +837,18 @@ public class Formato12AGartController {
   			
   			String codEmpresa = request.getParameter("s_empresa");
   			String periodoEnvio = request.getParameter("s_periodoenvio_present");
+  			
+  			String anoEjecucion = "";
+  			String mesEjecucion = "";
+  			
   			String anoPresentacion ="";
-  			if( periodoEnvio!=null && periodoEnvio.length()>4 ){
+  			String mesPresentacion = "";
+  		
+  			
+  			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
   				anoPresentacion = periodoEnvio.substring(0, 4);
+  				//add
+  				mesPresentacion = periodoEnvio.substring(4,6);
   			}
   			
   			BigDecimal costoUnitEmpR = null;
@@ -884,12 +893,58 @@ public class Formato12AGartController {
   			
   			//jsonObj.put("costoAgentL", costoUnitAgentL);
   			
+  			String flagPeriodoEjecucion = "";
+  			
   			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				if( periodoEnvio.equals(p.getCodigoItem()) ){
 					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
+					flagPeriodoEjecucion = p.getFlagPeriodoEjecucion();
 					break;
 				}
 			}
+  			
+  			if( "S".equals(flagPeriodoEjecucion) ){
+	    		anoEjecucion = request.getParameter("anoEjecucion");
+				mesEjecucion = request.getParameter("mesEjecucion");
+				if(FiseConstants.BLANCO.equals(anoEjecucion)){
+					anoEjecucion = anoPresentacion;
+				}
+				if(FiseConstants.BLANCO.equals(mesEjecucion)){
+					mesEjecucion = mesPresentacion;
+				}
+			}else{
+				anoEjecucion = anoPresentacion;
+				mesEjecucion = mesPresentacion;
+			}
+  			
+  			long anoP =0;
+  			long mesP =0;
+  			long anoE =0;
+  			long mesE =0;
+  			
+  			
+  			if(FormatoUtil.isNotBlank(anoPresentacion)){ 
+  				anoP = Long.valueOf(anoPresentacion);
+  			   }
+  			   if(FormatoUtil.isNotBlank(mesPresentacion)){ 
+  				 mesP = Long.valueOf(mesPresentacion);
+  			   }
+  			   if(FormatoUtil.isNotBlank(anoEjecucion)){ 
+  				 anoE = Long.valueOf(anoEjecucion);
+  			   }
+  			   if(FormatoUtil.isNotBlank(mesEjecucion)){ 
+  				 mesE = Long.valueOf(mesEjecucion);
+  			   }
+  			
+  			boolean ultimaEtapaFormato = fiseUtil.bloquearFormatoXEtapa(FiseConstants.TIPO_FORMATO_12A,codEmpresa,anoP, mesP,anoE, mesE,0,0);
+  			if(ultimaEtapaFormato){
+  				jsonObj.put("etapaFinal","SI");
+  			}else{
+  				jsonObj.put("etapaFinal","NO");
+  			}
+  			
+  			
+  			
   			
   			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
   				long idGrupo = commonService.obtenerIdGrupoInformacion(Long.parseLong(periodoEnvio.substring(0, 4)), Long.parseLong(periodoEnvio.substring(4, 6)), FiseConstants.MENSUAL);

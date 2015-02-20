@@ -440,6 +440,15 @@ $(document).ready(function () {
 		</p>
 	</div>
 	
+	<!-- inicio revertir etapa -->
+	<div id="<portlet:namespace/>dialog-confirm-revertir" title="Mensaje de Confirmaci&oacute;n">
+		<p>	
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content-revertir">¿Está seguro?</label>
+		</p>
+	</div>
+	<!-- fin -->
 	
 	<div id="<portlet:namespace/>dialog-confirm-establecer" title="Mensaje de Confirmaci&oacute;n">
 		<p>	
