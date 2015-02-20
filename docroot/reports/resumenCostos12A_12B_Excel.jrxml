@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="3.1384283767210683"/>
-	<property name="ireport.x" value="1760"/>
-	<property name="ireport.y" value="63"/>
+	<property name="ireport.zoom" value="2.143588810000046"/>
+	<property name="ireport.x" value="442"/>
+	<property name="ireport.y" value="45"/>
 	<parameter name="TIPO_FORMATO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
@@ -74,7 +74,7 @@
 				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement x="59" y="74" width="688" height="20" forecolor="#006699"/>
+				<reportElement x="59" y="95" width="688" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center">
 					<font size="13" isBold="true"/>
 				</textElement>
@@ -85,7 +85,7 @@
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="59" y="95" width="688" height="20" forecolor="#006699"/>
+				<reportElement x="59" y="75" width="688" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center">
 					<font size="13" isBold="true"/>
 				</textElement>

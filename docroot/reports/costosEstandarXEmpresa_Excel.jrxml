@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenCostoActividad" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.4641000000000393"/>
-	<property name="ireport.x" value="407"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="6.7274999493258045"/>
+	<property name="ireport.x" value="4771"/>
+	<property name="ireport.y" value="1247"/>
 	<parameter name="TIPO_FORMATO" class="java.lang.String"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
@@ -55,7 +55,7 @@
 		<groupHeader>
 			<band height="107">
 				<textField evaluationTime="Group" evaluationGroup="Distribuidora_Electrica">
-					<reportElement x="9" y="61" width="783" height="25" printWhenGroupChanges="Distribuidora_Electrica">
+					<reportElement x="9" y="87" width="783" height="20" printWhenGroupChanges="Distribuidora_Electrica">
 						<printWhenExpression><![CDATA[$F{desEmpresa}]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Top">
@@ -82,7 +82,7 @@
 					<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="9" y="86" width="783" height="20"/>
+					<reportElement x="9" y="67" width="783" height="20"/>
 					<textElement textAlignment="Center">
 						<font size="10" isBold="true"/>
 					</textElement>
@@ -143,7 +143,7 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="2"/>
+			<band height="1"/>
 		</groupFooter>
 	</group>
 	<background>
@@ -208,9 +208,20 @@
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="22" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="747" y="1" width="45" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="691" y="1" width="56" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="1" splitType="Stretch"/>
+		<band height="2" splitType="Stretch"/>
 	</summary>
 </jasperReport>
