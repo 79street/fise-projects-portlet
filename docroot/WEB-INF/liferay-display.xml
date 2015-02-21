@@ -25,5 +25,6 @@
 		<portlet id="gartResumenCostosActividad"/>
 		<portlet id="gartVariacionCostos"/>
 		<portlet id="gartHistoricoCostos"/>
+		<portlet id="gartParametros"/>
 	</category>
 </display>
