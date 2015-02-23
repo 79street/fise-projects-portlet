@@ -193,12 +193,12 @@ function inicializarFormulario(){
 	soloNumerosDecimalesFormulario();
 }
 function soloNumerosEnteros(){
-	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',7,0)");
-	$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_p',7,0)");
-	$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_l',7,0)");
-	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_r',6,0)");
-	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',6,0)");
-	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',6,0)");
+	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroEmpad_r',7,0)");
+	$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroEmpad_p',7,0)");
+	$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroEmpad_l',7,0)");
+	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroAgentGlp_r',6,0)");
+	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroAgentGlp_p',6,0)");
+	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroAgentGlp_l',6,0)");
 }
 function soloNumerosDecimalesFormulario(){
 	//
@@ -483,12 +483,12 @@ function calculoTotal(){
 	totalImportes();
 	totalGeneral();
 	//completar nulos
-	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_r',7,0)");
-	$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_p',7,0)");
-	$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroEmpad_l',7,0)");
-	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_r',6,0)");
-	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_p',6,0)");
-	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosDecimales(event, 1, 'i_nroAgentGlp_l',6,0)");
+	$('#i_nroEmpad_r').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroEmpad_r',7,0)");
+	$('#i_nroEmpad_p').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroEmpad_p',7,0)");
+	$('#i_nroEmpad_l').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroEmpad_l',7,0)");
+	$('#i_nroAgentGlp_r').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroAgentGlp_r',6,0)");
+	$('#i_nroAgentGlp_p').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroAgentGlp_p',6,0)");
+	$('#i_nroAgentGlp_l').attr("onkeypress","return soloNumerosEntero(event, 1, 'i_nroAgentGlp_l',6,0)");
 	completarBlanco('i_nroEmpad_r');
 	completarBlanco('i_nroEmpad_p');
 	completarBlanco('i_nroEmpad_l');

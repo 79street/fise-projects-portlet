@@ -58,6 +58,7 @@ var fiseParametros= {
 		f_codigo:null,
 		f_nombre:null,
 		f_valor:null,
+		f_orden:null,
 		//grillas
 		tablaResultados:null,
 		paginadoResultados:null,	
@@ -119,6 +120,7 @@ var fiseParametros= {
 			this.f_codigo=$('#codigo');			
 			this.f_nombre=$('#nombre');
 			this.f_valor=$('#valor');
+			this.f_orden=$('#orden');
 			
 			//grillas			
 			this.tablaResultados=$("#<portlet:namespace/>grid_resultado_busqueda");
@@ -159,11 +161,12 @@ var fiseParametros= {
 		buildGrids : function () {	
 			fiseParametros.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Código','Nombre','Valor','Ver','Editar','Eliminar'],
+		       colNames: ['Código','Nombre','Valor','Orden','Ver','Editar','Eliminar'],
 		       colModel: [
                        { name: 'codigo', index: 'codigo', width: 40},
 					   { name: 'nombre', index: 'nombre', width: 150},					
-					   { name: 'valor', index: 'valor', width: 80},					
+					   { name: 'valor', index: 'valor', width: 80},		
+					   { name: 'orden', index: 'orden', width: 30},	
 		               { name: 'view', index: 'view', width: 20,align:'center' },
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },
 		               { name: 'elim', index: 'elim', width: 20,align:'center' }  
@@ -232,39 +235,17 @@ var fiseParametros= {
 		},		
 		//funcion para nuevo registro
 		<portlet:namespace/>nuevofiseParametro : function(){	
-			/*jQuery.ajax({			
-				url: fiseParametros.urlNuevo+'&'+fiseParametros.formCommand.serialize(),
-				type: 'post',
-				dataType: 'json',				
-				success: function(data) {					
-					fiseParametros.f_id.val(data.id);
-					fiseParametros.f_descripcion.val('');			
-					fiseParametros.f_id.attr("disabled",true);  	
-					fiseParametros.f_descripcion.removeAttr("disabled");	
-					
-					fiseParametros.divNuevo.show();
-					fiseParametros.divBuscar.hide();		
-								
-					console.debug("boton nuevo registro:  ");
-					
-					$('#<portlet:namespace/>guardarfiseParametro').css('display','block');
-					$('#<portlet:namespace/>actualizarfiseParametro').css('display','none');	
-					
-				},error : function(){
-					var addhtmError='Error de conexión.';					
-					fiseParametros.dialogErrorContent.html(addhtmError);
-					fiseParametros.dialogError.dialog("open");
-					fiseParametros.initBlockUI();
-				}
-			});	*/	
-	
-							
+
 					fiseParametros.f_codigo.val('');
 					fiseParametros.f_nombre.val('');			
-					fiseParametros.f_valor.val('');			
+					fiseParametros.f_valor.val('');
+					fiseParametros.f_orden.val('');
 					fiseParametros.f_codigo.removeAttr("disabled");  	
 					fiseParametros.f_nombre.removeAttr("disabled");	
 					fiseParametros.f_valor.removeAttr("disabled");	
+					fiseParametros.f_orden.removeAttr("disabled");	
+					
+					fiseParametros.f_orden.attr("onkeypress","return soloNumerosEntero(event, 1, 'orden',5,0)");
 					
 					fiseParametros.divNuevo.show();
 					fiseParametros.divBuscar.hide();		
@@ -299,6 +280,7 @@ var fiseParametros= {
 					    	fiseParametros.f_codigo.attr("disabled",true);				        	
 					    	fiseParametros.f_nombre.attr("disabled",true);
 					    	fiseParametros.f_valor.attr("disabled",true);
+					    	fiseParametros.f_orden.attr("disabled",true);
 					    	
 					    	$('#<portlet:namespace/>guardarfiseParametro').css('display','none');
 					    	$('#<portlet:namespace/>actualizarfiseParametro').css('display','none');
@@ -341,6 +323,7 @@ var fiseParametros= {
 								fiseParametros.f_codigo.attr("disabled",true);  	
 								fiseParametros.f_nombre.removeAttr("disabled");
 								fiseParametros.f_valor.removeAttr("disabled");
+								fiseParametros.f_orden.removeAttr("disabled");
 								
 								$('#<portlet:namespace/>guardarfiseParametro').css('display','none');
 								$('#<portlet:namespace/>actualizarfiseParametro').css('display','block');	
@@ -365,6 +348,9 @@ var fiseParametros= {
 			fiseParametros.f_codigo.val(bean.codigo);
 			fiseParametros.f_nombre.val(bean.nombre);
 			fiseParametros.f_valor.val(bean.valor);
+			fiseParametros.f_orden.val(bean.orden);
+			
+			fiseParametros.f_orden.attr("onkeypress","return soloNumerosEntero(event, 1, 'orden',5,0)");
 		},
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarfiseParametro : function(codigo){
@@ -387,7 +373,7 @@ var fiseParametros= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro eliminado con éxito';					
+						var addhtml2='Registro eliminado satisfactoriamente';					
 						fiseParametros.dialogMessageContent.html(addhtml2);
 						fiseParametros.dialogMessage.dialog("open");
 						fiseParametros.buscarfiseParametro();
@@ -418,7 +404,8 @@ var fiseParametros= {
 					data: {											
 						<portlet:namespace />codigo: fiseParametros.f_codigo.val(),
 						<portlet:namespace />nombre: fiseParametros.f_nombre.val() ,
-						<portlet:namespace />valor: fiseParametros.f_valor.val() 			
+						<portlet:namespace />valor: fiseParametros.f_valor.val(),
+						<portlet:namespace />orden: fiseParametros.f_orden.val()
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -430,6 +417,8 @@ var fiseParametros= {
 										
 							fiseParametros.f_codigo.attr("disabled",true);			        	
 							fiseParametros.f_nombre.removeAttr("disabled");
+							fiseParametros.f_valor.removeAttr("disabled");
+							fiseParametros.f_orden.removeAttr("disabled");
 							
 							$('#<portlet:namespace/>guardarfiseParametro').css('display','none');
 							$('#<portlet:namespace/>actualizarfiseParametro').css('display','block');
@@ -465,7 +454,8 @@ var fiseParametros= {
 					data: {
 						<portlet:namespace />codigo: fiseParametros.f_codigo.val(),
 						<portlet:namespace />nombre: fiseParametros.f_nombre.val(),
-						<portlet:namespace />valor: fiseParametros.f_valor.val() 	
+						<portlet:namespace />valor: fiseParametros.f_valor.val() ,
+						<portlet:namespace />orden: fiseParametros.f_orden.val()
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -525,6 +515,14 @@ var fiseParametros= {
 				fiseParametros.dialogValidacionContent.html(addhtmAlert);
 				fiseParametros.dialogValidacion.dialog("open");
 				cod_focus=fiseParametros.f_valor;
+			  	return false; 
+			}
+			
+			if(fiseParametros.f_orden.val().length == ''){				
+				var addhtmAlert='Debe ingresar el orden del Parámetro.';					
+				fiseParametros.dialogValidacionContent.html(addhtmAlert);
+				fiseParametros.dialogValidacion.dialog("open");
+				cod_focus=fiseParametros.f_orden;
 			  	return false; 
 			}
 			

@@ -424,13 +424,13 @@
 									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1 Número de Empadronados
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="target" name="i_nroEmpad_r" id="i_nroEmpad_r" style="width:100px;"  >
+									   							<input type="text" class="target" name="i_nroEmpad_r" id="i_nroEmpad_r" style="width:100px;" maxlength="7"  >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="target" name="i_nroEmpad_p" id="i_nroEmpad_p" style="width:100px;" >
+									   							<input type="text" class="target" name="i_nroEmpad_p" id="i_nroEmpad_p" style="width:100px;" maxlength="7" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="target" name="i_nroEmpad_l" id="i_nroEmpad_l" style="width:100px;"  >
+									   							<input type="text" class="target" name="i_nroEmpad_l" id="i_nroEmpad_l" style="width:100px;" maxlength="7"  >
 									   						</td>
 									   					</tr>
 									   					<tr>
@@ -479,13 +479,13 @@
 									   						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 Número de Agentes Autorizados GLP
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="target" name="i_nroAgentGlp_r" id="i_nroAgentGlp_r" style="width:100px;" >
+									   							<input type="text" class="target" name="i_nroAgentGlp_r" id="i_nroAgentGlp_r" style="width:100px;" maxlength="6" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="target" name="i_nroAgentGlp_p" id="i_nroAgentGlp_p" style="width:100px;" >
+									   							<input type="text" class="target" name="i_nroAgentGlp_p" id="i_nroAgentGlp_p" style="width:100px;" maxlength="6" >
 									   						</td>
 									   						<td align="center">
-									   							<input type="text" class="target" name="i_nroAgentGlp_l" id="i_nroAgentGlp_l" style="width:100px;" >
+									   							<input type="text" class="target" name="i_nroAgentGlp_l" id="i_nroAgentGlp_l" style="width:100px;" maxlength="6" >
 									   						</td>
 									   					</tr>
 									   					<tr>

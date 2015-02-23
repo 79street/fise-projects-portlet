@@ -160,6 +160,13 @@ $(document).ready(function () {
 											      <form:input path="valor" size="50" maxlength="30" /> 
 											   </td>
 											 </tr>				
+											 <tr>											  
+											    <td><label style="font-size: 12px; font-weight: bold">Orden:</label>
+												</td>
+											    <td>
+											      <form:input path="orden" size="20" maxlength="5"  /> 
+											   </td>
+											 </tr>		
 										  </table>								 								
 										 </td>
 										</tr>																										

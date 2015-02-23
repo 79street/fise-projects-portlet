@@ -6,6 +6,7 @@ import gob.osinergmin.fise.bean.FiseParametroBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseParametro;
+import gob.osinergmin.fise.gart.json.ParametroJSON;
 import gob.osinergmin.fise.gart.service.FiseParametroGartService;
 
 import java.io.PrintWriter;
@@ -22,6 +23,7 @@ import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -84,9 +86,11 @@ public class FiseParametrosController {
 			HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
 	        HttpSession session = req.getSession();	  
 	        
+	        JSONArray jsonArray = new JSONArray();
+	        
 			response.setContentType("application/json");	       
 	        	
-			String data = "";
+			//--String data = "";
 		    
 			String codigo = p.getCodigoBusq(); 
 			String nombre = p.getNombreBusq();			
@@ -95,17 +99,24 @@ public class FiseParametrosController {
  		   
   			List<FiseParametro> listaParam = fiseParametroGartService.buscarFiseParametro(codigo, nombre); 	 			
   			logger.info("tamaño de la lista Parametros   :"+listaParam.size());   			 			
-  			  			
+  			
+  			for (FiseParametro param : listaParam) {
+  				jsonArray.put(new ParametroJSON().asJSONObject(param));
+			}
+  			
   			fiseUtil.configuracionExportarExcel(session, FiseConstants.OBSERVACIONES_EXPORT_EXEL, 
   					"Parametros", //title
   					"Parametros", //nombre hoja
   					listaParam);
   			
   			
-  			data = toStringListJSON(listaParam);  		
-  			logger.info("arreglo json:"+data);
+  			
+  			
+  			//--data = toStringListJSON(listaParam);  		
+  			
+  			logger.info("arreglo json:"+jsonArray);
   			PrintWriter pw = response.getWriter();
-  			pw.write(data);
+  			pw.write(jsonArray.toString());
   			pw.flush();
   			pw.close();
   			
@@ -115,12 +126,12 @@ public class FiseParametrosController {
 		}
 	}
 	
-	private String toStringListJSON(List<FiseParametro> lista) {
+	/*private String toStringListJSON(List<FiseParametro> lista) {
 		Serializer serializer = new JsonSerializer();
 		Object result = serializer.serialize(lista);
 		String data = String.valueOf(result);
 		return data;
-	}
+	}*/
 	
 	/*@ResourceMapping("nuevoRegistroParametro")
 	public void nuevoRegistroParametro(ModelMap model,ResourceRequest request,ResourceResponse response,
@@ -158,6 +169,16 @@ public class FiseParametrosController {
 			logger.info("codigo:  "+ p.getCodigo()); 
 			logger.info("nombre:  "+ p.getNombre());				
 				
+			String codigo = request.getParameter("codigo");
+			String nombre = request.getParameter("nombre");
+			String valorParametro = request.getParameter("valor");
+			String orden = request.getParameter("orden");
+			
+			p.setCodigo(codigo);
+			p.setNombre(nombre);
+			p.setValor(valorParametro);
+			p.setOrden(orden);
+			
 			p.setUsuario(themeDisplay.getUser().getLogin());
 			p.setTerminal(themeDisplay.getUser().getLoginIP());		
 			
@@ -198,6 +219,16 @@ public class FiseParametrosController {
 			logger.info("codigo:  "+ p.getCodigo()); 
 			logger.info("nombre:  "+ p.getNombre());		
 			
+			String codigo = request.getParameter("codigo");
+			String nombre = request.getParameter("nombre");
+			String valorParametro = request.getParameter("valor");
+			String orden = request.getParameter("orden");
+			
+			//p.setCodigo(codigo);
+			p.setNombre(nombre);
+			p.setValor(valorParametro);
+			p.setOrden(orden);
+			
 			String valor = fiseParametroGartService.actualizarDatosFiseParametro(p);
 			logger.info("valor de la transaccion al actualizar:  "+valor); 
 			if(!valor.equals("0")){ 
@@ -224,8 +255,8 @@ public class FiseParametrosController {
 			String data;			
 			logger.info("codigo para editar y visualizar "+p.getCodigo());					
 			
-			//String codigo = request.getParameter("codigo");
-			//p.setCodigo(codigo);
+			String codigo = request.getParameter("codigo");
+			p.setCodigo(codigo);
 			
 			p= fiseParametroGartService.buscarFiseObsEditar(p.getCodigo());
 			
@@ -255,7 +286,11 @@ public class FiseParametrosController {
 		JSONObject jsonObj = new JSONObject();
 		try {			
 			logger.info("Entrando a eliminar un registro Parametro"); 			
-			logger.info("codigo:  "+ p.getCodigo());      			
+			logger.info("codigo:  "+ p.getCodigo());      
+			
+			String codigo = request.getParameter("codigo");
+			p.setCodigo(codigo);
+			
 			logger.info("Enviando el formulario al service"); 
 			String valor = fiseParametroGartService.eliminarDatosFiseParametro(p.getCodigo());
 			if(valor.equals("1")){ 

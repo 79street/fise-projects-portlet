@@ -380,13 +380,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4 Número de  Vales Impresos</td>
 														<td align="center">
-															<form:input path="nroValesImpR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesImpR" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroValesImpP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesImpP" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroValesImpL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesImpL" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 													</tr>
 													<tr>
@@ -434,13 +434,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Número de Vales Repartidos</td>
 														<td align="center">
-															<form:input path="nroValesReptR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesReptR" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroValesReptP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesReptP" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroValesReptL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesReptL" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 													</tr>
 													<tr>
@@ -492,13 +492,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2 Número de Vales Entregados</td>
 														<td align="center">
-															<form:input path="nroValesEntrR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesEntrR" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroValesEntrP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesEntrP" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroValesEntrL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesEntrL" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 													</tr>
 													<tr>
@@ -547,13 +547,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2 Número de Vales Físicos Emitidos</td>
 														<td align="center">
-															<form:input path="nroValesFisR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesFisR" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroValesFisP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesFisP" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroValesFisL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroValesFisL" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 													</tr>
 													<tr>
@@ -657,13 +657,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.4 Número Total de Atenciones</td>
 														<td align="center">
-															<form:input path="nroTotalAtenR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroTotalAtenR" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroTotalAtenP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroTotalAtenP" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroTotalAtenL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroTotalAtenL" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 													</tr>
 													<tr>

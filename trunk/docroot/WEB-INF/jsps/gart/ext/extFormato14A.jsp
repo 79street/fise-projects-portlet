@@ -1148,12 +1148,12 @@ var formato14A= {
 		formato14A.formularioCompletarDecimales();
 	},
 	soloNumerosEnteros : function(){
-		formato14A.f_nroBenefR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroBenefEmpadR',7,0)");
-		formato14A.f_nroAgentR.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroAgentR',7,0)");
-		formato14A.f_nroBenefP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroBenefEmpadP',7,0)");
-		formato14A.f_nroAgentP.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroAgentP',7,0)");
-		formato14A.f_nroBenefL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroBenefEmpadL',7,0)");
-		formato14A.f_nroAgentL.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroAgentL',7,0)");
+		formato14A.f_nroBenefR.attr("onkeypress","return soloNumerosEntero(event, 1, 'nroBenefEmpadR',7,0)");
+		formato14A.f_nroAgentR.attr("onkeypress","return soloNumerosEntero(event, 1, 'nroAgentR',7,0)");
+		formato14A.f_nroBenefP.attr("onkeypress","return soloNumerosEntero(event, 1, 'nroBenefEmpadP',7,0)");
+		formato14A.f_nroAgentP.attr("onkeypress","return soloNumerosEntero(event, 1, 'nroAgentP',7,0)");
+		formato14A.f_nroBenefL.attr("onkeypress","return soloNumerosEntero(event, 1, 'nroBenefEmpadL',7,0)");
+		formato14A.f_nroAgentL.attr("onkeypress","return soloNumerosEntero(event, 1, 'nroAgentL',7,0)");
 	},
 	soloNumerosDecimales : function(){
 		//RURAL

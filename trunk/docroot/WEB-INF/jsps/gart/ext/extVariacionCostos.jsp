@@ -191,11 +191,14 @@ var variacionCostos= {
 					              {
 					                showLine:false, 
 					                //markerOptions: { size: 8, style:'diamond' },
+					                //markerOptions: { size: 14},
 					                pointLabels:{
 						                  show: true,
+						                  //fontSize: '14pt',
 						                  formatString: "%#.2f"
 						                  //labels:['ADIL', 'ELNO', 'EDLN', 'LDS', 'ELS','ABC','XXX']
 						            },
+						            fontSize: '14pt',
 						            //lineWidth: 2,
 						            //highlighter: { formatString: "<div style='background-color:white; border:1px #ddd solid; width:220px; height:60px'>hola . Views como Revenue :estas </div>" }
 					              },
@@ -222,7 +225,7 @@ var variacionCostos= {
 					    		  //renderer: $.jqplot.CategoryAxisRenderer,
 					    		  //label:'Distribuidora Eléctrica',
 					    		  //fontSize: '6pt'
-				    			  fontSize: '7pt',
+				    			  fontSize: '8pt',
 				    			  renderer: $.jqplot.CategoryAxisRenderer,
 				    	          label: 'Distribuidora Eléctrica',
 				    	          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
@@ -230,13 +233,13 @@ var variacionCostos= {
 				    	          tickOptions: {
 				    	              angle: -90,
 				    	              //fontFamily: 'Courier New',
-				    	              fontSize: '7pt'
+				    	              fontSize: '8pt'
 				    	          }
 					    	  },
 					    	  yaxis: {
 					    		  //label:'Costo Unitario (S/.)',
 					    		  //fontSize: '6pt'
-				    			  fontSize: '7pt',
+				    			  fontSize: '8pt',
 				    			  //renderer: $.jqplot.CategoryAxisRenderer,
 				    	          label: 'Costo Unitario',
 				    	          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
@@ -244,7 +247,7 @@ var variacionCostos= {
 				    	          tickOptions: {
 				    	              //angle: -90,
 				    	              //fontFamily: 'Courier New',
-				    	              fontSize: '7pt'
+				    	              fontSize: '8pt'
 				    	          }
 					    	  }
 					      },/*,
@@ -292,9 +295,10 @@ var variacionCostos= {
 				);
 				plot1.series[1].data = [[plot1.axes.xaxis.min,promedio],[plot1.axes.xaxis.max,promedio]]; //dynamically add the data for the empty series, we do this so we can get the auto-scaled yaxis min/max
 				plot1.redraw(); // redraw the plot with adjusted 2nd series
-				$('.jqplot-point-label.jqplot-series-1.jqplot-point-0').css({"color":"red","font-size":"7pt"});
+				$('.jqplot-point-label.jqplot-series-1.jqplot-point-0').css({"color":"red","font-size":"9pt"});
 				$('.jqplot-point-label.jqplot-series-1.jqplot-point-0').html('Promedio = '+promedio);
 				//plot1.replot( { resetAxes: true } );
+				$('.jqplot-point-label').css({"font-size":"9pt"});
 				
 				//mostramos el boton de exportar a PDF
 				$('#exportarPdf').css('display','');
