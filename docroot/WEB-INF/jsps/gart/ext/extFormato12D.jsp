@@ -2469,7 +2469,7 @@ var formato12D= {
 		return true; 
 	},
 	soloNumerosEnteros : function(){
-		formato12D.cantidadDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'cantidad',6,0)");
+		formato12D.cantidadDetalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'cantidad',6,0)");
 	},
 	soloNumerosDecimales : function(){
 		formato12D.costoUnitarioDetalle.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'costoUnitario',7,2)");

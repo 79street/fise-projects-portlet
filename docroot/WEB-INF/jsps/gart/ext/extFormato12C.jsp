@@ -2675,7 +2675,7 @@ var formato12C= {
 		return true; 
 	},
 	soloNumerosEnteros : function(){
-		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'nroDias',3,0)");
+		formato12C.nroDiasDetalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'nroDias',3,0)");
 	},
 	soloNumerosDecimales : function(){
 		formato12C.montoAlimentacionDetalle.attr("onKeyUp","return soloNumerosDecimales(event, 2, 'montoAlimentacion',7,2)");

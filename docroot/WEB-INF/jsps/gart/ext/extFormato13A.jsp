@@ -2390,14 +2390,14 @@ var formato13A= {
 		return true; 
 	},
 	soloNumerosEnteros : function(){
-		formato13A.st1Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st1',6,0)");
-		formato13A.st2Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st2',6,0)");
-		formato13A.st3Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st3',6,0)");
-		formato13A.st4Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st4',6,0)");
-		formato13A.st5Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st5',6,0)");
-		formato13A.st6Detalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'st6',6,0)");
-		formato13A.stserDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'stser',6,0)");
-		formato13A.stespDetalle.attr("onkeypress","return soloNumerosDecimales(event, 1, 'stesp',6,0)");
+		formato13A.st1Detalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'st1',6,0)");
+		formato13A.st2Detalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'st2',6,0)");
+		formato13A.st3Detalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'st3',6,0)");
+		formato13A.st4Detalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'st4',6,0)");
+		formato13A.st5Detalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'st5',6,0)");
+		formato13A.st6Detalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'st6',6,0)");
+		formato13A.stserDetalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'stser',6,0)");
+		formato13A.stespDetalle.attr("onkeypress","return soloNumerosEntero(event, 1, 'stesp',6,0)");
 	}
 };
 

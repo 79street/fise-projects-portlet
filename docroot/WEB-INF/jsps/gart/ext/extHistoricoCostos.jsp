@@ -199,7 +199,7 @@ var historicoCostos= {
 					    		  //renderer: $.jqplot.CategoryAxisRenderer,
 					    		  //label:'Distribuidora Eléctrica',
 					    		  //fontSize: '6pt'
-					    		  fontSize: '7pt',
+					    		  fontSize: '8pt',
 				    			  renderer: $.jqplot.CategoryAxisRenderer,
 				    	          label: 'Periodo',
 				    	          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
@@ -207,21 +207,21 @@ var historicoCostos= {
 				    	          tickOptions: {
 				    	              angle: -90,
 				    	              //fontFamily: 'Courier New',
-				    	              fontSize: '7pt'
+				    	              fontSize: '8pt'
 				    	          }
 					      
 					    	  },
 					    	  yaxis: {
 					    		  //label:'Costo Unitario (S/.)',
 					    		  //fontSize: '6pt'
-					    		  fontSize: '7pt',
+					    		  fontSize: '8pt',
 					    		  label: tituloEjeY,
 					              labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
 					              tickRenderer: $.jqplot.CanvasAxisTickRenderer,
 				    	          tickOptions: {
 				    	              //angle: -90,
 				    	              //fontFamily: 'Courier New',
-				    	              fontSize: '7pt'
+				    	              fontSize: '8pt'
 				    	          }
 					    	  }
 					      },/*,
@@ -234,6 +234,8 @@ var historicoCostos= {
 					    }
 				);
 				plot1.replot( { resetAxes: true } );
+				
+				$('.jqplot-point-label').css({"font-size":"9pt"});
 				
 				//mostramos el boton de exportar a PDF
 				$('#exportarPdf').css('display','');

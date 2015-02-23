@@ -432,16 +432,16 @@ $(document).ready(function () {
 													</td>
 													<!-- RURAL -->
 													<td style="text-align:center">
-													   <form:input id="numRural" path="numRural" size="5" cssClass="target" cssStyle="text-align: right;"/>
+													   <form:input id="numRural" path="numRural" size="5" cssClass="target" cssStyle="text-align: right;" maxlength="7" />
 													</td>
 													<td style="text-align:center" colspan="4"></td> 
 													<!-- URBANA PROVINCIAS -->
 													<td style="text-align:center">
-													   <form:input id="numUrbProv" path="numUrbProv" size="5" cssClass="target" cssStyle="text-align: right;"/>
+													   <form:input id="numUrbProv" path="numUrbProv" size="5" cssClass="target" cssStyle="text-align: right;" maxlength="7" />
 													</td>
 													<td style="text-align:center" colspan="4"></td> 
 													<!-- URBANA LIMA -->
-													<td style="text-align:center"><form:input id="numUrbLima" path="numUrbLima" size="5" cssClass="target" cssStyle="text-align: right;"/></td>
+													<td style="text-align:center"><form:input id="numUrbLima" path="numUrbLima" size="5" cssClass="target" cssStyle="text-align: right;" maxlength="7" /></td>
 													<td style="text-align:center" colspan="4"></td> 	
 													<!-- TOTAL -->
 													<td style="text-align:center"><form:input id="numTotal" path="numTotal" size="5" disabled="true" cssClass="target" cssStyle="text-align: right;"/></td>

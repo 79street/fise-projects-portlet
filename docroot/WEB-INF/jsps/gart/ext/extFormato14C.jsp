@@ -1362,49 +1362,49 @@ var formato14C= {
 		//function para validar solo numeros enteros
 		soloNumerosEnteros : function(){
 			/***cabecera**/
-			formato14C.f_numRural.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numRural',7,0)");
-			formato14C.f_numUrbProv.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUrbProv',7,0)");
-			formato14C.f_numUrbLima.attr("onkeypress","return soloNumerosDecimales(event, 1, 'numUrbLima',7,0)");
+			formato14C.f_numRural.attr("onkeypress","return soloNumerosEntero(event, 1, 'numRural',7,0)");
+			formato14C.f_numUrbProv.attr("onkeypress","return soloNumerosEntero(event, 1, 'numUrbProv',7,0)");
+			formato14C.f_numUrbLima.attr("onkeypress","return soloNumerosEntero(event, 1, 'numUrbLima',7,0)");
 			
 			/**detalle**/
 			//RURAL
-			formato14C.f_canDRCoord.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDRCoord',7,0)");
-			formato14C.f_canIRCoord.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canIRCoord',7,0)");
+			formato14C.f_canDRCoord.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDRCoord',7,0)");
+			formato14C.f_canIRCoord.attr("onkeypress","return soloNumerosEntero(event, 1, 'canIRCoord',7,0)");
 			
-			formato14C.f_canDRSupe.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDRSupe',7,0)");
-			formato14C.f_canIRSupe.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canIRSupe',7,0)");
+			formato14C.f_canDRSupe.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDRSupe',7,0)");
+			formato14C.f_canIRSupe.attr("onkeypress","return soloNumerosEntero(event, 1, 'canIRSupe',7,0)");
 			
-			formato14C.f_canDRGest.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDRGest',7,0)");
-			formato14C.f_canIRGest.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canIRGest',7,0)");
+			formato14C.f_canDRGest.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDRGest',7,0)");
+			formato14C.f_canIRGest.attr("onkeypress","return soloNumerosEntero(event, 1, 'canIRGest',7,0)");
 			
-			formato14C.f_canDRAsist.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDRAsist',7,0)");
-			formato14C.f_canIRAsist.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canIRAsist',7,0)");
+			formato14C.f_canDRAsist.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDRAsist',7,0)");
+			formato14C.f_canIRAsist.attr("onkeypress","return soloNumerosEntero(event, 1, 'canIRAsist',7,0)");
 			
 			//PROVINCIAS
-			formato14C.f_canDPCoord.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDPCoord',7,0)");
-			formato14C.f_canIPCoord.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canIPCoord',7,0)");
+			formato14C.f_canDPCoord.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDPCoord',7,0)");
+			formato14C.f_canIPCoord.attr("onkeypress","return soloNumerosEntero(event, 1, 'canIPCoord',7,0)");
 			
-			formato14C.f_canDPSupe.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDPSupe',7,0)");
-			formato14C.f_canIPSupe.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canIPSupe',7,0)");
+			formato14C.f_canDPSupe.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDPSupe',7,0)");
+			formato14C.f_canIPSupe.attr("onkeypress","return soloNumerosEntero(event, 1, 'canIPSupe',7,0)");
 			
-			formato14C.f_canDPGest.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDPGest',7,0)");
-			formato14C.f_canIPGest.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canIPGest',7,0)");
+			formato14C.f_canDPGest.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDPGest',7,0)");
+			formato14C.f_canIPGest.attr("onkeypress","return soloNumerosEntero(event, 1, 'canIPGest',7,0)");
 			
-			formato14C.f_canDPAsist.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDPAsist',7,0)");
-			formato14C.f_canIPAsist.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canIPAsist',7,0)");
+			formato14C.f_canDPAsist.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDPAsist',7,0)");
+			formato14C.f_canIPAsist.attr("onkeypress","return soloNumerosEntero(event, 1, 'canIPAsist',7,0)");
 			
 			//LIMA
-			formato14C.f_canDLCoord.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDLCoord',7,0)");
-			formato14C.f_canILCoord.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canILCoord',7,0)");
+			formato14C.f_canDLCoord.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDLCoord',7,0)");
+			formato14C.f_canILCoord.attr("onkeypress","return soloNumerosEntero(event, 1, 'canILCoord',7,0)");
 			
-			formato14C.f_canDLSupe.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDLSupe',7,0)");
-			formato14C.f_canILSupe.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canILSupe',7,0)");
+			formato14C.f_canDLSupe.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDLSupe',7,0)");
+			formato14C.f_canILSupe.attr("onkeypress","return soloNumerosEntero(event, 1, 'canILSupe',7,0)");
 			
-			formato14C.f_canDLGest.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDLGest',7,0)");
-			formato14C.f_canILGest.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canILGest',7,0)");
+			formato14C.f_canDLGest.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDLGest',7,0)");
+			formato14C.f_canILGest.attr("onkeypress","return soloNumerosEntero(event, 1, 'canILGest',7,0)");
 			
-			formato14C.f_canDLAsist.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canDLAsist',7,0)");
-			formato14C.f_canILAsist.attr("onkeypress","return soloNumerosDecimales(event, 1, 'canILAsist',7,0)");
+			formato14C.f_canDLAsist.attr("onkeypress","return soloNumerosEntero(event, 1, 'canDLAsist',7,0)");
+			formato14C.f_canILAsist.attr("onkeypress","return soloNumerosEntero(event, 1, 'canILAsist',7,0)");
 			
 		},
 		//function para validar solo numeros decimales

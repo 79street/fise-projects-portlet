@@ -570,13 +570,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Número de Beneficiarios empadronados en el mes de diciembre</td>
 														<td align="center">
-															<form:input path="nroBenefEmpadR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroBenefEmpadR" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroBenefEmpadP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroBenefEmpadP" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroBenefEmpadL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroBenefEmpadL" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 													</tr>
 													<tr>
@@ -663,13 +663,13 @@ $(document).ready(function () {
 													<tr>
 														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Número de Agentes</td>
 														<td align="center">
-															<form:input path="nroAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentR" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroAgentP" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentP" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 														<td align="center">
-															<form:input path="nroAgentL" cssClass="target" cssStyle="width: 100px; text-align: right;"/>
+															<form:input path="nroAgentL" cssClass="target" cssStyle="width: 100px; text-align: right;" maxlength="7" />
 														</td>
 													</tr>
 													<tr>

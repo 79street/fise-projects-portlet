@@ -279,7 +279,7 @@ public class VariacionCostosController {
   			String msgTitulo1 = tituloPlot1(descripcionGrupo);
   			String msgTitulo2 = tituloPlot2(formato);
   			String msgTitulo3 = tituloPlot3(etapa);
-  			String msgTitulo4 = tituloPlot4(concepto);
+  			String msgTitulo4 = tituloPlot4(concepto,zona);
   			
   			if( listaCostos!=null && listaCostos.size()>0 ){
   				
@@ -310,7 +310,7 @@ public class VariacionCostosController {
   			jsonObj.put("promedio",promedio(listaCostos));
   			
   			String mensajeTitulo = "";
-  			mensajeTitulo = tituloPlot(formato,concepto,etapa,descripcionGrupo);
+  			mensajeTitulo = tituloPlot(formato,concepto,etapa,descripcionGrupo,zona);
   			
   			jsonObj.put("titulo",mensajeTitulo);
   			
@@ -380,7 +380,7 @@ public class VariacionCostosController {
 		return promedio;
 	}
 	
-	public String tituloPlot(String formato, String concepto, String etapa, String descripcionGrupo){
+	public String tituloPlot(String formato, String concepto, String etapa, String descripcionGrupo, String zona){
 		String titulo = "";
 		
 		String tituloF14A = "FORMATO FISE-14A: Costos Estándares de Implementación";
@@ -418,6 +418,14 @@ public class VariacionCostosController {
 		
 		if( !FiseConstants.BLANCO.equals(concepto) ){
 			titulo = titulo + "<br/> "+mapaConceptos.get(concepto);
+		}
+		
+		if( "R".equals(zona) ){
+			titulo = titulo +" - Rural";
+		}else if( "P".equals(zona) ){
+			titulo = titulo +" - Urbano Provincias";
+		}else if( "L".equals(zona) ){
+			titulo = titulo +" - Urbano Lima";
 		}
 
 		return titulo;
@@ -471,11 +479,19 @@ public class VariacionCostosController {
 		return titulo;
 	}
 	
-	public String tituloPlot4(String concepto){
+	public String tituloPlot4(String concepto, String zona){
 		String titulo = "";
 		
 		if( !FiseConstants.BLANCO.equals(concepto) ){
 			titulo = titulo + mapaConceptos.get(concepto);
+		}
+		
+		if( "R".equals(zona) ){
+			titulo = titulo +" - Rural";
+		}else if( "P".equals(zona) ){
+			titulo = titulo +" - Urbano Provincias";
+		}else if( "L".equals(zona) ){
+			titulo = titulo +" - Urbano Lima";
 		}
 
 		return titulo;
