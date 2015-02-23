@@ -3156,10 +3156,20 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 					command.setDescestado(destd!=null?destd:"");
 				}
 				//seteamos el ano inicio y fin de vigencia
-				command.setAnioInicioVigencia(""+f.getAnoInicioVigenciaDetalle());
+				String anioIniVigencia ="";
+				String anioFinVigencia ="";
+				anioIniVigencia = f.getAnoInicioVigenciaDetalle()==null?"":""+f.getAnoInicioVigenciaDetalle();
+				anioFinVigencia = f.getAnoFinVigenciaDetalle()==null?"":""+f.getAnoFinVigenciaDetalle();
+				
+				/*command.setAnioInicioVigencia(""+f.getAnoInicioVigenciaDetalle());
 				command.setAnoInicioVigenciaHidden(""+f.getAnoInicioVigenciaDetalle());
 				command.setAnioFinVigencia(""+f.getAnoFinVigenciaDetalle());
-				command.setAnoFinVigenciaHidden(""+f.getAnoFinVigenciaDetalle());
+				command.setAnoFinVigenciaHidden(""+f.getAnoFinVigenciaDetalle());*/
+				command.setAnioInicioVigencia(anioIniVigencia);
+				command.setAnoInicioVigenciaHidden(anioIniVigencia);
+				command.setAnioFinVigencia(anioFinVigencia);
+				command.setAnoFinVigenciaHidden(anioFinVigencia);
+				
 			}
 
 			model.addAttribute("formato13AGartCommand", command);
