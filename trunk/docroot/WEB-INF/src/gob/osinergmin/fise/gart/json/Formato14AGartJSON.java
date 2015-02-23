@@ -268,7 +268,7 @@ public class Formato14AGartJSON {
 		jsonObj.put("totalEmpadR", totalEmpadR!=null?totalEmpadR:new BigDecimal(0));
 		jsonObj.put("impEsqInvR", impEsqInvR!=null?impEsqInvR:new BigDecimal(0));
 		jsonObj.put("impDeclJuradaR", impDeclJuradaR!=null?impDeclJuradaR:new BigDecimal(0));
-		jsonObj.put("impFichaVerifR", impFichaVerifR!=null?impDeclJuradaR:new BigDecimal(0));
+		jsonObj.put("impFichaVerifR", impFichaVerifR!=null?impFichaVerifR:new BigDecimal(0));
 		jsonObj.put("repEsqInvR", repEsqInvR!=null?repEsqInvR:new BigDecimal(0));
 		jsonObj.put("verifInfoR", verifInfoR!=null?verifInfoR:new BigDecimal(0));
 		jsonObj.put("elabArchBenefR", elabArchBenefR!=null?elabArchBenefR:new BigDecimal(0));
