@@ -29,6 +29,7 @@ var resumenCosto= {
 		
 		div_F14AB_opc:null,
 		div_F14AB_zona:null,
+		div_F14B_zonas_comp:null,//solo para comparativos no incluye todos
 		//divF12B:null,
 		
 		//mensajes				
@@ -85,6 +86,7 @@ var resumenCosto= {
 			
 			this.div_F14AB_opc=$("#<portlet:namespace/>div_F14B_opciones");
 			this.div_F14AB_zona=$("#<portlet:namespace/>div_F14B_zonas");
+			this.div_F14B_zonas_comp=$("#<portlet:namespace/>div_F14B_zonas_comp");
 			
 			
 			//mensajes			
@@ -195,9 +197,14 @@ var resumenCosto= {
 			//evento change para bienales
 			resumenCosto.i_cboBienal.change(function(){	
 				if(resumenCosto.i_cboBienal.val()=='F14A'){
-					resumenCosto.div_F14AB_zona.hide();		
-				}else{
-					resumenCosto.div_F14AB_zona.show();		
+					resumenCosto.div_F14AB_zona.hide();	
+					resumenCosto.div_F14B_zonas_comp.hide();
+				}else if(resumenCosto.i_cboBienal.val()=='F14A_COMP' || resumenCosto.i_cboBienal.val()=='F14B_COMP'){
+					resumenCosto.div_F14B_zonas_comp.show();
+					resumenCosto.div_F14AB_zona.hide();	
+				}else{					
+					resumenCosto.div_F14AB_zona.show();
+					resumenCosto.div_F14B_zonas_comp.hide();
 				}							
 			});			
 		    		   

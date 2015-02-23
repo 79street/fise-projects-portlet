@@ -131,7 +131,19 @@ $(document).ready(function () {
 														<form:option value="LIMA">URBANO LIMA</form:option>														
 													</form:select> 
 																									     
-												  </div>	
+												  </div>
+												  
+												  <div id="<portlet:namespace/>div_F14B_zonas_comp" style="display: none;">
+												   	
+												   	 <br>  
+												     
+												     <form:select path="optionZonaComp" cssClass="select" cssStyle="width: 150px;">												        												
+														<form:option value="RURAL">RURAL</form:option>
+														<form:option value="PROVINCIA">URBANO PROVINCIAS</form:option>
+														<form:option value="LIMA">URBANO LIMA</form:option>														
+													</form:select> 
+																									     
+												  </div>		
 												  								  
 												  <br>
 												  
