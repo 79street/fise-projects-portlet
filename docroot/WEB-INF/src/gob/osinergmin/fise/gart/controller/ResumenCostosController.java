@@ -726,16 +726,16 @@ public class ResumenCostosController {
 			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
 				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
 			}
-			if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
-					"RURAL".equals(r.getOptionZona())){
+			if(FormatoUtil.isNotBlank(r.getOptionZonaComp()) && 
+					"RURAL".equals(r.getOptionZonaComp())){
 				idZona = FiseConstants.ZONABENEF_RURAL;
 				desZona = "Zona Rural";
-			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
-					"PROVINCIA".equals(r.getOptionZona())){
+			}else if(FormatoUtil.isNotBlank(r.getOptionZonaComp()) && 
+					"PROVINCIA".equals(r.getOptionZonaComp())){
 				idZona = FiseConstants.ZONABENEF_PROVINCIA;
 				desZona = "Zona Urbano Provincias";
-			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
-					"LIMA".equals(r.getOptionZona())){
+			}else if(FormatoUtil.isNotBlank(r.getOptionZonaComp()) && 
+					"LIMA".equals(r.getOptionZonaComp())){
 				idZona = FiseConstants.ZONABENEF_LIMA_COD;
 				desZona = "Zona Urbano Lima";
 			}
@@ -743,7 +743,7 @@ public class ResumenCostosController {
 			logger.info("grupo inf:  "+idGrupoInf);		
 			logger.info("periocidad:  "+r.getOptionFormato());	
 			logger.info("formato:  "+r.getOptionBienal());//formato seleccionado de los bienales
-			logger.info("zona:  "+r.getOptionZona());//zona
+			logger.info("zona:  "+r.getOptionZonaComp());//zona
 		   		    
             String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
 		    
@@ -826,16 +826,16 @@ public class ResumenCostosController {
 			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
 				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
 			}
-			if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
-					"RURAL".equals(r.getOptionZona())){
+			if(FormatoUtil.isNotBlank(r.getOptionZonaComp()) && 
+					"RURAL".equals(r.getOptionZonaComp())){
 				idZona = FiseConstants.ZONABENEF_RURAL;
 				desZona = "Zona Rural";
-			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
-					"PROVINCIA".equals(r.getOptionZona())){
+			}else if(FormatoUtil.isNotBlank(r.getOptionZonaComp()) && 
+					"PROVINCIA".equals(r.getOptionZonaComp())){
 				idZona = FiseConstants.ZONABENEF_PROVINCIA;
 				desZona = "Zona Urbano Provincias";
-			}else if(FormatoUtil.isNotBlank(r.getOptionZona()) && 
-					"LIMA".equals(r.getOptionZona())){
+			}else if(FormatoUtil.isNotBlank(r.getOptionZonaComp()) && 
+					"LIMA".equals(r.getOptionZonaComp())){
 				idZona = FiseConstants.ZONABENEF_LIMA_COD;
 				desZona = "Zona Urbano Lima";
 			}
@@ -843,7 +843,7 @@ public class ResumenCostosController {
 			logger.info("grupo inf:  "+idGrupoInf);		
 			logger.info("periocidad:  "+r.getOptionFormato());	
 			logger.info("formato:  "+r.getOptionBienal());//formato seleccionado de los bienales
-			logger.info("zona:  "+r.getOptionZona());//zona
+			logger.info("zona:  "+r.getOptionZonaComp());//zona
 		   		    
             String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
 		    
