@@ -454,11 +454,11 @@ var liquidacionVar= {
 			var ancho = liquidacionVar.divBuscarLiq.width();
 			liquidacionVar.tablaResultadosMotivo.jqGrid({
 			   datatype: "local",
-		       colNames: ['Ítem','Zona','Ítem Formato','Descripción del Motivo','Editar','Eliminar',''],
+		       colNames: ['Ítem','Ítem Formato','Zona','Descripción del Motivo','Editar','Eliminar',''],
 		       colModel: [
-                       { name: 'itemMotivo', index: 'itemMotivo', width: 50,align:'center'},
-                       { name: 'desZona', index: 'desZona', width: 50,align:'center'},
+                       { name: 'itemMotivo', index: 'itemMotivo', width: 50,align:'center'},                       
                        { name: 'desActividad', index: 'desActividad', width: 50,align:'center'},
+                       { name: 'desZona', index: 'desZona', width: 50,align:'center'},
 					   { name: 'descMotivo', index: 'descMotivo', width: 250},					  	  	           
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },		                
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
@@ -962,8 +962,8 @@ var liquidacionVar= {
 		<portlet:namespace/>nuevoMotivo : function(){
 			var formatoActiv = $('#formatoMotivo').val();
 			console.debug("boton nuevo registro motivo formato :  "+formatoActiv);	
-			//if(formatoActiv=='F14A' || formatoActiv=='F14B'){
-				
+			if(formatoActiv!='F12C' && formatoActiv!='F12D' && formatoActiv!='F13A'){
+				console.debug("entrando a formatos diferentes de 12C 12D 13A  ");	
 				liquidacionVar.listarActividades(formatoActiv);//listamos las actividades
 				liquidacionVar.listarZonasBeneficiarios();//listamos las zonas de beneficiarios
 				
@@ -980,7 +980,8 @@ var liquidacionVar= {
 				}	
 				$('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
 			    $('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');				
-			/* }else{	
+			 }else{	
+				 console.debug("entrando a formatos  12C 12D 13A  ");	
 				liquidacionVar.divActividades.hide();
 				liquidacionVar.divNuevoMotivo.show();
 				liquidacionVar.divBuscarLiq.hide();	
@@ -993,7 +994,7 @@ var liquidacionVar= {
 				}	
 			    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
 				$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');		
-			}		 */		
+			}			
 		},
 		
 		//funcion para listar zonas de beneficiarios para nuevo registro
@@ -1222,7 +1223,7 @@ var liquidacionVar= {
 			var formatoActiv = $('#formatoMotivo').val();
 			console.debug("boton nuevo registro motivo formato :  "+formatoActiv);
 			console.debug("setando datos cuando edito id actividad "+bean.itemActividad);
-			//if(formatoActiv=='F14A' || formatoActiv=='F14B'){
+			if(formatoActiv!='F12C' && formatoActiv!='F12D' && formatoActiv!='F13A'){
 				liquidacionVar.listarActividadesEditar(formatoActiv,bean.itemActividad);//listamos las actividades 
 				liquidacionVar.listarZonasBeneficiariosEditar(bean.codigoZona);//listamos las zonas de beneficiarios
 				liquidacionVar.divActividades.show();
@@ -1232,12 +1233,12 @@ var liquidacionVar= {
 				//$('#itemActividad').val(bean.itemActividad);
 				//$('#codigoZona').val(bean.codigoZona);
 				
-			/* }else{	
+			 }else{	
 				liquidacionVar.divActividades.hide();
 				liquidacionVar.f_descMotivo.val(bean.descMotivo); 
 				$('#itemMotivo').val(bean.itemMotivo);
 				$('#coMotivo').val(bean.coMotivo);		
-			} */			
+			} 			
 		},
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
