@@ -1969,9 +1969,9 @@ public class EnvioDefinitivoController {
 	  													fileEntryJsp.setFileEntry(archivo13Obs);
 	  													listaArchivo.add(fileEntryJsp);
 	  												}
-	  											}
-	  											f13A = "1";
-	  										}//fin del if map !null   
+	  											}	  											
+	  										}//fin del if map !null  
+	  										f13A = "1";
 	  									}
 
 	  								}                	
@@ -2017,9 +2017,9 @@ public class EnvioDefinitivoController {
 	  													fileEntryJsp.setFileEntry(archivo14AObs);
 	  													listaArchivo.add(fileEntryJsp);
 	  												}
-	  											}
-	  											f14A = "1";
+	  											}	  											
 	  										}//fin del if map ! null	
+	  										f14A = "1";
 	  									}
 
 	  								}
