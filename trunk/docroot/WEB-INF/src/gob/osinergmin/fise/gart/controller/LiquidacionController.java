@@ -507,8 +507,12 @@ public class LiquidacionController {
 				pk.setAnoEjecucionGasto(new Long(l.getAnioEjec()));
 				pk.setMesEjecucionGasto(new Long(l.getMesEjec()));
 				pk.setEtapa(l.getEtapa());  	  			        
-				FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);		        
-				cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());	
+				FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);
+				if(formato12A.getFiseFormato12ADs()!=null){
+					cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());	
+				}else{
+					listaObs12A = new ArrayList<MensajeErrorBean>();
+				}					
 				for (MensajeErrorBean error : listaObs12A) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());	
@@ -527,8 +531,12 @@ public class LiquidacionController {
 				pk.setAnoEjecucionGasto(new Integer(l.getAnioEjec()));
 				pk.setMesEjecucionGasto(new Integer(l.getMesEjec()));
 				pk.setEtapa(l.getEtapa());  
-				FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);      
-				cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());
+				FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);
+				if(formato12B.getListaDetalle12BDs()!=null){
+					cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());
+				}else{
+					listaObs12B = new ArrayList<MensajeErrorBean>();	
+				}				
 				for (MensajeErrorBean error : listaObs12B) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());	
@@ -545,8 +553,12 @@ public class LiquidacionController {
 				pk.setAnoPresentacion(new Long(l.getAnioPres()));
 				pk.setMesPresentacion(new Long(l.getMesPres()));
 				pk.setEtapa(l.getEtapa()); 
-				FiseFormato12CC formato12C = formatoService12C.obtenerFormato12CCByPK(pk);	        
-				cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());
+				FiseFormato12CC formato12C = formatoService12C.obtenerFormato12CCByPK(pk);
+				if(formato12C.getFiseFormato12CDs()!=null){
+					cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());
+				}else{
+					listaObs12C = new ArrayList<MensajeErrorBean>();	
+				}				
 				for (MensajeErrorBean error : listaObs12C) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());
@@ -564,8 +576,12 @@ public class LiquidacionController {
 				pk.setAnoPresentacion(new Long(l.getAnioPres()));
 				pk.setMesPresentacion(new Long(l.getMesPres()));
 				pk.setEtapa(l.getEtapa()); 
-				FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk);  
-				cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
+				FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk);
+				if(formato12D.getFiseFormato12DDs()!=null){
+					cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());	
+				}else{
+					listaObs12D = new ArrayList<MensajeErrorBean>();	
+				}				
 				for (MensajeErrorBean error : listaObs12D) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());
@@ -583,8 +599,12 @@ public class LiquidacionController {
 				pk.setAnoPresentacion(new Long(l.getAnioPres()));
 				pk.setMesPresentacion(new Long(l.getMesPres()));
 				pk.setEtapa(l.getEtapa());  	 
-				FiseFormato13AC formato13A = formatoService13A.obtenerFormato13ACByPK(pk);	      
-				cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+				FiseFormato13AC formato13A = formatoService13A.obtenerFormato13ACByPK(pk);
+				if(formato13A.getFiseFormato13ADs()!=null){
+					cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+				}else{
+					listaObs13A = new ArrayList<MensajeErrorBean>();	
+				}				
 				for (MensajeErrorBean error : listaObs13A) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());
@@ -604,8 +624,12 @@ public class LiquidacionController {
 				pk.setAnoInicioVigencia(new Long(l.getAnioIniVig()));
 				pk.setAnoFinVigencia(new Long(l.getAnioFinVig()));
 				pk.setEtapa(l.getEtapa());  				        
-				FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);	      
-				cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());
+				FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);
+				if(formato14A.getFiseFormato14ADs()!=null){
+					cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());	
+				}else{
+					listaObs14A = new ArrayList<MensajeErrorBean>();
+				}				
 				for (MensajeErrorBean error : listaObs14A) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());	
@@ -624,8 +648,12 @@ public class LiquidacionController {
 				pk.setAnoInicioVigencia(new Long(l.getAnioIniVig()));
 				pk.setAnoFinVigencia(new Long(l.getAnioFinVig()));
 				pk.setEtapa(l.getEtapa());  						        
-				FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);	       
-				cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());	
+				FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);
+				if(formato14B.getFiseFormato14BDs()!=null){
+					cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());	
+				}else{
+					listaObs14B = new ArrayList<MensajeErrorBean>();
+				}					
 				for (MensajeErrorBean error : listaObs14B) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());	
@@ -644,8 +672,12 @@ public class LiquidacionController {
 				f14C.setAnoIniVigencia(l.getAnioIniVig());
 				f14C.setAnoFinVigencia(l.getAnioFinVig());
 				f14C.setEtapa(l.getEtapa());				
-				FiseFormato14CC formato14C = formatoService14C.obtenerFiseFormato14CC(f14C);			
-				cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());
+				FiseFormato14CC formato14C = formatoService14C.obtenerFiseFormato14CC(f14C);
+				if(formato14C.getListaDetalle14cDs()!=null){
+					cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());
+				}else{
+					listaObs14C = new ArrayList<MensajeErrorBean>();	
+				}				
 				for (MensajeErrorBean error : listaObs14C) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());	
@@ -777,8 +809,13 @@ public class LiquidacionController {
 				if(mapa!=null && formato!=null){				
 					File reportFile = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes12C = null;
-					bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-							new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
+					if(formato.getFiseFormato12CDs()!=null){
+						bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+								new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));	
+					}else{
+						bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+								new JREmptyDataSource());
+					}					
 					if (bytes12C != null) {				  	  		    		
 						session.setAttribute("bytesFormato", bytes12C);
 						valorReporte =true;
@@ -799,8 +836,13 @@ public class LiquidacionController {
 				if(mapa!=null && formato!=null){				
 					File reportFile = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes12D = null;
-					bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-							new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+					if(formato.getFiseFormato12DDs()!=null){
+						bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+								new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));	
+					}else{
+						bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+								new JREmptyDataSource());
+					}					
 					if (bytes12D != null) {				  	  		    		
 						session.setAttribute("bytesFormato", bytes12D);
 						valorReporte =true;

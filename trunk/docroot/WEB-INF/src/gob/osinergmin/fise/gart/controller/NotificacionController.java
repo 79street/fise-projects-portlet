@@ -82,6 +82,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -532,7 +533,7 @@ public class NotificacionController {
 				pk.setMesEjecucionGasto(new Long(n.getMesEjec()));
 				pk.setEtapa(n.getEtapa());  	  			        
 				FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);	
-				if(formato12A!=null){
+				if(formato12A!=null){					
 					cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());	
 					for (MensajeErrorBean error : listaObservaciones) {
 		  				JSONObject jsonObj = new JSONObject();
@@ -1157,8 +1158,11 @@ public class NotificacionController {
   	  						pk.setAnoEjecucionGasto(new Long(not.getAnioEjec()));
   	  						pk.setMesEjecucionGasto(new Long(not.getMesEjec()));
   	  						pk.setEtapa(not.getEtapa());  	  			        
-  	  						FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk);  						
-  	  						cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());
+  	  						FiseFormato12AC formato12A = formatoService12A.obtenerFormato12ACByPK(pk); 
+  	  						
+  	  						if(formato12A.getFiseFormato12ADs()!=null){
+  	  						    cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());	
+  	  						}  	  						
   	  						
   	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
@@ -1179,8 +1183,13 @@ public class NotificacionController {
   	  					   	
   	  					    File reportFile12A = new File(session.getServletContext().getRealPath(directorio));
   	  	 		    	    byte[] bytes12A = null;
-  	  	 		    	    bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa,
-  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  	  	 		    	    if(listaObservaciones!=null && !listaObservaciones.isEmpty() && listaObservaciones.size()>0){
+  	  	 		    	         bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa,
+  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));	
+  	  	 		    	    }else{
+  	  	 		    	        bytes12A = JasperRunManager.runReportToPdf(reportFile12A.getPath(), mapa,
+  	  	 		    	        	new JREmptyDataSource()); 	  	 		    	   
+  	  	 		    	    }  	  	 		    	    
   		  	 		    	if (bytes12A != null) {
   		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), 
@@ -1202,8 +1211,11 @@ public class NotificacionController {
   	  						pk.setAnoEjecucionGasto(new Integer(not.getAnioEjec()));
   	  						pk.setMesEjecucionGasto(new Integer(not.getMesEjec()));
   	  						pk.setEtapa(not.getEtapa());  
-  	  						FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);      
-  	  						cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());
+  	  						FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);
+  	  						
+  	  						if(formato12B.getListaDetalle12BDs()!=null){
+  	  						   cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());
+  	  						}	  						
   	  						
   	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
@@ -1223,8 +1235,14 @@ public class NotificacionController {
 
   	  						File reportFile12B = new File(session.getServletContext().getRealPath(directorio));
   	  						byte[] bytes12B = null;
-  	  					    bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), mapa,
+  	  					    if(listaObservaciones!=null && !listaObservaciones.isEmpty() && listaObservaciones.size()>0){
+  	  					        bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), mapa,
   	  								new JRBeanCollectionDataSource(listaObservaciones));
+	  	 		    	    }else{
+	  	 		    	    	bytes12B = JasperRunManager.runReportToPdf(reportFile12B.getPath(), mapa,
+	  	 		    	    			new JREmptyDataSource()); 	  	 		    	   
+	  	 		    	    }
+  	  					    
   	  						if (bytes12B != null) {
   	  							String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   	  									Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()), 
@@ -1244,8 +1262,11 @@ public class NotificacionController {
   	  						pk.setAnoPresentacion(new Long(not.getAnioPres()));
   	  						pk.setMesPresentacion(new Long(not.getMesPres()));
   	  						pk.setEtapa(not.getEtapa()); 
-  	  						FiseFormato12CC formato12C = formatoService12C.obtenerFormato12CCByPK(pk);	        
-  	  						cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());  	  						
+  	  						FiseFormato12CC formato12C = formatoService12C.obtenerFormato12CCByPK(pk);
+  	  						
+  	  						if(formato12C.getFiseFormato12CDs()!=null){
+  	  						   cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());  	  		
+  	  						}  	  											
   	  						
   	  						nombreReporte = "validacion12";		  	  		    		
   	  						directorio = "/reports/" + nombreReporte + ".jasper";
@@ -1265,8 +1286,13 @@ public class NotificacionController {
   	  						
   	  						File reportFile12C = new File(session.getServletContext().getRealPath(directorio));
   	  						byte[] bytes12C = null;
-  	  						bytes12C = JasperRunManager.runReportToPdf(reportFile12C.getPath(), mapa, 
-  	  								new JRBeanCollectionDataSource(listaObservaciones));
+  	  						if(listaObservaciones!=null && !listaObservaciones.isEmpty() && listaObservaciones.size()>0){
+  	  							bytes12C = JasperRunManager.runReportToPdf(reportFile12C.getPath(), mapa, 
+  	  									new JRBeanCollectionDataSource(listaObservaciones));	
+  	  						}else{
+  	  							bytes12C = JasperRunManager.runReportToPdf(reportFile12C.getPath(), mapa, 
+  	  								new JREmptyDataSource()); 	  	 		    	   
+  	  						}  	  						
   	  						if (bytes12C != null) {	  	  		    			
   	  							String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   	  									Long.valueOf(not.getAnioPres()),Long.valueOf(not.getMesPres()),
@@ -1286,8 +1312,12 @@ public class NotificacionController {
   	  						pk.setAnoPresentacion(new Long(not.getAnioPres()));
   	  						pk.setMesPresentacion(new Long(not.getMesPres()));
   	  						pk.setEtapa(not.getEtapa()); 
-  	  						FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk);  
-  	  						cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
+  	  						FiseFormato12DC formato12D = formatoService12D.obtenerFormato12DCByPK(pk); 
+  	  						
+  	  						if(formato12D.getFiseFormato12DDs()!=null){
+  	  						   cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
+  	  						} 	  						
+  	  						
   	  						nombreReporte = "validacion12";		  	  		    		
   	  						directorio = "/reports/" + nombreReporte + ".jasper";
   	  						tabla = tablaService.obtenerCfgTablaByPK(FiseConstants.ID_TABLA_FORMATO12D);
@@ -1306,8 +1336,13 @@ public class NotificacionController {
 
   	  						File reportFile12D = new File(session.getServletContext().getRealPath(directorio));
   	  						byte[] bytes12D = null;
-  	  						bytes12D = JasperRunManager.runReportToPdf(reportFile12D.getPath(), mapa, 
-  	  								new JRBeanCollectionDataSource(listaObservaciones));
+  	  						if(listaObservaciones!=null && !listaObservaciones.isEmpty() && listaObservaciones.size()>0){
+  	  							bytes12D = JasperRunManager.runReportToPdf(reportFile12D.getPath(), mapa, 
+  	  									new JRBeanCollectionDataSource(listaObservaciones));	
+  	  						}else{
+  	  							bytes12D = JasperRunManager.runReportToPdf(reportFile12D.getPath(), mapa, 
+  	  								new JREmptyDataSource()); 	  	 		    	   
+  	  						}  	  						
   	  						if (bytes12D != null) {	  	  		    			
   	  							String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   	  									Long.valueOf(not.getAnioPres()),Long.valueOf(not.getMesPres()),
@@ -1327,8 +1362,11 @@ public class NotificacionController {
   	  						pk.setAnoPresentacion(new Long(not.getAnioPres()));
   	  						pk.setMesPresentacion(new Long(not.getMesPres()));
   	  						pk.setEtapa(not.getEtapa());  						
-  	  						FiseFormato13AC formato13A = formatoService13A.obtenerFormato13ACByPK(pk);  						
-  	  						cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+  	  						FiseFormato13AC formato13A = formatoService13A.obtenerFormato13ACByPK(pk); 
+  	  						
+  	  						if(formato13A.getFiseFormato13ADs()!=null){
+  	  						    cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+  	  						}
   	  						
   	  						nombreReporte ="validacion13";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
@@ -1352,8 +1390,13 @@ public class NotificacionController {
 
   							File reportFile13A = new File(session.getServletContext().getRealPath(directorio));
   	  	 		    	    byte[] bytes13A = null;
-  	  	 		    	    bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa,
-  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  	  	 		    	    if(listaObservaciones!=null && !listaObservaciones.isEmpty() && listaObservaciones.size()>0){
+  	  	 		    	    	bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa,
+  	  	 		    	    			new JRBeanCollectionDataSource(listaObservaciones));	
+  	  	 		    	    }else{
+  	  	 		    	    	bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa,
+  	  	 		    	    		new JREmptyDataSource()); 	  	 		    	   
+  	  	 		    	    }  	  	 		    	    
   		  	 		    	if (bytes13A != null) {
   		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()),
@@ -1376,8 +1419,11 @@ public class NotificacionController {
   	  						pk.setAnoInicioVigencia(new Long(not.getAnioIniVig()));
   	  						pk.setAnoFinVigencia(new Long(not.getAnioFinVig()));
   	  						pk.setEtapa(not.getEtapa());  				        
-  	  						FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);	
-  	  						cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());
+  	  						FiseFormato14AC formato14A = formatoService14A.obtenerFormato14ACByPK(pk);
+  	  						
+  	  						if(formato14A.getFiseFormato14ADs()!=null){
+  	  						  cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());
+  	  						}  	  						
   	  						
   	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
@@ -1397,8 +1443,13 @@ public class NotificacionController {
   	  			    		
   	  					    File reportFile14A = new File(session.getServletContext().getRealPath(directorio));
   	  	 		    	    byte[] bytes14A = null;
-  	  	 		    	    bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa,
-  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  	  	 		    	    if(listaObservaciones!=null && !listaObservaciones.isEmpty() && listaObservaciones.size()>0){
+  	  	 		    	    	bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa,
+  	  	 		    	    			new JRBeanCollectionDataSource(listaObservaciones));
+  	  	 		    	    }else{
+  	  	 		    	    	bytes14A = JasperRunManager.runReportToPdf(reportFile14A.getPath(), mapa,
+  	  	 		    	    		new JREmptyDataSource());	  	 		    	   
+  	  	 		    	    }  	  	 		    	    
   		  	 		    	if (bytes14A != null) {
   		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()),
@@ -1421,8 +1472,10 @@ public class NotificacionController {
   	  						pk.setAnoInicioVigencia(new Long(not.getAnioIniVig()));
   	  						pk.setAnoFinVigencia(new Long(not.getAnioFinVig()));
   	  						pk.setEtapa(not.getEtapa());  						        
-  	  						FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);	
-  	  						cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());
+  	  						FiseFormato14BC formato14B = formatoService14B.obtenerFormato14BCByPK(pk);
+  	  						if(formato14B.getFiseFormato14BDs()!=null){
+  	  						   cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());
+  	  						}  	  						
   	  						
   	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
@@ -1442,8 +1495,14 @@ public class NotificacionController {
   	  			    		
   	  					    File reportFile14B = new File(session.getServletContext().getRealPath(directorio));
   	  	 		    	    byte[] bytes14B = null;
-  	  	 		    	    bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa,
-  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  	  	 		    	    if(listaObservaciones!=null && !listaObservaciones.isEmpty() && listaObservaciones.size()>0){
+  	  	 		    	      bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa,
+  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));	
+  	  	 		    	    }else{
+  	  	 		    	       bytes14B = JasperRunManager.runReportToPdf(reportFile14B.getPath(), mapa,
+  	  	 		    	    		new JREmptyDataSource()); 	  	 		    	   
+  	  	 		    	    }
+  	  	 		    	   
   		  	 		    	if (bytes14B != null) {
   		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()),
@@ -1467,7 +1526,10 @@ public class NotificacionController {
   	  						f14C.setAnoFinVigencia(not.getAnioFinVig());
   	  						f14C.setEtapa(not.getEtapa());
   	  						FiseFormato14CC formato14C = formatoService14C.obtenerFiseFormato14CC(f14C);
-  	  						cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());
+  	  						
+  	  						if(formato14C.getListaDetalle14cDs()!=null){
+  	  						   cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());
+  	  						} 	  						
   	  						
   	  						nombreReporte ="validacion";
   	  						directorio =  "/reports/"+nombreReporte+".jasper";
@@ -1487,8 +1549,13 @@ public class NotificacionController {
 	  						
   	  					    File reportFile14C = new File(session.getServletContext().getRealPath(directorio));
   	  	 		    	    byte[] bytes14C = null;
-  	  	 		    	    bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa,
-  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));
+  	  	 		    	    if(listaObservaciones!=null && !listaObservaciones.isEmpty() && listaObservaciones.size()>0){
+  	  	 		    	      bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa,
+  	  	 			    		   new JRBeanCollectionDataSource(listaObservaciones));	
+  	  	 		    	    }else{
+  	  	 		    	        bytes14C = JasperRunManager.runReportToPdf(reportFile14C.getPath(), mapa,
+  	  	 		    	        	new JREmptyDataSource());  	  	 		    	    		 		    	   
+  	  	 		    	    }  	  	 		    	    
   		  	 		    	if (bytes14C != null) {
   		   			    	   String nombre = FormatoUtil.nombreReporteGeneralAnexoObs(not.getCodEmpresa(),
   		   			    			   Long.valueOf(not.getAnioPres()), Long.valueOf(not.getMesPres()),
