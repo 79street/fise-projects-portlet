@@ -1575,17 +1575,19 @@ public class Formato12DGartController {
 	public void cargarListaObservaciones(List<FiseFormato12DD> listaDetalle) {
 		int cont = 0;
 		listaObservaciones = new ArrayList<MensajeErrorBean>();
-		for (FiseFormato12DD detalle : listaDetalle) {
-			List<FiseFormato12DDOb> listaObser = formatoService.listarFormato12DDObByFormato12DD(detalle);
-			for (FiseFormato12DDOb observacion : listaObser) {
-				cont++;
-				MensajeErrorBean obs = new MensajeErrorBean();
-				obs.setId(cont);
-				obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
-				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
-				obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
-				listaObservaciones.add(obs);
+		if( listaDetalle!=null && listaDetalle.size()>0 ){
+			for (FiseFormato12DD detalle : listaDetalle) {
+				List<FiseFormato12DDOb> listaObser = formatoService.listarFormato12DDObByFormato12DD(detalle);
+				for (FiseFormato12DDOb observacion : listaObser) {
+					cont++;
+					MensajeErrorBean obs = new MensajeErrorBean();
+					obs.setId(cont);
+					obs.setNroItemEtapa(observacion.getId().getNumeroItemEtapa());
+					obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
+					obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+					obs.setDescEtapaEjecucion(mapaEtapaEjecucion.get(observacion.getId().getEtapaEjecucion()));
+					listaObservaciones.add(obs);
+				}
 			}
 		}
 	}
