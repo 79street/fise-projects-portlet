@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="2.9230756500000417"/>
-	<property name="ireport.x" value="1244"/>
-	<property name="ireport.y" value="65"/>
+	<property name="ireport.zoom" value="2.923075650000049"/>
+	<property name="ireport.x" value="2601"/>
+	<property name="ireport.y" value="253"/>
 	<parameter name="IMG" class="java.lang.String"/>
 	<parameter name="FORMATO" class="java.lang.String"/>
 	<parameter name="GRUPO_INFORMACION" class="java.lang.String">
@@ -55,7 +55,7 @@
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="949" y="28" width="194" height="16"/>
+				<reportElement x="949" y="28" width="201" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -66,14 +66,14 @@
 				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="6" y="91" width="1137" height="20" forecolor="#006699"/>
+				<reportElement x="6" y="91" width="1144" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{FORMATO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="6" y="71" width="1137" height="20" forecolor="#006699"/>
+				<reportElement x="6" y="71" width="1144" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -150,7 +150,7 @@
 				<text><![CDATA[Actividad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="949" y="0" width="194" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="949" y="0" width="201" height="40" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -159,74 +159,74 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="27" splitType="Stretch">
+		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement x="54" y="0" width="127" height="27"/>
+				<reportElement x="54" y="0" width="127" height="33"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{desEmpresa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="6" y="0" width="48" height="27"/>
+				<reportElement x="6" y="0" width="48" height="33"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{codEmpresa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="181" y="0" width="36" height="27"/>
+				<reportElement x="181" y="0" width="36" height="33"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="217" y="0" width="324" height="27"/>
+				<reportElement x="217" y="0" width="324" height="33"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{actividad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="541" y="0" width="112" height="27"/>
+				<reportElement x="541" y="0" width="112" height="33"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{desZona}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="653" y="0" width="79" height="27"/>
+				<reportElement x="653" y="0" width="79" height="33"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoSolicitud}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="732" y="0" width="76" height="27"/>
+				<reportElement x="732" y="0" width="76" height="33"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoLevObs}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="808" y="0" width="75" height="27"/>
+				<reportElement x="808" y="0" width="75" height="33"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoHistorico}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="883" y="0" width="66" height="27"/>
+				<reportElement x="883" y="0" width="66" height="33"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{montoEstablecido}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="949" y="0" width="194" height="27"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="949" y="0" width="201" height="33"/>
 				<textElement textAlignment="Left">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{desMotivo}]]></textFieldExpression>
 			</textField>
@@ -238,7 +238,7 @@
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="949" y="1" width="194" height="18"/>
+				<reportElement x="949" y="1" width="201" height="18"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{pagCount}]]></textFieldExpression>
 			</textField>
