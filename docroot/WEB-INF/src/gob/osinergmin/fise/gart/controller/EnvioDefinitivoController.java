@@ -340,7 +340,11 @@ public class EnvioDefinitivoController {
   	  		          valor = false;
   	  		          break;
   	  		        }
-  	  		        cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());	
+  	  		        if(formato12A.getFiseFormato12ADs()!=null){
+  	  		           cargarListaObservaciones12A(formato12A.getFiseFormato12ADs());		
+  	  		        }else{
+  	  		            listaObs12A = new ArrayList<MensajeErrorBean>();
+  	  		        }
   	  		        
   				}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(not.getFormato())){ 
   					FiseFormato12BCPK pk=new FiseFormato12BCPK();
@@ -360,7 +364,11 @@ public class EnvioDefinitivoController {
 	        	    	valor = false;
 	        	    	break;
 	        	    }
-	        	    cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());
+	        	    if(formato12B.getListaDetalle12BDs()!=null){
+	        	    	 cargarListaObservaciones12B(formato12B.getListaDetalle12BDs());	
+	        	    }else{
+	        	    	listaObs12B = new ArrayList<MensajeErrorBean>();
+	        	    }
 	        	    
   				}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(not.getFormato())){ 
   					FiseFormato12CCPK pk = new FiseFormato12CCPK();
@@ -375,8 +383,13 @@ public class EnvioDefinitivoController {
 				    if(i!=0){
 				    	valor = false;
 				    	break;
-		  		    } 
-				    cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());
+		  		    }
+				    if(formato12C.getFiseFormato12CDs()!=null){
+				    	cargarListaObservaciones12C(formato12C.getFiseFormato12CDs());	
+				    }else{
+				    	listaObs12C = new ArrayList<MensajeErrorBean>();
+				    }
+				    
 				    
   				}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(not.getFormato())){ 
   					FiseFormato12DCPK pk = new FiseFormato12DCPK();
@@ -391,8 +404,12 @@ public class EnvioDefinitivoController {
   					if (i != 0) {
   						valor = false;
 				    	break;	
-  					}  					
-  					cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
+  					} 
+  					if(formato12D.getFiseFormato12DDs()!=null){
+  						cargarListaObservaciones12D(formato12D.getFiseFormato12DDs());
+  					}else{
+  						listaObs12D = new ArrayList<MensajeErrorBean>();
+  					}
   					
   				}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(not.getFormato())){ 
   					FiseFormato13ACPK pk = new FiseFormato13ACPK();
@@ -410,7 +427,9 @@ public class EnvioDefinitivoController {
 	  		        }
   	  		        if(formato13A.getFiseFormato13ADs()!=null){
   	  		            cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
-  	  		        }	  		        
+  	  		        }else{
+  	  		           listaObs13A = new ArrayList<MensajeErrorBean>();
+  	  		        }
   	  		        
   				}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(not.getFormato())){ 
   					FiseFormato14ACPK pk = new FiseFormato14ACPK();
@@ -428,7 +447,11 @@ public class EnvioDefinitivoController {
 	  		          valor = false;
 	  		          break;
 	  		       }
-  		    	   cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());
+  		    	   if(formato14A.getFiseFormato14ADs()!=null){
+  		    		 cargarListaObservaciones14A(formato14A.getFiseFormato14ADs());  
+  		    	   }else{
+  		    		 listaObs14A = new ArrayList<MensajeErrorBean>();  
+  		    	   }
   		    	   
   				}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(not.getFormato())){ 
   					FiseFormato14BCPK pk = new FiseFormato14BCPK();
@@ -446,7 +469,11 @@ public class EnvioDefinitivoController {
 	  		          valor = false;
 	  		          break;
 	  		       }
-  		    	   cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());	
+  		    	   if(formato14B.getFiseFormato14BDs()!=null){
+  		    		 cargarListaObservaciones14B(formato14B.getFiseFormato14BDs());	   
+  		    	   }else{
+  		    		 listaObs14B = new ArrayList<MensajeErrorBean>();  
+  		    	   }
   		    	   
   				}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(not.getFormato())){ 
   					Formato14CBean f14C = new Formato14CBean();  					
@@ -466,7 +493,11 @@ public class EnvioDefinitivoController {
   			    		valor = false;
   			    		break;
   			    	}
-  			    	cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());
+  			    	if(formato14C.getListaDetalle14cDs()!=null){
+  			    		cargarListaObservaciones14C(formato14C.getListaDetalle14cDs());
+  			    	}else{
+  			    		listaObs14C = new ArrayList<MensajeErrorBean>();	
+  			    	}
   				}				
   			}//fin del for de la lista	 				
 		} catch (Exception e) {
@@ -1797,8 +1828,13 @@ public class EnvioDefinitivoController {
     			  	  		        	directorio = "/reports/" + nombreReporte + ".jasper";
     			  	  		        	File reportFile = new File(session.getServletContext().getRealPath(directorio));
     			  	  		        	byte[] bytes12C = null;
-    			  	  		        	bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+    			  	  		        	if(formato.getFiseFormato12CDs()!=null){
+    			  	  		        	    bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
     			  	  		        			new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
+    			  	  		        	}else{
+    			  	  		        	    bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+    			  	  		        	    	new JREmptyDataSource());	
+    			  	  		        	}    			  	  		        	
     			  	  		        	if (bytes12C != null) {				  	  		    		
     			  	  		        		String nombre = FormatoUtil.nombreReporteGeneralFormato(m.getCodEmpresa(),
     			  	  		        				Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
@@ -1851,8 +1887,13 @@ public class EnvioDefinitivoController {
     			  	  				   directorio = "/reports/" + nombreReporte + ".jasper";
     			  	  				   File reportFile = new File(session.getServletContext().getRealPath(directorio));
     			  	  				   byte[] bytes12D = null;
-    			  	  				   bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-    			  	  						   new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+    			  	  				   if(formato.getFiseFormato12DDs()!=null){
+    			  	  					 bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+      			  	  						   new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));   
+    			  	  				   }else{
+    			  	  					bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+    			  	  						new JREmptyDataSource());   
+    			  	  				   }    			  	  				  
     			  	  				   if (bytes12D != null) {				  	  		    		
     			  	  					   String nombre = FormatoUtil.nombreReporteGeneralFormato(m.getCodEmpresa(),
     			  	  							   Long.valueOf(m.getAnioPres()),Long.valueOf(m.getMesPres()),
@@ -2352,8 +2393,13 @@ public class EnvioDefinitivoController {
 				if(mapa!=null && formato!=null){				
 					File reportFile = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes12C = null;
-					bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-							new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));
+					if(formato.getFiseFormato12CDs()!=null){
+						bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+								new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));	
+					}else{
+						bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+								new JREmptyDataSource());
+					}					
 					if (bytes12C != null) {				  	  		    		
 						session.setAttribute("bytesFormato", bytes12C);
 						valorReporte =true;
@@ -2374,8 +2420,13 @@ public class EnvioDefinitivoController {
 				if(mapa!=null && formato!=null){				
 					File reportFile = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes12D = null;
-					bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-							new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+					if(formato.getFiseFormato12DDs()!=null){
+						bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+								new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+					}else{
+						bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+								new JREmptyDataSource());
+					}					
 					if (bytes12D != null) {				  	  		    		
 						session.setAttribute("bytesFormato", bytes12D);
 						valorReporte =true;

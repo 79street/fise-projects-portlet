@@ -899,9 +899,13 @@ public class Formato14CGartController {
 	    	int i = commonService.validarFormatos_14(formato14Generic, FiseConstants.NOMBRE_FORMATO_14C,
 	    			themeDisplay.getUser().getLogin(), themeDisplay.getUser().getLoginIP());
 		    if(i==0){
-		    	logger.info("Enviando la lista de detalle:  "+formato.getListaDetalle14cDs().size()); 
-		    	cargarListaObservaciones(formato.getListaDetalle14cDs());
-		    	logger.info("lista de observaciones cargado correctamente"); 
+		    	if(formato.getListaDetalle14cDs()!=null){
+		    		logger.info("Enviando la lista de detalle:  "+formato.getListaDetalle14cDs().size()); 
+			    	cargarListaObservaciones(formato.getListaDetalle14cDs());
+			    	logger.info("lista de observaciones cargado correctamente");	
+		    	}else{
+		    		listaObservaciones = new ArrayList<MensajeErrorBean>();
+		    	}
 		    	for (MensajeErrorBean error : listaObservaciones) {
 	  				JSONObject jsonObj = new JSONObject();
 					jsonObj.put("id", error.getId());	
@@ -979,7 +983,7 @@ public class Formato14CGartController {
 		    session.setAttribute("tipoFormato",tipoFormato);
 		    session.setAttribute("tipoArchivo",tipoArchivo);		    
 	
-		    if( listaObservaciones!=null ){
+		    if( listaObservaciones!=null && !listaObservaciones.isEmpty()){
 		    	session.setAttribute("lista", listaObservaciones);
 		    }
 	        
