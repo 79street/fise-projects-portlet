@@ -316,7 +316,25 @@ $(document).ready(function () {
 												    </c:forEach>
 												</form:select>		  
 											   </td>								   
+										     </tr>
+										     
+										     <tr height="10px">
+											   <td></td>
+											   <td></td>
+										    </tr>	
+										    	
+										      <tr>											      									   
+											   <td><label style="font-size: 12px; font-weight: bold">Zona Beneficiaria:</label>
+											   </td>
+											   <td>												
+												<form:select path="codigoZona" cssClass="select" cssStyle="width: 200px;">
+												    <c:forEach items="${listaZonas}" var="zona">
+												       <option value="${zona.idZonaBenef}">${zona.descripcion}</option>
+												    </c:forEach>
+												</form:select>		  
+											   </td>								   
 										     </tr>	
+										     	
 										     <tr height="10px">
 											   <td></td>
 											   <td></td>
