@@ -3233,7 +3233,8 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 				// cargamos la lista a enviar
 				List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
 
-				session.setAttribute("lista", lista);
+				//session.setAttribute("lista", lista);
+				session.setAttribute("lista", null);
 				
 				Map<String, Object> mapa = formatoService.mapearParametrosFormato13A(bean);
 				mapa.put("ANO_INICIO_VIGENCIA", formato.getAnoInicioVigenciaDetalle());
@@ -3489,7 +3490,13 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 					//enviamos la lista de los sectores decalarados
 					List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
 					
-					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JRBeanCollectionDataSource(lista));
+					if( lista!=null && lista.size()>0 ){
+						bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JRBeanCollectionDataSource(lista));
+					}else{
+						bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
+					}
+					
+					
 
 					if (bytes != null) {
 						// session.setAttribute("bytes1", bytes);

@@ -1460,7 +1460,11 @@ public class Formato12DGartController {
 					File reportFile = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes = null;
 					
-					bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+					if( formato.getFiseFormato12DDs()!=null && formato.getFiseFormato12DDs().size()>0 ){
+						bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));
+					}else{
+						bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, new JREmptyDataSource());
+					}
 					
 					if (bytes != null) {
 						// session.setAttribute("bytes1", bytes);
