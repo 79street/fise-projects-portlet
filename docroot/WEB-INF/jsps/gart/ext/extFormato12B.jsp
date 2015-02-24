@@ -1543,6 +1543,12 @@
 			formato12B.cmbPeriodo.prop('disabled', true);
 		
 			formato12B.txtAnioEjec.prop("type","text");
+			
+			formato12B.txtAnioEjec.prop("type","hidden");
+			
+			formato12B.txtAnioEjecCommand.prop('disabled', true);
+			formato12B.cmbMesEjecucion.prop('disabled', true);
+			
 			//--formato12B.txtAnioEjecCommand.prop("type","hidden");
 			//--formato12B.cmbMesEjecucion.prop('disabled', true);
 			

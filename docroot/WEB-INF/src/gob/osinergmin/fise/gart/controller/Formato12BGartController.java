@@ -272,14 +272,16 @@ public class Formato12BGartController {
   			String flagPeriodoEjecucion = "";
   			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(command.getCodEmpresa().trim(), FiseConstants.NOMBRE_FORMATO_12B);
   			
-  			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
-				if( periodoEnvio.equals(p.getCodigoItem()) ){
-					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
-					flagPeriodoEjecucion = p.getFlagPeriodoEjecucion();
-					break;
-				}
-			}
-
+  			if( periodoEnvio!=null ){
+  				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+  					if( periodoEnvio.equals(p.getCodigoItem()) ){
+  						jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
+  						flagPeriodoEjecucion = p.getFlagPeriodoEjecucion();
+  						break;
+  					}
+  				}
+  			}
+  			
 			anoEjecucion = anoPresentacion;
 			mesEjecucion = mesPresentacion;
   			

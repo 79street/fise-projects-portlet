@@ -241,7 +241,7 @@ var variacionCostos= {
 					    		  //fontSize: '6pt'
 				    			  fontSize: '8pt',
 				    			  //renderer: $.jqplot.CategoryAxisRenderer,
-				    	          label: 'Costo Unitario',
+				    	          label: 'Costo Unitario (Nuevos Soles)',
 				    	          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
 				    	          //tickRenderer: $.jqplot.CanvasAxisTickRenderer,
 				    	          tickOptions: {
@@ -350,7 +350,7 @@ var variacionCostos= {
 	             doc.text(x1, 40, $('#<portlet:namespace/>titulo1-imagen').val());
 	             doc.text(x2, 55, $('#<portlet:namespace/>titulo2-imagen').val());
 	             doc.text(x3, 70, $('#<portlet:namespace/>titulo3-imagen').val());
-	             doc.text(x3, 85, $('#<portlet:namespace/>titulo4-imagen').val());
+	             doc.text(x4, 85, $('#<portlet:namespace/>titulo4-imagen').val());
 	             
 				doc.addImage(img, 'PNG',20,100);
 				doc.save('variacionCostos.pdf');
