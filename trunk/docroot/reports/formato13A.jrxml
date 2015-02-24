@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato13A" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="26"/>
+	<property name="ireport.x" value="380"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
@@ -85,13 +85,18 @@
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico2}]]></variableExpression>
 	</variable>
 	<variable name="AnioMes" class="java.lang.String">
-		<variableExpression><![CDATA[$F{anioAlta}.toString()+' / '+$F{mesAlta}.toString()]]></variableExpression>
+		<variableExpression><![CDATA[($F{anioAlta}==null && $F{mesAlta}==null)? "":$F{anioAlta}.toString()+' / '+$F{mesAlta}.toString() ]]></variableExpression>
 	</variable>
 	<variable name="nroTotal" class="java.lang.Long" calculation="Sum">
-		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico1}+$F{nroBenefPoteSecTipico2}+$F{nroBenefPoteSecTipico3}
-+$F{nroBenefPoteSecTipico4}+$F{nroBenefPoteSecTipico5}
-+$F{nroBenefPoteSecTipico6}+$F{nroBenefPoteSecTipico7}
-+$F{nroBenefPoteSecTipico8}]]></variableExpression>
+		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico1}==null?0.0:$F{nroBenefPoteSecTipico1}+
+$F{nroBenefPoteSecTipico2}==null?0.0:$F{nroBenefPoteSecTipico2}+
+$F{nroBenefPoteSecTipico3}==null?0.0:$F{nroBenefPoteSecTipico3}+
+$F{nroBenefPoteSecTipico4}==null?0.0:$F{nroBenefPoteSecTipico4}+
+$F{nroBenefPoteSecTipico5}==null?0.0:$F{nroBenefPoteSecTipico5}+
+$F{nroBenefPoteSecTipico6}==null?0.0:$F{nroBenefPoteSecTipico6}+
+$F{nroBenefPoteSecTipico7}==null?0.0:$F{nroBenefPoteSecTipico7}+
+$F{nroBenefPoteSecTipico8}==null?0.0:$F{nroBenefPoteSecTipico8}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -406,7 +411,7 @@
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico1}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="548" y="0" width="63" height="15"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
