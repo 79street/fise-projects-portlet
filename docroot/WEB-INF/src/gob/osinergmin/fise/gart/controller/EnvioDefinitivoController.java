@@ -1930,8 +1930,13 @@ public class EnvioDefinitivoController {
 	  										nombreReporte = "formato13A";	       				
 	  										directorio = "/reports/" + nombreReporte + ".jasper";
 	  										File reportFile13A = new File(session.getServletContext().getRealPath(directorio));
-	  										byte[] bytes13A = null;	       				  				
-	  										bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, new JRBeanCollectionDataSource(listaZonas13A));	       				
+	  										byte[] bytes13A = null;  
+	  										if(listaZonas13A!=null && listaZonas13A.size()>0){
+	  											bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, new JRBeanCollectionDataSource(listaZonas13A));
+	  										}else{						
+	  											bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, 
+	  													new JREmptyDataSource());	
+	  										}  											       				
 	  										if (bytes13A != null) {	        					
 	  											String nombre = FormatoUtil.nombreReporteGeneralFormato(b.getCodEmpresa(),
 	  													Long.valueOf(b.getAnioPres()),Long.valueOf(b.getMesPres()),
@@ -2382,9 +2387,14 @@ public class EnvioDefinitivoController {
 						rutaImg, usuario, terminal, email); 				
 				if(mapa!=null){					
 					File reportFile13A = new File(session.getServletContext().getRealPath(directorio));
-					byte[] bytes13A = null;	       				  				
-					bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, 
-							new JRBeanCollectionDataSource(listaZonas13A));	       				
+					byte[] bytes13A = null;	
+					if(listaZonas13A!=null && listaZonas13A.size()>0){
+						bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, 
+								new JRBeanCollectionDataSource(listaZonas13A));	
+					}else{						
+						bytes13A = JasperRunManager.runReportToPdf(reportFile13A.getPath(), mapa, 
+								new JREmptyDataSource());	
+					}				
 					if (bytes13A != null) {	        					
 						session.setAttribute("bytesFormato", bytes13A);
 						valorReporte =true;
