@@ -85,7 +85,7 @@
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico2}]]></variableExpression>
 	</variable>
 	<variable name="AnioMes" class="java.lang.String">
-		<variableExpression><![CDATA[($F{anioAlta}==null && $F{mesAlta}==null)? "":$F{anioAlta}.toString()+' / '+$F{mesAlta}.toString() ]]></variableExpression>
+		<variableExpression><![CDATA[($F{anioAlta}==null && $F{mesAlta}==null)? "":$F{anioAlta}.toString()+' / '+$F{mesAlta}.toString()]]></variableExpression>
 	</variable>
 	<variable name="nroTotal" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico1}==null?0.0:$F{nroBenefPoteSecTipico1}+
