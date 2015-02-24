@@ -595,9 +595,9 @@ function soloLetras(e){
 }
 //funcion para validar alfanumeicos
 //\u00f1\u00d1 Яя
-//\u00e1-\u00fa\u00c1-\u00da А-За-з --  \u0022="
+//\u00e1-\u00fa\u00c1-\u00da А-За-з --  \u0022="  \u000A= salto de linea
 function validarLetra(campo) {	
-	cadena = "^[A-z0-9:,/;. \u00dc \u00DC \u00FC \u00fc \u0027 \u0022 \u00f1\u00d1 \u00e1-\u00fa\u00c1-\u00da-]{1,600}$";	
+	cadena = "^[A-z0-9:,;. \u000A \u00dc \u00DC \u00FC \u00fc \u0027 \u0022 \u00f1\u00d1 \u00e1-\u00fa\u00c1-\u00da-]{1,600}$";	
 	var re = new RegExp(cadena);
 	if (campo.match(re))
 		return true;
