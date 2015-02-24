@@ -76,11 +76,23 @@ public class ServletViewReport extends HttpServlet {
 			}else if( FiseConstants.TIPO_FORMATO_12B.equals(tipoFormato) ){
 				coleccion = new JREmptyDataSource();
 			}else if( FiseConstants.TIPO_FORMATO_12C.equals(tipoFormato) ){
-				coleccion = new JRBeanCollectionDataSource(lista);
+				if( lista!=null && lista.size()>0){
+					coleccion = new JRBeanCollectionDataSource(lista);
+				}else{
+					coleccion = new JREmptyDataSource();
+				}
 			}else if( FiseConstants.TIPO_FORMATO_12D.equals(tipoFormato) ){
-				coleccion = new JRBeanCollectionDataSource(lista);
+				if( lista!=null && lista.size()>0){
+					coleccion = new JRBeanCollectionDataSource(lista);
+				}else{
+					coleccion = new JREmptyDataSource();
+				}
 			}else if( FiseConstants.TIPO_FORMATO_13A.equals(tipoFormato) ){
-				coleccion = new JRBeanCollectionDataSource(lista);
+				if( lista!=null && lista.size()>0){
+					coleccion = new JRBeanCollectionDataSource(lista);
+				}else{
+					coleccion = new JREmptyDataSource();
+				}
 			}else if( FiseConstants.TIPO_FORMATO_14A.equals(tipoFormato) ){
 				coleccion = new JREmptyDataSource();
 			}else if( FiseConstants.TIPO_FORMATO_14B.equals(tipoFormato) ){
