@@ -3606,17 +3606,19 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 	public void cargarListaObservaciones(List<FiseFormato13AD> listaDetalle) {
 		int cont = 0;
 		listaObservaciones = new ArrayList<MensajeErrorBean>();
-		for (FiseFormato13AD detalle : listaDetalle) {
-			List<FiseFormato13ADOb> listaObser = formatoService.listarFormato13ADObByFormato13AD(detalle);
-			for (FiseFormato13ADOb observacion : listaObser) {
-				cont++;
-				MensajeErrorBean obs = new MensajeErrorBean();
-				obs.setId(cont);
-				obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
-				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
-				obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
-				listaObservaciones.add(obs);
+		if( listaDetalle!=null && listaDetalle.size()>0 ){
+			for (FiseFormato13AD detalle : listaDetalle) {
+				List<FiseFormato13ADOb> listaObser = formatoService.listarFormato13ADObByFormato13AD(detalle);
+				for (FiseFormato13ADOb observacion : listaObser) {
+					cont++;
+					MensajeErrorBean obs = new MensajeErrorBean();
+					obs.setId(cont);
+					obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
+					obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
+					obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
+					obs.setDescCodSectorTipico(mapaSectorTipico.get(observacion.getId().getCodSectorTipico()));
+					listaObservaciones.add(obs);
+				}
 			}
 		}
 	}
