@@ -48,9 +48,11 @@ import gob.osinergmin.fise.domain.FiseFormato14CC;
 import gob.osinergmin.fise.domain.FiseFormato14CD;
 import gob.osinergmin.fise.domain.FiseFormato14CDOb;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
+import gob.osinergmin.fise.domain.FiseZonaBenef;
 import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.gart.service.FiseLiquidacionService;
+import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.service.Formato12CGartService;
@@ -156,6 +158,10 @@ public class LiquidacionController {
 	@Qualifier("cfgTablaGartServiceImpl")
 	private CfgTablaGartService tablaService;
 	
+	
+	@Autowired
+	@Qualifier("fiseZonaBenefGartServiceImpl")
+	private FiseZonaBenefGartService zonaBenefService;
 	
 	
 	private Map<String, String> mapaEmpresa;
@@ -1625,6 +1631,7 @@ public class LiquidacionController {
 			logger.info("correlativo:  "+ l.getCoMotivo()); 
 			logger.info("item:  "+ l.getDescMotivo());
 			logger.info("codigo actividad:  "+ l.getItemActividad());
+			logger.info("codigo zona:  "+ l.getCodigoZona());
 			
 			l.setUsuario(themeDisplay.getUser().getLogin());
 			l.setTerminal(themeDisplay.getUser().getLoginIP());		
@@ -1780,7 +1787,32 @@ public class LiquidacionController {
 	}
 	
 	
+	/**Metodo para listar las zonas de beneficiarios para 
+	 * un nuevo motivo de la liquidacion*/
 	
+	@ResourceMapping("listarZonasBeneficiarios")
+  	public void listarZonasBeneficiarios(ModelMap model, ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("liquidacionBean")LiquidacionBean l){
+		try {			
+  			response.setContentType("applicacion/json");  			
+  			List<FiseZonaBenef> listaZonas = zonaBenefService.listarFiseZonaBenef();
+  			logger.info("Tamaño de lista de zonas:  "+listaZonas.size()); 
+  			JSONArray jsonArray = new JSONArray();
+  			for (FiseZonaBenef z : listaZonas) {
+  				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("codigoZona", z.getIdZonaBenef());				
+				jsonObj.put("descZona", z.getDescripcion());			
+				jsonArray.put(jsonObj);		
+			}  			
+  		    PrintWriter pw = response.getWriter();
+  		    logger.info(jsonArray.toString());
+  		    pw.write(jsonArray.toString());
+  		    pw.flush();
+  		    pw.close();							
+  		}catch (Exception e) {  		
+  			e.printStackTrace();
+  		}
+	}
 	
 	
 }

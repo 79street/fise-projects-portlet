@@ -84,6 +84,9 @@ var liquidacionVar= {
 	    urlEditarMotivo:null,
 	    urlActualizarMotivo:null,
 	    urlListarActividades:null,
+	    
+	    urlListarZonas:null,
+	    
 		
 		//botones		
 		botonBuscar:null,		
@@ -200,7 +203,9 @@ var liquidacionVar= {
 			this.urlEliminarMotivo='<portlet:resourceURL id="eliminarMotivoLiquidacion" />';			
 			this.urlEditarMotivo='<portlet:resourceURL id="editarMotivoLiquidacion" />';
 			this.urlActualizarMotivo='<portlet:resourceURL id="actualizarMotivoLiquidacion" />';
-			this.urlListarActividades='<portlet:resourceURL id="listarActividades" />';			
+			this.urlListarActividades='<portlet:resourceURL id="listarActividades" />';	
+			this.urlListarZonas='<portlet:resourceURL id="listarZonasBeneficiarios" />';	
+			
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarLiquidacion");		
@@ -449,11 +454,12 @@ var liquidacionVar= {
 			var ancho = liquidacionVar.divBuscarLiq.width();
 			liquidacionVar.tablaResultadosMotivo.jqGrid({
 			   datatype: "local",
-		       colNames: ['Ítem','Ítem Formato','Descripción del Motivo','Editar','Eliminar',''],
+		       colNames: ['Ítem','Zona','Ítem Formato','Descripción del Motivo','Editar','Eliminar',''],
 		       colModel: [
                        { name: 'itemMotivo', index: 'itemMotivo', width: 50,align:'center'},
+                       { name: 'desZona', index: 'desZona', width: 50,align:'center'},
                        { name: 'desActividad', index: 'desActividad', width: 50,align:'center'},
-					   { name: 'descMotivo', index: 'descMotivo', width: 300},					  	  	           
+					   { name: 'descMotivo', index: 'descMotivo', width: 250},					  	  	           
 		               { name: 'edit', index: 'edit', width: 20,align:'center' },		                
 		               { name: 'elim', index: 'elim', width: 20,align:'center' },		    
 		               { name: 'coMotivo', index: 'coMotivo', hidden: true}	               
@@ -957,36 +963,23 @@ var liquidacionVar= {
 			var formatoActiv = $('#formatoMotivo').val();
 			console.debug("boton nuevo registro motivo formato :  "+formatoActiv);	
 			//if(formatoActiv=='F14A' || formatoActiv=='F14B'){
-				jQuery.ajax({
-					url: liquidacionVar.urlListarActividades+'&'+liquidacionVar.formCommand.serialize(),
-					type: 'post',
-					dataType: 'json',
-					data : {
-						   <portlet:namespace />formatoActividad: formatoActiv						  
-					},
-					success: function(data) {		
-						dwr.util.removeAllOptions("itemActividad");
-						dwr.util.addOptions("itemActividad", data,"codigoActividad","descActividad");	
-						liquidacionVar.divActividades.show();
-						liquidacionVar.divNuevoMotivo.show();
-						liquidacionVar.divBuscarLiq.hide();	
-						liquidacionVar.divBuscarMotivo.hide();
-						liquidacionVar.f_descMotivo.val('');
-						if(liquidacionVar.i_tipoMensual.prop('checked')){
-							$('#tituloNuevoMotivo').val('Motivo de no Reconocimiento de Gastos Operativos.');	
-						}else{
-							$('#tituloNuevoMotivo').val('Motivo de no Establecimiento de Costos Estándares.');
-						}	
-					    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
-						$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');
+				
+				liquidacionVar.listarActividades(formatoActiv);//listamos las actividades
+				liquidacionVar.listarZonasBeneficiarios();//listamos las zonas de beneficiarios
+				
+				liquidacionVar.divActividades.show();
+				liquidacionVar.divNuevoMotivo.show();
+				liquidacionVar.divBuscarLiq.hide();	
+				liquidacionVar.divBuscarMotivo.hide();
+				liquidacionVar.f_descMotivo.val('');
 						
-					},error : function(){
-						var addhtmError='Error de conexión.';					
-						liquidacionVar.dialogErrorContent.html(addhtmError);
-						liquidacionVar.dialogError.dialog("open");
-						liquidacionVar.initBlockUI();
-					}
-			    });
+				if(liquidacionVar.i_tipoMensual.prop('checked')){
+					$('#tituloNuevoMotivo').val('Motivo de no Reconocimiento de Gastos Operativos.');	
+				}else{
+				    $('#tituloNuevoMotivo').val('Motivo de no Establecimiento de Costos Estándares.');
+				}	
+				$('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
+			    $('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');				
 			/* }else{	
 				liquidacionVar.divActividades.hide();
 				liquidacionVar.divNuevoMotivo.show();
@@ -1001,7 +994,87 @@ var liquidacionVar= {
 			    $('#<portlet:namespace/>guardarMotivoLiq').css('display','block');
 				$('#<portlet:namespace/>actualizarMotivoLiq').css('display','none');		
 			}		 */		
+		},
+		
+		//funcion para listar zonas de beneficiarios para nuevo registro
+		 listarActividades : function(formatoActiv){			
+				jQuery.ajax({
+					url: liquidacionVar.urlListarActividades+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data : {
+						   <portlet:namespace />formatoActividad: formatoActiv						  
+					},
+					success: function(data) {		
+						dwr.util.removeAllOptions("itemActividad");
+						dwr.util.addOptions("itemActividad", data,"codigoActividad","descActividad");						
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
+						liquidacionVar.initBlockUI();
+					}
+			    });		
+		},
+		
+		//funcion para listar zonas de beneficiarios para nuevo registro
+		 listarZonasBeneficiarios : function(){			
+				jQuery.ajax({
+					url: liquidacionVar.urlListarZonas+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',					
+					success: function(data) {		
+						dwr.util.removeAllOptions("codigoZona");
+						dwr.util.addOptions("codigoZona", data,"codigoZona","descZona");					
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
+						liquidacionVar.initBlockUI();
+					}
+			    });		
 		},	
+		
+		//funcion para listar zonas de beneficiarios para editar un registro
+		 listarActividadesEditar : function(formatoActiv,idActividad){			
+				jQuery.ajax({
+					url: liquidacionVar.urlListarActividades+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data : {
+						   <portlet:namespace />formatoActividad: formatoActiv						  
+					},
+					success: function(data) {		
+						dwr.util.removeAllOptions("itemActividad");
+						dwr.util.addOptions("itemActividad", data,"codigoActividad","descActividad");
+						$('#itemActividad').val(idActividad);
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
+						liquidacionVar.initBlockUI();
+					}
+			    });		
+		},
+		
+		//funcion para listar zonas de beneficiarios para editar un registro 
+		 listarZonasBeneficiariosEditar : function(idZona){			
+				jQuery.ajax({
+					url: liquidacionVar.urlListarZonas+'&'+liquidacionVar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',					
+					success: function(data) {		
+						dwr.util.removeAllOptions("codigoZona");
+						dwr.util.addOptions("codigoZona", data,"codigoZona","descZona");						
+						$('#codigoZona').val(idZona);
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						liquidacionVar.dialogErrorContent.html(addhtmError);
+						liquidacionVar.dialogError.dialog("open");
+						liquidacionVar.initBlockUI();
+					}
+			    });		
+		},		
 		
 		//Funcion para Grabar nuevo registro de motivo de liquidacion
 		<portlet:namespace/>guardarMotivo: function(){
@@ -1150,28 +1223,15 @@ var liquidacionVar= {
 			console.debug("boton nuevo registro motivo formato :  "+formatoActiv);
 			console.debug("setando datos cuando edito id actividad "+bean.itemActividad);
 			//if(formatoActiv=='F14A' || formatoActiv=='F14B'){
-				jQuery.ajax({
-					url: liquidacionVar.urlListarActividades+'&'+liquidacionVar.formCommand.serialize(),
-					type: 'post',
-					dataType: 'json',
-					data : {
-						   <portlet:namespace />formatoActividad: formatoActiv						  
-					},
-					success: function(data) {		
-						dwr.util.removeAllOptions("itemActividad");
-						dwr.util.addOptions("itemActividad", data,"codigoActividad","descActividad");	
-						liquidacionVar.divActividades.show();
-						liquidacionVar.f_descMotivo.val(bean.descMotivo); 
-						$('#itemMotivo').val(bean.itemMotivo);
-						$('#coMotivo').val(bean.coMotivo);
-						$('#itemActividad').val(bean.itemActividad);
-					},error : function(){
-						var addhtmError='Error de conexión.';					
-						liquidacionVar.dialogErrorContent.html(addhtmError);
-						liquidacionVar.dialogError.dialog("open");
-						liquidacionVar.initBlockUI();
-					}
-			    });
+				liquidacionVar.listarActividadesEditar(formatoActiv,bean.itemActividad);//listamos las actividades 
+				liquidacionVar.listarZonasBeneficiariosEditar(bean.codigoZona);//listamos las zonas de beneficiarios
+				liquidacionVar.divActividades.show();
+				liquidacionVar.f_descMotivo.val(bean.descMotivo); 
+				$('#itemMotivo').val(bean.itemMotivo);
+				$('#coMotivo').val(bean.coMotivo);
+				//$('#itemActividad').val(bean.itemActividad);
+				//$('#codigoZona').val(bean.codigoZona);
+				
 			/* }else{	
 				liquidacionVar.divActividades.hide();
 				liquidacionVar.f_descMotivo.val(bean.descMotivo); 
