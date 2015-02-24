@@ -1729,8 +1729,8 @@ var formato13A= {
 			       if(ids!=0){
 			    	   location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
 			       }else{			    				
-			    	formato13A.dialogMessageInfoContent.html("No existe información para exportar a Excel");
-					formato13A.dialogMessageInfo.dialog("open");
+			    	formato13A.dialogMessageInfoCrudContent.html("No existe información para exportar a Excel");
+					formato13A.dialogMessageInfoCrud.dialog("open");
 			       }    	   
 		       } 
 		}); 
@@ -1742,8 +1742,8 @@ var formato13A= {
 			       if(ids!=0){
 			    	   formato13A.<portlet:namespace/>mostrarReporteValidacion();   
 			       }else{			    				
-			    	formato13A.dialogMessageInfoContent.html("No existe información para exportar a Pdf");
-					formato13A.dialogMessageInfo.dialog("open");
+			    	formato13A.dialogMessageInfoCrudContent.html("No existe información para exportar a Pdf");
+					formato13A.dialogMessageInfoCrud.dialog("open");
 			       }    	   
 		       } 
 		});
