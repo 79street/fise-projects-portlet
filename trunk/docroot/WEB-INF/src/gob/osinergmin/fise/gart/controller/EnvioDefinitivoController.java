@@ -407,8 +407,10 @@ public class EnvioDefinitivoController {
   	  		       if(i!=0){
 	  		          valor = false;
 	  		          break;
-	  		        } 
-  	  		        cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+	  		        }
+  	  		        if(formato13A.getFiseFormato13ADs()!=null){
+  	  		            cargarListaObservaciones13A(formato13A.getFiseFormato13ADs());
+  	  		        }	  		        
   	  		        
   				}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(not.getFormato())){ 
   					FiseFormato14ACPK pk = new FiseFormato14ACPK();
