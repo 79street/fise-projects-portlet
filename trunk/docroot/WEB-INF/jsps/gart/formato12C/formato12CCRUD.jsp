@@ -479,7 +479,7 @@ $(document).ready(function () {
 				style="float: left; margin: 0 7px 20px 0;"></span>  -->
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label
+			<label class="labelCentrado"
 				id="<portlet:namespace/>dialog-confirm-envio-content">¿Está
 				seguro?</label>
 		</p>
@@ -492,7 +492,7 @@ $(document).ready(function () {
 				style="float: left; margin: 0 7px 20px 0;"></span> --> 
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label
+			<label class="labelCentrado"
 				id="<portlet:namespace/>dialog-confirm-detalle-content">¿Está
 				seguro?</label>
 		</p>
@@ -505,7 +505,7 @@ $(document).ready(function () {
 				style="float: left; margin: 0 7px 50px 0;"> </span>  -->
 			<img src="/fise-projects-portlet/images/success.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>
-			<label
+			<label class="labelCentrado"
 				id="<portlet:namespace/>dialog-message-report-content">Datos
 				grabados exit&oacute;samente.</label>
 		</p>

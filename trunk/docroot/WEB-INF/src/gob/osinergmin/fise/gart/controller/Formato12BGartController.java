@@ -621,13 +621,13 @@ public class Formato12BGartController {
 		if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"") ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, anoEjecucion, mesEjecucion, etapaNew);
-		}else if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"") ){
+		}else if( tipoOperacion.equals(""+FiseConstants.UPDATE) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"") ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anoEjecucion, mesEjecucion, etapaEdit);
 		}else if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
 			fileEntry =fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, anoEjecucion, mesEjecucion, etapaNew);
-		}else if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
+		}else if( tipoOperacion.equals(""+FiseConstants.UPDATE) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
 			fileEntry=fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anoEjecucion, mesEjecucion, etapaEdit);
 		}
