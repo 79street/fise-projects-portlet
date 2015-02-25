@@ -310,7 +310,7 @@ $(document).ready(function () {
 											   <td style="width:220px"><label style="font-size: 12px; font-weight: bold">Ítem del Formato:</label>
 											   </td>
 											   <td>												
-												<form:select path="itemActividad" cssClass="select" cssStyle="width: 200px;">
+												<form:select path="itemActividad" cssClass="select" cssStyle="width: 300px;">
 												    <c:forEach items="${listaActividades}" var="actividad">
 												       <option value="${actividad.codigoItem}">${actividad.descripcionItem}</option>
 												    </c:forEach>
@@ -327,7 +327,7 @@ $(document).ready(function () {
 											   <td><label style="font-size: 12px; font-weight: bold">Zona Beneficiaria:</label>
 											   </td>
 											   <td>												
-												<form:select path="codigoZona" cssClass="select" cssStyle="width: 200px;">
+												<form:select path="codigoZona" cssClass="select" cssStyle="width: 150px;">
 												    <c:forEach items="${listaZonas}" var="zona">
 												       <option value="${zona.idZonaBenef}">${zona.descripcion}</option>
 												    </c:forEach>
