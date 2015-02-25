@@ -189,7 +189,7 @@ function initDialogs(){
 												<output>Grupo Información:</output>
 											</td>
 											<td>
-												<select id="<portlet:namespace/>grupoInfBusq" name="<portlet:namespace/>grupoInfBusq" class="select" style="width:200px;" >
+												<select id="<portlet:namespace/>grupoInfBusq" name="<portlet:namespace/>grupoInfBusq" class="select" style="width:220px;" >
 						   							<c:forEach items="${listaGrupoInf}" var="grupo">																
 														<option value="${grupo.idGrupoInformacion}">${grupo.descripcion}</option>
 													</c:forEach>
