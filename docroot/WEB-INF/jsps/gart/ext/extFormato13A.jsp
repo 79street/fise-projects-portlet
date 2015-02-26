@@ -1910,16 +1910,19 @@ var formato13A= {
 				'Ver Acta': function() {
 					//formato13A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 					formato13A.mostrarReporteEnvioDefinitivoF13A();
-					$(this).dialog("close");
+					formato13A.dialogMessageReport.hide();
+					//$(this).dialog("close");
 					//formato13A.botonRegresarBusqueda.trigger('click');
 				},
 				Ok: function() {
 					location.href=formato13A.varUrlRegresar;
-					$(this).dialog("close");
+					formato13A.dialogMessageReport.hide();
+					//$(this).dialog("close");
 					//formato13A.botonRegresarBusqueda.trigger('click');
 				}
 			},
 			close: function(event,ui){
+				location.href=formato13A.varUrlRegresar;
 				//formato13A.botonRegresarBusqueda.trigger('click');
 	       	}
 		});
