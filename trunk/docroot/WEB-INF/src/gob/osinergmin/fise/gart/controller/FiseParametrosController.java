@@ -219,7 +219,7 @@ public class FiseParametrosController {
 			logger.info("codigo:  "+ p.getCodigo()); 
 			logger.info("nombre:  "+ p.getNombre());		
 			
-			String codigo = request.getParameter("codigo");
+			//String codigo = request.getParameter("codigo");
 			String nombre = request.getParameter("nombre");
 			String valorParametro = request.getParameter("valor");
 			String orden = request.getParameter("orden");
@@ -253,12 +253,12 @@ public class FiseParametrosController {
 			@ModelAttribute("fiseParametroBean")FiseParametroBean p) { 		
 		try {	
 			String data;			
-			logger.info("codigo para editar y visualizar "+p.getCodigo());					
+			logger.info("codigo para editar y visualizar "+p.getCodParametro());					
 			
-			String codigo = request.getParameter("codigo");
-			p.setCodigo(codigo);
+			//String codigo = request.getParameter("codigo");
+			//p.setCodigo(codigo);
 			
-			p= fiseParametroGartService.buscarFiseObsEditar(p.getCodigo());
+			p= fiseParametroGartService.buscarFiseObsEditar(p.getCodParametro());
 			
 			data = toStringJSON(p);						
 			response.setContentType("application/json");
@@ -286,13 +286,13 @@ public class FiseParametrosController {
 		JSONObject jsonObj = new JSONObject();
 		try {			
 			logger.info("Entrando a eliminar un registro Parametro"); 			
-			logger.info("codigo:  "+ p.getCodigo());      
+			logger.info("codigo:  "+ p.getCodParametro());      
 			
-			String codigo = request.getParameter("codigo");
-			p.setCodigo(codigo);
+			//String codigo = request.getParameter("codigo");
+			//p.setCodigo(codigo);
 			
 			logger.info("Enviando el formulario al service"); 
-			String valor = fiseParametroGartService.eliminarDatosFiseParametro(p.getCodigo());
+			String valor = fiseParametroGartService.eliminarDatosFiseParametro(p.getCodParametro());
 			if(valor.equals("1")){ 
 				jsonObj.put("resultado", "OK");	   	
 			}else{
