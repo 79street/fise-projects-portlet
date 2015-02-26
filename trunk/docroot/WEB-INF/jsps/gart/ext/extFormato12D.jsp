@@ -2093,17 +2093,20 @@ var formato12D= {
 			buttons: {
 				'Ver Acta': function() {
 					formato12D.mostrarReporteEnvioDefinitivoF12D();
+					formato12D.dialogMessageReport.hide();
 					//formato12D.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
-					$(this).dialog("close");
+					//$(this).dialog("close");
 					//formato12D.botonRegresarBusqueda.trigger('click');
 				},
 				Ok: function() {
 					location.href=formato12D.varUrlRegresar;
-					$(this).dialog("close");
+					formato12D.dialogMessageReport.hide();
+					//$(this).dialog("close");
 					//formato12D.botonRegresarBusqueda.trigger('click');
 				}
 			},
 			close: function(event,ui){
+				location.href=formato12D.varUrlRegresar;
 				//formato12D.botonRegresarBusqueda.trigger('click');
 	       	}
 		});

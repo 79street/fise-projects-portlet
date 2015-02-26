@@ -2288,16 +2288,18 @@ var formato12C= {
 				'Ver Acta': function() {
 					//formato12C.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 					formato12C.mostrarReporteEnvioDefinitivoF12C();
-					$(this).dialog("close");
+					formato12C.dialogMessageReport.hide();
+					//--$(this).dialog("close");
 					//formato12C.botonRegresarBusqueda.trigger('click');
 				},
 				Ok: function() {
 					location.href=formato12C.varUrlRegresar;
-					$(this).dialog("close");
+					formato12C.dialogMessageReport.hide();
+					//--$(this).dialog("close");
 				}
 			},
 			close: function(event,ui){
-				//location.href=formato12C.varUrlRegresar;
+				location.href=formato12C.varUrlRegresar;
 	       	}
 		});
 		formato12C.dialogConfirmEnvio.dialog({

@@ -2097,6 +2097,7 @@
 				},
 				success : function(gridData) {
 					formato12B.verReporte();
+					formato12B.btnBack.trigger("click");
 				},error : function(){
 					alert("Error de conexión.");
 					formato12B.initBlockUI();
@@ -2131,18 +2132,22 @@
 				buttons: {
 					'Ver Acta': function() {
 						formato12B.mostrarReporteEnvioDefinitivo();
-						$( this ).dialog("close");
-						formato12B.urlRetornar;
+						//$( this ).dialog("close");
+						//formato12B.urlRetornar;
+						formato12B.dialogMessageReport.hide();
 						formato12B.btnBuscar.trigger('click');
 					},
 					Ok: function() {
-						$( this ).dialog("close");
-						formato12B.urlRetornar;
+						//$( this ).dialog("close");
+						//formato12B.urlRetornar;
+						formato12B.dialogMessageReport.hide();
+						formato12B.btnBack.trigger("click");
 						formato12B.btnBuscar.trigger('click');
 					}
 				},
 				close: function(event,ui){
-					formato12B.urlRetornar;
+					//formato12B.urlRetornar;
+					formato12B.btnBack.trigger("click");
 					formato12B.btnBuscar.trigger('click');
 		       	}
 			});

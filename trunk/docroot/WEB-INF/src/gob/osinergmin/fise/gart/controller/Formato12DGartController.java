@@ -738,7 +738,7 @@ public class Formato12DGartController {
 		
 		bean.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		
-		List<FisePeriodoEnvio> listaPeriodoEnvioN = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_13A);
+		List<FisePeriodoEnvio> listaPeriodoEnvioN = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_12D);
 		bean.setListaPeriodoEnvio(listaPeriodoEnvioN);
 		
 		//add item
