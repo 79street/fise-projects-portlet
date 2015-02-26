@@ -154,6 +154,8 @@ var formato12C= {
 	
 	/**********DETALLE CRUD**********/
 	
+	varUrlRegresar:null,
+	
 	//valores constantes para edelnor y luz del sur
 	cod_empresa_edelnor:null,
 	cod_empresa_luz_sur:null,
@@ -278,6 +280,8 @@ var formato12C= {
 	
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
+		
+		this.varUrlRegresar=urlRegresarBusqueda;
 		
 		this.flagCarga=$('#<portlet:namespace/>flagCarga');
 		this.divInformacion=$("#<portlet:namespace/>divInformacion");
@@ -2006,7 +2010,7 @@ var formato12C= {
 	//procesos de validacion y envio definitivo
 	<portlet:namespace/>validacionFormato : function(){
 		var form = formato12C.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12C.urlValidacion+'&'+form.serialize(),
 			type : 'post',
@@ -2034,7 +2038,7 @@ var formato12C= {
 	},
 	<portlet:namespace/>mostrarReporteValidacion : function(){
 		var form = formato12C.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12C.urlReporteValidacion+'&'+form.serialize(),
 			type : 'post',
@@ -2062,7 +2066,7 @@ var formato12C= {
 	},
 	<portlet:namespace/>envioDefinitivo : function(){
 		var form = formato12C.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12C.urlEnvioDefinitivo+'&'+form.serialize(),
 			type : 'post',
@@ -2154,7 +2158,7 @@ var formato12C= {
 	},
 	<portlet:namespace/>mostrarReporteEnvioDefinitivo : function(){
 		var form = formato12C.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12C.urlReporteEnvioDefinitivo+'&'+form.serialize(),
 			type : 'post',
@@ -2164,12 +2168,34 @@ var formato12C= {
 			},
 			success : function(gridData) {
 				formato12C.verReporte();
+				location.href=formato12C.varUrlRegresar;
 			},error : function(){
-				alert("Error de conexión.");
+				alert("Error de conexiónmm.");
 				formato12C.unblockUI();
 			}
 		});
 	},
+	
+	mostrarReporteEnvioDefinitivoF12C : function(){
+		var form = formato12C.formNuevo;
+		//----form.removeAttr('enctype');
+		jQuery.ajax({
+			url: formato12C.urlReporteEnvioDefinitivo+'&'+form.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+			},
+			success : function(gridData) {
+				formato12C.verReporte();
+				location.href=formato12C.varUrlRegresar;
+			},error : function(){
+				alert("Error de conexiónmm.");
+				formato12C.unblockUI();
+			}
+		});
+	},
+	
 	<portlet:namespace/>mostrarReporteActaEnvio : function(){
 		if(formato12C.labelEstado.val()=='Enviado'){
 			var form = formato12C.formNuevo;
@@ -2248,6 +2274,11 @@ var formato12C= {
 			}
 		});
 	},
+	
+	regresarBusquedaCrudActa : function(){
+		location.href=formato12C.varUrlRegresar;
+	},
+	
 	initDialogsCRUD : function(){	
 		formato12C.dialogMessageReport.dialog({
 			modal: true,
@@ -2255,17 +2286,18 @@ var formato12C= {
 			width: 450,
 			buttons: {
 				'Ver Acta': function() {
-					formato12C.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+					//formato12C.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+					formato12C.mostrarReporteEnvioDefinitivoF12C();
 					$(this).dialog("close");
-					formato12C.botonRegresarBusqueda.trigger('click');
+					//formato12C.botonRegresarBusqueda.trigger('click');
 				},
 				Ok: function() {
+					location.href=formato12C.varUrlRegresar;
 					$(this).dialog("close");
-					formato12C.botonRegresarBusqueda.trigger('click');
 				}
 			},
 			close: function(event,ui){
-				formato12C.botonRegresarBusqueda.trigger('click');
+				//location.href=formato12C.varUrlRegresar;
 	       	}
 		});
 		formato12C.dialogConfirmEnvio.dialog({
@@ -2440,7 +2472,7 @@ var formato12C= {
 	eliminarFormatoDetalle : function(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,ano_Ejecucion,mes_Ejecucion,etapa_Ejecucion,item_Etapa){			
 		//$.blockUI({ message: formato12C.mensajeEliminando });
 		var form = formato12C.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12C.urlDeleteDetalle+'&'+form.serialize(),
 			type: 'post',

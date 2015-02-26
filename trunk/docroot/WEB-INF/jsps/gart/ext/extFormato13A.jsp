@@ -75,6 +75,8 @@ var formato13A= {
 	urlACrud:null,
 	command:null,
 	
+	varUrlRegresar:null,
+	
 	btnGuardarCabecera:null,
 	urlGuardarCabecera:null,
 	dlgConfirmacion:null,
@@ -323,6 +325,9 @@ var formato13A= {
 },
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
+		
+		this.varUrlRegresar=urlRegresarBusqueda;
+		
 		this.urlCargaDeclaracion='<portlet:resourceURL id="cargaPeriodoDeclaracion" />';
 		
 		this.typeFile=$("#typeFile");
@@ -1602,7 +1607,7 @@ var formato13A= {
 	//procesos de validacion y envio definitivo
 	<portlet:namespace/>validacionFormato : function(){
 		var form = formato13A.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato13A.urlValidacion+'&'+form.serialize(),
 			type : 'post',
@@ -1630,7 +1635,7 @@ var formato13A= {
 	},
 	<portlet:namespace/>mostrarReporteValidacion : function(){
 		var form = formato13A.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato13A.urlReporteValidacion+'&'+form.serialize(),
 			type : 'post',
@@ -1658,7 +1663,7 @@ var formato13A= {
 	},
 	<portlet:namespace/>envioDefinitivo : function(){
 		var form = formato13A.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato13A.urlEnvioDefinitivo+'&'+form.serialize(),
 			type : 'post',
@@ -1750,7 +1755,7 @@ var formato13A= {
 	},
 	<portlet:namespace/>mostrarReporteEnvioDefinitivo : function(){
 		var form = formato13A.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato13A.urlReporteEnvioDefinitivo+'&'+form.serialize(),
 			type : 'post',
@@ -1766,6 +1771,27 @@ var formato13A= {
 			}
 		});
 	},
+	
+	mostrarReporteEnvioDefinitivoF13A : function(){
+		var form = formato13A.formNuevo;
+		//----form.removeAttr('enctype');
+		jQuery.ajax({
+			url: formato13A.urlReporteEnvioDefinitivo+'&'+form.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+			},
+			success : function(gridData) {
+				formato13A.verReporte();
+				location.href=formato13A.varUrlRegresar;
+			},error : function(){
+				alert("Error de conexión.");
+				formato13A.unblockUI();
+			}
+		});
+	},
+	
 	<portlet:namespace/>mostrarReporteActaEnvio : function(){
 		if(formato13A.labelEstado.val()=='Enviado'){
 		//if(formato13A.txtEstado.val()=='Enviado'){
@@ -1882,17 +1908,19 @@ var formato13A= {
 			autoOpen: false,
 			buttons: {
 				'Ver Acta': function() {
-					formato13A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+					//formato13A.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+					formato13A.mostrarReporteEnvioDefinitivoF13A();
 					$(this).dialog("close");
-					formato13A.botonRegresarBusqueda.trigger('click');
+					//formato13A.botonRegresarBusqueda.trigger('click');
 				},
 				Ok: function() {
+					location.href=formato13A.varUrlRegresar;
 					$(this).dialog("close");
-					formato13A.botonRegresarBusqueda.trigger('click');
+					//formato13A.botonRegresarBusqueda.trigger('click');
 				}
 			},
 			close: function(event,ui){
-				formato13A.botonRegresarBusqueda.trigger('click');
+				//formato13A.botonRegresarBusqueda.trigger('click');
 	       	}
 		});
 		formato13A.dialogError.dialog({
@@ -2070,7 +2098,7 @@ var formato13A= {
 	eliminarFormatoDetalle : function(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,cod_Ubigeo,id_ZonaBenef){			
 		//$.blockUI({ message: formato13A.mensajeEliminando });
 		var form = formato13A.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato13A.urlDeleteDetalle+'&'+form.serialize(),
 			type: 'post',
