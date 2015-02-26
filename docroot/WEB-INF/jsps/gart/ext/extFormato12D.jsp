@@ -153,6 +153,7 @@ var formato12D= {
 	tipoOperacion:null,
 	
 	/**********DETALLE CRUD**********/
+	varUrlRegresar:null,
 	
 	//valores constantes para edelnor y luz del sur
 	cod_empresa_edelnor:null,
@@ -265,6 +266,8 @@ var formato12D= {
 	
 	initCRUD : function(operacion,urlAnadirFormato,urlRegresarBusqueda){
 		this.portletID='<%=PortalUtil.getPortletId(renderRequest)%>';
+		
+		this.varUrlRegresar=urlRegresarBusqueda;
 		
 		this.flagCarga=$('#<portlet:namespace/>flagCarga');
 		this.divInformacion=$("#<portlet:namespace/>divInformacion");
@@ -1819,7 +1822,7 @@ var formato12D= {
 	//procesos de validacion y envio definitivo
 	<portlet:namespace/>validacionFormato : function(){
 		var form = formato12D.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12D.urlValidacion+'&'+form.serialize(),
 			type : 'post',
@@ -1847,7 +1850,7 @@ var formato12D= {
 	},
 	<portlet:namespace/>mostrarReporteValidacion : function(){
 		var form = formato12D.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12D.urlReporteValidacion+'&'+form.serialize(),
 			type : 'post',
@@ -1875,7 +1878,7 @@ var formato12D= {
 	},
 	<portlet:namespace/>envioDefinitivo : function(){
 		var form = formato12D.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12D.urlEnvioDefinitivo+'&'+form.serialize(),
 			type : 'post',
@@ -1967,7 +1970,7 @@ var formato12D= {
 	},
 	<portlet:namespace/>mostrarReporteEnvioDefinitivo : function(){
 		var form = formato12D.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12D.urlReporteEnvioDefinitivo+'&'+form.serialize(),
 			type : 'post',
@@ -1983,6 +1986,27 @@ var formato12D= {
 			}
 		});
 	},
+	
+	mostrarReporteEnvioDefinitivoF12D : function(){
+		var form = formato12D.formNuevo;
+		//----form.removeAttr('enctype');
+		jQuery.ajax({
+			url: formato12D.urlReporteEnvioDefinitivo+'&'+form.serialize(),
+			type : 'post',
+			dataType : 'json',
+			data : {
+				<portlet:namespace />tipoArchivo: '2'//PDF+concatenado
+			},
+			success : function(gridData) {
+				formato12D.verReporte();
+				location.href=formato12D.varUrlRegresar;
+			},error : function(){
+				alert("Error de conexión.");
+				formato12D.unblockUI();
+			}
+		});
+	},
+	
 	<portlet:namespace/>mostrarReporteActaEnvio : function(){
 		if(formato12D.labelEstado.val()=='Enviado'){
 			var form = formato12D.formNuevo;
@@ -2068,17 +2092,19 @@ var formato12D= {
 			width: 450,
 			buttons: {
 				'Ver Acta': function() {
-					formato12D.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
+					formato12D.mostrarReporteEnvioDefinitivoF12D();
+					//formato12D.<portlet:namespace/>mostrarReporteEnvioDefinitivo();
 					$(this).dialog("close");
-					formato12D.botonRegresarBusqueda.trigger('click');
+					//formato12D.botonRegresarBusqueda.trigger('click');
 				},
 				Ok: function() {
+					location.href=formato12D.varUrlRegresar;
 					$(this).dialog("close");
-					formato12D.botonRegresarBusqueda.trigger('click');
+					//formato12D.botonRegresarBusqueda.trigger('click');
 				}
 			},
 			close: function(event,ui){
-				formato12D.botonRegresarBusqueda.trigger('click');
+				//formato12D.botonRegresarBusqueda.trigger('click');
 	       	}
 		});
 		formato12D.dialogConfirmEnvio.dialog({
@@ -2253,7 +2279,7 @@ var formato12D= {
 	eliminarFormatoDetalle : function(cod_Empresa,ano_Presentacion,mes_Presentacion,cod_Etapa,ano_Ejecucion,mes_Ejecucion,etapa_Ejecucion,item_Etapa){			
 		//$.blockUI({ message: formato12D.mensajeEliminando });
 		var form = formato12D.formNuevo;
-		form.removeAttr('enctype');
+		//----form.removeAttr('enctype');
 		jQuery.ajax({
 			url: formato12D.urlDeleteDetalle+'&'+form.serialize(),
 			type: 'post',
