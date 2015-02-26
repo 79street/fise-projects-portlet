@@ -259,14 +259,14 @@ var fiseParametros= {
 		},
 		
 		//Function para Visualizar los datos del formulario		
-		verfiseParametro : function(codigo){	
+		verfiseParametro : function(cod_parametro){	
 			$.blockUI({ message: fiseParametros.mensajeObteniendoDatos});
 			jQuery.ajax({
 					url: fiseParametros.urlEditarView+'&'+fiseParametros.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {						  
-					      <portlet:namespace />codigo: codigo					 
+					      <portlet:namespace />codParametro  : cod_parametro					 
 						},
 					success: function(data) {
 					    if (data != null){															
@@ -301,7 +301,7 @@ var fiseParametros= {
 			});	
 		},
 		//Function para editar los datos del formulario
-		editarfiseParametro : function(codigo){	
+		editarfiseParametro : function(cod_parametro){	
 			    console.debug("entrando a editar ");		
 				$.blockUI({ message: fiseParametros.mensajeObteniendoDatos });			 
 				jQuery.ajax({
@@ -309,7 +309,7 @@ var fiseParametros= {
 						type: 'post',
 						dataType: 'json',
 						data: {							
-						   <portlet:namespace />codigo: codigo						   				  
+						   <portlet:namespace />codParametro  : cod_parametro						   				  
 						},
 						success: function(data) {				
 							if (data != null){															
@@ -353,12 +353,12 @@ var fiseParametros= {
 			fiseParametros.f_orden.attr("onkeypress","return soloNumerosEntero(event, 1, 'orden',5,0)");
 		},
 		/**Function para confirmar si quiere eliminar el registro o no*/
-		confirmarEliminarfiseParametro : function(codigo){
-			console.debug("entranado a eliminar confirmar:  "+codigo);
+		confirmarEliminarfiseParametro : function(codigo_parametro){
+			console.debug("entranado a eliminar confirmar:  "+codigo_parametro);
 			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 			fiseParametros.dialogConfirmContent.html(addhtml);
 			fiseParametros.dialogConfirm.dialog("open");	
-			cod_parametro=codigo;
+			cod_parametro=codigo_parametro;
 		},
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
 		eliminarfiseParametro : function(cod_parametro){
@@ -369,7 +369,7 @@ var fiseParametros= {
 				type: 'post',
 				dataType: 'json',
 				data: {				
-				   <portlet:namespace />codigo: cod_parametro				  
+				   <portlet:namespace />codParametro  : cod_parametro				  
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
@@ -402,10 +402,10 @@ var fiseParametros= {
 					type: 'post',
 					dataType: 'json',
 					data: {											
-						<portlet:namespace />codigo: fiseParametros.f_codigo.val(),
-						<portlet:namespace />nombre: fiseParametros.f_nombre.val() ,
-						<portlet:namespace />valor: fiseParametros.f_valor.val(),
-						<portlet:namespace />orden: fiseParametros.f_orden.val()
+						<portlet:namespace />codigo : fiseParametros.f_codigo.val(),
+						<portlet:namespace />nombre : fiseParametros.f_nombre.val() ,
+						<portlet:namespace />valor  : fiseParametros.f_valor.val(),
+						<portlet:namespace />orden : fiseParametros.f_orden.val()
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
@@ -452,10 +452,10 @@ var fiseParametros= {
 					type: 'post',
 					dataType: 'json',
 					data: {
-						<portlet:namespace />codigo: fiseParametros.f_codigo.val(),
-						<portlet:namespace />nombre: fiseParametros.f_nombre.val(),
-						<portlet:namespace />valor: fiseParametros.f_valor.val() ,
-						<portlet:namespace />orden: fiseParametros.f_orden.val()
+						<portlet:namespace />codigo : fiseParametros.f_codigo.val(),
+						<portlet:namespace />nombre : fiseParametros.f_nombre.val(),
+						<portlet:namespace />valor : fiseParametros.f_valor.val() ,
+						<portlet:namespace />orden : fiseParametros.f_orden.val()
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
