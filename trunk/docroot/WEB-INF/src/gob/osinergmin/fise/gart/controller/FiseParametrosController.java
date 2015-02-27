@@ -104,7 +104,7 @@ public class FiseParametrosController {
   				jsonArray.put(new ParametroJSON().asJSONObject(param));
 			}
   			
-  			fiseUtil.configuracionExportarExcel(session, FiseConstants.OBSERVACIONES_EXPORT_EXEL, 
+  			fiseUtil.configuracionExportarExcel(session, FiseConstants.PARAMETROS_EXPORT_EXCEL, 
   					"Parametros", //title
   					"Parametros", //nombre hoja
   					listaParam);
