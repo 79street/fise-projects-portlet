@@ -3191,7 +3191,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 			HttpSession session = httpRequest.getSession();
-
+            logger.info("Entrando a exportar a pdf formato 13A"); 
 			JSONArray jsonArray = new JSONArray();
 			FiseFormato13AC formato = new FiseFormato13AC();
 
@@ -3232,9 +3232,9 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 				//
 				// cargamos la lista a enviar
 				List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
-
-				//session.setAttribute("lista", lista);
-				session.setAttribute("lista", null);
+                
+				session.setAttribute("lista", lista);
+				//session.setAttribute("lista", null);
 				
 				Map<String, Object> mapa = formatoService.mapearParametrosFormato13A(bean);
 				mapa.put("ANO_INICIO_VIGENCIA", formato.getAnoInicioVigenciaDetalle());
