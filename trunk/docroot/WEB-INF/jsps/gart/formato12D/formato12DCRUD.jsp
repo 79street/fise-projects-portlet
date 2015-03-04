@@ -74,7 +74,7 @@ $(document).ready(function () {
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														  <!-- <output id="o_descGrupoInformacion" ></output> -->
-														  <input id="o_descGrupoInformacion" readonly="readonly" style="border:none; background:#efefef;">
+														  <input id="o_descGrupoInformacion" readonly="readonly" style="border:none; background:#efefef; width: 250px;">
 													   </td>
 													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													   <td>
