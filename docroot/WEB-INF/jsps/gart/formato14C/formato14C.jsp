@@ -193,7 +193,7 @@ $(document).ready(function () {
 														</td>														
 														<td style="text-align: center;">
 														  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														  
-														  <input id="grupoInformacion" readonly="readonly" style="border:none; background:#efefef;">
+														  <input id="grupoInformacion" readonly="readonly" style="border:none; background:#efefef; width: 250px;">
 													   </td>
 													   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													   <td>

@@ -251,7 +251,7 @@
 															<td style="text-align: center;">
 															  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 															  <!-- <output id="descGrupoInformacion" ></output> -->
-															  <input id="descGrupoInformacion" readonly="readonly" style="border:none; background:#efefef;">	
+															  <input id="descGrupoInformacion" readonly="readonly" style="border:none; background:#efefef; width: 250px;">	
 														   </td>
 														   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 														   <td>
