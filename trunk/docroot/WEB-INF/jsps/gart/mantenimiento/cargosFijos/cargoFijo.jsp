@@ -210,13 +210,13 @@ $(document).ready(function () {
 											      <tr>
 											        <td><label style="font-size: 12px; font-weight: bold">Número Usuarios Beneficiarios:</label></td>
 											        <td align="center">
-													 <form:input path="numUsuBenefR"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numUsuBenefR"  cssStyle="width: 65px; text-align: right;"/>
 												    </td>
 												    <td align="center">
-													 <form:input path="numUsuBenefP"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numUsuBenefP"  cssStyle="width: 65px; text-align: right;"/>
 												    </td>
 												    <td align="center">
-													 <form:input path="numUsuBenefL"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numUsuBenefL"  cssStyle="width: 65px; text-align: right;"/>
 												    </td>											  
 											     </tr>								     
 											     
@@ -227,13 +227,13 @@ $(document).ready(function () {
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Usuarios Empadronados:</label></td>
 											      <td align="center">
-													 <form:input path="numUsuEmpR"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numUsuEmpR"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numUsuEmpP"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numUsuEmpP"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numUsuEmpL"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numUsuEmpL"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>												  											  
 											     </tr>		
 											     
@@ -244,13 +244,13 @@ $(document).ready(function () {
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físicos Emitidos:</label></td>
 											      <td align="center">
-													 <form:input path="numValFEmiR"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValFEmiR"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numValFEmiP"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValFEmiP"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numValFEmiL"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValFEmiL"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>		 						  
 												  
 											     </tr>	
@@ -262,13 +262,13 @@ $(document).ready(function () {
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Emitidos:</label></td>
 											      <td align="center">
-													 <form:input path="numValDEmiR"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValDEmiR"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numValDEmiP"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValDEmiP"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numValDEmiL"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValDEmiL"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  												 
 											     </tr>	
@@ -280,13 +280,13 @@ $(document).ready(function () {
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Físicos Canjeados:</label></td>
 											      <td align="center">
-													 <form:input path="numValFCanR"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValFCanR"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numValFCanP"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValFCanP"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numValFCanL"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValFCanL"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												 					  
 											     </tr>	
@@ -298,13 +298,13 @@ $(document).ready(function () {
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Vales Digitales Canjeados:</label></td>
 											      <td align="center">
-													 <form:input path="numValDCanR"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValDCanR"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numValDCanP"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValDCanP"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numValDCanL"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numValDCanL"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>		 					  
 												  
 											     </tr>
@@ -316,13 +316,13 @@ $(document).ready(function () {
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Número Agentes:</label></td>
 											      <td align="center">
-													 <form:input path="numAgenteR"  cssStyle="width: 50px; text-align: right;" />
+													 <form:input path="numAgenteR"  cssStyle="width: 65px; text-align: right;" />
 												  </td>
 												  <td align="center">
-													 <form:input path="numAgenteP"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numAgenteP"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="numAgenteL"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="numAgenteL"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>									 						  
 												  
 											     </tr>	
@@ -334,13 +334,13 @@ $(document).ready(function () {
 											     <tr>
 											      <td><label style="font-size: 12px; font-weight: bold">Cargo Fijo del Mes:</label></td>
 											      <td align="center">
-													 <form:input path="montoMesR"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="montoMesR"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="montoMesP"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="montoMesP"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>
 												  <td align="center">
-													 <form:input path="montoMesL"  cssStyle="width: 50px; text-align: right;"/>
+													 <form:input path="montoMesL"  cssStyle="width: 65px; text-align: right;"/>
 												  </td>								  			 					  
 												  
 											     </tr>	          
@@ -358,21 +358,21 @@ $(document).ready(function () {
 											  <td><label style="font-size: 12px; font-weight: bold">Monto Transferido x Canje:</label>
 											   </td>
 											  <td>
-												 <form:input path="montoCanje"  cssStyle="width: 50px; text-align: right;"/>
+												 <form:input path="montoCanje"  cssStyle="width: 65px; text-align: right;"/>
 											  </td>
 											
 											 <td width="150px"> 
 											    <label style="font-size: 12px; font-weight: bold">Fecha Informe Sustento:(dd/mm/aaaa)</label>
 											  </td>
 											  <td>											  										 
-											   <form:input path="fechaSustento" cssStyle="text-align: right;" size="7"/>								    												
+											   <form:input path="fechaSustento" cssStyle="text-align: right;" size="8"/>								    												
 											  </td>										 
 											  
 											  <td width="200px">
 											     <label style="font-size: 12px; font-weight: bold">Fecha Recepción Información:(dd/mm/aaaa)</label>
 											  </td>
 											  <td>									  
-											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" size="7" />			 							    												
+											    <form:input path="fechaRecepcion" cssStyle="text-align: right;" size="8" />			 							    												
 											  
 											  </td>		
 											  										 											 
@@ -387,19 +387,19 @@ $(document).ready(function () {
 											 <td><label style="font-size: 12px; font-weight: bold">Número Doc. Recepción Informe.:</label>
 											   </td>
 											  <td>
-												 <form:input path="numDocRecepcion"  cssStyle="width: 50px; text-align: right;" onKeyPress="return isNumeric(event)" maxlength="13"/>
+												 <form:input path="numDocRecepcion"  cssStyle="width: 65px; text-align: right;" onKeyPress="return isNumeric(event)" maxlength="13"/>
 											  </td>
 											  
 											  <td><label style="font-size: 12px; font-weight: bold">Número Doc. Informe Sustento:</label>
 											   </td>
 											  <td>
-												 <form:input path="numDoc"  cssStyle="width: 60px; text-align: right;"  onKeyPress="return isNumeric(event)" maxlength="13"/> 
+												 <form:input path="numDoc"  cssStyle="width: 65px; text-align: right;"  onKeyPress="return isNumeric(event)" maxlength="13"/> 
 											  </td>
 											
 											 <td><label style="font-size: 12px; font-weight: bold">IGV:</label>
 											   </td>
 											  <td>
-												 <form:input path="igv"  cssStyle="width: 60px; text-align: right;"/>
+												 <form:input path="igv"  cssStyle="width: 65px; text-align: right;"/>
 											  </td>										 
 											  										 											 
 											</tr>	

@@ -962,6 +962,7 @@ var formato14C= {
 			formato14C.flagCarga.val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 			/**para controlar los costos directos e indirectos*/
 			console.debug("flag costo al momento de editar: "+bean.flagCosto);
+			var flagCostoLima = bean.flagCosto;
 			if(bean.flagCosto=='D'){
 				formato14C.habilitarCostosDirectos();
 				formato14C.deshabilitarCostosIndirectos();				
@@ -979,7 +980,7 @@ var formato14C= {
 			console.debug("codigo empresa seleccionado al llenar datos editar o visualizar: "+formato14C.f_empresa.val());
 			if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
 					formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
-				formato14C.habilitarLima();										
+				formato14C.habilitarLima(flagCostoLima);										
 			}else{
 				formato14C.deshabilitarLima();
 			}			
@@ -1110,6 +1111,7 @@ var formato14C= {
 						//formato14C.mostrarPeriodoEjecucion();
 					
 						/**para controlar los costos directos e indirectos*/
+						var flagCostoLima = formato14C.flagCosto.val();
 						if(formato14C.flagCosto.val()=='D'){
 							formato14C.habilitarCostosDirectos();
 							formato14C.deshabilitarCostosIndirectos();				
@@ -1127,7 +1129,7 @@ var formato14C= {
 						console.debug("codigo empresa seleccionado al cargar flag periodo: "+formato14C.f_empresa.val());
 						if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
 								formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
-							formato14C.habilitarLima();										
+							formato14C.habilitarLima(flagCostoLima);										
 						}else{
 							formato14C.deshabilitarLima();
 						}						
@@ -1203,6 +1205,7 @@ var formato14C= {
 			$('#anoFinVigencia').val('');			
 				
 			/**para controlar los costos directos e indirectos*/
+			var flagCostoLima = formato14C.flagCosto.val();
 			if(formato14C.flagCosto.val()=='D'){
 				formato14C.habilitarCostosDirectos();
 				formato14C.deshabilitarCostosIndirectos();				
@@ -1220,7 +1223,7 @@ var formato14C= {
 			console.debug("codigo empresa seleccionado al iniciar formulario: "+formato14C.f_empresa.val());
 			if(formato14C.cod_empresa_edelnor.val()==formato14C.f_empresa.val() || 
 					formato14C.cod_empresa_luz_sur.val()==formato14C.f_empresa.val()){
-				formato14C.habilitarLima();										
+				formato14C.habilitarLima(flagCostoLima);										
 			}else{
 				formato14C.deshabilitarLima();
 			}		
@@ -3566,56 +3569,95 @@ var formato14C= {
 			
 		},
 		//funcion para habilitar campos lima
-		habilitarLima : function(){
+		habilitarLima : function(flag){
 			//cabecera		
 			formato14C.f_numUrbLima.removeAttr("disabled");			
-			formato14C.f_costoPromUrbLima.removeAttr("disabled");			
-			//LIMA
-			formato14C.f_canDLCoord.removeAttr("disabled");
-			formato14C.f_costDLCoord.removeAttr("disabled");
-			formato14C.f_canILCoord.removeAttr("disabled");
-			formato14C.f_costILCoord.removeAttr("disabled");
-			
-			formato14C.f_canDLSupe.removeAttr("disabled");
-			formato14C.f_costDLSupe.removeAttr("disabled");
-			formato14C.f_canILSupe.removeAttr("disabled");
-			formato14C.f_costILSupe.removeAttr("disabled");
-			
-			formato14C.f_canDLGest.removeAttr("disabled");
-			formato14C.f_costDLGest.removeAttr("disabled");
-			formato14C.f_canILGest.removeAttr("disabled");
-			formato14C.f_costILGest.removeAttr("disabled");
-			
-			formato14C.f_canDLAsist.removeAttr("disabled");
-			formato14C.f_costDLAsist.removeAttr("disabled");
-			formato14C.f_canILAsist.removeAttr("disabled");
-			formato14C.f_costILAsist.removeAttr("disabled");	
-			
+			formato14C.f_costoPromUrbLima.removeAttr("disabled");	
 			//ESTILOS
 			//cabecera		
 			formato14C.f_numUrbLima.addClass("fise-editable");			
-			formato14C.f_costoPromUrbLima.addClass("fise-editable");			
-			//LIMA
-			formato14C.f_canDLCoord.addClass("fise-editable");
-			formato14C.f_costDLCoord.addClass("fise-editable");
-			formato14C.f_canILCoord.addClass("fise-editable");
-			formato14C.f_costILCoord.addClass("fise-editable");
+			formato14C.f_costoPromUrbLima.addClass("fise-editable");
 			
-			formato14C.f_canDLSupe.addClass("fise-editable");
-			formato14C.f_costDLSupe.addClass("fise-editable");
-			formato14C.f_canILSupe.addClass("fise-editable");
-			formato14C.f_costILSupe.addClass("fise-editable");
-			
-			formato14C.f_canDLGest.addClass("fise-editable");
-			formato14C.f_costDLGest.addClass("fise-editable");
-			formato14C.f_canILGest.addClass("fise-editable");
-			formato14C.f_costILGest.addClass("fise-editable");
-			
-			formato14C.f_canDLAsist.addClass("fise-editable");
-			formato14C.f_costDLAsist.addClass("fise-editable");
-			formato14C.f_canILAsist.addClass("fise-editable");
-			formato14C.f_costILAsist.addClass("fise-editable");
-			
+			if(flag=='D'){
+				formato14C.f_canDLCoord.removeAttr("disabled");
+				formato14C.f_costDLCoord.removeAttr("disabled");
+				formato14C.f_canDLSupe.removeAttr("disabled");
+				formato14C.f_costDLSupe.removeAttr("disabled");
+				formato14C.f_canDLGest.removeAttr("disabled");
+				formato14C.f_costDLGest.removeAttr("disabled");
+				formato14C.f_canDLAsist.removeAttr("disabled");
+				formato14C.f_costDLAsist.removeAttr("disabled");
+				//ESTILOS
+				formato14C.f_canDLCoord.addClass("fise-editable");
+				formato14C.f_costDLCoord.addClass("fise-editable");
+				formato14C.f_canDLSupe.addClass("fise-editable");
+				formato14C.f_costDLSupe.addClass("fise-editable");
+				formato14C.f_canDLGest.addClass("fise-editable");
+				formato14C.f_costDLGest.addClass("fise-editable");
+				formato14C.f_canDLAsist.addClass("fise-editable");
+				formato14C.f_costDLAsist.addClass("fise-editable");
+			}else if(flag=='I'){
+				formato14C.f_canILCoord.removeAttr("disabled");
+				formato14C.f_costILCoord.removeAttr("disabled");
+				formato14C.f_canILSupe.removeAttr("disabled");
+				formato14C.f_costILSupe.removeAttr("disabled");
+				formato14C.f_canILGest.removeAttr("disabled");
+				formato14C.f_costILGest.removeAttr("disabled");
+				formato14C.f_canILAsist.removeAttr("disabled");
+				formato14C.f_costILAsist.removeAttr("disabled");
+				//ESTILOS
+				formato14C.f_canILCoord.addClass("fise-editable");
+				formato14C.f_costILCoord.addClass("fise-editable");
+				formato14C.f_canILSupe.addClass("fise-editable");
+				formato14C.f_costILSupe.addClass("fise-editable");
+				formato14C.f_canILGest.addClass("fise-editable");
+				formato14C.f_costILGest.addClass("fise-editable");
+				formato14C.f_canILAsist.addClass("fise-editable");
+				formato14C.f_costILAsist.addClass("fise-editable");
+			}else{				
+				//LIMA
+				formato14C.f_canDLCoord.removeAttr("disabled");
+				formato14C.f_costDLCoord.removeAttr("disabled");	
+				formato14C.f_canILCoord.removeAttr("disabled");
+				formato14C.f_costILCoord.removeAttr("disabled");
+				
+				formato14C.f_canDLSupe.removeAttr("disabled");
+				formato14C.f_costDLSupe.removeAttr("disabled");
+				formato14C.f_canILSupe.removeAttr("disabled");
+				formato14C.f_costILSupe.removeAttr("disabled");
+				
+				formato14C.f_canDLGest.removeAttr("disabled");
+				formato14C.f_costDLGest.removeAttr("disabled");
+				formato14C.f_canILGest.removeAttr("disabled");
+				formato14C.f_costILGest.removeAttr("disabled");
+				
+				formato14C.f_canDLAsist.removeAttr("disabled");
+				formato14C.f_costDLAsist.removeAttr("disabled");
+				formato14C.f_canILAsist.removeAttr("disabled");
+				formato14C.f_costILAsist.removeAttr("disabled");	
+				
+				//ESTILOS						
+				//LIMA
+				formato14C.f_canDLCoord.addClass("fise-editable");
+				formato14C.f_costDLCoord.addClass("fise-editable");
+				formato14C.f_canILCoord.addClass("fise-editable");
+				formato14C.f_costILCoord.addClass("fise-editable");
+				
+				formato14C.f_canDLSupe.addClass("fise-editable");
+				formato14C.f_costDLSupe.addClass("fise-editable");
+				formato14C.f_canILSupe.addClass("fise-editable");
+				formato14C.f_costILSupe.addClass("fise-editable");
+				
+				formato14C.f_canDLGest.addClass("fise-editable");
+				formato14C.f_costDLGest.addClass("fise-editable");
+				formato14C.f_canILGest.addClass("fise-editable");
+				formato14C.f_costILGest.addClass("fise-editable");
+				
+				formato14C.f_canDLAsist.addClass("fise-editable");
+				formato14C.f_costDLAsist.addClass("fise-editable");
+				formato14C.f_canILAsist.addClass("fise-editable");
+				formato14C.f_costILAsist.addClass("fise-editable");	
+			}				
 		},
 		
 		//Funcion para deshabilitar costos directos
