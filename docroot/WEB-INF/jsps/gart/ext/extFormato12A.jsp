@@ -61,7 +61,8 @@ $(document).ready(function () {
 	 if( $('#flag').val()=='N' ){//solo ocurre cuando hay un error en la carga de formularios, sino se muestra el proceso normal
 		 inicializarFormulario();
 		 mostrarUltimoFormato();
-		 $("#s_empresa").val(codEmpSes);
+		 //mantener datos en session
+		 $("#s_empresa_b").val(codEmpSes);
 		 //$("#s_periodoenvio_present").val(anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
 		 if( $('#flagPeriodoEjecucion').val()=='S' ){
 			 $("#i_anioejecuc").val(anioEjeSes);
@@ -78,6 +79,8 @@ $(document).ready(function () {
 		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes != '' && mesEjeSes != '' && etapaSes != ''){
 		 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioEjeSes, mesEjeSes, etapaSes,flagOpera);
 		 }
+		 //mantener datos en session
+		 $("#s_empresa_b").val(codEmpSes);
 	 }
 	 
 	 
@@ -125,10 +128,10 @@ $(document).ready(function () {
 
 ////////VALIDACIONES
 function inicializarFormulario(){
-	$('#s_empresa').val('');
-	
+	$('#s_empresa').val('');	
+	console.debug("valor al iniciar formulario b busqueda:  "+$('#s_empresa_b').val());	
 	if($('#s_empresa_b').val()!=''){
-		$('#s_empresa').val($('#s_empresa_b').val());
+		$('#s_empresa').val($('#s_empresa_b').val());		
 	}else{
 		$('#s_empresa').val('');
 	}
@@ -2116,6 +2119,19 @@ function deshabilitarLima(){
 	$('#i_despPersonal_l').attr("disabled",true);
 	$('#i_activExtraord_l').attr("disabled",true);
 	quitarEstiloEdicionLima();
+	
+	/*$('#i_nroEmpad_r').removeAttr("disabled");	
+	$('#i_nroAgentGlp_r').removeAttr("disabled");	
+	$('#i_despPersonal_r').removeAttr("disabled");
+	$('#i_activExtraord_r').removeAttr("disabled");
+	estiloEdicionRural();
+	//
+	$('#i_nroEmpad_p').removeAttr("disabled");	
+	$('#i_nroAgentGlp_p').removeAttr("disabled");	
+	$('#i_despPersonal_p').removeAttr("disabled");
+	$('#i_activExtraord_p').removeAttr("disabled");
+	estiloEdicionProvincia();*/
+	
 }
 //funcion para habilitar campos lima
 function habilitarLima(){
@@ -2124,6 +2140,18 @@ function habilitarLima(){
 	$('#i_despPersonal_l').removeAttr("disabled");
 	$('#i_activExtraord_l').removeAttr("disabled");
 	estiloEdicionLima();
+	
+	/*$('#i_nroEmpad_r').attr("disabled",true);
+	$('#i_nroAgentGlp_r').attr("disabled",true);
+	$('#i_despPersonal_r').attr("disabled",true);
+	$('#i_activExtraord_r').attr("disabled",true);
+	quitarEstiloEdicionRural();
+	
+	$('#i_nroEmpad_p').attr("disabled",true);	
+	$('#i_nroAgentGlp_p').attr("disabled",true);
+	$('#i_despPersonal_p').attr("disabled",true);
+	$('#i_activExtraord_p').attr("disabled",true);
+	quitarEstiloEdicionProvincia();*/
 }
 //poner estilos de edicion para cada columna
 function estiloEdicionCabecera(){
