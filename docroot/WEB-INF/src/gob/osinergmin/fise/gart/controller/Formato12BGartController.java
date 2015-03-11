@@ -145,9 +145,9 @@ public class Formato12BGartController {
 		command.setListaMes(fiseUtil.getMapaMeses());
 		
 		
-			System.out.println("volvio entrar::");
+			logger.info("volvio entrar::");
 			if(formato12BBusqueda!=null && formato12BBusqueda.getAnioInicio()!=null){
-				System.out.println("volvio entrar anio inicio::"+formato12BBusqueda.getAnioInicio());
+				logger.info("volvio entrar anio inicio::"+formato12BBusqueda.getAnioInicio());
 				command.setAnioInicio(formato12BBusqueda.getAnioInicio());
 			}else{
 				command.setAnioInicio(fiseUtil.obtenerNroAnioFechaAnterior() != null ? Integer.parseInt(fiseUtil.obtenerNroAnioFechaAnterior()) : null);
@@ -159,7 +159,7 @@ public class Formato12BGartController {
 				
 			}
 			if(formato12BBusqueda!=null ){
-				System.out.println("volvio entrar MES INICIO::"+formato12BBusqueda.getMesInicio());
+				logger.info("volvio entrar MES INICIO::"+formato12BBusqueda.getMesInicio());
 				command.setMesInicio(formato12BBusqueda.getMesInicio());
 				command.setMesFin(formato12BBusqueda.getMesFin());
 			}else{
@@ -196,7 +196,7 @@ public class Formato12BGartController {
             
             
             if(command!=null){
-            	System.out.println("comman difente de nulo");
+            	logger.info("comman difente de nulo");
             }
 			List<FiseFormato12BC> lstFise = formatoService.getLstFormatoCabecera(codEmp, command.getAnioInicio(), command.getMesInicio(), command.getAnioFin(), command.getMesFin(), command.getEtapaBusqueda());
 
@@ -232,7 +232,7 @@ public class Formato12BGartController {
 	@ResourceMapping("loadPeriodoDeclaracion")
 	public void loadPeriodoDeclaracion(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		try {
-			System.out.println("codEmpresa::" + command.getCodEmpresa());
+			logger.info("codEmpresa::" + command.getCodEmpresa());
 			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(command.getCodEmpresa().trim(), FiseConstants.NOMBRE_FORMATO_12B);
 			JSONArray jsonArray = new JSONArray();
 			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
@@ -317,7 +317,7 @@ public class Formato12BGartController {
   				jsonObj.put("idGrupoInfo", 0);
   			}
   			
-  			System.out.println(jsonObj.toString());
+  			logger.info(jsonObj.toString());
   			PrintWriter pw = response.getWriter();
   		    pw.write(jsonObj.toString());
   		    pw.flush();
@@ -403,7 +403,7 @@ public class Formato12BGartController {
   				jsonObj.put("idGrupoInfo", 0);
   			}
   			
-  			System.out.println(jsonObj.toString());
+  			logger.info(jsonObj.toString());
   			PrintWriter pw = response.getWriter();
   		    pw.write(jsonObj.toString());
   		    pw.flush();
@@ -418,8 +418,8 @@ public class Formato12BGartController {
 	@ResourceMapping("loadCostoUnitario")
 	public void loadCostoUnitario(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		try {
-			System.out.println("codEmpresa::" + command.getCodEmpresa());
-			System.out.println("periodo::" + command.getPeridoDeclaracion());
+			logger.info("codEmpresa::" + command.getCodEmpresa());
+			logger.info("periodo::" + command.getPeridoDeclaracion());
 			
 			if (command != null && (command.getPeridoDeclaracion() !=null && command.getPeridoDeclaracion().length() > 6)) {
 				command.setAnoPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(0, 4)));
@@ -446,7 +446,7 @@ public class Formato12BGartController {
 					jsonArray.put(jsonObj);
 				}
 			}
-			System.out.println(jsonArray.toString());
+			logger.info(jsonArray.toString());
             PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 			pw.flush();
@@ -461,7 +461,7 @@ public class Formato12BGartController {
 		
 		PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
-		System.out.println("en nuevo formato");
+		logger.info("en nuevo formato");
 		String codEmpresa = renderRequest.getParameter("codEmpresa");
 		String periodo = renderRequest.getParameter("periodoDeclaracion");
 		String tipoOperacion = renderRequest.getParameter("tipoOperacion");
@@ -475,9 +475,9 @@ public class Formato12BGartController {
 		
 		String msg = renderRequest.getParameter("msgTrans");
 
-		System.out.println("anio::busqueda "+command.getAnioInicio());
-		System.out.println("mes:: busqueda"+command.getMesInicio());
-		System.out.println("etapa ::: busqueda"+command.getEtapaBusqueda());
+		logger.info("anio::busqueda "+command.getAnioInicio());
+		logger.info("mes:: busqueda"+command.getMesInicio());
+		logger.info("etapa ::: busqueda"+command.getEtapaBusqueda());
 		
 		List<MensajeErrorBean> listaError = (List<MensajeErrorBean>)pRequest.getPortletSession().getAttribute("listaError", PortletSession.APPLICATION_SCOPE);
 		
@@ -512,7 +512,7 @@ public class Formato12BGartController {
 		command.setTipoOperacion((tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE : FiseConstants.ADD);
 
 		if (command.getTipoOperacion().intValue() == FiseConstants.UPDATE) {
-			System.out.println("aquisito update");
+			logger.info("aquisito update");
 			FiseFormato12BCPK id = new FiseFormato12BCPK();
 			id.setAnoEjecucionGasto(anioEjec != null ? Integer.valueOf(anioEjec) : null);
 			id.setAnoPresentacion(anio != null ? Integer.valueOf(anio) : null);
@@ -550,8 +550,8 @@ public class Formato12BGartController {
           formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
           formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
           
-          System.out.println("ANIO INICIO CARGA NUEVO****"+command.getAnioInicio());
-          System.out.println("MES INICIO CARGA NUEVO****"+command.getMesInicio());
+          logger.info("ANIO INICIO CARGA NUEVO****"+command.getAnioInicio());
+          logger.info("MES INICIO CARGA NUEVO****"+command.getMesInicio());
         
 		
 		return "formato12BDetalle";
@@ -586,19 +586,31 @@ public class Formato12BGartController {
     	String tipoOperacion = uploadPortletRequest.getParameter("tipoOperacion");
 		String typeFile = uploadPortletRequest.getParameter("typeFile");
 		
-		String anoEjecucion = uploadPortletRequest.getParameter("anoEjecucionGasto");
-		String mesEjecucion = uploadPortletRequest.getParameter("mesEjecucionGasto");
+		String anoEjecucion = "";//uploadPortletRequest.getParameter("txtanoEjecucionGasto");
+		String mesEjecucion = "";//uploadPortletRequest.getParameter("txtmesEjecucionGasto");
+		
+		String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
+		
+		//recuperamos la pk en session solo cuando actualizo la carga de excel o text
+        PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+		
+		 codEmpresaEdit = (String)pRequest.getPortletSession().getAttribute("codEmpresaEdit", PortletSession.APPLICATION_SCOPE);
+		 anioPresEdit = (String)pRequest.getPortletSession().getAttribute("anoPresentacionEdit", PortletSession.APPLICATION_SCOPE);
+		 mesPresEdit = (String)pRequest.getPortletSession().getAttribute("mesPresentacionEdit", PortletSession.APPLICATION_SCOPE);
+		 String anioEjecEdit = (String)pRequest.getPortletSession().getAttribute("anoEjecucionEdit", PortletSession.APPLICATION_SCOPE);
+		 String mesEjecEdit = (String)pRequest.getPortletSession().getAttribute("mesEjecucionEdit", PortletSession.APPLICATION_SCOPE);
+		 etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapaEdit", PortletSession.APPLICATION_SCOPE);
 		
 		String periodo = "";
 		
 		if(tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))){
-			codEmpresaEdit = uploadPortletRequest.getParameter("codEmpresaHidden");
-			periodoEnvioPresEdit = uploadPortletRequest.getParameter("peridoDeclaracionHidden");
+			//codEmpresaEdit = uploadPortletRequest.getParameter("codEmpresaHidden");
+			/*periodoEnvioPresEdit = uploadPortletRequest.getParameter("peridoDeclaracionHidden");
 			if(periodoEnvioPresEdit!=null && periodoEnvioPresEdit.length()>6){
 	    		anioPresEdit = periodoEnvioPresEdit.substring(0, 4);
 	    		mesPresEdit = periodoEnvioPresEdit.substring(4, 6);
 	    		etapaEdit = periodoEnvioPresEdit.substring(6, periodoEnvioPresEdit.length());
-			}
+			}*/
 			periodo = periodoEnvioPresEdit;
 			bean.setCodigoEmpresa(codEmpresaEdit);
 		}else{
@@ -608,33 +620,36 @@ public class Formato12BGartController {
 	    		anioPresNew = periodoEnvioPresNew.substring(0, 4);
 	    		mesPresNew = periodoEnvioPresNew.substring(4, 6);
 	    		etapaNew = periodoEnvioPresNew.substring(6, periodoEnvioPresNew.length());
+	    		if( "S".equals(flagPeriodoEjecucion) ){
+	    			anoEjecucion = uploadPortletRequest.getParameter("anoEjecucionGasto");
+	    			mesEjecucion = uploadPortletRequest.getParameter("mesEjecucionGasto");
+				}else{
+					anoEjecucion = anioPresNew;
+					mesEjecucion = mesPresNew;
+				}
 			}
 			periodo = periodoEnvioPresNew;
 			bean.setCodigoEmpresa(codEmpresaNew);
 		}
-  
-		
-		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
 		FileEntry fileEntry=null;
 		try{
 		if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"") ){
-			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
+			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);			
 			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, anoEjecucion, mesEjecucion, etapaNew);
 		}else if( tipoOperacion.equals(""+FiseConstants.UPDATE) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"") ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anoEjecucion, mesEjecucion, etapaEdit);
+			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit, etapaEdit);
 		}else if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
-			fileEntry =fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
+			fileEntry =fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);			
 			formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, anoEjecucion, mesEjecucion, etapaNew);
 		}else if( tipoOperacion.equals(""+FiseConstants.UPDATE) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
 			fileEntry=fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-			formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anoEjecucion, mesEjecucion, etapaEdit);
+			formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit, etapaEdit);
 		}
 		}catch(FileMimeTypeException ex){
 			
-		}catch (Exception e) {
-			// TODO: handle exception
+		}catch (Exception e) {			
 		}
 		
 		//**************************
@@ -675,15 +690,21 @@ public class Formato12BGartController {
 				response.setRenderParameter("anoPresentacion", anioPresEdit);
 				response.setRenderParameter("mesPresentacion", mesPresEdit);
 				response.setRenderParameter("etapa", etapaEdit);
-				response.setRenderParameter("anoEjecucionGasto", anoEjecucion);
-				response.setRenderParameter("mesEjecucionGasto", mesEjecucion);
+				response.setRenderParameter("anoEjecucionGasto", anioEjecEdit);
+				response.setRenderParameter("mesEjecucionGasto", mesEjecEdit);
 			}
 			
 			if(formatoMensaje.getListaMensajeError()!=null && formatoMensaje.getListaMensajeError().size()>0){
 				pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
 			}
 		}
-		
+		//limpiamos las variables en sesion utilizados para la edicion de archivos de carga
+		pRequest.getPortletSession().setAttribute("codEmpresaEdit", "", PortletSession.APPLICATION_SCOPE);
+		pRequest.getPortletSession().setAttribute("anoPresentacionEdit", "", PortletSession.APPLICATION_SCOPE);
+		pRequest.getPortletSession().setAttribute("mesPresentacionEdit", "", PortletSession.APPLICATION_SCOPE);
+		pRequest.getPortletSession().setAttribute("anoEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
+		pRequest.getPortletSession().setAttribute("mesEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
+		pRequest.getPortletSession().setAttribute("etapaEdit", "", PortletSession.APPLICATION_SCOPE);
 		response.setRenderParameter("codEmpresaHidden", bean.getCodigoEmpresa());
 		response.setRenderParameter("peridoDeclaracion", periodo);
 		response.setRenderParameter("peridoDeclaracionHidden", periodo);
@@ -1268,7 +1289,7 @@ public class Formato12BGartController {
 						
 						/**verificar*/
 						formulario.setAnioEjecuc(formulario.getAnioPresent());
-						formulario.setMesEjecuc(formulario.getMesEjecuc());
+						formulario.setMesEjecuc(formulario.getMesPresent());
 						/***/
 						
 						if( FiseConstants.BLANCO.equals(sMsg) ){
@@ -1337,10 +1358,11 @@ public class Formato12BGartController {
 							//
 							formulario.setEtapa(etapaEdit);
 							
-							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
+							if(codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
 									Long.parseLong(mesPres) == formulario.getMesPresent() 
 									){
+								
 								if( (""+FiseConstants.ADD).equals(tipoOperacion) ){
 									objeto = formatoService.registrarFormato12BC(formulario);
 								}else if( (""+FiseConstants.UPDATE).equals(tipoOperacion) ){
@@ -1532,15 +1554,23 @@ public class Formato12BGartController {
 							formulario.setMesPresent(Long.parseLong(key3));
 							formulario.setAnioEjecuc(Long.parseLong(key4));
 							formulario.setMesEjecuc(Long.parseLong(key5));
-
-							if( codEmpresaEdit.trim().equals(formulario.getCodigoEmpresa().trim()) &&
-									anioPresEdit.equals(String.valueOf(formulario.getAnioPresent())) &&
-									Long.parseLong(mesPresEdit)==formulario.getMesPresent() &&
-									anioEjecucion.equals(String.valueOf(formulario.getAnioEjecuc())) &&
-									mesEjecucion.equals(String.valueOf(formulario.getMesEjecuc())) 
-									){
+							logger.error("key 1:  "+key1);
+							logger.error("key 2:  "+key2);
+							logger.error("key 3:  "+key3);
+							logger.error("key 4:  "+key4);
+							logger.error("key 5:  "+key5);
+							logger.error("empresa  :  "+codEmpresaEdit);
+							logger.error("anio pres:  "+anioPresEdit);
+							logger.error("mes pres:  "+mesPresEdit);							
+							logger.error("anio ejec:  "+anioEjecucion);
+							logger.error("mes ejec:  "+mesEjecucion);
+							if(codEmpresaEdit.trim().equals(key1.trim()) &&
+									anioPresEdit.equals(key2) &&
+									Integer.parseInt(mesPresEdit)==Integer.parseInt(key3) && 
+									anioEjecucion.equals(key4) &&
+									Integer.parseInt(mesEjecucion)==Integer.parseInt(key5) 
+									){		
 								
-								//
 								for (String s : listaDetalleTxt) {
 									String zonaBenef = s.substring(posicionMesEjecucion, posicionZonaBenef).trim();
 									
@@ -1916,7 +1946,7 @@ public class Formato12BGartController {
 				error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
 			}
 			sMsg = sMsg+error;	        	
-			System.out.println(error);
+			logger.info(error);
 			cont++;
 			MensajeErrorBean errorBean = new MensajeErrorBean();
 			errorBean.setId(cont);
@@ -1938,14 +1968,14 @@ public class Formato12BGartController {
 	
 	@ActionMapping(params = "action=uploadFile2")
 	public void uploadFile(ActionRequest request, ActionResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
-		System.out.println("aqui en upload controller");
+		logger.info("aqui en upload controller");
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		
 		String tipoaccion = uploadPortletRequest.getParameter("tipoOperacion");
 		String typeFile = uploadPortletRequest.getParameter("typeFile");
 		
-		System.out.println("TIPO FILE ::"+typeFile);
+		logger.info("TIPO FILE ::"+typeFile);
 		String codEmp = null;
 		String periodo = null;
 		
@@ -1984,9 +2014,9 @@ public class Formato12BGartController {
 		cabeceraPk.setAnoEjecucionGasto(Integer.parseInt(anoEjecucion));
 		cabeceraPk.setMesEjecucionGasto(Integer.parseInt(mesEjecucion));
 		
-		System.out.println("tipoaccion::" + tipoaccion);
-		System.out.println("codEmp::" + codEmp);
-		System.out.println("periodo::" + periodo);
+		logger.info("tipoaccion::" + tipoaccion);
+		logger.info("codEmp::" + codEmp);
+		logger.info("periodo::" + periodo);
 		
 		List<MensajeErrorBean> lstErrores=new ArrayList<MensajeErrorBean>();
 		
@@ -2058,10 +2088,10 @@ public class Formato12BGartController {
 					FiseFormato12BCPK resultPk = FormatoExcelImport.readSheetCabecera12B(libro);
 					List<FiseFormato12BD> lstDetalle = FormatoExcelImport.getListDetalleSheet12B(libro, resultPk, util);
 					if (resultPk != null) {
-						System.out.println("empresa::" + pk.getCodEmpresa() + "vs" + resultPk.getCodEmpresa());
-						System.out.println("anio::" + pk.getAnoPresentacion() + "vs" + resultPk.getAnoPresentacion());
-						System.out.println("mes::" + pk.getMesPresentacion() + "vs" + resultPk.getMesPresentacion());
-						System.out.println("etapa::" + pk.getEtapa() + "vs" + resultPk.getEtapa());
+						logger.info("empresa::" + pk.getCodEmpresa() + "vs" + resultPk.getCodEmpresa());
+						logger.info("anio::" + pk.getAnoPresentacion() + "vs" + resultPk.getAnoPresentacion());
+						logger.info("mes::" + pk.getMesPresentacion() + "vs" + resultPk.getMesPresentacion());
+						logger.info("etapa::" + pk.getEtapa() + "vs" + resultPk.getEtapa());
 
 						if (pk.getCodEmpresa().trim().equalsIgnoreCase(resultPk.getCodEmpresa().trim()) && pk.getAnoPresentacion().intValue() == resultPk.getAnoPresentacion().intValue() && pk.getMesPresentacion().intValue() == resultPk.getMesPresentacion().intValue()) {
 
@@ -2113,9 +2143,9 @@ public class Formato12BGartController {
 								//nameEstado = FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR;
 								nameEstado = "Abierto";
 								fise12BC = formatoService.saveFormatoCabecera(fise12BC);
-								System.out.println("fise12BC" + fise12BC);
+								logger.info("fise12BC" + fise12BC);
 								if (fise12BC != null) {
-									System.out.println("diferente de nulo");
+									logger.info("diferente de nulo");
 									if (lstDetalle != null && !lstDetalle.isEmpty()) {
 									
 										for (FiseFormato12BD detalle : lstDetalle) {
@@ -2222,7 +2252,7 @@ public class Formato12BGartController {
 						
 						for(CfgCampo campo:listaCampo){
 							boolean isAdd=false;
-							System.out.println("COD CAMPO::"+campo.getCodCampo());
+							logger.info("COD CAMPO::"+campo.getCodCampo());
 							if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_EMPRESA.trim())){
 								isAdd=true;
 								lenghtEmpresa=campo.getLongitud().intValue();
@@ -2316,7 +2346,7 @@ public class Formato12BGartController {
 							
 						}
 					}
-					System.out.println("CANTIDAD CAMPOS ::"+listaCampoRead.size());
+					logger.info("CANTIDAD CAMPOS ::"+listaCampoRead.size());
 					BufferedReader br = new BufferedReader( new InputStreamReader(is));
 					//List<String> listaDetalleTxt= new ArrayList<String>();
 					String sCurrentLine;
@@ -2324,28 +2354,28 @@ public class Formato12BGartController {
 					List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
 				
 					while ((sCurrentLine = br.readLine()) != null) {
-						System.out.println("total::"+sCurrentLine.length());
-						System.out.println(sCurrentLine);
+						logger.info("total::"+sCurrentLine.length());
+						logger.info(sCurrentLine);
 						int posInicial=0;
 						String codEm=sCurrentLine.substring(posInicial, lenghtEmpresa);
 						posInicial=posInicial+lenghtEmpresa;
-						System.out.println("codEm ::"+codEm+"/"+posInicial+"/"+lenghtAnioPres);//0+4
-						System.out.println("sCurrentLine ::"+sCurrentLine.length());//0+4
+						logger.info("codEm ::"+codEm+"/"+posInicial+"/"+lenghtAnioPres);//0+4
+						logger.info("sCurrentLine ::"+sCurrentLine.length());//0+4
 							
 						String anioPres=sCurrentLine.substring(posInicial, posInicial+lenghtAnioPres);
-						System.out.println("anioPres ::"+anioPres+"/"+posInicial);
+						logger.info("anioPres ::"+anioPres+"/"+posInicial);
 						posInicial=posInicial+lenghtAnioPres;
 						String mesPres=sCurrentLine.substring(posInicial, posInicial+lenghtMesPres);
-						System.out.println("mesPres ::"+mesPres+"/"+posInicial);
+						logger.info("mesPres ::"+mesPres+"/"+posInicial);
 						posInicial=posInicial+lenghtMesPres;
 						String anioEjec=sCurrentLine.substring(posInicial, posInicial+lenghtAnioEjec);
-						System.out.println("anioEjec ::"+anioEjec+"/"+posInicial);
+						logger.info("anioEjec ::"+anioEjec+"/"+posInicial);
 						posInicial=posInicial+lenghtAnioEjec;
 						String mesEjec=sCurrentLine.substring(posInicial, posInicial+lenghtMesEjec);
-						System.out.println("mesEjec ::"+mesEjec+"/"+posInicial);
+						logger.info("mesEjec ::"+mesEjec+"/"+posInicial);
 						posInicial=posInicial+lenghtMesEjec;
 						String idzon=sCurrentLine.substring(posInicial, posInicial+lenghtZona);
-						System.out.println("idzon ::"+idzon+"/"+posInicial);
+						logger.info("idzon ::"+idzon+"/"+posInicial);
 						posInicial=posInicial+lenghtZona;
 							
 							
@@ -2370,23 +2400,23 @@ public class Formato12BGartController {
 						String totalreconocer=sCurrentLine.substring(posInicial, posInicial+lenghtReconocer);
 							
 							
-						System.out.println("codEm**LG ::"+codEm);
-						System.out.println("anioPres**LG ::"+anioPres);
-						System.out.println("mesPres**LG ::"+mesPres);
+						logger.info("codEm**LG ::"+codEm);
+						logger.info("anioPres**LG ::"+anioPres);
+						logger.info("mesPres**LG ::"+mesPres);
 						
-						System.out.println("anioEjec**LG ::"+anioEjec);
-						System.out.println("mesEjec**LG ::"+mesEjec);
-						System.out.println("Zona**LG ::"+idzon);
-						System.out.println("numValesImp**LG ::"+numValesImp);
-						System.out.println("numValesRepar**LG ::"+numValesRepar);
-						System.out.println("numValesEntrDE**LG ::"+numValesEntrDE);
-						System.out.println("numValesFisico**LG ::"+numValesFisico);
-						System.out.println("numValesDigital**LG ::"+numValesDigital);
-						System.out.println("numValeAtenciones**LG ::"+numValeAtenciones);
-						System.out.println("numValeGestion**LG ::"+numValeGestion);
-						System.out.println("numValeDesplazamiento**LG ::"+numValeDesplazamiento);
-						System.out.println("numValeActividad**LG ::"+numValeActividad);
-						System.out.println("totalreconocer**LG ::"+totalreconocer);
+						logger.info("anioEjec**LG ::"+anioEjec);
+						logger.info("mesEjec**LG ::"+mesEjec);
+						logger.info("Zona**LG ::"+idzon);
+						logger.info("numValesImp**LG ::"+numValesImp);
+						logger.info("numValesRepar**LG ::"+numValesRepar);
+						logger.info("numValesEntrDE**LG ::"+numValesEntrDE);
+						logger.info("numValesFisico**LG ::"+numValesFisico);
+						logger.info("numValesDigital**LG ::"+numValesDigital);
+						logger.info("numValeAtenciones**LG ::"+numValeAtenciones);
+						logger.info("numValeGestion**LG ::"+numValeGestion);
+						logger.info("numValeDesplazamiento**LG ::"+numValeDesplazamiento);
+						logger.info("numValeActividad**LG ::"+numValeActividad);
+						logger.info("totalreconocer**LG ::"+totalreconocer);
 						  
 								 
 						validarCampos(anioPres, "Año de Presentación", 3, 0);//validar vacio
@@ -2625,8 +2655,8 @@ public class Formato12BGartController {
 		PortletRequest pRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		String tipoOperacion = request.getParameter("tipoOperacion");
-        System.out.println("en view formato tipo operacion::"+tipoOperacion+" /command::"+command.getTipoOperacion()+"-"+command.getCodEmpresa());
-		System.out.println("command busqueda::"+command.getAnioInicio());
+        logger.info("en view formato tipo operacion::"+tipoOperacion+" /command::"+command.getTipoOperacion()+"-"+command.getCodEmpresa());
+		logger.info("command busqueda::"+command.getAnioInicio());
     
 		String codEmpresa = request.getParameter("codEmpresa");
 		String periodo = request.getParameter("periodoDeclaracion");
@@ -2709,13 +2739,20 @@ public class Formato12BGartController {
          formato12BBusqueda.setAnioInicio(command.getAnioInicio());
          formato12BBusqueda.setAnioFin(command.getAnioFin());
          formato12BBusqueda.setMesInicio(command.getMesInicio());
-         System.out.println("MES INICIO CARGA ****"+command.getAnioInicio());
-         System.out.println("MES INICIO CARGA ****"+command.getMesInicio());
-         System.out.println("EMORESA CARGADA CARGA ****"+command.getCodEmpresaBusqueda());
+         logger.info("MES INICIO CARGA ****"+command.getAnioInicio());
+         logger.info("MES INICIO CARGA ****"+command.getMesInicio());
+         logger.info("EMORESA CARGADA CARGA ****"+command.getCodEmpresaBusqueda());
          formato12BBusqueda.setMesFin(command.getMesFin());
          formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
          formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
-		
+         
+		 //guardamos en sesion para cuando editamos para cargar un text o excel lo tenga la pk        
+         pRequest.getPortletSession().setAttribute("codEmpresaEdit", cabeceraBean.getId().getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
+         pRequest.getPortletSession().setAttribute("anoPresentacionEdit", String.valueOf(cabeceraBean.getId().getAnoPresentacion()), PortletSession.APPLICATION_SCOPE);
+         pRequest.getPortletSession().setAttribute("mesPresentacionEdit", String.valueOf(cabeceraBean.getId().getMesPresentacion()), PortletSession.APPLICATION_SCOPE);
+         pRequest.getPortletSession().setAttribute("anoEjecucionEdit", String.valueOf(cabeceraBean.getId().getAnoEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
+         pRequest.getPortletSession().setAttribute("mesEjecucionEdit", String.valueOf(cabeceraBean.getId().getMesEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
+         pRequest.getPortletSession().setAttribute("etapaEdit", cabeceraBean.getId().getEtapa(), PortletSession.APPLICATION_SCOPE);
 
 		return "formato12BDetalle";
 	}
@@ -2727,15 +2764,23 @@ public class Formato12BGartController {
 		JSONObject jsonObj = new JSONObject();
 		
 		try {
-			System.out.println("aqui save formato");
-			System.out.println("empresa::" + command.getCodEmpresa());
-			System.out.println("perido::" + command.getPeridoDeclaracion());
-			System.out.println("empresaHiden::" + command.getCodEmpresaHidden());
-			System.out.println("peridoHiden::" + command.getPeridoDeclaracionHidden());
-			System.out.println("tipoOperacion::" + command.getTipoOperacion());
-			System.out.println("año presentacion::" + command.getAnoPresentacion());
-			System.out.println("requestEmp::" + request.getParameter("codEmpresaHidden"));
-			System.out.println("requestPeriodo::" + request.getParameter("peridoDeclaracionHidden"));
+			logger.info("aqui save formato");
+			logger.info("empresa::" + command.getCodEmpresa());
+			logger.info("perido:" + command.getPeridoDeclaracion());
+			logger.info("empresaHiden::" + command.getCodEmpresaHidden());
+			logger.info("peridoHiden::" + command.getPeridoDeclaracionHidden());
+			logger.info("tipoOperacion::" + command.getTipoOperacion());
+			logger.info("año presentacion::" + command.getAnoPresentacion());
+			logger.info("requestEmp::" + request.getParameter("codEmpresaHidden"));
+			logger.info("requestPeriodo::" + request.getParameter("peridoDeclaracionHidden"));
+			logger.info("flag periodo ejecucion del bean :  "+command.getFlagPeriodoEjecucion());		
+			
+			Integer anoEjecucion=0;
+			Integer mesEjecucion=0;
+			if( "S".equals(command.getFlagPeriodoEjecucion()) ){
+				anoEjecucion = command.getAnoEjecucionGasto();
+				mesEjecucion = command.getMesEjecucionGasto();
+			}
 			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 
 			
@@ -2747,9 +2792,6 @@ public class Formato12BGartController {
 				command.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
 				command.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
 				command.setFechaActualizacion(new Date());
-				
-				
-				
 				
 				pkCbcr.setCodEmpresa(command.getCodEmpresaHidden().trim());
 				pkCbcr.setAnoEjecucionGasto(command.getAnoEjecucionGasto());
@@ -2769,12 +2811,12 @@ public class Formato12BGartController {
 					result.setTerminalActualizacion(command.getTerminalActualizacion());
 					result.setFechaActualizacion(new Date());
 					formatoService.updateFormatoCabecera(result);
-					System.out.println("antes de setear costo Total digitales:::"+command.getCostoTotalCanjeLiqValeDig());
+					logger.info("antes de setear costo Total digitales:::"+command.getCostoTotalCanjeLiqValeDig());
 					
 					List<FiseFormato12BD> lstDetalle = Formato12BGartCommand.toBeanDetalle(command);
 					if (lstDetalle != null && !lstDetalle.isEmpty()) {
 						for (FiseFormato12BD dtll : lstDetalle) {
-							System.out.println("costo Total digitales:::"+dtll.getCostoTotalCanjeLiqValeDig());
+							logger.info("costo Total digitales:::"+dtll.getCostoTotalCanjeLiqValeDig());
 							dtll.setUsuarioCreacion(result.getUsuarioCreacion());
 							 dtll.setTerminalCreacion(result.getTerminalCreacion());
 							 dtll.setFechaCreacion(result.getFechaCreacion());
@@ -2786,17 +2828,20 @@ public class Formato12BGartController {
 							 //dtll = formatoService.saveFormatoDetalle(dtll);
 						}
 					}
-				}
-				
+				}				
 			} else {
-
 				if (command != null && command.getPeridoDeclaracion().length() > 6) {
 					command.setAnoPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(0, 4)));
 					command.setMesPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(4, 6)));
 					command.setEtapa(command.getPeridoDeclaracion().substring(6, command.getPeridoDeclaracion().length()));
-				}
-				//command.setAnoEjecucionGasto(command.getAnoEjecucionGasto());
-				//command.setMesEjecucionGasto(command.getMesEjecucionGasto());
+					if( "S".equals(command.getFlagPeriodoEjecucion()) ){
+						command.setAnoEjecucionGasto(anoEjecucion);
+						command.setMesEjecucionGasto(mesEjecucion);
+					}else{
+						command.setAnoEjecucionGasto(command.getAnoPresentacion());
+						command.setMesEjecucionGasto(command.getMesPresentacion());
+					}
+				}		
 				command.setUsuarioCreacion(themeDisplay.getUser().getLogin());
 				command.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
 				command.setFechaCreacion(new Date());
@@ -2811,8 +2856,7 @@ public class Formato12BGartController {
                  
 				result = formatoService.saveFormatoCabecera(Formato12BGartCommand.toBeanCabecera(command));
 
-				if (result != null) {
-					//command.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+				if (result != null) {					
 					command.setDescEstado("Abierto");
 					List<FiseFormato12BD> lstDetalle = Formato12BGartCommand.toBeanDetalle(command);
 					if (lstDetalle != null && !lstDetalle.isEmpty()) {
@@ -2822,9 +2866,7 @@ public class Formato12BGartController {
 							dtll.setFechaCreacion(result.getFechaCreacion());
 							dtll = formatoService.saveFormatoDetalle(dtll);
 						}
-					}
-			
-				
+					}			
 				}
 				
 				command.setTipoOperacion(FiseConstants.UPDATE);
@@ -2838,19 +2880,12 @@ public class Formato12BGartController {
 				jsonObj.put("anoPresentacion", command.getAnoPresentacion());
 				jsonObj.put("etapa", command.getEtapa());
 				
-			}
-
-			//response.setContentType("text/plain");
-			model.addAttribute("formato12BGartCommand", command);
-			
-			
-			
-				
+			}		
+			model.addAttribute("formato12BGartCommand", command);				
 		} catch (DataIntegrityViolationException e) {
-			System.out.println("entor  constraint");
+			logger.info("entor  constraint");
 			msg = "-1";
 			e.printStackTrace();
-
 		} catch (PortalException e) {
 			msg = "-2";
 			e.printStackTrace();
@@ -2864,7 +2899,7 @@ public class Formato12BGartController {
 			try {
 				jsonObj.put("msg", msg);
 				jsonArray.put(jsonObj);
-				System.out.println(jsonArray.toString());
+				logger.info(jsonArray.toString());
 				response.setContentType("application/json");
 				PrintWriter pw = response.getWriter();
 				pw.write(jsonArray.toString());
@@ -2884,13 +2919,13 @@ public class Formato12BGartController {
 	public void deleteFormato(ModelMap model, ResourceRequest request, ResourceResponse response,
 			  @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		
-		System.out.println("empresa::***"+request.getParameter("codEmpresa")+"***command**"+command.getCodEmpresa());
-		System.out.println("mes::***"+request.getParameter("mesPresentacion")+"*****"+command.getMesPresentacion());
-		System.out.println("anio::***"+request.getParameter("anoPresentacion")+"*****"+command.getAnoPresentacion());
-		System.out.println("mesEjec::***"+request.getParameter("mesEjecucionGasto")+"*****"+command.getMesEjecucionGasto());
-		System.out.println("anioEjec::***"+request.getParameter("anoEjecucionGasto")+"*****"+command.getAnoEjecucionGasto());
-		System.out.println("etapa::***"+request.getParameter("etapa")+"*****"+command.getEtapa());
-		System.out.println("eliminando....");
+		logger.info("empresa::***"+request.getParameter("codEmpresa")+"***command**"+command.getCodEmpresa());
+		logger.info("mes::***"+request.getParameter("mesPresentacion")+"*****"+command.getMesPresentacion());
+		logger.info("anio::***"+request.getParameter("anoPresentacion")+"*****"+command.getAnoPresentacion());
+		logger.info("mesEjec::***"+request.getParameter("mesEjecucionGasto")+"*****"+command.getMesEjecucionGasto());
+		logger.info("anioEjec::***"+request.getParameter("anoEjecucionGasto")+"*****"+command.getAnoEjecucionGasto());
+		logger.info("etapa::***"+request.getParameter("etapa")+"*****"+command.getEtapa());
+		logger.info("eliminando....");
 		
 		FiseFormato12BCPK id = new FiseFormato12BCPK();
 		id.setAnoEjecucionGasto(command.getAnoEjecucionGasto() != null ? Integer.valueOf(command.getAnoEjecucionGasto()) : null);
@@ -2947,12 +2982,12 @@ public class Formato12BGartController {
 		    JSONArray jsonArray = new JSONArray();	
 		     
 		    
-		    System.out.println("EMPRESA::"+command.getCodEmpresaHidden().trim());
-		    System.out.println("PERIODOD::"+command.getPeridoDeclaracionHidden().trim());
-		    System.out.println("MES PRESENTACION::"+command.getMesPresentacion());
-		    System.out.println("ANO PRESENTACION::"+command.getAnoPresentacion());
-		    System.out.println("DES MES::"+command.getDescMesEjec());
-		    System.out.println("ETAPA::"+command.getEtapa());
+		    logger.info("EMPRESA::"+command.getCodEmpresaHidden().trim());
+		    logger.info("PERIODOD::"+command.getPeridoDeclaracionHidden().trim());
+		    logger.info("MES PRESENTACION::"+command.getMesPresentacion());
+		    logger.info("ANO PRESENTACION::"+command.getAnoPresentacion());
+		    logger.info("DES MES::"+command.getDescMesEjec());
+		    logger.info("ETAPA::"+command.getEtapa());
 		    
 		 
 		    
@@ -2961,8 +2996,8 @@ public class Formato12BGartController {
 		    String tipoFormato = FiseConstants.TIPO_FORMATO_12B;
 		    String tipoArchivo = request.getParameter("tipoReporte").trim();
 		   
-		    System.out.println("nombreReporte::"+nombreReporte);
-		    System.out.println("nombreArchivo::"+nombreArchivo);
+		    logger.info("nombreReporte::"+nombreReporte);
+		    logger.info("nombreArchivo::"+nombreArchivo);
 		    
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
@@ -3013,12 +3048,12 @@ public class Formato12BGartController {
 	try {
 		   JSONArray jsonArray = new JSONArray();	
 	   
-		System.out.println("EMPRESA::"+command.getCodEmpresaHidden().trim());
-	    System.out.println("PERIODOD::"+command.getPeridoDeclaracionHidden().trim());
-	    System.out.println("MES PRESENTACION::"+command.getMesPresentacion());
-	    System.out.println("ANO PRESENTACION::"+command.getAnoPresentacion());
-	    System.out.println("DES MES::"+command.getDescMesEjec());
-	    System.out.println("ETAPA::"+command.getEtapa());
+		logger.info("EMPRESA::"+command.getCodEmpresaHidden().trim());
+	    logger.info("PERIODOD::"+command.getPeridoDeclaracionHidden().trim());
+	    logger.info("MES PRESENTACION::"+command.getMesPresentacion());
+	    logger.info("ANO PRESENTACION::"+command.getAnoPresentacion());
+	    logger.info("DES MES::"+command.getDescMesEjec());
+	    logger.info("ETAPA::"+command.getEtapa());
 	    
 	   FiseFormato12BCPK pk=new FiseFormato12BCPK();
 	    pk.setCodEmpresa(command.getCodEmpresaHidden());
@@ -3160,11 +3195,11 @@ public class Formato12BGartController {
 		    boolean valorActa = false;			
 			String respuestaEmail ="";	
 		   
-		    System.out.println("EMPRESA::"+command.getCodEmpresaHidden().trim());
-		    System.out.println("PERIODOD::"+command.getPeridoDeclaracionHidden().trim());
-		    System.out.println("MES PRESENTACION::"+command.getMesPresentacion());
-		    System.out.println("ANO PRESENTACION::"+command.getAnoPresentacion());
-		    System.out.println("DES MES::"+command.getDescMesEjec());
+		    logger.info("EMPRESA::"+command.getCodEmpresaHidden().trim());
+		    logger.info("PERIODOD::"+command.getPeridoDeclaracionHidden().trim());
+		    logger.info("MES PRESENTACION::"+command.getMesPresentacion());
+		    logger.info("ANO PRESENTACION::"+command.getAnoPresentacion());
+		    logger.info("DES MES::"+command.getDescMesEjec());
 		    
 		   FiseFormato12BCPK pk=new FiseFormato12BCPK();
 		   pk.setCodEmpresa(command.getCodEmpresaHidden());
