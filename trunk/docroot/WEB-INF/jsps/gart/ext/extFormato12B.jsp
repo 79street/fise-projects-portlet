@@ -1566,73 +1566,185 @@
 			}
 		},
 		
-		validateSave :function(tipoOperacion){
-			
-			var codemp=formato12B.cmbCodEmpresa.val();
-			
+		validateSave :function(tipoOperacion){			
+			var codemp=formato12B.cmbCodEmpresa.val();	
+			var periodoDeclarado = $('#peridoDeclaracion').val();
+			console.debug("Periodo declarado:   "+periodoDeclarado);
+			var flagLima = '0';
 			if(tipoOperacion=='1'){//edit
 				codemp=$("#codEmpresaHidden").val();
 			}
-			var countR=0;
-			var countP=0;
-			
-			if(formato12B.txtnroValesImpreso.val().length>0){countR++;}
-			if(formato12B.txtnroValesRepartidosDomi.val().length>0){countR++;}
-			if(formato12B.txtnroValesEntregadoDisEl.val().length>0){countR++;}
-			if(formato12B.txtnroValesFisicosCanjeados.val().length>0){countR++;}
-			if(formato12B.txtnroValesDigitalCanjeados.val().length>0){countR++;}
-			if(formato12B.txtnroAtenciones.val().length>0){countR++;}
-			if(formato12B.txtTotalGestionAdministrativa.val().length>0){countR++;}
-			if(formato12B.txtTotalDesplazamientoPersonal.val().length>0){countR++;}
-			if(formato12B.txtTotalActividadesExtraord.val().length>0){countR++;}
-			
-			if(formato12B.txtnroValesImpresoProv.val().length){countP++;}
-			if(formato12B.txtnroValesRepartidosDomiProv.val().length){countP++;}
-			if(formato12B.txtnroValesEntregadoDisElProv.val().length){countP++;}
-			if(formato12B.txtnroValesFisicosCanjeadosProv.val().length){countP++;}
-			if(formato12B.txtnroValesDigitalCanjeadosProv.val().length){countP++;}
-			if(formato12B.txtnroAtencionesProv.val().length){countP++;}
-			if(formato12B.txtTotalGestionAdministrativaProv.val().length){countP++;}
-			if(formato12B.txtTotalDesplazamientoPersonalProv.val().length){countP++;}
-			if(formato12B.txtTotalActividadesExtraordProv.val().length){countP++;}
-			
-			if(codemp == 'EDLN' || codemp == 'LDS'){
-				var countL=0;
-				if(formato12B.txtnroValesImpresoLim.val().length){countL++;}
-				if(formato12B.txtnroValesRepartidosDomiLim.val().length){countL++;}
-				if(formato12B.txtnroValesEntregadoDisElLim.val().length){countL++;}
-				if(formato12B.txtnroValesFisicosCanjeadosLim.val().length){countL++;}
-				if(formato12B.txtnroValesDigitalCanjeadosLim.val().length){countL++;}
-				if(formato12B.txtnroAtencionesLim.val().length){countL++;}
-				if(formato12B.txtTotalGestionAdministrativaLim.val().length){countL++;}
-				if(formato12B.txtTotalDesplazamientoPersonalLim.val().length){countL++;}
-				if(formato12B.txtTotalActividadesExtraordLim.val().length){countL++;}
-				
-				if(countR>0 && countP>0 && countL>0 ){
-					return true;
-				}
-			}else{
-				if(countR>0 && countP>0 ){
-					return true;
-				}
-				
+			if(codemp == 'EDLN' || codemp.trim() == 'LDS'){
+				flagLima='1';	
 			}
-			
-			return false;
+			if(codemp.length == '') { 					
+				var addhtmAlert='Seleccione una Distribuidora Eléctrica.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+			  	return false; 
+			}/*else if(periodoDeclarado==null || 
+					periodoDeclarado.length == '' ) {			
+				var addhtmAlert='No existe un Periodo Declarado para la Distribuidora Eléctrica seleccionada.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}*/
+			//Rural
+			else if(formato12B.txtnroValesImpreso.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales Impresos de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroValesRepartidosDomi.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales repartido a domicilio de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroValesEntregadoDisEl.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales entregados en la Distribuidora Eléctrica de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroValesFisicosCanjeados.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales Físicos Canjeados de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroValesDigitalCanjeados.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales Digitales Canjeados de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroAtenciones.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Atenciones de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalGestionAdministrativa.val().length==''){
+				var addhtmAlert='Debe ingresar Gestión Administrativa de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalDesplazamientoPersonal.val().length==''){
+				var addhtmAlert='Debe ingresar Desplazamiento de Personal de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalActividadesExtraord.val().length==''){
+				var addhtmAlert='Debe ingresar  Actividades Extraordinaria de la Zona Rural.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}
+			//Provincia
+			else if(formato12B.txtnroValesImpresoProv.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales Impresos de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;  
+			}else if(formato12B.txtnroValesRepartidosDomiProv.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales repartido a domicilio de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroValesEntregadoDisElProv.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales entregados en la Distribuidora Eléctrica de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;
+			}else if(formato12B.txtnroValesFisicosCanjeadosProv.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales Físicos Canjeados de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroValesDigitalCanjeadosProv.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Vales Digitales Canjeados de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroAtencionesProv.val().length==''){
+				var addhtmAlert='Debe ingresar el Número de Atenciones de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalGestionAdministrativaProv.val().length==''){
+				var addhtmAlert='Debe ingresar Gestión Administrativa de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalDesplazamientoPersonalProv.val().length==''){
+				var addhtmAlert='Debe ingresar Desplazamiento de Personal de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalActividadesExtraordProv.val().length==''){
+				var addhtmAlert='Debe ingresar Actividades Extraordinaria de la Zona Urbano Provincia.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;
+			}
+			//LIMA				
+			else if(formato12B.txtnroValesImpresoLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar el Número de Vales Impresos de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;  
+			}else if(formato12B.txtnroValesRepartidosDomiLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar el Número de Vales repartido a domicilio de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroValesEntregadoDisElLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar el Número de Vales entregados en la Distribuidora Eléctrica de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;
+			}else if(formato12B.txtnroValesFisicosCanjeadosLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar el Número de Vales Físicos Canjeados de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroValesDigitalCanjeadosLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar el Número de Vales Digitales Canjeados de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtnroAtencionesLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar el Número de Atenciones de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalGestionAdministrativaLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar Gestión Administrativa de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalDesplazamientoPersonalLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar Desplazamiento de Personal de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false; 
+			}else if(formato12B.txtTotalActividadesExtraordLim.val().length=='' && flagLima=='1'){
+				var addhtmAlert='Debe ingresar Actividades Extraordinaria de la Zona Urbano Lima.';					
+				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
+				formato12B.dialogMessageWarningDetalle.dialog("open");
+				return false;
+			}else{
+				return true;	
+			}		
 		},
+		
 		save : function(){	
 			var form = formato12B.formNewEdit.serialize();
 			if(formato12B.validateSave(formato12B.tpOperacion.val())){
 				jQuery.ajax({	
-					url: formato12B.urlSave,
-					cache : false,
-					async : false,
+					url: formato12B.urlSave,					
 					type: 'post',
 					data : form,
 					dataType : "json",
 					beforeSend:function(){
 						formato12B.blockUI();
-					},				
+					},					
 					success: function(data) {
 						if(data!=null && data.length>0){
 							$.each(data, function (i, item) {
@@ -1706,14 +1818,11 @@
 						formato12B.unblockUI();
 					}
 			});
-			}else{
-				//formato12B.lblMessage.html("Debe al menos registrar un campo por zona beneficiaria");
-				//formato12B.dialogMessageGeneral.dialog("open");
+			}
+			/*else{				
 				formato12B.dialogMessageWarningDetalleContent.html("Debe al menos registrar un campo por Zona Beneficiaria");
 				formato12B.dialogMessageWarningDetalle.dialog("open");
-			}
-			
-			
+			}*/		
 		},
 		
 		validarFormulario : function(){
@@ -1870,15 +1979,12 @@
 			jQuery.ajax({
 				url: formato12B.urlValidacion+'&'+formato12B.formNewEdit.serialize(),
 				type : 'post',
-				dataType : 'json',
-				contentType: "application/json; charset=utf-8",
-                async : false,
-					
-				success : function(data) {
-					if( data!=null ){
+				dataType : 'json',	
+				success : function(gridData) {
+					if( gridData!=null ){
 						formato12B.dialogObservacion.dialog("open");
 						formato12B.tablaObservacion.clearGridData(true);
-						formato12B.tablaObservacion.jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
+						formato12B.tablaObservacion.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 						formato12B.tablaObservacion[0].refreshIndex();
 						formato12B.initBlockUI();
 					}
