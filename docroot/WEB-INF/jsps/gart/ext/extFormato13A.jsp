@@ -2381,21 +2381,21 @@ var formato13A= {
 			cod_focus=formato13A.codDepa;
 			return false;
 		}
-		
-		if(formato13A.idZonaBenefDetalle.val().length == '' ) {
-			//alert('Debe seleccionar la Zona Beneficiario');
+		console.debug("Empresa edelnor :  "+formato13A.cod_empresa_edelnor.val());
+		console.debug("Empresa luz del sur :  "+formato13A.cod_empresa_luz_sur.val());
+		console.debug("Empresa edelnor :  "+formato13A.codEmpresaDetalle.val());		
+		if(formato13A.idZonaBenefDetalle.val().length == '' ) {			
 			formato13A.dialogMessageWarningDetalleContent.html("Debe seleccionar la Zona Beneficiario");
-			formato13A.dialogMessageWarningDetalle.dialog("open");
-		    //formato13A.idZonaBenefDetalle.focus();
+			formato13A.dialogMessageWarningDetalle.dialog("open");		    
 		    cod_focus=formato13A.idZonaBenefDetalle;
 		   	return false; 
-		}else{
-			if(formato13A.cod_empresa_edelnor.val()!=formato13A.codEmpresaDetalle.val() && formato13A.cod_empresa_luz_sur.val()!=formato13A.codEmpresaDetalle.val()){
-				if(formato13A.idZonaBenefDetalle.val() == 3 ) {//LIMA
-					//alert('No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica');
+		}else{			
+			if(formato13A.cod_empresa_edelnor.val()!=formato13A.codEmpresaDetalle.val() && 
+					formato13A.cod_empresa_luz_sur.val().trim()!=formato13A.codEmpresaDetalle.val().trim()){
+				console.debug("ZONA :  "+formato13A.idZonaBenefDetalle.val());
+				if(formato13A.idZonaBenefDetalle.val() == 3 ) {//LIMA					
 					formato13A.dialogMessageWarningDetalleContent.html("No puede seleccionar la Zona Beneficiario Lima para la Distribuidora Eléctrica seleccionada");
-					formato13A.dialogMessageWarningDetalle.dialog("open");
-				    //formato13A.idZonaBenefDetalle.focus();
+					formato13A.dialogMessageWarningDetalle.dialog("open");				  
 				    cod_focus=formato13A.idZonaBenefDetalle;
 				   	return false;
 				}
