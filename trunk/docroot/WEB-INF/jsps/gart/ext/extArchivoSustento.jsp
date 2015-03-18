@@ -43,6 +43,7 @@ var archivoSustentoVar= {
 		mensajeObteniendoDatos:null,		
 		mensajeGuardando:null,	
 		mensajeReemplazando:null,
+		mensajeDescarga:null,
 		
 		//urls
 		urlBusqueda: null,	    
@@ -50,7 +51,7 @@ var archivoSustentoVar= {
 	    urlEliminar:null,	   
 	    urlVerObservaciones:null,
 	    urlVerFormatos:null,  	
-		
+	    urlDescargarArchivo:null,  
 	    urlBusquedaArchivos: null,	    
 	    
 		//botones		
@@ -67,9 +68,7 @@ var archivoSustentoVar= {
 		i_tipoMensual:null,	
 		i_etapaBusq:null,
 		
-		//variables 
-		f_empresa:null,	
-		
+			
 		//grillas
 		tablaResultados:null,
 		paginadoResultados:null,	
@@ -85,6 +84,52 @@ var archivoSustentoVar= {
 		
 		tablaResultadosArchivos:null,
 		paginadoResultadosArchivos:null,
+		
+		//varibales para la carga de archivos 
+		flag:null, //flag = E ocurrrio un error al cargar archivos
+		flagCarga:null,//indica si es nueva carga o reemplazar archivo existente
+	    desEmpresaSes:null,
+		anioPresSes:null,
+		mesPresSes:null,
+		anioEjecSes:null,
+		mesEjecSes:null,
+		anioIniVigSes:null,
+		anioFinVigSes:null,
+		etapaSes:null,
+		formatoSes:null,
+		correlativoSes:null,
+		//para la busqueda inicial
+		codEmpresaSes:null,
+		grupoInfSes:null,
+		periocidadSes:null,
+		
+		//pra mesajes error o exito
+		mensajeError:null,
+		mensajeInfo:null,
+		
+		//varibales para enviar al controller cuando se carga un archivo
+		codEmpresaF:null,
+		anioPresF:null,
+		mesPresF:null,
+		anioEjecF:null,
+		mesEjecF:null,
+		anioIniVigF:null,
+		anioFinVigF:null,
+		estapaF:null,
+		formatoF:null,
+		//para mantener en session de la busqueda de formatos
+		desEmpresaF:null,
+		grupoInforF:null,
+		periocidadF:null,
+		
+		//para nuevo registro
+		correlativoF:null,//correlativo del formato para insertar en el detalle del archivo sustento
+		//para reemplazar archivo
+		itemArchivo:null,
+		correlativoArchivo:null,
+		
+		
+		
 		
 		
 		init : function() {
@@ -118,11 +163,12 @@ var archivoSustentoVar= {
 			this.divOverlay=$("#<portlet:namespace/>divOverlay");
 			
 			//mensajes						
-			this.mensajeEliminar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando Archivo </h3>';
+			this.mensajeEliminar='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando Archivo de Sustento </h3>';
 			this.mensajeReporte='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo el Reporte </h3>';
 			this.mensajeObteniendoDatos='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Obteniendo Archivos </h3>';
 			this.mensajeGuardando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Archivo </h3>';
 			this.mensajeReemplazando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Reemplazando Archivo </h3>';
+			this.mensajeDescarga='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Descargando Archivo de Sustento </h3>';
 						
 			//urls
 			this.urlBusqueda='<portlet:resourceURL id="busquedaFormatos" />';					
@@ -130,7 +176,7 @@ var archivoSustentoVar= {
 			this.urlCargaGrupoInf='<portlet:resourceURL id="cargarGrupoInformacion" />';			
 			this.urlVerObservaciones='<portlet:resourceURL id="verObservacionesFormatos" />';
 			this.urlVerFormatos='<portlet:resourceURL id="verFormatosReporte" />'; 		
-			
+			this.urlDescargarArchivo='<portlet:resourceURL id="descargarArchivoSustento" />'; 		
 			this.urlBusquedaArchivos='<portlet:resourceURL id="busquedaArchivosSustentoFormato" />'; 	
 			
 			
@@ -148,6 +194,53 @@ var archivoSustentoVar= {
 			this.i_tipoMensual=$('#rbtMensual');
 			this.i_etapaBusq=$('#etapaBusq');
 					
+			
+			//varibales hidden para la carga de archivos
+			this.flag=$('#<portlet:namespace/>flag');
+			this.flagCarga=$('#<portlet:namespace/>flagCarga');
+			this.desEmpresaSes=$('#<portlet:namespace/>desEmpresaSes');
+			this.anioPresSes=$('#<portlet:namespace/>anioPresSes');
+			this.mesPresSes=$('#<portlet:namespace/>mesPresSes');
+			this.anioEjecSes=$('#<portlet:namespace/>anioEjecSes');
+			this.mesEjecSes=$('#<portlet:namespace/>mesEjecSes');
+			this.anioIniVigSes=$('#<portlet:namespace/>anioIniVigSes');
+			this.anioFinVigSes=$('#<portlet:namespace/>anioFinVigSes');
+			this.etapaSes=$('#<portlet:namespace/>etapaSes');
+			this.formatoSes=$('#<portlet:namespace/>formatoSes');
+			this.correlativoSes=$('#<portlet:namespace/>correlativoSes');
+			
+			//para mantener la sesion para la busqueda inicial
+			this.codEmpresaSes=$('#<portlet:namespace/>codEmpresaSes');
+			this.grupoInfSes=$('#<portlet:namespace/>grupoInfSes');
+			this.periocidadSes=$('#<portlet:namespace/>periocidadSes');
+		
+			
+			//variables para mandar al controller
+			this.desEmpresaF=$('#<portlet:namespace/>desEmpresaF');
+			this.anioPresF=$('#<portlet:namespace/>anioPresF');
+			this.mesPresF=$('#<portlet:namespace/>mesPresF');
+			this.anioEjecF=$('#<portlet:namespace/>anioEjecF');
+			this.mesEjecF=$('#<portlet:namespace/>mesEjecF');
+			this.anioIniVigF=$('#<portlet:namespace/>anioIniVigF');
+			this.anioFinVigF=$('#<portlet:namespace/>anioFinVigF');
+			this.estapaF=$('#<portlet:namespace/>estapaF');
+			this.formatoF=$('#<portlet:namespace/>formatoF');
+			//para mantener en session de la busqueda de formatos
+			this.codEmpresaF=$('#<portlet:namespace/>codEmpresaF');
+			this.grupoInforF=$('#<portlet:namespace/>grupoInforF');
+			this.periocidadF=$('#<portlet:namespace/>periocidadF');
+			
+			//nuevo
+			this.correlativoF=$('#<portlet:namespace/>correlativoF');
+			//reemplazar
+			this.itemArchivo=$('#<portlet:namespace/>itemArchivo');
+			this.correlativoArchivo=$('#<portlet:namespace/>correlativoArchivo');
+			
+			//mensajes de error o exito
+			this.mensajeError=$('#<portlet:namespace/>mensajeError');
+			this.mensajeInfo=$('#<portlet:namespace/>mensajeInfo');	
+			
+			
 			
 			//grillas			
 			this.tablaResultados=$("#<portlet:namespace/>grid_resultado_busqueda");
@@ -182,6 +275,7 @@ var archivoSustentoVar= {
 		    });	
 						
 			archivoSustentoVar.initDialogs();
+			archivoSustentoVar.cargaInicial();
 		    
 		    
 			archivoSustentoVar.i_tipoBienal.change(function(){
@@ -194,13 +288,145 @@ var archivoSustentoVar= {
 			
 			
 			//botones para carga de archivos
-		    archivoSustentoVar.botonNuevoArchivo.click(function() {		    	
+		    archivoSustentoVar.botonNuevoArchivo.click(function() {	
+		    	archivoSustentoVar.flagCarga.val('0');// 0= nueva carga
 		    	archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustento();	    		
 		    });
+			
+			
+		    archivoSustentoVar.botonCargarArchivoSustento.click(function() {
+		    	archivoSustentoVar.<portlet:namespace/>cargarArchivosSustentoFormato();
+		    });
+			
 		  
 			archivoSustentoVar.i_tipoMensual.trigger('change');
 			
 		},		
+		
+		
+		//function para la carga inicial del formulario al cargar archivos
+		cargaInicial : function(){				
+			//SE CARGA VARIABLES EN SESION PARA MOSTRAR LOS PANELES DE BUSQUEDA DE ARCHIVOS
+			 var desEmpSes = archivoSustentoVar.desEmpresaSes.val();
+			 var anioPresSes = archivoSustentoVar.anioPresSes.val();
+			 var mesPresSes = archivoSustentoVar.mesPresSes.val();
+			 var anioEjecSes = archivoSustentoVar.anioEjecSes.val();
+			 var mesEjecSes = archivoSustentoVar.mesEjecSes.val();
+			 var anioIniVigSes = archivoSustentoVar.anioIniVigSes.val();
+			 var anioFinVigSes = archivoSustentoVar.anioFinVigSes.val();
+			 var etapaSes = archivoSustentoVar.etapaSes.val();
+			 var formatoSes = archivoSustentoVar.formatoSes.val();
+			 var correlativoSes = archivoSustentoVar.correlativoSes.val();	 
+			 
+			    console.debug("Entrando despues de cargar correlativo: "+correlativoSes);
+				console.debug("Entrando despues de cargar cod empresa:  "+desEmpSes);
+				console.debug("Entrando despues de cargar anio pres :  "+anioPresSes);
+				console.debug("Entrando despues de cargar mes pres :  "+mesPresSes);
+				console.debug("Entrando despues de cargar anio ejec : "+anioEjecSes);
+				console.debug("Entrando despues de cargar mes ejec :  "+mesEjecSes);
+				console.debug("Entrando despues de cargar anio ini:  "+anioIniVigSes);
+				console.debug("Entrando despues de cargar anio fin : "+anioFinVigSes);				
+				console.debug("Entrando despues de cargar etapa:  "+etapaSes);
+				console.debug("Entrando despues de cargar formato:   "+formatoSes);		
+			 // var flagOpera = 'ABIERTO';
+			
+			 var flag = archivoSustentoVar.flag.val();
+			 console.debug("Entrando despues de cargar flag  "+flag);
+			 if(flag=='E' ){//solo ocurre cuando hay un error en la carga de formularios, sino se muestra el proceso normal				 
+				 
+				 if(correlativoSes!='' && desEmpSes != '' && anioPresSes != '' && mesPresSes != '' 
+						 && anioEjecSes != '' && mesEjecSes != '' 
+						 && anioIniVigSes != '' && anioFinVigSes != '' 
+						 && etapaSes != ''  && formatoSes != ''){
+					 archivoSustentoVar.mostrarArchivosFormato(correlativoSes,desEmpSes,anioPresSes,mesPresSes,anioEjecSes,mesEjecSes,anioIniVigSes,anioFinVigSes,etapaSes,formatoSes);
+				 }
+				 archivoSustentoVar.flagCarga.val('0');// 0= nueva carga
+				 				
+				//mantener datos en sesion
+				if(archivoSustentoVar.codEmpresaSes.val()!='' 
+						&& archivoSustentoVar.grupoInfSes.val()!='' 
+						&& archivoSustentoVar.periocidadSes.val()!=''
+						&& archivoSustentoVar.etapaSes.val()!=''){
+					
+					archivoSustentoVar.i_codEmpresaBusq.val(archivoSustentoVar.codEmpresaSes.val());
+					archivoSustentoVar.i_grupoInfBusq.val(archivoSustentoVar.grupoInfSes.val());
+					if(archivoSustentoVar.periocidadSes.val()=='MENSUAL'){
+						document.getElementById('rbtMensual').checked = true;
+					}else{
+						document.getElementById('rbtBienal').checked = true;
+					}	
+					$('#optionFormato').val(archivoSustentoVar.periocidadSes.val());		
+					archivoSustentoVar.i_etapaBusq.val(archivoSustentoVar.etapaSes.val());
+				}else{
+					archivoSustentoVar.i_codEmpresaBusq.val('');
+					archivoSustentoVar.i_grupoInfBusq.val('');
+					document.getElementById('rbtMensual').checked = true;
+					archivoSustentoVar.i_etapaBusq.val('');
+					$('#optionFormato').val('');		
+				}
+				 
+			}else{						
+				 if(correlativoSes!='' && desEmpSes != '' && anioPresSes != '' && mesPresSes != '' 
+					 && anioEjecSes != '' && mesEjecSes != '' 
+					 && anioIniVigSes != '' && anioFinVigSes != '' 
+					 && etapaSes != ''  && formatoSes != ''){
+					 console.debug("Entrando despues de cargar ");
+				     archivoSustentoVar.mostrarArchivosFormato(correlativoSes,desEmpSes,anioPresSes,mesPresSes,anioEjecSes,mesEjecSes,anioIniVigSes,anioFinVigSes,etapaSes,formatoSes);
+			    }
+				//mantener datos en sesion
+				 if(archivoSustentoVar.codEmpresaSes.val()!='' 
+						&& archivoSustentoVar.grupoInfSes.val()!='' 
+						&& archivoSustentoVar.periocidadSes.val()!=''
+						&& archivoSustentoVar.etapaSes.val()!=''){
+					
+					archivoSustentoVar.i_codEmpresaBusq.val(archivoSustentoVar.codEmpresaSes.val());
+					archivoSustentoVar.i_grupoInfBusq.val(archivoSustentoVar.grupoInfSes.val());
+					if(archivoSustentoVar.periocidadSes.val()=='MENSUAL'){
+						document.getElementById('rbtMensual').checked = true;
+					}else{
+						document.getElementById('rbtBienal').checked = true;
+					}
+					$('#optionFormato').val(archivoSustentoVar.periocidadSes.val());					
+					archivoSustentoVar.i_etapaBusq.val(archivoSustentoVar.etapaSes.val());
+				}else{
+					archivoSustentoVar.i_codEmpresaBusq.val('');
+					archivoSustentoVar.i_grupoInfBusq.val('');
+					document.getElementById('rbtMensual').checked = true;
+					$('#optionFormato').val('');		
+					archivoSustentoVar.i_etapaBusq.val('');
+				}
+			 }	 
+			 var mensajeInfo =  archivoSustentoVar.mensajeInfo.val();
+			 console.debug("Entrando despues de cargar mensaje info : "+mensajeInfo);
+			 var mensajeError = archivoSustentoVar.mensajeError.val();
+			 console.debug("Entrando despues de cargar mensaje error:   "+mensajeError);
+			 //SE MUESTRAN LOS MENSAJES DE ERROR PARA LA CARGA DE LOS ARCHIVOS
+			 if(mensajeError!=''){				
+				 archivoSustentoVar.dialogErrorContent.html(mensajeError);
+				 archivoSustentoVar.dialogError.dialog("open");	
+			}else{
+				//Se muestra el mensaje de informacion exitosa
+				 if(mensajeInfo!=''){
+					 archivoSustentoVar.dialogMessageContent.html(mensajeInfo);
+					 archivoSustentoVar.dialogMessage.dialog("open");			
+				 }
+			 }
+			 //limpiar variables			
+			 archivoSustentoVar.desEmpresaSes.val('');
+			 archivoSustentoVar.anioPresSes.val('');
+			 archivoSustentoVar.mesPresSes.val('');
+			 archivoSustentoVar.anioEjecSes.val('');
+			 archivoSustentoVar.mesEjecSes.val('');
+			 archivoSustentoVar.anioIniVigSes.val('');
+			 archivoSustentoVar.anioFinVigSes.val('');
+			 archivoSustentoVar.etapaSes.val('');
+			 archivoSustentoVar.formatoSes.val('');
+			 archivoSustentoVar.correlativoSes.val('');
+			 
+			 archivoSustentoVar.codEmpresaSes.val('');
+			 archivoSustentoVar.grupoInfSes.val('');
+			 archivoSustentoVar.periocidadSes.val('');
+		},	
 		
 		
 		//funcion para armar el modelo de la grilla para el resultado
@@ -334,14 +560,15 @@ var archivoSustentoVar= {
 			var ancho = archivoSustentoVar.divBuscar.width();
 			archivoSustentoVar.tablaResultadosArchivos.jqGrid({
 			   datatype: "local",
-		       colNames: ['Ítem','Archivo','Descargar','Reemplazar','Eliminar',''],
+		       colNames: ['Ítem','Archivo','Descargar','Reemplazar','Eliminar','',''],
 		       colModel: [
                        { name: 'itemArchivo', index: 'itemArchivo', width: 20,align:'center'},                       
                        { name: 'nombreArchivo', index: 'nombreArchivo', width: 80},                       					  	  	           
 		               { name: 'descargar', index: 'descargar', width: 20,align:'center' },		                
 		               { name: 'reemplazar', index: 'reemplazar', width: 20,align:'center' },	
 		               { name: 'eliminar', index: 'eliminar', width: 20,align:'center' },	
-		               { name: 'corrArchivo', index: 'corrArchivo', hidden: true}	               
+		               { name: 'corrArchivo', index: 'corrArchivo', hidden: true},
+		               { name: 'idFileEntry', index: 'idFileEntry', hidden: true}
 			   	    ],
 			   	 multiselect: false,
 					rowNum:10,
@@ -360,9 +587,9 @@ var archivoSustentoVar= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = archivoSustentoVar.tablaResultadosArchivos.jqGrid('getRowData',cl);	        			
-		      			descargar = "<a href='#'><img border='0' title='Descargar' src='/net-theme/images/img-net/edit.png' align='center' onclick=\"archivoSustentoVar.editarMotivo('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
-		      			reemplazar = "<a href='#'><img border='0' title='Reemplazar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"archivoSustentoVar.confirmarEliminarMotivo('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
-		      			eliminar = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"archivoSustentoVar.confirmarEliminarMotivo('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
+		      			descargar = "<a href='#'><img border='0' title='Descargar' src='/net-theme/images/img-net/edit.png' align='center' onclick=\"archivoSustentoVar.descargarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"','"+ret.nombreArchivo+"','"+ret.idFileEntry+"');\" /></a> ";
+		      			reemplazar = "<a href='#'><img border='0' title='Reemplazar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"archivoSustentoVar.reemplazarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
+		      			eliminar = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"archivoSustentoVar.confirmarEliminarArchivo('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
 		      			archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{descargar:descargar});		      		   
 		      		    archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{reemplazar:reemplazar});
 		      		    archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{eliminar:eliminar});
@@ -389,6 +616,7 @@ var archivoSustentoVar= {
 						archivoSustentoVar.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
 						archivoSustentoVar.tablaResultados[0].refreshIndex();
 						archivoSustentoVar.initBlockUI();
+						archivoSustentoVar.flagCarga.val('0');// 0= nueva carga
 					},error : function(){
 						var addhtmError='Error de conexión.';					
 						archivoSustentoVar.dialogErrorContent.html(addhtmError);
@@ -511,30 +739,95 @@ var archivoSustentoVar= {
 			});
 		}, 		
 		
+		
+		
+		//funcion para mostrar el reporte de cada formato	
+		descargarArchivoSustento : function(item_archivo,corr_archivo,nombre_archivo,id_file){
+			console.debug("entranado a  descaragar archivo de sustento");
+			$.blockUI({ message: archivoSustentoVar.mensajeDescarga});
+			jQuery.ajax({
+				url: archivoSustentoVar.urlDescargarArchivo+'&'+archivoSustentoVar.formCommand.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {
+					   <portlet:namespace />itemArchivo: item_archivo,
+					   <portlet:namespace />corrArchivo: corr_archivo,
+					   <portlet:namespace />nombreArchivo: nombre_archivo,
+					   <portlet:namespace />idFileEntry: id_file	
+				},
+				success : function(data) {
+					if(data.resultado=='OK'){
+						archivoSustentoVar.verReporteArchivoSustento(data.url);	
+						archivoSustentoVar.initBlockUI();
+					}else{						
+						var addhtmError='Error al descargar Archivo de Sustento seleccionado.';					
+						archivoSustentoVar.dialogErrorContent.html(addhtmError);
+						archivoSustentoVar.dialogError.dialog("open");
+						archivoSustentoVar.initBlockUI();
+					}
+				},error : function(){
+					var addhtmError='Error de conexión.';					
+					archivoSustentoVar.dialogErrorContent.html(addhtmError);
+					archivoSustentoVar.dialogError.dialog("open");
+					archivoSustentoVar.initBlockUI();
+				}
+			});
+		}, 		
+		
 				
 		//funcion para ver reposrte en una nueva pestaña
 		verReporteFormato : function(){
 			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
 		}, 
 		
+		//funcion para ver reposrte en una nueva pestaña
+		verReporteArchivoSustento : function(url){
+			window.open(url,'_newtab');
+		}, 
+		
 				
 		//funcion  para mostrar detalle de los archivos de sustento
 		mostrarArchivosFormato : function(cod_correlativo,empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,anio_inicio,anio_fin,etapa_final,formato){	
 			
-			$('#empresaArchivo').val(empresa);
-			$('#anioArchivo').val(anio_pres);
-			$('#mesArchivo').val(mes_pres);
-			$('#anioEjecArchivo').val(anio_ejec);
-			$('#mesEjecArchivo').val(mes_ejec);
-			$('#anioInicioVigArchivo').val(anio_inicio);
-			$('#anioFinVigArchivo').val(anio_fin);
-			$('#etapaArchivo').val(etapa_final);
-			$('#formatoArchivo').val(formato);					
-				
-			//$('#coMotivo').val(cod_correlativo);//para el nuevo registro del archivo de sustento*
 			
-			$('#tituloBusquedaArchivo').val('Datos principales del Formato: '+formato);
-						
+			console.debug("codEmpresaBus:  "+archivoSustentoVar.i_codEmpresaBusq.val());			
+			console.debug("grupo informacion :  "+archivoSustentoVar.i_grupoInfBusq.val());	
+			console.debug("periocidad :  "+ document.getElementById('rbtMensual').checked);
+			console.debug("periocidad :  "+ document.getElementById('rbtBienal').checked);			
+			//varibles  para mantener sesion cuando volvemos a la busqueda inicial
+			var periocidad = "";
+			if(document.getElementById('rbtMensual').checked==true){
+				periocidad = 'MENSUAL';
+			}else{
+				periocidad = 'BIENAL';
+			}
+			archivoSustentoVar.codEmpresaF.val(archivoSustentoVar.i_codEmpresaBusq.val());
+			archivoSustentoVar.grupoInforF.val(archivoSustentoVar.i_grupoInfBusq.val());
+			archivoSustentoVar.periocidadF.val(periocidad);
+			
+			//variables para funcionalidad			
+			$('#empresaArchivo').val(empresa);			
+			archivoSustentoVar.desEmpresaF.val(empresa);
+			$('#anioArchivo').val(anio_pres);
+			archivoSustentoVar.anioPresF.val(anio_pres);
+			$('#mesArchivo').val(mes_pres);
+			archivoSustentoVar.mesPresF.val(mes_pres);
+			$('#anioEjecArchivo').val(anio_ejec);
+			archivoSustentoVar.anioEjecF.val(anio_ejec);
+			$('#mesEjecArchivo').val(mes_ejec);
+			archivoSustentoVar.mesEjecF.val(mes_ejec);
+			$('#anioInicioVigArchivo').val(anio_inicio);
+			archivoSustentoVar.anioIniVigF.val(anio_inicio);
+			$('#anioFinVigArchivo').val(anio_fin);
+			archivoSustentoVar.anioFinVigF.val(anio_fin);
+			$('#etapaArchivo').val(etapa_final);
+			archivoSustentoVar.estapaF.val(etapa_final);
+			$('#formatoArchivo').val(formato);
+			archivoSustentoVar.formatoF.val(formato);		
+			archivoSustentoVar.correlativoF.val(cod_correlativo); //para nuevo registro	
+			
+			$('#tituloBusquedaArchivo').val('Datos principales del Formato: '+formato);		
+			
 			archivoSustentoVar.divBuscarArch.show();
 			archivoSustentoVar.divBuscar.hide();		
 			archivoSustentoVar.buscarArchivosSustentoFormato(cod_correlativo);			
@@ -567,14 +860,22 @@ var archivoSustentoVar= {
 		},	
 		
 		
+		//funcion para reemplazar un archivo de sustento
+		 reemplazarArchivoSustento : function (item_formato,cod_correlativo) {
+			archivoSustentoVar.flagCarga.val('1');	
+			archivoSustentoVar.itemArchivo.val(item_formato);
+			archivoSustentoVar.correlativoArchivo.val(cod_correlativo);
+			archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustento();
+		},
+		
 		
 		<portlet:namespace/>mostrarFormCargaArchivoSustento : function(){
 			if (archivoSustentoVar.validarArchivoCarga()){
-				/*if( archivoSustentoVar.flagCarga.val()=='0' ){//proviene de archivos nuevos
+				if( archivoSustentoVar.flagCarga.val()=='0' ){//proviene de archivos nuevos
 					archivoSustentoVar.flagCarga.val('2');//para cargar archivos excel
 				}else if(archivoSustentoVar.flagCarga.val()=='1' ){//proviene de archivos modificados
 					archivoSustentoVar.flagCarga.val('3');//para cargar archivos excel
-				}*/
+				}
 				archivoSustentoVar.divOverlay.show();
 				archivoSustentoVar.dialogCargaArchivos.show();			   
 				archivoSustentoVar.dialogCargaArchivos.draggable();
@@ -601,23 +902,96 @@ var archivoSustentoVar= {
 				return false; 
 			}*/
 			return true; 
+		},		
+		
+		/**Function para confirmar si quiere eliminar el registro o no*/
+		confirmarEliminarArchivo : function(cod_item,cod_correlativo){
+			console.debug("entranado a eliminar confirmar archivo sustento:  "+cod_item);
+			var addhtml='¿Está seguro que desea eliminar el Archivo de Sustento seleccionado?';
+			archivoSustentoVar.dialogConfirmContent.html(addhtml);
+			archivoSustentoVar.dialogConfirm.dialog("open");				
+			codMotivo= cod_item; 
+			codCorrelativo= cod_correlativo;
 		},
+		/**Function para  eliminar el registro una vez hecho la confirmacion*/
+		eliminarArchivoSustento : function(codMotivo,codCorrelativo){
+			console.debug("entranado a eliminar motivo:  "+codMotivo);
+			$.blockUI({ message: archivoSustentoVar.mensajeEliminar });
+			jQuery.ajax({
+				url: archivoSustentoVar.urlEliminar+'&'+archivoSustentoVar.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data: {				
+					   <portlet:namespace />itemArchivo: codMotivo,
+					   <portlet:namespace />corrArchivo: codCorrelativo				  
+					},
+				success: function(data) {
+					if (data.resultado == "OK"){
+						var addhtml2='El Archivo de Sustento fue eliminado satisfactoriamente';					
+						archivoSustentoVar.dialogMessageContent.html(addhtml2);
+						archivoSustentoVar.dialogMessage.dialog("open");
+						archivoSustentoVar.buscarArchivosSustentoFormato(codCorrelativo);
+						archivoSustentoVar.initBlockUI();
+					}
+					else{						
+						var addhtmError='Error al eliminar el Archivo de Sustento seleccionado.';					
+						archivoSustentoVar.dialogErrorContent.html(addhtmError);
+						archivoSustentoVar.dialogError.dialog("open");
+						archivoSustentoVar.initBlockUI();
+					}
+				},error : function(){
+					var addhtmError='Error de conexión.';					
+					archivoSustentoVar.dialogErrorContent.html(addhtmError);
+					archivoSustentoVar.dialogError.dialog("open");
+					archivoSustentoVar.initBlockUI();
+				}
+			});
+		},	
 		
 		
 		
 		//funcion para regresar a buscar formatos
 		<portlet:namespace/>regresarFormatos : function(){			
 			archivoSustentoVar.divBuscar.show();
-			archivoSustentoVar.divBuscarArch.hide();		
+			archivoSustentoVar.divBuscarArch.hide();
+			archivoSustentoVar.buscarFormatos('M');
 		},
 		
 		regresarFormularioCargaArchivos : function(){
-			//archivoSustentoVar.flagCarga.val('');
+			archivoSustentoVar.flagCarga.val('');
 			archivoSustentoVar.dialogCargaArchivos.hide();
 			archivoSustentoVar.divOverlay.hide();   
 			$("#msjUploadFile").html("");			
 		},
 				
+		
+		<portlet:namespace/>cargarArchivosSustentoFormato : function(){
+			var frm = document.getElementById('archivoSustentoBean');
+			
+			var nameFile=$("#archivoSustento").val();
+			var isSubmit=true;
+			
+			$("#msjUploadFile").html("");			
+			if(typeof (nameFile) == "undefined" || nameFile.length==0){				
+				isSubmit=false;
+				$("#msjUploadFile").html("Debe seleccionar un archivo");
+			}else{
+				isSubmit=true;
+				/*var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
+				if(extension == 'xls' || extension == 'xlsx'){
+					isSubmit=true;
+				}else{
+					isSubmit=false;
+					$("#msjUploadFile").html("Archivo inválido");
+				}*/				
+			}			
+			if(isSubmit){
+				frm.submit();
+			}			
+		},
+		
+		
+		
 		
 		//DIALOGOS
 		initDialogs : function(){		
@@ -629,7 +1003,7 @@ var archivoSustentoVar= {
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
-						//archivoSustentoVar.eliminarAchivoSustento(id_Correlativo);
+						archivoSustentoVar.eliminarArchivoSustento(codMotivo,codCorrelativo);
 						$( this ).dialog("close");
 					},
 					"No": function() {				

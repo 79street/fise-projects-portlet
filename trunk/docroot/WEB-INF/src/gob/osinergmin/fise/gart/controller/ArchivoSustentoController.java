@@ -68,6 +68,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -93,12 +95,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 
 
 @Controller("archivoSustentoController")
@@ -189,7 +195,42 @@ public class ArchivoSustentoController {
 	@RequestMapping
 	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,
 			     @ModelAttribute("archivoSustentoBean")ArchivoSustentoBean a){
-        try {           	
+        try {
+        	/***PARA MANEJAR CARGA DE ARCHIVOS DE SUSTENTO***/
+        	PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+        	
+        	String desEmpresa = (String)pRequest.getPortletSession().getAttribute("desEmpresa", PortletSession.APPLICATION_SCOPE);
+    		String anioPresentacion = (String)pRequest.getPortletSession().getAttribute("anioPres", PortletSession.APPLICATION_SCOPE);
+    		String mesPresentacion = (String)pRequest.getPortletSession().getAttribute("mesPres", PortletSession.APPLICATION_SCOPE);
+    		String anioEjecucion = (String)pRequest.getPortletSession().getAttribute("anioEjec", PortletSession.APPLICATION_SCOPE);
+    		String mesEjecucion = (String)pRequest.getPortletSession().getAttribute("mesEjec", PortletSession.APPLICATION_SCOPE);
+    		String anoInicioVigencia = (String)pRequest.getPortletSession().getAttribute("anioIniVig", PortletSession.APPLICATION_SCOPE);
+    		String anoFinVigencia = (String)pRequest.getPortletSession().getAttribute("anioFinVig", PortletSession.APPLICATION_SCOPE);
+    		String etapa = (String)pRequest.getPortletSession().getAttribute("etapa", PortletSession.APPLICATION_SCOPE);
+    		String formato = (String)pRequest.getPortletSession().getAttribute("formato", PortletSession.APPLICATION_SCOPE);
+    		String correlativo = (String)pRequest.getPortletSession().getAttribute("correlativo", PortletSession.APPLICATION_SCOPE);
+    		String flag = (String)pRequest.getPortletSession().getAttribute("flag", PortletSession.APPLICATION_SCOPE);
+    		String msgError = (String)pRequest.getPortletSession().getAttribute("mensajeError", PortletSession.APPLICATION_SCOPE);
+    		String msgInfo = (String)pRequest.getPortletSession().getAttribute("mensajeInfo", PortletSession.APPLICATION_SCOPE);
+    		    		
+    		String codEmpresa = (String)pRequest.getPortletSession().getAttribute("codEmpresaBusq", PortletSession.APPLICATION_SCOPE);
+    		String grupoInf = (String)pRequest.getPortletSession().getAttribute("grupoInfBusq", PortletSession.APPLICATION_SCOPE);
+    		String periocidad = (String)pRequest.getPortletSession().getAttribute("optionFormato", PortletSession.APPLICATION_SCOPE);
+    		    		  		
+    		a.setDesEmpresa(desEmpresa!=null?desEmpresa:"");
+    		a.setAnioPres(anioPresentacion!=null?anioPresentacion:"");
+    		a.setMesPres(mesPresentacion!=null?mesPresentacion:"");
+    		a.setAnioEjec(anioEjecucion!=null?anioEjecucion:"");
+    		a.setMesEjec(mesEjecucion!=null?mesEjecucion:"");
+    		a.setAnioIniVig(anoInicioVigencia!=null?anoInicioVigencia:"");
+    		a.setAnioFinVig(anoFinVigencia!=null?anoFinVigencia:"");
+    		a.setEtapa(etapa!=null?etapa:"");
+    		a.setFormato(formato!=null?formato:"");
+    		a.setCorrelativo(correlativo!=null?correlativo:"");
+    		a.setFlag(flag!=null?flag:"");   
+    		a.setMensajeError(msgError!=null?msgError:"");
+    		a.setMensajeInfo(msgInfo!=null?msgInfo:"");    		     	
+        	
     		if(a.getListaEmpresas()==null){
     			logger.info("Lista de empresa es null:  " +renderRequest); 
     			a.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
@@ -203,6 +244,29 @@ public class ArchivoSustentoController {
     		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
     		
     		mapaEtapaEjecucion = fiseUtil.getMapaEtapaEjecucion();
+    		
+    		a.setCodEmpresaBusq(codEmpresa!=null?codEmpresa:""); 
+    		a.setGrupoInfBusq(grupoInf!=null?grupoInf:""); 
+    		a.setOptionFormato(periocidad!=null?periocidad:"");     		
+    		
+    		//limpiando los valores de sesion para la carga de archivos de sustento
+    		pRequest.getPortletSession().setAttribute("desEmpresa", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioPres", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mesPres", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioEjec", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mesEjec", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioIniVig", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioFinVig", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("etapa", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("formato", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("correlativo", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mensajeInfo", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mensajeError", "", PortletSession.APPLICATION_SCOPE);
+    		
+		    pRequest.getPortletSession().setAttribute("codEmpresaBusq", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("grupoInfBusq", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("optionFormato", "", PortletSession.APPLICATION_SCOPE);
     		
     		model.addAttribute("model", a);
     		
@@ -344,6 +408,263 @@ public class ArchivoSustentoController {
 		}
 	}
 	
+	
+	
+     /***Carga de archivos de sustento por cada formato***/
+	
+	@ActionMapping(params="action=cargar")
+	public void cargarArchivoSustento(ActionRequest request,ActionResponse response,
+			@ModelAttribute("archivoSustentoBean")ArchivoSustentoBean a){
+		
+		logger.info("--- cargar archivo de sustento");
+				
+		String  mensaje = "01"+"/"+""; //inicializamos con codigo 01 = error
+		boolean valor = false;
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
+		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+		
+		String flagCarga = uploadPortletRequest.getParameter("flagCarga");//indica si en nuevo o reemplazo
+		
+		
+		String desEmpresa = uploadPortletRequest.getParameter("desEmpresaF");
+		String anioPresF = uploadPortletRequest.getParameter("anioPresF");
+		String mesPresF = uploadPortletRequest.getParameter("mesPresF");
+		String anioEjecF = uploadPortletRequest.getParameter("anioEjecF");
+		String mesEjecF = uploadPortletRequest.getParameter("mesEjecF");
+		String anioIniVigF = uploadPortletRequest.getParameter("anioIniVigF");
+		String anioFinVigF = uploadPortletRequest.getParameter("anioFinVigF");
+		String estapaF = uploadPortletRequest.getParameter("estapaF");
+		String formatoF = uploadPortletRequest.getParameter("formatoF");
+		//para la busqueda inicial 
+		String codEmpresaF = uploadPortletRequest.getParameter("codEmpresaF");
+		String grupoInf = uploadPortletRequest.getParameter("grupoInforF");
+		String periocidad = uploadPortletRequest.getParameter("periocidadF");
+		
+		
+		//nuevo    	
+    	String correlativoFormato =uploadPortletRequest.getParameter("correlativoF");   	
+    	
+    	logger.info("Flag de carga:  "+flagCarga);   	
+    	
+    	//variables solo cuando es reemplazo de archivo de sustento
+    	String itemArchivo =uploadPortletRequest.getParameter("itemArchivo");
+    	String correlativoArchivo =uploadPortletRequest.getParameter("correlativoArchivo");    	
+    	
+				
+		if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_NUEVO) &&
+				FormatoUtil.isNotBlank(correlativoFormato)){		
+			logger.info("correlativo formato:  "+correlativoFormato);   
+			valor = true;
+		}else if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_ACTUALIZAR) &&
+				FormatoUtil.isNotBlank(itemArchivo) &&
+				FormatoUtil.isNotBlank(correlativoArchivo)){
+			logger.info("item archivo:  "+itemArchivo);
+			logger.info("correlativo archivo:  "+correlativoArchivo);
+			valor = true;
+		}			
+		if(valor){
+			FileEntry fileEntry=null;
+			try{
+				String user = themeDisplay.getUser().getLogin();
+		    	String terminal = themeDisplay.getUser().getLoginIP();
+		    	
+				if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_NUEVO)){				
+					fileEntry = fiseUtil.subirArchivoSustento(request, uploadPortletRequest);				
+					logger.info("Nombre del archivo:  "+fileEntry.getTitle()); 
+					logger.info("Des del archivo:  "+fileEntry.getDescription()); 
+					logger.info("Extension del archivo:  "+fileEntry.getExtension());					
+					logger.info("ID FILEENTRY :  "+fileEntry.getFileEntryId());
+					mensaje = grabarArchivoSustento(fileEntry.getTitle(), correlativoFormato, user,
+							terminal,fileEntry.getFileEntryId());	
+				}else if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_ACTUALIZAR) ){
+					fileEntry = fiseUtil.subirArchivoSustento(request, uploadPortletRequest);
+					mensaje = actualizarArchivoSustento(fileEntry.getTitle(), itemArchivo,correlativoArchivo, 
+							user, terminal,fileEntry.getFileEntryId());
+				}
+			}catch(FileMimeTypeException ex){
+				ex.printStackTrace();
+				mensaje  = "01"+"/"+"El archivo no tiene una extensión válida."; 
+			}catch (Exception e) {
+				e.printStackTrace();
+				mensaje  = "01"+"/"+"Ocurrio un error al subir archivo al contenedor de archivos del servidor"; 
+			}
+			
+			String[] msnId = mensaje.split("/");	
+		    
+			if(("00").equals(msnId[0])){
+				logger.info("Entrando a ok exitoso");
+				pRequest.getPortletSession().setAttribute("desEmpresa", desEmpresa, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anioPres", anioPresF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesPres", mesPresF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anioEjec", anioEjecF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesEjec", mesEjecF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anioIniVig", anioIniVigF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anioFinVig", anioFinVigF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("etapa", estapaF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("formato", formatoF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("correlativo", correlativoFormato, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);
+			    //para la busqueda inicial
+			    pRequest.getPortletSession().setAttribute("codEmpresaBusq", codEmpresaF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("grupoInfBusq", grupoInf, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("optionFormato", periocidad, PortletSession.APPLICATION_SCOPE);
+			    
+			    if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_NUEVO)){
+					pRequest.getPortletSession().setAttribute("mensajeInfo", msnId[1], PortletSession.APPLICATION_SCOPE);	
+				}else if( flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_ACTUALIZAR)){
+					pRequest.getPortletSession().setAttribute("mensajeInfo", msnId[1], PortletSession.APPLICATION_SCOPE);
+				}	
+			}else{
+				logger.info("Entrando a error");					
+				pRequest.getPortletSession().setAttribute("desEmpresa", desEmpresa, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anioPres", anioPresF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesPres", mesPresF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anioEjec", anioEjecF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("mesEjec", mesEjecF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anioIniVig", anioIniVigF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("anioFinVig", anioFinVigF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("etapa", estapaF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("formato", formatoF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("correlativo", correlativoFormato, PortletSession.APPLICATION_SCOPE);
+			    //para la busqueda inicial
+			    pRequest.getPortletSession().setAttribute("codEmpresaBusq", codEmpresaF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("grupoInfBusq", grupoInf, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("optionFormato", periocidad, PortletSession.APPLICATION_SCOPE);
+			    
+			    if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_NUEVO)){
+			    	logger.info("Entrando a error nuevo ");
+			    	pRequest.getPortletSession().setAttribute("flag", "E", PortletSession.APPLICATION_SCOPE);	
+				}else if( flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_ACTUALIZAR)){
+					pRequest.getPortletSession().setAttribute("flag", " ", PortletSession.APPLICATION_SCOPE);	
+				}			    
+			    pRequest.getPortletSession().setAttribute("mensajeError", msnId[1], PortletSession.APPLICATION_SCOPE);
+			}		
+		}else{
+			/***Entra solo cuando el correlativo del formato, item o correlativo de archivo son nulos*/
+			logger.info("Entrando a correlito item nulo");
+			pRequest.getPortletSession().setAttribute("desEmpresa", desEmpresa, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioPres", anioPresF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mesPres", mesPresF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioEjec", anioEjecF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("mesEjec", mesEjecF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioIniVig", anioIniVigF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("anioFinVig", anioFinVigF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("etapa", estapaF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("formato", formatoF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("correlativo", correlativoFormato, PortletSession.APPLICATION_SCOPE);
+		    //para la busqueda inicial
+		    pRequest.getPortletSession().setAttribute("codEmpresaBusq", codEmpresaF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("grupoInfBusq", grupoInf, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("optionFormato", periocidad, PortletSession.APPLICATION_SCOPE);
+		    
+		    if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_NUEVO)){
+		    	pRequest.getPortletSession().setAttribute("flag", "E", PortletSession.APPLICATION_SCOPE);	
+			}else if( flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_ACTUALIZAR)){
+				pRequest.getPortletSession().setAttribute("flag", " ", PortletSession.APPLICATION_SCOPE);	
+			}			    
+		    pRequest.getPortletSession().setAttribute("mensajeError", "Por favor vuelva a intentar subir el archivo", PortletSession.APPLICATION_SCOPE);
+		}			
+	}		
+	
+	private String grabarArchivoSustento(String nombreArchivo,String correlativoF,
+			String user,String terminal,long idFileEntry){
+		String  mensaje  = "01"+"/"+""; 
+		try {
+			String valor = archivoSustentoService.guardarArchivoSustento(correlativoF,nombreArchivo,
+					idFileEntry,user, terminal);
+			if("1".equals(valor)){ 
+				mensaje  = "00"+"/"+"El archivo de sustento fue subido satisfactoriamente"; 
+			}else{
+				mensaje  = "01"+"/"+"Ocurrio un error al grabar en detalle de archivo sustento"; 	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			mensaje  = "01"+"/"+"Ocurrio un error al grabar en detalle de archivo sustento"; 	
+		}
+		return mensaje;
+	}
+	
+	
+	private String actualizarArchivoSustento(String nombreArchivo,String itemArchivo,String correlativoArchivo,
+			String user,String terminal,long idFileEntry){
+		String  mensaje  = "01"+"/"+""; 
+		try {
+			String valor = archivoSustentoService.actualizarArchivoSustento(itemArchivo, correlativoArchivo,
+					nombreArchivo,idFileEntry, user, terminal);
+			if("1".equals(valor)){ 
+				mensaje  = "00"+"/"+"El archivo de sustento fue reemplazado satisfactoriamente"; 
+			}else{
+				mensaje  = "01"+"/"+"Ocurrio un error al actualizar en detalle de archivo sustento"; 	
+			}
+		} catch (Exception e) {
+			mensaje  = "01"+"/"+"Ocurrio un error al actualizar en detalle de archivo sustento"; 	
+		}
+		return mensaje;
+	}
+	
+	
+	@ResourceMapping("eliminarArchivosSustento")
+	public void eliminarArchivoSustento(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("archivoSustentoBean")ArchivoSustentoBean a) { 	
+		
+		JSONObject jsonObj = new JSONObject();
+		try {	
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
+			a.setUsuario(themeDisplay.getUser().getLogin());
+			a.setTerminal(themeDisplay.getUser().getLoginIP());	
+			
+			logger.info("Entrando a eliminar archivo de sustento"); 			
+			logger.info("correlativo:  "+ a.getCorrArchivo()); 
+			logger.info("item:  "+ a.getItemArchivo());   
+			
+			logger.info("Enviando el formulario al service"); 
+			
+			String valor = archivoSustentoService.eliminarArchivoSustento(a.getItemArchivo(), a.getCorrArchivo());
+			if(valor.equals("1")){ 
+				jsonObj.put("resultado", "OK");	   	
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();				
+		} catch (Exception e) {
+			e.printStackTrace();				
+			logger.error("Error al eliminar el archivo de sustento: "+e.getMessage());
+		} 	
+	}
+	
+	
+	@ResourceMapping("descargarArchivoSustento")
+	public void descargarArchivoSustento(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("archivoSustentoBean")ArchivoSustentoBean a) {		
+		try {					
+			logger.info("Entrando a descargar archivo sustento"); 		
+			JSONObject jsonObj = new JSONObject();	   
+			logger.info("Id file entry :  "+a.getIdFileEntry()); 		 
+			if(FormatoUtil.isNotBlank(a.getIdFileEntry())){ 
+				String urlArchivo = fiseUtil.urlArchivoSustento(request, Long.valueOf(a.getIdFileEntry()));	 
+				logger.info("RUTA URL DEL ARCHIVO  :  "+urlArchivo); 			   	   
+			    jsonObj.put("resultado", "OK");	
+			    jsonObj.put("url", urlArchivo);	
+			}else{
+				jsonObj.put("resultado", "ERROR");	   	
+			}	
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al descargar archivo sustento: "+e); 
+			e.printStackTrace();
+		}
+    }			
 	
 	
 	
