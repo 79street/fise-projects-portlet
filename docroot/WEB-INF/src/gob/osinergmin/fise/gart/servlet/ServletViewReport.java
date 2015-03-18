@@ -202,10 +202,8 @@ public class ServletViewReport extends HttpServlet {
 				output.close();
 			}
 		}
-	}
+	}	
 
-	// <editor-fold defaultstate="collapsed"
-	// desc="mÃ©todos doGet y doPost creados por NetBeans">
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 * 

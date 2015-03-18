@@ -50,11 +50,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -70,6 +73,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.model.ExpandoValueModel;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
@@ -265,14 +269,13 @@ public class FiseUtil {
 	}
 	
 	public FileEntry subirDocumentoTxt(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) throws FileMimeTypeException,Exception{
-
-		// TODO Auto-generated method stub
+		
 		FileEntry fileEntry=null;
 		//--UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		System.out.println("subirDocumento::"+request+":::uploadPortletRequest::"+uploadPortletRequest);
 		try {
-			String[] mimeTypesXls = new String[]{"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
+			//String[] mimeTypesXls = new String[]{"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
 			String[] mimeTypesTxt = new String[]{"text/plain"};
 			String[] mimeTypes = new String[]{};
 			long maxUploadFileSize =2097152;//bytes = 2MB
@@ -347,8 +350,7 @@ public class FiseUtil {
 	}
 	
 	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) throws FileMimeTypeException,Exception{
-
-		// TODO Auto-generated method stub
+	
 		FileEntry fileEntry=null;
 		//--UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -431,6 +433,104 @@ public class FiseUtil {
 		
 	}
 	
+	/**Para subir archivos de sustento*/
+	public FileEntry subirArchivoSustento(PortletRequest request, UploadPortletRequest uploadPortletRequest) 
+			throws FileMimeTypeException,Exception{
+		
+		FileEntry fileEntry=null;		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		System.out.println("subir archivo de ssutento::"+request+":::uploadPortletRequest::"+uploadPortletRequest);
+		try {
+			String[] mimeTypesArchivo = new String[]{
+					"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+					"text/plain","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+					"application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation",
+					"application/vnd.oasis.opendocument.text ","application/vnd.oasis.opendocument.presentation",
+					"application/vnd.oasis.opendocument.spreadsheet","application/pdf","image/jpeg","application/x-compressed",
+					"image/png"
+					};					
+			long maxUploadFileSize =4194304;//bytes = 4MB
+			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(themeDisplay.getScopeGroupId(), 0, "ArchivosSustento");
+			
+			if (dlFolder.getGroupId() != themeDisplay.getScopeGroupId()) {
+				throw new NoSuchFolderException();
+			}			 
+			String nameFileInput = "archivoSustento";
+			
+			File file = uploadPortletRequest.getFile(nameFileInput);
+			String mimeType = uploadPortletRequest.getContentType(nameFileInput);
+			long size = uploadPortletRequest.getSize(nameFileInput);
+			String sourceFileName = uploadPortletRequest.getFileName(nameFileInput);
+
+			logger.info("MIME ARCHIVO A SUBIR  :"+mimeType);
+			logger.info("SOURCE FILE NAME A SUBIR  :"+sourceFileName);
+			boolean valor = false;
+			for (int i=0; i< mimeTypesArchivo.length; i++) {				  
+				  if(mimeTypesArchivo[i].compareToIgnoreCase(mimeType)==0){
+					  logger.info("SON IGUALES"); 
+					  valor = true;
+					  break;
+				  }else{
+					  logger.info(" NO SON IGUALES"); 
+					  valor = false;
+				  }			   
+			}
+			if (!valor) {				
+				throw new FileMimeTypeException(mimeType);
+			}
+			
+			logger.info("Size:"+size+" bytes");
+			logger.info("Max Size:"+maxUploadFileSize+" bytes");
+			
+			if(size>maxUploadFileSize){
+			    throw new FileSizeException(String.valueOf(maxUploadFileSize));
+			}
+			 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String hoy = sdf.format(new Date());
+			long userId = themeDisplay.getUserId();
+			
+			long repositoryId = dlFolder.getRepositoryId();
+			long folderId = dlFolder.getFolderId();			
+			int secuencia = commonService.obtenerSecuencia();
+			
+			String title = secuencia+FiseConstants.UNDERLINE+sourceFileName;
+			
+			logger.info("Title archivo sustento:  "+title); 
+			
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), request);
+			logger.info("ruta del archivo:  "+serviceContext.getCurrentURL());
+			logger.info("ruta del archivo:  "+serviceContext.getPortalURL());
+			logger.info("ruta del archivo:  "+dlFolder.getPath());
+			logger.info("ruta del archivo:  "+dlFolder.getRepositoryId());
+			try {
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(dlFolder.getGroupId(), folderId, sourceFileName);
+			} catch (NoSuchFileEntryException e) {
+				logger.info("el archivo no existe en el folder del repositorio");
+				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, sourceFileName, "Subido el "+hoy, file, serviceContext);
+			}			
+			DLAppLocalServiceUtil.updateFileEntry(fileEntry.getUserId(), fileEntry.getFileEntryId(),sourceFileName, mimeType, title, sourceFileName, "Actualizo estado", true, file, serviceContext);
+			logger.info("Archivo subido:"+sourceFileName);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		 return fileEntry;		
+	}
+	
+	public String urlArchivoSustento(PortletRequest request,long fileEntryId){
+		 String urlImagen ="";
+		try {
+		      ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		      FileEntry imagen=DLAppLocalServiceUtil.getFileEntry(fileEntryId);		      
+		      FileVersion latestFileVersion = imagen.getFileVersion();
+		   if (latestFileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) {			
+		        urlImagen = DLUtil.getPreviewURL(imagen, latestFileVersion, themeDisplay,StringPool.BLANK);
+		   }		   
+		  } catch (Exception e) {		  
+		  }
+		return  urlImagen ;
+	}
 	
 	
 	public FileEntry subirDocumentoBytes(PortletRequest request, byte[] bytes, String mimeType, String sourceFileName) {

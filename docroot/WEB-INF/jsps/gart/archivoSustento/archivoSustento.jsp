@@ -1,5 +1,8 @@
 <%@include file="/WEB-INF/jsps/gart/ext/extArchivoSustento.jsp"%>
 
+<portlet:actionURL var="accionURL" name="actionNormal">
+	<portlet:param name="action" value="cargar" />
+</portlet:actionURL>
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/fise-projects-portlet/js/fise.js"></script>
@@ -14,7 +17,7 @@ $(document).ready(function () {
            
            
 <form:form method="POST" style="padding:17px;padding-top:0px;" 
-            modelAttribute="archivoSustentoBean">
+            modelAttribute="archivoSustentoBean" action="${accionURL}" enctype="multipart/form-data">
             
             
             	
@@ -403,8 +406,60 @@ $(document).ready(function () {
 			<br/>
 			<label class="labelCentrado" id="<portlet:namespace/>dialog-info-content">Info..</label>
 		</p>
-	</div>
-			
+	</div>	
+	
+	
+	
+	<!-- variable para mantener en ssion la pk de la carga de archivos -->
+	<input type="hidden" id="<portlet:namespace/>desEmpresaSes" value="${model.desEmpresa}" />
+	<input type="hidden" id="<portlet:namespace/>anioPresSes" value="${model.anioPres}" />	
+	<input type="hidden" id="<portlet:namespace/>mesPresSes" value="${model.mesPres}" />
+	<input type="hidden" id="<portlet:namespace/>anioEjecSes" value="${model.anioEjec}" />	
+	<input type="hidden" id="<portlet:namespace/>mesEjecSes" value="${model.mesEjec}" />		
+	<input type="hidden" id="<portlet:namespace/>anioIniVigSes" value="${model.anioIniVig}" />	
+	<input type="hidden" id="<portlet:namespace/>anioFinVigSes" value="${model.anioFinVig}" />	
+	<input type="hidden" id="<portlet:namespace/>etapaSes" value="${model.etapa}" />
+	<input type="hidden" id="<portlet:namespace/>formatoSes" value="${model.formato}" />	
+	<input type="hidden" id="<portlet:namespace/>correlativoSes" value="${model.correlativo}" />
+	
+    <!-- variable para manejar el mensaje de error o el mesaje de exito -->
+    <input type="hidden" id="<portlet:namespace/>mensajeError" value="${model.mensajeError}" />
+	<input type="hidden" id="<portlet:namespace/>mensajeInfo" value="${model.mensajeInfo}" />
+    
+    <!-- variable para saber si ocurrio un error o fue exitoso-->
+    <input type="hidden" id="<portlet:namespace/>flag" value="${model.flag}" />	
+    
+     <!-- variable para la busqueda inicial de los formatos-->
+    <input type="hidden" id="<portlet:namespace/>codEmpresaSes" value="${model.codEmpresaBusq}" />
+	<input type="hidden" id="<portlet:namespace/>grupoInfSes" value="${model.grupoInfBusq}" />	
+	<input type="hidden" id="<portlet:namespace/>periocidadSes" value="${model.optionFormato}" />
+    
+    
+    <!-- variable para almacenar los datos que se van al controller al momento de acction cargar archivo sustento-->
+    
+    <input type="hidden" id="<portlet:namespace/>desEmpresaF" name="desEmpresaF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>anioPresF" name="anioPresF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>mesPresF" name="mesPresF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>anioEjecF" name="anioEjecF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>mesEjecF" name="mesEjecF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>anioIniVigF" name="anioIniVigF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>anioFinVigF" name="anioFinVigF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>estapaF" name="estapaF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>formatoF" name="formatoF" value="" style="display: none;" />        
+    <!-- nuevo-->
+    <input type="hidden" id="<portlet:namespace/>correlativoF" name="correlativoF" value="" style="display: none;" />	
+     <!-- reemplazar-->
+    <input type="hidden" id="<portlet:namespace/>itemArchivo" name="itemArchivo" value="" style="display: none;" />	
+    <input type="hidden" id="<portlet:namespace/>correlativoArchivo" name="correlativoArchivo" value="" style="display: none;" />		
+    
+    <!-- variable para saber si la carga de archivos es nuevo o actualizar -->
+	<input type="hidden" id="<portlet:namespace/>flagCarga" name="flagCarga" value="" style="display: none;" />
+	
+	
+	 <!-- variable para almacenar los datos que se van al controller al momento de acction cargar archivo sustento para la busqueda -->
+    <input type="hidden" id="<portlet:namespace/>codEmpresaF" name="codEmpresaF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>grupoInforF" name="grupoInforF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>periocidadF" name="periocidadF" value="" style="display: none;" />	
 			
 	
 </form:form>
