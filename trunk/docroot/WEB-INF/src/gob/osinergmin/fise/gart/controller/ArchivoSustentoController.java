@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.FileMimeTypeException;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 
 
 @Controller("archivoSustentoController")
@@ -420,7 +421,7 @@ public class ArchivoSustentoController {
 				
 		String  mensaje = "01"+"/"+""; //inicializamos con codigo 01 = error
 		boolean valor = false;
-		
+		boolean valorExption = false;
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
 		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -484,11 +485,21 @@ public class ArchivoSustentoController {
 							user, terminal,fileEntry.getFileEntryId());
 				}
 			}catch(FileMimeTypeException ex){
-				ex.printStackTrace();
+				//ex.printStackTrace();
+				logger.info("Entro a l exception de mimi type");
+				valorExption = true;
 				mensaje  = "01"+"/"+"El archivo no tiene una extensión válida."; 
+			}catch (FileSizeException size) {
+				//e.printStackTrace();
+				logger.info("Entro a l exception max size");
+				valorExption = true;
+				mensaje  = "01"+"/"+"El archivo pesa más de 4 MB"; 
 			}catch (Exception e) {
-				e.printStackTrace();
-				mensaje  = "01"+"/"+"Ocurrio un error al subir archivo al contenedor de archivos del servidor"; 
+				//e.printStackTrace();
+				logger.info("Entro a l exception de general");
+				if(!valorExption){
+					mensaje  = "01"+"/"+"Ocurrio un error al subir archivo al contenedor de archivos del servidor"; 
+				}	
 			}
 			
 			String[] msnId = mensaje.split("/");	

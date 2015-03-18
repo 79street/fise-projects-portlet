@@ -470,7 +470,7 @@ var archivoSustentoVar= {
 		      			var ret = archivoSustentoVar.tablaResultados.jqGrid('getRowData',cl);	        			
 		      			verF = "<a href='#'><img border='0' title='Ver Formato' src='/net-theme/images/img-net/file.png' align='center' onclick=\"archivoSustentoVar.mostrarReporteFormatos('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			verObs = "<a href='#'><img border='0' title='Ver Obs.' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"archivoSustentoVar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
-		      			mostrarArch = "<a href='#'><img border='0' title='Motivo de no Reconocimiento/Establecimiento' src='/net-theme/images/img-net/file-add.png'  align='center' onclick=\"archivoSustentoVar.mostrarArchivosFormato('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
+		      			mostrarArch = "<a href='#'><img border='0' title='Archivos de Sustento' src='/net-theme/images/img-net/address-book-add.png'  align='center' onclick=\"archivoSustentoVar.mostrarArchivosFormato('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			
 		      			archivoSustentoVar.tablaResultados.jqGrid('setRowData',ids[i],{verF:verF});
 		      		    archivoSustentoVar.tablaResultados.jqGrid('setRowData',ids[i],{verObs:verObs});		      		   
@@ -587,9 +587,9 @@ var archivoSustentoVar= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = archivoSustentoVar.tablaResultadosArchivos.jqGrid('getRowData',cl);	        			
-		      			descargar = "<a href='#'><img border='0' title='Descargar' src='/net-theme/images/img-net/edit.png' align='center' onclick=\"archivoSustentoVar.descargarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"','"+ret.nombreArchivo+"','"+ret.idFileEntry+"');\" /></a> ";
-		      			reemplazar = "<a href='#'><img border='0' title='Reemplazar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"archivoSustentoVar.reemplazarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
-		      			eliminar = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"archivoSustentoVar.confirmarEliminarArchivo('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
+		      			descargar = "<a href='#'><img border='0' title='Descargar' src='/net-theme/images/img-net/descarga.png' align='center' onclick=\"archivoSustentoVar.descargarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"','"+ret.nombreArchivo+"','"+ret.idFileEntry+"');\" /></a> ";
+		      			reemplazar = "<a href='#'><img border='0' title='Reemplazar' src='/net-theme/images/img-net/address-book-edit.png'  align='center' onclick=\"archivoSustentoVar.reemplazarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
+		      			eliminar = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/address-book-delete.png'  align='center' onclick=\"archivoSustentoVar.confirmarEliminarArchivo('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
 		      			archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{descargar:descargar});		      		   
 		      		    archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{reemplazar:reemplazar});
 		      		    archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{eliminar:eliminar});

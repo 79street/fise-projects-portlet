@@ -364,9 +364,9 @@ public class Formato12BGartCommand implements Serializable {
 				}
 
 				for (FiseFormato12BD bean : lst) {
+					System.out.println("ID ZONA:  "+bean.getId().getIdZonaBenef()); 
 					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_RURAL) {
-						// round(new BigDecimal("12.390"), 2, true);
-
+						System.out.println("ID ZONA costo unitario :  "+bean.getCostoEstandarUnitAtencion()); 
 						command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
@@ -595,8 +595,7 @@ public class Formato12BGartCommand implements Serializable {
 
 				} else if (nro == 2) {
 					if (command.getCodEmpresa().trim().equalsIgnoreCase("EDLN") || command.getCodEmpresa().trim().equalsIgnoreCase("LDS") ) {
-                       
-						// lima
+                      	// lima
 						bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionLim().setScale(2, BigDecimal.ROUND_DOWN));
 						bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanLim().setScale(2, BigDecimal.ROUND_DOWN));
 						bean.setCostoEstandarUnitValDisEl(command.getCostoEstandarUnitValDisElLim().setScale(2, BigDecimal.ROUND_DOWN));

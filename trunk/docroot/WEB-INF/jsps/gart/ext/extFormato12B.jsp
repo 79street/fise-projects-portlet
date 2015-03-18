@@ -859,15 +859,14 @@
 		
 		
 		loadCostosUnitarios : function(){
+			console.debug("Entrando a obtener los costos unitarios");
 			var periodo=formato12B.cmbPeriodo.val();
 			var anioPres;
 			var mesPres;
 			if(periodo!=null && periodo.length>0){
 				 anioPres=periodo.substring(0,4);
 				 mesPres=periodo.substring(4,6);
-			}
-			
-			
+			}		
 			return jQuery.ajax({
 				url: formato12B.urlLoadCostosUnitarios+'&'+formato12B.formNewEdit.serialize(),
 				contentType: "application/json; charset=utf-8",
@@ -877,16 +876,14 @@
 				beforeSend:function(){
 					formato12B.blockUI();
 				},
-				success: function(data) {		
-					
+				success: function(data) {						
 					formato12B.txtAnioEjec.val(anioPres);
 					formato12B.txtAnioEjecCommand.val(anioPres);
 					formato12B.cmbMesEjecucion.val(parseInt(mesPres));
-					formato12B.txtMesEjechidden.val(parseInt(mesPres));
-					//formato12B.txtMesEjec.val(mesPres);
-					//formato12B.txtMesEjecCommnad.val(mesPres);
+					formato12B.txtMesEjechidden.val(parseInt(mesPres));			
 					
 					formato12B.unblockUI();
+					//llenado campos con los costos unitarios
 					formato12B.loadDataCostoUnitario(data);
 					
 					formato12B.<portlet:namespace/>loadGrupoInformacion();
@@ -897,6 +894,9 @@
 				}
 			});
 		},
+		
+		
+		
 		//
 		<portlet:namespace/>loadGrupoInformacion : function() {
 			jQuery.ajax({
@@ -983,12 +983,16 @@
 		//
 		
 		loadDataCostoUnitario: function(data){
+			console.debug("Entrando a llenar campos de los costos unitarios");
 			if(data!=null && data.length>0){
+				formato12B.inicializarValoresCostos();
 				$.each(data, function (i, item) {
 					
-					formato12B.inicializarValoresCostos();
-					
+					 console.debug("zona del llenado de costos unitarios:  "+item.idZonaBenef);
+					 
 					 if(item.idZonaBenef == '1'){
+						 console.debug("entrando a zona = 1 del llenado de costos unitarios");
+						 
 						 formato12B.txtEtndrUnitValeImpre.val(item.costoUnitarioImpresionVales);
 						 $('#costoEstandarUnitValeImpre').val(item.costoUnitarioImpresionVales);
 						 
@@ -1008,6 +1012,8 @@
 						 $('#costoEstandarUnitAtencion').val(item.costoUnitarioPorAtencion);
 						 
 					 }else if(item.idZonaBenef == '2'){
+						 console.debug("entrando a zona = 2 del llenado de costos unitarios");
+						 
 						 formato12B.txtEtndrUnitValeImpreProv.val(item.costoUnitarioImpresionVales);
 						 $('#costoEstandarUnitValeImpreProv').val(item.costoUnitarioImpresionVales);
 						 
@@ -1026,10 +1032,11 @@
 						 formato12B.txtEtndrUnitAtencionProv.val(item.costoUnitarioPorAtencion);
 						 $('#costoEstandarUnitAtencionProv').val(item.costoUnitarioPorAtencion);
 						 
-					 }
-					
+					 }					
 					 if(item.codEmpresa.trim() == 'EDLN' || item.codEmpresa.trim() == 'LDS'){
+						 console.debug("entrando al llenado de costos unitarios solo lima ");
 						 if(item.idZonaBenef == '3'){
+							 console.debug("entrando a zona = 3 del llenado de costos unitarios");
 							
 							 formato12B.txtEtndrUnitValeImpreLim.val(item.costoUnitarioImpresionVales);
 							 $('#costoEstandarUnitValeImpreLim').val(item.costoUnitarioImpresionVales);
@@ -1050,13 +1057,9 @@
 							 $('#costoEstandarUnitAtencionLim').val(item.costoUnitarioPorAtencion);
 							 
 						 }
-					 }
-					 
-					 
-	               
+					 }           
 	             });
-			}else{
-				 
+			}else{		 
 					 formato12B.txtEtndrUnitValeImpre.val("0");
 					 $('#costoEstandarUnitValeImpre').val("0");
 					 
@@ -1092,9 +1095,10 @@
 					 
 					 formato12B.txtEtndrUnitAtencionProv.val("0");
 					 $('#costoEstandarUnitAtencionProv').val("0");
-					 				
 					 
-					 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
+					 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || 
+							 formato12B.cmbCodEmpresa.val().trim()=='LDS'){
+						 
 						 formato12B.txtEtndrUnitValeImpreLim.val("0");
 						 $('#costoEstandarUnitValeImpreLim').val("0");
 						 
@@ -1112,18 +1116,16 @@
 						 
 						 formato12B.txtEtndrUnitAtencionLim.val("0");
 						 $('#costoEstandarUnitAtencionLim').val("0");
-					 }
-					
-					 
-					//formato12B.lblMessage.html("No existe costos estándares establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a declara seleccionado");
-					//formato12B.dialogMessageGeneral.dialog("open");
+					 }			
 					formato12B.dialogMessageInfoDetalleContent.html("No existe Costos Estándares Establecidos en el Formato 14B para la Distribuidora Eléctrica y Periodo a Declarar seleccionado");
 					formato12B.dialogMessageInfoDetalle.dialog("open");
 			}
-			formato12B.loadCostoTotal(formato12B.cmbCodEmpresa.val());
-			
-		},
+			formato12B.loadCostoTotal(formato12B.cmbCodEmpresa.val());			
+		},	
+		
+		
 		inicializarValoresCostos:function(){
+			console.debug("inicializando todos los unitarios con cero");
 			 formato12B.txtEtndrUnitValeImpre.val("0");
 			 $('#costoEstandarUnitValeImpre').val("0");
 			 formato12B.txtEtndrUnitValeRepar.val("0");

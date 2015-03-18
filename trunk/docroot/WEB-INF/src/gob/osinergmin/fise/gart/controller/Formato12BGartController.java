@@ -416,7 +416,8 @@ public class Formato12BGartController {
 	
 		
 	@ResourceMapping("loadCostoUnitario")
-	public void loadCostoUnitario(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
+	public void loadCostoUnitario(ModelMap model, ResourceRequest request, ResourceResponse response, 
+			 @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		try {
 			logger.info("codEmpresa::" + command.getCodEmpresa());
 			logger.info("periodo::" + command.getPeridoDeclaracion());
@@ -426,12 +427,13 @@ public class Formato12BGartController {
 				command.setMesPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(4, 6)));
 				command.setEtapa(command.getPeridoDeclaracion().substring(6, command.getPeridoDeclaracion().length()));
 			}
-			List<FiseFormato14BD> lstfise14D=fiseUtil.getLstCostoUnitario(command.getCodEmpresa(), command.getAnoPresentacion(),null, null, FiseConstants.ETAPA_ESTABLECIDO);
+			List<FiseFormato14BD> lstfise14D = fiseUtil.getLstCostoUnitario(command.getCodEmpresa(), command.getAnoPresentacion(),null, null, FiseConstants.ETAPA_ESTABLECIDO);
 			//List<FiseFormato14BD> lstfise14D=fiseUtil.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion().longValue(),command.getIdZonaBenef().longValue());
 			
 			
 			JSONArray jsonArray = new JSONArray();
 			if(lstfise14D!=null && !lstfise14D.isEmpty()){
+				logger.info("Tamanio lista de costos unitarios:  "+lstfise14D.size()); 
 				for (FiseFormato14BD fise14D : lstfise14D) {
 					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("codEmpresa", command.getCodEmpresa());
@@ -442,7 +444,14 @@ public class Formato12BGartController {
 					jsonObj.put("costoUnitCanjeLiqValFisi", fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi().setScale(2, BigDecimal.ROUND_DOWN):0);
 					jsonObj.put("costoUnitCanjeValDigital", fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital().setScale(2, BigDecimal.ROUND_DOWN):0);
 					jsonObj.put("costoUnitarioPorAtencion", fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion().setScale(2, BigDecimal.ROUND_DOWN):0);
-					
+					logger.info("cod empresa :  "+command.getCodEmpresa()); 
+					logger.info("id Zona Benef :  "+fise14D.getId().getIdZonaBenef()); 
+					logger.info("costo Unitario Impresion Vales :  "+fise14D.getCostoUnitarioImpresionVales()); 
+					logger.info("costo Unit Reprto Vale Domici :  "+fise14D.getCostoUnitReprtoValeDomici()); 
+					logger.info("costo Unit Entrega Val Dis El :  "+fise14D.getCostoUnitEntregaValDisEl()); 
+					logger.info("costo Unit Canje Liq Val Fisi :  "+fise14D.getCostoUnitCanjeLiqValFisi()); 
+					logger.info("costo Unit Canje Val Digital :  "+fise14D.getCostoUnitCanjeValDigital()); 
+					logger.info("costo Unitario Por Atencion :  "+fise14D.getCostoUnitarioPorAtencion()); 
 					jsonArray.put(jsonObj);
 				}
 			}
@@ -2644,8 +2653,7 @@ public class Formato12BGartController {
 				Double.parseDouble(valor.trim());
 			}catch(Exception e){
 				throw new NumberFormatException("Formato no válido para el campo "+nameCampo);
-			}
-			
+			}			
 		}
 	}
 	
