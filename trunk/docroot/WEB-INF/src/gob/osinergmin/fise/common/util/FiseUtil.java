@@ -443,25 +443,28 @@ public class FiseUtil {
 		try {
 			String[] mimeTypesArchivo = new String[]{
 					"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-					"text/plain","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+					"application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 					"application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation",
 					"application/vnd.oasis.opendocument.text ","application/vnd.oasis.opendocument.presentation",
 					"application/vnd.oasis.opendocument.spreadsheet","application/pdf","image/jpeg","application/x-compressed",
-					"image/png"
-					};					
-			long maxUploadFileSize =4194304;//bytes = 4MB
+					"image/png","text/plain"
+					};			
+			long maxUploadFileSize =10485760;//bytes = 10MB como maximo
+			
 			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(themeDisplay.getScopeGroupId(), 0, "ArchivosSustento");
 			
 			if (dlFolder.getGroupId() != themeDisplay.getScopeGroupId()) {
 				throw new NoSuchFolderException();
 			}			 
-			String nameFileInput = "archivoSustento";
+			String nameFileInput = "fileArchivoSustento";	
 			
 			File file = uploadPortletRequest.getFile(nameFileInput);
+			logger.info("MIME ARCHIVO A SUBIR  :"+nameFileInput);
 			String mimeType = uploadPortletRequest.getContentType(nameFileInput);
+			//String mimeType = MimeTypesUtil.getContentType(file);
 			long size = uploadPortletRequest.getSize(nameFileInput);
-			String sourceFileName = uploadPortletRequest.getFileName(nameFileInput);
-
+			String sourceFileName = uploadPortletRequest.getFileName(nameFileInput);	
+			
 			logger.info("MIME ARCHIVO A SUBIR  :"+mimeType);
 			logger.info("SOURCE FILE NAME A SUBIR  :"+sourceFileName);
 			logger.info("SIZE A SUBIR  :"+size);
@@ -475,22 +478,22 @@ public class FiseUtil {
 					  logger.info(" NO SON IGUALES"); 
 					  valor = false;
 				  }			   
-			}
+			}			
 			if (!valor) {				
-				throw new FileMimeTypeException(mimeType);
+				throw new FileMimeTypeException("El archivo no tiene una extensión válida. ");
 			}
 			
 			logger.info("Size:"+size+" bytes");
 			logger.info("Max Size:"+maxUploadFileSize+" bytes");
 			
 			if(size>maxUploadFileSize){
-			    throw new FileSizeException(String.valueOf(maxUploadFileSize));
+			    throw new FileSizeException(String.valueOf("El archivo no debe exceder a 10MB"));
 			}
 			 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			String hoy = sdf.format(new Date());
-			long userId = themeDisplay.getUserId();
 			
+			long userId = themeDisplay.getUserId();			
 			long repositoryId = dlFolder.getRepositoryId();
 			long folderId = dlFolder.getFolderId();			
 			int secuencia = commonService.obtenerSecuencia();
@@ -500,6 +503,7 @@ public class FiseUtil {
 			logger.info("Title archivo sustento:  "+title); 
 			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), request);
+			
 			logger.info("ruta del archivo:  "+serviceContext.getCurrentURL());
 			logger.info("ruta del archivo:  "+serviceContext.getPortalURL());
 			logger.info("ruta del archivo:  "+dlFolder.getPath());
@@ -507,12 +511,11 @@ public class FiseUtil {
 			try {
 				fileEntry = DLAppLocalServiceUtil.getFileEntry(dlFolder.getGroupId(), folderId, sourceFileName);
 			} catch (NoSuchFileEntryException e) {
-				logger.info("el archivo no existe en el folder del repositorio");
-				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, sourceFileName, "Subido el "+hoy, file, serviceContext);
+				logger.info("el archivo no existe en el folder del repositorio");							
+				fileEntry=DLAppLocalServiceUtil.addFileEntry(userId, repositoryId, folderId, sourceFileName, mimeType,title, sourceFileName, "Subido el "+hoy, file, serviceContext);				
 			}			
 			DLAppLocalServiceUtil.updateFileEntry(fileEntry.getUserId(), fileEntry.getFileEntryId(),sourceFileName, mimeType, title, sourceFileName, "Actualizo estado", true, file, serviceContext);
-			logger.info("Archivo subido:"+sourceFileName);
-			
+			logger.info("Archivo subido:"+sourceFileName);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
