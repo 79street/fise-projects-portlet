@@ -52,7 +52,8 @@ var archivoSustentoVar= {
 	    urlVerObservaciones:null,
 	    urlVerFormatos:null,  	
 	    urlDescargarArchivo:null,  
-	    urlBusquedaArchivos: null,	    
+	    urlBusquedaArchivos: null,
+	    urlFlagOperacion: null,
 	    
 		//botones		
 		botonBuscar:null,			
@@ -88,9 +89,11 @@ var archivoSustentoVar= {
 		//varibales para la carga de archivos 
 		flag:null, //flag = E ocurrrio un error al cargar archivos
 		flagCarga:null,//indica si es nueva carga o reemplazar archivo existente
+		codEmpresaOriSes:null,
 	    desEmpresaSes:null,
 		anioPresSes:null,
 		mesPresSes:null,
+		codMesPresSes:null,
 		anioEjecSes:null,
 		mesEjecSes:null,
 		anioIniVigSes:null,
@@ -108,9 +111,11 @@ var archivoSustentoVar= {
 		mensajeInfo:null,
 		
 		//varibales para enviar al controller cuando se carga un archivo
-		codEmpresaF:null,
+		codEmpresaOriF:null,		
+		desEmpresaF:null,
 		anioPresF:null,
 		mesPresF:null,
+		codMesPresF:null,
 		anioEjecF:null,
 		mesEjecF:null,
 		anioIniVigF:null,
@@ -118,9 +123,11 @@ var archivoSustentoVar= {
 		estapaF:null,
 		formatoF:null,
 		//para mantener en session de la busqueda de formatos
-		desEmpresaF:null,
+		codEmpresaF:null,		
 		grupoInforF:null,
 		periocidadF:null,
+		
+		flagOperacion:null,//flag para saber si esta ABIERTO,CERRADO o ENVIADO
 		
 		//para nuevo registro
 		correlativoF:null,//correlativo del formato para insertar en el detalle del archivo sustento
@@ -178,7 +185,7 @@ var archivoSustentoVar= {
 			this.urlVerFormatos='<portlet:resourceURL id="verFormatosReporte" />'; 		
 			this.urlDescargarArchivo='<portlet:resourceURL id="descargarArchivoSustento" />'; 		
 			this.urlBusquedaArchivos='<portlet:resourceURL id="busquedaArchivosSustentoFormato" />'; 	
-			
+			this.urlFlagOperacion='<portlet:resourceURL id="obtenerFlagOperacion" />';
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarFormatos");		
@@ -198,9 +205,11 @@ var archivoSustentoVar= {
 			//varibales hidden para la carga de archivos
 			this.flag=$('#<portlet:namespace/>flag');
 			this.flagCarga=$('#<portlet:namespace/>flagCarga');
+			this.codEmpresaOriSes=$('#<portlet:namespace/>codEmpresaOriSes');
 			this.desEmpresaSes=$('#<portlet:namespace/>desEmpresaSes');
 			this.anioPresSes=$('#<portlet:namespace/>anioPresSes');
 			this.mesPresSes=$('#<portlet:namespace/>mesPresSes');
+			this.codMesPresSes=$('#<portlet:namespace/>codMesPresSes');
 			this.anioEjecSes=$('#<portlet:namespace/>anioEjecSes');
 			this.mesEjecSes=$('#<portlet:namespace/>mesEjecSes');
 			this.anioIniVigSes=$('#<portlet:namespace/>anioIniVigSes');
@@ -216,9 +225,11 @@ var archivoSustentoVar= {
 		
 			
 			//variables para mandar al controller
+			this.codEmpresaOriF=$('#<portlet:namespace/>codEmpresaOriF');
 			this.desEmpresaF=$('#<portlet:namespace/>desEmpresaF');
 			this.anioPresF=$('#<portlet:namespace/>anioPresF');
 			this.mesPresF=$('#<portlet:namespace/>mesPresF');
+			this.codMesPresF=$('#<portlet:namespace/>codMesPresF');
 			this.anioEjecF=$('#<portlet:namespace/>anioEjecF');
 			this.mesEjecF=$('#<portlet:namespace/>mesEjecF');
 			this.anioIniVigF=$('#<portlet:namespace/>anioIniVigF');
@@ -240,6 +251,7 @@ var archivoSustentoVar= {
 			this.mensajeError=$('#<portlet:namespace/>mensajeError');
 			this.mensajeInfo=$('#<portlet:namespace/>mensajeInfo');	
 			
+			this.flagOperacion=$('#<portlet:namespace/>flagOperacion');	
 			
 			
 			//grillas			
@@ -289,8 +301,20 @@ var archivoSustentoVar= {
 			
 			//botones para carga de archivos
 		    archivoSustentoVar.botonNuevoArchivo.click(function() {	
-		    	archivoSustentoVar.flagCarga.val('0');// 0= nueva carga
-		    	archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustento();	    		
+		    	var flagOperacion = archivoSustentoVar.flagOperacion.val();
+				 console.debug("Flag de operacion al momento de nuevo archivo sustento");
+				if(flagOperacion=='ABIERTO'){
+					archivoSustentoVar.flagCarga.val('0');// 0= nueva carga			    	
+			    	archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustento();	 
+				}else if(flagOperacion=='CERRADO'){				
+					var addhtmInfo='El plazo para realizar esta acción se encuentra cerrado';				
+					archivoSustentoVar.dialogInfoContent.html(addhtmInfo);
+					archivoSustentoVar.dialogInfo.dialog("open");	
+				}else{				
+					var addhtmInfo='Este Formato seleccionado ya fue enviado a OSINERGMIN-GART.';				
+					archivoSustentoVar.dialogInfoContent.html(addhtmInfo);
+					archivoSustentoVar.dialogInfo.dialog("open");	
+				}			    	   		
 		    });
 			
 			
@@ -307,8 +331,10 @@ var archivoSustentoVar= {
 		//function para la carga inicial del formulario al cargar archivos
 		cargaInicial : function(){				
 			//SE CARGA VARIABLES EN SESION PARA MOSTRAR LOS PANELES DE BUSQUEDA DE ARCHIVOS
+			 var codEmpOriSes = archivoSustentoVar.codEmpresaOriSes.val();
 			 var desEmpSes = archivoSustentoVar.desEmpresaSes.val();
 			 var anioPresSes = archivoSustentoVar.anioPresSes.val();
+			 var codMesPresSes = archivoSustentoVar.codMesPresSes.val();
 			 var mesPresSes = archivoSustentoVar.mesPresSes.val();
 			 var anioEjecSes = archivoSustentoVar.anioEjecSes.val();
 			 var mesEjecSes = archivoSustentoVar.mesEjecSes.val();
@@ -319,9 +345,11 @@ var archivoSustentoVar= {
 			 var correlativoSes = archivoSustentoVar.correlativoSes.val();	 
 			 
 			    console.debug("Entrando despues de cargar correlativo: "+correlativoSes);
-				console.debug("Entrando despues de cargar cod empresa:  "+desEmpSes);
+			    console.debug("Entrando despues de cargar cod empreesa ori : "+codEmpOriSes);
+				console.debug("Entrando despues de cargar des empresa:  "+desEmpSes);
 				console.debug("Entrando despues de cargar anio pres :  "+anioPresSes);
 				console.debug("Entrando despues de cargar mes pres :  "+mesPresSes);
+				console.debug("Entrando despues de cargar cod mes pres :  "+codMesPresSes);
 				console.debug("Entrando despues de cargar anio ejec : "+anioEjecSes);
 				console.debug("Entrando despues de cargar mes ejec :  "+mesEjecSes);
 				console.debug("Entrando despues de cargar anio ini:  "+anioIniVigSes);
@@ -338,7 +366,7 @@ var archivoSustentoVar= {
 						 && anioEjecSes != '' && mesEjecSes != '' 
 						 && anioIniVigSes != '' && anioFinVigSes != '' 
 						 && etapaSes != ''  && formatoSes != ''){
-					 archivoSustentoVar.mostrarArchivosFormato(correlativoSes,desEmpSes,anioPresSes,mesPresSes,anioEjecSes,mesEjecSes,anioIniVigSes,anioFinVigSes,etapaSes,formatoSes);
+					 archivoSustentoVar.mostrarArchivosFormato(codEmpOriSes,correlativoSes,desEmpSes,anioPresSes,mesPresSes,anioEjecSes,mesEjecSes,anioIniVigSes,anioFinVigSes,etapaSes,formatoSes,codMesPresSes);
 				 }
 				 archivoSustentoVar.flagCarga.val('0');// 0= nueva carga
 				 				
@@ -371,7 +399,7 @@ var archivoSustentoVar= {
 					 && anioIniVigSes != '' && anioFinVigSes != '' 
 					 && etapaSes != ''  && formatoSes != ''){
 					 console.debug("Entrando despues de cargar ");
-				     archivoSustentoVar.mostrarArchivosFormato(correlativoSes,desEmpSes,anioPresSes,mesPresSes,anioEjecSes,mesEjecSes,anioIniVigSes,anioFinVigSes,etapaSes,formatoSes);
+				     archivoSustentoVar.mostrarArchivosFormato(codEmpOriSes,correlativoSes,desEmpSes,anioPresSes,mesPresSes,anioEjecSes,mesEjecSes,anioIniVigSes,anioFinVigSes,etapaSes,formatoSes,codMesPresSes);
 			    }
 				//mantener datos en sesion
 				 if(archivoSustentoVar.codEmpresaSes.val()!='' 
@@ -411,9 +439,11 @@ var archivoSustentoVar= {
 					 archivoSustentoVar.dialogMessage.dialog("open");			
 				 }
 			 }
-			 //limpiar variables			
+			 //limpiar variables	
+			 archivoSustentoVar.codEmpresaOriSes.val('');
 			 archivoSustentoVar.desEmpresaSes.val('');
 			 archivoSustentoVar.anioPresSes.val('');
+			 archivoSustentoVar.codMesPresSes.val('');
 			 archivoSustentoVar.mesPresSes.val('');
 			 archivoSustentoVar.anioEjecSes.val('');
 			 archivoSustentoVar.mesEjecSes.val('');
@@ -470,7 +500,7 @@ var archivoSustentoVar= {
 		      			var ret = archivoSustentoVar.tablaResultados.jqGrid('getRowData',cl);	        			
 		      			verF = "<a href='#'><img border='0' title='Ver Formato' src='/net-theme/images/img-net/file.png' align='center' onclick=\"archivoSustentoVar.mostrarReporteFormatos('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
 		      			verObs = "<a href='#'><img border='0' title='Ver Obs.' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"archivoSustentoVar.verObservaciones('"+ret.codEmpresa+"','"+ret.anioPres+"','"+ret.mesPres+"','"+ret.anioEjec+"','"+ret.mesEjec+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
-		      			mostrarArch = "<a href='#'><img border='0' title='Archivos de Sustento' src='/net-theme/images/img-net/address-book-add.png'  align='center' onclick=\"archivoSustentoVar.mostrarArchivosFormato('"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"');\" /></a> ";
+		      			mostrarArch = "<a href='#'><img border='0' title='Archivos de Sustento' src='/net-theme/images/img-net/address-book-add.png'  align='center' onclick=\"archivoSustentoVar.mostrarArchivosFormato('"+ret.codEmpresa+"','"+ret.correlativo+"','"+ret.desEmpresa+"','"+ret.anioPres+"','"+ret.desMes+"','"+ret.anioEjec+"','"+ret.desMesEje+"','"+ret.anioIniVig+"','"+ret.anioFinVig+"','"+ret.etapa+"','"+ret.formato+"','"+ret.mesPres+"');\" /></a> ";
 		      			
 		      			archivoSustentoVar.tablaResultados.jqGrid('setRowData',ids[i],{verF:verF});
 		      		    archivoSustentoVar.tablaResultados.jqGrid('setRowData',ids[i],{verObs:verObs});		      		   
@@ -568,7 +598,7 @@ var archivoSustentoVar= {
 		               { name: 'reemplazar', index: 'reemplazar', width: 20,align:'center' },	
 		               { name: 'eliminar', index: 'eliminar', width: 20,align:'center' },	
 		               { name: 'corrArchivo', index: 'corrArchivo', hidden: true},
-		               { name: 'idFileEntry', index: 'idFileEntry', hidden: true}
+		               { name: 'idFileEntry', index: 'idFileEntry', hidden: true}		               
 			   	    ],
 			   	 multiselect: false,
 					rowNum:10,
@@ -592,7 +622,7 @@ var archivoSustentoVar= {
 		      			eliminar = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/address-book-delete.png'  align='center' onclick=\"archivoSustentoVar.confirmarEliminarArchivo('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
 		      			archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{descargar:descargar});		      		   
 		      		    archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{reemplazar:reemplazar});
-		      		    archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{eliminar:eliminar});
+		      		    archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{eliminar:eliminar});		      		   
 		      		}
 		      } 
 		  	});
@@ -787,7 +817,7 @@ var archivoSustentoVar= {
 		
 				
 		//funcion  para mostrar detalle de los archivos de sustento
-		mostrarArchivosFormato : function(cod_correlativo,empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,anio_inicio,anio_fin,etapa_final,formato){	
+		mostrarArchivosFormato1 : function(cod_empresaOri,cod_correlativo,empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,anio_inicio,anio_fin,etapa_final,formato,cod_mesPres){	
 			
 			
 			console.debug("codEmpresaBus:  "+archivoSustentoVar.i_codEmpresaBusq.val());			
@@ -805,13 +835,16 @@ var archivoSustentoVar= {
 			archivoSustentoVar.grupoInforF.val(archivoSustentoVar.i_grupoInfBusq.val());
 			archivoSustentoVar.periocidadF.val(periocidad);
 			
-			//variables para funcionalidad			
+			//variables para funcionalidad		
+			console.debug("codEmpresaOri:  "+cod_empresaOri);
+			archivoSustentoVar.codEmpresaOriF.val(cod_empresaOri);
 			$('#empresaArchivo').val(empresa);			
 			archivoSustentoVar.desEmpresaF.val(empresa);
 			$('#anioArchivo').val(anio_pres);
 			archivoSustentoVar.anioPresF.val(anio_pres);
 			$('#mesArchivo').val(mes_pres);
 			archivoSustentoVar.mesPresF.val(mes_pres);
+			archivoSustentoVar.codMesPresF.val(cod_mesPres);
 			$('#anioEjecArchivo').val(anio_ejec);
 			archivoSustentoVar.anioEjecF.val(anio_ejec);
 			$('#mesEjecArchivo').val(mes_ejec);
@@ -833,6 +866,68 @@ var archivoSustentoVar= {
 			archivoSustentoVar.buscarArchivosSustentoFormato(cod_correlativo);			
 		},
 		
+		//funcion para mostrar el detalle del formato y la lista de archvios de sustento asociados al formato y el flag operacion
+		mostrarArchivosFormato : function(cod_empresaOri,cod_correlativo,empresa,anio_pres,mes_pres,anio_ejec,mes_ejec,anio_inicio,anio_fin,etapa_final,formato,cod_mesPres){
+			console.debug("entranado a mostrar archivo de sustento ");			
+			jQuery.ajax({
+				url: archivoSustentoVar.urlFlagOperacion+'&'+archivoSustentoVar.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data: {				
+					   <portlet:namespace />codEmpresa: cod_empresaOri,
+					   <portlet:namespace />formato: formato,
+					   <portlet:namespace />anioPres: anio_pres,
+					   <portlet:namespace />mesPres: cod_mesPres,
+					   <portlet:namespace />etapa: etapa_final		  
+					},
+				success: function(data) {
+					if (data.resultado == "OK"){
+						//variables para funcionalidad	
+						console.debug("flag operacion al mostrar lista de archivos de sustento:  "+data.flagOperacion);
+						archivoSustentoVar.flagOperacion.val(data.flagOperacion);
+						console.debug("codEmpresaOri:  "+cod_empresaOri);
+						archivoSustentoVar.codEmpresaOriF.val(cod_empresaOri);
+						$('#empresaArchivo').val(empresa);			
+						archivoSustentoVar.desEmpresaF.val(empresa);
+						$('#anioArchivo').val(anio_pres);
+						archivoSustentoVar.anioPresF.val(anio_pres);
+						$('#mesArchivo').val(mes_pres);
+						archivoSustentoVar.mesPresF.val(mes_pres);
+						archivoSustentoVar.codMesPresF.val(cod_mesPres);
+						$('#anioEjecArchivo').val(anio_ejec);
+						archivoSustentoVar.anioEjecF.val(anio_ejec);
+						$('#mesEjecArchivo').val(mes_ejec);
+						archivoSustentoVar.mesEjecF.val(mes_ejec);
+						$('#anioInicioVigArchivo').val(anio_inicio);
+						archivoSustentoVar.anioIniVigF.val(anio_inicio);
+						$('#anioFinVigArchivo').val(anio_fin);
+						archivoSustentoVar.anioFinVigF.val(anio_fin);
+						$('#etapaArchivo').val(etapa_final);
+						archivoSustentoVar.estapaF.val(etapa_final);
+						$('#formatoArchivo').val(formato);
+						archivoSustentoVar.formatoF.val(formato);		
+						archivoSustentoVar.correlativoF.val(cod_correlativo); //para nuevo registro							
+						$('#tituloBusquedaArchivo').val('Datos principales del Formato: '+formato);		
+						
+						archivoSustentoVar.divBuscarArch.show();
+						archivoSustentoVar.divBuscar.hide();		
+						archivoSustentoVar.buscarArchivosSustentoFormato(cod_correlativo);
+					}
+					else{						
+						var addhtmError='Error al mostrar los Archivos de Sustento asociados al formato: '+formato;					
+						archivoSustentoVar.dialogErrorContent.html(addhtmError);
+						archivoSustentoVar.dialogError.dialog("open");
+						archivoSustentoVar.initBlockUI();
+					}
+				},error : function(){
+					var addhtmError='Error de conexión.';					
+					archivoSustentoVar.dialogErrorContent.html(addhtmError);
+					archivoSustentoVar.dialogError.dialog("open");
+					archivoSustentoVar.initBlockUI();
+				}
+			});
+		},	
+		
 		
 		//funcion para buscar los archivos de sustento de cada formato
 		buscarArchivosSustentoFormato : function (cod_correlativo) {	
@@ -845,11 +940,11 @@ var archivoSustentoVar= {
 					data : {
 						   <portlet:namespace />correlativo: cod_correlativo						  
 					},
-					success: function(gridData) {					
-						archivoSustentoVar.tablaResultadosArchivos.clearGridData(true);
-						archivoSustentoVar.tablaResultadosArchivos.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
-						archivoSustentoVar.tablaResultadosArchivos[0].refreshIndex();
-						archivoSustentoVar.initBlockUI();
+					success: function(gridData) {						
+						  archivoSustentoVar.tablaResultadosArchivos.clearGridData(true);
+						  archivoSustentoVar.tablaResultadosArchivos.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+						  archivoSustentoVar.tablaResultadosArchivos[0].refreshIndex();					
+						  archivoSustentoVar.initBlockUI();																	
 					},error : function(){
 						var addhtmError='Error de conexión.';					
 						archivoSustentoVar.dialogErrorContent.html(addhtmError);
@@ -862,10 +957,22 @@ var archivoSustentoVar= {
 		
 		//funcion para reemplazar un archivo de sustento
 		 reemplazarArchivoSustento : function (item_formato,cod_correlativo) {
-			archivoSustentoVar.flagCarga.val('1');	
-			archivoSustentoVar.itemArchivo.val(item_formato);
-			archivoSustentoVar.correlativoArchivo.val(cod_correlativo);
-			archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustento();
+			var flagOperacion = archivoSustentoVar.flagOperacion.val();
+			 console.debug("Flag de operacion al momento de reemplazar archivo");
+			if(flagOperacion=='ABIERTO'){
+				archivoSustentoVar.flagCarga.val('1');	
+				archivoSustentoVar.itemArchivo.val(item_formato);
+				archivoSustentoVar.correlativoArchivo.val(cod_correlativo);
+				archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustento();
+			}else if(flagOperacion=='CERRADO'){				
+				var addhtmInfo='El plazo para realizar esta acción se encuentra cerrado';				
+				archivoSustentoVar.dialogInfoContent.html(addhtmInfo);
+				archivoSustentoVar.dialogInfo.dialog("open");	
+			}else{				
+				var addhtmInfo='Este Formato seleccionado ya fue enviado a OSINERGMIN-GART.';				
+				archivoSustentoVar.dialogInfoContent.html(addhtmInfo);
+				archivoSustentoVar.dialogInfo.dialog("open");	
+			}		
 		},
 		
 		
@@ -907,11 +1014,23 @@ var archivoSustentoVar= {
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarArchivo : function(cod_item,cod_correlativo){
 			console.debug("entranado a eliminar confirmar archivo sustento:  "+cod_item);
-			var addhtml='¿Está seguro que desea eliminar el Archivo de Sustento seleccionado?';
-			archivoSustentoVar.dialogConfirmContent.html(addhtml);
-			archivoSustentoVar.dialogConfirm.dialog("open");				
-			codMotivo= cod_item; 
-			codCorrelativo= cod_correlativo;
+			var flagOperacion = archivoSustentoVar.flagOperacion.val();
+			 console.debug("Flag de operacion al momento de eliminar archivo");
+			if(flagOperacion=='ABIERTO'){
+				var addhtml='¿Está seguro que desea eliminar el Archivo de Sustento seleccionado?';
+				archivoSustentoVar.dialogConfirmContent.html(addhtml);
+				archivoSustentoVar.dialogConfirm.dialog("open");				
+				codMotivo= cod_item; 
+				codCorrelativo= cod_correlativo;
+			}else if(flagOperacion=='CERRADO'){				
+				var addhtmInfo='El plazo para realizar esta acción se encuentra cerrado';				
+				archivoSustentoVar.dialogInfoContent.html(addhtmInfo);
+				archivoSustentoVar.dialogInfo.dialog("open");	
+			}else{				
+				var addhtmInfo='Este Formato seleccionado ya fue enviado a OSINERGMIN-GART.';				
+				archivoSustentoVar.dialogInfoContent.html(addhtmInfo);
+				archivoSustentoVar.dialogInfo.dialog("open");	
+			}		
 		},
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
 		eliminarArchivoSustento : function(codMotivo,codCorrelativo){

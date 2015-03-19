@@ -49,6 +49,7 @@ import gob.osinergmin.fise.domain.FiseFormato14CDOb;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.gart.service.ArchivoSustentoService;
 import gob.osinergmin.fise.gart.service.CfgTablaGartService;
+import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.gart.service.FiseZonaBenefGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
@@ -163,6 +164,10 @@ public class ArchivoSustentoController {
 	@Qualifier("cfgTablaGartServiceImpl")
 	private CfgTablaGartService tablaService;
 	
+	@Autowired
+	@Qualifier("commonGartServiceImpl")
+	private CommonGartService commonService;
+	
 	
 	@Autowired
 	@Qualifier("fiseZonaBenefGartServiceImpl")
@@ -199,10 +204,11 @@ public class ArchivoSustentoController {
         try {
         	/***PARA MANEJAR CARGA DE ARCHIVOS DE SUSTENTO***/
         	PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-        	
+        	String codEmpresaOri = (String)pRequest.getPortletSession().getAttribute("codEmpresaOri", PortletSession.APPLICATION_SCOPE);
         	String desEmpresa = (String)pRequest.getPortletSession().getAttribute("desEmpresa", PortletSession.APPLICATION_SCOPE);
     		String anioPresentacion = (String)pRequest.getPortletSession().getAttribute("anioPres", PortletSession.APPLICATION_SCOPE);
-    		String mesPresentacion = (String)pRequest.getPortletSession().getAttribute("mesPres", PortletSession.APPLICATION_SCOPE);
+    		String desmesPresentacion = (String)pRequest.getPortletSession().getAttribute("mesPres", PortletSession.APPLICATION_SCOPE);
+    		String mesPresentacion = (String)pRequest.getPortletSession().getAttribute("codMesPres", PortletSession.APPLICATION_SCOPE);
     		String anioEjecucion = (String)pRequest.getPortletSession().getAttribute("anioEjec", PortletSession.APPLICATION_SCOPE);
     		String mesEjecucion = (String)pRequest.getPortletSession().getAttribute("mesEjec", PortletSession.APPLICATION_SCOPE);
     		String anoInicioVigencia = (String)pRequest.getPortletSession().getAttribute("anioIniVig", PortletSession.APPLICATION_SCOPE);
@@ -217,10 +223,12 @@ public class ArchivoSustentoController {
     		String codEmpresa = (String)pRequest.getPortletSession().getAttribute("codEmpresaBusq", PortletSession.APPLICATION_SCOPE);
     		String grupoInf = (String)pRequest.getPortletSession().getAttribute("grupoInfBusq", PortletSession.APPLICATION_SCOPE);
     		String periocidad = (String)pRequest.getPortletSession().getAttribute("optionFormato", PortletSession.APPLICATION_SCOPE);
-    		    		  		
+    		 
+    		a.setCodEmpresa(codEmpresaOri!=null?codEmpresaOri:""); 
     		a.setDesEmpresa(desEmpresa!=null?desEmpresa:"");
     		a.setAnioPres(anioPresentacion!=null?anioPresentacion:"");
     		a.setMesPres(mesPresentacion!=null?mesPresentacion:"");
+    		a.setDesMes(desmesPresentacion!=null?desmesPresentacion:"");
     		a.setAnioEjec(anioEjecucion!=null?anioEjecucion:"");
     		a.setMesEjec(mesEjecucion!=null?mesEjecucion:"");
     		a.setAnioIniVig(anoInicioVigencia!=null?anoInicioVigencia:"");
@@ -251,9 +259,11 @@ public class ArchivoSustentoController {
     		a.setOptionFormato(periocidad!=null?periocidad:"");     		
     		
     		//limpiando los valores de sesion para la carga de archivos de sustento
+    		pRequest.getPortletSession().setAttribute("codEmpresaOri", "", PortletSession.APPLICATION_SCOPE);
     		pRequest.getPortletSession().setAttribute("desEmpresa", "", PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anioPres", "", PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("mesPres", "", PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("codMesPres", "", PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anioEjec", "", PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("mesEjec", "", PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anioIniVig", "", PortletSession.APPLICATION_SCOPE);
@@ -383,9 +393,10 @@ public class ArchivoSustentoController {
 			response.setContentType("application/json");	
 			
 			String correl = a.getCorrelativo();	
-			
+					
 			String data ="";			
 			logger.info("codigo correlativo "+ correl); 
+			
 			
 			long correlativo = 0;
 			
@@ -396,8 +407,9 @@ public class ArchivoSustentoController {
   			List<ArchivoSustentoBean> lista =archivoSustentoService.listarArchivosSustentoFormato(correlativo);
   			
   			logger.info("tamaño de la lista de archivos de sustento..   :"+lista.size()); 			
-  		
-  			data = toStringListJSON(lista);
+  		  
+  		    data = toStringListJSON(lista);
+  		    
   			logger.info("arreglo json:"+data);
   			PrintWriter pw = response.getWriter();
   			pw.write(data);
@@ -407,7 +419,54 @@ public class ArchivoSustentoController {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+	}	
+	
+	
+	@ResourceMapping("obtenerFlagOperacion")
+	public void obtenerFlagOperacion(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("archivoSustentoBean")ArchivoSustentoBean a) { 	
+		
+		JSONObject jsonObj = new JSONObject();
+		try {							
+			logger.info("Entrando a obtener el flag de operacion"); 			
+			String codEmpresa =a.getCodEmpresa();
+			String formato = a.getFormato();
+			String anioPres = a.getAnioPres();
+			String mesPres = a.getMesPres();
+			String etapa = a.getEtapa();	
+			
+			logger.info("codigo empresa "+ codEmpresa); 
+			logger.info("formato "+ formato); 
+			logger.info("anio pres "+ anioPres); 
+			logger.info("mes pres "+ mesPres); 
+			logger.info("etapa "+ etapa);		
+			
+			long anio = 0;
+			long mes = 0;	
+			
+			if(FormatoUtil.isNotBlank(anioPres) && FormatoUtil.isNotBlank(mesPres)){
+				 anio = Long.valueOf(anioPres);
+				 mes = Long.valueOf(mesPres);
+			}
+			
+			String flagOper = commonService.obtenerEstadoProceso(codEmpresa,
+						formato,anio,mes, etapa);
+			logger.info("flag operacion:  "+flagOper);			
+			
+		     jsonObj.put("resultado", "OK");		
+		     jsonObj.put("flagOperacion", flagOper);
+			
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();				
+		} catch (Exception e) {
+			e.printStackTrace();				
+			logger.error("Error al eliminar el archivo de sustento: "+e.getMessage());
+		} 	
 	}
+	
 	
 	
 	
@@ -428,10 +487,11 @@ public class ArchivoSustentoController {
 		
 		String flagCarga = uploadPortletRequest.getParameter("flagCarga");//indica si en nuevo o reemplazo
 		
-		
+		String codEmpresaOri = uploadPortletRequest.getParameter("codEmpresaOriF");
 		String desEmpresa = uploadPortletRequest.getParameter("desEmpresaF");
 		String anioPresF = uploadPortletRequest.getParameter("anioPresF");
 		String mesPresF = uploadPortletRequest.getParameter("mesPresF");
+		String codMesPresF = uploadPortletRequest.getParameter("codMesPresF");
 		String anioEjecF = uploadPortletRequest.getParameter("anioEjecF");
 		String mesEjecF = uploadPortletRequest.getParameter("mesEjecF");
 		String anioIniVigF = uploadPortletRequest.getParameter("anioIniVigF");
@@ -506,9 +566,11 @@ public class ArchivoSustentoController {
 		    
 			if(("00").equals(msnId[0])){
 				logger.info("Entrando a ok exitoso");
+				pRequest.getPortletSession().setAttribute("codEmpresaOri", codEmpresaOri, PortletSession.APPLICATION_SCOPE);
 				pRequest.getPortletSession().setAttribute("desEmpresa", desEmpresa, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anioPres", anioPresF, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("mesPres", mesPresF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("codMesPres", codMesPresF, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anioEjec", anioEjecF, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("mesEjec", mesEjecF, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anioIniVig", anioIniVigF, PortletSession.APPLICATION_SCOPE);
@@ -528,10 +590,12 @@ public class ArchivoSustentoController {
 					pRequest.getPortletSession().setAttribute("mensajeInfo", msnId[1], PortletSession.APPLICATION_SCOPE);
 				}	
 			}else{
-				logger.info("Entrando a error");					
+				logger.info("Entrando a error");	
+				pRequest.getPortletSession().setAttribute("codEmpresaOri", codEmpresaOri, PortletSession.APPLICATION_SCOPE);
 				pRequest.getPortletSession().setAttribute("desEmpresa", desEmpresa, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anioPres", anioPresF, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("mesPres", mesPresF, PortletSession.APPLICATION_SCOPE);
+			    pRequest.getPortletSession().setAttribute("codMesPres", codMesPresF, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anioEjec", anioEjecF, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("mesEjec", mesEjecF, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("anioIniVig", anioIniVigF, PortletSession.APPLICATION_SCOPE);
@@ -555,9 +619,11 @@ public class ArchivoSustentoController {
 		}else{
 			/***Entra solo cuando el correlativo del formato, item o correlativo de archivo son nulos*/
 			logger.info("Entrando a correlito item nulo");
+			pRequest.getPortletSession().setAttribute("codEmpresaOri", codEmpresaOri, PortletSession.APPLICATION_SCOPE);
 			pRequest.getPortletSession().setAttribute("desEmpresa", desEmpresa, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anioPres", anioPresF, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("mesPres", mesPresF, PortletSession.APPLICATION_SCOPE);
+		    pRequest.getPortletSession().setAttribute("codMesPres", codMesPresF, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anioEjec", anioEjecF, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("mesEjec", mesEjecF, PortletSession.APPLICATION_SCOPE);
 		    pRequest.getPortletSession().setAttribute("anioIniVig", anioIniVigF, PortletSession.APPLICATION_SCOPE);
