@@ -464,6 +464,7 @@ public class FiseUtil {
 
 			logger.info("MIME ARCHIVO A SUBIR  :"+mimeType);
 			logger.info("SOURCE FILE NAME A SUBIR  :"+sourceFileName);
+			logger.info("SIZE A SUBIR  :"+size);
 			boolean valor = false;
 			for (int i=0; i< mimeTypesArchivo.length; i++) {				  
 				  if(mimeTypesArchivo[i].compareToIgnoreCase(mimeType)==0){

@@ -411,9 +411,11 @@ $(document).ready(function () {
 	
 	
 	<!-- variable para mantener en ssion la pk de la carga de archivos -->
+	<input type="hidden" id="<portlet:namespace/>codEmpresaOriSes" value="${model.codEmpresa}" />
 	<input type="hidden" id="<portlet:namespace/>desEmpresaSes" value="${model.desEmpresa}" />
 	<input type="hidden" id="<portlet:namespace/>anioPresSes" value="${model.anioPres}" />	
-	<input type="hidden" id="<portlet:namespace/>mesPresSes" value="${model.mesPres}" />
+	<input type="hidden" id="<portlet:namespace/>mesPresSes" value="${model.desMes}" />
+	<input type="hidden" id="<portlet:namespace/>codMesPresSes" value="${model.mesPres}" />
 	<input type="hidden" id="<portlet:namespace/>anioEjecSes" value="${model.anioEjec}" />	
 	<input type="hidden" id="<portlet:namespace/>mesEjecSes" value="${model.mesEjec}" />		
 	<input type="hidden" id="<portlet:namespace/>anioIniVigSes" value="${model.anioIniVig}" />	
@@ -436,10 +438,11 @@ $(document).ready(function () {
     
     
     <!-- variable para almacenar los datos que se van al controller al momento de acction cargar archivo sustento-->
-    
+    <input type="hidden" id="<portlet:namespace/>codEmpresaOriF" name="codEmpresaOriF" value="" style="display: none;" />
     <input type="hidden" id="<portlet:namespace/>desEmpresaF" name="desEmpresaF" value="" style="display: none;" />
     <input type="hidden" id="<portlet:namespace/>anioPresF" name="anioPresF" value="" style="display: none;" />
     <input type="hidden" id="<portlet:namespace/>mesPresF" name="mesPresF" value="" style="display: none;" />
+    <input type="hidden" id="<portlet:namespace/>codMesPresF" name="codMesPresF" value="" style="display: none;" />
     <input type="hidden" id="<portlet:namespace/>anioEjecF" name="anioEjecF" value="" style="display: none;" />
     <input type="hidden" id="<portlet:namespace/>mesEjecF" name="mesEjecF" value="" style="display: none;" />
     <input type="hidden" id="<portlet:namespace/>anioIniVigF" name="anioIniVigF" value="" style="display: none;" />
@@ -460,6 +463,8 @@ $(document).ready(function () {
     <input type="hidden" id="<portlet:namespace/>codEmpresaF" name="codEmpresaF" value="" style="display: none;" />
     <input type="hidden" id="<portlet:namespace/>grupoInforF" name="grupoInforF" value="" style="display: none;" />
     <input type="hidden" id="<portlet:namespace/>periocidadF" name="periocidadF" value="" style="display: none;" />	
+    
+    <input type="hidden" id="<portlet:namespace/>flagOperacion" name="flagOperacion" value="" style="display: none;" />	
 			
 	
 </form:form>
