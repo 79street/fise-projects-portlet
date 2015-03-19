@@ -1,7 +1,8 @@
 <%@include file="/WEB-INF/jsps/gart/ext/extArchivoSustento.jsp"%>
 
+
 <portlet:actionURL var="accionURL" name="actionNormal">
-	<portlet:param name="action" value="cargar" />
+	<portlet:param name="action" value="cargarArchivo" />
 </portlet:actionURL>
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
@@ -15,11 +16,9 @@ $(document).ready(function () {
 });
 </script>
            
-           
-<form:form method="POST" style="padding:17px;padding-top:0px;" 
-            modelAttribute="archivoSustentoBean" action="${accionURL}" enctype="multipart/form-data">
-            
-            
+                    
+<form:form method="POST" modelAttribute="archivoSustentoBean"
+           style="padding: 17px; padding-top: 0px;" action="${accionURL}" enctype="multipart/form-data">            
             	
 <div id="d_filtro" class="net-frame-listado"> 
 		<div id="d_filtro">
@@ -271,6 +270,15 @@ $(document).ready(function () {
 						<tr height="10px">
 							<td></td>
 						</tr>
+						<tr>
+							<td><label style="font-size: 12px; font-weight:bold">Formatos Permitidos:</label> .doc, .docx, .xls, .xlsx, .pdf, .txt, .ppt, .pptx, .jpeg, .png, .zip </td>
+						</tr>
+						<tr>
+							<td><label style="font-size: 12px; font-weight:bold">Tamaño Máximo por Archivo:</label> 10MB </td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
 					</table>			
 				</div>
 								
@@ -295,7 +303,7 @@ $(document).ready(function () {
 								<tr>								
 								   <td>Archivo:</td>
 								<td>
-								    <input type="file" id="archivoSustento" name="archivoSustento" /></td>
+								    <input type="file" id="fileArchivoSustento" name="fileArchivoSustento" /></td>
 								</tr>
 								<tr>
 									<td height="10px;"></td>
