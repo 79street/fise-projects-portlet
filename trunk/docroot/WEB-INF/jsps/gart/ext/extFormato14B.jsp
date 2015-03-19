@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.util.PortalUtil"%>
 <%@page import="com.liferay.portal.kernel.util.PrefsPropsUtil"%>
 <%@page import="com.liferay.portal.kernel.util.PropsKeys"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
