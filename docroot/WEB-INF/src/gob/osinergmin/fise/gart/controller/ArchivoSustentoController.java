@@ -472,7 +472,7 @@ public class ArchivoSustentoController {
 	
      /***Carga de archivos de sustento por cada formato***/
 	
-	@ActionMapping(params="action=cargar")
+	@ActionMapping(params="action=cargarArchivo")
 	public void cargarArchivoSustento(ActionRequest request,ActionResponse response,
 			@ModelAttribute("archivoSustentoBean")ArchivoSustentoBean a){
 		
@@ -532,7 +532,7 @@ public class ArchivoSustentoController {
 		    	String terminal = themeDisplay.getUser().getLoginIP();
 		    	
 				if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_NUEVO)){				
-					fileEntry = fiseUtil.subirArchivoSustento(request, uploadPortletRequest);				
+					fileEntry = fiseUtil.subirArchivoSustento(request, uploadPortletRequest);					
 					logger.info("Nombre del archivo:  "+fileEntry.getTitle()); 
 					logger.info("Des del archivo:  "+fileEntry.getDescription()); 
 					logger.info("Extension del archivo:  "+fileEntry.getExtension());					
