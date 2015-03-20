@@ -502,12 +502,13 @@ public class ArchivoSustentoController {
 		String codEmpresaF = uploadPortletRequest.getParameter("codEmpresaF");
 		String grupoInf = uploadPortletRequest.getParameter("grupoInforF");
 		String periocidad = uploadPortletRequest.getParameter("periocidadF");
-		
+		String itemActividad = uploadPortletRequest.getParameter("itemActividad");
 		
 		//nuevo    	
     	String correlativoFormato =uploadPortletRequest.getParameter("correlativoF");   	
     	
     	logger.info("Flag de carga:  "+flagCarga);   	
+    	logger.info("etapa euclides:  "+itemActividad);   	
     	
     	//variables solo cuando es reemplazo de archivo de sustento
     	String itemArchivo =uploadPortletRequest.getParameter("itemArchivo");
