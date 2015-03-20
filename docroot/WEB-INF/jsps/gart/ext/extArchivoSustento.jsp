@@ -345,8 +345,12 @@ var archivoSustentoVar= {
 			 var anioFinVigSes = archivoSustentoVar.anioFinVigSes.val();
 			 var etapaSes = archivoSustentoVar.etapaSes.val();
 			 var formatoSes = archivoSustentoVar.formatoSes.val();
-			 var correlativoSes = archivoSustentoVar.correlativoSes.val();	 
-			 
+			 var correlativoSes = archivoSustentoVar.correlativoSes.val();	
+			 //varibales para mantener la session de la busqueda
+			 var codEmpresaBusqSes = archivoSustentoVar.codEmpresaSes.val(); 
+			 var grupoInfSes= archivoSustentoVar.grupoInfSes.val();
+			 var periocidadSes = archivoSustentoVar.periocidadSes.val();
+				 
 			    console.debug("Entrando despues de cargar correlativo: "+correlativoSes);
 			    console.debug("Entrando despues de cargar cod empreesa ori : "+codEmpOriSes);
 				console.debug("Entrando despues de cargar des empresa:  "+desEmpSes);
@@ -359,7 +363,10 @@ var archivoSustentoVar= {
 				console.debug("Entrando despues de cargar anio fin : "+anioFinVigSes);				
 				console.debug("Entrando despues de cargar etapa:  "+etapaSes);
 				console.debug("Entrando despues de cargar formato:   "+formatoSes);		
-			 // var flagOpera = 'ABIERTO';
+				//////////////////////////////////////////////////////////////////////
+				console.debug("Entrando despues de cargar cod empresa busq: "+codEmpresaBusqSes);
+				console.debug("Entrando despues de cargar grupo inf busq : "+grupoInfSes);
+			    console.debug("Entrando despues de cargar periocidad busq:  "+periocidadSes);
 			
 			 var flag = archivoSustentoVar.flag.val();
 			 console.debug("Entrando despues de cargar flag  "+flag);
@@ -426,7 +433,8 @@ var archivoSustentoVar= {
 					$('#optionFormato').val('');		
 					archivoSustentoVar.i_etapaBusq.val('');
 				}
-			 }	 
+			 }
+			
 			 var mensajeInfo =  archivoSustentoVar.mensajeInfo.val();
 			 console.debug("Entrando despues de cargar mensaje info : "+mensajeInfo);
 			 var mensajeError = archivoSustentoVar.mensajeError.val();
@@ -886,6 +894,22 @@ var archivoSustentoVar= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
+						
+						console.debug("codEmpresaBus:  "+archivoSustentoVar.i_codEmpresaBusq.val());			
+						console.debug("grupo informacion :  "+archivoSustentoVar.i_grupoInfBusq.val());	
+						console.debug("periocidad :  "+ document.getElementById('rbtMensual').checked);
+						console.debug("periocidad :  "+ document.getElementById('rbtBienal').checked);			
+						//varibles  para mantener sesion cuando volvemos a la busqueda inicial
+						var periocidad = "";
+						if(document.getElementById('rbtMensual').checked==true){
+							periocidad = 'MENSUAL';
+						}else{
+							periocidad = 'BIENAL';
+						}
+						archivoSustentoVar.codEmpresaF.val(archivoSustentoVar.i_codEmpresaBusq.val());
+						archivoSustentoVar.grupoInforF.val(archivoSustentoVar.i_grupoInfBusq.val());
+						archivoSustentoVar.periocidadF.val(periocidad);
+						
 						//variables para funcionalidad	
 						console.debug("flag operacion al mostrar lista de archivos de sustento:  "+data.flagOperacion);
 						archivoSustentoVar.flagOperacion.val(data.flagOperacion);
@@ -1100,8 +1124,10 @@ var archivoSustentoVar= {
 				$("#msjUploadFile").html("Debe seleccionar un archivo");
 			}else{
 				isSubmit=true;
-				/*var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
-				if(extension == 'xls' || extension == 'xlsx'){
+				//isSubmit=false;
+				var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);		
+				console.debug("Extencion del archivo a subir:  "+extension);
+				/*if(extension == 'xls' || extension == 'xlsx'){
 					isSubmit=true;
 				}else{
 					isSubmit=false;
