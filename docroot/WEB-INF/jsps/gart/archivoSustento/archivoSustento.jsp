@@ -299,17 +299,29 @@ $(document).ready(function () {
 							 <table style="width: 100%;">
 								<tr>
 									<td></td>
+									<td></td>
 								</tr>
+								<%-- <tr>
+								   <td>Item Actividad:</td>
+									<td>
+									<form:select path="itemActividad" cssClass="select" cssStyle="width: 220px;">
+													<form:option value="EUCLIDES">SOLICITUD</form:option>
+													<form:option value="LOZANO">LEVANTAMIENTO OBSERVACIONES</form:option>											
+									</form:select>
+									</td>	
+									
+								</tr> --%>
 								<tr>								
 								   <td>Archivo:</td>
-								<td>
-								    <input type="file" id="fileArchivoSustento" name="fileArchivoSustento" /></td>
+								   <td>
+								      <input type="file" id="fileArchivoSustento" name="fileArchivoSustento" />
+								   </td>
 								</tr>
 								<tr>
-									<td height="10px;"></td>
+									<td height="10px;" colspan="2"></td> 
 								</tr>
 								<tr>
-									<td colspan="3"><span id="msjUploadFile" style="color: red;"></span></td>
+									<td colspan="2"><span id="msjUploadFile" style="color: red;"></span></td>
 								</tr>
 							</table>							
 						</fieldset>
