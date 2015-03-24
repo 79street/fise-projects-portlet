@@ -2943,8 +2943,6 @@ public class Formato12BGartController {
 		id.setMesEjecucionGasto(command.getMesEjecucionGasto());
 		id.setMesPresentacion(command.getMesPresentacion() != null ? Integer.valueOf(command.getMesPresentacion()) : null);
 		FiseFormato12BC cabeceraBean = formatoService.getFormatoCabeceraById(id);
-	
-		
 		
 		String msj="1";
 		try {
@@ -2956,7 +2954,10 @@ public class Formato12BGartController {
 					cabeceraBean.getId().getAnoPresentacion(), cabeceraBean.getId().getMesPresentacion(), 
 					cabeceraBean.getId().getEtapa(), cabeceraBean.getId().getAnoEjecucionGasto(), 
 					cabeceraBean.getId().getMesEjecucionGasto(), null);
-			 formatoService.deleteFormatoCabecera(id);
+			 formatoService.deleteFormatoCabecera(id);			 
+			 //eliminando el archivo sustento cabecera			 
+			 String valor = formatoService.eliminarArchivoSustentoCab(id);
+			 logger.info("Valor al eliminar archivos de sustento si es 1= OK caso contrario error:  "+valor);
 			
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();

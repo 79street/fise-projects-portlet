@@ -300,17 +300,19 @@ $(document).ready(function () {
 								<tr>
 									<td></td>
 									<td></td>
-								</tr>
-								<%-- <tr>
+								</tr>								
+								<tr>
 								   <td>Item Actividad:</td>
-									<td>
-									<form:select path="itemActividad" cssClass="select" cssStyle="width: 220px;">
-													<form:option value="EUCLIDES">SOLICITUD</form:option>
-													<form:option value="LOZANO">LEVANTAMIENTO OBSERVACIONES</form:option>											
-									</form:select>
+									<td>									
+									<form:select path="itemActividad" cssClass="select" cssStyle="width: 300px;">
+									    <form:option value=" ">-Seleccione-</form:option>											  
+									</form:select>	
 									</td>	
 									
-								</tr> --%>
+								</tr> 
+								<tr>
+									<td height="10px;" colspan="2"></td> 
+								</tr>
 								<tr>								
 								   <td>Archivo:</td>
 								   <td>

@@ -58,6 +58,9 @@ var archivoSustentoVar= {
 	    urlBusquedaArchivos: null,
 	    urlFlagOperacion: null,
 	    
+	    urlListarActividades:null,
+		
+	    
 		//botones		
 		botonBuscar:null,			
 		botonRegresarFormatos:null,	
@@ -190,6 +193,8 @@ var archivoSustentoVar= {
 			this.urlBusquedaArchivos='<portlet:resourceURL id="busquedaArchivosSustentoFormato" />'; 	
 			this.urlFlagOperacion='<portlet:resourceURL id="obtenerFlagOperacion" />';
 			
+			this.urlListarActividades='<portlet:resourceURL id="listarActividades" />';	
+			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarFormatos");		
 			this.botonRegresarFormatos=$("#<portlet:namespace/>btnRegresarBusqFormatos");
@@ -308,7 +313,7 @@ var archivoSustentoVar= {
 				 console.debug("Flag de operacion al momento de nuevo archivo sustento");
 				if(flagOperacion=='ABIERTO'){
 					archivoSustentoVar.flagCarga.val('0');// 0= nueva carga			    	
-			    	archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustento();	 
+			    	archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustentoNuevo();	 
 				}else if(flagOperacion=='CERRADO'){				
 					var addhtmInfo='El plazo para realizar esta acción se encuentra cerrado';				
 					archivoSustentoVar.dialogInfoContent.html(addhtmInfo);
@@ -602,15 +607,17 @@ var archivoSustentoVar= {
 			var ancho = archivoSustentoVar.divBuscar.width();
 			archivoSustentoVar.tablaResultadosArchivos.jqGrid({
 			   datatype: "local",
-		       colNames: ['Ítem','Archivo','Descargar','Reemplazar','Eliminar','',''],
+		       colNames: ['Ítem','Archivo','Actividad','Descargar','Reemplazar','Eliminar','','',''],
 		       colModel: [
                        { name: 'itemArchivo', index: 'itemArchivo', width: 20,align:'center'},                       
-                       { name: 'nombreArchivo', index: 'nombreArchivo', width: 80},                       					  	  	           
+                       { name: 'nombreArchivo', index: 'nombreArchivo', width: 80}, 
+                       { name: 'descripcionActiv', index: 'descripcionActiv', width: 60},  
 		               { name: 'descargar', index: 'descargar', width: 20,align:'center' },		                
 		               { name: 'reemplazar', index: 'reemplazar', width: 20,align:'center' },	
 		               { name: 'eliminar', index: 'eliminar', width: 20,align:'center' },	
 		               { name: 'corrArchivo', index: 'corrArchivo', hidden: true},
-		               { name: 'idFileEntry', index: 'idFileEntry', hidden: true}		               
+		               { name: 'idFileEntry', index: 'idFileEntry', hidden: true},
+		               { name: 'itemActividad', index: 'itemActividad', hidden: true}	
 			   	    ],
 			   	 multiselect: false,
 					rowNum:10,
@@ -630,7 +637,7 @@ var archivoSustentoVar= {
 		      			var cl = ids[i];
 		      			var ret = archivoSustentoVar.tablaResultadosArchivos.jqGrid('getRowData',cl);	        			
 		      			descargar = "<a href='#'><img border='0' title='Descargar' src='/net-theme/images/img-net/descarga.png' align='center' onclick=\"archivoSustentoVar.descargarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"','"+ret.nombreArchivo+"','"+ret.idFileEntry+"');\" /></a> ";
-		      			reemplazar = "<a href='#'><img border='0' title='Reemplazar' src='/net-theme/images/img-net/address-book-edit.png'  align='center' onclick=\"archivoSustentoVar.reemplazarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
+		      			reemplazar = "<a href='#'><img border='0' title='Reemplazar' src='/net-theme/images/img-net/address-book-edit.png'  align='center' onclick=\"archivoSustentoVar.reemplazarArchivoSustento('"+ret.itemArchivo+"','"+ret.corrArchivo+"','"+ret.itemActividad+"');\" /></a> ";
 		      			eliminar = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/address-book-delete.png'  align='center' onclick=\"archivoSustentoVar.confirmarEliminarArchivo('"+ret.itemArchivo+"','"+ret.corrArchivo+"');\" /></a> ";
 		      			archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{descargar:descargar});		      		   
 		      		    archivoSustentoVar.tablaResultadosArchivos.jqGrid('setRowData',ids[i],{reemplazar:reemplazar});
@@ -984,14 +991,14 @@ var archivoSustentoVar= {
 		
 		
 		//funcion para reemplazar un archivo de sustento
-		 reemplazarArchivoSustento : function (item_formato,cod_correlativo) {
+		 reemplazarArchivoSustento : function (item_formato,cod_correlativo,item_Actividad) {
 			var flagOperacion = archivoSustentoVar.flagOperacion.val();
 			 console.debug("Flag de operacion al momento de reemplazar archivo");
 			if(flagOperacion=='ABIERTO'){
 				archivoSustentoVar.flagCarga.val('1');	
 				archivoSustentoVar.itemArchivo.val(item_formato);
 				archivoSustentoVar.correlativoArchivo.val(cod_correlativo);
-				archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustento();
+				archivoSustentoVar.<portlet:namespace/>mostrarFormCargaArchivoSustentoEditar(item_Actividad);
 			}else if(flagOperacion=='CERRADO'){				
 				var addhtmInfo='El plazo para realizar esta acción se encuentra cerrado';				
 				archivoSustentoVar.dialogInfoContent.html(addhtmInfo);
@@ -1004,40 +1011,87 @@ var archivoSustentoVar= {
 		},
 		
 		
-		<portlet:namespace/>mostrarFormCargaArchivoSustento : function(){
-			if (archivoSustentoVar.validarArchivoCarga()){
-				if( archivoSustentoVar.flagCarga.val()=='0' ){//proviene de archivos nuevos
-					archivoSustentoVar.flagCarga.val('2');//para cargar archivos excel
-				}else if(archivoSustentoVar.flagCarga.val()=='1' ){//proviene de archivos modificados
-					archivoSustentoVar.flagCarga.val('3');//para cargar archivos excel
+		<portlet:namespace/>mostrarFormCargaArchivoSustentoNuevo : function(){
+			console.debug("formato para enviar a listar actividades:  "+archivoSustentoVar.formatoF.val());
+			jQuery.ajax({
+				url: archivoSustentoVar.urlListarActividades+'&'+archivoSustentoVar.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data : {
+					   <portlet:namespace />formatoActiv: archivoSustentoVar.formatoF.val()						  
+				},
+				success: function(data) {		
+					dwr.util.removeAllOptions("itemActividad");
+					dwr.util.addOptions("itemActividad", ["--Seleccione--"]);
+					dwr.util.addOptions("itemActividad", data,"codigoActividad","descActividad");	
+					//para mostrar el papel de carga de archivos de sustento
+					if( archivoSustentoVar.flagCarga.val()=='0' ){//proviene de archivos nuevos
+						archivoSustentoVar.flagCarga.val('2');//para cargar archivos excel
+					}else if(archivoSustentoVar.flagCarga.val()=='1' ){//proviene de archivos modificados
+						archivoSustentoVar.flagCarga.val('3');//para cargar archivos excel
+					}
+					archivoSustentoVar.divOverlay.show();
+					archivoSustentoVar.dialogCargaArchivos.show();			   
+					archivoSustentoVar.dialogCargaArchivos.draggable();
+					archivoSustentoVar.dialogCargaArchivos.css({ 
+				        'left': ($(window).width() / 2 - archivoSustentoVar.dialogCargaArchivos.width() / 2) + 'px', 
+				        'top': ($(window).height()  - archivoSustentoVar.dialogCargaArchivos.height() ) + 'px'
+				    });					
+				},error : function(){
+					var addhtmError='Error de conexión.';					
+					archivoSustentoVar.dialogErrorContent.html(addhtmError);
+					archivoSustentoVar.dialogError.dialog("open");
+					archivoSustentoVar.initBlockUI();
 				}
-				archivoSustentoVar.divOverlay.show();
-				archivoSustentoVar.dialogCargaArchivos.show();			   
-				archivoSustentoVar.dialogCargaArchivos.draggable();
-				archivoSustentoVar.dialogCargaArchivos.css({ 
-			        'left': ($(window).width() / 2 - archivoSustentoVar.dialogCargaArchivos.width() / 2) + 'px', 
-			        'top': ($(window).height()  - archivoSustentoVar.dialogCargaArchivos.height() ) + 'px'
-			    });
-			}
-		},		
+		     });	
+		},	
+		
+		<portlet:namespace/>mostrarFormCargaArchivoSustentoEditar : function(item_Actividad){
+			console.debug("formato para enviar a listar actividades:  "+archivoSustentoVar.formatoF.val());
+			jQuery.ajax({
+				url: archivoSustentoVar.urlListarActividades+'&'+archivoSustentoVar.formCommand.serialize(),
+				type: 'post',
+				dataType: 'json',
+				data : {
+					   <portlet:namespace />formatoActiv: archivoSustentoVar.formatoF.val()						  
+				},
+				success: function(data) {		
+					dwr.util.removeAllOptions("itemActividad");
+					dwr.util.addOptions("itemActividad", ["--Seleccione--"]);
+					dwr.util.addOptions("itemActividad", data,"codigoActividad","descActividad");
+					$('#itemActividad').val(item_Actividad); //para mostrar la actividad selecccionada
+					//para mostrar el papel de carga de archivo de sustento
+					if( archivoSustentoVar.flagCarga.val()=='0' ){//proviene de archivos nuevos
+						archivoSustentoVar.flagCarga.val('2');//para cargar archivos excel
+					}else if(archivoSustentoVar.flagCarga.val()=='1' ){//proviene de archivos modificados
+						archivoSustentoVar.flagCarga.val('3');//para cargar archivos excel
+					}
+					archivoSustentoVar.divOverlay.show();
+					archivoSustentoVar.dialogCargaArchivos.show();			   
+					archivoSustentoVar.dialogCargaArchivos.draggable();
+					archivoSustentoVar.dialogCargaArchivos.css({ 
+				        'left': ($(window).width() / 2 - archivoSustentoVar.dialogCargaArchivos.width() / 2) + 'px', 
+				        'top': ($(window).height()  - archivoSustentoVar.dialogCargaArchivos.height() ) + 'px'
+				    });
+				},error : function(){
+					var addhtmError='Error de conexión.';					
+					archivoSustentoVar.dialogErrorContent.html(addhtmError);
+					archivoSustentoVar.dialogError.dialog("open");
+					archivoSustentoVar.initBlockUI();
+				}
+		     });	
+		},	
 		
 		validarArchivoCarga : function() {			
-			/*if(archivoSustentoVar.f_empresa.val()==null || 
-					archivoSustentoVar.f_empresa.val().length == '' ) { 			
-				var addhtmAlert='Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo.';					
-				archivoSustentoVar.dialogValidacionContent.html(addhtmAlert);
-				archivoSustentoVar.dialogValidacion.dialog("open");				
+			if($('#itemActividad').val()==null || 
+					$('#itemActividad').val().length == '' ) { 								
+				$("#msjUploadFile").html("Seleccione un Ítem de Actividad para proceder con la carga de archivo.");		
 				return false; 
-			}
-			if(archivoSustentoVar.f_periodoEnvio.val()==null || 
-					archivoSustentoVar.f_periodoEnvio.val().length == '' ) {					
-				var addhtmAlert='Debe ingresar el Periodo a Declarar.';					
-				archivoSustentoVar.dialogValidacionContent.html(addhtmAlert);
-				archivoSustentoVar.dialogValidacion.dialog("open");				
-				return false; 
-			}*/
+			}			
 			return true; 
 		},		
+		
+		
 		
 		/**Function para confirmar si quiere eliminar el registro o no*/
 		confirmarEliminarArchivo : function(cod_item,cod_correlativo){
@@ -1113,32 +1167,33 @@ var archivoSustentoVar= {
 				
 		
 		<portlet:namespace/>cargarArchivosSustentoFormato : function(){
-			var frm = document.getElementById('archivoSustentoBean');
-			
-			var nameFile=$("#fileArchivoSustento").val();
-			var isSubmit=true;
-			
-			$("#msjUploadFile").html("");			
-			if(typeof (nameFile) == "undefined" || nameFile.length==0){				
-				isSubmit=false;
-				$("#msjUploadFile").html("Debe seleccionar un archivo");
-			}else{
-				isSubmit=true;
-				//isSubmit=false;
-				var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);		
-				console.debug("Extencion del archivo a subir:  "+extension);
-				/*if(extension == 'xls' || extension == 'xlsx'){
-					isSubmit=true;
-				}else{
+			if (archivoSustentoVar.validarArchivoCarga()){
+				var frm = document.getElementById('archivoSustentoBean');
+				
+				var nameFile=$("#fileArchivoSustento").val();
+				var isSubmit=true;
+				
+				$("#msjUploadFile").html("");			
+				if(typeof (nameFile) == "undefined" || nameFile.length==0){				
 					isSubmit=false;
-					$("#msjUploadFile").html("Archivo inválido");
-				}*/				
-			}			
-			if(isSubmit){
-				frm.submit();
-			}			
+					$("#msjUploadFile").html("Debe seleccionar un archivo");
+				}else{
+					isSubmit=true;
+					//isSubmit=false;
+					var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);		
+					console.debug("Extencion del archivo a subir:  "+extension);
+					/*if(extension == 'xls' || extension == 'xlsx'){
+						isSubmit=true;
+					}else{
+						isSubmit=false;
+						$("#msjUploadFile").html("Archivo inválido");
+					}*/				
+				}			
+				if(isSubmit){
+					frm.submit();
+				}		
+			}				
 		},
-		
 		
 		
 		
