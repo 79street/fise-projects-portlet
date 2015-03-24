@@ -15,6 +15,7 @@ import gob.osinergmin.fise.bean.MensajeErrorBean;
 import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.CfgTabla;
+import gob.osinergmin.fise.domain.FiseDescripcionActividade;
 import gob.osinergmin.fise.domain.FiseFormato12AC;
 import gob.osinergmin.fise.domain.FiseFormato12ACPK;
 import gob.osinergmin.fise.domain.FiseFormato12AD;
@@ -508,7 +509,11 @@ public class ArchivoSustentoController {
     	String correlativoFormato =uploadPortletRequest.getParameter("correlativoF");   	
     	
     	logger.info("Flag de carga:  "+flagCarga);   	
-    	logger.info("etapa euclides:  "+itemActividad);   	
+    	logger.info("item actividad para archivo de sustento:  "+itemActividad);
+    	if(FormatoUtil.isNotBlank(itemActividad) &&
+    			"--Seleccione--".equals(itemActividad)){ 
+    		itemActividad = " "+"/"+" ";//copncateno espacion en blanco para el formato y la item actividad	
+    	}
     	
     	//variables solo cuando es reemplazo de archivo de sustento
     	String itemArchivo =uploadPortletRequest.getParameter("itemArchivo");
@@ -538,12 +543,12 @@ public class ArchivoSustentoController {
 					logger.info("Des del archivo:  "+fileEntry.getDescription()); 
 					logger.info("Extension del archivo:  "+fileEntry.getExtension());					
 					logger.info("ID FILEENTRY :  "+fileEntry.getFileEntryId());
-					mensaje = grabarArchivoSustento(fileEntry.getTitle(), correlativoFormato, user,
+					mensaje = grabarArchivoSustento(fileEntry.getTitle(), correlativoFormato, itemActividad, user,
 							terminal,fileEntry.getFileEntryId());	
 				}else if(flagCarga.equals(FiseConstants.FLAG_CARGA_ARCHIVO_ACTUALIZAR) ){
 					fileEntry = fiseUtil.subirArchivoSustento(request, uploadPortletRequest);
 					mensaje = actualizarArchivoSustento(fileEntry.getTitle(), itemArchivo,correlativoArchivo, 
-							user, terminal,fileEntry.getFileEntryId());
+							itemActividad,user, terminal,fileEntry.getFileEntryId());
 				}
 			}catch(FileMimeTypeException ex){
 				//ex.printStackTrace();
@@ -646,12 +651,15 @@ public class ArchivoSustentoController {
 		}			
 	}		
 	
-	private String grabarArchivoSustento(String nombreArchivo,String correlativoF,
+	private String grabarArchivoSustento(String nombreArchivo,String correlativoF,String itemActividad,
 			String user,String terminal,long idFileEntry){
 		String  mensaje  = "01"+"/"+""; 
 		try {
+			
+			String[] IdActiv = itemActividad.split("/");	
+			//0 = formato de actividad, 1 = item actividad			
 			String valor = archivoSustentoService.guardarArchivoSustento(correlativoF,nombreArchivo,
-					idFileEntry,user, terminal);
+					idFileEntry,IdActiv[0],IdActiv[1],user, terminal);
 			if("1".equals(valor)){ 
 				mensaje  = "00"+"/"+"El archivo de sustento fue subido satisfactoriamente"; 
 			}else{
@@ -666,11 +674,13 @@ public class ArchivoSustentoController {
 	
 	
 	private String actualizarArchivoSustento(String nombreArchivo,String itemArchivo,String correlativoArchivo,
-			String user,String terminal,long idFileEntry){
+			String itemActividad,String user,String terminal,long idFileEntry){
 		String  mensaje  = "01"+"/"+""; 
 		try {
+			String[] IdActiv = itemActividad.split("/");	
+			//0 = formato de actividad, 1 = item actividad
 			String valor = archivoSustentoService.actualizarArchivoSustento(itemArchivo, correlativoArchivo,
-					nombreArchivo,idFileEntry, user, terminal);
+					nombreArchivo,idFileEntry,IdActiv[0],IdActiv[1], user, terminal);
 			if("1".equals(valor)){ 
 				mensaje  = "00"+"/"+"El archivo de sustento fue reemplazado satisfactoriamente"; 
 			}else{
@@ -742,7 +752,38 @@ public class ArchivoSustentoController {
 			logger.error("Error al descargar archivo sustento: "+e); 
 			e.printStackTrace();
 		}
-    }			
+    }	
+	
+	
+	/**Metodo para listar las actividades para los formatos 14A y 14B para 
+	 * un nuevo motivo de la liquidacion*/
+	
+	@ResourceMapping("listarActividades")
+  	public void listarActividades(ModelMap model, ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("archivoSustentoBean")ArchivoSustentoBean a){
+		try {			
+  			response.setContentType("applicacion/json");
+  			String formatoActiv = a.getFormatoActiv();  			
+  			logger.info("formato actividad:  "+formatoActiv);
+  			
+  			List<FiseDescripcionActividade> listaActiv = archivoSustentoService.listarDescripcionActividades(formatoActiv);
+  			logger.info("Tamaño de lista de actividades:  "+listaActiv.size()); 
+  			JSONArray jsonArray = new JSONArray();
+  			for (FiseDescripcionActividade f : listaActiv) {
+  				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("codigoActividad", f.getId().getFormato()+"/"+f.getId().getItem());				
+				jsonObj.put("descActividad", f.getId().getItem()+" "+f.getDescripcion());			
+				jsonArray.put(jsonObj);		
+			}  			
+  		    PrintWriter pw = response.getWriter();
+  		    logger.info(jsonArray.toString());
+  		    pw.write(jsonArray.toString());
+  		    pw.flush();
+  		    pw.close();							
+  		}catch (Exception e) {  		
+  			e.printStackTrace();
+  		}
+	}
 	
 	
 	
