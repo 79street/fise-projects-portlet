@@ -472,7 +472,7 @@
 			this.txtnroAtenciones=$('#numeroAtenciones');
 			this.txtnroAtencionesProv=$('#numeroAtencionesProv');
 			this.txtnroAtencionesLim=$('#numeroAtencionesLim');
-			 this.txtEtndrUnitAtencion=$('#txtcostoEstandarUnitAtencion');
+		     this.txtEtndrUnitAtencion=$('#txtcostoEstandarUnitAtencion');
 			 this.txtEtndrUnitAtencionProv=$('#txtcostoEstandarUnitAtencionProv');
 			 this.txtEtndrUnitAtencionLim=$('#txtcostoEstandarUnitAtencionLim');
 			this.txtTotalAtencionConsRecl=$('#txtcostoTotalAtencionConsRecl');
@@ -535,11 +535,13 @@
 				formato12B.blockUI();
 				location.href=urlBack;
 			});
-            formato12B.showHiddenButtons(formato12B.tpOperacion.val(),'1');
-           
+            
+            
+            formato12B.showHiddenButtons(formato12B.tpOperacion.val(),'1');           
 			
             
 			if(formato12B.tpOperacion.val()=='0'){
+				console.debug("Entrando a aperacion 0 ");//nuevo
 			 	formato12B.cmbPeriodo.append($("<option></option>").attr("value",$("#peridoDeclaracionHidden").val()).text(formato12B.txtPeriodo.val())); 
 				formato12B.showCamposOculto();
 				formato12B.btnReportePdf.click(function() {formato12B.viewReporte('0');});
@@ -551,11 +553,16 @@
 				formato12B.loadTotales($("#codEmpresaHidden").val());
 				
 			}else if(formato12B.tpOperacion.val()=='1'){
+				console.debug("Entrando a aperacion 1 ");//editar y carga de exel nuevo				
 				formato12B.cmbPeriodo.append($("<option></option>").attr("value",$("#peridoDeclaracionHidden").val()).text(formato12B.txtPeriodo.val())); 
-				formato12B.showCamposOculto();
-				formato12B.eventButtons(formato12B.tpOperacion.val());
+				formato12B.showCamposOculto();				
+				formato12B.eventButtons(formato12B.tpOperacion.val());				
 				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
+				
 				formato12B.buildGridsObservacion();
+				
+				formato12B.inicializarFormularioCeros();//cambio elozano
+				
 				formato12B.loadTotales($("#codEmpresaHidden").val());
 				
 				$('#<portlet:namespace/>guardarFormato').val('Actualizar');
@@ -572,19 +579,24 @@
 				}
 			
 			}else if(formato12B.tpOperacion.val()=='2'){
+				console.debug("Entrando a aperacion 2 ");
+				
 				formato12B.cmbCodEmpresa.change(function(){
 					formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 					formato12B.clearCampoLima();
 					$.when(formato12B.loadPeriodoDeclaracion(formato12B.tpOperacion.val())).then(formato12B.loadCostosUnitarios());
 					formato12B.showHiddenButtons(formato12B.tpOperacion.val(),'2');
 				});
+				
 				formato12B.cmbCodEmpresa.trigger('change');
+				
 				formato12B.cmbPeriodo.change(function(){
 					formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 					formato12B.clearCampoLima();
 					formato12B.loadCostosUnitarios();
 					formato12B.showHiddenButtons(formato12B.tpOperacion.val(),'2');
 				});
+				
 				formato12B.eventButtons(formato12B.tpOperacion.val());
 			//	formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 				
@@ -597,13 +609,11 @@
 					formato12B.dialogMessageGeneral.dialog("open");
 				}else if( formato12B.msgTransaccion.val()=='ERROR' ){
 					formato12B.dialogError.dialog( "open" );
-				}
-				
+				}		
 			}
-			
-		
-			
 		},
+		
+		
 		eventButtons:function (tipo){
 			formato12B.divLoadFile.css("display","block");
 			formato12B.btnGuardar.css("display","block");
@@ -646,11 +656,12 @@
 			}else if(tipo == '2'){//nuevo
 				formato12B.btnValidacion.css("display","none");
 				formato12B.btnEnvioDefinitivo.css("display","none");
-			}
-			
+			}			
 		},
+		
+		
 	   showHiddenButtons:function(tipo,isclear){
-			
+		   
 			if(tipo == '0'){
 				formato12B.divLoadFile.css("display","none");
 				formato12B.btnValidacion.css("display","none");
@@ -688,16 +699,11 @@
 				formato12B.txtTotalActividadesExtraord.prop('disabled', true);
 				formato12B.txtTotalActividadesExtraordProv.prop('disabled', true);
 				formato12B.txtTotalActividadesExtraordLim.prop('disabled', true);
-			
 				
-				
-				
-			}else{
-				
+			}else{				
 				formato12B.btnReporteExpExcel.css("display","none");
 				formato12B.btnReporteActaEnvio.css("display","none");
 				formato12B.btnReportePdf.css("display","none");
-				
 				
 				formato12B.txtnroValesImpreso.prop('disabled', false);
 				formato12B.txtnroValesImpresoProv.prop('disabled', false);
@@ -739,10 +745,8 @@
 					formato12B.txtTotalGestionAdministrativaLim.prop('disabled', true);
 					formato12B.txtTotalDesplazamientoPersonalLim.prop('disabled', true);
 					formato12B.txtTotalActividadesExtraordLim.prop('disabled', true);
-				}
-				
-				
-					var impre=formato12B.txtnroValesImpresoLim.val();
+				}		
+					 var impre=formato12B.txtnroValesImpresoLim.val();
 					 var repar=formato12B.txtnroValesRepartidosDomiLim.val();
 					 var entre=formato12B.txtnroValesEntregadoDisElLim.val();
 					 var fisic=formato12B.txtnroValesFisicosCanjeadosLim.val();
@@ -781,13 +785,10 @@
 					 formato12B.txtEtndrUnitAtencionLim.val(formato12B.txtEtndrUnitAtencionLim.val().length>0?formato12B.txtEtndrUnitAtencionLim.val():'');
 					 $('#costoEstandarUnitAtencionLim').val(formato12B.txtEtndrUnitAtencionLim.val());
 				
-
-			
-				
-			}
-			
-			
+			}		
 		},
+		
+		
 		clearCampoLima :function(){
 			
 			formato12B.txtnroValesImpresoLim.val('0');
@@ -827,11 +828,10 @@
 			 formato12B.txtTotalCanjeLiqValeDigLim.val('0.00');
 			 formato12B.txtTotalAtencionConsReclLim.val('0.00');
 			 $('#totalGestionAdministrativaLim').val('0.00');
-	$('#totalDesplazamientoPersonalLim').val('0.00');
-	$('#totalActividadesExtraordLim').val('0.00');
-
-			 
+	         $('#totalDesplazamientoPersonalLim').val('0.00');
+	         $('#totalActividadesExtraordLim').val('0.00');		 
 		},
+		
 		loadPeriodoDeclaracion : function(tipo){
 			return jQuery.ajax({
 				url: formato12B.urlLoadPeriodo+'&'+formato12B.formNewEdit.serialize(),
@@ -922,6 +922,8 @@
 		cargaPeriodoYGrupo : function(){
 			formato12B.<portlet:namespace/>loadGrupoInformacionEdit();
 		},
+		
+		
 		<portlet:namespace/>loadGrupoInformacionEdit : function() {
 			jQuery.ajax({
 				url: formato12B.urlGrupoInformacionEdit+'&'+formato12B.formNewEdit.serialize(),
@@ -953,7 +955,8 @@
 				return false;
 			}
 			return true;
-		},
+		},		
+		
 		validarGrupoInformacionTxt : function(){
 			
 			if( $('#idGrupoInfo').val()=='0' ){
@@ -971,6 +974,7 @@
 			
 			return true;
 		},
+		
 		validarUltimaEtapa : function(){
 			if( $('#etapaFinal').val()=='SI' ){
 				//alert('Seleccione una Distribuidora Eléctrica'); 
@@ -1237,10 +1241,11 @@
 			
 		    formato12B.loadTotales(emp);
 		},
+		
+		
 		loadTotales : function(emp){
-			 
-			if(emp.trim() =='EDLN' || emp.trim() =='LDS'){
-				
+			
+			if(emp.trim() =='EDLN' || emp.trim() =='LDS'){				
 				console.debug(parseFloat($('#costoTotalImpresionVale').val()));
 				console.debug(parseFloat($('#costoTotalImpresionValeProv').val()));
 				console.debug(parseFloat($('#costoTotalImpresionValeLim').val()));
@@ -1281,17 +1286,12 @@
 				$('#porGestionAdm').val(parseFloat($('#totalGestionAdministrativa').val().length>0?$('#totalGestionAdministrativa').val():'0')
 			               +parseFloat($('#totalGestionAdministrativaProv').val().length>0?$('#totalGestionAdministrativaProv').val():'0'));
 	
-	$('#porDesplazamientoPers').val(parseFloat($('#totalDesplazamientoPersonal').val().length>0?$('#totalDesplazamientoPersonal').val():'0')
-			+parseFloat($('#totalDesplazamientoPersonalProv').val().length>0?$('#totalDesplazamientoPersonalProv').val():'0'));
+	            $('#porDesplazamientoPers').val(parseFloat($('#totalDesplazamientoPersonal').val().length>0?$('#totalDesplazamientoPersonal').val():'0')
+			             +parseFloat($('#totalDesplazamientoPersonalProv').val().length>0?$('#totalDesplazamientoPersonalProv').val():'0'));
 	
-	$('#porActividadExtra').val(parseFloat($('#totalActividadesExtraord').val().length>0?$('#totalActividadesExtraord').val():'0')
-			+parseFloat($('#totalActividadesExtraordProv').val().length>0?$('#totalActividadesExtraordProv').val():'0'));
-
-			
-			}
-			
-			
-			
+	            $('#porActividadExtra').val(parseFloat($('#totalActividadesExtraord').val().length>0?$('#totalActividadesExtraord').val():'0')
+			            +parseFloat($('#totalActividadesExtraordProv').val().length>0?$('#totalActividadesExtraordProv').val():'0'));
+       		}			
 			$('#porImpresionVales').val(parseFloat($('#porImpresionVales').val()).toFixed(2));
 			$('#porRepartoDom').val(parseFloat($('#porRepartoDom').val()).toFixed(2));	
 			$('#porEntregaValesDE').val(parseFloat($('#porEntregaValesDE').val()).toFixed(2));
@@ -1301,9 +1301,10 @@
 			$('#porGestionAdm').val(parseFloat($('#porGestionAdm').val()).toFixed(2));
 			$('#porDesplazamientoPers').val(parseFloat($('#porDesplazamientoPers').val()).toFixed(2));
 			$('#porActividadExtra').val(parseFloat($('#porActividadExtra').val()).toFixed(2));
-			formato12B.loadTotalReconocer();
-		
+			formato12B.loadTotalReconocer();		
 		},
+		
+		
 		loadGestion:function(idpor,idinput){
 			 var value=$("#"+idinput).val();
 			 var valueProv=$("#"+idinput+"Prov").val();
@@ -1324,9 +1325,7 @@
             	 if(numdec==0){
             		 $("#"+idinput+"Lim").val(valueLim.substring(0, (valueLim.indexOf('.')+1))+'00'); 
             	}
-			 }
-			
-			 
+			 }		 
 			 if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
 				 $("#"+idpor).val(parseFloat(value.length>0?value:'0.0')+parseFloat(valueProv.length>0?valueProv:'0.0')+parseFloat(valueLim.length>0?valueLim:'0.0')); 
 			 }else{
@@ -1336,13 +1335,16 @@
 			$("#"+idpor).val(parseFloat($("#"+idpor).val()).toFixed(2));
 			formato12B.loadTotalReconocer();
 		},
+		
+		
 		loadTotalReconocer : function(){
 			$('#totalGeneralReconocer').val(Number($('#porImpresionVales').val())+Number($('#porRepartoDom').val())+Number($('#porEntregaValesDE').val())+
 					Number($('#porValesFisicos').val())+Number($('#porValesDigitales').val())+Number($('#porAtencionReclamos').val())+Number($('#porGestionAdm').val())+
 					Number($('#porDesplazamientoPers').val())+Number($('#porActividadExtra').val()));	
 			//$('#totalGeneralReconocer').val(redondeo( $('#totalGeneralReconocer').val(), 2));
 			$('#totalGeneralReconocer').val(Number($('#totalGeneralReconocer').val()).toFixed(2));
-		},
+		},		
+		
 		loadCostoTotatByInput:function (total,nro,costo,idhidden,idstandar,idtotal){
 			total.val((nro.val()!=null && nro.length>0)?(nro.val()*costo.val()):'0.00');
 			//alert(nro.val() +"*"+costo.val()+"=" +total.val());
@@ -1365,8 +1367,7 @@
 				 $("#"+idtotal).val(parseFloat(value.length>0?value:'0.00')+parseFloat(valueProv.length>0?valueProv:'0.00')+parseFloat(valueLim.length>0?valueLim:'0.00'));
 			 }else{
 				 $("#"+idtotal).val(parseFloat(value.length>0?value:'0.00')+parseFloat(valueProv.length>0?valueProv:'0.00'));
-			 }
-			 
+			 } 
 			 
 			var totalT=$("#"+idtotal).val();
 			
@@ -1375,12 +1376,11 @@
 			}else{
 				$("#"+idtotal).val(totalT);	
 			}
-			 
 			
-             formato12B.loadTotalReconocer();
-			
-		
+             formato12B.loadTotalReconocer();	
 		},
+		
+		
 		showConfirmacion : function (emp,mes,anio,etapa,desmes,stdEnvio,std,mesEjec,desmesEjec,anioEjec,tipo) {	
 			//alert(emp+"/"+mes+"/"+anio+"/"+etapa+"/"+desmes+"/"+stdEnvio+"/"+std+"/"+mesEjec+"/"+desmesEjec+"/"+anioEjec+"/"+tipo);
 			var admin = '${esAdministrador}';
@@ -1478,13 +1478,11 @@
 				     }).load();*/
 					formato12B.dialogMessageInfoContent.html(msj);
 					formato12B.dialogMessageInfo.dialog("open");
-				}
-				
-				
+				}	
 			}
-           
-
-		},
+		},	
+		
+		
 		showLoadFile:function(tipoFile){
 			
 				formato12B.txtTypeFile.val(tipoFile);
@@ -1498,10 +1496,14 @@
 			    $("#msjUploadFile").html("");
 			
 		},
+		
+		
 		closeLoadFile : function(){
 			formato12B.dlgLoadFile.hide();
 			formato12B.divOverlay.hide();   
 		},
+		
+		
 		uploadFile : function(tipoFile){
 			var nameFile=$("#archivoExcel").val();
 			var isSubmit=true;
@@ -1538,23 +1540,18 @@
 			 
 			
 		},
-		showCamposOculto: function(){
-			
+		
+		
+		showCamposOculto: function(){			
 			formato12B.divgrupoestado.css("display","block");
 			formato12B.cmbCodEmpresa.prop('disabled', true);
-			formato12B.cmbPeriodo.prop('disabled', true);
-		
-			formato12B.txtAnioEjec.prop("type","text");
-			
-			formato12B.txtAnioEjec.prop("type","hidden");
-			
+			formato12B.cmbPeriodo.prop('disabled', true);		
+			formato12B.txtAnioEjec.prop("type","text");			
+			formato12B.txtAnioEjec.prop("type","hidden");			
 			formato12B.txtAnioEjecCommand.prop('disabled', true);
-			formato12B.cmbMesEjecucion.prop('disabled', true);
-			
-			//--formato12B.txtAnioEjecCommand.prop("type","hidden");
-			//--formato12B.cmbMesEjecucion.prop('disabled', true);
-			
+			formato12B.cmbMesEjecucion.prop('disabled', true);		
 		},
+		
 		
 		mostrarPeriodoEjecucion : function(){
 			if( $('#flagPeriodoEjecucion').val()=='S' ){
@@ -1856,6 +1853,7 @@
 			return true;
 		},
 		
+		
 		deleteFormato:function(emp,mes,anio,etapa,mesEjec,anioEjec){
 		
 			jQuery.ajax({	
@@ -1896,6 +1894,8 @@
 				}
 		});
 		},
+		
+		
 		viewReporte:function(tipo){
 		
 			jQuery.ajax({
@@ -1977,6 +1977,7 @@
 			       } 
 			});
 		},
+		
 		showValidacion : function(){
 			jQuery.ajax({
 				url: formato12B.urlValidacion+'&'+formato12B.formNewEdit.serialize(),
@@ -1996,7 +1997,8 @@
 					formato12B.initBlockUI();
 				}
 			});
-		},
+		},		
+		
 		showReporteValidacion : function(){
 		jQuery.ajax({
 				url: formato12B.urlReporteValidacion+'&'+formato12B.formNewEdit.serialize(),
@@ -2015,11 +2017,13 @@
 				}
 			});
 		},
+		
 		confirmarEnvioDefinitivo : function(){	
 			var addhtml='¿Está seguro que desea realizar el Envío Definitivo para el Formato 12B?';
 			formato12B.lblConfirmEnvioContent.html(addhtml);
 			formato12B.dialogConfirmEnvio.dialog("open");
 		},
+		
 		envioDefinitivo : function(){
 			jQuery.ajax({
 				url: formato12B.urlEnvioDefinitivo+'&'+formato12B.formNewEdit.serialize(),
@@ -2058,6 +2062,8 @@
 				}
 			});
 		},
+		
+		
 		showActaEnvio : function(){
 			var estado = $('#txtDescEst').val();	
 			if(estado=='Enviado'){
@@ -2082,7 +2088,8 @@
 				formato12B.dialogMessageInfoDetalle.dialog("open");
 				
 			}
-		},
+		},		
+		
 		updateStyleClassInput:function (tipo,emp){
 			formato12B.txtnroValesImpreso.addClass("fise-editable");
 			formato12B.txtnroValesImpresoProv.addClass("fise-editable");
@@ -2113,8 +2120,7 @@
 			formato12B.txtTotalGestionAdministrativaLim.addClass("fise-editable");
 			formato12B.txtTotalDesplazamientoPersonalLim.addClass("fise-editable");
 			formato12B.txtTotalActividadesExtraordLim.addClass("fise-editable");
-		}else{
-			
+		}else{			
 			formato12B.txtnroValesImpresoLim.removeClass("fise-editable");
 			formato12B.txtnroValesRepartidosDomiLim.removeClass("fise-editable");
 			formato12B.txtnroValesEntregadoDisElLim.removeClass("fise-editable");
@@ -2541,16 +2547,10 @@
 				
 				$('#costoTotalAtencionConsRecl').val(formato12B.txtTotalAtencionConsRecl.val());
 				$('#costoTotalAtencionConsReclProv').val(formato12B.txtTotalAtencionConsReclProv.val());
-				$('#costoTotalAtencionConsReclLim').val(formato12B.txtTotalAtencionConsReclLim.val());
-				
-				
-			    
-			    
-			   
-			   
-			   
+				$('#costoTotalAtencionConsReclLim').val(formato12B.txtTotalAtencionConsReclLim.val());			   
 			
-		}
-		
+		}	
 	};
+	
+	
 </script>

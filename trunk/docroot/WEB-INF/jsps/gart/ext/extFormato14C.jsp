@@ -616,16 +616,30 @@ var formato14C= {
 				}else{
 					formato14C.i_codEmpresaBusq.val('');
 				}
+				if(formato14C.mesPresSes.val()!=''){
+						formato14C.i_mesDesde.val(formato14C.mesPresSes.val());
+				}else{
+						formato14C.i_mesDesde.val('');
+				}
+				
 			}else{			
 				 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioIniVigSes != '' && anioFinVigSes != '' && etapaSes != ''){
 					 formato14C.editarFormato14C(codEmpSes, anioPresSes, mesPresSes, anioIniVigSes, anioFinVigSes, etapaSes,flagOpera);
 				 }
-				//mantener datos en sesion
+				//mantener datos en sesion				
 				 if(formato14C.codEmpresaSes.val()!=''){
+					    console.debug("cod empresa session carga exel:  "+codEmpSes.length);
 						formato14C.i_codEmpresaBusq.val(formato14C.codEmpresaSes.val());
 				 }else{
 						formato14C.i_codEmpresaBusq.val('');
 				 }
+				 console.debug("Mes presentacion session carga exel:  "+formato14C.mesPresSes.val());
+				 if(formato14C.mesPresSes.val()!=''){
+						formato14C.i_mesDesde.val(formato14C.mesPresSes.val());
+				 }else{
+						formato14C.i_mesDesde.val('');
+				 }
+				
 			 }	 
 			 var mensajeInfo = formato14C.mensajeInfo.val();
 			 var mensajeError = formato14C.mensajeError.val();

@@ -293,12 +293,12 @@ public class Formato13AGartController {
 			pw.write(jsonArray.toString());
 			pw.flush();
 			pw.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 	}
-
+	
+	@SuppressWarnings("unchecked")	
 	@RequestMapping(params = "action=nuevo")
 	public String nuevoFormato(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 		System.out.println("aqui en nuevoFormato");
@@ -327,6 +327,7 @@ public class Formato13AGartController {
 		
 		String anioInicioVigencia = renderRequest.getParameter("anioInicioVigencia");
 		String anioFinVigencia = renderRequest.getParameter("anioFinVigencia");
+		
 		
 		List<MensajeErrorBean> listaError = (List<MensajeErrorBean>)pRequest.getPortletSession().getAttribute("listaError", PortletSession.APPLICATION_SCOPE);
 
@@ -494,11 +495,9 @@ public class Formato13AGartController {
 				pw.write(msg);
 				pw.flush();
 				pw.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (IOException e) {				
 				e.printStackTrace();
 			}
-
 		}
 
 	}
@@ -643,23 +642,16 @@ public class Formato13AGartController {
 					
 					msg = "OK2";
 
-				}
-
-				
-				
+				}				
 			} catch (DataIntegrityViolationException dt) {
-				dt.printStackTrace();
-				//--response.setRenderParameter("msj", "Existe detalle ");
+				dt.printStackTrace();				
 				msg = "ERROR1";
 			} catch (Exception e) {
-				e.printStackTrace();
-				//--response.setRenderParameter("msj", "Ocurrio al guardar cambios");
+				e.printStackTrace();				
 				msg = "ERROR2";
 			}
-
 		}else{
-			//formato nuevo
-			
+			//formato nuevo			
 			boolean existe = false;
 			
 			existe = formatoService.existeFormatoDetalleSectorTipico(cabecera, command.getCodDistrito(), Long.parseLong(command.getIdZonaBenef()));
@@ -680,9 +672,7 @@ public class Formato13AGartController {
 				agregarFormato13(themeDisplay, cabecera, listaDetalle);
 				
 				msg = "OK1";
-			}
-
-			
+			}			
 		}
 		
 		if( "OK1".equals(msg) || "OK2".equals(msg) ){
@@ -695,17 +685,12 @@ public class Formato13AGartController {
 			}else if ( CRUD_UPDATE.equals(crud) ) {
 				response.setRenderParameter("crud", CRUD_UPDATE);
 			}
-		}
-
-		//response.setRenderParameter("crud", CRUD_READ_CREATEUPDATE);
-		response.setRenderParameter("action", "detalle");
-		
-		response.setRenderParameter("msg", msg);
-		
+		}	
+		response.setRenderParameter("action", "detalle");		
+		response.setRenderParameter("msg", msg);		
 		response.setRenderParameter("codEmpresa", codEmpresa);
 		response.setRenderParameter("periodoDeclaracion", periodoDeclaracion);
 		response.setRenderParameter("codUbigeo", codUbigeo);
-
 	}
 
 	@ActionMapping(params = "action=nuevoDetalle")
@@ -739,28 +724,13 @@ public class Formato13AGartController {
 		logger.info("Cabecera anioPresentacion:" + anioPresentacion);
 		logger.info("Cabecera mesPresentacion:" + mesPresentacion);
 		logger.info("Cabecera etapa:" + etapa);
-
-		// Registramos la cabecera
-		/*FiseFormato13ACPK pkCabecera = new FiseFormato13ACPK();
-		pkCabecera.setCodEmpresa(codEmpresa != "" ? FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4) : "");
-		pkCabecera.setAnoPresentacion(Long.parseLong(anioPresentacion));
-		pkCabecera.setMesPresentacion(Long.parseLong(mesPresentacion));
-		pkCabecera.setEtapa(etapa);
-
-		FiseFormato13AC cabecera = new FiseFormato13AC();
-		cabecera.setId(pkCabecera);*/
-
 		if( "0".equals(origen) ){
 			response.setRenderParameter("crud", CRUD_CREATE);
 		}else if( "1".equals(origen) ){
 			response.setRenderParameter("crud", CRUD_CREATEUPDATE);
-		}
-		
-		//response.setRenderParameter("crud", CRUD_CREATE);
-		response.setRenderParameter("action", "detalle");
-		
-		response.setRenderParameter("msg",msg);
-		
+		}		
+		response.setRenderParameter("action", "detalle");		
+		response.setRenderParameter("msg",msg);		
 		response.setRenderParameter("codEmpresa", codEmpresa);
 		response.setRenderParameter("periodoDeclaracion", periodoDeclaracion);
 		response.setRenderParameter("codUbigeo", FiseConstants.BLANCO);
@@ -904,8 +874,7 @@ public class Formato13AGartController {
 										descDistrito = dist.getNomUbigeo();
 										break;
 									}
-								}
-								
+								}								
 								//seteamos los valores
 								command.setCodDepartamentoHidden(codDepartamento.concat("0000"));
 								command.setCodProvinciaHidden(codProvincia.concat("00"));
@@ -914,15 +883,13 @@ public class Formato13AGartController {
 								command.setDescProvincia(descProvincia);
 								command.setDescDistrito(descDistrito);
 							}
-						}
-						
+						}						
 						/*String ubigeo = f.getCodUbigeo();
 						if (StringUtils.isNotBlank(ubigeo)) {
 							command.setCodDepartamento(ubigeo.substring(0, 2).concat("0000"));
 							command.setCodProvincia(ubigeo.substring(0, 4).concat("00"));
 							command.setCodDistrito(ubigeo);
 						}*/
-
 						command.setLocalidad(f.getDescLocalidad());
 						command.setSt1(String.valueOf(f.getNroBenefPoteSecTipico1()));
 						command.setSt2(String.valueOf(f.getNroBenefPoteSecTipico2()));
@@ -941,7 +908,6 @@ public class Formato13AGartController {
 				}
 			} else if (CRUD_CREATE.equals(crud) || CRUD_CREATEUPDATE.equals(crud) ) {
 				model.addAttribute("readonlyEdit", "false");
-
 				command.setSt1(FiseConstants.CERO);
 				command.setSt2(FiseConstants.CERO);
 				command.setSt3(FiseConstants.CERO);
@@ -951,11 +917,9 @@ public class Formato13AGartController {
 				command.setStser(FiseConstants.CERO);
 				command.setStesp(FiseConstants.CERO);
 				command.setTotal(FiseConstants.CERO);
-			}
-			//--
+			}			
 		}else{
-			//viene del proceso nuevo
-			
+			//viene del proceso nuevo			
 			if( "".equals(msg) ){
 				command.setSt1(FiseConstants.CERO);
 				command.setSt2(FiseConstants.CERO);
@@ -966,20 +930,13 @@ public class Formato13AGartController {
 				command.setStser(FiseConstants.CERO);
 				command.setStesp(FiseConstants.CERO);
 				command.setTotal(FiseConstants.CERO);
-			}
-			
-			
+			}	
 		}
-
-		
-
 		model.addAttribute("crud", crud);
-		model.addAttribute("msg", msg);
-		
+		model.addAttribute("msg", msg);		
 		//valores constantes para las empresas edelnor y luz del sur
 		command.setCodEdelnor(FiseConstants.COD_EMPRESA_EDELNOR);
 		command.setCodLuzSur(FiseConstants.COD_EMPRESA_LUZ_SUR);
-
 		return "formato13ACRUDDetalle";
 	}
 
@@ -1001,13 +958,11 @@ public class Formato13AGartController {
 				// agregar los valores
 				jsonArray.put(jsonObj);
 			}
-
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 			pw.flush();
 			pw.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 	}
@@ -1074,8 +1029,7 @@ public class Formato13AGartController {
 			pw.write(jsonArray.toString());
 			pw.flush();
 			pw.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {		
 			e.printStackTrace();
 		}
 	}
@@ -1111,8 +1065,7 @@ public class Formato13AGartController {
 			pw.write(jsonArray.toString());
 			pw.flush();
 			pw.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 	}
@@ -1197,8 +1150,7 @@ public class Formato13AGartController {
 			pw.close();
 
 			model.addAttribute("formato13AGartCommand", command);
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 	}
@@ -1307,14 +1259,13 @@ public class Formato13AGartController {
 			}
 		
 		}catch(FileMimeTypeException ex){
-			
+			logger.error("Entro a este error 1");
 		}catch (Exception e) {
-			// TODO: handle exception
+			logger.error("Entro a este error 2");
+			e.printStackTrace();
 		}
-
 		
-		if( formatoMensaje.getFiseFormato13AC()!=null ){
-			
+		if( formatoMensaje.getFiseFormato13AC()!=null ){			
 			response.setRenderParameter("action", "view");
 			response.setRenderParameter("msgTrans", "OK");
 			
@@ -1326,11 +1277,9 @@ public class Formato13AGartController {
 			response.setRenderParameter("anioPresentacion", ""+formatoMensaje.getFiseFormato13AC().getId().getAnoPresentacion());
 			response.setRenderParameter("mesPresentacion", ""+formatoMensaje.getFiseFormato13AC().getId().getMesPresentacion());
 			response.setRenderParameter("etapa", formatoMensaje.getFiseFormato13AC().getId().getEtapa());
-		}else{
-			
+		}else{			
 			response.setRenderParameter("msgTrans", "ERROR");
 			
-			//if(CRUD_CREATE.equals(tipoOperacion)){
 			if((""+FiseConstants.ADD).equals(tipoOperacion)){
 		
 				response.setRenderParameter("action", "nuevo");
@@ -1341,8 +1290,7 @@ public class Formato13AGartController {
 				response.setRenderParameter("codEmpresa", codEmpresaNew);
 				response.setRenderParameter("anioPresentacion", anioPresNew);
 				response.setRenderParameter("mesPresentacion", mesPresNew);
-				response.setRenderParameter("etapa", etapaNew);
-			//}else if(CRUD_UPDATE.equals(tipoOperacion)){
+				response.setRenderParameter("etapa", etapaNew);			
 			}else if((""+FiseConstants.UPDATE).equals(tipoOperacion)){
 				
 				response.setRenderParameter("action", "view");
@@ -1354,15 +1302,11 @@ public class Formato13AGartController {
 				response.setRenderParameter("anioPresentacion", anioPresEdit);
 				response.setRenderParameter("mesPresentacion", mesPresEdit);
 				response.setRenderParameter("etapa", etapaEdit);
-			}
-			
+			}			
 			if(formatoMensaje.getListaMensajeError()!=null && formatoMensaje.getListaMensajeError().size()>0){
 				pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
-			}
-			
-		}
-		
-		
+			}			
+		}	
 		response.setRenderParameter("periodoDeclaracion", bean.getPeridoDeclaracion());
 		response.setRenderParameter("descripcionPeriodo", bean.getDescripcionPeriodo());
 		response.setRenderParameter("codEmpresaHidden", bean.getCodEmpresaHidden());
@@ -1397,7 +1341,8 @@ public class Formato13AGartController {
 					is=archivo.getContentStream();
 					libro = new HSSFWorkbook(is);//Se lee libro xls
 				} catch (Exception e1) {
-					logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F13A_3634));
+					logger.info(mapaErrores.get(FiseConstants.COD_ERROR_F13A_3634));
+					logger.info("Error al leer el archivo Excel"); 
 					cont++;
 					sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F13A_3634);
 					throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_F13A_3634));
@@ -1406,10 +1351,10 @@ public class Formato13AGartController {
 				
 				if (libro != null) {
 					//el excel puede tener varias hojas, se tiene qie leer el total de hojas y encontrar la que necesitemos
-					logger.info("nro de hojas:"+ libro.getNumberOfSheets());
+					logger.error("nro de hojas:"+ libro.getNumberOfSheets());
 					for (int sheetNro = 0; sheetNro < libro.getNumberOfSheets(); sheetNro++){
 						logger.info("nombre de hoja "+sheetNro+":"+ libro.getSheetName(sheetNro));
-						if( FiseConstants.NOMBRE_HOJA_FORMATO13A.equals(libro.getSheetName(sheetNro)) ){
+						if(FiseConstants.NOMBRE_HOJA_FORMATO13A.equals(libro.getSheetName(sheetNro))){
 							process = true;
 							nroHojaSelec = sheetNro;
 							break;
@@ -1418,7 +1363,7 @@ public class Formato13AGartController {
 					logger.info("nro de hoja seleccionada "+nroHojaSelec);
 					
 					if(process){
-						
+						logger.info("entro a proccess: "+process);
 						HSSFSheet hojaF13 = libro.getSheetAt(nroHojaSelec);
 						int numRows=hojaF13.getPhysicalNumberOfRows();
 						
@@ -1442,12 +1387,12 @@ public class Formato13AGartController {
 						
 						int inicioDetalle = FiseConstants.NRO_INICIO_REGISTROS_FORMATO13A;
 						int finRegistros = 0;
-						
+						logger.info("numero de rows : "+numRows);
 						for( int i=0; i<numRows; i++ ){
 							HSSFRow row= hojaF13.getRow(i);
 							if( row != null ){
 								HSSFCell cell = row.getCell(1);//cogemos la segunda columna del excel, para detectar las posicion inicial de cada sector
-								if( HSSFCell.CELL_TYPE_STRING==cell.getCellType()  && HSSFCell.CELL_TYPE_BLANK != cell.getCellType() ){
+								if(HSSFCell.CELL_TYPE_STRING==cell.getCellType()  && HSSFCell.CELL_TYPE_BLANK != cell.getCellType() ){
 									if( FiseConstants.DESC_FILA_FIN_REGISTROS_FORMATO13A.equalsIgnoreCase(cell.toString()) ){
 										finRegistros = i;
 									}
@@ -1493,8 +1438,10 @@ public class Formato13AGartController {
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3640);
 						}
-						
-						if( inicioDetalle!=0  && finRegistros!=0 ){
+						logger.info("entro a inicio detalle : "+inicioDetalle);
+						logger.info("fin registros  : "+finRegistros);
+						if(inicioDetalle!=0  && finRegistros!=0 ){
+							
 							for (int i = (inicioDetalle+1); i<finRegistros; i++) {
 								
 								Formato13ACBean detalleBean = new Formato13ACBean();
@@ -1529,6 +1476,8 @@ public class Formato13AGartController {
 								detalleBean.setAnioInicioVigencia(Long.parseLong(anoInicioVig));
 								detalleBean.setAnioFinVigencia(Long.parseLong(anoFinVig));
 								
+								logger.info("termino de setear datos cabecera  : ");
+								
 								//ZONA BENEFICIARIO
 								if( HSSFCell.CELL_TYPE_NUMERIC == celdaZonaBeneficiario.getCellType()  ){
 									detalleBean.setIdZonaBenef(new Double(celdaZonaBeneficiario.getNumericCellValue()).longValue());
@@ -1542,15 +1491,19 @@ public class Formato13AGartController {
 								}
 								
 								boolean target=false;
-								if(  FiseConstants.ZONABENEF_LIMA_COD == detalleBean.getIdZonaBenef() ){
-									if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa()) ){
+								logger.info("VALOR DE LA ZONA:  "+detalleBean.getIdZonaBenef());
+								if(FiseConstants.ZONABENEF_LIMA_COD == detalleBean.getIdZonaBenef()){									
+									if( FiseConstants.COD_EMPRESA_EDELNOR.equals(formulario.getCodigoEmpresa()) || 
+											FiseConstants.COD_EMPRESA_LUZ_SUR.equals(formulario.getCodigoEmpresa().trim()) ){
 										target=true;
 									}
 								}else{
 									target=true;
-								}
+								}							
 								
+								logger.info("valor del target   : "+target);
 								if(target){
+									
 									//ANO MES ALTA
 									String fechaFormato = "";
 									
@@ -1820,19 +1773,20 @@ public class Formato13AGartController {
 									if( !FormatoUtil.validaCampoString(detalleBean.getSede(),60) ){
 										cont++;
 										sMsgDetalle = sMsgDetalle.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3655,i+1));
-									}
-									
-									/***/
-									
-									if( FiseConstants.BLANCO.equals(sMsgDetalle.toString()) ){
+									}							
+																
+									if(FiseConstants.BLANCO.equals(sMsgDetalle.toString()) ){
+										logger.info("Entro a este a guardar detalle");
 										listaDetalle.add(detalleBean);
 									}
-								}
-
+								}//fin de if targe
 							}
 
-						}
-						
+						}else{
+							//entro aca no tiene filas
+							cont++;
+							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_3633);
+						}				
 						
 						long idGrupoInf = commonService.obtenerIdGrupoInformacion(formulario.getAnioPresent(), formulario.getMesPresent(), FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION);
 
@@ -1841,39 +1795,49 @@ public class Formato13AGartController {
 							nameGrupo=grupoInfo.getDescripcion();
 						}
 						nameEstado="Abierto";
-						
-						/*boolean p = false;
-						if(p){*/
-						
+						logger.info("VALOR DEL MENSAJE  : "+sMsg);
+						logger.info("VALOR DEL MENSAJE  : "+sMsgDetalle);
 						if( FiseConstants.BLANCO.equals(sMsg) &&
 								FiseConstants.BLANCO.equals(sMsgDetalle.toString())
 								){
-							
-							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
+							logger.info("VALOR DEL CODIGO EMPRESA  : "+codEmpresa.trim());
+							logger.info("VALOR DEL CODIGO EMPRESA FORMATO  : "+formulario.getCodigoEmpresa().trim());
+							logger.info("VALOR DEL CODIGO ANIO  : "+anioPres);
+							logger.info("VALOR DEL CODIGO ANIO FORMATO  : "+String.valueOf(formulario.getAnioPresent()));
+							logger.info("VALOR DEL CODIGO MES  : "+Long.parseLong(mesPres));
+							logger.info("VALOR DEL CODIGO MES FORMATO  : "+formulario.getMesPresent());
+							if(codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
-									Long.parseLong(mesPres) == formulario.getMesPresent() 
-									){
+									Long.parseLong(mesPres) == formulario.getMesPresent()){
 								//se hace la logica para que cuando sea nuevo se crea la cabecera para el primer detalle y luego sobre eso se agregan las demas
 								//para cuando es una edicion, se borran primero los detalles existentes de la cabecera y se cargan nuevamente todos los detalles
-								
-								//if( CRUD_CREATE.equals(tipoOperacion) ){
+								logger.info("VALOR DEL ADD  : "+""+FiseConstants.ADD);
+								logger.info("VALOR DEL TIPO OPERACION  : "+tipoOperacion);		
 								if( (""+FiseConstants.ADD).equals(tipoOperacion) ){
+									logger.info("ENTRANDO A OPERACION 2  : "+""+FiseConstants.ADD);
+									logger.info("LISTA DETALLE  : "+""+listaDetalle);
 									if( listaDetalle!=null && listaDetalle.size()>0 ){
+										logger.info("LISTA DETALLE  : "+""+listaDetalle.size());
 										FiseFormato13AC formatoNuevo = null;
+										
 										for( int i=0; i<listaDetalle.size(); i++ ){
-											if( i==0 ){
+											if(i==0 ){
 												formatoNuevo = formatoService.registrarFormato13ACregistrarFormato13AD(listaDetalle.get(i),null);
 												objeto = formatoNuevo;
-											}else{
-												if( formatoNuevo!=null ){
+												logger.info("OBJETO CREADO  : "+objeto);
+											}else{	
+												logger.info("OBJETO MODIFICADO  : "+formatoNuevo);
+												if(formatoNuevo!=null ){
 													objeto = formatoService.modificarFormato13ACregistrarFormato13AD(listaDetalle.get(i), formatoNuevo,null);
+													logger.info("OBJETO MODIFICADO  : "+objeto);
 												}
-											}
-											
+											}										
 										}
+									}else{
+										//la lista detalle no tiene datos
+										cont++;
+										sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_3633);
 									}
-									
-								//}else if( CRUD_UPDATE.equals(tipoOperacion) ){
 								}else if( (""+FiseConstants.UPDATE).equals(tipoOperacion) ){
 									FiseFormato13AC formatoModif = new FiseFormato13AC();
 									FiseFormato13ACPK id = new FiseFormato13ACPK();
@@ -1886,8 +1850,7 @@ public class Formato13AGartController {
 									if( listaDetalle!=null && listaDetalle.size()>0 ){
 										//borramos todos los detalles
 										for (FiseFormato13AD formato13AD : formatoModif.getFiseFormato13ADs()) {
-											formatoService.eliminarDetalle(formato13AD);
-											
+											formatoService.eliminarDetalle(formato13AD);											
 										}
 										//agregamos todos los detalles que se estan cargando
 										for (Formato13ACBean detalle : listaDetalle) {
@@ -1898,20 +1861,14 @@ public class Formato13AGartController {
 							}else{
 								cont++;
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3660);
-							}
-							
-						}
-						///
-						
+							}							
+						}						
 					}else{
-						//--logger.warn(mapaErrores.get(FiseConstants.COD_ERROR_F12_20));
+						//processs = false
 						cont++;
 						sMsg = sMsg + "No se encuentra la hoja "+FiseConstants.NOMBRE_HOJA_FORMATO13A+" en el archivo cargado";
 						throw new Exception("No se encuentra la hoja "+FiseConstants.NOMBRE_HOJA_FORMATO13A+" en el archivo cargado");
 					}
-					
-					
-					
 				}
 					
 			}
@@ -1930,16 +1887,18 @@ public class Formato13AGartController {
 			errorBean.setDescripcion(error);
 			listaError.add(errorBean);
 			objeto = null;
+			e.printStackTrace();
 		}finally{
 			StreamUtil.cleanUp(is);
 		}
 		formatoMensaje.setMensajeError(sMsg);
 		formatoMensaje.setFiseFormato13AC(objeto);
 		if(listaError.size()>0)
-			formatoMensaje.setListaMensajeError(listaError);
-		
+			formatoMensaje.setListaMensajeError(listaError);		
 		return formatoMensaje;
 	}
+	
+	
 	
 	public Formato13AMensajeBean readTxtFileNew(FileEntry archivo,UploadPortletRequest uploadPortletRequest, User user, String tipoOperacion, String codEmpresa, 	String anioPres, String mesPres, String etapaEdit, String anoInicioVigencia, String anoFinVigencia) {
 		
@@ -2009,7 +1968,7 @@ public class Formato13AGartController {
 						sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F13A_3662);
 					}
 					
-					String key1,key2,key3,key4,key5="";//,key6="";
+					String key1,key2,key3;//,key6="";
 					if( listaDetalleTxt.size()>0 ){
 						key1 = listaDetalleTxt.get(0).substring(0, posicionCodEmpresa).trim();
 						key2 = listaDetalleTxt.get(0).substring(posicionCodEmpresa, posicionAnioPresentacion).trim();
@@ -2503,20 +2462,6 @@ public class Formato13AGartController {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		/*FileEntry fileEntry=null;
-		try{
-			fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-		}catch (Exception e) {
-		// TODO: handle exception
-		}
-		List<MensajeErrorBean> lstErrores = readExcelFile(fileEntry, themeDisplay, cabecerapk, tipoaccion);
-		System.out.println("tipo de errores::" + lstErrores.size());*/
 
 		if (lstErrores != null && !lstErrores.isEmpty()) {
 			if (tipoaccion != null && tipoaccion != null && tipoaccion.endsWith(String.valueOf(FiseConstants.UPDATE))) {
@@ -3053,11 +2998,11 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "action=view")
 	public String viewFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 
 		try {
-
 			PortletRequest pRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 			
 			String tipo = request.getParameter("tipoOperacion");
@@ -3089,9 +3034,6 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			command.setCodEmpresaHidden(command.getCodEmpresa());
 			command.setDescripcionPeriodoHidden(command.getPeridoDeclaracion());
 			
-			//---command.setDescGrupoInformacion(desgrupo!=null?desgrupo:"");
-			//---command.setDescestado(destd!=null?destd:"");
-
 			System.out.println("setPeridoDeclaracion::>" + command.getPeridoDeclaracion());
 			if (tipo != null && tipo.equalsIgnoreCase(String.valueOf(FiseConstants.VIEW))) {
 				model.addAttribute("crud", CRUD_READ);
@@ -3400,6 +3342,8 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			String nombreReporte = request.getParameter("nombreReporte").trim();
 			String nombreArchivo = request.getParameter("nombreArchivo").trim();
 
+			logger.info("Nombre del archivo:  "+nombreArchivo); 
+			
 			FiseFormato13ACPK pk = new FiseFormato13ACPK();
 			pk.setCodEmpresa(codEmpresa);
 			pk.setAnoPresentacion(new Long(anoPresentacion));
@@ -3900,8 +3844,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			detalle.setFechaActualizacion(hoy);
 			listaDetalle.add(detalle);
 
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {		
 			e.printStackTrace();
 		}
 
@@ -3950,8 +3893,7 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 			detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
 			detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
 			detalle.setFechaActualizacion(hoy);
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {		
 			e.printStackTrace();
 		}
 	}

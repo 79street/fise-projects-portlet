@@ -127,8 +127,8 @@ public class Formato12BGartController {
 	@Qualifier("formato14BGartServiceImpl")
 	Formato14BGartService formato14Service;
 
-	private String nameEstado;
-	private String nameGrupo;
+	//private String nameEstado;
+	//private String nameGrupo;
 
 	List<MensajeErrorBean> listaObservaciones;
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
@@ -269,14 +269,12 @@ public class Formato12BGartController {
   				mesPresentacion = periodoEnvio.substring(4,6);
   			}
   			
-  			String flagPeriodoEjecucion = "";
   			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(command.getCodEmpresa().trim(), FiseConstants.NOMBRE_FORMATO_12B);
   			
   			if( periodoEnvio!=null ){
   				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
   					if( periodoEnvio.equals(p.getCodigoItem()) ){
-  						jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
-  						flagPeriodoEjecucion = p.getFlagPeriodoEjecucion();
+  						jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());  						
   						break;
   					}
   				}
@@ -322,8 +320,7 @@ public class Formato12BGartController {
   		    pw.write(jsonObj.toString());
   		    pw.flush();
   		    pw.close();							
-  		}catch (Exception e) {
-  			// TODO: handle exception
+  		}catch (Exception e) {  			
   			e.printStackTrace();
   		}
 	}
@@ -408,8 +405,7 @@ public class Formato12BGartController {
   		    pw.write(jsonObj.toString());
   		    pw.flush();
   		    pw.close();							
-  		}catch (Exception e) {
-  			// TODO: handle exception
+  		}catch (Exception e) {  			
   			e.printStackTrace();
   		}
 	}
@@ -428,9 +424,7 @@ public class Formato12BGartController {
 				command.setEtapa(command.getPeridoDeclaracion().substring(6, command.getPeridoDeclaracion().length()));
 			}
 			List<FiseFormato14BD> lstfise14D = fiseUtil.getLstCostoUnitario(command.getCodEmpresa(), command.getAnoPresentacion(),null, null, FiseConstants.ETAPA_ESTABLECIDO);
-			//List<FiseFormato14BD> lstfise14D=fiseUtil.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion().longValue(),command.getIdZonaBenef().longValue());
-			
-			
+					
 			JSONArray jsonArray = new JSONArray();
 			if(lstfise14D!=null && !lstfise14D.isEmpty()){
 				logger.info("Tamanio lista de costos unitarios:  "+lstfise14D.size()); 
@@ -465,6 +459,7 @@ public class Formato12BGartController {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "action=newFormato")
 	public String newFormato(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		
@@ -570,7 +565,7 @@ public class Formato12BGartController {
 	@ActionMapping(params="action=uploadFile")
 	public void cargarDocumento(ActionRequest request,ActionResponse response,@ModelAttribute("formato12BCBean")Formato12BCBean bean){
 		
-		logger.info("--- cargar documento");
+		logger.error("--- cargar documento");
 		Formato12BMensajeBean formatoMensaje = new Formato12BMensajeBean();
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
@@ -753,21 +748,20 @@ public class Formato12BGartController {
 				
 				if (libro != null) {
 					//el excel puede tener varias hojas, se tiene qie leer el total de hojas y encontrar la que necesitemos
-					logger.info("nro de hojas:"+ libro.getNumberOfSheets());
+					logger.error("nro de hojas:"+ libro.getNumberOfSheets());
 					for (int sheetNro = 0; sheetNro < libro.getNumberOfSheets(); sheetNro++){
-						logger.info("nombre de hoja "+sheetNro+":"+ libro.getSheetName(sheetNro));
+						logger.error("nombre de hoja "+sheetNro+":"+ libro.getSheetName(sheetNro));
 						if( FiseConstants.NOMBRE_HOJA_FORMATO12B.equals(libro.getSheetName(sheetNro)) ){
 							process = true;
 							nroHojaSelec = sheetNro;
 							break;
 						}
 					}
-					logger.info("nro de hoja seleccionada "+nroHojaSelec);
+					logger.error("nro de hoja seleccionada "+nroHojaSelec);
 					
 					if(process){
 						
-						HSSFSheet hojaF12 = libro.getSheetAt(nroHojaSelec);
-						//int nroFilas = hojaF12.getLastRowNum()+1;
+						HSSFSheet hojaF12 = libro.getSheetAt(nroHojaSelec);					
 						
 						HSSFRow filaEmpresa = hojaF12.getRow(FiseConstants.NRO_FILA_CODEMPRESA_FORMATO12B);						
 						HSSFRow filaAnioMes = hojaF12.getRow(FiseConstants.NRO_FILA_ANIOMES_FORMATO12B);	
@@ -1021,7 +1015,8 @@ public class Formato12BGartController {
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3696);
 						}
 						
-						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
+						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || 
+								FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
 							//LIMA
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroValesImpL.getCellType()  ){
 								formulario.setNroValeImpL(new Double(celdaNroValesImpL.getNumericCellValue()).longValue());
@@ -1301,8 +1296,7 @@ public class Formato12BGartController {
 						formulario.setMesEjecuc(formulario.getMesPresent());
 						/***/
 						
-						if( FiseConstants.BLANCO.equals(sMsg) ){
-							
+						if( FiseConstants.BLANCO.equals(sMsg) ){						
 							
 							//obtenemos los costos unitarios del formato padre
 							FiseFormato14BD detalleRuralPadre = null;
@@ -1373,6 +1367,7 @@ public class Formato12BGartController {
 									){
 								
 								if( (""+FiseConstants.ADD).equals(tipoOperacion) ){
+									logger.error("Entrando a guardar carga exel nuevo"); 
 									objeto = formatoService.registrarFormato12BC(formulario);
 								}else if( (""+FiseConstants.UPDATE).equals(tipoOperacion) ){
 									FiseFormato12BC formatoModif = new FiseFormato12BC();
@@ -1998,10 +1993,7 @@ public class Formato12BGartController {
 		}else{
 			 codEmp = uploadPortletRequest.getParameter("codEmpresa");
 			 periodo = uploadPortletRequest.getParameter("peridoDeclaracion");
-		}
-		
-		
-		
+		}		
 		
 		FiseFormato12BCPK cabeceraPk = new FiseFormato12BCPK();
 		cabeceraPk.setCodEmpresa(codEmp);
@@ -2013,9 +2005,7 @@ public class Formato12BGartController {
 			}catch(NumberFormatException e){
 				cabeceraPk.setMesPresentacion(Integer.parseInt(periodo.substring(4, 5)));
 				cabeceraPk.setEtapa(periodo.substring(5, periodo.length()));
-			}
-			
-			
+			}		
 			command.setPeridoDeclaracion(periodo);
 			command.setPeridoDeclaracion(FiseUtil.descripcionPeriodo(cabeceraPk.getMesPresentacion().longValue(), cabeceraPk.getAnoPresentacion().longValue(), cabeceraPk.getEtapa()));
 
@@ -2145,12 +2135,12 @@ public class Formato12BGartController {
 								long idGrupoInf = commonService.obtenerIdGrupoInformacion(fise12BC.getId().getAnoPresentacion().longValue(), fise12BC.getId().getMesPresentacion().longValue(),FiseConstants.MENSUAL.trim());
 								if (idGrupoInf != 0) {
 									grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
-									nameGrupo = grupoInfo.getDescripcion();
+									//nameGrupo = grupoInfo.getDescripcion();
 								}
 								fise12BC.setFiseGrupoInformacion(grupoInfo);
 
 								//nameEstado = FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR;
-								nameEstado = "Abierto";
+								//nameEstado = "Abierto";
 								fise12BC = formatoService.saveFormatoCabecera(fise12BC);
 								logger.info("fise12BC" + fise12BC);
 								if (fise12BC != null) {
@@ -2544,7 +2534,7 @@ public class Formato12BGartController {
 						long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion().longValue(), cabecera.getId().getMesPresentacion().longValue(),FiseConstants.MENSUAL.trim());
 						if (idGrupoInf != 0) {
 							grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
-							nameGrupo = grupoInfo.getDescripcion();
+							//nameGrupo = grupoInfo.getDescripcion();
 						}
 						cabecera.setFiseGrupoInformacion(grupoInfo);
 						 
@@ -2657,6 +2647,7 @@ public class Formato12BGartController {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "action=viewFormato")
 	public String viewFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 
@@ -2794,8 +2785,9 @@ public class Formato12BGartController {
 			
 			FiseFormato12BCPK pkCbcr = new FiseFormato12BCPK();
 			FiseFormato12BC result = null;
-
-			if (command.getTipoOperacion() != null && command.getTipoOperacion().intValue() == FiseConstants.UPDATE) {
+            logger.info("flag tipo operacion:     "+command.getTipoOperacion());
+			if (command.getTipoOperacion() != null && 
+					command.getTipoOperacion().intValue() == FiseConstants.UPDATE) {
 				command.setCodEmpresa(command.getCodEmpresaHidden().trim());
 				command.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
 				command.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
@@ -3137,8 +3129,7 @@ public class Formato12BGartController {
 		    
 		    if( listaObservaciones!=null ){
 		    	session.setAttribute("lista", listaObservaciones);
-		    }
-	        
+		    }	        
 		    //add
 		    FiseFormato12BCPK pk=new FiseFormato12BCPK();
 		    pk.setCodEmpresa(command.getCodEmpresaHidden());
@@ -3166,10 +3157,7 @@ public class Formato12BGartController {
 		   	mapa.put(FiseConstants.PARAM_DESC_EMPRESA,formato.getAdmEmpresa().getDscCortaEmpresa() );
 		   	mapa.put(FiseConstants.PARAM_ETAPA, mapaEtapa.get(formato.getId().getEtapa()));
 		   	
-		   	session.setAttribute("mapa", mapa);
-		    //
-		   	
-		   
+		   	session.setAttribute("mapa", mapa);		   
 		    
 		    response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
@@ -3191,14 +3179,12 @@ public class Formato12BGartController {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
 	        ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-	        JSONObject jsonObj = new JSONObject(); 
-		    //FileEntry archivo=null;
+	        JSONObject jsonObj = new JSONObject(); 		  
 		    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>(); 	   
 		    
 		    Formato12BCBean bean = new Formato12BCBean();
 		    Map<String, Object> mapa = null;
-		    String directorio = null;
-		   
+		    String directorio = null;		   
           //cambios		    
 		    boolean valorFormato = false;
 		    boolean valorActa = false;			
@@ -3297,7 +3283,7 @@ public class Formato12BGartController {
 			        /**REPORTE FORMATO 12B*/
 		    	   String nombreReporte = request.getParameter("nombreReporte").trim();
 				   String nombreArchivo = request.getParameter("nombreArchivo").trim();
-				 
+				   logger.info("nombre del arrchivo:  "+nombreArchivo); 
 			       nombreReporte = "formato12B";
 			       nombreArchivo = nombreReporte;
 			       directorio =  "/reports/"+nombreReporte+".jasper";
@@ -3359,14 +3345,10 @@ public class Formato12BGartController {
 			    		   valorActa = true;
 			    	   }
 			       }
-			       //guardamos la fecha de envio, en este momento porque necesitamos la fecha de envio para mandar al reporte
-		    	  /* Formato12BCBean form = new Formato12BCBean();
-		    	   form.setUsuario(themeDisplay.getUser().getLogin());
-		    	   form.setTerminal(themeDisplay.getUser().getLoginIP());*/
+			       //guardamos la fecha de envio, en este momento porque necesitamos la fecha de envio para mandar al reporte		    	
 		    	   /**actualizamos  la fecha de envio*/	
 		    	   String valorActuaizar = "0";
-			       if(valorFormato && valorActa){
-			    	   //formatoActualizar =formatoService.modificarEnvioDefinitivoFormato12BC(form, formato);
+			       if(valorFormato && valorActa){			    	   
 			    	   valorActuaizar = formatoService.modificarEnvioDefinitivoFormato12BC(
 			    			   themeDisplay.getUser().getLogin(), 
 			    			   themeDisplay.getUser().getLoginIP(),formato);

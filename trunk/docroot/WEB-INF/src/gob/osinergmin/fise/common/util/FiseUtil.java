@@ -1100,13 +1100,7 @@ public class FiseUtil {
 	}
 	
 	public  List<FiseFormato14BD> getLstCostoUnitario(String codempresa,Integer anio,Integer mes,Integer zona,String etp){
-		try {
-			System.out.println("service 14B::"+formatoService14B);
-			System.out.println("cod empresa ::"+codempresa);
-			System.out.println("anio pres ::"+anio);
-			System.out.println("mes pres ::"+mes);
-			System.out.println("zona ::"+zona);
-			System.out.println("etapa ::"+etp);
+		try {		
 			List<FiseFormato14BD> lstResult=formatoService14B.getLstCostoUnitarioByEmpAnio(codempresa, anio,mes, zona, etp);
 			return lstResult;
 		} catch (Exception e) {

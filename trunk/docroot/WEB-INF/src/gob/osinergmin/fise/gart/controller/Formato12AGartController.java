@@ -324,7 +324,7 @@ public class Formato12AGartController {
 				
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		//cargar mapas para su consulta posterior
 		logger.info("lista empresa"+listaEmpresa);
@@ -430,8 +430,7 @@ public class Formato12AGartController {
   			   
   		} catch (Exception e) {
   			e.printStackTrace();
-  			logger.error(e.getMessage());
-  			// TODO: handle exception
+  			logger.error(e.getMessage()); 			
   		}
   	}
 	
@@ -822,7 +821,7 @@ public class Formato12AGartController {
   		    pw.flush();
   		    pw.close();							
   		}catch (Exception e) {
-  			// TODO: handle exception
+  			
   			e.printStackTrace();
   		}
 	}
@@ -970,8 +969,7 @@ public class Formato12AGartController {
   		    pw.write(jsonObj.toString());
   		    pw.flush();
   		    pw.close();							
-  		}catch (Exception e) {
-  			// TODO: handle exception
+  		}catch (Exception e) {  			
   			e.printStackTrace();
   		}
 	}
@@ -1092,10 +1090,10 @@ public class Formato12AGartController {
 	///////////////////CARGA EXCEL - TXT//////////////////////
 	/////////////////////////////////////////////////////////////////
 	
-	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, String tipoArchivo) {
-		// TODO Auto-generated method stub
-		FileEntry fileEntry=null;
-		//--UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
+	public FileEntry subirDocumento(PortletRequest request, UploadPortletRequest uploadPortletRequest, 
+			String tipoArchivo) {
+		
+		FileEntry fileEntry=null;	
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		try {
 			String[] mimeTypesXls = new String[]{"application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
@@ -1127,18 +1125,7 @@ public class Formato12AGartController {
 			logger.info("MIME ARCHIVO:"+mimeType);
 			if (Arrays.binarySearch(mimeTypes, mimeType) < 0) {
 				throw new FileMimeTypeException(mimeType);
-			}
-			//solo para txt/verificar luego
-			//if( FiseConstants.TIPOARCHIVO_XLS.equals(tipoArchivo) ){
-				//String contenType=MimeTypesUtil.getContentType(file,nameFileInput);´
-				//String contenType=MimeTypesUtil.getContentType(file);
-				//logger.info("MIME CONTENT TYPE:"+contenType);
-				//if (Arrays.binarySearch(mimeTypes, contenType) < 0) {
-				//	throw new FileMimeTypeException(contenType);
-				//}
-			//}
-			
-						 
+			}					 
 			logger.info("Size:"+size+" bytes");
 			logger.info("Max Size:"+maxUploadFileSize+" bytes");
 			
@@ -1172,7 +1159,9 @@ public class Formato12AGartController {
 		
 	}
 	
-	public Formato12AMensajeBean readExcelFile(FileEntry archivo, User user, String flagCarga, String codEmpresa, 	String anioPres, String mesPres, String anioEjec, String mesEjec, String etapaEdit) {
+	public Formato12AMensajeBean readExcelFile(FileEntry archivo, User user, 
+			String flagCarga, String codEmpresa, 	String anioPres, String mesPres, 
+			String anioEjec, String mesEjec, String etapaEdit) {
 		
 		//---------------------
 		//FLAG CARGA:
@@ -1461,7 +1450,7 @@ public class Formato12AGartController {
 								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_170));
 								listaError.add(error);
 							}
-							if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordL.getCellType()  ){
+							if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordL.getCellType()){
 								formulario.setActivExtraordL(new BigDecimal(activExtraordL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == activExtraordL.getCellType()  ){
 								formulario.setActivExtraordL(new BigDecimal(0.00));
@@ -2556,9 +2545,7 @@ public class Formato12AGartController {
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
 		    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-		    //String tipoFormato = FiseConstants.TIPO_FORMATO_12A;
-		    //String tipoArchivo = request.getParameter("tipoArchivo").trim();
-
+		    logger.info("Nombre del archivo:  "+nombreArchivo);
 		    if( periodoEnvio.length()>6 ){
 		    	anoPresentacion = periodoEnvio.substring(0, 4);
 		    	mesPresentacion = periodoEnvio.substring(4, 6);

@@ -118,7 +118,8 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping
-	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,@ModelAttribute("formato14ACBean")Formato14ACBean command){
+	public String defaultView(ModelMap model,RenderRequest renderRequest, RenderResponse renderResponse,
+			@ModelAttribute("formato14ACBean")Formato14ACBean command){
 
 		listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
 		
@@ -186,14 +187,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 		}
 		if( beanBusqueda!=null && beanBusqueda.getEtapaB()!=null ){
 			command.setEtapaB(beanBusqueda.getEtapaB());
-		}
-		
-		/*command.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
-		command.setMesDesde( String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual())-1));
-		command.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
-		command.setMesHasta(fiseUtil.obtenerNroMesFechaActual());
-		command.setEtapaB(FiseConstants.ETAPA_SOLICITUD);*/
-		
+		}		
 		command.setEtapaB(FiseConstants.ETAPA_SOLICITUD);
 		
 		//valores constantes para las empresas edelnor y luz del sur
@@ -221,7 +215,8 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 	}
 	
 	@ResourceMapping("busqueda")
-  	public void busqueda(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command){
+  	public void busqueda(ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("formato14ACBean")Formato14ACBean command){
 		
 		try{
 			response.setContentType("application/json");	
@@ -262,13 +257,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
   					fiseFormato14AC.setDescGrupoInformacion(fiseFormato14AC.getFiseGrupoInformacion().getDescripcion());
   				}else{
   					fiseFormato14AC.setDescGrupoInformacion(FiseConstants.BLANCO);
-  				}
-  				/*if(fiseFormato14AC.getFechaEnvioDefinitivo()!=null){
-  					fiseFormato14AC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
-  				}else{
-  					fiseFormato14AC.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-  				}*/
-  				
+  				} 				
   				/**Obteniendo el flag de la operacion*/
   				String flagOper = commonService.obtenerEstadoProceso(fiseFormato14AC.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_14A,fiseFormato14AC.getId().getAnoPresentacion(),
   						fiseFormato14AC.getId().getMesPresentacion(), fiseFormato14AC.getId().getEtapa());
@@ -303,7 +292,8 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 	}
 	
 	@ResourceMapping("crud")
-	public void crud(ModelMap model, ResourceRequest request,ResourceResponse response, @ModelAttribute("formato14ACBean")Formato14ACBean command) {
+	public void crud(ModelMap model, ResourceRequest request,ResourceResponse response, 
+			@ModelAttribute("formato14ACBean")Formato14ACBean command) {
  	
 		try {
 			JSONObject jsonObj = new JSONObject();
@@ -401,21 +391,13 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 					if( command.getPeriodoEnvio().length()>6 ){
 						formulario.setAnioPresent(Long.parseLong(command.getPeriodoEnvio().substring(0, 4)));
 						formulario.setMesPresent(Long.parseLong(command.getPeriodoEnvio().substring(4, 6)));
-						formulario.setEtapa(command.getPeriodoEnvio().substring(6, command.getPeriodoEnvio().length()));
-						/*if( "S".equals(command.getFlagPeriodoEjecucion()) ){
-							formulario.setAnioInicioVigencia(command.getAnioInicioVigencia());
-							formulario.setAnioFinVigencia(command.getAnioFinVigencia());
-						}else{
-							formulario.setAnioInicioVigencia(formulario.getAnioPresent());
-							formulario.setAnioFinVigencia(formulario.getAnioPresent());
-						}*/
-					
+						formulario.setEtapa(command.getPeriodoEnvio().substring(6, command.getPeriodoEnvio().length()));							
 					}
 					formulario.setAnioInicioVigencia(Long.parseLong(anoIniVigencia));
 					formulario.setAnioFinVigencia(Long.parseLong(anoFinVigencia));
 					
 					//RURAL
-					//formulario.setTotalEmpadR(command.getTotalEmpadR());
+					
 					formulario.setImprEsqInvitR(command.getImprEsqInvitR());
 					formulario.setImprDeclaJuradaR(command.getImprDeclaJuradaR());
 					formulario.setImprFichaVerifR(command.getImprFichaVerifR());
@@ -423,69 +405,57 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 					formulario.setVerifInfoR(command.getVerifInfoR());
 					formulario.setElabArchivoBenefR(command.getElabArchivoBenefR());
 					formulario.setDigitFichaBenefR(command.getDigitFichaBenefR());
-					//formulario.setTotalDifIniProgR(command.getTotalDifIniProgR());
+					
 					formulario.setImprVolantesR(command.getImprVolantesR());
 					formulario.setImprAfichesR(command.getImprAfichesR());
 					formulario.setRepFolletosR(command.getRepFolletosR());
 					formulario.setSpotPublTvR(command.getSpotPublTvR());
 					formulario.setSpotPublRadioR(command.getSpotPublRadioR());
 					formulario.setNroBenefEmpadR(command.getNroBenefEmpadR());
-					//formulario.setCostoUnitEmpadR(command.getCostoUnitEmpadR());
-					//
-					//formulario.setTotalCostoAgentR(command.getTotalCostoAgentR());
+					
 					formulario.setPromConvAgentR(command.getPromConvAgentR());
 					formulario.setRegConvAgentR(command.getRegConvAgentR());
 					formulario.setImpEntrBandR(command.getImpEntrBandR());
 					formulario.setNroAgentR(command.getNroAgentR());
-					//formulario.setCostoUnitAgentR(command.getCostoUnitAgentR());
-					//PROVINCIA
-					//formulario.setTotalEmpadP(command.getTotalEmpadP());
+					
+					//PROVINCIA					
 					formulario.setImprEsqInvitP(command.getImprEsqInvitP());
 					formulario.setImprDeclaJuradaP(command.getImprDeclaJuradaP());
 					formulario.setImprFichaVerifP(command.getImprFichaVerifP());
 					formulario.setRepartoEsqInvitP(command.getRepartoEsqInvitP());
 					formulario.setVerifInfoP(command.getVerifInfoP());
 					formulario.setElabArchivoBenefP(command.getElabArchivoBenefP());
-					formulario.setDigitFichaBenefP(command.getDigitFichaBenefP());
-					//formulario.setTotalDifIniProgP(command.getTotalDifIniProgP());
+					formulario.setDigitFichaBenefP(command.getDigitFichaBenefP());					
 					formulario.setImprVolantesP(command.getImprVolantesP());
 					formulario.setImprAfichesP(command.getImprAfichesP());
 					formulario.setRepFolletosP(command.getRepFolletosP());
 					formulario.setSpotPublTvP(command.getSpotPublTvP());
 					formulario.setSpotPublRadioP(command.getSpotPublRadioP());
 					formulario.setNroBenefEmpadP(command.getNroBenefEmpadP());
-					//formulario.setCostoUnitEmpadP(command.getCostoUnitEmpadP());
-					//
-					//formulario.setTotalCostoAgentP(command.getTotalCostoAgentP());
+					
 					formulario.setPromConvAgentP(command.getPromConvAgentP());
 					formulario.setRegConvAgentP(command.getRegConvAgentP());
 					formulario.setImpEntrBandP(command.getImpEntrBandP());
 					formulario.setNroAgentP(command.getNroAgentP());
-					//formulario.setCostoUnitAgentP(command.getCostoUnitAgentP());
-					//LIMA
-					//formulario.setTotalEmpadL(command.getTotalEmpadL());
+					
+					//LIMA					
 					formulario.setImprEsqInvitL(command.getImprEsqInvitL());
 					formulario.setImprDeclaJuradaL(command.getImprDeclaJuradaL());
 					formulario.setImprFichaVerifL(command.getImprFichaVerifL());
 					formulario.setRepartoEsqInvitL(command.getRepartoEsqInvitL());
 					formulario.setVerifInfoL(command.getVerifInfoL());
 					formulario.setElabArchivoBenefL(command.getElabArchivoBenefL());
-					formulario.setDigitFichaBenefL(command.getDigitFichaBenefL());
-					//formulario.setTotalDifIniProgL(command.getTotalDifIniProgL());
+					formulario.setDigitFichaBenefL(command.getDigitFichaBenefL());					
 					formulario.setImprVolantesL(command.getImprVolantesL());
 					formulario.setImprAfichesL(command.getImprAfichesL());
 					formulario.setRepFolletosL(command.getRepFolletosL());
 					formulario.setSpotPublTvL(command.getSpotPublTvL());
 					formulario.setSpotPublRadioL(command.getSpotPublRadioL());
-					formulario.setNroBenefEmpadL(command.getNroBenefEmpadL());
-					//formulario.setCostoUnitEmpadL(command.getCostoUnitEmpadL());
-					//
-					//formulario.setTotalCostoAgentL(command.getTotalCostoAgentL());
+					formulario.setNroBenefEmpadL(command.getNroBenefEmpadL());					
 					formulario.setPromConvAgentL(command.getPromConvAgentL());
 					formulario.setRegConvAgentL(command.getRegConvAgentL());
 					formulario.setImpEntrBandL(command.getImpEntrBandL());
-					formulario.setNroAgentL(command.getNroAgentL());
-					//formulario.setCostoUnitAgentR(command.getCostoUnitAgentR());
+					formulario.setNroAgentL(command.getNroAgentL());			
 					
 					ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 					
@@ -502,31 +472,18 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 				}   				   				
 					 					 				
 			}else if(tipo.equals(FiseConstants.COD_UPDATE)){
-				logger.info("entro a modificar valores");
-				
-				try {
-					
+				logger.info("entro a modificar valores");				
+				try {					
 					FiseFormato14AC formato = new FiseFormato14AC();
 					FiseFormato14ACPK pk = new FiseFormato14ACPK();
 					String codEmpresa = request.getParameter("codEmpresa");
-					String periodoEnvio = request.getParameter("periodoEnvio");
-					//String anoPresentacion = request.getParameter("anoPresentacion");
-					//String mesPresentacion = request.getParameter("mesPresentacion");
-					/*String flagPeriodoEjecucion = request.getParameter("flagPeriodo");
-					String anoInicioVigencia="";
-					String anoFinVigencia="";
-					if( "S".equals(flagPeriodoEjecucion) ){
-						anoInicioVigencia = request.getParameter("anoInicioVigencia");
-						anoFinVigencia = request.getParameter("anoFinVigencia");
-					}*/
+					String periodoEnvio = request.getParameter("periodoEnvio");				
 					String etapa = request.getParameter("etapa");
 					
 					String anoInicioVigencia = request.getParameter("anoInicioVigencia");
 					String anoFinVigencia = request.getParameter("anoFinVigencia");
 					
-					logger.info("codempresa "+codEmpresa);
-			        //logger.info("anopresent "+anoPresentacion);
-			        //logger.info("mespresent "+mesPresentacion);
+					logger.info("codempresa "+codEmpresa);			      
 			        logger.info("anoInicioVigencia "+anoInicioVigencia);
 			        logger.info("anoFinVigencia "+anoFinVigencia);
 			        logger.info("etapa "+etapa);
@@ -534,56 +491,48 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 			        
 			        Formato14ACBean formulario = new Formato14ACBean();
 			        
-			      //RURAL
-					//formulario.setTotalEmpadR(command.getTotalEmpadR());
+			      //RURAL					
 					formulario.setImprEsqInvitR(command.getImprEsqInvitR());
 					formulario.setImprDeclaJuradaR(command.getImprDeclaJuradaR());
 					formulario.setImprFichaVerifR(command.getImprFichaVerifR());
 					formulario.setRepartoEsqInvitR(command.getRepartoEsqInvitR());
 					formulario.setVerifInfoR(command.getVerifInfoR());
 					formulario.setElabArchivoBenefR(command.getElabArchivoBenefR());
-					formulario.setDigitFichaBenefR(command.getDigitFichaBenefR());
-					//formulario.setTotalDifIniProgR(command.getTotalDifIniProgR());
+					formulario.setDigitFichaBenefR(command.getDigitFichaBenefR());					
 					formulario.setImprVolantesR(command.getImprVolantesR());
 					formulario.setImprAfichesR(command.getImprAfichesR());
 					formulario.setRepFolletosR(command.getRepFolletosR());
 					formulario.setSpotPublTvR(command.getSpotPublTvR());
 					formulario.setSpotPublRadioR(command.getSpotPublRadioR());
 					formulario.setNroBenefEmpadR(command.getNroBenefEmpadR());
-					//formulario.setCostoUnitEmpadR(command.getCostoUnitEmpadR());
-					//
-					//formulario.setTotalCostoAgentR(command.getTotalCostoAgentR());
+					
 					formulario.setPromConvAgentR(command.getPromConvAgentR());
 					formulario.setRegConvAgentR(command.getRegConvAgentR());
 					formulario.setImpEntrBandR(command.getImpEntrBandR());
 					formulario.setNroAgentR(command.getNroAgentR());
-					//formulario.setCostoUnitAgentR(command.getCostoUnitAgentR());
-					//PROVINCIA
-					//formulario.setTotalEmpadP(command.getTotalEmpadP());
+					
+					//PROVINCIA					
 					formulario.setImprEsqInvitP(command.getImprEsqInvitP());
 					formulario.setImprDeclaJuradaP(command.getImprDeclaJuradaP());
 					formulario.setImprFichaVerifP(command.getImprFichaVerifP());
 					formulario.setRepartoEsqInvitP(command.getRepartoEsqInvitP());
 					formulario.setVerifInfoP(command.getVerifInfoP());
 					formulario.setElabArchivoBenefP(command.getElabArchivoBenefP());
-					formulario.setDigitFichaBenefP(command.getDigitFichaBenefP());
-					//formulario.setTotalDifIniProgP(command.getTotalDifIniProgP());
+					formulario.setDigitFichaBenefP(command.getDigitFichaBenefP());					
 					formulario.setImprVolantesP(command.getImprVolantesP());
 					formulario.setImprAfichesP(command.getImprAfichesP());
 					formulario.setRepFolletosP(command.getRepFolletosP());
 					formulario.setSpotPublTvP(command.getSpotPublTvP());
 					formulario.setSpotPublRadioP(command.getSpotPublRadioP());
 					formulario.setNroBenefEmpadP(command.getNroBenefEmpadP());
-					//formulario.setCostoUnitEmpadP(command.getCostoUnitEmpadP());
-					//
-					//formulario.setTotalCostoAgentP(command.getTotalCostoAgentP());
+					
 					formulario.setPromConvAgentP(command.getPromConvAgentP());
 					formulario.setRegConvAgentP(command.getRegConvAgentP());
 					formulario.setImpEntrBandP(command.getImpEntrBandP());
 					formulario.setNroAgentP(command.getNroAgentP());
-					//formulario.setCostoUnitAgentP(command.getCostoUnitAgentP());
+				
 					//LIMA
-					//formulario.setTotalEmpadL(command.getTotalEmpadL());
+					
 					formulario.setImprEsqInvitL(command.getImprEsqInvitL());
 					formulario.setImprDeclaJuradaL(command.getImprDeclaJuradaL());
 					formulario.setImprFichaVerifL(command.getImprFichaVerifL());
@@ -591,35 +540,25 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 					formulario.setVerifInfoL(command.getVerifInfoL());
 					formulario.setElabArchivoBenefL(command.getElabArchivoBenefL());
 					formulario.setDigitFichaBenefL(command.getDigitFichaBenefL());
-					//formulario.setTotalDifIniProgL(command.getTotalDifIniProgL());
+					
 					formulario.setImprVolantesL(command.getImprVolantesL());
 					formulario.setImprAfichesL(command.getImprAfichesL());
 					formulario.setRepFolletosL(command.getRepFolletosL());
 					formulario.setSpotPublTvL(command.getSpotPublTvL());
 					formulario.setSpotPublRadioL(command.getSpotPublRadioL());
 					formulario.setNroBenefEmpadL(command.getNroBenefEmpadL());
-					//formulario.setCostoUnitEmpadL(command.getCostoUnitEmpadL());
-					//
-					//formulario.setTotalCostoAgentL(command.getTotalCostoAgentL());
+					
 					formulario.setPromConvAgentL(command.getPromConvAgentL());
 					formulario.setRegConvAgentL(command.getRegConvAgentL());
 					formulario.setImpEntrBandL(command.getImpEntrBandL());
-					formulario.setNroAgentL(command.getNroAgentL());
-					//formulario.setCostoUnitAgentR(command.getCostoUnitAgentR());
+					formulario.setNroAgentL(command.getNroAgentL());				
 			        
 			        formulario.setCodigoEmpresa(codEmpresa);
 					
 					if( periodoEnvio.length()>6 ){
 						formulario.setAnioPresent(Long.parseLong(periodoEnvio.substring(0, 4)));
 						formulario.setMesPresent(Long.parseLong(periodoEnvio.substring(4, 6)));
-						formulario.setEtapa(periodoEnvio.substring(6, periodoEnvio.length()));
-						/*if( "S".equals(flagPeriodoEjecucion) ){
-							formulario.setAnioInicioVigencia(Long.parseLong(anoInicioVigencia));
-							formulario.setAnioFinVigencia(Long.parseLong(anoFinVigencia));
-						}else{
-							formulario.setAnioInicioVigencia(formulario.getAnioPresent());
-							formulario.setAnioFinVigencia(formulario.getAnioPresent());
-						}*/
+						formulario.setEtapa(periodoEnvio.substring(6, periodoEnvio.length()));				
 					}
 					
 					formulario.setAnioInicioVigencia(Long.parseLong(anoInicioVigencia));
@@ -663,8 +602,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 					logger.info("valorp"+mesPresentacion);
 					logger.info("valorp"+anoInicioVigencia);
 					logger.info("valorp"+anoFinVigencia);
-					
-					
+										
 					pk.setCodEmpresa(codEmpresa);
 			        pk.setAnoPresentacion(new Long(anoPresentacion));
 			        pk.setMesPresentacion(new Long(mesPresentacion));
@@ -682,8 +620,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 					jsonObj.put("resultado", "Error");
 					jsonObj.put("mensaje", e.getMessage());
 					System.out.println("Error al eliminar datos "+e.getMessage());
-				}   				   				
-				
+				}   				
 			}
 			response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
@@ -696,11 +633,11 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 	}
 	
 	@ResourceMapping("cargaPeriodo")
-  	public void cargaPeriodo(ModelMap model, ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command){
+  	public void cargaPeriodo(ModelMap model, ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("formato14ACBean")Formato14ACBean command){
 		try {			
   			response.setContentType("applicacion/json");
-  			String codEmpresa = command.getCodigoEmpresa();
-  			//String periodoEnvio = command.getPeriodoEnvio();
+  			String codEmpresa = command.getCodigoEmpresa();  		
   			//lo pongo en la lista porque no persiste las colecciones en el command
   			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_14A);
   			command.setListaPeriodoEnvio(listaPeriodoEnvio);
@@ -726,7 +663,8 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 	}
 	
 	@ResourceMapping("cargaFlagPeriodo")
-  	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command){
+  	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("formato14ACBean")Formato14ACBean command){
 		try {			
   			response.setContentType("applicacion/json");
   			String periodoEnvio = command.getPeriodoEnvio();
@@ -766,14 +704,14 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
   		    pw.write(jsonObj.toString());
   		    pw.flush();
   		    pw.close();							
-  		}catch (Exception e) {
-  			// TODO: handle exception
+  		}catch (Exception e) {  			
   			e.printStackTrace();
   		}
 	}
 	
 	@ActionMapping(params="action=cargar")
-	public void cargarDocumento(ActionRequest request,ActionResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command){
+	public void cargarDocumento(ActionRequest request,ActionResponse response,
+			@ModelAttribute("formato14ACBean")Formato14ACBean command){
 		
 		logger.info("--- cargar documento");
 		Formato14AMensajeBean formatoMensaje = new Formato14AMensajeBean();
@@ -782,8 +720,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 		
 		String flagCarga = uploadPortletRequest.getParameter("flagCarga");
     	String codEmpresaNew = uploadPortletRequest.getParameter("codigoEmpresa");
-    	String periodoEnvioPresNew = uploadPortletRequest.getParameter("periodoEnvio");
-    	//String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
+    	String periodoEnvioPresNew = uploadPortletRequest.getParameter("periodoEnvio");    	
     	
     	String anioPresNew = "";
 		String mesPresNew = "";
@@ -803,10 +740,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
     				break;
     			}
     		}
-		
-		}
-		
-		
+		}	
 		
 		PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
@@ -834,8 +768,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 		}
 		}catch(FileMimeTypeException ex){
 			
-		}catch (Exception e) {
-			// TODO: handle exception
+		}catch (Exception e) {			
 		}
 		
 		if( formatoMensaje.getFiseFormato14AC()!=null ){
@@ -870,8 +803,7 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 			    pRequest.getPortletSession().setAttribute("anoFinVigencia", anioFinVigEdit, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("etapa", etapaEdit, PortletSession.APPLICATION_SCOPE);
 			    pRequest.getPortletSession().setAttribute("flag", "", PortletSession.APPLICATION_SCOPE);//para control de mostrar formulario a ingresar
-			}
-			
+			}			
 		}
 		if(formatoMensaje.getListaMensajeError()!=null && formatoMensaje.getListaMensajeError().size()>0){
 			pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
@@ -889,7 +821,9 @@ private static final Logger logger = Logger.getLogger(Formato14AGartController.c
 		
 	}
 	
-public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String flagCarga, String codEmpresa, 	String anioPres, String mesPres, String anioIniVigencia, String anioFinVigencia, String etapaEdit) {
+   public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String flagCarga, 
+		String codEmpresa, 	String anioPres, String mesPres, String anioIniVigencia, 
+		String anioFinVigencia, String etapaEdit) {
 		
 		//---------------------
 		//FLAG CARGA:
@@ -1919,7 +1853,9 @@ public Formato14AMensajeBean readExcelFile(FileEntry archivo, User user, String 
 		return formatoMensaje;
 	}
 
-public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest uploadPortletRequest, User user, String flagCarga, String codEmpresaEdit, String anioPresEdit, String mesPresEdit, String anioIniVigEdit, String anioFinVigEdit, String etapaEdit) {
+   public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest uploadPortletRequest,
+		   User user, String flagCarga, String codEmpresaEdit, String anioPresEdit, 
+		   String mesPresEdit, String anioIniVigEdit, String anioFinVigEdit, String etapaEdit) {
 	
 	//---------------------
 	//FLAG CARGA:
@@ -2261,13 +2197,9 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 											formulario.setRegConvAgentL(new BigDecimal(0));
 											formulario.setImpEntrBandL(new BigDecimal(0));
 											formulario.setNroAgentL(0);
-										}
-										
-										
-										
+										}				
 									}
-								}
-								
+								}							
 								/**validacion de estructura de campos*/
 								
 								//-------RURAL
@@ -2532,10 +2464,7 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 								if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentL(),10) ){
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2460);
-								}
-								
-								/***/
-								
+								}				
 							}
 							//
 							formulario.setUsuario(user.getLogin());
@@ -2560,34 +2489,28 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 									formatoModif = formato14Service.obtenerFormato14ACByPK(id);
 									objeto = formato14Service.modificarFormato14AC(formulario, formatoModif);
 								}
-							}
-							
+							}							
 						}else{
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14A_2290);
-						}
-						
+						}					
 					}
 				}else{
 					cont++;
 					sMsg = sMsg + "El archivo cargado debe contener información para el Formato 14A ";
 					throw new Exception("El archivo cargado debe contener información para el Formato 14A ");
 				}
-				is.close();
-				
+				is.close();				
 			}else{
 				cont++;
 				sMsg = sMsg + "El nombre del archivo debe corresponder al periodo a declarar ";
 				throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
-			}
-			
-			
+			}			
 		}else{
 			throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_3670));
 		}
 		
-	}catch (Exception e) {			   
-		  //refer.setCondicion(false);				  
+	}catch (Exception e) {						  
 		String error = e.getMessage();
 		if( FiseConstants.BLANCO.equals(error.trim()) ){
 			error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
@@ -2598,11 +2521,8 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 		MensajeErrorBean errorBean = new MensajeErrorBean();
 		errorBean.setId(cont);
 		errorBean.setDescripcion(error);
-		listaError.add(errorBean);
-		  //throw new Exception(error); 
-		  			   
-	  }
-	//pRequest.getPortletSession().setAttribute("MensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
+		listaError.add(errorBean);	  			   
+	  }	
 	formatoMensaje.setFiseFormato14AC(objeto);
 	formatoMensaje.setMensajeError(sMsg);
 	if(listaError.size()>0)
@@ -2611,8 +2531,9 @@ public Formato14AMensajeBean readTxtFile(FileEntry archivo, UploadPortletRequest
 	return formatoMensaje;
 }
 
-@ResourceMapping("reporte")
-public void reporte(ResourceRequest request,ResourceResponse response, @ModelAttribute("formato14ACBean")Formato14ACBean command) {
+  @ResourceMapping("reporte")
+  public void reporte(ResourceRequest request,ResourceResponse response, 
+		  @ModelAttribute("formato14ACBean")Formato14ACBean command) {
 	try {
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
         HttpSession session = httpRequest.getSession();
@@ -2623,8 +2544,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	    Formato14ACBean bean = new Formato14ACBean();
 	    
 	    String codEmpresa = request.getParameter("codEmpresa").trim();
-	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
-	    //String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
+	    String periodoEnvio = request.getParameter("periodoEnvio").trim();	   
 	    String anoPresentacion = "";
 	    String mesPresentacion = "";
 	    String anoInicioVigencia = "";
@@ -2644,14 +2564,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	    if( periodoEnvio.length()>6 ){
 	    	anoPresentacion = periodoEnvio.substring(0, 4);
 	    	mesPresentacion = periodoEnvio.substring(4, 6);
-	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
-	    	/*if( "S".equals(flagPeriodoEjecucion) ){
-	    		anoInicioVigencia = request.getParameter("anoInicioVigencia");
-				anoFinVigencia = request.getParameter("anoFinVigencia");
-			}else{
-				anoInicioVigencia = anoPresentacion;
-				anoFinVigencia = anoPresentacion;
-			}*/
+	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());	    	
 	    }
 	    
 	    anoInicioVigencia = request.getParameter("anoInicioVigencia");
@@ -2687,8 +2600,9 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 
 /**Validacion de Formato**/
 
-@ResourceMapping("validacion")
-	public void validacion(ModelMap model, ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command) {
+    @ResourceMapping("validacion")
+	public void validacion(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("formato14ACBean")Formato14ACBean command) {
 	//JSONObject jsonObj = new JSONObject();
 	HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
     HttpSession session = req.getSession();
@@ -2700,8 +2614,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 		JSONArray jsonArray = new JSONArray();
 			
 		String codEmpresa = request.getParameter("codEmpresa").trim();
-	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
-	    //String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
+	    String periodoEnvio = request.getParameter("periodoEnvio").trim();	   
 	    String anoPresentacion = "";
 	    String mesPresentacion = "";
 	    String anoInicioVigencia = "";
@@ -2711,14 +2624,7 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	    if( periodoEnvio.length()>6 ){
 	    	anoPresentacion = periodoEnvio.substring(0, 4);
 	    	mesPresentacion = periodoEnvio.substring(4, 6);
-	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
-	    	/*if( "S".equals(flagPeriodoEjecucion) ){
-	    		anoInicioVigencia = request.getParameter("anoInicioVigencia");
-				anoFinVigencia = request.getParameter("anoFinVigencia");
-			}else{
-				anoInicioVigencia = anoPresentacion;
-				anoFinVigencia = anoPresentacion;
-			}*/
+	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());	    	
 	    }
 	    anoInicioVigencia = request.getParameter("anoInicioVigencia");
 		anoFinVigencia = request.getParameter("anoFinVigencia");
@@ -2747,17 +2653,15 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 					jsonObj.put("descripcion", error.getDescripcion());	
 					//agregar los valores
 					jsonArray.put(jsonObj);		
-				}
-		    			
+				}		    			
 		    	//**exportar excel
-		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, FiseConstants.NOMBRE_EXCEL_VALIDACION_F14A, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-		    	
-		    	//jsonObj.put("resultado", "OK");
+		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, 
+		    			FiseConstants.NOMBRE_EXCEL_VALIDACION_F14A, FiseConstants.NOMBRE_HOJA_VALIDACION, 
+		    			listaObservaciones);		    		    
 		    }else{
 		    	//jsonObj.put("resultado", "Error");
 		    }
-	    }
-	    
+	    }	    
 	    response.setContentType("application/json");
 	    PrintWriter pw = response.getWriter();
 	    //pw.write(jsonObj.toString());
@@ -2769,10 +2673,11 @@ public void reporte(ResourceRequest request,ResourceResponse response, @ModelAtt
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-}
+ }
 
-@ResourceMapping("reporteValidacion")
-public void reporteValidacion(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command) {
+  @ResourceMapping("reporteValidacion")
+  public void reporteValidacion(ResourceRequest request,ResourceResponse response,
+		  @ModelAttribute("formato14ACBean")Formato14ACBean command) {
 	try {
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
         HttpSession session = httpRequest.getSession();
@@ -2839,19 +2744,18 @@ public void reporteValidacion(ResourceRequest request,ResourceResponse response,
 	}catch (Exception e) {
 		e.printStackTrace();
 	}
-}
+  }
 
-@ResourceMapping("envioDefinitivo")
-public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato14ACBean")Formato14ACBean command) {
-	//FiseFormato14AC formatoActualizar = null;
+  @ResourceMapping("envioDefinitivo")
+  public void envioDefinitivo(ResourceRequest request,ResourceResponse response,
+		  @ModelAttribute("formato14ACBean")Formato14ACBean command) {
+	
 	FiseFormato14AC formato = null;
-	try {		
-		//List<byte[]> listaBytes = new ArrayList<byte[]>();		
+	try {				
 		HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
         HttpSession session = httpRequest.getSession();
         ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-        JSONObject jsonObj = new JSONObject(); 
-	    //FileEntry archivo=null;
+        JSONObject jsonObj = new JSONObject(); 	   
 	    List<FileEntryJSP> listaArchivo = new ArrayList<FileEntryJSP>();    
 	    
 	    Formato14ACBean bean = new Formato14ACBean();
@@ -2860,13 +2764,10 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	   //cambios		    
 	    boolean valorFormato = false;
 	    boolean valorActa = false;			
-		String respuestaEmail ="";
-		
-	    //OutputStream outputStream = response.getPortletOutputStream();
+		String respuestaEmail ="";   
 	    
 	    String codEmpresa = request.getParameter("codEmpresa").trim();
-	    String periodoEnvio = request.getParameter("periodoEnvio").trim();
-	    //String flagPeriodoEjecucion = command.getFlagPeriodoEjecucion();
+	    String periodoEnvio = request.getParameter("periodoEnvio").trim();	   
 	    String anoPresentacion = "";
 	    String mesPresentacion = "";
 	    String anoInicioVigencia = "";
@@ -2875,22 +2776,13 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 	    
 	    String nombreReporte = request.getParameter("nombreReporte").trim();
 	    String nombreArchivo = request.getParameter("nombreArchivo").trim();
-	    //String tipoFormato = FiseConstants.TIPO_FORMATO_12A;
-	    //String tipoArchivo = request.getParameter("tipoArchivo").trim();
+	    logger.info("Nombre del archivo:  "+nombreArchivo); 
 
 	    if( periodoEnvio.length()>6 ){
 	    	anoPresentacion = periodoEnvio.substring(0, 4);
 	    	mesPresentacion = periodoEnvio.substring(4, 6);
-	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());
-	    	/*if( "S".equals(flagPeriodoEjecucion) ){
-	    		anoInicioVigencia = request.getParameter("anoInicioVigencia");
-				anoFinVigencia = request.getParameter("anoFinVigencia");
-			}else{
-				anoInicioVigencia = anoPresentacion;
-				anoFinVigencia = anoPresentacion;
-			}*/
-	    }
-	    
+	    	etapa = periodoEnvio.substring(6, periodoEnvio.length());    	
+	    }	    
 	    anoInicioVigencia = request.getParameter("anoInicioVigencia");
 		anoFinVigencia = request.getParameter("anoFinVigencia");
 	    
@@ -3032,10 +2924,7 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 		    		   listaArchivo.add(fileEntryJsp);
 		    		   valorActa = true;
 		    	   }
-		       }	      
-	    	   /*Formato14ACBean form = new Formato14ACBean();
-	    	   form.setUsuario(themeDisplay.getUser().getLogin());
-	    	   form.setTerminal(themeDisplay.getUser().getLoginIP());*/
+		       }	      	    	  
 	    	   /**actualizamos  la fecha de envio*/
 	    	   String valorActuaizar = "0";
 		       if(valorFormato && valorActa){
@@ -3087,9 +2976,9 @@ public void envioDefinitivo(ResourceRequest request,ResourceResponse response,@M
 			formato = null;
 		}
 	}
-}
+  }
 
-public void cargarListaObservaciones(List<FiseFormato14AD> listaDetalle){
+  public void cargarListaObservaciones(List<FiseFormato14AD> listaDetalle){
 	int cont=0;
 	listaObservaciones = new ArrayList<MensajeErrorBean>();
 	for (FiseFormato14AD detalle : listaDetalle) {
@@ -3105,7 +2994,7 @@ public void cargarListaObservaciones(List<FiseFormato14AD> listaDetalle){
 			listaObservaciones.add(obs);
 		}
 	}
-}
+  }
 
 	@ResourceMapping("reporteEnvioDefinitivo")
 	public void reporteEnvioDefinitivo(ResourceRequest request,ResourceResponse response) {
