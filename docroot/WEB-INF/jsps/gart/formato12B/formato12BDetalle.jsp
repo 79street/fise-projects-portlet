@@ -1087,7 +1087,7 @@
 		<label class="labelCentrado" id="lblConfirmEnvioContent">¿Está seguro?</label>
 		</p>
 	</div>
-	<div id="dialogMessageReport" title="Mensaje de Informaci&oacute;n">
+	<div id="dialogMessageReport" title="Mensaje de &Eacute;xito">
 		<p>
 			<!-- <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span> -->
@@ -1097,7 +1097,7 @@
 		</p>	
 	</div>
 	
-	<div id="dialogMessageGeneral" title="Mensaje de Informaci&oacute;n">
+	<div id="dialogMessageGeneral" title="Mensaje de &Eacute;xito">
 		<p>
 			<!-- <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
 			</span> -->
@@ -1108,7 +1108,7 @@
 	</div>
 	
 	<!--  -->
-	<div id="<portlet:namespace/>dialog-message-info-detalle" title="Mensaje de Informaci&oacute;n">
+	<div id="<portlet:namespace/>dialog-message-info-detalle" title="Mensaje de &Eacute;xito">
 		<p>
 			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>

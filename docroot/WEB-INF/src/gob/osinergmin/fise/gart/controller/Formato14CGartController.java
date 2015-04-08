@@ -708,23 +708,25 @@ public class Formato14CGartController {
 						
 		FileEntry fileEntry=null;
 		try{
-			if(flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO)){
-				
+			String codEmpresaExcelNuevo = codEmpresaNew==null?" ":codEmpresaNew.trim();
+			String codEmpresaExcelEdit = codEmpresaEdit==null?" ":codEmpresaEdit.trim();
+			
+			if(flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO)){				
 				fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);				
 				formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, 
-						codEmpresaNew, anioPresNew, mesPresNew, anioIniVigNew, anioFinVigNew, etapaNew,flagCosto);				
+						codEmpresaExcelNuevo, anioPresNew, mesPresNew, anioIniVigNew, anioFinVigNew, etapaNew,flagCosto);				
 			}else if(flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
 				fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 				formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, 
-						codEmpresaEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit,flagCostoEdit);
+						codEmpresaExcelEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit,flagCostoEdit);
 			}else if(flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
 				fileEntry =fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 				formatoMensaje = readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), 
-					flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioIniVigNew, anioFinVigNew, etapaNew,flagCosto);
+					flagCarga, codEmpresaExcelNuevo, anioPresNew, mesPresNew, anioIniVigNew, anioFinVigNew, etapaNew,flagCosto);
 			}else if(flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
 				fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 				formatoMensaje = readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), 
-						flagCarga, codEmpresaEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit,flagCostoEdit);
+						flagCarga, codEmpresaExcelEdit, anioPresEdit, mesPresEdit, anioIniVigEdit, anioFinVigEdit, etapaEdit,flagCostoEdit);
 			}
 		}catch(FileMimeTypeException ex){
 			ex.printStackTrace();
@@ -1543,7 +1545,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F14C_390);
 						}else if(FormatoUtil.isNotBlank(bean.getNumRural())){
 							BigDecimal numR = new BigDecimal(bean.getNumRural());
-							bean.setNumRural(String.valueOf(numR.setScale(0,RoundingMode.UP)));	
+							bean.setNumRural(String.valueOf(numR.setScale(0,RoundingMode.DOWN)));	
 						}
 						
 						/*if(FormatoUtil.isBlank(bean.getNumUrbProv())){					
@@ -1560,7 +1562,7 @@ public class Formato14CGartController {
 									listaError, cont, FiseConstants.COD_ERROR_F14C_410);
 						}else if(FormatoUtil.isNotBlank(bean.getNumUrbProv())){
 							BigDecimal numP = new BigDecimal(bean.getNumUrbProv());
-							bean.setNumUrbProv(String.valueOf(numP.setScale(0,RoundingMode.UP)));	
+							bean.setNumUrbProv(String.valueOf(numP.setScale(0,RoundingMode.DOWN)));	
 						}				
 							
 						
@@ -1583,7 +1585,7 @@ public class Formato14CGartController {
 										listaError, cont, FiseConstants.COD_ERROR_F14C_430);
 							}else if(FormatoUtil.isNotBlank(bean.getNumUrbLima())){
 								BigDecimal numL = new BigDecimal(bean.getNumUrbLima());
-								bean.setNumUrbLima(String.valueOf(numL.setScale(0,RoundingMode.UP)));	
+								bean.setNumUrbLima(String.valueOf(numL.setScale(0,RoundingMode.DOWN)));	
 							}
 							
 							bean.setCostoPromUrbLima(String.valueOf(celdaCostPromL));		
@@ -3093,7 +3095,7 @@ public class Formato14CGartController {
 							int mesBean = Integer.valueOf(bean.getMesPres());						
 							logger.info("mes pres del bean: "+mesBean);
 							
-							if(codEmpresa.equals(bean.getCodEmpresa()) && 
+							if(codEmpresa.equals(bean.getCodEmpresa().trim()) && 
 									anioPres.equals(bean.getAnioPres()) &&	
 									mesForm==mesBean)
 							{
@@ -4296,7 +4298,7 @@ public class Formato14CGartController {
 						int mesBean = Integer.valueOf(bean.getMesPres());						
 						logger.info("mes pres del bean: "+mesBean);
 						
-						if(codigoEmpresa.equals(bean.getCodEmpresa()) && 
+						if(codigoEmpresa.equals(bean.getCodEmpresa().trim()) && 
 								anioPresentacion.equals(bean.getAnioPres()) &&	
 								mesForm==mesBean)
 						{

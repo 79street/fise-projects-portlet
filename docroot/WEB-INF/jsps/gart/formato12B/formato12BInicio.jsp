@@ -173,7 +173,7 @@ $(document).ready(function () {
 		</p>	
 	</div>
 	
-	<div id="<portlet:namespace/>dialog-message-info" title="Mensaje de Informaci&oacute;n">
+	<div id="<portlet:namespace/>dialog-message-info" title="Mensaje de &Eacute;xito">
 		<p>
 			<img src="/fise-projects-portlet/images/info.png" style="float:left; margin:20px 25px 20px 5px;">
 			<br/>

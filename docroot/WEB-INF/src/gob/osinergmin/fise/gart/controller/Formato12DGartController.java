@@ -134,7 +134,8 @@ public class Formato12DGartController {
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
 
 	@RequestMapping
-	public String defaultView(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public String defaultView(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 
 		listaPeriodoEnvio = new ArrayList<FisePeriodoEnvio>();
 		
@@ -166,8 +167,7 @@ public class Formato12DGartController {
 		}
 		if( beanBusqueda!=null && beanBusqueda.getEtapaB()!=null ){
 			bean.setEtapaB(beanBusqueda.getEtapaB());
-		}
-		
+		}		
 		/*bean.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
 		bean.setMesDesde(String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1));
 		bean.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
@@ -192,7 +192,8 @@ public class Formato12DGartController {
 	}
 
 	@ResourceMapping("busqueda")
-	public void grid(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public void grid(ModelMap model, ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 
 		try {
 			response.setContentType("application/json");
@@ -261,20 +262,19 @@ public class Formato12DGartController {
 			pw.flush();
 			pw.close();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "action=nuevo")
-	public String nuevoFormato(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
-		System.out.println("aqui en nuevoFormato");
+	public String nuevoFormato(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {		
 		
 		PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		String codEmpresa = renderRequest.getParameter("codEmpresa");
-		String periodo = renderRequest.getParameter("periodoDeclaracion");
+		//String periodo = renderRequest.getParameter("periodoDeclaracion");
 		String read = renderRequest.getParameter("readonly");
 		String tipoOperacion = renderRequest.getParameter("tipoOperacion");
 		
@@ -283,28 +283,17 @@ public class Formato12DGartController {
 		List<MensajeErrorBean> listaError = (List<MensajeErrorBean>)pRequest.getPortletSession().getAttribute("listaError", PortletSession.APPLICATION_SCOPE);
 		
 		String descGrupoInformacion = renderRequest.getParameter("descGrupoInformacion");
-		String descEstado = renderRequest.getParameter("descestado");
-		
-		System.out.println("codEmpresa::>" + codEmpresa);
-		System.out.println("periodo::>" + periodo);
-
-		/*if (error != null) {
-			model.addAttribute("error", error);
-		}*/
-
+		String descEstado = renderRequest.getParameter("descestado");	
+	
 		if (codEmpresa != null) {
 			bean.setCodigoEmpresa(codEmpresa);
-		}
-		//if (periodo != null) {
-		//	bean.setPeridoDeclaracion(periodo);
-		//}
+		}	
 		if (descGrupoInformacion != null) {
 			bean.setDescGrupoInformacion(descGrupoInformacion);
 		}
 		if (descEstado != null) {
 			bean.setDescEstado(descEstado);
-		}
-		
+		}		
 		//valores busqueda
 		beanBusqueda = new Formato12DCBean();
 		beanBusqueda.setCodEmpresaB(bean.getCodEmpresaB());
@@ -317,7 +306,6 @@ public class Formato12DGartController {
 		bean.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 
 		bean.setReadOnly(read != null ? Boolean.parseBoolean(read) : false);
-		//bean.setTipoOperacion((tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE : FiseConstants.ADD);
 
 		model.addAttribute("crud", (tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? CRUD_UPDATE : CRUD_CREATE);
 		model.addAttribute("readonly", "false");
@@ -333,7 +321,8 @@ public class Formato12DGartController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "action=viewedit")
-	public String viewEditFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public String viewEditFormato(ModelMap model, RenderRequest request, RenderResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 
 		PortletRequest pRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
@@ -427,14 +416,15 @@ public class Formato12DGartController {
 			model.addAttribute("msgTrans", msg);
 
 		} catch (Exception e) {
-			System.out.println("entro error view");
+			logger.error("Error al view"); 
 			e.printStackTrace();
 		}
 		return "formato12DCRUD";
 	}
 	
 	@ResourceMapping("busquedaDetalle")
-	public void gridDetalle(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public void gridDetalle(ModelMap model, ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 
 		try {
 			System.out.println("busquedaDetalle");
@@ -493,11 +483,7 @@ public class Formato12DGartController {
 						//setear algunas descripciones
 						formato.setDescMesEjecucion(mapaMeses.get(formato.getId().getMesEjecucionGasto()));
 						formato.setDescEtapaEjecucion(mapaEtapaEjecucion.get(formato.getId().getEtapaEjecucion()));
-						formato.setDescZonaBenef(mapaZonaBenef.get(formato.getIdZonaBenef()));
-						
-						//jsonArray.put(new Formato12DGartJSON().asJSONObject(formato));
-						
-						//jsonArray.put(new Formato12DGartJSON().asJSONObject(formato));
+						formato.setDescZonaBenef(mapaZonaBenef.get(formato.getIdZonaBenef()));								
 						
 						if( FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD == formato.getId().getEtapaEjecucion() ){
 							jsonArrayImplementacion.put(new Formato12DGartJSON().asJSONObject(formato));
@@ -521,54 +507,20 @@ public class Formato12DGartController {
 			jsonObj.put("implementacion", jsonArrayImplementacion);
 			jsonObj.put("operativa", jsonArrayOperativa);
 			
-			PrintWriter pw = response.getWriter();
-			//pw.write(jsonArray.toString());
-			pw.write(jsonObj.toString());
-			//pw.write(jsonArrayImplementacion.toString());
-			//pw.write(jsonArrayOperativa.toString());
-			
+			PrintWriter pw = response.getWriter();			
+			pw.write(jsonObj.toString());			
 			pw.flush();
 			pw.close();
 
 			model.addAttribute("formato12DCBean", bean);
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
-	}
-	
-	/*@ResourceMapping("cargaPeriodoDeclaracion")
-	public void cargaPeriodoDeclaracion(ModelMap model, SessionStatus status, ResourceRequest request, ResourceResponse response, 
-			@RequestParam("codEmpresa") String codEmpresa, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
-		try {
-			logger.info("cargaPeriodoDeclaracion");
-			logger.debug("-->cargaPeriodoDeclaracion");
-			response.setContentType("applicacion/json");
-
-			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresa, FiseConstants.TIPO_FORMATO_12D);
-
-			JSONArray jsonArray = new JSONArray();
-			for (FisePeriodoEnvio periodo : listaPeriodoEnvio) {
-				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("codigoItem", periodo.getCodigoItem());
-				jsonObj.put("descripcionItem", periodo.getDescripcionItem());
-				jsonObj.put("flagPeriodoEjecucion", periodo.getFlagPeriodoEjecucion());
-				// agregar los valores
-				jsonArray.put(jsonObj);
-			}
-
-			PrintWriter pw = response.getWriter();
-			pw.write(jsonArray.toString());
-			pw.flush();
-			pw.close();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-	}*/
+	}	
 	
 	@ResourceMapping("cargaPeriodo")
-  	public void cargaPeriodo(ModelMap model, ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12DCBean") Formato12DCBean bean){
+  	public void cargaPeriodo(ModelMap model, ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("formato12DCBean") Formato12DCBean bean){
 		try {			
   			response.setContentType("applicacion/json");
   			String codEmpresa = bean.getCodigoEmpresa();
@@ -591,14 +543,14 @@ public class Formato12DGartController {
   		    pw.write(jsonArray.toString());
   		    pw.flush();
   		    pw.close();							
-  		}catch (Exception e) {
-  			// TODO: handle exception
+  		}catch (Exception e) {  		
   			e.printStackTrace();
   		}
 	}
 	
 	@ResourceMapping("cargaFlagPeriodo")
-  	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12DCBean") Formato12DCBean bean){
+  	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("formato12DCBean") Formato12DCBean bean){
 		try {			
   			response.setContentType("applicacion/json");
   			String periodoEnvio = bean.getPeriodoEnvio();
@@ -641,17 +593,17 @@ public class Formato12DGartController {
   		    pw.write(jsonObj.toString());
   		    pw.flush();
   		    pw.close();							
-  		}catch (Exception e) {
-  			// TODO: handle exception
+  		}catch (Exception e) {  			
   			e.printStackTrace();
   		}
 	}
 	
 	@ActionMapping(params = "action=nuevoDetalle")
-	public void nuevoDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean,
+	public void nuevoDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean,
 			@RequestParam("origen") String origen ) {
-		String codEmpresa = bean.getCodigoEmpresa();
-		//String periodoDeclaracion = command.getPeridoDeclaracion();
+		
+		String codEmpresa = bean.getCodigoEmpresa();		
 		String periodoDeclaracion = bean.getPeriodoEnvio();//se obtiene el valor del periodo guardado de el campo descripcionPeriodoHidden(valorPeriodoHidden), probar los demas flujos
 		
 		String msg = "";
@@ -667,13 +619,9 @@ public class Formato12DGartController {
 			response.setRenderParameter("crud", CRUD_CREATE);
 		}else if( "1".equals(origen) ){
 			response.setRenderParameter("crud", CRUD_CREATEUPDATE);
-		}
-		
-		//response.setRenderParameter("crud", CRUD_CREATE);
-		response.setRenderParameter("action", "detalle");
-		
-		response.setRenderParameter("msg",msg);
-		
+		}	
+		response.setRenderParameter("action", "detalle");		
+		response.setRenderParameter("msg",msg);		
 		response.setRenderParameter("codigoEmpresaDetalle", codEmpresa);
 		response.setRenderParameter("periodoEnvioDetalle", periodoDeclaracion);
 		
@@ -683,14 +631,12 @@ public class Formato12DGartController {
 		response.setRenderParameter("anoEjecucionDetalle", FiseConstants.CERO);
 		response.setRenderParameter("mesEjecucionDetalle", FiseConstants.CERO);
 		response.setRenderParameter("etapaEjecucionDetalle", FiseConstants.CERO);
-		response.setRenderParameter("itemDetalle", FiseConstants.CERO);
-		
-		//--response.setRenderParameter("periodoEnvioDetalle", periodoDeclaracion);
-		//--response.setRenderParameter("nroItemEtapa", FiseConstants.CERO);
+		response.setRenderParameter("itemDetalle", FiseConstants.CERO);		
 	}
 
 	@RequestMapping(params = "action=detalle")
-	public String detalle(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @RequestParam("crud") String crud, @RequestParam("msg") String msg,
+	public String detalle(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, 
+			@RequestParam("crud") String crud, @RequestParam("msg") String msg,
 			@RequestParam("codigoEmpresaDetalle") String codEmpresa, 
 			@RequestParam("periodoEnvioDetalle") String periodoDeclaracion,
 			@RequestParam("anoPresentacionDetalle") String anoPresentacion,
@@ -701,10 +647,6 @@ public class Formato12DGartController {
 			@RequestParam("etapaEjecucionDetalle") String etapaEjecucion,
 			@RequestParam("itemDetalle") String nroItemEtapa,
 			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
-
-		//String codEmpresa = bean.getCodigoEmpresa();
-		//String  periodoDeclaracion = bean.getPeriodoEnvio();
-		
 		
 		logger.info("valores requestparameter" + crud);
 		logger.info("valores periodoDeclaracion" + periodoDeclaracion);
@@ -870,24 +812,15 @@ public class Formato12DGartController {
 							}
 							
 							break;
-						}
-						
-					}
-					
-				}
-				
+						}						
+					}					
+				}				
 			} else if (CRUD_CREATE.equals(crud) || CRUD_CREATEUPDATE.equals(crud) ) {
 				model.addAttribute("readonlyEdit", "false");
-
 				bean.setAnioEjecucion(Long.parseLong(anioPres));
-				bean.setMesEjecucion(Long.parseLong(mesPres));
-				
-			}
-			//----
+				bean.setMesEjecucion(Long.parseLong(mesPres));				
+			}			
 		}
-		
-
-
 		model.addAttribute("crud", crud);
 		model.addAttribute("msg", msg);
 		
@@ -899,7 +832,8 @@ public class Formato12DGartController {
 	}
 	
 	@ResourceMapping("provincias")
-	public void cargarProvincias(ModelMap model, SessionStatus status, ResourceRequest request, ResourceResponse response, @RequestParam("codDepartamento") String codDepartamento) {
+	public void cargarProvincias(ModelMap model, SessionStatus status, ResourceRequest request, 
+			ResourceResponse response, @RequestParam("codDepartamento") String codDepartamento) {
 		try {
 			logger.info("cargarProvincias");
 			logger.debug("-->cargarProvincias");
@@ -928,14 +862,14 @@ public class Formato12DGartController {
 			pw.write(jsonArray.toString());
 			pw.flush();
 			pw.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 	}
 
 	@ResourceMapping("distritos")
-	public void cargaDistritos(ModelMap model, SessionStatus status, ResourceRequest request, ResourceResponse response, @RequestParam("codProvincia") String codProvincia) {
+	public void cargaDistritos(ModelMap model, SessionStatus status, ResourceRequest request, 
+			ResourceResponse response, @RequestParam("codProvincia") String codProvincia) {
 		try {
 			logger.info("cargaDistritos");
 			logger.debug("-->cargaDistritos");
@@ -965,19 +899,15 @@ public class Formato12DGartController {
 			pw.write(jsonArray.toString());
 			pw.flush();
 			pw.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 	}
 	
 	@ActionMapping(params = "action=guardarDetalle")
-	public void guardarDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, @RequestParam("crud") String crud, 
-			//--@RequestParam("idZonaBenef") String idZona, 
-			@RequestParam("codEmpresa") String codEmpresa, 
-			//--@RequestParam("periodoEnvio") String periodoEnvio, 
-			//--@RequestParam("anoEjecucionHidden") String anoEjecucionHidden, @RequestParam("mesEjecucionHidden") String mesEjecucionHidden, 
-			//--@RequestParam("etapaEjecucionHidden") String etapaEjecucionHidden,
+	public void guardarDetalleFormato(ModelMap model, ActionRequest request, ActionResponse response, 
+			@RequestParam("crud") String crud, 			
+			@RequestParam("codEmpresa") String codEmpresa, 			
 			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
@@ -986,7 +916,6 @@ public class Formato12DGartController {
 
 		FiseFormato12DC f = null;
 		
-		//String codEmpresa = bean.getCodigoEmpresa();
 		Long anoPresentacion = bean.getAnioPresentacion();
 		Long mesPresentacion = bean.getMesPresentacion();
 		String etapa = bean.getEtapa();
@@ -1010,10 +939,7 @@ public class Formato12DGartController {
 			bean.setTerminal(themeDisplay.getUser().getLoginIP());
 
 			FiseFormato12DCPK pk = new FiseFormato12DCPK();
-			pk.setCodEmpresa(codEmpresa);
-			/*pk.setAnoPresentacion(Long.parseLong(anioPresentacion));
-			pk.setMesPresentacion(Long.parseLong(mesPresentacion));
-			pk.setEtapa(etapa);*/
+			pk.setCodEmpresa(codEmpresa);			
 			pk.setAnoPresentacion(anoPresentacion);
 			pk.setMesPresentacion(mesPresentacion);
 			pk.setEtapa(etapa);
@@ -1038,15 +964,12 @@ public class Formato12DGartController {
 				//para nuevos registros
 				f = formatoService.registrarFormato12DCregistrarFormato12DD(bean);
 				msg = "OK1";
-			}
-			
-			//-----msg = "OK";
-			
+			}			
+			//-----msg = "OK";			
 		} catch (Exception e) {
 			//e.printStackTrace();
 			msg = "ERROR";
-		}
-		
+		}		
 		if(periodoEnvio==null){
 			periodoEnvio = ""+anoPresentacion+FormatoUtil.rellenaIzquierda(""+mesPresentacion, '0', 2)+etapa;
 		}
@@ -1064,12 +987,9 @@ public class Formato12DGartController {
 				response.setRenderParameter("crud", CRUD_UPDATE);
 			}
 		}
-
-		//response.setRenderParameter("crud", CRUD_READ_CREATEUPDATE);
-		response.setRenderParameter("action", "detalle");
 		
-		response.setRenderParameter("msg", msg);
-		
+		response.setRenderParameter("action", "detalle");		
+		response.setRenderParameter("msg", msg);		
 		response.setRenderParameter("codigoEmpresaDetalle", codEmpresa);
 		response.setRenderParameter("periodoEnvioDetalle", periodoEnvio);
 		
@@ -1080,15 +1000,11 @@ public class Formato12DGartController {
 		response.setRenderParameter("mesEjecucionDetalle", f.getMesEjecucionDetalle().toString());
 		response.setRenderParameter("etapaEjecucionDetalle", f.getEtapaEjecucionDetalle().toString());
 		response.setRenderParameter("itemDetalle", f.getNumeroItemEtapaDetalle().toString());
-		
-		
-		//--response.setRenderParameter("periodoEnvioDetalle", periodoEnvio);
-		//---response.setRenderParameter("nroItemEtapa", f.getNumeroItemEtapaDetalle().toString());
-
 	}
 	
 	@ResourceMapping("deleteDetalle")
-	public void deleteDetalle(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public void deleteDetalle(ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 		try {
 			JSONObject jsonObj = new JSONObject();
 			FiseFormato12DC formato = new FiseFormato12DC();
@@ -1140,7 +1056,8 @@ public class Formato12DGartController {
 	}
 
 	@ResourceMapping("deleteCabecera")
-	public void deleteCabecera(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public void deleteCabecera(ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 		try {
 			JSONObject jsonObj = new JSONObject();
 			FiseFormato12DC formato = new FiseFormato12DC();
@@ -1179,7 +1096,8 @@ public class Formato12DGartController {
 	
 	/** reportes */
 	@ResourceMapping("reporte")
-	public void reporte(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public void reporte(ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 			HttpSession session = httpRequest.getSession();
@@ -1235,7 +1153,8 @@ public class Formato12DGartController {
 
 	/** validacion y envio definitivo */
 	@ResourceMapping("validacion")
-	public void validacion(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public void validacion(ModelMap model, ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 		HttpServletRequest req = PortalUtil.getHttpServletRequest(request);
 		HttpSession session = req.getSession();
 
@@ -1291,7 +1210,8 @@ public class Formato12DGartController {
 	}
 
 	@ResourceMapping("reporteValidacion")
-	public void reporteValidacion(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public void reporteValidacion(ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 			HttpSession session = httpRequest.getSession();
@@ -1349,8 +1269,9 @@ public class Formato12DGartController {
 	}
 
 	@ResourceMapping("envioDefinitivo")
-	public void envioDefinitivo(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
-		//FiseFormato12DC formatoActualizar = null;
+	public void envioDefinitivo(ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+		
 		FiseFormato12DC formato = null;
 		try {
 
@@ -1376,7 +1297,7 @@ public class Formato12DGartController {
 
 			String nombreReporte = request.getParameter("nombreReporte").trim();
 			String nombreArchivo = request.getParameter("nombreArchivo").trim();
-
+            logger.info("Nombre del archivo:  "+nombreArchivo); 
 			FiseFormato12DCPK pk = new FiseFormato12DCPK();
 			pk.setCodEmpresa(codEmpresa);
 			pk.setAnoPresentacion(new Long(anoPresentacion));
@@ -1617,7 +1538,8 @@ public class Formato12DGartController {
 	}
 	
 	@ResourceMapping("reporteActaEnvioView")
-	public void reporteActaEnvio(ResourceRequest request,ResourceResponse response, @ModelAttribute("formato12DCBean") Formato12DCBean bean) {
+	public void reporteActaEnvio(ResourceRequest request,ResourceResponse response, 
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 			HttpSession session = httpRequest.getSession();
@@ -1707,7 +1629,8 @@ public class Formato12DGartController {
 	
 	/***CARGA EXCEL Y TXT***/
 	@ActionMapping(params="action=uploadFile")
-	public void cargarDocumento(ActionRequest request,ActionResponse response,@ModelAttribute("formato12DCBean") Formato12DCBean bean){
+	public void cargarDocumento(ActionRequest request,ActionResponse response,
+			@ModelAttribute("formato12DCBean") Formato12DCBean bean){
 		
 		logger.info("--- cargar documento");
 		
@@ -1757,24 +1680,18 @@ public class Formato12DGartController {
 			
 		}catch(FileMimeTypeException ex){
 			
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
+		}catch (Exception e) {			
+		}	
 		
-		
-		
-		if( formatoMensaje.getFiseFormato12DC()!=null ){
-			
+		if( formatoMensaje.getFiseFormato12DC()!=null ){			
 			response.setRenderParameter("action", "viewedit");
-			response.setRenderParameter("msgTrans", "OK");
-			
+			response.setRenderParameter("msgTrans", "OK");			
 			response.setRenderParameter("tipo", FiseConstants.UPDATE+"");
 			response.setRenderParameter("codEmpresa", formatoMensaje.getFiseFormato12DC().getId().getCodEmpresa());
 			response.setRenderParameter("anioPresentacion", ""+formatoMensaje.getFiseFormato12DC().getId().getAnoPresentacion());
 			response.setRenderParameter("mesPresentacion", ""+formatoMensaje.getFiseFormato12DC().getId().getMesPresentacion());
 			response.setRenderParameter("etapa", formatoMensaje.getFiseFormato12DC().getId().getEtapa());
-		}else{
-			
+		}else{			
 			response.setRenderParameter("msgTrans", "ERROR");
 			
 			if(CRUD_CREATE.equals(tipoOperacion)){
@@ -1785,25 +1702,23 @@ public class Formato12DGartController {
 				response.setRenderParameter("anioPresentacion", anioPresNew);
 				response.setRenderParameter("mesPresentacion", mesPresNew);
 				response.setRenderParameter("etapa", etapaNew);
-			}else if(CRUD_UPDATE.equals(tipoOperacion)){
-				
+			}else if(CRUD_UPDATE.equals(tipoOperacion)){				
 				response.setRenderParameter("action", "viewedit");
 				response.setRenderParameter("tipo", FiseConstants.UPDATE+"");
 				response.setRenderParameter("codEmpresa", codEmpresaEdit);
 				response.setRenderParameter("anioPresentacion", anioPresEdit);
 				response.setRenderParameter("mesPresentacion", mesPresEdit);
 				response.setRenderParameter("etapa", etapaEdit);
-			}
-			
+			}			
 			if(formatoMensaje.getListaMensajeError()!=null && formatoMensaje.getListaMensajeError().size()>0){
 				pRequest.getPortletSession().setAttribute("listaError", formatoMensaje.getListaMensajeError(), PortletSession.APPLICATION_SCOPE);
-			}
-			
-		}
-		
+			}		
+		}	
 	}
 	
-	public Formato12DMensajeBean readExcelFile(FileEntry archivo, User user, String tipoOperacion, String codEmpresa, 	String anioPres, String mesPres, String etapaEdit) {
+	
+	public Formato12DMensajeBean readExcelFile(FileEntry archivo, User user, String tipoOperacion, 
+			String codEmpresa, 	String anioPres, String mesPres, String etapaEdit) {
 		
 		Formato12DMensajeBean formatoMensaje = new Formato12DMensajeBean();
 
