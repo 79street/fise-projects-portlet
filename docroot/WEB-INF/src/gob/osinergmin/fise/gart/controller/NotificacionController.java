@@ -1806,13 +1806,13 @@ public class NotificacionController {
 						not.setCodEmpresa(d.getId().getCodEmpresa());
 						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
 						not.setAnioPres(""+d.getId().getAnoPresentacion());
-						not.setMesPres(""+d.getId().getMesPresentacion());
+						not.setMesPres(""+d.getId().getMesPresentacion());						
 						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion())); 
 						not.setEtapa(d.getId().getEtapa());
 						not.setAnioEjec(""+d.getId().getAnoEjecucionGasto());
-						not.setMesEjec(""+d.getId().getMesEjecucionGasto()); 
+						not.setMesEjec(""+d.getId().getMesEjecucionGasto()); 						
 						not.setDesMesEje(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion())); 
-						not.setIdZona(""+d.getId().getIdZonaBenef()); 
+						not.setIdZona(""+d.getId().getIdZonaBenef()); 						
 						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));						
 						listaDetalle.add(not);
 					}	    	
@@ -1828,18 +1828,19 @@ public class NotificacionController {
 				FiseFormato12BC formato12B =formatoService12B.getFormatoCabeceraById(pk);
 				if(formato12B!=null){					
 					for (FiseFormato12BD d : formato12B.getListaDetalle12BDs()) {
+						logger.info("Tamanio lista detalle:  "+formato12B.getListaDetalle12BDs().size()); 
 						not = new NotificacionBean();
 						not.setCodEmpresa(d.getId().getCodEmpresa());
 						not.setDesEmpresa(mapaEmpresa.get(d.getId().getCodEmpresa()));
 						not.setAnioPres(""+d.getId().getAnoPresentacion());
-						not.setMesPres(""+d.getId().getMesPresentacion());
-						not.setDesMes(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion())); 
+						not.setMesPres(""+d.getId().getMesPresentacion());						
+						not.setDesMes(fiseUtil.getMapaMeses().get(new Long(d.getId().getMesPresentacion())));						
 						not.setEtapa(d.getId().getEtapa());
-						not.setAnioEjec(""+d.getId().getAnoEjecucionGasto());
-						not.setMesEjec(""+d.getId().getMesEjecucionGasto()); 
-						not.setDesMesEje(fiseUtil.getMapaMeses().get(d.getId().getMesPresentacion()));
-						not.setIdZona(""+d.getId().getIdZonaBenef()); 
-						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));						
+						not.setAnioEjec(""+d.getId().getAnoEjecucionGasto());						
+						not.setMesEjec(""+d.getId().getMesEjecucionGasto()); 						
+						not.setDesMesEje(fiseUtil.getMapaMeses().get(new Long(d.getId().getMesPresentacion())));
+						not.setIdZona(""+d.getId().getIdZonaBenef()); 						
+						not.setDesZona(fiseUtil.getMapaZonaBenef().get(new Long(d.getId().getIdZonaBenef())));						
 						listaDetalle.add(not);	
 					}		
 				}			
@@ -1989,6 +1990,7 @@ public class NotificacionController {
 						not.setAnioFinVig(""+d.getId().getAnoFinVigencia());
 						not.setIdZona(""+d.getId().getIdZonaBenef());
 						not.setDesZona(fiseUtil.getMapaZonaBenef().get(d.getId().getIdZonaBenef()));
+						logger.info("Descripcion de la zona a mostrar:  "+not.getDesZona()); 
 						not.setIdPersonal(""+d.getId().getIdTipPersonal()); 
 						not.setDesPersonal(fiseUtil.getMapaTipoPersonal().get(d.getId().getIdTipPersonal()));					
 						listaDetalle.add(not);		
@@ -2088,7 +2090,7 @@ public class NotificacionController {
 					not.setAnioEjec(""+o.getId().getAnoEjecucionGasto());
 					not.setMesEjec(""+o.getId().getMesEjecucionGasto());					
 					not.setIdZona(""+o.getId().getIdZonaBenef()); 
-					not.setDesZona(fiseUtil.getMapaZonaBenef().get(o.getId().getIdZonaBenef()));
+					not.setDesZona(fiseUtil.getMapaZonaBenef().get(new Long(o.getId().getIdZonaBenef())));
 					not.setItemObs(""+o.getId().getItemObservacion()); 
 					not.setIdObservacion(""+o.getFiseObservacion().getIdObservacion()); 
 					not.setDesObservacion(o.getFiseObservacion().getDescripcion());

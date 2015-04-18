@@ -48,6 +48,9 @@ var resumenCosto= {
 	    urlVerF12AExcel:null,
 	    urlVerF12B:null,	
 	    urlVerF12BExcel:null,	
+	    ///////////////////
+	    urlVerTotalesF12ABPdf:null,	
+	    urlVerTotalesF12ABExcel:null,
 	    //comparativo de costos
 	    urlVerCostoCompF14AB:null,	
 	    urlVerCostoCompF14ABExcel:null,
@@ -106,6 +109,9 @@ var resumenCosto= {
 			this.urlVerF12AExcel='<portlet:resourceURL id="verResumenCostoF12AExcel" />'; 	
 			this.urlVerF12B='<portlet:resourceURL id="verResumenCostoF12B" />'; 
 			this.urlVerF12BExcel='<portlet:resourceURL id="verResumenCostoF12BExcel" />';
+			/////////////////////////////////
+			this.urlVerTotalesF12ABPdf='<portlet:resourceURL id="verResumenCostoTotalF12ABPdf" />'; 
+			this.urlVerTotalesF12ABExcel='<portlet:resourceURL id="verResumenCostoTotalF12BExcel" />';			
 			//costos comparativos
 			this.urlVerCostoCompF14AB='<portlet:resourceURL id="verResumenCostoComF14AB" />'; 
 			this.urlVerCostoCompF14ABExcel='<portlet:resourceURL id="verResumenCostoCompF14ABExcel" />';
@@ -165,8 +171,10 @@ var resumenCosto= {
 				console.debug("entranado a exportar los mensuales: "+resumenCosto.i_cboMensual.val());
 				var valorPdf = document.getElementById('rbtPdf').checked;
 				var valorExcel = document.getElementById('rbtExcel').checked;
+				var idFormato = resumenCosto.i_cboMensual.val();
 				console.debug("entranado a exportar los mensuales PDF: "+valorPdf);	
 				console.debug("entranado a exportar los mensuales Excel: "+valorExcel);	
+				console.debug("entranado a exportar los mensuales id formato: "+idFormato);	
 				
 				if(valorPdf && resumenCosto.i_cboMensual.val()=='F12A'){					
 					resumenCosto.mostrarReporteCostoF12A();
@@ -176,6 +184,10 @@ var resumenCosto= {
 					resumenCosto.mostrarReporteCostoF12B();	
 				}else if(valorExcel && resumenCosto.i_cboMensual.val()=='F12B'){
 					resumenCosto.mostrarReporteCostoF12BExcel();
+				}else if(valorPdf){
+					resumenCosto.mostrarReporteCostoTotalF12ABPdf(idFormato);
+				}else if(valorExcel){
+					resumenCosto.mostrarReporteCostoTotalF12ABExcel(idFormato);
 				}else{					
 				}				
 			});		
@@ -555,7 +567,91 @@ var resumenCosto= {
 					}
 				});	
 			}		
+		}, 	
+		
+	  //funcion para mostrar reporte de resumen de costos toales en pdf F12A y 12B		
+		mostrarReporteCostoTotalF12ABPdf : function(idFormato){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
+			console.debug("entranado a  ver el reporte resumen costo totales F12A y 12B pdf");
+			if (resumenCosto.validarBusqueda()){
+				$.blockUI({ message: resumenCosto.mensajeReporte});
+				jQuery.ajax({
+					url: resumenCosto.urlVerTotalesF12ABPdf+'&'+resumenCosto.formCommand.serialize(),
+					type : 'post',
+					dataType : 'json',
+					data : {					
+						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />tipoFormato: idFormato,
+						   <portlet:namespace />desGrupoInf: desGrupo
+					},
+					success : function(data) {
+						if(data.resultado=='OK'){
+							resumenCosto.verReporteCostos();	
+							resumenCosto.initBlockUI();
+						}else if(data.resultado=='VACIO'){							
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
+							resumenCosto.dialogInfoContent.html(addhtmInfo);
+							resumenCosto.dialogInfo.dialog("open");	
+							resumenCosto.initBlockUI();
+						}else{							
+							var addhtmError='Error al mostrar el reporte del resumen totales de costos';					
+							resumenCosto.dialogErrorContent.html(addhtmError);
+							resumenCosto.dialogError.dialog("open");	
+							resumenCosto.initBlockUI();
+						}
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						resumenCosto.dialogErrorContent.html(addhtmError);
+						resumenCosto.dialogError.dialog("open");
+						resumenCosto.initBlockUI();
+					}
+				});	
+			}		
 		}, 
+		
+		
+		//funcion para mostrar reporte de resumen de costos totales F12A y 12B exel		
+		mostrarReporteCostoTotalF12ABExcel : function(idFormato){
+			var desGrupo = document.getElementById('grupoInfBusq')[document.getElementById('grupoInfBusq').selectedIndex].innerHTML;
+			console.debug("entranado a  ver el reporte resumen costo totales F12A y 12B excel");
+			if (resumenCosto.validarBusqueda()){
+				$.blockUI({ message: resumenCosto.mensajeReporte});
+				jQuery.ajax({
+					url: resumenCosto.urlVerTotalesF12ABExcel+'&'+resumenCosto.formCommand.serialize(),
+					type : 'post',
+					dataType : 'json',
+					data : {					
+						   <portlet:namespace />codEmpresaBusq: resumenCosto.i_codEmpresaBusq.val(),
+						   <portlet:namespace />grupoInfBusq: resumenCosto.i_grupoInfBusq.val(),
+						   <portlet:namespace />tipoFormato: idFormato,
+						   <portlet:namespace />desGrupoInf: desGrupo
+					},
+					success : function(data) {
+						if(data.resultado=='OK'){
+							resumenCosto.verReporteCostos();	
+							resumenCosto.initBlockUI();
+						}else if(data.resultado=='VACIO'){							
+							var addhtmInfo='No existe información para los criterios seleccionados.';					
+							resumenCosto.dialogInfoContent.html(addhtmInfo);
+							resumenCosto.dialogInfo.dialog("open");	
+							resumenCosto.initBlockUI();
+						}else{							
+							var addhtmError='Error al mostrar el reporte del resumen de totales de costos ';					
+							resumenCosto.dialogErrorContent.html(addhtmError);
+							resumenCosto.dialogError.dialog("open");	
+							resumenCosto.initBlockUI();
+						}
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						resumenCosto.dialogErrorContent.html(addhtmError);
+						resumenCosto.dialogError.dialog("open");
+						resumenCosto.initBlockUI();
+					}
+				});	
+			}		
+		}, 
+		
 				
 	    //funcion para ver reporte de resumen de costos comparativos Formatos 14A y 14B			
 		mostrarReporteCostoComparativosF14AB : function(){

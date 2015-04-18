@@ -1179,11 +1179,18 @@ public class Formato12CGartController {
 				// setamos los valores en el bean
 				reportBean = formatoService.estructurarFormato12CBeanByFiseFormato12CC(formato);
 				reportBean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
-				reportBean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
-				//
+				reportBean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));			
 				// cargamos la lista a enviar
-				session.setAttribute("lista", formato.getFiseFormato12CDs());
+				//cambios elozano
+				List<FiseFormato12CD> listaEnviar = new ArrayList<FiseFormato12CD>();
+				//logger.error("Tamanio de lista a enviar para el reporte:  "+formato.getFiseFormato12CDs().size());
+				for(FiseFormato12CD d : formato.getFiseFormato12CDs()){					
+					d.setDescZonaBenef(mapaZonaBenef.get(d.getIdZonaBenef()));
+					d.setIdTipDocRef(mapaTipoDocumento.get(d.getIdTipDocRef()));  
+					listaEnviar.add(d);
+				}
 				
+				session.setAttribute("lista", listaEnviar);				
 				session.setAttribute("mapa", formatoService.mapearParametrosFormato12C(reportBean) );
 			}
 			response.setContentType("application/json");
@@ -1860,6 +1867,7 @@ public class Formato12CGartController {
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3352);
 						}
+						
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaAnio.getCellType()  ){
 							formulario.setAnioPresentacion(new Double(celdaAnio.getNumericCellValue()).longValue());
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaAnio.getCellType()  ){
@@ -1871,6 +1879,7 @@ public class Formato12CGartController {
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3354);
 						}
+						
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaMes.getCellType()  ){
 							formulario.setMesPresentacion(new Double(celdaMes.getNumericCellValue()).longValue());
 						}else if( HSSFCell.CELL_TYPE_BLANK == celdaMes.getCellType()  ){
@@ -2048,12 +2057,15 @@ public class Formato12CGartController {
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3369,i+1));
 									}
 									
-									//CUENTA CONTABLE
+									//CUENTA CONTABLE									
 									if( HSSFCell.CELL_TYPE_STRING == celdaCuentaContable.getCellType() ){
 										detalleBean.setCodCuentaContable(celdaCuentaContable.toString());
+										logger.error("pasando cuenta a String:   "+celdaCuentaContable.toString());
 									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaCuentaContable.getCellType()  ){
 										String valor = "" + celdaCuentaContable.getNumericCellValue();
 										detalleBean.setCodCuentaContable(FormatoUtil.eliminaDecimales(valor));
+										logger.error("pasando cuenta  numeric:   "+valor);
+										logger.error("pasando cuenta a numeric:   "+FormatoUtil.eliminaDecimales(valor));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaCuentaContable.getCellType()  ){
 										detalleBean.setCodCuentaContable(FiseConstants.BLANCO);
 										cont++;
@@ -2063,6 +2075,8 @@ public class Formato12CGartController {
 										cont++;
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3374,i+1));
 									}
+									
+									
 									//ACTIVIDAD
 									if( HSSFCell.CELL_TYPE_STRING == celdaActividad.getCellType() ){
 										detalleBean.setActividad(celdaActividad.toString());

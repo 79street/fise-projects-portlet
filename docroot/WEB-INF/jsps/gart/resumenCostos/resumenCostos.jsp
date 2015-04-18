@@ -155,10 +155,17 @@ $(document).ready(function () {
 											   <div id="<portlet:namespace/>div_F12A">
 											   
 											       <div id="<portlet:namespace/>div_F12B_opciones"> 							 
-													     
+													     <!--  F12AT, F12BT = resumen de costos totales solicitado y reconocido-->
+													     <!--  F12AR, F12BR = resumen de costos totales reconocido-->
+													     <!--  F12ABR = resumen de costos totales reconocido 12A+12B-->
 														<form:select path="optionMensual" cssClass="select" cssStyle="width: 150px;">														
 															<form:option value="F12A">F12A</form:option>
-															<form:option value="F12B">F12B</form:option>														
+															<form:option value="F12B">F12B</form:option>
+															<form:option value="F12AT">F12A-Totales</form:option>
+															<form:option value="F12BT">F12B-Totales</form:option>
+															<form:option value="F12AR">F12A-Resumen</form:option>
+															<form:option value="F12BR">F12B-Resumen</form:option>
+															<form:option value="F12ABR">F12A + F12B</form:option> 													
 														</form:select>
 																						     											     
 												   </div>									  

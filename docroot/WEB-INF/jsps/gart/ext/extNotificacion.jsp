@@ -1874,18 +1874,18 @@ var notificarValidar= {
 		/**Function para confirmar si quiere eliminar la observacion manual o no*/
 		confirmarEliminarObs : function(cod_observacion,item_observacion,origen_obs){
 			console.debug("entranado a eliminar observacion confirmar:  "+item_observacion);
-			if(origen_obs=='M'){
+			//if(origen_obs=='M'){
 				var addhtml='¿Está seguro que desea eliminar la Observación seleccionada?';
 				notificarValidar.dialogEliminarObsContent.html(addhtml);
 				notificarValidar.dialogEliminarObs.dialog("open");	
 				codObservacion=cod_observacion;
 				itemObservacion=item_observacion;				
-			}else{
+			/*}else{
 				var addhtmInfo='La Observación no puede ser eliminada ha sido generado de manera automática.';					
 				notificarValidar.dialogInfoContent.html(addhtmInfo);
 				notificarValidar.dialogInfo.dialog("open");	
 				notificarValidar.initBlockUI();	
-			}		
+			}*/		
 		},
 		/**Function para  eliminar la obsercacion manual una vez hecho la confirmacion*/
 		eliminarObservacion : function(codObservacion,itemObservacion){

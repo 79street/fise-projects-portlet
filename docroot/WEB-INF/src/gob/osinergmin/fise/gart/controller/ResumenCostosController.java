@@ -424,6 +424,7 @@ public class ResumenCostosController {
 		}
     }
 	
+	/*****Resumen de costos para formatos 12A y 12B PDF y EXCEL******/	
 	
 	@ResourceMapping("verResumenCostoF12A")
 	public void verResumenF12A(ModelMap model, ResourceRequest request,ResourceResponse response,
@@ -562,9 +563,7 @@ public class ResumenCostosController {
 				listaF12A =null;
 			}		
 		}
-    }
-	
-	
+    }	
 	
 	@ResourceMapping("verResumenCostoF12B")
 	public void verResumenF12B(ModelMap model, ResourceRequest request,ResourceResponse response,
@@ -703,6 +702,207 @@ public class ResumenCostosController {
 			}		
 		}
     }
+	
+	/****Metodos para los nuevos reportes en PDF*****/
+	
+	@ResourceMapping("verResumenCostoTotalF12ABPdf")
+	public void verResumenTotalesF12ABPdf(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> lista =null;
+		byte[] bytes = null;
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+			
+			logger.info("Entrando a ver reporte de resumen de costos totales de F12A"); 
+			logger.info("Tipo de formato para el reporte en pdf:   "+r.getTipoFormato());
+
+			String tipoReporte = r.getTipoFormato()==null?"":r.getTipoFormato();
+			
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);			
+			logger.info("periocidad:  "+r.getOptionFormato());
+			
+			JSONObject jsonObj = new JSONObject();	  	    
+            String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");		    
+		    Map<String, Object> mapa = new  HashMap<String, Object>();
+		    
+		    String tipoFormato= "";
+		    String nombreFormato ="";
+		    String nombreReporte = "";
+		    
+		    if(tipoReporte.equals("F12AT")){ 
+		    	nombreFormato = FiseConstants.NOMBRE_F12A;
+			    tipoFormato = "RESUMEN DE COSTOS TOTALES F12A ";  	    
+			    nombreReporte = "resumenCostosTotal_12A_12B"; 		    
+			    lista = resumenCostosService.buscarResumenCostoTotalesF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12A");	
+		    }else if(tipoReporte.equals("F12BT")){
+		    	nombreFormato = FiseConstants.NOMBRE_F12B;
+			    tipoFormato = "RESUMEN DE COSTOS TOTALES F12B ";  	    
+			    nombreReporte = "resumenCostosTotal_12A_12B"; 		    
+			    lista = resumenCostosService.buscarResumenCostoTotalesF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12B");	
+		    }else if(tipoReporte.equals("F12AR")){
+		    	nombreFormato = FiseConstants.NOMBRE_F12A;
+			    tipoFormato = "RESUMEN DE COSTOS TOTALES F12A ";  	    
+			    nombreReporte = "resumenCostosReconocido_12A_12B"; 		    
+			    lista = resumenCostosService.buscarResumenCostoTotalesAprobadoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12A");	
+		    }else if(tipoReporte.equals("F12BR")){
+		    	nombreFormato = FiseConstants.NOMBRE_F12B;
+			    tipoFormato = "RESUMEN DE COSTOS TOTALES F12B ";  	    
+			    nombreReporte = "resumenCostosReconocido_12A_12B"; 		    
+			    lista = resumenCostosService.buscarResumenCostoTotalesAprobadoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12B");	
+		    }else if(tipoReporte.equals("F12ABR")){
+		    	nombreFormato = FiseConstants.NOMBRE_F12AB;
+			    tipoFormato = "RESUMEN DE COSTOS CONSOLIDADO F12A + F12B ";  	    
+			    nombreReporte = "resumenCostosReconocido_12A+12B"; 		    
+			    lista = resumenCostosService.buscarResumenCostoConsolidadoAprobadoF12AB(r.getCodEmpresaBusq(), idGrupoInf);	
+		    }			   		    
+		    
+		    mapa.put("IMG", rutaImg);
+		    mapa.put("TIPO_FORMATO", nombreFormato);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);	
+			String tipoArchivo = "3";//PDF	
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+		    String directorio = "/reports/" + nombreReporte + ".jasper";
+		    
+		    if(lista!=null && lista.size()>0){
+		    	File reportFile = new File(session.getServletContext().getRealPath(directorio));
+		    	bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
+		    			new JRBeanCollectionDataSource(lista));
+		    	if (bytes != null) {				  	  		    		
+		    		session.setAttribute("bytesFormato", bytes);
+		    		jsonObj.put("resultado", "OK");	   	
+		    	}else{
+		    		jsonObj.put("resultado", "ERROR");	   
+		    	}
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		   
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver reporte de reseumen de costo totales de F12A y F12B: "+e); 
+			e.printStackTrace();
+		}finally{	
+			if(lista!=null){
+				lista =null;
+			}
+			if(bytes!=null){
+				bytes=null;
+			}
+		}
+    }	
+	
+	@ResourceMapping("verResumenCostoTotalF12BExcel")
+	public void verResumenTotalesF12BExcel(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("resumenCostoBean")ResumenCostoBean r) {		
+		List<ResumenCostoBean> lista =null;		
+		try {	
+			
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();		    
+		    
+			logger.info("Entrando a ver reporte de resumen de costos totales de F12A y 12B Excel"); 	
+			logger.info("Tipo de formato para el reporte en excel:   "+r.getTipoFormato());
+			
+			String tipoReporte = r.getTipoFormato()==null?"":r.getTipoFormato();
+			
+			long idGrupoInf = 0;
+			if(FormatoUtil.isNotBlank(r.getGrupoInfBusq())){
+				idGrupoInf = Long.valueOf(r.getGrupoInfBusq());
+			}
+			
+			logger.info("codEmpresa:  "+r.getCodEmpresaBusq());
+			logger.info("grupo inf:  "+idGrupoInf);		
+			logger.info("periocidad:  "+r.getOptionFormato());	
+			
+			JSONObject jsonObj = new JSONObject();        
+            String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
+            Map<String, Object> mapa = new  HashMap<String, Object>();
+            
+            String tipoFormato= "";
+		    String nombreFormato ="";
+		    String nombreReporte = "";
+		    String nombreArchivo = "";
+		   
+		   		  
+		    if(tipoReporte.equals("F12AT")){ 
+		    	nombreFormato = FiseConstants.NOMBRE_F12A;
+			    tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;		   
+			    nombreReporte = "resumenCostosTotal_12A_12B_Excel";
+			    nombreArchivo ="RESUMEN_COSTO_TOTALES_F12A"; 	    
+			    lista = resumenCostosService.buscarResumenCostoTotalesF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12A"); 
+		    }else if(tipoReporte.equals("F12BT")){ 
+		    	nombreFormato = FiseConstants.NOMBRE_F12B;
+			    tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;		   
+			    nombreReporte = "resumenCostosTotal_12A_12B_Excel";
+			    nombreArchivo ="RESUMEN_COSTO_TOTALES_F12B"; 	    
+			    lista = resumenCostosService.buscarResumenCostoTotalesF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12B"); 
+		    }else if(tipoReporte.equals("F12AR")){
+		    	nombreFormato = FiseConstants.NOMBRE_F12A;
+			    tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;		   
+			    nombreReporte = "resumenCostosReconocido_12A_12B_Excel";
+			    nombreArchivo ="RESUMEN_COSTO_TOTALES_F12A"; 	    
+			    lista = resumenCostosService.buscarResumenCostoTotalesAprobadoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12A");
+		    }else if(tipoReporte.equals("F12BR")){
+		    	nombreFormato = FiseConstants.NOMBRE_F12B;
+			    tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;		   
+			    nombreReporte = "resumenCostosReconocido_12A_12B_Excel";
+			    nombreArchivo ="RESUMEN_COSTO_TOTALES_F12B"; 	    
+			    lista = resumenCostosService.buscarResumenCostoTotalesAprobadoF12AB(r.getCodEmpresaBusq(), idGrupoInf, "F12B");
+		    }else if(tipoReporte.equals("F12ABR")){
+		    	nombreFormato = FiseConstants.NOMBRE_F12AB;
+			    tipoFormato = FiseConstants.TIPO_FORMATO_RESUMEN_COSTOS;		   
+			    nombreReporte = "resumenCostosReconocido_12A+12B_Excel";
+			    nombreArchivo ="RESUMEN_COSTO_CONSOLIDADO_F12A_F12B"; 	    
+			    lista = resumenCostosService.buscarResumenCostoConsolidadoAprobadoF12AB(r.getCodEmpresaBusq(), idGrupoInf); 
+		    }  
+		    
+		    mapa.put("IMG", rutaImg);
+		    mapa.put("TIPO_FORMATO", nombreFormato);
+		    mapa.put("GRUPO_INFORMACION", r.getDesGrupoInf());
+			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);	
+			String tipoArchivo = "1";//exel		    
+		    
+		    if(lista!=null && lista.size()>0){
+		    	session.setAttribute("tipoFormato",tipoFormato);
+		    	session.setAttribute("tipoArchivo",tipoArchivo);
+		    	session.setAttribute("nombreReporte",nombreReporte);
+		    	session.setAttribute("nombreArchivo",nombreArchivo);
+		    	session.setAttribute("lista", lista);
+		    	session.setAttribute("mapa", mapa);
+		    	jsonObj.put("resultado", "OK");	 
+		    }else{
+		    	jsonObj.put("resultado", "VACIO");	   
+		    }		
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();		  
+			logger.info(jsonObj.toString());
+			pw.write(jsonObj.toString());
+			pw.flush();
+			pw.close();	    
+		 } catch (Exception e) {
+			logger.error("Error al ver reporte resumen costos toales 12A y 12B Excel: "+e); 
+			e.printStackTrace();
+		}finally{
+			if(lista!=null){
+				lista =null;
+			}		
+		}
+    }
+	
+		
 	
 	/**Metodos para ver reportes de resumen de costos comparativos formatos 14A y 14B*/
 	

@@ -376,7 +376,7 @@ var fiseParametros= {
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
-						var addhtml2='Registro eliminado satisfactoriamente';					
+						var addhtml2='El registro fue eliminado satisfactoriamente';					
 						fiseParametros.dialogMessageContent.html(addhtml2);
 						fiseParametros.dialogMessage.dialog("open");
 						fiseParametros.buscarfiseParametro();
@@ -412,7 +412,7 @@ var fiseParametros= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='La Observación se guardó satisfactoriamente';
+							var addhtml2='El Parámetro se guardó satisfactoriamente';
 							
 							fiseParametros.dialogMessageContent.html(addhtml2);
 							fiseParametros.dialogMessage.dialog("open");							
@@ -462,12 +462,12 @@ var fiseParametros= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='La Observación se actualizó satisfactoriamente';
+							var addhtml2='El Parámetro se actualizó satisfactoriamente';
 							fiseParametros.dialogMessageContent.html(addhtml2);
 							fiseParametros.dialogMessage.dialog("open");						
 							fiseParametros.initBlockUI();								
 						}else if(data.resultado == "Error"){						
-							var addhtmError='Se produjo un error al actualizar la Observación.';					
+							var addhtmError='Se produjo un error al actualizar el Parámetro.';					
 							fiseParametros.dialogErrorContent.html(addhtmError);
 							fiseParametros.dialogError.dialog("open");				
 							fiseParametros.initBlockUI();

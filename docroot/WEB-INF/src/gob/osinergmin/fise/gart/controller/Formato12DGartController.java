@@ -1133,11 +1133,17 @@ public class Formato12DGartController {
 				// setamos los valores en el bean
 				reportBean = formatoService.estructurarFormato12DBeanByFiseFormato12DC(formato);
 				reportBean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
-				reportBean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
-				//
+				reportBean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));				
 				// cargamos la lista a enviar
-				session.setAttribute("lista", formato.getFiseFormato12DDs());
-				
+				List<FiseFormato12DD> listaEnviar = new ArrayList<FiseFormato12DD>();
+				logger.error("Tamanio de lista a enviar para el reporte:  "+formato.getFiseFormato12DDs().size());
+				for(FiseFormato12DD d : formato.getFiseFormato12DDs()){					
+					d.setDescZonaBenef(mapaZonaBenef.get(d.getIdZonaBenef()));
+					d.setIdTipDocRef(mapaTipoDocumento.get(d.getIdTipDocRef())); 
+					d.setIdTipGasto(mapaTipoGasto.get(d.getIdTipGasto()));  
+					listaEnviar.add(d);
+				}				
+				session.setAttribute("lista", listaEnviar);				
 				session.setAttribute("mapa", formatoService.mapearParametrosFormato12D(reportBean) );
 			}
 

@@ -750,9 +750,9 @@
 
 									<tr style="padding-top: 10px:">
 										<td>7. Gestión Administrativa</td>
-										<td align="center"><form:input path="totalGestionAdministrativa" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativa')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
-										<td align="center"><form:input path="totalGestionAdministrativaProv" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaProv')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
-										<td align="center"><form:input path="totalGestionAdministrativaLim" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaLim')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="false" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
+										<td align="center"><form:input  path="totalGestionAdministrativa" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativa')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" maxlength="12" /></td>
+										<td align="center"><form:input  path="totalGestionAdministrativaProv" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaProv')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
+										<td align="center"><form:input  path="totalGestionAdministrativaLim" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaLim')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>

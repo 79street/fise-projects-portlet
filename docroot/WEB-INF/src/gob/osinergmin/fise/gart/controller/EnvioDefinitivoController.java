@@ -1245,7 +1245,7 @@ public class EnvioDefinitivoController {
   	  		        }  	  		       
   	  		        mapa.put("NAMEF12A", "FISE 12A"); 	     		  
   	  		        mapa.put("UNCHECKED12A", dirUncheckedImage);     		  
-  	  		        mapa.put("FFIRMADO12A", "Formato Firmado(3)");  			  
+  	  		        mapa.put("FFIRMADO12A", "Formato Firmado(1)");  			  
   	  		        mapa.put("NAMEPLAZO12A", "Cumple Plazos");  			  
   	  		        mapa.put("NAMEOBS12A", "Con Observaciones");  			  
   	  		        mapa.put("CHECKED12A",dirCheckedImage);  			  
@@ -1286,7 +1286,7 @@ public class EnvioDefinitivoController {
 	  		        } 	  		        
   	  		        mapa.put("NAMEF12B", "FISE 12B"); 	     		  
   	  		        mapa.put("UNCHECKED12B", dirUncheckedImage);     		  
-  	  		        mapa.put("FFIRMADO12B", "Formato Firmado(3)");  			  
+  	  		        mapa.put("FFIRMADO12B", "Formato Firmado(1)");  			  
   	  		        mapa.put("NAMEPLAZO12B", "Cumple Plazos");  			  
   	  		        mapa.put("NAMEOBS12B", "Con Observaciones");  			  
   	  		        mapa.put("CHECKED12B",dirCheckedImage);  			  
@@ -1325,7 +1325,7 @@ public class EnvioDefinitivoController {
 	 		        }   	  		       
   	  		        mapa.put("NAMEF12C", "FISE 12C"); 	     		  
   	  		        mapa.put("UNCHECKED12C", dirUncheckedImage);     		  
-  	  		        mapa.put("FFIRMADO12C", "Formato Firmado(3)");  			  
+  	  		        mapa.put("FFIRMADO12C", "Formato Firmado(1)");  			  
   	  		        mapa.put("NAMEPLAZO12C", "Cumple Plazos");  			  
   	  		        mapa.put("NAMEOBS12C", "Con Observaciones");  			  
   	  		        mapa.put("CHECKED12C",dirCheckedImage);  			  
@@ -1364,7 +1364,7 @@ public class EnvioDefinitivoController {
 			        } 	  		       
   	  		        mapa.put("NAMEF12D", "FISE 12D"); 	     		  
   	  		        mapa.put("UNCHECKED12D", dirUncheckedImage);     		  
-  	  		        mapa.put("FFIRMADO12D", "Formato Firmado(3)");  			  
+  	  		        mapa.put("FFIRMADO12D", "Formato Firmado(1)");  			  
   	  		        mapa.put("NAMEPLAZO12D", "Cumple Plazos");  			  
   	  		        mapa.put("NAMEOBS12D", "Con Observaciones");  			  
   	  		        mapa.put("CHECKED12D",dirCheckedImage);  			  
