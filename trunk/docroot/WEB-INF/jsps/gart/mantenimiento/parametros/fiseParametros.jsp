@@ -130,7 +130,7 @@ $(document).ready(function () {
 	
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
-											<td><output class="net-titulo">PARAMETROS</output>
+											<td><output class="net-titulo">PARÁMETROS</output>
 											</td>
 										</tr>
 										<tr height="10px">

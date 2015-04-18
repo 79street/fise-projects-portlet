@@ -1256,6 +1256,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_40));
 							listaError.add(error);
 						}
+						
 						if( HSSFCell.CELL_TYPE_STRING == celdaAnio.getCellType()  ){
 							formulario.setAnioPresent(Long.parseLong(celdaAnio.toString()));
 							formulario.setAnioEjecuc(Long.parseLong(celdaAnio.toString()));
@@ -1281,6 +1282,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_60));
 							listaError.add(error);
 						}
+						
 						if( HSSFCell.CELL_TYPE_STRING == celdaMes.getCellType()  ){
 							formulario.setMesPresent(Long.parseLong(celdaMes.toString()));
 							formulario.setMesEjecuc(Long.parseLong(celdaMes.toString()));
@@ -1321,8 +1323,13 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_90));
 							listaError.add(error);
 						}
+						
+						logger.info("Verificanto tipo de la celda:     "+nroAgentRural.getCellType()); 
 						if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentRural.getCellType()  ){
 							formulario.setNroAgentR(new Double(nroAgentRural.getNumericCellValue()).longValue());
+						}else if( HSSFCell.CELL_TYPE_BLANK == nroAgentRural.getCellType()  ){
+							formulario.setNroAgentR(0L);
+							logger.info("Verificanto tipo de la celda entro en BLANK:     "+formulario.getNroAgentR()); 	
 						}else{
 							formulario.setNroAgentR(0);
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_120)+FiseConstants.SALTO_LINEA;
@@ -1332,6 +1339,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_120));
 							listaError.add(error);
 						}
+						
 						if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalR.getCellType()  ){
 							formulario.setDesplPersonalR(new BigDecimal(despPersonalR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == despPersonalR.getCellType()  ){
@@ -1345,6 +1353,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_150));
 							listaError.add(error);
 						}
+						
 						if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordR.getCellType()  ){
 							formulario.setActivExtraordR(new BigDecimal(activExtraordR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == activExtraordR.getCellType()  ){
@@ -1373,8 +1382,11 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_100));
 							listaError.add(error);
 						}
+						
 						if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentProv.getCellType()  ){
 							formulario.setNroAgentP(new Double(nroAgentProv.getNumericCellValue()).longValue());
+						}else if( HSSFCell.CELL_TYPE_BLANK == nroAgentProv.getCellType()  ){
+							formulario.setNroAgentP(0L);
 						}else{
 							formulario.setNroAgentP(0);
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_130)+FiseConstants.SALTO_LINEA;
@@ -1384,6 +1396,8 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_130));
 							listaError.add(error);
 						}
+						
+						
 						if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalP.getCellType()  ){
 							formulario.setDesplPersonalP(new BigDecimal(despPersonalP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == despPersonalP.getCellType()  ){
@@ -1397,6 +1411,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_160));
 							listaError.add(error);
 						}
+						
 						if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordP.getCellType()  ){
 							formulario.setActivExtraordP(new BigDecimal(activExtraordP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 						}else if( HSSFCell.CELL_TYPE_BLANK == activExtraordP.getCellType()  ){
@@ -1413,6 +1428,7 @@ public class Formato12AGartController {
 						
 						//LIMA
 						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
+							
 							if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadLima.getCellType()  ){
 								formulario.setNroEmpadL(new Double(nroEmpadLima.getNumericCellValue()).longValue());
 							}else if( HSSFCell.CELL_TYPE_BLANK == nroEmpadLima.getCellType()  ){
@@ -1426,8 +1442,11 @@ public class Formato12AGartController {
 								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_110));
 								listaError.add(error);
 							}
+							
 							if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentLima.getCellType()  ){
 								formulario.setNroAgentL(new Double(nroAgentLima.getNumericCellValue()).longValue());
+							}else if( HSSFCell.CELL_TYPE_BLANK == nroAgentLima.getCellType()  ){
+								formulario.setNroAgentL(0L);
 							}else{
 								formulario.setNroAgentL(0);
 								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_140)+FiseConstants.SALTO_LINEA;
@@ -1437,6 +1456,7 @@ public class Formato12AGartController {
 								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_140));
 								listaError.add(error);
 							}
+							
 							if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalL.getCellType()  ){
 								formulario.setDesplPersonalL(new BigDecimal(despPersonalL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == despPersonalL.getCellType()  ){
@@ -1450,6 +1470,7 @@ public class Formato12AGartController {
 								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_170));
 								listaError.add(error);
 							}
+							
 							if( HSSFCell.CELL_TYPE_NUMERIC == activExtraordL.getCellType()){
 								formulario.setActivExtraordL(new BigDecimal(activExtraordL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == activExtraordL.getCellType()  ){
