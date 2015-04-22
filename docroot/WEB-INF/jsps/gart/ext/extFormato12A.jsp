@@ -1742,7 +1742,7 @@ function <portlet:namespace/>cargarFormatoExcel(){
 		$("#msjFileExcel").html("Debe seleccionar un archivo");
 	}else{
 		var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);				
-		if(extension == 'xls' || extension == 'xlsx'){
+		if(extension == 'xls' || extension == 'xlsx'|| extension == 'XLS'|| extension == 'XLSX'){
 			isSubmit=true;
 			$("#msjFileExcel").html("");
 		}else{
