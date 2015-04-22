@@ -1577,7 +1577,7 @@
 				var extension=nameFile.substr(nameFile.indexOf(".")+1,nameFile.length);
 				
 				if(tipoFile == '1'){
-					if(extension == 'xls' || extension == 'xlsx'){
+					if(extension == 'xls' || extension == 'xlsx' || extension == 'XLS'|| extension == 'XLSX'){
 						isSubmit=true;
 					}else{
 						isSubmit=false;
