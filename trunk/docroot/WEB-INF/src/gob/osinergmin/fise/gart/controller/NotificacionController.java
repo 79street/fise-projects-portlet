@@ -50,6 +50,7 @@ import gob.osinergmin.fise.domain.FiseFormato14CD;
 import gob.osinergmin.fise.domain.FiseFormato14CDOb;
 import gob.osinergmin.fise.domain.FiseFormato14CDPK;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
+import gob.osinergmin.fise.domain.FiseObservacion;
 import gob.osinergmin.fise.gart.jsp.FileEntryJSP;
 import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
@@ -68,6 +69,7 @@ import gob.osinergmin.fise.util.FormatoUtil;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -169,8 +171,7 @@ public class NotificacionController {
 	
 	
 	private Map<String, String> mapaEmpresa;	
-	private List<MensajeErrorBean> listaObservaciones;
-	//private Map<String, String> mapaErrores;
+	private List<MensajeErrorBean> listaObservaciones;	
 	private Map<String, String> mapaSectorTipico;
 	private Map<Long, String> mapaEtapaEjecucion;
 	
@@ -195,12 +196,11 @@ public class NotificacionController {
     		n.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL,"")); 
     		
     		mapaEmpresa = fiseUtil.getMapaEmpresa();
-    		
-    		//mapaErrores = fiseUtil.getMapaErrores();
-    		
-    		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
-    		
+    		mapaSectorTipico = fiseUtil.getMapaSectorTipico();    		
     		mapaEtapaEjecucion = fiseUtil.getMapaEtapaEjecucion();
+    		
+    		
+    		logger.info("Fecha actual del sistema:  "+new Date());
     		
     		model.addAttribute("model", n);
     		
@@ -816,7 +816,7 @@ public class NotificacionController {
 		}
 	} 
   	
-  	public void cargarListaObservaciones12D(List<FiseFormato12DD> listaDetalle) {
+  	private void cargarListaObservaciones12D(List<FiseFormato12DD> listaDetalle) {
 		int cont = 0;
 		listaObservaciones = new ArrayList<MensajeErrorBean>();
 		for (FiseFormato12DD detalle : listaDetalle) {
@@ -2322,20 +2322,22 @@ public class NotificacionController {
 			logger.info("item etapa:  "+ n.getItemEtapa());
 			logger.info("cod ubigeo:  "+ n.getCodUbigeo());
 			logger.info("cod sector:  "+ n.getCodSector());
-  			 							
+  							
 			if(FiseConstants.NOMBRE_FORMATO_12A.equals(n.getFormato())){
 				logger.info("ingresando a grabar obs 12A");
 				valor = formatoService12A.insertarObservacion12A(codEmpreCompleta, 
 						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
 						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
-					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal);
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_MANUAL);
 						
 			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 				
 				logger.info("ingresando a grabar obs 12B");
 				valor = formatoService12B.insertarObservacion12B(codEmpreCompleta, 
 						Integer.valueOf(n.getAnioPres()), Integer.valueOf(n.getMesPres()), 
 						Integer.valueOf(n.getAnioEjec()), Integer.valueOf(n.getMesEjec()), n.getEtapa(), 
-						Integer.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal);
+						Integer.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal,
+						n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_MANUAL);
 						
 			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 				
 				logger.info("ingresando a grabar obs 12C");
@@ -2343,7 +2345,8 @@ public class NotificacionController {
 						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
 						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
 					    Long.valueOf(n.getEtapaEjec()),Long.valueOf(n.getItemEtapa()),
-					    n.getDesObservacion(), user, terminal);
+					    n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_MANUAL);
 				
 			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){	
 				logger.info("ingresando a grabar obs 12D");
@@ -2351,28 +2354,32 @@ public class NotificacionController {
 						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
 						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
 					    Long.valueOf(n.getEtapaEjec()),Long.valueOf(n.getItemEtapa()),
-					    n.getDesObservacion(), user, terminal);
+					    n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_MANUAL);
 				
 			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){				
 				logger.info("ingresando a grabar obs 13A");
 				valor = formatoService13A.insertarObservacion13A(codEmpreCompleta, 
 						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
 						n.getCodUbigeo(), n.getCodSector(), n.getEtapa(),Long.valueOf(n.getIdZona()),					    
-					    n.getDesObservacion(), user, terminal);
+					    n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_MANUAL);
 					
 			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 			
 				logger.info("ingresando a grabar obs 14A");
 				valor = formatoService14A.insertarObservacion14A(codEmpreCompleta, 
 						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
 						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
-					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal);
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_MANUAL);
 							    	
 			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){			 
 				logger.info("ingresando a grabar obs 14B");
 				valor = formatoService14B.insertarObservacion14B(codEmpreCompleta, 
 						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
 						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
-					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal);
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_MANUAL);
 				    	
 			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 			
 				logger.info("ingresando a grabar obs 14C");
@@ -2380,7 +2387,8 @@ public class NotificacionController {
 						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
 						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
 					    Long.valueOf(n.getIdZona()), Long.valueOf(n.getIdPersonal()), 
-					    n.getDesObservacion(), user, terminal);					
+					    n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_MANUAL);					
 			}	 			
 			if(valor.equals("1")){ 
 				jsonObj.put("resultado", "OK");	   	
@@ -2397,6 +2405,153 @@ public class NotificacionController {
 			logger.error(e.getMessage());
 		}
 	}
+	
+	
+	@ResourceMapping("grabarObservacionExistente")
+  	public void grabarObservacionExistente(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){		
+		String valor = "0";
+		try{
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);			
+			String user = themeDisplay.getUser().getLogin();
+		    String terminal = themeDisplay.getUser().getLoginIP(); 
+		    JSONObject jsonObj = new JSONObject();
+		    String codEmpreCompleta = FormatoUtil.rellenaDerecha(n.getCodEmpresa(), ' ', 4);
+			logger.info("Entrando a grabar observaciones existente"); 				
+			logger.info("Codigo empresa:  "+ n.getCodEmpresa()); 
+			logger.info("anio pres:  "+ n.getAnioPres());	
+			logger.info("mes pres:  "+ n.getMesPres());
+			logger.info("formato:  "+ n.getFormato());	
+			logger.info("etapa:  "+ n.getEtapa());	
+			logger.info("anio ejec:  "+ n.getAnioEjec());
+			logger.info("mes ejec:  "+ n.getMesEjec());
+			logger.info("anio ini vige:  "+ n.getAnioIniVig());
+			logger.info("anio fin vige:  "+ n.getAnioFinVig());	
+			logger.info("etapa ejec:  "+ n.getEtapaEjec());
+			logger.info("id zona:  "+ n.getIdZona());
+			logger.info("id personal:  "+ n.getIdPersonal());
+			logger.info("item etapa:  "+ n.getItemEtapa());
+			logger.info("cod ubigeo:  "+ n.getCodUbigeo());
+			logger.info("cod sector:  "+ n.getCodSector());
+  			 							
+			if(FiseConstants.NOMBRE_FORMATO_12A.equals(n.getFormato())){
+				logger.info("ingresando a grabar obs 12A");
+				valor = formatoService12A.insertarObservacion12A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_AUTOMATICA);
+						
+			}else if(FiseConstants.NOMBRE_FORMATO_12B.equals(n.getFormato())){ 				
+				logger.info("ingresando a grabar obs 12B");
+				valor = formatoService12B.insertarObservacion12B(codEmpreCompleta, 
+						Integer.valueOf(n.getAnioPres()), Integer.valueOf(n.getMesPres()), 
+						Integer.valueOf(n.getAnioEjec()), Integer.valueOf(n.getMesEjec()), n.getEtapa(), 
+						Integer.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal,
+						n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_AUTOMATICA);
+						
+			}else if(FiseConstants.NOMBRE_FORMATO_12C.equals(n.getFormato())){ 				
+				logger.info("ingresando a grabar obs 12C");
+				valor = formatoService12C.insertarObservacion12C(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getEtapaEjec()),Long.valueOf(n.getItemEtapa()),
+					    n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_AUTOMATICA);
+				
+			}else if(FiseConstants.NOMBRE_FORMATO_12D.equals(n.getFormato())){	
+				logger.info("ingresando a grabar obs 12D");
+				valor = formatoService12D.insertarObservacion12D(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioEjec()), Long.valueOf(n.getMesEjec()), n.getEtapa(), 
+					    Long.valueOf(n.getEtapaEjec()),Long.valueOf(n.getItemEtapa()),
+					    n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_AUTOMATICA);
+				
+			}else if(FiseConstants.NOMBRE_FORMATO_13A.equals(n.getFormato())){				
+				logger.info("ingresando a grabar obs 13A");
+				valor = formatoService13A.insertarObservacion13A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						n.getCodUbigeo(), n.getCodSector(), n.getEtapa(),Long.valueOf(n.getIdZona()),					    
+					    n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_AUTOMATICA);
+					
+			}else if(FiseConstants.NOMBRE_FORMATO_14A.equals(n.getFormato())){ 			
+				logger.info("ingresando a grabar obs 14A");
+				valor = formatoService14A.insertarObservacion14A(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_AUTOMATICA);
+							    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14B.equals(n.getFormato())){			 
+				logger.info("ingresando a grabar obs 14B");
+				valor = formatoService14B.insertarObservacion14B(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_AUTOMATICA);
+				    	
+			}else if(FiseConstants.NOMBRE_FORMATO_14C.equals(n.getFormato())){ 			
+				logger.info("ingresando a grabar obs 14C");
+				valor = formatoService14C.insertarObservacion14C(codEmpreCompleta, 
+						Long.valueOf(n.getAnioPres()), Long.valueOf(n.getMesPres()), 
+						Long.valueOf(n.getAnioIniVig()), Long.valueOf(n.getAnioFinVig()), n.getEtapa(), 
+					    Long.valueOf(n.getIdZona()), Long.valueOf(n.getIdPersonal()), 
+					    n.getDesObservacion(), user, terminal,
+					    n.getIdObsExistente(),FiseConstants.TIPO_OBSERVACION_AUTOMATICA);					
+			}	 			
+			if(valor.equals("1")){ 
+				jsonObj.put("resultado", "OK");	   	
+			}else{
+				jsonObj.put("resultado", "Error");	
+			}
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonObj.toString());
+  			pw.flush();
+  			pw.close();  			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
+	
+	
+	@ResourceMapping("busquedaObsExistente")
+  	public void busquedaObservacionExistente(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){
+		
+		try{
+			response.setContentType("application/json");					
+			
+			String data ="";	
+			
+			List<FiseObservacion> listaObs = fiseObservacionGartService.buscarFiseObservacion(n.getIdObsBusq(), n.getDescObsBusq());
+			 			
+  			//logger.info("tamaño de la lista observaciones   :"+listaObs.size());
+  			
+  			List<NotificacionBean> listaNotifi = new ArrayList<NotificacionBean>();
+  			
+  			for(FiseObservacion o : listaObs){    				
+  				NotificacionBean not = new NotificacionBean();
+  				not.setIdObsExistente(o.getIdObservacion()); 
+  				not.setTipoObservacion(o.getOrigen().equals("A")?"Automática":"Manual");
+  				not.setDescObsExistente(o.getDescripcion()); 
+  				listaNotifi.add(not);
+  			} 			
+  			data = toStringListJSON(listaNotifi);
+  			logger.info("arreglo json:"+data);
+  			PrintWriter pw = response.getWriter();
+  			pw.write(data);
+  			pw.flush();
+  			pw.close();   			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}	
 	
 	
    /*****metodo para actualizar observacion manual*****/	

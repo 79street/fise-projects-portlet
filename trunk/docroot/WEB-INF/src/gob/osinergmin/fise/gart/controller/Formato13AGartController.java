@@ -3105,7 +3105,8 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 
 	/** reportes */
 	@ResourceMapping("reporte")
-	public void reporte(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
+	public void reporte(ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato13AGartCommand") Formato13AGartCommand command) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 			HttpSession session = httpRequest.getSession();
@@ -3146,13 +3147,19 @@ private void validarCampos(String valor,String nameCampo,int tipo,int length)thr
 				// setamos los valores en el bean
 				bean = formatoService.estructurarFormato13ABeanByFiseFormato13AC(formato);
 				bean.setDescEmpresa(fiseUtil.getMapaEmpresa().get(formato.getId().getCodEmpresa()));
-				bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));
-				//
-				// cargamos la lista a enviar
+				bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));				
+				
+				List<Formato13ADReportBean> listaEnviar = new ArrayList<Formato13ADReportBean>();
+				
 				List<Formato13ADReportBean> lista = formatoService.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);
-                
-				session.setAttribute("lista", lista);
-				//session.setAttribute("lista", null);
+				
+				for(Formato13ADReportBean r:lista){
+					r.setDescZonaBenef(mapaZonaBenef.get(r.getIdZonaBenef()));
+					listaEnviar.add(r);
+				}	
+				logger.error("Tamanio de la lista a enviar reporte 13A:  "+listaEnviar.size()); 
+				session.setAttribute("lista", listaEnviar);
+				
 				
 				Map<String, Object> mapa = formatoService.mapearParametrosFormato13A(bean);
 				mapa.put("ANO_INICIO_VIGENCIA", formato.getAnoInicioVigenciaDetalle());

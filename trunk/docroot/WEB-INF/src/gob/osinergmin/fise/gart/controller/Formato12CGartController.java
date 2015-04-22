@@ -1186,7 +1186,8 @@ public class Formato12CGartController {
 				//logger.error("Tamanio de lista a enviar para el reporte:  "+formato.getFiseFormato12CDs().size());
 				for(FiseFormato12CD d : formato.getFiseFormato12CDs()){					
 					d.setDescZonaBenef(mapaZonaBenef.get(d.getIdZonaBenef()));
-					d.setIdTipDocRef(mapaTipoDocumento.get(d.getIdTipDocRef()));  
+					d.setIdTipDocRef(mapaTipoDocumento.get(d.getIdTipDocRef())); 
+					d.setEtapaEjecucionReport(d.getId().getEtapaEjecucion());
 					listaEnviar.add(d);
 				}
 				
@@ -1839,7 +1840,7 @@ public class Formato12CGartController {
 							HSSFRow row= hojaF12.getRow(i);
 							if( row != null ){
 								HSSFCell cell = row.getCell(0);//cogemos la primera columna del excel, para detectar las posicion inicial de cada sector
-								if( HSSFCell.CELL_TYPE_STRING==cell.getCellType()  && HSSFCell.CELL_TYPE_BLANK != cell.getCellType() ){
+								if(cell!=null && HSSFCell.CELL_TYPE_STRING==cell.getCellType()  && HSSFCell.CELL_TYPE_BLANK != cell.getCellType() ){
 									if( FiseConstants.DESC_FILA_INICIO_IMPLEMENTACION_FORMATO12C.equalsIgnoreCase(cell.toString()) ){
 										inicioImplementacion = i;
 									}else if( FiseConstants.DESC_FILA_INICIO_OPERATIVO_FORMATO12C.equalsIgnoreCase(cell.toString()) ){

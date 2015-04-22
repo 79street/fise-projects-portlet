@@ -164,10 +164,12 @@ public class LiquidacionController {
 	private FiseZonaBenefGartService zonaBenefService;
 	
 	
-	private Map<String, String> mapaEmpresa;
-	//private Map<String, String> mapaErrores;
+	private Map<String, String> mapaEmpresa;	
 	private Map<String, String> mapaSectorTipico;
 	private Map<Long, String> mapaEtapaEjecucion;
+	private Map<Long, String> mapaZonaBenef;	
+	private Map<String, String> mapaTipoDocumento;
+	private Map<String, String> mapaTipoGasto;	
 	
 	
 	private List<MensajeErrorBean> listaObs12A;
@@ -201,13 +203,13 @@ public class LiquidacionController {
     		
     		l.setListaGrupoInf(fiseGrupoInformacionService.listarGrupoInformacion(FiseConstants.MENSUAL,"")); 
     		
-    		mapaEmpresa = fiseUtil.getMapaEmpresa();
-    		
-    		//mapaErrores = fiseUtil.getMapaErrores();
-    		
-    		mapaSectorTipico = fiseUtil.getMapaSectorTipico();
-    		
+    		mapaEmpresa = fiseUtil.getMapaEmpresa();    		
+    		mapaSectorTipico = fiseUtil.getMapaSectorTipico();    		
     		mapaEtapaEjecucion = fiseUtil.getMapaEtapaEjecucion();
+    		mapaZonaBenef = fiseUtil.getMapaZonaBenef();    		
+    		mapaTipoDocumento = fiseUtil.getMapTipoDocumento();  
+    		mapaTipoGasto = fiseUtil.getMapTipoGasto();
+    		
     		
     		model.addAttribute("model", l);
     		
@@ -816,8 +818,15 @@ public class LiquidacionController {
 					File reportFile = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes12C = null;
 					if(formato.getFiseFormato12CDs()!=null){
+						 List<FiseFormato12CD> listaEnviar12C = new ArrayList<FiseFormato12CD>();		    			  	  				
+		  	  			 for(FiseFormato12CD d : formato.getFiseFormato12CDs()){					
+		  	  					d.setDescZonaBenef(mapaZonaBenef.get(d.getIdZonaBenef()));
+		  	  					d.setIdTipDocRef(mapaTipoDocumento.get(d.getIdTipDocRef()));  
+		  	  				    d.setEtapaEjecucionReport(d.getId().getEtapaEjecucion());
+		  	  				    listaEnviar12C.add(d);
+		  	  			 }
 						bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-								new JRBeanCollectionDataSource(formato.getFiseFormato12CDs()));	
+								new JRBeanCollectionDataSource(listaEnviar12C));	
 					}else{
 						bytes12C = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
 								new JREmptyDataSource());
@@ -843,8 +852,16 @@ public class LiquidacionController {
 					File reportFile = new File(session.getServletContext().getRealPath(directorio));
 					byte[] bytes12D = null;
 					if(formato.getFiseFormato12DDs()!=null){
+						List<FiseFormato12DD> listaEnviar12D = new ArrayList<FiseFormato12DD>();    			  	  				   
+	  	  				for(FiseFormato12DD d : formato.getFiseFormato12DDs()){					
+	  	  					d.setDescZonaBenef(mapaZonaBenef.get(d.getIdZonaBenef()));
+	  	  					d.setIdTipDocRef(mapaTipoDocumento.get(d.getIdTipDocRef())); 
+	  	  					d.setIdTipGasto(mapaTipoGasto.get(d.getIdTipGasto()));
+	  	  				    d.setEtapaEjecucionReport(d.getId().getEtapaEjecucion());
+	  	  				    listaEnviar12D.add(d);					
+	  	  				}		
 						bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
-								new JRBeanCollectionDataSource(formato.getFiseFormato12DDs()));	
+								new JRBeanCollectionDataSource(listaEnviar12D));	
 					}else{
 						bytes12D = JasperRunManager.runReportToPdf(reportFile.getPath(), mapa, 
 								new JREmptyDataSource());
@@ -1003,7 +1020,7 @@ public class LiquidacionController {
 		}
 	}
   	
-  	public void cargarListaObservaciones12D(List<FiseFormato12DD> listaDetalle) {
+  	private void cargarListaObservaciones12D(List<FiseFormato12DD> listaDetalle) {
 		int cont = 0;
 		listaObs12D = new ArrayList<MensajeErrorBean>();
 		for (FiseFormato12DD detalle : listaDetalle) {
@@ -1352,7 +1369,13 @@ public class LiquidacionController {
 			formato = formatoService13A.obtenerFormato13ACByPK(pk);
 		    if( formato!=null ){  
 		    	/****Cargamos la lista de zonas *****/
-		    	listaZonas13A = formatoService13A.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);		    	
+		    	List<Formato13ADReportBean> lista = formatoService13A.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);					
+				listaZonas13A = new ArrayList<Formato13ADReportBean>();
+				for(Formato13ADReportBean r:lista){
+					r.setDescZonaBenef(mapaZonaBenef.get(r.getIdZonaBenef()));
+					listaZonas13A.add(r);
+				}	
+		    	//listaZonas13A = formatoService13A.listarLocalidadesPorZonasBenefFormato13ADByFormato13AC(formato);		    	
 		    	bean = formatoService13A.estructurarFormato13ABeanByFiseFormato13AC(formato);
 	        	bean.setDescEmpresa(mapaEmpresa.get(formato.getId().getCodEmpresa()));
 	        	bean.setDescMesPresentacion(fiseUtil.getMapaMeses().get(formato.getId().getMesPresentacion()));

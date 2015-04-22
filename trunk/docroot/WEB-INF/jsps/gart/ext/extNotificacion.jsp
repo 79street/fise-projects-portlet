@@ -45,11 +45,15 @@ var notificarValidar= {
 		mensajeActualizando:null,
 		mensajeEliminandoObs:null,
 		
+		mensajeBuscarObs:null,
+		
 		//divs cambios observacion  manual
 		divBuscar:null,	
 		divDetalle:null,
 		divListaObs:null,
 		divNuevoObs:null,
+		divNuevoObsExist:null,
+		
 		
 		//div grillas
 		divGrillaF12AB:null,
@@ -78,7 +82,10 @@ var notificarValidar= {
 	    urlBuscarListaObs:null,
 	    urlGrabarObs:null,	    
 	    urlEliminarObs:null,	   
-	    urlActualizarObs:null,	
+	    urlActualizarObs:null,
+	    
+	    urlBuscarObsExist:null,
+	    urlGrabarObsExist:null,
 		
 		
 		//botones		
@@ -93,6 +100,10 @@ var notificarValidar= {
 		botonRegresarListaObs:null,
 		botonRegresarNuevoObs:null,
 		
+		botonNuevoObsExist:null,
+		botonRegresarObsExist:null,
+		botonBuscarObsExist:null,
+		
 		
 		//varibales de busqueda
 		i_codEmpresaBusq:null,
@@ -100,6 +111,9 @@ var notificarValidar= {
 		i_etapaBusq:null,
 		i_tipoBienal:null,
 		i_tipoMensual:null,
+		
+		i_idObsExist:null,
+		i_descObsExist:null,
 		
 		//variables 
 		f_empresa:null,
@@ -122,6 +136,9 @@ var notificarValidar= {
 		paginadoResultadosDetalle:null,		
 		tablaResultadosObsFomato:null,
 		paginadoResultadosObsFormato:null,
+		
+		tablaResultadosObsExist:null,
+		paginadoResultadosObsExist:null,
 		
 		
 		
@@ -157,6 +174,8 @@ var notificarValidar= {
 			this.divDetalle=$("#<portlet:namespace/>div_detalle_formato");
 			this.divListaObs=$("#<portlet:namespace/>div_detalle_observaciones");
 			this.divNuevoObs=$("#<portlet:namespace/>div_nuevo_observacion");
+			this.divNuevoObsExist=$("#<portlet:namespace/>div_nuevo_observacion_existente");
+			
 			
 			
 			//div grillas
@@ -181,9 +200,10 @@ var notificarValidar= {
 			this.mensajeGuardando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>';
 			this.mensajeActualizando='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Actualizando Datos </h3>';
 			this.mensajeEliminandoObs='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Eliminando </h3>';
+			this.mensajeBuscarObs='<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Buscando Observación </h3>';
 			
 			
-			//urls
+			//urls 
 			this.urlBusqueda='<portlet:resourceURL id="busquedaNotificacion" />';					
 			this.urlProcesar='<portlet:resourceURL id="procesarNotificacion" />';
 			this.urlCargaGrupoInf='<portlet:resourceURL id="cargarGrupoInformacion" />';
@@ -199,7 +219,8 @@ var notificarValidar= {
 			this.urlEliminarObs='<portlet:resourceURL id="eliminarObservacionManual" />';			
 			this.urlActualizarObs='<portlet:resourceURL id="actualizarObservacionManual" />';	
 			
-			
+			this.urlBuscarObsExist='<portlet:resourceURL id="busquedaObsExistente" />';	
+			this.urlGrabarObsExist='<portlet:resourceURL id="grabarObservacionExistente" />';
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarNotificacion");	
@@ -214,6 +235,10 @@ var notificarValidar= {
 			this.botonRegresarListaObs=$("#<portlet:namespace/>btnRegresarDetalle");	
 			this.botonRegresarNuevoObs=$("#<portlet:namespace/>btnRegresarObs");
 			
+			this.botonNuevoObsExist=$("#<portlet:namespace/>btnNuevoObservacionExist");	
+			this.botonRegresarObsExist=$("#<portlet:namespace/>btnRegresarObsExist");
+			this.botonBuscarObsExist=$("#<portlet:namespace/>btnBuscarObsExist");
+			
 			
 			//variables de busqueda
 			this.i_codEmpresaBusq=$('#codEmpresaBusq');
@@ -221,6 +246,9 @@ var notificarValidar= {
 			this.i_etapaBusq=$('#etapaBusq');	
 			this.i_tipoBienal=$('#rbtBienal');
 			this.i_tipoMensual=$('#rbtMensual');
+			
+			this.i_idObsExist=$('#idObsBusq');
+			this.i_descObsExist=$('#descObsBusq');
 			
 			this.f_descObservacion=$('#desObservacion');
 			
@@ -279,9 +307,11 @@ var notificarValidar= {
 			
 			this.tablaObsF14C=$("#<portlet:namespace/>grid_resultado_obs_14C");			
 			this.paginadoObsF14C='#<portlet:namespace/>paginador_resultado_obs_14C';		
-			this.buildGridsObsF14C();
+			this.buildGridsObsF14C();			
 			
-					
+			this.tablaResultadosObsExist=$("#<portlet:namespace/>grid_resultado_busqueda_obs_exist");
+			this.paginadoResultadosObsExist='#<portlet:namespace/>paginador_resultado_busqueda_obs_exist';
+			this.buildGridsObsExistentes();
 			
 			//llamado a la funciones de cada boton
 			notificarValidar.botonBuscar.click(function() {			
@@ -320,6 +350,21 @@ var notificarValidar= {
 			notificarValidar.botonActualizarObs.click(function() {
 				notificarValidar.<portlet:namespace/>actualizarObsManual();
 		    });		
+			
+			//observaciones existentes en catalogo
+			
+			notificarValidar.botonNuevoObsExist.click(function() {			
+				notificarValidar.<portlet:namespace/>nuevoObservacionExiste();
+			});		
+			
+			notificarValidar.botonBuscarObsExist.click(function() {			
+				notificarValidar.buscarObservacionesExistentes();
+			});			
+			
+			notificarValidar.botonRegresarObsExist.click(function() {			
+				notificarValidar.<portlet:namespace/>regresarListaObs();
+			});
+			
 			
 			
 			notificarValidar.initDialogs();
@@ -563,7 +608,7 @@ var notificarValidar= {
 			var ancho = notificarValidar.divBuscar.width();
 			notificarValidar.tablaResultadosDetalleF12AB.jqGrid({
 			   datatype: "local",
-		       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Etapa','Zona','Agregar Obs. Manual','','','',''],
+		       colNames: ['Dist. Eléct.','Año Decl.','Mes Decl.','Año Ejec.','Mes Ejec.','Etapa','Zona','Reg. Observaciones','','','',''],
 		       colModel: [
                        { name: 'desEmpresa', index: 'desEmpresa', width: 50},					  
 		               { name: 'anioPres', index: 'anioPres', width: 20,align:'center' },  
@@ -955,6 +1000,45 @@ var notificarValidar= {
 		},		
 		
 		/*fin cambios para ingresar observaciones manuales**/	
+		
+		
+		//funcion para observaciones existentes en el catalogo
+		
+		buildGridsObsExistentes : function () {
+			var ancho = notificarValidar.divBuscar.width();
+			notificarValidar.tablaResultadosObsExist.jqGrid({
+			   datatype: "local",
+		       colNames: ['Tipo','Código','Descripción','Seleccionar'],
+		       colModel: [
+                       { name: 'tipoObservacion', index: 'tipoObservacion', width: 30},					  
+		               { name: 'idObsExistente', index: 'idObsExistente', width: 20 },  
+		               { name: 'descObsExistente', index: 'descObsExistente', width: 60 }, 	                          
+		               { name: 'select', index: 'select', width: 20,align:'center' }	                             
+			   	    ],
+			   	 multiselect: false,
+					rowNum:10,
+				   	rowList:[10,20,50],
+					height: 225,
+				   //	autowidth: true,
+					rownumbers: true,
+					//shrinkToFit:true,
+					width:ancho ,
+					pager: notificarValidar.paginadoResultadosObsExist,
+				    viewrecords: true,
+				    caption: "Lista de Observaciones",
+				    sortorder: "asc",	   	    	   	   
+		       gridComplete: function(){
+		      		var ids = notificarValidar.tablaResultadosObsExist.jqGrid('getDataIDs');
+		      		for(var i=0;i < ids.length;i++){
+		      			var cl = ids[i];
+		      			var ret = notificarValidar.tablaResultadosObsExist.jqGrid('getRowData',cl);	      			
+		      			select = "<a href='#'><img border='0' title='Seleccionar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"notificarValidar.guardarObservacionExistente('"+ret.idObsExistente+"');\" /></a> ";		      			
+		      			notificarValidar.tablaResultadosObsExist.jqGrid('setRowData',ids[i],{select:select});		      			
+		      		}
+		      }
+		  	});
+			notificarValidar.tablaResultadosObsExist.jqGrid('navGrid',notificarValidar.paginadoResultadosObsExist,{add:false,edit:false,del:false,search: false,refresh: false});				
+		},		
 		
 		
 		
@@ -1399,6 +1483,7 @@ var notificarValidar= {
 			                notificarValidar.divBuscar.hide();	
 			                notificarValidar.divListaObs.show();
 			                notificarValidar.divNuevoObs.hide();
+			                notificarValidar.divNuevoObsExist.hide();
 							//respaldar su pk
 							$('#hiddenCodEmpresa').val(cod_empresa);
 				            $('#hiddenAnioPres').val(anio_pres);
@@ -1455,6 +1540,7 @@ var notificarValidar= {
 				                notificarValidar.divBuscar.hide();	
 				                notificarValidar.divListaObs.show();
 				                notificarValidar.divNuevoObs.hide();
+				                notificarValidar.divNuevoObsExist.hide();
 								//respaldar su pk
 								$('#hiddenCodEmpresa').val(cod_empresa);
 					            $('#hiddenAnioPres').val(anio_pres);
@@ -1510,6 +1596,7 @@ var notificarValidar= {
 					                notificarValidar.divBuscar.hide();	
 					                notificarValidar.divListaObs.show();
 					                notificarValidar.divNuevoObs.hide();
+					                notificarValidar.divNuevoObsExist.hide();
 									//respaldar su pk
 									$('#hiddenCodEmpresa').val(cod_empresa);
 						            $('#hiddenAnioPres').val(anio_pres);
@@ -1564,6 +1651,7 @@ var notificarValidar= {
 						                notificarValidar.divBuscar.hide();	
 						                notificarValidar.divListaObs.show();
 						                notificarValidar.divNuevoObs.hide();
+						                notificarValidar.divNuevoObsExist.hide();
 										//respaldar su pk
 										$('#hiddenCodEmpresa').val(cod_empresa);
 							            $('#hiddenAnioPres').val(anio_pres);
@@ -1618,6 +1706,7 @@ var notificarValidar= {
 							                notificarValidar.divBuscar.hide();	
 							                notificarValidar.divListaObs.show();
 							                notificarValidar.divNuevoObs.hide();
+							                notificarValidar.divNuevoObsExist.hide();
 											//respaldar su pk
 											$('#hiddenCodEmpresa').val(cod_empresa);
 								            $('#hiddenAnioPres').val(anio_pres);
@@ -1676,10 +1765,28 @@ var notificarValidar= {
 			notificarValidar.divBuscar.hide();	
 			notificarValidar.divListaObs.hide();
 			notificarValidar.divNuevoObs.show();
+			notificarValidar.divNuevoObsExist.hide();
 			notificarValidar.f_descObservacion.val('');
 			$('#<portlet:namespace/>btnGrabarObservacion').css('display','block');
 			$('#<portlet:namespace/>btnActualizarObservacion').css('display','none');
-	    },	    
+	    },	
+	    
+	    
+	  //funcion para regresar a busqueda desde el detalle del formato
+		<portlet:namespace/>nuevoObservacionExiste : function(){	
+			notificarValidar.tablaResultadosObsExist.clearGridData(true);
+			//notificarValidar.tablaResultadosObsExist.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+			//notificarValidar.tablaResultadosObsExist[0].refreshIndex();	
+			notificarValidar.divDetalle.hide();
+			notificarValidar.divBuscar.hide();	
+			notificarValidar.divListaObs.hide();
+			notificarValidar.divNuevoObs.hide();
+			notificarValidar.divNuevoObsExist.show();
+			notificarValidar.i_idObsExist.val('');
+			notificarValidar.i_descObsExist.val('');			
+	    },	   
+	    
+	    
 	    
 	  //Function para editar una observacion
 		editarObservacionManual : function(cod_obs,descripcion,origen){	
@@ -1690,6 +1797,7 @@ var notificarValidar= {
 				notificarValidar.divBuscar.hide();	
 				notificarValidar.divListaObs.hide();
 				notificarValidar.divNuevoObs.show();
+				notificarValidar.divNuevoObsExist.hide();
 				$('#hiddenIdObservacion').val(cod_obs);
 				$('#<portlet:namespace/>btnGrabarObservacion').css('display','none');
 				$('#<portlet:namespace/>btnActualizarObservacion').css('display','block');
@@ -1842,6 +1950,117 @@ var notificarValidar= {
 				});			
 			}
 		},
+				
+		
+		//funcion buscar observaciones existes en el catalogo	
+		buscarObservacionesExistentes : function () {	
+			console.debug("entranado a buscar observaciones existentes en el catalogo");
+			$.blockUI({ message: notificarValidar.mensajeBuscarObs});
+			jQuery.ajax({			
+					url: notificarValidar.urlBuscarObsExist+'&'+notificarValidar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					data : {
+						   <portlet:namespace />idObsBusq: notificarValidar.i_idObsExist.val(),	
+						   <portlet:namespace />descObsBusq: notificarValidar.i_descObsExist.val()						  				  
+					},
+					success: function(gridData) {						
+							notificarValidar.tablaResultadosObsExist.clearGridData(true);
+							notificarValidar.tablaResultadosObsExist.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+							notificarValidar.tablaResultadosObsExist[0].refreshIndex();								
+							//juego de div de las secciones
+							notificarValidar.divDetalle.hide();
+			                notificarValidar.divBuscar.hide();	
+			                notificarValidar.divListaObs.hide();
+			                notificarValidar.divNuevoObs.hide();
+			                notificarValidar.divNuevoObsExist.show();												            
+							notificarValidar.initBlockUI();							
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");
+						notificarValidar.initBlockUI();
+					}
+				});			
+		   },
+		
+		   
+		 //Funcion para grabar una observacion existente al momento de seleccionar de la grilla	
+		  guardarObservacionExistente: function(id_observacion){				
+					$.blockUI({ message: notificarValidar.mensajeGuardando});
+					 jQuery.ajax({
+						 url: notificarValidar.urlGrabarObsExist+'&'+notificarValidar.formCommand.serialize(),
+						type: 'post',
+						dataType: 'json',
+						data: {	  
+							   <portlet:namespace />codEmpresa: $('#hiddenCodEmpresa').val(),	
+							   <portlet:namespace />anioPres: $('#hiddenAnioPres').val(),	
+							   <portlet:namespace />mesPres: $('#hiddenMesPres').val(),					  
+							   <portlet:namespace />etapa: $('#hiddenEtapa').val(),	
+							   <portlet:namespace />anioEjec: $('#hiddenAnioEjec').val(),	
+							   <portlet:namespace />mesEjec: $('#hiddenMesEjec').val(),	
+							   <portlet:namespace />anioIniVig: $('#hiddenAnioIniVig').val(),	
+							   <portlet:namespace />anioFinVig: $('#hiddenAnioFinVig').val(),						   
+							   <portlet:namespace />formato: $('#formatoDetalle').val(),						  
+							   <portlet:namespace />etapaEjec: $('#hiddenEtapaEjec').val(),
+							   <portlet:namespace />itemEtapa: $('#hiddenItemEtapa').val(),
+							   <portlet:namespace />codUbigeo: $('#hiddenCodUbigeo').val(),	
+							   <portlet:namespace />codSector: $('#hiddenCodSector').val(),	
+							   <portlet:namespace />idZona: $('#hiddenIdZona').val(),
+							   <portlet:namespace />idPersonal: $('#hiddenIdPersonal').val(),						  
+							   <portlet:namespace />idObsExistente: id_observacion
+							},
+						    success: function(data) {			
+							if (data.resultado == "OK"){				
+								var addhtml2='La Observación se guardó satisfactoriamente';							
+								notificarValidar.dialogMessageContent.html(addhtml2);
+								notificarValidar.dialogMessage.dialog("open");						
+								var tipoBusq =  $('#hiddenTipoBusqueda').val();
+								if(tipoBusq=='0'){								
+									notificarValidar.buscarObsF12AB($('#hiddenCodEmpresa').val(),
+											$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
+											$('#hiddenAnioEjec').val(),	$('#hiddenMesEjec').val(),
+											$('#hiddenEtapa').val(), $('#hiddenIdZona').val(),'');	
+								}else if(tipoBusq=='1'){
+									notificarValidar.buscarObsF12CD($('#hiddenCodEmpresa').val(),
+											$('#hiddenAnioPres').val(),$('#hiddenMesPres').val(),
+											$('#hiddenAnioEjec').val(),	$('#hiddenMesEjec').val(),
+											$('#hiddenEtapa').val(),$('#hiddenEtapaEjec').val(),
+											$('#hiddenItemEtapa').val());
+								}else if(tipoBusq=='2'){
+									notificarValidar.buscarObsF13A($('#hiddenCodEmpresa').val(),
+											$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
+											$('#hiddenEtapa').val(),$('#hiddenCodUbigeo').val(),
+											$('#hiddenCodSector').val(),$('#hiddenIdZona').val(),'','');	
+								}else if(tipoBusq=='3'){
+									notificarValidar.buscarObsF14AB($('#hiddenCodEmpresa').val(),
+											$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
+											$('#hiddenAnioIniVig').val(),$('#hiddenAnioFinVig').val(),
+											$('#hiddenEtapa').val(),$('#hiddenIdZona').val(),'');
+								}else if(tipoBusq=='4'){								
+									notificarValidar.buscarObsF14C($('#hiddenCodEmpresa').val(),
+											$('#hiddenAnioPres').val(),	$('#hiddenMesPres').val(),
+											$('#hiddenAnioIniVig').val(),$('#hiddenAnioFinVig').val(),
+											$('#hiddenEtapa').val(),$('#hiddenIdZona').val(),
+											$('#hiddenIdPersonal').val(),'','');
+								}							
+								notificarValidar.initBlockUI();								
+							}else{								
+								var addhtmError='Se produjo un error al guardar la Observación.';					
+								notificarValidar.dialogErrorContent.html(addhtmError);
+								notificarValidar.dialogError.dialog("open");						
+								notificarValidar.initBlockUI();
+							}
+						},error : function(){
+							var addhtmError='Error de conexión.';					
+							notificarValidar.dialogErrorContent.html(addhtmError);
+							notificarValidar.dialogError.dialog("open");
+							notificarValidar.initBlockUI();
+						}
+					});				
+			},
+		   
+		
 		
 		//funcion para validar ingreso de datos del motivo de liquidacion
 		validarFormulario : function() {
@@ -1971,7 +2190,8 @@ var notificarValidar= {
 			notificarValidar.divDetalle.hide();
 			notificarValidar.divBuscar.show();	
 			notificarValidar.divListaObs.hide();
-			notificarValidar.divNuevoObs.hide();	
+			notificarValidar.divNuevoObs.hide();
+			notificarValidar.divNuevoObsExist.hide();
 		},
 		
 		//funcion para regresar a busqueda desde el detalle del formato
@@ -1979,7 +2199,8 @@ var notificarValidar= {
 			notificarValidar.divDetalle.show();
 			notificarValidar.divBuscar.hide();
 			notificarValidar.divListaObs.hide();
-			notificarValidar.divNuevoObs.hide();	
+			notificarValidar.divNuevoObs.hide();
+			notificarValidar.divNuevoObsExist.hide();
 		},	
 		
 		//funcion para regresar a la lista de obs desde un nuevo registro o una actualizacion del registro
@@ -1987,7 +2208,8 @@ var notificarValidar= {
 			notificarValidar.divDetalle.hide();
 			notificarValidar.divBuscar.hide();
 			notificarValidar.divListaObs.show();
-			notificarValidar.divNuevoObs.hide();	
+			notificarValidar.divNuevoObs.hide();
+			notificarValidar.divNuevoObsExist.hide();
 		},		
 		
 		//funcion para regresar a busqueda desde el detalle del formato
@@ -1995,7 +2217,8 @@ var notificarValidar= {
 			notificarValidar.divDetalle.hide();
 			notificarValidar.divBuscar.hide();
 			notificarValidar.divListaObs.show();
-			notificarValidar.divNuevoObs.hide();	
+			notificarValidar.divNuevoObs.hide();
+			notificarValidar.divNuevoObsExist.hide();
 		},
 		
 		ponerFocus : function(cadena){		

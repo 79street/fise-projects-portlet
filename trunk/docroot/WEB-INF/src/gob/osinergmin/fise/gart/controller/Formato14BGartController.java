@@ -1746,8 +1746,16 @@ private static final Logger logger = Logger.getLogger(Formato14BGartController.c
 							formulario.setNombreArchivo(archivo.getTitle());
 							//
 							formulario.setEtapa(etapaEdit);
+							logger.info("Cod empresa excel: "+formulario.getCodigoEmpresa().trim()); 
+							logger.info("Cod empresa formulario: "+codEmpresa.trim());
+							logger.info("anio excel: "+String.valueOf(formulario.getAnioPresent())); 
+							logger.info("anio formulario: "+anioPres);
+							logger.info("mes excel: "+formulario.getMesPresent()); 
+							logger.info("mes formulario: "+Long.parseLong(mesPres));
+							logger.info("anio inicio excel: "+String.valueOf(formulario.getAnioInicioVigencia())); 
+							logger.info("anio inicio formulario: "+anioIniVigencia);
 							
-							if( codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
+							if(codEmpresa.trim().equals(formulario.getCodigoEmpresa().trim()) &&
 									anioPres.equals(String.valueOf(formulario.getAnioPresent())) &&
 									Long.parseLong(mesPres) == formulario.getMesPresent() &&
 									anioIniVigencia.equals(String.valueOf(formulario.getAnioInicioVigencia())) &&
