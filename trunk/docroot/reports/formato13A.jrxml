@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato13A" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="190"/>
+	<property name="ireport.zoom" value="1.5000000000000009"/>
+	<property name="ireport.x" value="434"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -56,6 +56,9 @@
 	</field>
 	<field name="nroBenefPoteSecTipico8" class="java.lang.Long">
 		<fieldDescription><![CDATA[nroBenefPoteSecTipico8]]></fieldDescription>
+	</field>
+	<field name="descZonaBenef" class="java.lang.String">
+		<fieldDescription><![CDATA[descZonaBenef]]></fieldDescription>
 	</field>
 	<variable name="nroBenefPoteSecTipico1_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{nroBenefPoteSecTipico1}]]></variableExpression>
@@ -387,13 +390,6 @@ $V{nroBenefPoteSecTipico6_1}+$V{nroBenefPoteSecTipico8_1}]]></variableExpression
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico8}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="612" y="0" width="77" height="15"/>
-				<textElement textAlignment="Center">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$F{idZonaBenef}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
 				<reportElement x="690" y="0" width="112" height="15"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
@@ -430,6 +426,13 @@ $V{nroBenefPoteSecTipico6_1}+$V{nroBenefPoteSecTipico8_1}]]></variableExpression
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nroBenefPoteSecTipico5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="612" y="0" width="77" height="15"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descZonaBenef}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -526,7 +529,7 @@ $V{nroBenefPoteSecTipico6_1}+$V{nroBenefPoteSecTipico8_1}]]></variableExpression
 				<text><![CDATA[Nota:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="0" y="50" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="0" y="41" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
@@ -535,13 +538,20 @@ $V{nroBenefPoteSecTipico6_1}+$V{nroBenefPoteSecTipico8_1}]]></variableExpression
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="280" y="65" width="252" height="1"/>
 			</line>
-			<staticText>
-				<reportElement positionType="FixRelativeToBottom" mode="Transparent" x="0" y="40" width="319" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+			<textField>
+				<reportElement x="682" y="59" width="73" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
 				</textElement>
-				<text><![CDATA[(*)    1=Rural, 2=Urbano Provincias, 3=Urbano Lima]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="755" y="59" width="47" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
