@@ -43,6 +43,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 
@@ -168,27 +170,30 @@ public class ResumenObsController {
 			logger.info("etapa:  "+r.getEtapaMBusq());
 			logger.info("grupo inf:  "+idGrupoInf);
 			logger.info("formato mensual:  "+r.getOptionMensual());
-			
-			
+			if(FormatoUtil.isNotBlank(r.getCodEmpresaBusq()) && "TODOS".equals(r.getCodEmpresaBusq())){ 
+			   r.setCodEmpresaBusq("");	
+			}			
 		    String rutaImg = session.getServletContext().getRealPath("/reports/logoOSINERGMIN.jpg");
-		   // ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
+		    ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);	
 		    JSONObject jsonObj = new JSONObject();	 
 		    Map<String, Object> mapa = new  HashMap<String, Object>();
 		    mapa.put("IMG", rutaImg);		   
 			mapa.put(JRParameter.REPORT_LOCALE, Locale.US);			  
-			//String usuario = themeDisplay.getUser().getLogin();
+			String usuario = themeDisplay.getUser().getLogin();
 			String desEmpresa = "";
 			String desMes = "";
 			String anioPres = "";
 			String etapa = "";
 			String nombreFormato= "";
+			String codEmpresa = "";
 			
 		    if("F12A".equals(r.getOptionMensual())){ 	    	
 		    	List<FiseFormato12AC> lista = formatoService12A.buscarFormato12AReporteObs(r.getCodEmpresaBusq(), 
 		    			idGrupoInf, r.getEtapaMBusq());	
 		    	logger.info("Tamanio de la lista f12A cabecera:   "+lista.size()); 
 		    	
-		    	for(FiseFormato12AC f: lista){	
+		    	for(FiseFormato12AC f: lista){
+		    		codEmpresa = f.getId().getCodEmpresa();
 		    		desEmpresa = mapaEmpresa.get(f.getId().getCodEmpresa());
 		    		desMes = fiseUtil.getMapaMeses().get(f.getId().getMesPresentacion());
 		    		anioPres = ""+f.getId().getAnoPresentacion();
@@ -204,12 +209,14 @@ public class ResumenObsController {
 		    			for (FiseFormato12ADOb observacion : listaObser) {		    				
 		    				ResumenObsBean obs = new ResumenObsBean();	
 		    				obs.setDesEmpresa(desEmpresa); 
+		    				obs.setCodEmpresa(codEmpresa);
 		    				logger.info("Empresa:  "+obs.getDesEmpresa());
 		    	        	obs.setPeriodo(anioPres+"/"+desMes); 
 		    	        	logger.info("Periodo:  "+obs.getPeriodo());
 		    				obs.setFormato(nombreFormato);
 		    				logger.info("Formato:  "+obs.getFormato());
-		    				obs.setEtapa(etapa);		    				
+		    				obs.setEtapa(etapa);	
+		    				obs.setUsuario(usuario); 
 		    	        	obs.setDescZonaBenef(fiseUtil.getMapaZonaBenef().get(observacion.getId().getIdZonaBenef()));
 		    				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
 		    				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());		    			

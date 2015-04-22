@@ -2120,6 +2120,7 @@ public class Formato12CGartController {
 										sMsgImplementacion = sMsgImplementacion.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3381,i+1));
 									}
 									//SERIE DOCUMENTO
+									logger.error("tipo de la celda serie documento implementacion::   "+celdaSerieDocumento.getCellType()); 
 									if( HSSFCell.CELL_TYPE_STRING == celdaSerieDocumento.getCellType() ){
 										detalleBean.setSerieDocumento(celdaSerieDocumento.toString());
 									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaSerieDocumento.getCellType()  ){
@@ -2540,8 +2541,13 @@ public class Formato12CGartController {
 										sMsgOperativa = sMsgOperativa.append(fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12C_3419,i+1));
 									}
 									//SERIE DOCUMENTO
+									logger.error("tipo de la celda serie documento mensuales::   "+celdaSerieDocumento.getCellType()); 
 									if( HSSFCell.CELL_TYPE_STRING == celdaSerieDocumento.getCellType() ){
 										detalleBean.setSerieDocumento(celdaSerieDocumento.toString());
+									}else if( HSSFCell.CELL_TYPE_NUMERIC == celdaSerieDocumento.getCellType()  ){
+										String valor = "" + celdaSerieDocumento.getNumericCellValue();
+										logger.error("valor numeric de la celda serie documento mensuales::   "+valor); 
+										detalleBean.setSerieDocumento(FormatoUtil.eliminaDecimales(valor));
 									}else if( HSSFCell.CELL_TYPE_BLANK == celdaSerieDocumento.getCellType()  ){
 										detalleBean.setSerieDocumento(FiseConstants.BLANCO);
 										cont++;
