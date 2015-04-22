@@ -144,6 +144,8 @@ $(document).ready(function () {
 				</div>								
 				<!-- FIN DE DIV  PARA BUSQUEDA -->	
 				
+				
+				
 				<!-- DIV PARA PRESENTAR LOS DETALLE DEL FORMATO SELECCIONADO -->
 				
 				<div id="<portlet:namespace/>div_detalle_formato" class="net-frame-listado" style="display: none;"> 
@@ -318,7 +320,9 @@ $(document).ready(function () {
 																
 					</table>			
 				</div>								
-				<!-- FIN DIV PARA PRESENTAR LOS DETALLE DEL FORMATO SELECCIONADO -->			
+				<!-- FIN DIV PARA PRESENTAR LOS DETALLE DEL FORMATO SELECCIONADO -->	
+				
+						
 				
 				<!-- DIV PARA PRESENTAR LAS OBS.  POR CADA DETALLE SELECCIONADO -->
 				
@@ -502,19 +506,22 @@ $(document).ready(function () {
 							<td>
 								<table style="width: 100%;" border="0">
 									<tr>	
-									    <td align="center" width="90px">
-											<div id="d_opc_crear_obs">
+									    <td align="center" width="90px">											
 												<input type="button" class="net-button-small"
 													id="<portlet:namespace/>btnNuevoObservacion"
-													name="<portlet:namespace/>btnNuevoObservacion" value="Agregar" />
-											</div>
+													name="<portlet:namespace/>btnNuevoObservacion" value="Agregar Obs. Manual" />
+											
+										</td>
+										<td align="center" width="90px">											
+												<input type="button" class="net-button-small"
+													id="<portlet:namespace/>btnNuevoObservacionExist"
+													name="<portlet:namespace/>btnNuevoObservacionExist" value="Agregar Obs. Existente" />
+											
 										</td>													
-										 <td align="right" width="90px">	
-										     <div id="d_opc_regresar_detalle">
+										 <td align="center" width="90px">									    
 												<input type="button" class="net-button-small"
 													id="<portlet:namespace/>btnRegresarDetalle"
-													name="<portlet:namespace/>btnRegresarDetalle" value="Regresar" />
-											</div>										
+													name="<portlet:namespace/>btnRegresarDetalle" value="Regresar" />																				
 										</td>
 									</tr>
 								</table>
@@ -529,6 +536,7 @@ $(document).ready(function () {
 				</div>								
 				<!-- FIN DIV PARA PRESENTAR LAS OBS.  POR CADA DETALLE SELECCIONADO -->
 				
+								
 								
 				<!-- DIV PARA NUEVO REGISTRO DE UNA OBSERVACION MANUAL-->	
 				
@@ -608,7 +616,103 @@ $(document).ready(function () {
 					</table>	
 				</div>				
 				
-				<!-- FIN DIV PARA NUEVO REGISTRO -->				
+				<!-- FIN DIV PARA NUEVO REGISTRO -->
+				
+				
+				<!-- DIV PARA NUEVO REGISTRO DE UNA OBSERVACION EXISTENTE EN EL CATALOGO-->	
+				
+				<div id="<portlet:namespace/>div_nuevo_observacion_existente" class="net-frame-listado" style="display: none;">			
+								
+			      <table style="width: 100%;" border="0">
+						<tr>
+							<td>
+								
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						<tr>
+							<td class="filete">
+								<fieldset class="">
+									<table class="" style="width: 100%;" border="0">
+										<tr>
+											<td colspan="4"><output class="net-titulo">Criterios
+													de Búsqueda:</output>
+											</td>
+										</tr>
+										<tr height="10px">
+											<td colspan="4"></td>
+										</tr>
+										<tr>
+											<td><output>Id Observación:</output></td>
+											<td>
+											 <form:input path="idObsBusq" size="10"/>		
+											</td>
+											
+											<td><output>Descripción:</output></td>
+											<td>
+											 <form:input path="descObsBusq" size="30"/>		
+											</td>
+											
+										</tr>										
+										<tr height="10px">
+											<td colspan="4"></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>											
+											<td align="right"><input name="<portlet:namespace/>btnBuscarObsExist"
+												id="<portlet:namespace/>btnBuscarObsExist" type="button"
+												class="net-button-small" value="Buscar" />
+											</td>
+										</tr>
+									</table>
+								</fieldset>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<table id="<portlet:namespace/>grid_resultado_busqueda_obs_exist">
+								</table>
+								<div id="<portlet:namespace/>paginador_resultado_busqueda_obs_exist"></div>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<table style="width: 100%;" border="0">
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td align="right" width="90px">											
+												<input type="button" class="net-button-small"
+													id="<portlet:namespace/>btnRegresarObsExist"
+													name="<portlet:namespace/>btnRegresarObsExist" value="Regresar" />											
+										</td>
+										<td align="right" width="90px">											
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr height="10px">
+							<td></td>
+						</tr>
+					</table>				
+				</div>				
+				
+				<!-- FIN DIV PARA NUEVO REGISTRO DE UNA OBSERVACION EXISTENTE EN EL CATALOGO-->						
 				
 								
             </div>
