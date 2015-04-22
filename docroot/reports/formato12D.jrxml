@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato12D" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.3636363636363686"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="83"/>
+	<property name="ireport.y" value="21"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
@@ -97,8 +97,9 @@
 	<variable name="vDescEtapaEjec" class="java.lang.String">
 		<variableExpression><![CDATA[($F{etapaEjecucionReport}!=null &&
 $F{etapaEjecucionReport}.intValue()==1)?
-"Actividades Extraordinarias Operativas":
-"Actividades Extraordinarias Implementación"]]></variableExpression>
+"Actividades Extraordinarias Implementación":
+"Actividades Extraordinarias Operativas"
+]]></variableExpression>
 	</variable>
 	<variable name="vSubTotalEtapaEjec" class="java.lang.String">
 		<variableExpression><![CDATA["Sub Total "+$V{vDescEtapaEjec}+ " : "]]></variableExpression>
@@ -107,17 +108,17 @@ $F{etapaEjecucionReport}.intValue()==1)?
 		<groupExpression><![CDATA[$F{etapaEjecucionReport}]]></groupExpression>
 		<groupHeader>
 			<band height="21">
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement x="0" y="1" width="15" height="20"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.Long"><![CDATA[$F{etapaEjecucionReport}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="Etapa Ejecucion">
+				<textField evaluationTime="Group" evaluationGroup="Etapa Ejecucion" isBlankWhenNull="true">
 					<reportElement x="15" y="1" width="787" height="20"/>
 					<textElement verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font size="7" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$V{vDescEtapaEjec}]]></textFieldExpression>
 				</textField>
@@ -128,14 +129,14 @@ $F{etapaEjecucionReport}.intValue()==1)?
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="717" y="0" width="85" height="20"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font size="9" isBold="true"/>
+						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_1}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="Etapa Ejecucion">
 					<reportElement x="0" y="0" width="717" height="20"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font isBold="true"/>
+						<font size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$V{vSubTotalEtapaEjec}]]></textFieldExpression>
 				</textField>
@@ -146,7 +147,7 @@ $F{etapaEjecucionReport}.intValue()==1)?
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="140" splitType="Stretch">
+		<band height="99" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="65" width="802" height="20" forecolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -172,164 +173,165 @@ $F{etapaEjecucionReport}.intValue()==1)?
 				</textElement>
 				<text><![CDATA[Fecha de emisión:   ]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="100" width="135" height="15"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[Distribuidora Eléctrica:]]></text>
-			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="43" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="135" y="100" width="667" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="135" y="2" width="667" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="0" y="115" width="135" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="0" y="17" width="135" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
 					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Año / Mes Declarado:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="135" y="115" width="667" height="15"/>
+				<reportElement x="135" y="17" width="667" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[""+$P{ANO_PRESENTACION}+" / "+$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="2" width="135" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Distribuidora Eléctrica:]]></text>
+			</staticText>
 		</band>
-	</title>
-	<pageHeader>
-		<band height="1" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="49" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="3" width="38" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="0" y="3" width="34" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Año Ejecución Gasto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="125" y="3" width="55" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="117" y="3" width="55" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Localidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="96" y="3" width="28" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="88" y="3" width="28" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Cód Ubigeo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="228" y="3" width="40" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="220" y="3" width="40" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Cta.Contable de la empresa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="78" y="3" width="17" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="70" y="3" width="17" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Ítem]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="181" y="3" width="46" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="173" y="3" width="46" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[Cód.Zona Beneficiario FISE **]]></text>
+				<text><![CDATA[Zona Beneficiario FISE ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="39" y="3" width="38" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="35" y="3" width="34" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Mes Ejecución Gasto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="269" y="3" width="48" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="261" y="3" width="119" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Descripción del Gasto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="351" y="3" width="48" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="414" y="3" width="48" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[Tipo Doc. de Referencia ****]]></text>
+				<text><![CDATA[Tipo Doc. de Referencia ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="400" y="3" width="60" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="463" y="3" width="42" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[RUC empresa emite Documento de Referencia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="461" y="3" width="62" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="506" y="3" width="39" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Serie de Documento de Referencia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="524" y="3" width="52" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="546" y="3" width="52" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Nº Doc. de Referencia de sustento del gasto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="627" y="3" width="44" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="637" y="3" width="44" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[N° Documento Autoriza Gasto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="672" y="3" width="44" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="682" y="3" width="34" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Cantidad]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="717" y="3" width="44" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Costo Unitario S/.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="762" y="3" width="40" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Total Gasto S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="318" y="3" width="32" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="381" y="3" width="32" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[Tipo de Gasto ***]]></text>
+				<text><![CDATA[Tipo de Gasto ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="577" y="3" width="49" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="599" y="3" width="37" height="45" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
-					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Fecha Autorización Gasto]]></text>
 			</staticText>
@@ -337,129 +339,129 @@ $F{etapaEjecucionReport}.intValue()==1)?
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="38" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="34" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{anoEjecucionGastoReport}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="38" y="0" width="39" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="34" y="0" width="35" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{mesEjecucionGastoReport}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="77" y="0" width="18" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="69" y="0" width="18" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{numeroItemEtapaReport}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="95" y="0" width="29" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="87" y="0" width="29" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{codUbigeo}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="124" y="0" width="56" height="20"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font size="8"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="116" y="0" width="56" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcionLocalidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="762" y="0" width="40" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalGeneral}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="717" y="0" width="45" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{costoUnitario}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="227" y="0" width="41" height="20"/>
+			<textField isBlankWhenNull="false">
+				<reportElement x="219" y="0" width="41" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7" isBold="false" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigoCuentaContaEde}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="268" y="0" width="49" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="261" y="0" width="119" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcionGasto}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="317" y="0" width="34" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="380" y="0" width="34" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{idTipGasto}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="351" y="0" width="48" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="414" y="0" width="48" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{idTipDocRef}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="399" y="0" width="62" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="462" y="0" width="43" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{rucEmpresaEmiteDocRef}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="461" y="0" width="63" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="506" y="0" width="40" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{serieDocumentoReferencia}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="524" y="0" width="53" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="546" y="0" width="53" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroDocumentoRefGasto}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="627" y="0" width="44" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="637" y="0" width="44" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroDocAutorizaGasto}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="671" y="0" width="46" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="682" y="0" width="35" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="577" y="0" width="50" height="20"/>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="599" y="0" width="38" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{fechaAutorizacionGasto}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="180" y="0" width="47" height="20"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="172" y="0" width="47" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descZonaBenef}]]></textFieldExpression>
 			</textField>
@@ -476,14 +478,14 @@ $F{etapaEjecucionReport}.intValue()==1)?
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="717" y="0" width="85" height="17"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalGasto_2}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="0" width="716" height="17"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL FISE-12D :]]></text>
 			</staticText>
@@ -511,6 +513,20 @@ $F{etapaEjecucionReport}.intValue()==1)?
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="290" y="35" width="252" height="1"/>
 			</line>
+			<textField>
+				<reportElement x="680" y="46" width="73" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="753" y="46" width="47" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

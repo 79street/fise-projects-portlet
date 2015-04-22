@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14C" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="100"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.2396694214876063"/>
+	<property name="ireport.x" value="573"/>
+	<property name="ireport.y" value="169"/>
 	<parameter name="NUMBENEF_EMPAD_CANT_R" class="java.lang.Long"/>
 	<parameter name="COSTO_COORD_CANT_R" class="java.lang.Long"/>
 	<parameter name="COSTO_SUP_CANT_R" class="java.lang.Long"/>
@@ -206,7 +206,7 @@
 				<text><![CDATA[1.1 Nombre de la Sede]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="4" y="161" width="86" height="15"/>
+				<reportElement x="4" y="161" width="1140" height="15"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -384,38 +384,38 @@
 				<reportElement mode="Transparent" x="7" y="226" width="1133" height="1" forecolor="#006699"/>
 			</line>
 			<line>
-				<reportElement mode="Transparent" x="597" y="588" width="346" height="1" forecolor="#006699"/>
+				<reportElement mode="Transparent" x="508" y="588" width="346" height="1" forecolor="#006699"/>
 			</line>
 			<staticText>
-				<reportElement x="497" y="593" width="549" height="17"/>
+				<reportElement x="508" y="593" width="346" height="17"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Nombre y Firma del Representante Legal de la Empresa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="426" width="782" height="12"/>
+				<reportElement x="12" y="426" width="842" height="12"/>
 				<textElement>
 					<font size="7" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Los costos de personal son referidos a la organización del personal y deben sustentarse teniendo en cuenta las áreas de servicio, el número de beneficiarios, actividades]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="386" width="326" height="12"/>
+				<reportElement x="12" y="386" width="842" height="12"/>
 				<textElement>
 					<font size="7" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[(1) Corresponde a Personal contratado directamente por la Empresa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="399" width="326" height="12"/>
+				<reportElement x="12" y="399" width="842" height="12"/>
 				<textElement>
 					<font size="7" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[(2) Corresponde a Personal por Servicio de Terceros]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="412" width="326" height="12"/>
+				<reportElement x="12" y="412" width="842" height="12"/>
 				<textElement>
 					<font size="7" isItalic="true"/>
 				</textElement>
@@ -786,7 +786,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_ASIST_CD_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="833" y="319" width="50" height="15"/>
+				<reportElement mode="Transparent" x="833" y="318" width="50" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
 					<font size="8" isBold="true" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
@@ -1010,7 +1010,7 @@
 				<text><![CDATA[Bienal]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="135" y="179" width="124" height="15"/>
+				<reportElement mode="Transparent" x="135" y="179" width="1005" height="15"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" markup="none">
 					<font size="8" isBold="false" isStrikeThrough="false" isPdfEmbedded="false"/>
 				</textElement>
@@ -1211,6 +1211,20 @@
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{ANO_FIN_VIGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="1102" y="593" width="47" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1029" y="593" width="73" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

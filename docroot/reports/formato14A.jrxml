@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato14A" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="422"/>
+	<property name="ireport.y" value="93"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
 	<parameter name="ANO_EJECUCION" class="java.lang.Long"/>
@@ -126,39 +126,39 @@
 				<text><![CDATA[Año / Mes Declarado:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="431" y="116" width="60" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="431" y="120" width="60" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Urbano
 Provincias]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="368" y="79" width="186" height="34" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="368" y="92" width="186" height="25" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Grupo Beneficiario según Zona]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="368" y="116" width="60" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="368" y="120" width="60" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Rural]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="494" y="116" width="60" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="494" y="120" width="60" height="30" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Urbano
 Lima]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="5" y="79" width="360" height="72" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="5" y="92" width="360" height="58" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Actividades]]></text>
 			</staticText>
@@ -1035,10 +1035,10 @@ Lima]]></text>
 				<text><![CDATA[N°]]></text>
 			</staticText>
 			<line>
-				<reportElement mode="Transparent" x="144" y="684" width="320" height="1" forecolor="#006699"/>
+				<reportElement mode="Transparent" x="84" y="683" width="320" height="1" forecolor="#006699"/>
 			</line>
 			<staticText>
-				<reportElement x="37" y="686" width="516" height="17"/>
+				<reportElement x="84" y="685" width="320" height="17"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
@@ -1086,6 +1086,20 @@ Lima]]></text>
 				</textElement>
 				<text><![CDATA[            recibo de luz del beneficiarios]]></text>
 			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="508" y="682" width="47" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="682" width="73" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
