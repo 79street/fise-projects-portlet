@@ -196,7 +196,7 @@
 			this.dlgConfirmacion=$("#dlgConfirmacion");
 			this.urlDeleteFormato='<portlet:resourceURL id="deleteFormato"/>';
 			
-			this. dialogMessageGeneralInicial=$("#dialogMessageGeneralInicio");
+			this.dialogMessageGeneralInicial=$("#dialogMessageGeneralInicio");
 			this.lblMessageInicial=$("#lblMessageInicio");
 			this.txtAnioInicio=$("#anioInicio");
 			this.txtAnioFin=$("#anioFin");
@@ -221,9 +221,7 @@
 			
 			formato12B.btnNew.click(function() {
 				formato12B.blockUI();
-				location.href=urlNew+'&'+formato12B.formBusqueda.serialize();
-				
-				//formato13A.formNuevo.attr('action',urlAnadirFormato+'&codEmpresa='+formato13A.codEmpresa.val()+'&peridoDeclaracion='+formato13A.peridoDeclaracion.val()+'&strip=0').removeAttr('enctype').submit();
+				location.href=urlNew+'&'+formato12B.formBusqueda.serialize();			
 			});
 			
 		}, 
@@ -241,41 +239,34 @@
 				 return false; 
 			}
 			
-			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){
-	    		 //formato12B.lblMessageInicial.html("El año debe contener 4 dígitos");
-				 //formato12B.dialogMessageGeneralInicial.dialog("open");
+			 if((inicio.val().length>0 && inicio.val().length<4 )|| (fin.val().length>0 && fin.val().length<4)){	    		
 				 formato12B.dialogMessageWarningContent.html("Debe ingresar un Año Declarado Desde válido");
 				 formato12B.dialogMessageWarning.dialog("open");
 				 return false; 
 	    		
 	    	 }else if(fin.val().length>0){
-	    		 if(parseFloat(inicio.val().length>0?inicio.val():'0')>parseFloat(fin.val())){
-	    			
-	    			 //formato12B.lblMessageInicial.html("El año final debe ser mayor o igual al inicial ");
-					 //formato12B.dialogMessageGeneralInicial.dialog("open"); 
+	    		 if(parseFloat(inicio.val().length>0?inicio.val():'0')>parseFloat(fin.val())){	    		
 					 formato12B.dialogMessageWarningContent.html("El Año Declarado Desde no puede exceder al Año Declarado Hasta");
 					 formato12B.dialogMessageWarning.dialog("open");
 					 return false; 
-	    		 }
-	    		 
+	    		 }	    		 
 	    	 }
 		
 			 if(parseFloat(inicio.val().length>0?inicio.val():'0')==parseFloat(fin.val().length>0?fin.val():'0')){
 				 var mesinicio=$("#mesInicio").val();
 					var mesfin=$("#mesFin").val();
 				
-					if(parseFloat(mesfin)<parseFloat(mesinicio)){
-						 //formato12B.lblMessageInicial.html("El mes final debe ser posterior al mes inicial");
-						 //formato12B.dialogMessageGeneralInicial.dialog("open"); 
+					if(parseFloat(mesfin)<parseFloat(mesinicio)){						
 						 formato12B.dialogMessageWarningContent.html("El Mes Declarado Desde no puede exceder al Mes Declarado Hasta");
 						 formato12B.dialogMessageWarning.dialog("open");
 						 return false; 
-					}
-	    		
-	    		
+					}   		
 	    	 }
 	  	 return true; 
      },
+     
+     
+     
      buildGridsBusqueda : function () {	
 			formato12B.tablaBusqueda.jqGrid({
 				   datatype: "local",
@@ -365,8 +356,7 @@
 						formato12B.unblockUI();
 					}
 			});
-			}
-            
+			}           
         },
        
 		
@@ -394,8 +384,7 @@
 			this.urlSave='<portlet:resourceURL id="saveNuevoFormato"/>';
 			
 			this.btnShowLoadTxt=$('#<portlet:namespace/>cargaTxt');
-			this.txtTypeFile=$("#txtTypeFile");
-			//this.btnUploadTxt=$('#btnUploadTxt');
+			this.txtTypeFile=$("#txtTypeFile");			
 			
 			this.btnBack=$("#<portlet:namespace/>regresarFormato");
 			
@@ -405,27 +394,26 @@
 			this.divgrupoestado=$('#divgrupoestado');
 			
 			
-			this.txtAnioEjec=$('#txtanoEjecucionGasto');
-		//	this.txtMesEjec=$('#txtmesEjecucionGasto');
-			this.txtAnioEjecCommand=$('#anoEjecucionGasto');
-		//	this. txtMesEjecCommnad=$('#mesEjecucionGasto');
+			this.txtAnioEjec=$('#txtanoEjecucionGasto');		
+			this.txtAnioEjecCommand=$('#anoEjecucionGasto');		
 			
-			 this.cmbMesEjecucion=$('#cmbMesEjecucion');
-			 this.txtMesEjechidden=$('#txtmesEjecucionGasto');
+			this.cmbMesEjecucion=$('#cmbMesEjecucion');
+			this.txtMesEjechidden=$('#txtmesEjecucionGasto');
 			 
-			 this.anoPresentacionDetalle=$('#anoPresentacion');
-			 this.mesPresentacionDetalle=$('#Presentacion');
+			this.anoPresentacionDetalle=$('#anoPresentacion');
+			this.mesPresentacionDetalle=$('#Presentacion');
 			 
 			this.txtnroValesImpreso=$('#numeroValesImpreso');
 			this.txtnroValesImpresoProv=$('#numeroValesImpresoProv');
 			this.txtnroValesImpresoLim=$('#numeroValesImpresoLim');
-			this.txtEtndrUnitValeImpre=$('#txtcostoEstandarUnitValeImpre');
-			this.txtEtndrUnitValeImpreProv=$('#txtcostoEstandarUnitValeImpreProv');
-			this.txtEtndrUnitValeImpreLim=$('#txtcostoEstandarUnitValeImpreLim');
 			this.txtTotalImpresionVale=$('#txtcostoTotalImpresionVale');
 			this.txtTotalImpresionValeProv=$('#txtcostoTotalImpresionValeProv');
 			this.txtTotalImpresionValeLim=$('#txtcostoTotalImpresionValeLim');
 			
+			//costo unitario impresion de vales
+			this.txtEtndrUnitValeImpre=$('#txtcostoEstandarUnitValeImpre');
+			this.txtEtndrUnitValeImpreProv=$('#txtcostoEstandarUnitValeImpreProv');
+			this.txtEtndrUnitValeImpreLim=$('#txtcostoEstandarUnitValeImpreLim');			
 			
 			this.txtnroValesRepartidosDomi=$('#numeroValesRepartidosDomi');
 			this.txtnroValesRepartidosDomiProv=$('#numeroValesRepartidosDomiProv');
@@ -433,55 +421,71 @@
 			this.txtTotalRepartoValesDomi=$('#txtcostoTotalRepartoValesDomi');
 			this.txtTotalRepartoValesDomiProv=$('#txtcostoTotalRepartoValesDomiProv');
 			this.txtTotalRepartoValesDomiLim=$('#txtcostoTotalRepartoValesDomiLim');
+			
+			//costos unitarios de reparto a domicilio
 			this.txtEtndrUnitValeRepar=$('#txtcostoEstandarUnitValeRepar');
 			this.txtEtndrUnitValeReparProv=$('#txtcostoEstandarUnitValeReparProv');
 			this.txtEtndrUnitValeReparLim=$('#txtcostoEstandarUnitValeReparLim');
 			
 			this.txtnroValesEntregadoDisEl=$('#numeroValesEntregadoDisEl');
-			 this.txtnroValesEntregadoDisElProv=$('#numeroValesEntregadoDisElProv');
-			  this.txtnroValesEntregadoDisElLim=$('#numeroValesEntregadoDisElLim');
-			  this.txtEtndrUnitValDisEl=$('#txtcostoEstandarUnitValDisEl');
-			  this.txtEtndrUnitValDisElProv=$('#txtcostoEstandarUnitValDisElProv');
-			  this.txtEtndrUnitValDisElLim=$('#txtcostoEstandarUnitValDisElLim');
+			this.txtnroValesEntregadoDisElProv=$('#numeroValesEntregadoDisElProv');
+			this.txtnroValesEntregadoDisElLim=$('#numeroValesEntregadoDisElLim');			
 			this.txtTotalEntregaValDisEl=$('#txtcostoTotalEntregaValDisEl');
 			this.txtTotalEntregaValDisElProv=$('#txtcostoTotalEntregaValDisElProv');
 			this.txtTotalEntregaValDisElLim=$('#txtcostoTotalEntregaValDisElLim');
 			
+			//costos unitarios en la distribuidora electrica
+			this.txtEtndrUnitValDisEl=$('#txtcostoEstandarUnitValDisEl');
+			this.txtEtndrUnitValDisElProv=$('#txtcostoEstandarUnitValDisElProv');
+		    this.txtEtndrUnitValDisElLim=$('#txtcostoEstandarUnitValDisElLim');
+			
+			
 			this.txtnroValesFisicosCanjeados=$('#numeroValesFisicosCanjeados');
 			this.txtnroValesFisicosCanjeadosProv=$('#numeroValesFisicosCanjeadosProv');
-			this.txtnroValesFisicosCanjeadosLim=$('#numeroValesFisicosCanjeadosLim');
-			this.txtEtndrUnitValFiCan=$('#txtcostoEstandarUnitValFiCan');
-			this.txtEtndrUnitValFiCanProv=$('#txtcostoEstandarUnitValFiCanProv');
-			this.txtEtndrUnitValFiCanLim=$('#txtcostoEstandarUnitValFiCanLim');
+			this.txtnroValesFisicosCanjeadosLim=$('#numeroValesFisicosCanjeadosLim');			
 			this.txtTotalCanjeLiqValeFis=$('#txtcostoTotalCanjeLiqValeFis');
 			this.txtTotalCanjeLiqValeFisProv=$('#txtcostoTotalCanjeLiqValeFisProv');
 			this.txtTotalCanjeLiqValeFisLim=$('#txtcostoTotalCanjeLiqValeFisLim');
 			
+			//costos unitarios vales fisicos
+			this.txtEtndrUnitValFiCan=$('#txtcostoEstandarUnitValFiCan');
+			this.txtEtndrUnitValFiCanProv=$('#txtcostoEstandarUnitValFiCanProv');
+			this.txtEtndrUnitValFiCanLim=$('#txtcostoEstandarUnitValFiCanLim');
+			
 			
 			this.txtnroValesDigitalCanjeados=$('#numeroValesDigitalCanjeados');
 			this.txtnroValesDigitalCanjeadosProv=$('#numeroValesDigitalCanjeadosProv');
-			this.txtnroValesDigitalCanjeadosLim=$('#numeroValesDigitalCanjeadosLim');
-			this.txtEtndrUnitValDgCan=$('#txtcostoEstandarUnitValDgCan');
-			this.txtEtndrUnitValDgCanProv=$('#txtcostoEstandarUnitValDgCanProv');
-			this.txtEtndrUnitValDgCanLim=$('#txtcostoEstandarUnitValDgCanLim');
+			this.txtnroValesDigitalCanjeadosLim=$('#numeroValesDigitalCanjeadosLim');			
 			this.txtTotalCanjeLiqValeDig=$('#txtcostoTotalCanjeLiqValeDig');
 			this.txtTotalCanjeLiqValeDigProv=$('#txtcostoTotalCanjeLiqValeDigProv');
 			this.txtTotalCanjeLiqValeDigLim=$('#txtcostoTotalCanjeLiqValeDigLim');
 			
+			//costos unitarios vales digitales
+			this.txtEtndrUnitValDgCan=$('#txtcostoEstandarUnitValDgCan');
+			this.txtEtndrUnitValDgCanProv=$('#txtcostoEstandarUnitValDgCanProv');
+			this.txtEtndrUnitValDgCanLim=$('#txtcostoEstandarUnitValDgCanLim');
+			
 			
 		   this.txtnroAtenciones=$('#numeroAtenciones');
 		   this.txtnroAtencionesProv=$('#numeroAtencionesProv');
-		   this.txtnroAtencionesLim=$('#numeroAtencionesLim');
-		   this.txtEtndrUnitAtencion=$('#txtcostoEstandarUnitAtencion');
-		   this.txtEtndrUnitAtencionProv=$('#txtcostoEstandarUnitAtencionProv');
-		   this.txtEtndrUnitAtencionLim=$('#txtcostoEstandarUnitAtencionLim');
+		   this.txtnroAtencionesLim=$('#numeroAtencionesLim');		  
 		   this.txtTotalAtencionConsRecl=$('#txtcostoTotalAtencionConsRecl');
            this.txtTotalAtencionConsReclProv=$('#txtcostoTotalAtencionConsReclProv');
            this.txtTotalAtencionConsReclLim=$('#txtcostoTotalAtencionConsReclLim');
            
+           //costos unitarios atencion de solicitudes
+           this.txtEtndrUnitAtencion=$('#txtcostoEstandarUnitAtencion');
+		   this.txtEtndrUnitAtencionProv=$('#txtcostoEstandarUnitAtencionProv');
+		   this.txtEtndrUnitAtencionLim=$('#txtcostoEstandarUnitAtencionLim');
+           
+           
+		   //costos unitarios de gestion administrativa
            this.txtTotalGestionAdministrativa=$('#totalGestionAdministrativa');
            this.txtTotalGestionAdministrativaProv=$('#totalGestionAdministrativaProv');
            this.txtTotalGestionAdministrativaLim=$('#totalGestionAdministrativaLim');
+           
+           
+           
            this.txtTotalDesplazamientoPersonal=$('#totalDesplazamientoPersonal');
            this.txtTotalDesplazamientoPersonalProv=$('#totalDesplazamientoPersonalProv');
            this.txtTotalDesplazamientoPersonalLim=$('#totalDesplazamientoPersonalLim');
@@ -499,7 +503,7 @@
           
            
            this.urlViewReporte='<portlet:resourceURL id="showReporte" />';
-          this.urlReporteActaEnvio='<portlet:resourceURL id="showReporteActaEnvio" />';
+           this.urlReporteActaEnvio='<portlet:resourceURL id="showReporteActaEnvio" />';
            this.urlValidacion='<portlet:resourceURL id="showValidacion" />';
            this.urlEnvioDefinitivo='<portlet:resourceURL id="envioDefinitivo" />';
            this.urlReporteValidacion='<portlet:resourceURL id="showReporteValidacion" />';
@@ -508,26 +512,26 @@
            
            this.dialogError=$("#<portlet:namespace/>dialog-form-error");
             
-         this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");   
-         this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
-         this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
+           this.dialogObservacion=$("#<portlet:namespace/>dialog-form-observacion");   
+           this.tablaObservacion=$("#<portlet:namespace/>grid_observacion");
+           this.paginadoObservacion='#<portlet:namespace/>pager_observacion';
          
          
-         this.lblConfirmEnvioContent=$("#lblConfirmEnvioContent");   
-         this.dialogConfirmEnvio=$("#dialogConfirmEnvio");   
-         this.lblMessageReportContent=$("#lblMessageReportContent");   
-         this.dialogMessageReport=$("#dialogMessageReport");   
-         this.emailConfigured='<%=PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER)%>';
+           this.lblConfirmEnvioContent=$("#lblConfirmEnvioContent");   
+           this.dialogConfirmEnvio=$("#dialogConfirmEnvio");   
+           this.lblMessageReportContent=$("#lblMessageReportContent");   
+           this.dialogMessageReport=$("#dialogMessageReport");   
+           this.emailConfigured='<%=PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER)%>';
          
-         this.dialogMessageGeneral=$("#dialogMessageGeneral");
-         this.lblMessage=$("#lblMessage");
+           this.dialogMessageGeneral=$("#dialogMessageGeneral");
+           this.lblMessage=$("#lblMessage");
          
-         this.dialogMessageInfoDetalle=$("#<portlet:namespace/>dialog-message-info-detalle");
- 		 this.dialogMessageInfoDetalleContent=$("#<portlet:namespace/>dialog-message-info-content-detalle");
- 		 this.dialogMessageWarningDetalle=$("#<portlet:namespace/>dialog-message-warning-detalle");
- 		 this.dialogMessageWarningDetalleContent=$("#<portlet:namespace/>dialog-message-warning-content-detalle");
- 		 this.dialogMessageErrorDetalle=$("#<portlet:namespace/>dialog-message-error-detalle");
-		 this.dialogMessageErrorDetalleContent=$("#<portlet:namespace/>dialog-message-error-content-detalle");
+           this.dialogMessageInfoDetalle=$("#<portlet:namespace/>dialog-message-info-detalle");
+ 		   this.dialogMessageInfoDetalleContent=$("#<portlet:namespace/>dialog-message-info-content-detalle");
+ 		   this.dialogMessageWarningDetalle=$("#<portlet:namespace/>dialog-message-warning-detalle");
+ 		   this.dialogMessageWarningDetalleContent=$("#<portlet:namespace/>dialog-message-warning-content-detalle");
+ 		   this.dialogMessageErrorDetalle=$("#<portlet:namespace/>dialog-message-error-detalle");
+		   this.dialogMessageErrorDetalleContent=$("#<portlet:namespace/>dialog-message-error-content-detalle");
          
           formato12B.initDialogs();
  		
@@ -557,15 +561,11 @@
 				formato12B.cmbPeriodo.append($("<option></option>").attr("value",$("#peridoDeclaracionHidden").val()).text(formato12B.txtPeriodo.val())); 
 				formato12B.showCamposOculto();				
 				formato12B.eventButtons(formato12B.tpOperacion.val());				
-				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
-				
-				//$("#codEmpresaBusqueda").val(formato12B.cmbCodEmpresa.val());//cambio elozano
+				formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());			
 				
 				formato12B.buildGridsObservacion();
 				
-				formato12B.inicializarFormularioCeros();//cambio elozano
-				
-				//formato12B.loadCostosUnitarios();//cambio elozano
+				formato12B.inicializarFormularioCeros();//cambio elozano			
 				
 				formato12B.loadTotales($("#codEmpresaHidden").val());
 				
@@ -602,7 +602,6 @@
 				});
 				
 				formato12B.eventButtons(formato12B.tpOperacion.val());
-			//	formato12B.updateStyleClassInput(formato12B.tpOperacion.val(),formato12B.cmbCodEmpresa.val().trim());
 				
 				formato12B.loadTotales(formato12B.cmbCodEmpresa.val());
 				
@@ -692,11 +691,8 @@
 				formato12B.txtnroValesDigitalCanjeadosLim.prop('disabled', true);
 				formato12B.txtnroAtenciones.prop('disabled', true);
 				formato12B.txtnroAtencionesProv.prop('disabled', true);
-				formato12B.txtnroAtencionesLim.prop('disabled', true);
+				formato12B.txtnroAtencionesLim.prop('disabled', true);				
 				
-				//formato12B.txtTotalGestionAdministrativa.prop('disabled', true);
-				//formato12B.txtTotalGestionAdministrativaProv.prop('disabled', true);
-				//formato12B.txtTotalGestionAdministrativaLim.prop('disabled', true);
 				formato12B.txtTotalDesplazamientoPersonal.prop('disabled', true);
 				formato12B.txtTotalDesplazamientoPersonalProv.prop('disabled', true);
 				formato12B.txtTotalDesplazamientoPersonalLim.prop('disabled', true);
@@ -721,21 +717,21 @@
 				formato12B.txtnroValesDigitalCanjeadosProv.prop('disabled', false);
 				formato12B.txtnroAtenciones.prop('disabled', false);
 				formato12B.txtnroAtencionesProv.prop('disabled', false);
-				//formato12B.txtTotalGestionAdministrativa.prop('disabled', false);
-				//formato12B.txtTotalGestionAdministrativaProv.prop('disabled', false);
+				
 				formato12B.txtTotalDesplazamientoPersonal.prop('disabled', false);
 				formato12B.txtTotalDesplazamientoPersonalProv.prop('disabled', false);
 				formato12B.txtTotalActividadesExtraord.prop('disabled', false);
 				formato12B.txtTotalActividadesExtraordProv.prop('disabled', false);
 				
 				if(formato12B.cmbCodEmpresa.val().trim()=='EDLN' || formato12B.cmbCodEmpresa.val().trim()=='LDS'){
+					
 					formato12B.txtnroValesImpresoLim.prop('disabled', false);
 					formato12B.txtnroValesRepartidosDomiLim.prop('disabled', false);
 					formato12B.txtnroValesEntregadoDisElLim.prop('disabled', false);
 					formato12B.txtnroValesFisicosCanjeadosLim.prop('disabled', false);
 					formato12B.txtnroValesDigitalCanjeadosLim.prop('disabled', false);
 					formato12B.txtnroAtencionesLim.prop('disabled', false);
-					//formato12B.txtTotalGestionAdministrativaLim.prop('disabled', false);
+					
 					formato12B.txtTotalDesplazamientoPersonalLim.prop('disabled', false);
 					formato12B.txtTotalActividadesExtraordLim.prop('disabled', false);
 					
@@ -746,7 +742,7 @@
 					formato12B.txtnroValesFisicosCanjeadosLim.prop('disabled', true);
 					formato12B.txtnroValesDigitalCanjeadosLim.prop('disabled', true);
 					formato12B.txtnroAtencionesLim.prop('disabled', true);
-					//formato12B.txtTotalGestionAdministrativaLim.prop('disabled', true);
+					
 					formato12B.txtTotalDesplazamientoPersonalLim.prop('disabled', true);
 					formato12B.txtTotalActividadesExtraordLim.prop('disabled', true);
 				}		
@@ -771,7 +767,7 @@
 					formato12B.txtTotalActividadesExtraordLim.val(act.length>0?act:'');
 					
 					
-					formato12B.txtEtndrUnitValeImpreLim.val(formato12B.txtEtndrUnitValeImpreLim.val().length>0?formato12B.txtEtndrUnitValeImpreLim.val():'');
+					 formato12B.txtEtndrUnitValeImpreLim.val(formato12B.txtEtndrUnitValeImpreLim.val().length>0?formato12B.txtEtndrUnitValeImpreLim.val():'');
 					 $('#costoEstandarUnitValeImpreLim').val(formato12B.txtEtndrUnitValeImpreLim.val());
 					 
 					 formato12B.txtEtndrUnitValeReparLim.val(formato12B.txtEtndrUnitValeReparLim.val().length>0?formato12B.txtEtndrUnitValeReparLim.val():'');
@@ -831,8 +827,10 @@
 			 formato12B.txtTotalCanjeLiqValeFisLim.val('0.00');
 			 formato12B.txtTotalCanjeLiqValeDigLim.val('0.00');
 			 formato12B.txtTotalAtencionConsReclLim.val('0.00');
+			 
 			 $('#totalGestionAdministrativaLim').val('0.00');
-	         $('#totalDesplazamientoPersonalLim').val('0.00');
+	        
+			 $('#totalDesplazamientoPersonalLim').val('0.00');
 	         $('#totalActividadesExtraordLim').val('0.00');		 
 		},
 		
@@ -901,22 +899,16 @@
 		
 		
 		
-		//
 		<portlet:namespace/>loadGrupoInformacion : function() {
 			jQuery.ajax({
 				url: formato12B.urlGrupoInformacion+'&'+formato12B.formNewEdit.serialize(),
 					type: 'post',
 					dataType: 'json',
-					success: function(data) {	
-						
-						dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
-						//alert(data.idGrupoInfo);
-						dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
-						//
-						dwr.util.setValue("etapaFinal", data.etapaFinal);
-						
-						formato12B.mostrarPeriodoEjecucion();
-						
+					success: function(data) {						
+						dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);					
+						dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);						
+						dwr.util.setValue("etapaFinal", data.etapaFinal);						
+						formato12B.mostrarPeriodoEjecucion();						
 					},error : function(){
 						alert("Error de conexión.");
 						formato12B.unblockUI();
@@ -933,27 +925,22 @@
 				url: formato12B.urlGrupoInformacionEdit+'&'+formato12B.formNewEdit.serialize(),
 					type: 'post',
 					dataType: 'json',
-					success: function(data) {	
-						
-						dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
-						//alert(data.idGrupoInfo);
-						dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
-						//
-						dwr.util.setValue("etapaFinal", data.etapaFinal);
-						
-						formato12B.mostrarPeriodoEjecucion();
-						
+					success: function(data) {							
+						dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);						
+						dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);						
+						dwr.util.setValue("etapaFinal", data.etapaFinal);						
+						formato12B.mostrarPeriodoEjecucion();						
 					},error : function(){
 						alert("Error de conexión.");
 						formato12B.unblockUI();
 					}
 			});
 		},
-		//
+		
+		
 		validarGrupoInformacion : function(){
 			
-			if( $('#idGrupoInfo').val()=='0' ){
-				//alert('Seleccione una Distribuidora Eléctrica'); 
+			if( $('#idGrupoInfo').val()=='0' ){				
 				formato12B.dialogMessageWarningDetalleContent.html('Primero debe crear el Grupo de Información Mensual para el Año y Mes a declarar');
 				formato12B.dialogMessageWarningDetalle.dialog("open");
 				return false;
@@ -963,8 +950,7 @@
 		
 		validarGrupoInformacionTxt : function(){
 			
-			if( $('#idGrupoInfo').val()=='0' ){
-				//alert('Seleccione una Distribuidora Eléctrica'); 
+			if( $('#idGrupoInfo').val()=='0' ){				
 				formato12B.dialogMessageWarningDetalleContent.html('Primero debe crear el Grupo de Información Mensual para el Año y Mes a declarar');
 				formato12B.dialogMessageWarningDetalle.dialog("open");
 				return false;
@@ -980,26 +966,22 @@
 		},
 		
 		validarUltimaEtapa : function(){
-			if( $('#etapaFinal').val()=='SI' ){
-				//alert('Seleccione una Distribuidora Eléctrica'); 
+			if( $('#etapaFinal').val()=='SI' ){				
 				formato12B.dialogMessageWarningDetalleContent.html('No se puede realizar esta operación debido a que el Formato se encuentra en una etapa avanzada');
 				formato12B.dialogMessageWarningDetalle.dialog("open");
 				return false;
 			}
 			return true;
-		},
-		//
+		},		
 		
 		loadDataCostoUnitario: function(data){
 			console.debug("Entrando a llenar campos de los costos unitarios");
 			if(data!=null && data.length>0){
 				formato12B.inicializarValoresCostos();
-				$.each(data, function (i, item) {
-					
-					 console.debug("zona del llenado de costos unitarios:  "+item.idZonaBenef);
-					 
+				$.each(data, function (i, item) {					
+					 console.debug("zona del llenado de costos unitarios:  "+item.idZonaBenef);					 
 					 if(item.idZonaBenef == '1'){
-						 console.debug("entrando a zona = 1 del llenado de costos unitarios");
+						 console.debug("entrando a zona = 1 del llenado de costos unitarios");	
 						 
 						 formato12B.txtEtndrUnitValeImpre.val(item.costoUnitarioImpresionVales);
 						 $('#costoEstandarUnitValeImpre').val(item.costoUnitarioImpresionVales);
@@ -1024,7 +1006,7 @@
 						 $('#totalGestionAdministrativa').val(item.costoUnitarioGestionAdm.toFixed(2));
 						 
 					 }else if(item.idZonaBenef == '2'){
-						 console.debug("entrando a zona = 2 del llenado de costos unitarios");
+						 console.debug("entrando a zona = 2 del llenado de costos unitarios");	
 						 
 						 formato12B.txtEtndrUnitValeImpreProv.val(item.costoUnitarioImpresionVales);
 						 $('#costoEstandarUnitValeImpreProv').val(item.costoUnitarioImpresionVales);
@@ -1053,7 +1035,7 @@
 						 console.debug("entrando al llenado de costos unitarios solo lima ");
 						 if(item.idZonaBenef == '3'){
 							 console.debug("entrando a zona = 3 del llenado de costos unitarios");
-							
+							 
 							 formato12B.txtEtndrUnitValeImpreLim.val(item.costoUnitarioImpresionVales);
 							 $('#costoEstandarUnitValeImpreLim').val(item.costoUnitarioImpresionVales);
 							 
@@ -1389,8 +1371,7 @@
 		loadTotalReconocer : function(){
 			$('#totalGeneralReconocer').val(Number($('#porImpresionVales').val())+Number($('#porRepartoDom').val())+Number($('#porEntregaValesDE').val())+
 					Number($('#porValesFisicos').val())+Number($('#porValesDigitales').val())+Number($('#porAtencionReclamos').val())+Number($('#porGestionAdm').val())+
-					Number($('#porDesplazamientoPers').val())+Number($('#porActividadExtra').val()));	
-			//$('#totalGeneralReconocer').val(redondeo( $('#totalGeneralReconocer').val(), 2));
+					Number($('#porDesplazamientoPers').val())+Number($('#porActividadExtra').val()));			
 			$('#totalGeneralReconocer').val(Number($('#totalGeneralReconocer').val()).toFixed(2));
 		},		
 		
@@ -1441,8 +1422,7 @@
 		},
 		
 		
-		showConfirmacion : function (emp,mes,anio,etapa,desmes,stdEnvio,std,mesEjec,desmesEjec,anioEjec,tipo) {	
-			//alert(emp+"/"+mes+"/"+anio+"/"+etapa+"/"+desmes+"/"+stdEnvio+"/"+std+"/"+mesEjec+"/"+desmesEjec+"/"+anioEjec+"/"+tipo);
+		showConfirmacion : function (emp,mes,anio,etapa,desmes,stdEnvio,std,mesEjec,desmesEjec,anioEjec,tipo) {		
 			var admin = '${esAdministrador}';
 			var process = true;
 			var show=true;
@@ -1492,8 +1472,7 @@
 				 }break;
 			}
 			
-            if(show){
-				//formato12B.dlgConfirmacion.html(msj);
+            if(show){				
 				if(numModal == 1){					
 					formato12B.dialogMessageConfirmContent.html(msj);
 					formato12B.dialogMessageConfirm.dialog("open");
@@ -1502,40 +1481,8 @@
 					anioPre= anio;
 					codEtapa = etapa;
 					mesEjecu= mesEjec;
-					anioEjecu = anioEjec;				
-					/*formato12B.dlgConfirmacion.dialog({ 
-				     	title:"Mensaje de Confirmaci&oacute;n",
-				     	height:150,
-						width: 500,	
-				         modal: true,
-				         buttons:{
-				        	 "Si":function(){
-				        		 $( this ).dialog( "close" );
-				        		 formato12B.deleteFormato(emp, mes, anio, etapa,mesEjec,anioEjec, formato12B.dlgConfirmacion);
-				        		 //emp,mes,anio,etapa,desmes,stdEnvio,std,mesEjec,desmesEjec,anioEjec,tipo
-				        	 },
-				        	 "No":function(){
-				        		 $( this ).dialog( "close" );
-				        		
-				        	 }
-				         },
-				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
-				     }).load();*/
-					
-				}else{
-					/*titulo="Mensaje de Informaci&oacute;n";
-					formato12B.dlgConfirmacion.dialog({ 
-				     	title:titulo,
-				     	height:150,
-						width: 400,	
-				         modal: true,
-				         buttons:{
-				        	 "Aceptar":function(){
-				        		 $( this ).dialog( "close" );
-				        	}
-				         },
-				         open: function(event, ui) {$(".ui-dialog-titlebar-close").show(); }
-				     }).load();*/
+					anioEjecu = anioEjec;					
+				}else{					
 					formato12B.dialogMessageInfoContent.html(msj);
 					formato12B.dialogMessageInfo.dialog("open");
 				}	
@@ -1596,9 +1543,7 @@
 			
 			if(isSubmit){
 				 formato12B.formNewEdit.submit(); 
-			}
-			 
-			
+			}	
 		},
 		
 		
@@ -1641,13 +1586,8 @@
 				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
 				formato12B.dialogMessageWarningDetalle.dialog("open");
 			  	return false; 
-			}/*else if(periodoDeclarado==null || 
-					periodoDeclarado.length == '' ) {			
-				var addhtmAlert='No existe un Periodo Declarado para la Distribuidora Eléctrica seleccionada.';					
-				formato12B.dialogMessageWarningDetalleContent.html(addhtmAlert);
-				formato12B.dialogMessageWarningDetalle.dialog("open");
-				return false; 
-			}*/
+			}
+			
 			//Rural
 			else if(formato12B.txtnroValesImpreso.val().length==''){
 				var addhtmAlert='Debe ingresar el Número de Vales Impresos de la Zona Rural.';					
@@ -1844,27 +1784,16 @@
 									//bloque para mostrar cuando se graba un formato
 									$('#<portlet:namespace/>guardarFormato').val('Actualizar');
 									
-								}else if(item.msg == "-1"){
-									//formato12B.lblMessage.html("El formato ya existe para la empresa y periodo seleccionado");
-									//formato12B.dialogMessageGeneral.dialog("open");
+								}else if(item.msg == "-1"){									
 									formato12B.dialogMessageErrorDetalleContent.html("El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar seleccionado");
-									formato12B.dialogMessageErrorDetalle.dialog("open");
-									
-								}else if(item.msg == "-2"){
-									//formato12B.lblMessage.html("Error al obtener usuario");
-									//formato12B.dialogMessageGeneral.dialog("open");
+									formato12B.dialogMessageErrorDetalle.dialog("open");									
+								}else if(item.msg == "-2"){									
 									formato12B.dialogMessageErrorDetalleContent.html("Error al obtener usuario");
-									formato12B.dialogMessageErrorDetalle.dialog("open");
-									
-								}else if(item.msg == "-3"){
-									//formato12B.lblMessage.html("Error al obtener terminal");
-									//formato12B.dialogMessageGeneral.dialog("open");
+									formato12B.dialogMessageErrorDetalle.dialog("open");									
+								}else if(item.msg == "-3"){									
 									formato12B.dialogMessageErrorDetalleContent.html("Error al obtener terminal");
-									formato12B.dialogMessageErrorDetalle.dialog("open");
-									
-								}else if(item.msg == "-4"){
-									//formato12B.lblMessage.html("Se produjo un error al guardar los datos");
-									//formato12B.dialogMessageGeneral.dialog("open");
+									formato12B.dialogMessageErrorDetalle.dialog("open");									
+								}else if(item.msg == "-4"){									
 									formato12B.dialogMessageErrorDetalleContent.html("Se produjo un error al guardar los datos");
 									formato12B.dialogMessageErrorDetalle.dialog("open");
 									
@@ -1877,11 +1806,7 @@
 						formato12B.unblockUI();
 					}
 			});
-			}
-			/*else{				
-				formato12B.dialogMessageWarningDetalleContent.html("Debe al menos registrar un campo por Zona Beneficiaria");
-				formato12B.dialogMessageWarningDetalle.dialog("open");
-			}*/		
+			}			
 		},
 		
 		validarFormulario : function(){
@@ -1932,21 +1857,14 @@
 				},				
 				success: function(data) {		
 					
-					if(data == '1' ){
-						//formato12B.btnBuscar.trigger('click');
+					if(data == '1' ){						
 						formato12B.lblMessageInicial.html("El registro seleccionado del Formato 12B se eliminó satisfactoriamente.");
-						formato12B.dialogMessageGeneralInicial.dialog("open");
-						
-						
-					}else if(data == '-1'){
-						//formato12B.lblMessageInicial.html("Error al eliminar registro");
-						//formato12B.dialogMessageGeneralInicial.dialog("open");
+						formato12B.dialogMessageGeneralInicial.dialog("open");					
+					}else if(data == '-1'){						
 						formato12B.dialogMessageErrorContent.html("Error al eliminar registro");
-						formato12B.dialogMessageError.dialog("open");
-						
+						formato12B.dialogMessageError.dialog("open");						
 					}
-					formato12B.searchFormato();
-					//formato12B.btnBuscar.trigger('click');
+					formato12B.searchFormato();					
 					formato12B.unblockUI();
 				},error : function(){
 					alert("Error de conexión.");
@@ -2141,12 +2059,9 @@
 						formato12B.initBlockUI();
 					}
 				});
-			}else{
-				//formato12B.lblMessage.html("Primero debe realizar el envío definitivo");
-			    //formato12B.dialogMessageGeneral.dialog("open");
+			}else{				
 			    formato12B.dialogMessageInfoDetalleContent.html("Primero debe realizar el Envío Definitivo para el Formato 12B");
-				formato12B.dialogMessageInfoDetalle.dialog("open");
-				
+				formato12B.dialogMessageInfoDetalle.dialog("open");			
 			}
 		},		
 		
@@ -2162,9 +2077,7 @@
 			formato12B.txtnroValesDigitalCanjeados.addClass("fise-editable");
 			formato12B.txtnroValesDigitalCanjeadosProv.addClass("fise-editable");
 			formato12B.txtnroAtenciones.addClass("fise-editable");
-			formato12B.txtnroAtencionesProv.addClass("fise-editable");
-			//formato12B.txtTotalGestionAdministrativa.addClass("fise-editable");
-			//formato12B.txtTotalGestionAdministrativaProv.addClass("fise-editable");
+			formato12B.txtnroAtencionesProv.addClass("fise-editable");		
 			formato12B.txtTotalDesplazamientoPersonal.addClass("fise-editable");
 			formato12B.txtTotalDesplazamientoPersonalProv.addClass("fise-editable");
 			formato12B.txtTotalActividadesExtraord.addClass("fise-editable");
@@ -2176,8 +2089,7 @@
 			formato12B.txtnroValesEntregadoDisElLim.addClass("fise-editable");
 			formato12B.txtnroValesFisicosCanjeadosLim.addClass("fise-editable");
 			formato12B.txtnroValesDigitalCanjeadosLim.addClass("fise-editable");
-			formato12B.txtnroAtencionesLim.addClass("fise-editable");
-			//formato12B.txtTotalGestionAdministrativaLim.addClass("fise-editable");
+			formato12B.txtnroAtencionesLim.addClass("fise-editable");		
 			formato12B.txtTotalDesplazamientoPersonalLim.addClass("fise-editable");
 			formato12B.txtTotalActividadesExtraordLim.addClass("fise-editable");
 		}else{			
@@ -2186,8 +2098,7 @@
 			formato12B.txtnroValesEntregadoDisElLim.removeClass("fise-editable");
 			formato12B.txtnroValesFisicosCanjeadosLim.removeClass("fise-editable");
 			formato12B.txtnroValesDigitalCanjeadosLim.removeClass("fise-editable");
-			formato12B.txtnroAtencionesLim.removeClass("fise-editable");
-			//formato12B.txtTotalGestionAdministrativaLim.removeClass("fise-editable");
+			formato12B.txtnroAtencionesLim.removeClass("fise-editable");			
 			formato12B.txtTotalDesplazamientoPersonalLim.removeClass("fise-editable");
 			formato12B.txtTotalActividadesExtraordLim.removeClass("fise-editable");		
 		}
@@ -2204,7 +2115,8 @@
 					}
 				}
 			});
-			//addd
+
+            //add
 			formato12B.dialogMessageConfirm.dialog({
 				modal: true,
 				autoOpen: false,
@@ -2294,22 +2206,17 @@
 				width: 450,
 				buttons: {
 					'Ver Acta': function() {
-						formato12B.mostrarReporteEnvioDefinitivo();
-						//$( this ).dialog("close");
-						//formato12B.urlRetornar;
+						formato12B.mostrarReporteEnvioDefinitivo();						
 						formato12B.dialogMessageReport.hide();
 						formato12B.btnBuscar.trigger('click');
 					},
-					Ok: function() {
-						//$( this ).dialog("close");
-						//formato12B.urlRetornar;
+					Ok: function() {						
 						formato12B.dialogMessageReport.hide();
 						formato12B.btnBack.trigger("click");
 						formato12B.btnBuscar.trigger('click');
 					}
 				},
-				close: function(event,ui){
-					//formato12B.urlRetornar;
+				close: function(event,ui){					
 					formato12B.btnBack.trigger("click");
 					formato12B.btnBuscar.trigger('click');
 		       	}
@@ -2374,6 +2281,8 @@
 				}
 			});
 		},
+		
+		//funcion para valida el ingreso de numeros enteros
 		validateInputTextNumber:function(id){
 			$("#"+id).keyup(function () {
 			    if (!this.value.match(/^([0-9]{0,10})$/)) {
@@ -2381,10 +2290,11 @@
 			    }
 			});	
 		},
+		
+		//funcion para valida el ingreso de numeros decimales
 		validateInputTextDecimal:function(id){
 			$("#"+id).keyup(function (event) {
-			   $(this).val($(this).val().replace(/[^0-9\.]/g,''));
-			  // $(this).val($(this).val().replace(/^\s*-?\d+(\.\d{1,2})?\s*$/g,''));
+			   $(this).val($(this).val().replace(/[^0-9\.]/g,''));			  
 		          if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
 		                event.preventDefault();
 		            };
@@ -2394,24 +2304,25 @@
 		            	 if(numdec>2 && value.indexOf('.')!=-1){
 		            		$(this).val(value.substring(0, value.indexOf('.')+3)); 
 		            	}
-		            }
-		            
-		               
-		            
-			});
-			
+		            }       
+			});	
 		},
+		
+		
+		
+		
 		inicializarFormularioCeros : function(){
 			
 			formato12B.txtnroValesImpreso.attr('value',(formato12B.txtnroValesImpreso.val()!=''?formato12B.txtnroValesImpreso.val():'0'));
 			formato12B.txtnroValesImpresoProv.attr('value',(formato12B.txtnroValesImpresoProv.val()!=''?formato12B.txtnroValesImpresoProv.val():'0'));
-			formato12B.txtnroValesImpresoLim.attr('value',(formato12B.txtnroValesImpresoLim.val()!=''?formato12B.txtnroValesImpresoLim.val():'0'));
-			formato12B.txtEtndrUnitValeImpre.attr('value',(formato12B.txtEtndrUnitValeImpre.val()!=''?formato12B.txtEtndrUnitValeImpre.val():'0.00'));
-			formato12B.txtEtndrUnitValeImpreProv.attr('value',(formato12B.txtEtndrUnitValeImpreProv.val()!=''?formato12B.txtEtndrUnitValeImpreProv.val():'0.00'));
-			formato12B.txtEtndrUnitValeImpreLim.attr('value',(formato12B.txtEtndrUnitValeImpreLim.val()!=''?formato12B.txtEtndrUnitValeImpreLim.val():'0.00'));
+			formato12B.txtnroValesImpresoLim.attr('value',(formato12B.txtnroValesImpresoLim.val()!=''?formato12B.txtnroValesImpresoLim.val():'0'));			
 			formato12B.txtTotalImpresionVale.attr('value',(formato12B.txtTotalImpresionVale.val()!=''?formato12B.txtTotalImpresionVale.val():'0.00'));
 			formato12B.txtTotalImpresionValeProv.attr('value',(formato12B.txtTotalImpresionValeProv.val()!=''?formato12B.txtTotalImpresionValeProv.val():'0.00'));
 			formato12B.txtTotalImpresionValeLim.attr('value',(formato12B.txtTotalImpresionValeLim.val()!=''?formato12B.txtTotalImpresionValeLim.val():'0.00'));
+			//costos unitarios
+			formato12B.txtEtndrUnitValeImpre.attr('value',(formato12B.txtEtndrUnitValeImpre.val()!=''?formato12B.txtEtndrUnitValeImpre.val():'0.00'));
+			formato12B.txtEtndrUnitValeImpreProv.attr('value',(formato12B.txtEtndrUnitValeImpreProv.val()!=''?formato12B.txtEtndrUnitValeImpreProv.val():'0.00'));
+			formato12B.txtEtndrUnitValeImpreLim.attr('value',(formato12B.txtEtndrUnitValeImpreLim.val()!=''?formato12B.txtEtndrUnitValeImpreLim.val():'0.00'));
 			
 			
 			formato12B.txtnroValesRepartidosDomi.attr('value',(formato12B.txtnroValesRepartidosDomi.val()!=''?formato12B.txtnroValesRepartidosDomi.val():'0'));
@@ -2420,55 +2331,64 @@
 			formato12B.txtTotalRepartoValesDomi.attr('value',(formato12B.txtTotalRepartoValesDomi.val()!=''?formato12B.txtTotalRepartoValesDomi.val():'0.00'));
 			formato12B.txtTotalRepartoValesDomiProv.attr('value',(formato12B.txtTotalRepartoValesDomiProv.val()!=''?formato12B.txtTotalRepartoValesDomiProv.val():'0.00'));
 			formato12B.txtTotalRepartoValesDomiLim.attr('value',(formato12B.txtTotalRepartoValesDomiLim.val()!=''?formato12B.txtTotalRepartoValesDomiLim.val():'0.00'));
+			//costos unitarios
 			formato12B.txtEtndrUnitValeRepar.attr('value',(formato12B.txtEtndrUnitValeRepar.val()!=''?formato12B.txtEtndrUnitValeRepar.val():'0.00'));
 			formato12B.txtEtndrUnitValeReparProv.attr('value',(formato12B.txtEtndrUnitValeReparProv.val()!=''?formato12B.txtEtndrUnitValeReparProv.val():'0.00'));
 			formato12B.txtEtndrUnitValeReparLim.attr('value',(formato12B.txtEtndrUnitValeReparLim.val()!=''?formato12B.txtEtndrUnitValeReparLim.val():'0.00'));
 			
+			
 			formato12B.txtnroValesEntregadoDisEl.attr('value',(formato12B.txtnroValesEntregadoDisEl.val()!=''?formato12B.txtnroValesEntregadoDisEl.val():'0'));
 			formato12B.txtnroValesEntregadoDisElProv.attr('value',(formato12B.txtnroValesEntregadoDisElProv.val()!=''?formato12B.txtnroValesEntregadoDisElProv.val():'0'));
 			formato12B.txtnroValesEntregadoDisElLim.attr('value',(formato12B.txtnroValesEntregadoDisElLim.val()!=''?formato12B.txtnroValesEntregadoDisElLim.val():'0'));
-			formato12B.txtEtndrUnitValDisEl.attr('value',(formato12B.txtEtndrUnitValDisEl.val()!=''?formato12B.txtEtndrUnitValDisEl.val():'0.00'));
-			formato12B.txtEtndrUnitValDisElProv.attr('value',(formato12B.txtEtndrUnitValDisElProv.val()!=''?formato12B.txtEtndrUnitValDisElProv.val():'0.00'));
-			formato12B.txtEtndrUnitValDisElLim.attr('value',(formato12B.txtEtndrUnitValDisElLim.val()!=''?formato12B.txtEtndrUnitValDisElLim.val():'0.00'));
 			formato12B.txtTotalEntregaValDisEl.attr('value',(formato12B.txtTotalEntregaValDisEl.val()!=''?formato12B.txtTotalEntregaValDisEl.val():'0.00'));
 			formato12B.txtTotalEntregaValDisElProv.attr('value',(formato12B.txtTotalEntregaValDisElProv.val()!=''?formato12B.txtTotalEntregaValDisElProv.val():'0.00'));
 			formato12B.txtTotalEntregaValDisElLim.attr('value',(formato12B.txtTotalEntregaValDisElLim.val()!=''?formato12B.txtTotalEntregaValDisElLim.val():'0.00'));
+			//costos unitarios
+			formato12B.txtEtndrUnitValDisEl.attr('value',(formato12B.txtEtndrUnitValDisEl.val()!=''?formato12B.txtEtndrUnitValDisEl.val():'0.00'));
+			formato12B.txtEtndrUnitValDisElProv.attr('value',(formato12B.txtEtndrUnitValDisElProv.val()!=''?formato12B.txtEtndrUnitValDisElProv.val():'0.00'));
+			formato12B.txtEtndrUnitValDisElLim.attr('value',(formato12B.txtEtndrUnitValDisElLim.val()!=''?formato12B.txtEtndrUnitValDisElLim.val():'0.00'));
+			
 			
 			formato12B.txtnroValesFisicosCanjeados.attr('value',(formato12B.txtnroValesFisicosCanjeados.val()!=''?formato12B.txtnroValesFisicosCanjeados.val():'0'));
 			formato12B.txtnroValesFisicosCanjeadosProv.attr('value',(formato12B.txtnroValesFisicosCanjeadosProv.val()!=''?formato12B.txtnroValesFisicosCanjeadosProv.val():'0'));
 			formato12B.txtnroValesFisicosCanjeadosLim.attr('value',(formato12B.txtnroValesFisicosCanjeadosLim.val()!=''?formato12B.txtnroValesFisicosCanjeadosLim.val():'0'));
-			formato12B.txtEtndrUnitValFiCan.attr('value',(formato12B.txtEtndrUnitValFiCan.val()!=''?formato12B.txtEtndrUnitValFiCan.val():'0.00'));
-			formato12B.txtEtndrUnitValFiCanProv.attr('value',(formato12B.txtEtndrUnitValFiCanProv.val()!=''?formato12B.txtEtndrUnitValFiCanProv.val():'0.00'));
-			formato12B.txtEtndrUnitValFiCanLim.attr('value',(formato12B.txtEtndrUnitValFiCanLim.val()!=''?formato12B.txtEtndrUnitValFiCanLim.val():'0.00'));
 			formato12B.txtTotalCanjeLiqValeFis.attr('value',(formato12B.txtTotalCanjeLiqValeFis.val()!=''?formato12B.txtTotalCanjeLiqValeFis.val():'0.00'));
 			formato12B.txtTotalCanjeLiqValeFisProv.attr('value',(formato12B.txtTotalCanjeLiqValeFisProv.val()!=''?formato12B.txtTotalCanjeLiqValeFisProv.val():'0.00'));
 			formato12B.txtTotalCanjeLiqValeFisLim.attr('value',(formato12B.txtTotalCanjeLiqValeFisLim.val()!=''?formato12B.txtTotalCanjeLiqValeFisLim.val():'0.00'));
+			//costos unitarios
+			formato12B.txtEtndrUnitValFiCan.attr('value',(formato12B.txtEtndrUnitValFiCan.val()!=''?formato12B.txtEtndrUnitValFiCan.val():'0.00'));
+			formato12B.txtEtndrUnitValFiCanProv.attr('value',(formato12B.txtEtndrUnitValFiCanProv.val()!=''?formato12B.txtEtndrUnitValFiCanProv.val():'0.00'));
+			formato12B.txtEtndrUnitValFiCanLim.attr('value',(formato12B.txtEtndrUnitValFiCanLim.val()!=''?formato12B.txtEtndrUnitValFiCanLim.val():'0.00'));
 			
 			
 			formato12B.txtnroValesDigitalCanjeados.attr('value',(formato12B.txtnroValesDigitalCanjeados.val()!=''?formato12B.txtnroValesDigitalCanjeados.val():'0'));
 			formato12B.txtnroValesDigitalCanjeadosProv.attr('value',(formato12B.txtnroValesDigitalCanjeadosProv.val()!=''?formato12B.txtnroValesDigitalCanjeadosProv.val():'0'));
 			formato12B.txtnroValesDigitalCanjeadosLim.attr('value',(formato12B.txtnroValesDigitalCanjeadosLim.val()!=''?formato12B.txtnroValesDigitalCanjeadosLim.val():'0'));
-			formato12B.txtEtndrUnitValDgCan.attr('value',(formato12B.txtEtndrUnitValDgCan.val()!=''?formato12B.txtEtndrUnitValDgCan.val():'0.00'));
-			formato12B.txtEtndrUnitValDgCanProv.attr('value',(formato12B.txtEtndrUnitValDgCanProv.val()!=''?formato12B.txtEtndrUnitValDgCanProv.val():'0.00'));
-			formato12B.txtEtndrUnitValDgCanLim.attr('value',(formato12B.txtEtndrUnitValDgCanLim.val()!=''?formato12B.txtEtndrUnitValDgCanLim.val():'0.00'));
 			formato12B.txtTotalCanjeLiqValeDig.attr('value',(formato12B.txtTotalCanjeLiqValeDig.val()!=''?formato12B.txtTotalCanjeLiqValeDig.val():'0.00'));
 			formato12B.txtTotalCanjeLiqValeDigProv.attr('value',(formato12B.txtTotalCanjeLiqValeDigProv.val()!=''?formato12B.txtTotalCanjeLiqValeDigProv.val():'0.00'));
 			formato12B.txtTotalCanjeLiqValeDigLim.attr('value',(formato12B.txtTotalCanjeLiqValeDigLim.val()!=''?formato12B.txtTotalCanjeLiqValeDigLim.val():'0.00'));
+			//costos unitarios
+			formato12B.txtEtndrUnitValDgCan.attr('value',(formato12B.txtEtndrUnitValDgCan.val()!=''?formato12B.txtEtndrUnitValDgCan.val():'0.00'));
+			formato12B.txtEtndrUnitValDgCanProv.attr('value',(formato12B.txtEtndrUnitValDgCanProv.val()!=''?formato12B.txtEtndrUnitValDgCanProv.val():'0.00'));
+			formato12B.txtEtndrUnitValDgCanLim.attr('value',(formato12B.txtEtndrUnitValDgCanLim.val()!=''?formato12B.txtEtndrUnitValDgCanLim.val():'0.00'));
 			
 			
 			formato12B.txtnroAtenciones.attr('value',(formato12B.txtnroAtenciones.val()!=''?formato12B.txtnroAtenciones.val():'0'));
 			formato12B.txtnroAtencionesProv.attr('value',(formato12B.txtnroAtencionesProv.val()!=''?formato12B.txtnroAtencionesProv.val():'0'));
 			formato12B.txtnroAtencionesLim.attr('value',(formato12B.txtnroAtencionesLim.val()!=''?formato12B.txtnroAtencionesLim.val():'0'));
-			formato12B.txtEtndrUnitAtencion.attr('value',(formato12B.txtEtndrUnitAtencion.val()!=''?formato12B.txtEtndrUnitAtencion.val():'0.00'));
-			formato12B.txtEtndrUnitAtencionProv.attr('value',(formato12B.txtEtndrUnitAtencionProv.val()!=''?formato12B.txtEtndrUnitAtencionProv.val():'0.00'));
-			formato12B.txtEtndrUnitAtencionLim.attr('value',(formato12B.txtEtndrUnitAtencionLim.val()!=''?formato12B.txtEtndrUnitAtencionLim.val():'0.00'));
 			formato12B.txtTotalAtencionConsRecl.attr('value',(formato12B.txtTotalAtencionConsRecl.val()!=''?formato12B.txtTotalAtencionConsRecl.val():'0.00'));
 			formato12B.txtTotalAtencionConsReclProv.attr('value',(formato12B.txtTotalAtencionConsReclProv.val()!=''?formato12B.txtTotalAtencionConsReclProv.val():'0.00'));
 			formato12B.txtTotalAtencionConsReclLim.attr('value',(formato12B.txtTotalAtencionConsReclLim.val()!=''?formato12B.txtTotalAtencionConsReclLim.val():'0.00'));
-           
+            //costos unitarios
+            formato12B.txtEtndrUnitAtencion.attr('value',(formato12B.txtEtndrUnitAtencion.val()!=''?formato12B.txtEtndrUnitAtencion.val():'0.00'));
+			formato12B.txtEtndrUnitAtencionProv.attr('value',(formato12B.txtEtndrUnitAtencionProv.val()!=''?formato12B.txtEtndrUnitAtencionProv.val():'0.00'));
+			formato12B.txtEtndrUnitAtencionLim.attr('value',(formato12B.txtEtndrUnitAtencionLim.val()!=''?formato12B.txtEtndrUnitAtencionLim.val():'0.00'));
+			//costos unitarios		
 			formato12B.txtTotalGestionAdministrativa.attr('value',(formato12B.txtTotalGestionAdministrativa.val()!=''?formato12B.txtTotalGestionAdministrativa.val():'0.00'));
 			formato12B.txtTotalGestionAdministrativaProv.attr('value',(formato12B.txtTotalGestionAdministrativaProv.val()!=''?formato12B.txtTotalGestionAdministrativaProv.val():'0.00'));
 			formato12B.txtTotalGestionAdministrativaLim.attr('value',(formato12B.txtTotalGestionAdministrativaLim.val()!=''?formato12B.txtTotalGestionAdministrativaLim.val():'0.00'));
+			
+			
 			formato12B.txtTotalDesplazamientoPersonal.attr('value',(formato12B.txtTotalDesplazamientoPersonal.val()!=''?formato12B.txtTotalDesplazamientoPersonal.val():'0.00'));
 			formato12B.txtTotalDesplazamientoPersonalProv.attr('value',(formato12B.txtTotalDesplazamientoPersonalProv.val()!=''?formato12B.txtTotalDesplazamientoPersonalProv.val():'0.00'));
 			formato12B.txtTotalDesplazamientoPersonalLim.attr('value',(formato12B.txtTotalDesplazamientoPersonalLim.val()!=''?formato12B.txtTotalDesplazamientoPersonalLim.val():'0.00'));
@@ -2477,7 +2397,7 @@
 			formato12B.txtTotalActividadesExtraordLim.attr('value',(formato12B.txtTotalActividadesExtraordLim.val()!=''?formato12B.txtTotalActividadesExtraordLim.val():'0.00'));
 			
 			//costos unitarios
-			$('#costoEstandarUnitValeImpre').val(formato12B.txtEtndrUnitValeImpre.val());
+			 $('#costoEstandarUnitValeImpre').val(formato12B.txtEtndrUnitValeImpre.val());
 			 $('#costoEstandarUnitValeRepar').val(formato12B.txtEtndrUnitValeRepar.val());
 			 $('#costoEstandarUnitValDisEl').val(formato12B.txtEtndrUnitValDisEl.val());
 			 $('#costoEstandarUnitValFiCan').val(formato12B.txtEtndrUnitValFiCan.val());
@@ -2499,32 +2419,36 @@
 			 $('#costoEstandarUnitAtencionLim').val(formato12B.txtEtndrUnitAtencionLim.val());
 			 
 			 //costos totales
-			 	$('#costoTotalImpresionVale').val(formato12B.txtTotalImpresionVale.val());
-				$('#costoTotalImpresionValeProv').val(formato12B.txtTotalImpresionValeProv.val());
-				$('#costoTotalImpresionValeLim').val(formato12B.txtTotalImpresionValeLim.val());
+			 $('#costoTotalImpresionVale').val(formato12B.txtTotalImpresionVale.val());
+			 $('#costoTotalImpresionValeProv').val(formato12B.txtTotalImpresionValeProv.val());
+			 $('#costoTotalImpresionValeLim').val(formato12B.txtTotalImpresionValeLim.val());
 			
-				$('#costoTotalRepartoValesDomi').val(formato12B.txtTotalRepartoValesDomi.val());
-				$('#costoTotalRepartoValesDomiProv').val(formato12B.txtTotalRepartoValesDomiProv.val());
-				$('#costoTotalRepartoValesDomiLim').val(formato12B.txtTotalRepartoValesDomiLim.val());
+			 $('#costoTotalRepartoValesDomi').val(formato12B.txtTotalRepartoValesDomi.val());
+			 $('#costoTotalRepartoValesDomiProv').val(formato12B.txtTotalRepartoValesDomiProv.val());
+			 $('#costoTotalRepartoValesDomiLim').val(formato12B.txtTotalRepartoValesDomiLim.val());
 				
-			    $('#costoTotalEntregaValDisEl').val(formato12B.txtTotalEntregaValDisEl.val());
-				$('#costoTotalEntregaValDisElProv').val(formato12B.txtTotalEntregaValDisElProv.val());
-				$('#costoTotalEntregaValDisElLim').val(formato12B.txtTotalEntregaValDisElLim.val());
+			 $('#costoTotalEntregaValDisEl').val(formato12B.txtTotalEntregaValDisEl.val());
+		     $('#costoTotalEntregaValDisElProv').val(formato12B.txtTotalEntregaValDisElProv.val());
+			 $('#costoTotalEntregaValDisElLim').val(formato12B.txtTotalEntregaValDisElLim.val());
 				
-			    $('#costoTotalCanjeLiqValeFis').val(formato12B.txtTotalCanjeLiqValeFis.val());
-				$('#costoTotalCanjeLiqValeFisProv').val(formato12B.txtTotalCanjeLiqValeFisProv.val());
-				$('#costoTotalCanjeLiqValeFisLim').val(formato12B.txtTotalCanjeLiqValeFisLim.val());
+			 $('#costoTotalCanjeLiqValeFis').val(formato12B.txtTotalCanjeLiqValeFis.val());
+		     $('#costoTotalCanjeLiqValeFisProv').val(formato12B.txtTotalCanjeLiqValeFisProv.val());
+		     $('#costoTotalCanjeLiqValeFisLim').val(formato12B.txtTotalCanjeLiqValeFisLim.val());
 				
-				$('#costoTotalCanjeLiqValeDig').val(formato12B.txtTotalCanjeLiqValeDig.val());
-				$('#costoTotalCanjeLiqValeDigProv').val(formato12B.txtTotalCanjeLiqValeDigProv.val());
-				$('#costoTotalCanjeLiqValeDigLim').val(formato12B.txtTotalCanjeLiqValeDigLim.val());
+			 $('#costoTotalCanjeLiqValeDig').val(formato12B.txtTotalCanjeLiqValeDig.val());
+			 $('#costoTotalCanjeLiqValeDigProv').val(formato12B.txtTotalCanjeLiqValeDigProv.val());
+			 $('#costoTotalCanjeLiqValeDigLim').val(formato12B.txtTotalCanjeLiqValeDigLim.val());
 				
-				$('#costoTotalAtencionConsRecl').val(formato12B.txtTotalAtencionConsRecl.val());
-				$('#costoTotalAtencionConsReclProv').val(formato12B.txtTotalAtencionConsReclProv.val());
-				$('#costoTotalAtencionConsReclLim').val(formato12B.txtTotalAtencionConsReclLim.val());			   
-			
+			 $('#costoTotalAtencionConsRecl').val(formato12B.txtTotalAtencionConsRecl.val());
+			 $('#costoTotalAtencionConsReclProv').val(formato12B.txtTotalAtencionConsReclProv.val());
+			 $('#costoTotalAtencionConsReclLim').val(formato12B.txtTotalAtencionConsReclLim.val());	
 		}	
 	};
+	
+	
+	
+	
+	
 	
 	
 </script>

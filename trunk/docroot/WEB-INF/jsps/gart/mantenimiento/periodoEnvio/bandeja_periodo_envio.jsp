@@ -348,10 +348,14 @@ $(document).ready(function () {
 											 </td>
 											 
 											 <td>
-											     <label style="font-size: 12px; font-weight: bold">Año Fin Vig.:</label>
+											     <label style="font-size: 12px; font-weight: bold">Editar Costos Est.:</label>
 											 </td>
 											 <td>
-											   <form:input path="anoFinVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4" onKeyPress="return isNumeric(event)"/>								
+											    <input type="radio"	name="flagEditarCosto"
+												       id="rbtEditarCostoSi" value="S"/>SI							
+												 &nbsp;&nbsp;&nbsp;	
+												 <input type="radio"	name="flagEditarCosto"
+												        id="rbtEditarCostoNo" value="N" checked="true"/>NO																			
 											 </td>											 
 											 
 											 <td>
@@ -359,6 +363,31 @@ $(document).ready(function () {
 											  </td>
 											  <td>											   
 											     <form:input path="diasNotifCierre"  cssStyle="width: 50px; text-align: right;" maxlength="2" onKeyPress="return isNumeric(event)"/>											
+											  </td>	
+											  										 											 
+											</tr>	
+											
+											<tr height="10px">
+										      <td colspan="6"></td> 
+										     </tr>
+											
+											<tr> 											
+											 <td>
+											     <label style="font-size: 12px; font-weight: bold">Año Fin Vig.:</label>
+											 </td>
+											 <td>
+											   <form:input path="anoFinVigencia"  cssStyle="width: 50px; text-align: right;" maxlength="4" onKeyPress="return isNumeric(event)"/>								
+											 </td>	
+											 
+											 <td>
+											     
+											 </td>
+											 <td>											   								
+											 </td>											 
+											 
+											 <td>											     
+											  </td>
+											  <td>													    
 											  </td>	
 											  										 											 
 											</tr>																									  					

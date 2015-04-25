@@ -325,7 +325,8 @@ public class Formato12CGartController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "action=viewedit")
-	public String viewEditFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato12CCBean") Formato12CCBean bean) {
+	public String viewEditFormato(ModelMap model, RenderRequest request, RenderResponse response, 
+			@ModelAttribute("formato12CCBean") Formato12CCBean bean) {
 
 		PortletRequest pRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
@@ -431,7 +432,8 @@ public class Formato12CGartController {
 	}
 	
 	@ResourceMapping("busquedaDetalle")
-	public void gridDetalle(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12CCBean") Formato12CCBean bean) {
+	public void gridDetalle(ModelMap model, ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12CCBean") Formato12CCBean bean) {
 
 		try {
 			System.out.println("busquedaDetalle");
@@ -490,12 +492,7 @@ public class Formato12CGartController {
 						//setear algunas descripciones
 						formato.setDescMesEjecucion(mapaMeses.get(formato.getId().getMesEjecucionGasto()));
 						formato.setDescEtapaEjecucion(mapaEtapaEjecucion.get(formato.getId().getEtapaEjecucion()));
-						formato.setDescZonaBenef(mapaZonaBenef.get(formato.getIdZonaBenef()));
-						
-						//jsonArray.put(new Formato12CGartJSON().asJSONObject(formato));
-						
-						//jsonArray.put(new Formato12CGartJSON().asJSONObject(formato));
-						
+						formato.setDescZonaBenef(mapaZonaBenef.get(formato.getIdZonaBenef()));					
 						if( FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD == formato.getId().getEtapaEjecucion() ){
 							jsonArrayImplementacion.put(new Formato12CGartJSON().asJSONObject(formato));
 						}else if( FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD == formato.getId().getEtapaEjecucion() ){

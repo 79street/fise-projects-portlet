@@ -56,6 +56,7 @@ import gob.osinergmin.fise.gart.service.CfgTablaGartService;
 import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FiseGrupoInformacionGartService;
 import gob.osinergmin.fise.gart.service.FiseObservacionGartService;
+import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.Formato12AGartService;
 import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.service.Formato12CGartService;
@@ -129,7 +130,7 @@ public class NotificacionController {
 	
 	@Autowired
 	@Qualifier("formato12AGartServiceImpl")
-	Formato12AGartService formatoService12A;
+	private Formato12AGartService formatoService12A;
 	
 	@Autowired
 	@Qualifier("formato12BGartServiceImpl")
@@ -149,11 +150,11 @@ public class NotificacionController {
 	
 	@Autowired
 	@Qualifier("formato14AGartServiceImpl")
-	Formato14AGartService formatoService14A;
+	private Formato14AGartService formatoService14A;
 	
 	@Autowired
 	@Qualifier("formato14BGartServiceImpl")
-	Formato14BGartService formatoService14B;
+	private Formato14BGartService formatoService14B;
 	
 	@Autowired
 	@Qualifier("formato14CGartServiceImpl")
@@ -166,7 +167,11 @@ public class NotificacionController {
 	
 	@Autowired
 	@Qualifier("fiseObservacionGartServiceImpl")
-	FiseObservacionGartService fiseObservacionGartService;
+	private FiseObservacionGartService fiseObservacionGartService;
+	
+	@Autowired
+	@Qualifier("fisePeriodoEnvioGartServiceImpl")
+	private FisePeriodoEnvioGartService fisePeriodoEnvioGartService;
 	
 	
 	
@@ -265,7 +270,64 @@ public class NotificacionController {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+	}
+	
+	
+	@ResourceMapping("busquedaNotificacionEliminar")
+  	public void busquedaEliminar(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){
+		
+		try{
+			response.setContentType("application/json");
+			
+			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+			long idGrupo=0;
+			String codEmpresa = n.getCodEmpresaBusq();				
+			String optionFormato = n.getOptionFormato();
+			String idgrupoInf = n.getGrupoInfBusq();
+			String etapa = n.getEtapaBusq();
+			
+			if(FormatoUtil.isNotBlank(n.getGrupoInfBusq())){ 
+		    	idGrupo = new Long(idgrupoInf);
+		    }
+			String data ="";			
+			logger.info("codigo empresa "+ codEmpresa);  			
+  			logger.info("id Grupo inf "+ idgrupoInf);  	 			
+  			logger.info("Option formato "+ optionFormato);
+  			logger.info("etapa "+ etapa);
+  			
+  			String codEmpreCompleta = FormatoUtil.rellenaDerecha(codEmpresa, ' ', 4);
+  			
+  			List<NotificacionBean> lista =commonService.buscarNotificacion(codEmpreCompleta, 
+  					optionFormato, etapa,idGrupo,FiseConstants.EXCLUIR_REGISTRO_NOTIFICACION);
+  			
+  			logger.info("tamaño de la lista notificacion al eliminar   :"+lista.size());
+  			
+  			List<NotificacionBean> listaNotifi = new ArrayList<NotificacionBean>();
+  			
+  			for(NotificacionBean not : lista){    				
+  				not.setDesEmpresa(mapaEmpresa.get(not.getCodEmpresa()));
+  				not.setDesMes(fiseUtil.getMapaMeses().get(Long.valueOf(not.getMesPres())));
+  				if(!"00".equals(not.getMesEjec())){ 
+  					not.setDesMesEje(fiseUtil.getMapaMeses().get(Long.valueOf(not.getMesEjec())));   		
+  				}else{
+  					not.setDesMesEje("---");
+  				}
+  				listaNotifi.add(not);
+  			} 			
+  			data = toStringListJSON(listaNotifi);
+  			logger.info("arreglo json:"+data);
+  			PrintWriter pw = response.getWriter();
+  			pw.write(data);
+  			pw.flush();
+  			pw.close(); 
+  			pRequest.getPortletSession().setAttribute("listaNotificacion", listaNotifi, PortletSession.APPLICATION_SCOPE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
 	}	
+	
 	
 	private String toStringListJSON(List<NotificacionBean> lista) {
 		Serializer serializer = new JsonSerializer();
@@ -301,6 +363,42 @@ public class NotificacionController {
   			e.printStackTrace();
   		}
 	}
+	
+	
+	@ResourceMapping("obtenerEstadoNotificacion")
+  	public void obtenerEstadoNotificacion(ResourceRequest request,ResourceResponse response,
+  			 @ModelAttribute("notificacionBean")NotificacionBean n){
+		
+		try{
+			response.setContentType("application/json");
+			
+			JSONObject jsonObj = new JSONObject();
+			long idGrupo=0;
+			String codEmpresa = n.getCodEmpresaBusq();		
+			String idgrupoInf = n.getGrupoInfBusq();
+			String etapa = n.getEtapaBusq();    
+			if(FormatoUtil.isNotBlank(n.getGrupoInfBusq())){ 
+		    	idGrupo = new Long(idgrupoInf);
+		    }			
+			logger.info("codigo empresa "+ codEmpresa);  			
+  			logger.info("id Grupo inf "+ idgrupoInf);  				
+  			logger.info("etapa "+ etapa);
+  			
+  			String estado = commonService.obtenerEstadoNotificacion(codEmpresa, idGrupo, etapa);
+  			
+  			jsonObj.put("resultado", estado);
+  			
+  			logger.info("arreglo json:"+jsonObj);
+  			
+  			PrintWriter pw = response.getWriter();
+  			pw.write(jsonObj.toString());
+  			pw.flush();
+  			pw.close();  			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}	
 	
 	
 	@ResourceMapping("procesarNotificacion")
@@ -1131,9 +1229,11 @@ public class NotificacionController {
 		    		PortletSession.APPLICATION_SCOPE);
   			
   			if(lista!=null && lista.size()>0){  				
+  				
   				String mensaje = commonService.notificarValidacionMensual(codEmpresa,
   						etapa, Long.valueOf(idgrupoInf), optionFormato, themeDisplay.getUser().getLogin(),
-  						themeDisplay.getUser().getLoginIP());			
+  						themeDisplay.getUser().getLoginIP());	
+  				
   				logger.info("Valor del mensaje:  "+mensaje); 
   				
   				if(FiseConstants.ENVIO_EMAIL_OK_VALIDACION.equals(mensaje))
@@ -1146,9 +1246,15 @@ public class NotificacionController {
   	  		    	String descripcionFormato = ""; 
   	  		    	String codEmpresaLista = "";
   	  		    	
-  	  				for(NotificacionBean not :lista){
+  	  		    	//obtenemos el plazo
+  	  		    	String  plazo = fisePeriodoEnvioGartService.listarPlazoMaximoEnvioObs(lista.get(0).getCodEmpresa(),
+  	  				    	new Long(lista.get(0).getAnioPres()), new Long(lista.get(0).getMesPres()), FiseConstants.ETAPA_LEVOBS, lista.get(0).getFormato());
+  	  		    	
+  	  		    	logger.info("Plazo al envio de notificacion de observaciones:  "+plazo);
+  	  				
+  	  		    	for(NotificacionBean not :lista){
   	  					
-  	  				    codEmpresaLista = not.getCodEmpresa();
+  	  				    codEmpresaLista = not.getCodEmpresa();	  				   
   	  				    
   	  					if(FiseConstants.NOMBRE_FORMATO_12A.equals(not.getFormato())){  						
   	  						FiseFormato12ACPK pk = new FiseFormato12ACPK();
@@ -1579,7 +1685,7 @@ public class NotificacionController {
   		    	    		  request, 
   		    	    		  listaArchivo, 
   		    	    		  mapaEmpresa.get(codEmpreCompleta), 
-  		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--",codEmpreCompleta);
+  		    	    		  n.getDescGrupoInf()!= null ? n.getDescGrupoInf():"--",codEmpreCompleta,plazo);
   		    	       logger.info("El envio de email fue correctamente al realizar notificacion."+respuestaEmail); 		    	       
   		    	       valor = true;
   		           }  	  		     	 	   

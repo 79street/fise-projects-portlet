@@ -193,6 +193,7 @@ public class PeriodoEnvioController {
 			logger.info("flag envio obs:  "+ p.getFlagEnvioObs());
 			logger.info("flag mostrar anio mes:  "+ p.getFlagAnioMesEjec());
 			logger.info("flag costo:  "+ p.getFlagHabCostos());
+			logger.info("flag editar costo estandar:  "+ p.getFlagEditarCosto());
 			logger.info("anio ini vige:  "+ p.getAnoIniVigencia());
 			logger.info("anio fin vige:  "+ p.getAnoFinVigencia());	
 			
@@ -265,8 +266,7 @@ public class PeriodoEnvioController {
 			logger.info("Codigo empresa:  "+ p.getCodEmpresa()); 
 			logger.info("anio pres:  "+ p.getAnioPres());	
 			logger.info("mes pres:  "+ p.getMesPres());
-			logger.info("formato:  "+ p.getFormato());	
-			logger.info("etapa:  "+ p.getEtapa());	
+			logger.info("formato:  "+ p.getFormato());				
 			logger.info("estado:  "+ p.getEstado());
 			logger.info("desde:  "+ p.getDesde());
 			logger.info("hasta:  "+ p.getHasta());
@@ -274,10 +274,15 @@ public class PeriodoEnvioController {
 			logger.info("flag envio obs:  "+ p.getFlagEnvioObs());
 			logger.info("flag mostrar anio mes:  "+ p.getFlagAnioMesEjec());
 			logger.info("flag costo:  "+ p.getFlagHabCostos());
+			logger.info("flag editar costo estandar:  "+ p.getFlagEditarCosto());
 			logger.info("anio ini vige:  "+ p.getAnoIniVigencia());
-			logger.info("anio fin vige:  "+ p.getAnoFinVigencia());		
-			
+			logger.info("anio fin vige:  "+ p.getAnoFinVigencia());			
 			logger.info("fecha ampli:  "+ p.getFechaAmpl());	
+			
+			if(FiseConstants.ETAPA_LEVOBS_DESC.equals(p.getEtapa())){
+			 p.setEtapa("LEV.OBS");	 
+			}			
+			logger.info("etapa:  "+ p.getEtapa());	
 			
 			String fechaDesde = p.getDesde()+ " " +FechaUtil.getHoraActual();
 			String fechaHasta = p.getHasta()+ " " +FechaUtil.getHoraActual();

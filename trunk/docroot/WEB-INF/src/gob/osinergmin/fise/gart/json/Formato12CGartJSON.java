@@ -92,63 +92,7 @@ public class Formato12CGartJSON {
 	public JSONObject asJSONObject(FiseFormato12CD fiseFormato12CD) throws JSONException{
 		
 		JSONObject jsonObj = new JSONObject();
-		
-	/*	if( FiseConstants.ETAPA_EJECUCION_IMPLEMENTACION_COD == fiseFormato12CD.getId().getEtapaEjecucion() ){
-			jsonObj.put("codEmpresaI", fiseFormato12CD.getId().getCodEmpresa());
-			jsonObj.put("anoPresentacion", fiseFormato12CD.getId().getAnoPresentacion());
-			jsonObj.put("mesPresentacionI", fiseFormato12CD.getId().getMesPresentacion());
-			jsonObj.put("etapaI", fiseFormato12CD.getId().getEtapa());
-			jsonObj.put("anoEjecucionI", fiseFormato12CD.getId().getAnoEjecucionGasto());
-			jsonObj.put("mesEjecucionI", fiseFormato12CD.getId().getMesEjecucionGasto());
-			jsonObj.put("etapaEjecucionI", fiseFormato12CD.getId().getEtapaEjecucion());
-			jsonObj.put("itemI", fiseFormato12CD.getId().getNumeroItemEtapa());
-			
-			jsonObj.put("descMesEjecucionI", fiseFormato12CD.getDescMesEjecucion());
-			jsonObj.put("descEtapaEjecucionI", fiseFormato12CD.getDescEtapaEjecucion());
-			jsonObj.put("ubigeoOrigenI", fiseFormato12CD.getCodUbigeoOrigen());
-			jsonObj.put("localidadOrigenI", fiseFormato12CD.getDescripcionLocalidadOrigen());
-			jsonObj.put("ubigeoDestinoI", fiseFormato12CD.getCodUbigeoDestino());
-			jsonObj.put("localidadDestinoI", fiseFormato12CD.getDescripcionLocalidadDestino());
-			jsonObj.put("descZonaBenefI", fiseFormato12CD.getDescZonaBenef());
-			jsonObj.put("cuentaContableI", fiseFormato12CD.getCodigoCuentaContaEde());
-			jsonObj.put("actividadI", fiseFormato12CD.getDescripcionActividad());
-			jsonObj.put("tipoDocI", fiseFormato12CD.getIdTipDocRef());
-			jsonObj.put("rucI", fiseFormato12CD.getRucEmpresaEmiteDocRef());
-			jsonObj.put("serieDocI", fiseFormato12CD.getSerieDocumentoReferencia());
-			jsonObj.put("nroDocI", fiseFormato12CD.getNumeroDocumentoReferencia());
-			jsonObj.put("nroDiasI", fiseFormato12CD.getNumeroDias());
-			jsonObj.put("alimentacionI", fiseFormato12CD.getMontoAlimentacion());
-			jsonObj.put("alojamientoI", fiseFormato12CD.getMontoAlojamiento());
-			jsonObj.put("movilidadI", fiseFormato12CD.getMontoMovilidad());
-		}else if( FiseConstants.ETAPA_EJECUCION_OPERATIVA_COD == fiseFormato12CD.getId().getEtapaEjecucion() ){
-			jsonObj.put("codEmpresaO", fiseFormato12CD.getId().getCodEmpresa());
-			jsonObj.put("anoPresentacionO", fiseFormato12CD.getId().getAnoPresentacion());
-			jsonObj.put("mesPresentacionO", fiseFormato12CD.getId().getMesPresentacion());
-			jsonObj.put("etapaO", fiseFormato12CD.getId().getEtapa());
-			jsonObj.put("anoEjecucionO", fiseFormato12CD.getId().getAnoEjecucionGasto());
-			jsonObj.put("mesEjecucionO", fiseFormato12CD.getId().getMesEjecucionGasto());
-			jsonObj.put("etapaEjecucionO", fiseFormato12CD.getId().getEtapaEjecucion());
-			jsonObj.put("itemO", fiseFormato12CD.getId().getNumeroItemEtapa());
-			
-			jsonObj.put("descMesEjecucionO", fiseFormato12CD.getDescMesEjecucion());
-			jsonObj.put("descEtapaEjecucionO", fiseFormato12CD.getDescEtapaEjecucion());
-			jsonObj.put("ubigeoOrigenO", fiseFormato12CD.getCodUbigeoOrigen());
-			jsonObj.put("localidadOrigenO", fiseFormato12CD.getDescripcionLocalidadOrigen());
-			jsonObj.put("ubigeoDestinoO", fiseFormato12CD.getCodUbigeoDestino());
-			jsonObj.put("localidadDestinoO", fiseFormato12CD.getDescripcionLocalidadDestino());
-			jsonObj.put("descZonaBenefO", fiseFormato12CD.getDescZonaBenef());
-			jsonObj.put("cuentaContableO", fiseFormato12CD.getCodigoCuentaContaEde());
-			jsonObj.put("actividadO", fiseFormato12CD.getDescripcionActividad());
-			jsonObj.put("tipoDocO", fiseFormato12CD.getIdTipDocRef());
-			jsonObj.put("rucO", fiseFormato12CD.getRucEmpresaEmiteDocRef());
-			jsonObj.put("serieDocO", fiseFormato12CD.getSerieDocumentoReferencia());
-			jsonObj.put("nroDocO", fiseFormato12CD.getNumeroDocumentoReferencia());
-			jsonObj.put("nroDiasO", fiseFormato12CD.getNumeroDias());
-			jsonObj.put("alimentacionO", fiseFormato12CD.getMontoAlimentacion());
-			jsonObj.put("alojamientoO", fiseFormato12CD.getMontoAlojamiento());
-			jsonObj.put("movilidadO", fiseFormato12CD.getMontoMovilidad());
-		}*/
-		
+	
 		jsonObj.put("codEmpresa", fiseFormato12CD.getId().getCodEmpresa());
 		jsonObj.put("anoPresentacion", fiseFormato12CD.getId().getAnoPresentacion());
 		jsonObj.put("mesPresentacion", fiseFormato12CD.getId().getMesPresentacion());

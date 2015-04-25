@@ -678,7 +678,7 @@ public class FiseUtil {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
 			
-			String nombreUsuario = themeDisplay.getUser().getFullName();
+			String nombreUsuario = "";//themeDisplay.getUser().getFullName();
 			String periodoEnvio = ""+anoPresentacion+"-"+mesPresentacion;
 			String descripcionCosto ="";
 			String descripcionPeriodo="";
@@ -699,6 +699,7 @@ public class FiseUtil {
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
 			//validamos que tanto el correo del from ni del to deben estar vacios
 			if( !FiseConstants.BLANCO.equals(correoR) && (listaCorreoDestino!=null && !listaCorreoDestino.isEmpty()) ){
+				nombreUsuario = listaCorreoDestino.get(0).getUsuarioCorreo();
 				mailMessage.setFrom(new InternetAddress(correoR));
 				mailMessage.setSubject("Notificación de envío de formato para el administrador del FISE (GART-DDE)");
 				mailMessage.setTo(getArrayCorreoDestinatarios(listaCorreoDestino));
@@ -795,14 +796,14 @@ public class FiseUtil {
 	}
 	
 	public String enviarMailsAdjuntoValidacion(PortletRequest request,List<FileEntryJSP> listaArchivo,
-			String descEmpresa,String descGrupoInf,String codEmpresa) throws Exception {		
+			String descEmpresa,String descGrupoInf,String codEmpresa,String plazo) throws Exception {		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
 		
-		return enviarMailAdjuntoUsuarioValidacion(themeDisplay, listaArchivo, descEmpresa,descGrupoInf,codEmpresa);		
+		return enviarMailAdjuntoUsuarioValidacion(themeDisplay, listaArchivo, descEmpresa,descGrupoInf,codEmpresa,plazo);		
 	}
 	
 	private String enviarMailAdjuntoUsuarioValidacion(ThemeDisplay themeDisplay,List<FileEntryJSP> listaArchivo, 
-			String descEmpresa,String descGrupoInf,String codEmpresa) throws Exception {
+			String descEmpresa,String descGrupoInf,String codEmpresa,String plazo) throws Exception {
 		String valor =FiseConstants.PROCESO_ENVIO_EMAIL_ERROR+"/"+"";
 		try {
 			MailMessage mailMessage = new MailMessage();
@@ -829,7 +830,7 @@ public class FiseUtil {
 						+ descEmpresa + "</b></p><p>Mediante el presente se le env&iacute;a adjunto las observaciones de los formatos reportados correspondiente al Grupo de Informaci&oacute;n "
 						+ descGrupoInf + ". "
 						+ "" + "</p>"
-						+ "<p>Para subsanar las observaciones debe ingresar al sistema y corregir los datos para la etapa LEVANTAMIENTO DE OBSERVACIONES (LEV.OBS).</p>"
+						+ "<p>Para subsanar las observaciones debe ingresar al sistema y corregir los datos para la etapa LEVANTAMIENTO DE OBSERVACIONES. Plazo para la Remisión: "+ plazo+"</p>"
 						+ "<p>Si tiene alg&uacute;n inconveniente, comun&iacute;quese con nosotros, escribi&eacute;ndonos un correo a: sistemasgart@osinergmin.gob.pe, mdamas@osinergmin.gob.pe y jguillermo@osinergmin.gob.pe.</p>"
 						+ "<p>Cordialmente,<br/>Sistemas GART</p></body></html>");
 				for (FileEntryJSP fej : listaArchivo) {
@@ -898,7 +899,7 @@ public class FiseUtil {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);
 			
-			String nombreUsuario = themeDisplay.getUser().getFullName();
+			String nombreUsuario = "";/*themeDisplay.getUser().getFullName();*/
 			
 			String descripcionCosto ="";
 			if( FiseConstants.FRECUENCIA_BIENAL_DESCRIPCION.equals(frecuencia) ){
@@ -915,8 +916,10 @@ public class FiseUtil {
 			String correoMostrar = "";
 			//
 			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatarios();
+			
 			//validamos que tanto el correo del from ni del to deben estar vacios
 			if( !FiseConstants.BLANCO.equals(correoR) && (listaCorreoDestino!=null && !listaCorreoDestino.isEmpty()) ){
+				nombreUsuario = listaCorreoDestino.get(0).getUsuarioCorreo();
 				mailMessage.setFrom(new InternetAddress(correoR));
 				mailMessage.setSubject("Notificación de envío de formatos para el administrador del FISE (GART-DDE)");
 				mailMessage.setTo(getArrayCorreoDestinatarios(listaCorreoDestino));

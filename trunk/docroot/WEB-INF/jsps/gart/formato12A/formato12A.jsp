@@ -915,5 +915,16 @@
 	<input type="hidden" id="codLuzSur" value="${model.codLuzSur}" />
 	
 	<input type="hidden" id="esAdmin" value="${model.admin}" />
+	
+	
+	<!-- cambios elozano para editar costos estandares -->	
+	<input type="hidden" id="hiddenFlagCostoEstandar" value="" />
+	<input type="hidden" id="hiddenCostoUAgenteR" value="" />
+	<input type="hidden" id="hiddenCostoUEmpR" value="" />
+	<input type="hidden" id="hiddenCostoUAgenteP" value="" />
+	<input type="hidden" id="hiddenCostoUEmpP" value="" />
+	<input type="hidden" id="hiddenCostoUAgenteL" value="" />	
+	<input type="hidden" id="hiddenCostoUEmpL" value="" />
+	
 
 </form> 

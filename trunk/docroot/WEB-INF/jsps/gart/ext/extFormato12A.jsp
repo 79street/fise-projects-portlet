@@ -25,11 +25,9 @@ $(document).ready(function () {
 	 $("#<portlet:namespace/>cargaTxt").click(function() {<portlet:namespace/>mostrarFormularioCargaTexto();});
 	 $("#<portlet:namespace/>reportePdf").click(function() {<portlet:namespace/>mostrarReportePdf();});
 	 $("#<portlet:namespace/>reporteExcel").click(function() {<portlet:namespace/>mostrarReporteExcel();});
-	 $("#<portlet:namespace/>validacionFormato").click(function() {<portlet:namespace/>validacionFormato();});
-	 //$("#<portlet:namespace/>reporteValidacion").click(function() {<portlet:namespace/>mostrarReporteValidacion();});
-	 $("#<portlet:namespace/>envioDefinitivo").click(function() {confirmarEnvioDefinitivo();});
-	 
-	 //
+	 $("#<portlet:namespace/>validacionFormato").click(function() {<portlet:namespace/>validacionFormato();});	
+	 $("#<portlet:namespace/>envioDefinitivo").click(function() {confirmarEnvioDefinitivo();});	 
+	
 	$("#<portlet:namespace/>reporteActaEnvio").click(function() {<portlet:namespace/>mostrarReporteActaEnvio();});
 	 
 	 initDialogs();
@@ -61,8 +59,7 @@ $(document).ready(function () {
 		$('#<portlet:namespace/>validacionFormato').css('display','none');
 		$('#<portlet:namespace/>envioDefinitivo').css('display','none');
 		cargarPeriodoYCostos('',anioPresSes+completarCerosIzq(mesPresSes,2)+etapaSes);
-	 }else{
-		//alert(codEmpSes+','+anioPresSes+','+mesPresSes+','+anioEjeSes+','+mesEjeSes+','+etapaSes);
+	 }else{		
 		 if(codEmpSes != '' && anioPresSes != '' && mesPresSes != '' && anioEjeSes != '' && mesEjeSes != '' && etapaSes != ''){
 		 	 editarFormato(codEmpSes, anioPresSes, mesPresSes, anioEjeSes, mesEjeSes, etapaSes,flagOpera);
 		 }
@@ -450,11 +447,7 @@ function totalGeneral(){
 	importAgent=parseFloat(importAgentR)+parseFloat(importAgentP)+parseFloat(importAgentL);
 	importDesp=parseFloat(importDespR)+parseFloat(importDespP)+parseFloat(importDespL);
 	importActiv=parseFloat(importActivR)+parseFloat(importActivP)+parseFloat(importActivL);
-	//
-	/*importEmpad = redondeo(importEmpad,2);
-	importAgent = redondeo(importAgent,2);
-	importDesp = redondeo(importDesp,2);
-	importActiv = redondeo(importActiv,2);*/
+	
 	
 	totalGeneral = parseFloat(importEmpad)+parseFloat(importAgent)+parseFloat(importDesp)+parseFloat(importActiv);
 	totalGeneral = redondeo(totalGeneral,2);
@@ -541,8 +534,7 @@ function <portlet:namespace/>regresar(){
 function validarBusqueda() {		
 	  if($('#i_anio_d').val().length != '' ) {		  
 		  var numstr = trim($('#i_anio_d').val());
-		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  //alert('Ingrese un año desde válido');
+		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){			  
 			  $("#dialog-message-warning-content").html('Debe ingresar un Año Declarado Desde válido');
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_anio_d').focus();
@@ -556,8 +548,7 @@ function validarBusqueda() {
 	  }
 	  if($('#i_anio_h').val().length != '' ) {		  
 		  var numstr = trim($('#i_anio_h').val());
-		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-			  //alert('Ingrese un año hasta válido');
+		  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){			 
 			  $("#dialog-message-warning-content").html('Debe ingresar un Año Declarado Hasta válido');
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_anio_h').focus();
@@ -570,16 +561,14 @@ function validarBusqueda() {
 		  return false;
 	  }
 	  if($('#i_anio_d').val().length != '' && $('#i_anio_h').val().length != '' ) {
-		  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){
-				//alert('El año desde no puede exceder al año hasta');
+		  if( parseFloat($('#i_anio_d').val()) > parseFloat($('#i_anio_h').val()) ){				
 				$("#dialog-message-warning-content").html('El Año Declarado Desde no puede exceder al Año Declarado Hasta');
 				$("#dialog-message-warning").dialog( "open" );	
 				return false;
 		  }
 	  }
 	  
-	  if($('#s_etapa').val().length == '' ) { 	    
-		    //alert('Seleccione una etapa');
+	  if($('#s_etapa').val().length == '' ) { 	 
 		    $("#dialog-message-warning-content").html('Debe seleccionar una Etapa');
 			$("#dialog-message-warning").dialog( "open" );	
 		    document.getElementById('s_etapa').focus();
@@ -589,177 +578,168 @@ function validarBusqueda() {
 	  return true; 
 	}
 	
-function validarFormulario() {	
-			
-	 if($('#s_empresa').val().length == '' ) { 	
-	    //alert('Seleccione una Distribuidora Eléctrica'); 
+function validarFormulario() {				
+	 if($('#s_empresa').val().length == '' ) { 		   
 	    $("#dialog-message-warning-content").html('Debe seleccionar una Distribuidora Eléctrica');
 		$("#dialog-message-warning").dialog( "open" );
 	    document.getElementById('s_empresa').focus();
 	    return false; 
 	  }
-	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
-		    //alert('Debe seleccionar el periodo a declarar');
+	 if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		   
 		    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('s_periodoenvio_present').focus();
 		    return false; 
 	  }
-	  /*if($('#s_periodoenvio_present').val().length == '' ) {		  
-		    //alert('Debe ingresar el periodo a declarar');
-		    $("#dialog-message-warning-content").html('Debe ingresar el periodo a declarar');
-			$("#dialog-message-warning").dialog( "open" );
-		    document.getElementById('s_periodoenvio_present').focus();
-		    return false; 
-	  }*/
 	  if( $('#flagPeriodoEjecucion').val()=='S' ){
-		  if($('#i_anioejecuc').val().length == '' ) {		  
-			    //alert('Debe ingresar el año de ejecución');
+		  if($('#i_anioejecuc').val().length == '' ) {		  			    
 			    $("#dialog-message-warning-content").html('Debe ingresar el Año de Ejecución');
 				$("#dialog-message-warning").dialog( "open" );
 			    document.getElementById('i_anioejecuc').focus();
 			    return false; 
 		  }else{
 			  var numstr = trim($('#i_anioejecuc').val());
-			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){
-				  //alert('Ingrese un año de ejecución válido');
+			  if (isNaN(numstr) || numstr.length<4 || parseFloat(numstr)<1900){				 
 				  $("#dialog-message-warning-content").html('Debe ingresar un Año de Ejecución válido');
 				  $("#dialog-message-warning").dialog( "open" );
 				  return false;
 			  }
 		  }
-		  if($('#s_mes_ejecuc').val().length == '' ) {		  
-			    //alert('Debe ingresar el mes de ejecución');
+		  if($('#s_mes_ejecuc').val().length == '' ) {				    
 			    $("#dialog-message-warning-content").html('Debe ingresar el Mes de Ejecución');
 				$("#dialog-message-warning").dialog( "open" );
 			    document.getElementById('s_mes_ejecuc').focus();
 			    return false; 
-		  }
-		  //validamos el periodo de ejecución
+		  }		 
 		  
 		if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){
-			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
 			$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
 			$("#dialog-message-warning").dialog("open");
 			return false;
-		}
-		  
-		  
+		}	  
 	  }
+	  
 	  //valores de formulario
-	  if($('#i_nroEmpad_r').val().length == '' ) {		  
-		    //alert('Debe ingresar el número de empadronados para Rural');
+	  if($('#i_nroEmpad_r').val().length == '' ) {	  	   
 		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Empadronados para la Zona Rural');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_r').focus();
 		    return false; 
 	  }
-	  /*if($('#i_costoUnitEmpad_r').val().length == '' ) {		  
+	  if($('#i_costoUnitEmpad_r').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de empadronados para Rural');
 		    document.getElementById('i_costoUnitEmpad_r').focus();
 		    return false; 
-	  }*/
-	  if($('#i_nroAgentGlp_r').val().length == '' ) {		  
-		    //alert('Debe ingresar el número de agentes para Rural');
+	  }	
+	  
+	  if($('#i_nroAgentGlp_r').val().length == '' ) {			
 		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Agentes para la Zona Rural');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_r').focus();
 		    return false; 
 	  }
-	  /*if($('#i_costoUnitAgent_r').val().length == '' ) {		  
+	  if($('#i_costoUnitAgent_r').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de agentes para Rural');
 		    document.getElementById('i_costoUnitAgent_r').focus();
 		    return false; 
-	  }*/
-	  /*if($('#i_despPersonal_r').val().length == '' ) {		  
-		    alert('Debe ingresar el monto de descripcion de personal para Rural');
-		    document.getElementById('i_despPersonal_r').focus();
-		    return false; 
-	  }
-	  if($('#i_activExtraord_r').val().length == '' ) {		  
-		    alert('Debe ingresar el monto de actividades extraordinarias para Rural');
-		    document.getElementById('i_activExtraord_r').focus();
-		    return false; 
-	  }*/
-	  ////////////////////
-	  if($('#i_nroEmpad_p').val().length == '' ) {		  
-		    //alert('Debe ingresar el número de empadronados para Provincia');
+	  }   
+	  
+	  if($('#i_nroEmpad_p').val().length == '' ) {		  		   
 		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Empadronados para la Zona Urbano Provincias');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroEmpad_p').focus();
 		    return false; 
 	  }
-	  /*if($('#i_costoUnitEmpad_p').val().length == '' ) {		  
+	  if($('#i_costoUnitEmpad_p').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de empadronados para Provincia');
 		    document.getElementById('i_costoUnitEmpad_p').focus();
 		    return false; 
-	  }*/
-	  if($('#i_nroAgentGlp_p').val().length == '' ) {		  
-		    //alert('Debe ingresar el número de agentes para Provincia');
+	  }	  
+	  
+	  if($('#i_nroAgentGlp_p').val().length == '' ) {		  		  
 		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Agentes para la Zona Urbano Provincias');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_nroAgentGlp_p').focus();
 		    return false; 
 	  }
-	  /*if($('#i_costoUnitAgent_p').val().length == '' ) {		  
+	  if($('#i_costoUnitAgent_p').val().length == '' ) {		  
 		    alert('Debe ingresar el costo unitario de agentes para Provincia');
 		    document.getElementById('i_costoUnitAgent_p').focus();
 		    return false; 
+	  } 
+	  
+	  var isLima = false;   
+	  
+	  if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+		  isLima = true;
+		  if($('#i_nroEmpad_l').val().length == '' ) {		  		  
+			    $("#dialog-message-warning-content").html('Debe ingresar el Número de Empadronados para la Zona Urbano Lima');
+				$("#dialog-message-warning").dialog( "open" );
+			    document.getElementById('i_nroEmpad_l').focus();
+			    return false; 
+		  }
+		  if($('#i_costoUnitEmpad_l').val().length == '' ) {		  
+			    alert('Debe ingresar el costo unitario de empadronados para Lima');
+			    document.getElementById('i_costoUnitEmpad_l').focus();
+			    return false; 
+		  }	  
+		  if($('#i_nroAgentGlp_l').val().length == '' ) {	  
+			    $("#dialog-message-warning-content").html('Debe ingresar el Número de Agentes para la Zona Urbano Lima');
+				$("#dialog-message-warning").dialog( "open" );
+			    document.getElementById('i_nroAgentGlp_l').focus();
+			    return false; 
+		  }
+		  if($('#i_costoUnitAgent_l').val().length == '' ) {		  
+			    alert('Debe ingresar el costo unitario de agentes para Lima');
+			    document.getElementById('i_costoUnitAgent_l').focus();
+			    return false; 
+		  }	  											
 	  }
-	  if($('#i_despPersonal_p').val().length == '' ) {		  
-		    alert('Debe ingresar el monto de descripcion de personal para Provincia');
-		    document.getElementById('i_despPersonal_p').focus();
-		    return false; 
-	  }
-	  if($('#i_activExtraord_p').val().length == '' ) {		  
-		    alert('Debe ingresar el monto de actividades extraordinarias para Provincia');
-		    document.getElementById('i_activExtraord_p').focus();
-		    return false; 
-	  }*/
-	  ///////////
-	  if($('#i_nroEmpad_l').val().length == '' ) {		  
-		    //alert('Debe ingresar el número de empadronados para Lima');
-		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Empadronados para la Zona Urbano Lima');
-			$("#dialog-message-warning").dialog( "open" );
-		    document.getElementById('i_nroEmpad_l').focus();
-		    return false; 
-	  }
-	  /*if($('#i_costoUnitEmpad_l').val().length == '' ) {		  
-		    alert('Debe ingresar el costo unitario de empadronados para Lima');
-		    document.getElementById('i_costoUnitEmpad_l').focus();
-		    return false; 
-	  }*/
-	  if($('#i_nroAgentGlp_l').val().length == '' ) {		  
-		    //alert('Debe ingresar el número de agentes para Lima');
-		    $("#dialog-message-warning-content").html('Debe ingresar el Número de Agentes para la Zona Urbano Lima');
-			$("#dialog-message-warning").dialog( "open" );
-		    document.getElementById('i_nroAgentGlp_l').focus();
-		    return false; 
-	  }
-	  /*if($('#i_costoUnitAgent_l').val().length == '' ) {		  
-		    alert('Debe ingresar el costo unitario de agentes para Lima');
-		    document.getElementById('i_costoUnitAgent_l').focus();
-		    return false; 
-	  }
-	  if($('#i_despPersonal_l').val().length == '' ) {		  
-		    alert('Debe ingresar el monto de descripcion de personal para Lima');
-		    document.getElementById('i_despPersonal_l').focus();
-		    return false; 
-	  }
-	  if($('#i_activExtraord_l').val().length == '' ) {		  
-		    alert('Debe ingresar el monto de actividades extraordinarias para Lima');
-		    document.getElementById('i_activExtraord_l').focus();
-		    return false; 
-	  }*/
-	  //
+	  
+	  //validacion de costos unitarios estandares
+	  if($('#hiddenFlagCostoEstandar').val()=='S'){		  
+		  console.debug("Entrando a comparar valores de unitario emp R: "+parseFloat($('#i_costoUnitEmpad_r').val()).toFixed(2));
+		  console.debug("Entrando a comparar valores de unitario emp R: "+parseFloat($('#hiddenCostoUEmpR').val()).toFixed(2));	 
+		  if(parseFloat($('#i_costoUnitEmpad_r').val())>parseFloat($('#hiddenCostoUEmpR').val())){			  
+			  $("#dialog-message-warning-content").html('El costo unitario de empadronados para Rural no debe ser mayor a '+$('#hiddenCostoUEmpR').val());
+			  $("#dialog-message-warning").dialog( "open" );	
+			  document.getElementById('i_costoUnitEmpad_r').focus();
+			  return false;  
+		  }else if(parseFloat($('#i_costoUnitAgent_r').val())>parseFloat($('#hiddenCostoUAgenteR').val())){			  
+			  $("#dialog-message-warning-content").html('El costo unitario de agentes para Rural no debe ser mayor a '+$('#hiddenCostoUAgenteR').val());
+			  $("#dialog-message-warning").dialog( "open" );	
+			  document.getElementById('i_costoUnitAgent_r').focus();
+			  return false;  
+		  }else if(parseFloat($('#i_costoUnitEmpad_p').val())>parseFloat($('#hiddenCostoUEmpP').val())){			
+			  $("#dialog-message-warning-content").html('El costo unitario de empadronados para Provincia no debe ser mayor a '+$('#hiddenCostoUEmpP').val());
+			  $("#dialog-message-warning").dialog( "open" );	
+			  document.getElementById('i_costoUnitEmpad_p').focus();
+			  return false;  
+		  }   	  
+		  if(parseFloat($('#i_costoUnitAgent_p').val())>parseFloat($('#hiddenCostoUAgenteP').val())){			
+			  $("#dialog-message-warning-content").html('El costo unitario de agentes para Provincia no debe ser mayor a '+$('#hiddenCostoUAgenteP').val());
+			  $("#dialog-message-warning").dialog( "open" );	
+			  document.getElementById('i_costoUnitAgent_p').focus();
+			  return false;  
+		  }else if(isLima  &&  (parseFloat($('#i_costoUnitEmpad_l').val())>parseFloat($('#hiddenCostoUEmpL').val())) ){			 
+			  $("#dialog-message-warning-content").html('El costo unitario de empadronados para Lima no debe ser mayor a '+$('#hiddenCostoUEmpL').val());
+			  $("#dialog-message-warning").dialog( "open" );	
+			  document.getElementById('i_costoUnitEmpad_l').focus();
+			  return false;  
+		  }
+		  if(isLima && (parseFloat($('#i_costoUnitAgent_l').val())>parseFloat($('#hiddenCostoUAgenteL').val()))){			 
+			  $("#dialog-message-warning-content").html('El costo unitario de empadronados para Lima no debe ser mayor a '+$('#hiddenCostoUAgenteL').val());
+			  $("#dialog-message-warning").dialog( "open" );	
+			  document.getElementById('i_costoUnitAgent_l').focus();
+			  return false;  
+		  } 		  
+	  }  
 	  
 	  //validar que todos sean diferentes de cero
 	   if($('#i_nroEmpad_r').val() == '0' && $('#i_nroAgentGlp_r').val() == '0' && $('#i_nroEmpad_p').val() == '0' && 
-			   $('#i_nroAgentGlp_p').val() == '0' && $('#i_nroEmpad_l').val() == '0' && $('#i_nroAgentGlp_l').val() == '0'  ) {		  
-		    //alert('Debe ingresar al menos un valor en el nro. de empadronados o nro. de agentes autorizados para el grupo de beneficiario');
+			   $('#i_nroAgentGlp_p').val() == '0' && $('#i_nroEmpad_l').val() == '0' && $('#i_nroAgentGlp_l').val() == '0'  ) {			   
 		    $("#dialog-message-warning-content").html('Debe ingresar al menos un valor en el Nro. de Empadronados o Nro. de Agentes Autorizados para el Grupo de Beneficiarios');
-			$("#dialog-message-warning").dialog( "open" );
-		    //document.getElementById('i_nroEmpad_r').focus();
+			$("#dialog-message-warning").dialog( "open" );		   
 		    return false; 
 	  }
 	  
@@ -770,51 +750,46 @@ function validarFormulario() {
 		  	$("#dialog-message-warning-content").html('Debe ingresar al menos un valor para poder guardar un formato');
 			$("#dialog-message-warning").dialog( "open" );
 		    return false;
-	  }
-
-	 
+	  }	  
 	  
 	  return true; 
+	  
 	}
-function validarArchivoCarga() {	
-			
-	if($('#s_empresa').val().length == '' ) { 	
-	    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+	
+	
+function validarArchivoCarga() {			
+	if($('#s_empresa').val().length == '' ) { 		   
 	    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
 		$("#dialog-message-warning").dialog( "open" );
 	    document.getElementById('s_empresa').focus();
 	    return false; 
 	  }
-	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
-		    //alert('Debe seleccionar el periodo a declarar');
+	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		   
 		    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('s_periodoenvio_present').focus();
 		    return false; 
-	  }
-
-  
+	  } 
   return true;
 }
+
+
 function validarArchivoCargaTexto() {	
 
-	if($('#s_empresa').val().length == '' ) { 	
-	    //alert('Seleccione una Distribuidora Eléctrica para proceder con la carga de archivo'); 
+	if($('#s_empresa').val().length == '' ) { 		     
 	    $("#dialog-message-warning-content").html('Seleccione una Distribuidora Eléctrica para proceder con la carga del archivo');
 		$("#dialog-message-warning").dialog( "open" );
 	    document.getElementById('s_empresa').focus();
 	    return false; 
 	  }
-	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {		  
-		    //alert('Debe seleccionar el periodo a declarar');
+	  if( $('#s_periodoenvio_present') == null || $('#s_periodoenvio_present').val().length == '' ) {			   
 		    $("#dialog-message-warning-content").html('Debe seleccionar el Periodo a Declarar para proceder con la carga del archivo');
 			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('s_periodoenvio_present').focus();
 		    return false; 
 	  }
 	  
-	  if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){
-			//alert('El periodo de alta no puede ser mayor al periodo a declarar');
+	  if( parseFloat($('#i_anioejecuc').val())*100 + parseFloat($('#s_mes_ejecuc').val()) > parseFloat($('#s_periodoenvio_present').val().substring(0,4))*100 + parseFloat($('#s_periodoenvio_present').val().substring(4,6)) ){			
 			$("#dialog-message-warning-content").html("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
 			$("#dialog-message-warning").dialog("open");
 			return false;
@@ -899,18 +874,14 @@ function initDialogs(){
 		width: 400,
 		modal: true,
 		buttons: {
-			"Aceptar": function() {
-				//Agregarfuncion();
-				//Limpiar_FormFuncion();
+			"Aceptar": function() {				
 				$( this ).dialog( "close" );					  				
 			},
-			"Cerrar": function() {
-					//Limpiar_FormFuncion();
+			"Cerrar": function() {					
 					$( this ).dialog( "close" );
 			}
 		},
-		close: function() {
-			//Limpiar_FormFuncion();
+		close: function() {			
 		}
 	});
 	$( "#dialog-form-error" ).dialog({
@@ -965,7 +936,8 @@ function initDialogs(){
 		}
 	});
 }
-///////////////
+
+
 function <portlet:namespace/>buscar() {	
 	if (validarBusqueda()) {	
 		$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Cargando </h3>' });
@@ -1073,18 +1045,15 @@ function confirmarEliminar(cod_empresa,anoPresentacion,mesPresentacion,anoEjecuc
 			ano_Ejecucion=anoEjecucion;
 			mes_Ejecucion=mesEjecucion;
 			codEtapa=etapa;
-		}else{
-			//alert(" No tiene autorización para realizar esta operación");
+		}else{			
 			$("#dialog-message-info-content").html('No tiene autorización para realizar esta acción');
 			$("#dialog-message-info").dialog( "open" );
 		}
 		
-	}else if(flagOperacion=='CERRADO'){
-		//alert(" Está fuera de plazo");	
+	}else if(flagOperacion=='CERRADO'){		
 		$("#dialog-message-info-content").html('El plazo para realizar esta acción se encuentra cerrado');
 		$("#dialog-message-info").dialog( "open" );
-	}else{
-		//alert("El formato ya fue enviado a OSINERGMIN-GART");	
+	}else{		
 		$("#dialog-message-info-content").html('El formato ya fue enviado a OSINERGMIN-GART');
 		$("#dialog-message-info").dialog( "open" );
 	}
@@ -1112,8 +1081,7 @@ function eliminarFormato(codEmpresa,ano_Presentacion,mes_Presentacion,ano_Ejecuc
 				<portlet:namespace/>buscar();
 				initBlockUI();
 			}
-			else{
-				//alert("Error al eliminar el registro");
+			else{				
 				$("#dialog-message-error-content").html('Error al eliminar el registro');
 				$("#dialog-message-error").dialog( "open" );
 				initBlockUI();
@@ -1144,9 +1112,10 @@ function <portlet:namespace/>crearFormato(){
 	$('#<portlet:namespace/>guardarFormato').val('Grabar');
 	
 	estiloEdicionRural();
-	estiloEdicionProvincia();
-	
+	estiloEdicionProvincia();	
 }
+
+
 function mostrarUltimoFormato(){	
 	$('#Estado').val('SAVE');
 	$("#etapaEdit").val("");
@@ -1189,8 +1158,7 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 					deshabiliarControlerView();
 					initBlockUI();
 				}
-				else{
-					//alert("Error al recuperar los datos del registro seleccionado");
+				else{					
 					$("#dialog-message-error-content").html('Se produjo un error al recuperar los datos del registro seleccionado');
 					$("#dialog-message-error").dialog( "open" );
 					initBlockUI();
@@ -1252,8 +1220,7 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 							
 							initBlockUI();
 						}
-						else{
-							//alert("Error al recuperar los datos del registro seleccionado");
+						else{							
 							$("#dialog-message-error-content").html('Se produjo un error al recuperar los datos del registro seleccionado');
 							$("#dialog-message-error").dialog( "open" );
 							initBlockUI();
@@ -1263,22 +1230,20 @@ function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,m
 						initBlockUI();
 					}
 			});
-		}else{
-			//alert(" No tiene autorización para realizar esta operación");
+		}else{			
 			$("#dialog-message-info-content").html('No tiene autorización para realizar esta acción');
 			$("#dialog-message-info").dialog( "open" );
-		}
-			
-	}else if(flagOperacion=='CERRADO'){
-		//alert(" Está fuera de plazo");
+		}			
+	}else if(flagOperacion=='CERRADO'){		
 		$("#dialog-message-info-content").html('El plazo para realizar esta acción se encuentra cerrado');
 		$("#dialog-message-info").dialog( "open" );
-	}else{
-		//alert("El formato ya fue enviado a OSINERGMIN-GART");	
+	}else{		
 		$("#dialog-message-info-content").html('El formato ya fue enviado a OSINERGMIN-GART');
 		$("#dialog-message-info").dialog( "open" );
 	}
 }
+
+
 function FillEditformato(row){
 	$('#s_empresa').val(trim(row.codEmpresa));
 	//seteamos el concatenado
@@ -1292,19 +1257,13 @@ function FillEditformato(row){
 	var codigo=''+row.anoPresentacion+completarCerosIzq(row.mesPresentacion,2)+row.etapa;
 	var descripcion=mostrarDescripcionPeriodo(row.anoPresentacion, row.mesPresentacion, row.etapa);
 	var dataPeriodo = [{codigoItem:codigo, descripcionItem:descripcion}];   
+	console.debug("periodo de envio al momento de editar formato valor del combo:  "+ dataPeriodo);
 	dwr.util.addOptions("s_periodoenvio_present", dataPeriodo,"codigoItem","descripcionItem");
 	
-	$('#flagPeriodoEjecucion').val(row.flagPeriodoEjecucion);
-	
+	$('#flagPeriodoEjecucion').val(row.flagPeriodoEjecucion);	
 	$('#i_anioejecuc').val(row.anoEjecucion).css('text-align','right');
 	$('#s_mes_ejecuc').val(row.mesEjecucion);
 	
-	/*if( $('#flagPeriodoEjecucion').val()=='S' ){
-		$('#i_anioejecuc').val(row.anoEjecucion).css('text-align','right');
-		$('#s_mes_ejecuc').val(row.mesEjecucion);
-		$('#i_anioejecuc').attr("disabled",true);
-		$('#s_mes_ejecuc').attr("disabled",true);
-	}*/
 	$("#etapaEdit").val(row.etapa);
 	$('#i_nroEmpad_r').val(row.nroEmpadR).css('text-align','right');
 	$('#i_costoUnitEmpad_r').val(redondeo(row.costoUnitEmpadR,2)).css('text-align','right');
@@ -1339,25 +1298,26 @@ function FillEditformato(row){
 	$('#i_importeActivExtraord').css('text-align','right');
 	
 	$('#i_totalGeneral').css('text-align','right');
-	//
+	
 	$('#s_empresa').attr("disabled",true);
 	$('#s_periodoenvio_present').attr("disabled",true);
-	//
+	
 	$('#i_anioejecuc').attr("disabled",true);
 	$('#s_mes_ejecuc').attr("disabled",true);
+	
 	quitarEstiloEdicionCabecera();
 	
 	realizarCalculoCampos();
 	deshabilitarCampos();
-	//
+	
 	totalEmpadronamientoRural();
 	totalEmpadronamientoProvincia();
 	totalEmpadronamientoLima();
-	//
+	
 	totalRedAgentesRural();
 	totalRedAgentesProvincia();
 	totalRedAgentesLima();
-	//
+	
 	totalImportes();
 	$('#i_totalGeneral').val(redondeo(row.totalGeneral,2));
 	
@@ -1365,8 +1325,39 @@ function FillEditformato(row){
 	soloNumerosDecimalesFormulario();
 	formularioCompletarDecimales();
 	$('#flagCarga').val('1');
-	//mostrarPeriodoEjecucion();
+	
+	//cambios elozano para editar costos estandares
+	var flagEditarCostoEst = row.flagCostoEstandar;
+	console.debug("flag de costo estandar al editar formato 12A:  "+flagEditarCostoEst);
+	$('#hiddenFlagCostoEstandar').val(row.flagCostoEstandar);//asigno el valor para despues comparar al momento de grabar o actualizar
+	if(flagEditarCostoEst=='S'){
+	 //habilito campos para la edicion	
+		$('#i_costoUnitAgent_r').removeAttr("disabled");
+		$('#i_costoUnitEmpad_r').removeAttr("disabled");
+		$('#i_costoUnitAgent_p').removeAttr("disabled");
+		$('#i_costoUnitEmpad_p').removeAttr("disabled");
+		if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+			$('#i_costoUnitAgent_l').removeAttr("disabled");
+			$('#i_costoUnitEmpad_l').removeAttr("disabled");										
+		}	
+		//obtengo los costos estandares del formato 14A
+		console.debug("enviando cod empres al editar formato 12A y obetner costos 14A:  "+$('#s_empresa').val());
+		console.debug("enviando periodo envio  al editar formato 12A y obetner costos 14A:  "+$('#s_periodoenvio_present').val());
+		<portlet:namespace/>loadCostosEstandaresEditar($('#s_empresa').val(),$('#s_periodoenvio_present').val());	
+	}else{
+		$('#i_costoUnitAgent_r').attr("disabled",true);
+		$('#i_costoUnitEmpad_r').attr("disabled",true);
+		$('#i_costoUnitAgent_p').attr("disabled",true);
+		$('#i_costoUnitEmpad_p').attr("disabled",true);
+		if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+			$('#i_costoUnitEmpad_l').attr("disabled",true);
+			$('#i_costoUnitEmpad_l').attr("disabled",true);								
+		}			
+	}
+	
 }
+
+
 function deshabiliarControlerView(){
 	$('#i_nroEmpad_r').attr("disabled",true);
 	$('#i_nroEmpad_p').attr("disabled",true);
@@ -1398,11 +1389,9 @@ function deshabiliarControlerView(){
 }
 //////CRUD
 function <portlet:namespace/>guardarFormato(){
-	if (validarGrupoInformacion()){
-		
-		if( validarUltimaEtapa() ){
-			if( validarFormulario() ){
-				
+	if (validarGrupoInformacion()){		
+		if(validarUltimaEtapa()){
+			if(validarFormulario()){				
 				$.blockUI({ message: '<h3><img src="/net-theme/images/img-net/loading_indicator.gif" /> Guardando Datos </h3>' });
 				 jQuery.ajax({
 					url: '<portlet:resourceURL id="crud" />',
@@ -1441,26 +1430,22 @@ function <portlet:namespace/>guardarFormato(){
 						if (data.resultado == "OK1"){				
 							var addhtml2='El Formato 12A se guardó satisfactoriamente';
 							$("#dialog-message-content").html(addhtml2);
-							$("#dialog-message").dialog( "open" );
-							//limpiar();		
+							$("#dialog-message").dialog( "open" );								
 							$('#flagCarga').val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 							mostrarFormularioModificado();
 							initBlockUI();
 						}else if (data.resultado == "OK2"){				
 							var addhtml2='El Formato 12A se actualizó satisfactoriamente';
 							$("#dialog-message-content").html(addhtml2);
-							$("#dialog-message").dialog( "open" );
-							//limpiar();		
+							$("#dialog-message").dialog( "open" );									
 							$('#flagCarga').val('1');//inicializamos el flag de carga cuando editamos el archivo antes de cargar archivos
 							mostrarFormularioModificado();
 							initBlockUI();
 						}
 						else if(data.resultado == "Error"){				
-							var addhtml2=data.mensaje;
-							//var addhtml2='Se produjo un error al guardar los datos del Formato 12A ';
+							var addhtml2=data.mensaje;							
 							$("#dialog-message-error-content").html(addhtml2);
-							$("#dialog-message-error").dialog( "open" );
-							//<portlet:namespace/>filtrar();
+							$("#dialog-message-error").dialog( "open" );							
 							mostrarUltimoFormato();
 							initBlockUI();
 						}
@@ -1471,17 +1456,14 @@ function <portlet:namespace/>guardarFormato(){
 				});
 			   	//se deja el formulario activo
 				$("#div_formato").hide();
-				$("#div_home").show();
-				
+				$("#div_home").show();				
 			}
-		}
-		
-		
-	}
-	//
-	 
-	 
+		}	
+	} 
 }
+
+
+
 function mostrarFormularioModificado(){
 	var codEmpM = $("#s_empresa").val();
 	 var anioPresM = $("#s_periodoenvio_present").val().substring(0,4);
@@ -1502,8 +1484,7 @@ function mostrarFormularioModificado(){
 	 var etapaM = $("#s_periodoenvio_present").val().substring(6,$("#s_periodoenvio_present").val().length);
 	 if( $('#flagCarga').val()=='0' ){
 		 mostrarUltimoFormato();
-	 }else{
-		//alert(codEmpM+','+anioPresM+','+mesPresM+','+anioEjeM+','+mesEjeM+','+etapaM);
+	 }else{		
 		 if(codEmpM != '' && anioPresM != '' && mesPresM != '' && anioEjeM != '' && mesEjeM != '' && etapaM != ''){
 		 	 editarFormato(codEmpM, anioPresM, mesPresM, anioEjeM, mesEjeM, etapaM,flagOpera);
 		 }
@@ -1511,6 +1492,8 @@ function mostrarFormularioModificado(){
 	 $('#<portlet:namespace/>validacionFormato').css('display','');
 	 $('#<portlet:namespace/>envioDefinitivo').css('display','');
 }
+
+
 function cargarPeriodoYCostos(valCodEmpresa, valPeriodo){
 	<portlet:namespace/>loadPeriodo(valPeriodo);
 }
@@ -1520,6 +1503,7 @@ function cargarPeriodoYCostosSinRecarga(valPeriodo){
 }
 
 function <portlet:namespace/>loadPeriodo(valPeriodo) {
+	console.debug("Entrando a loadPeriodo f12A");
 	jQuery.ajax({
 			url: '<portlet:resourceURL id="request_data" />',
 			type: 'post',
@@ -1540,8 +1524,7 @@ function <portlet:namespace/>loadPeriodo(valPeriodo) {
 					habilitarLima();										
 				}else{
 					deshabilitarLima();
-				}
-				
+				}				
 			},error : function(){
 				alert("Error de conexión.");
 				initBlockUI();
@@ -1551,6 +1534,7 @@ function <portlet:namespace/>loadPeriodo(valPeriodo) {
 }
 
 function <portlet:namespace/>loadPeriodoSinRecarga(valPeriodo) {
+	console.debug("Entrando a loadPeriodo sin recarga f12A");
 	jQuery.ajax({
 			url: '<portlet:resourceURL id="request_data" />',
 			type: 'post',
@@ -1571,15 +1555,14 @@ function <portlet:namespace/>loadPeriodoSinRecarga(valPeriodo) {
 					habilitarLima();										
 				}else{
 					deshabilitarLima();
-				}
-				
+				}				
 			},error : function(){
 				alert("Error de conexión.");
 				initBlockUI();
 			}
-	});
-	
+	});	
 }
+
 
 function recargarPeriodoEjecucion(){
 	var ano;
@@ -1587,21 +1570,21 @@ function recargarPeriodoEjecucion(){
 	if( $('#s_periodoenvio_present').val() != null ){
 		ano = $('#s_periodoenvio_present').val().substring(0,4);
 		mes = $('#s_periodoenvio_present').val().substring(4,6);
-		//if( $('#flagPeriodoEjecucion').val()=='S' ){
-			$('#i_anioejecuc').val(ano);
-			$('#s_mes_ejecuc').val(parseFloat(mes));
-		//}
+		$('#i_anioejecuc').val(ano);
+		$('#s_mes_ejecuc').val(parseFloat(mes));		
 	}
 }
+
+
 function <portlet:namespace/>loadCostosUnitarios() {
+	console.debug("Entrando a loadCostos unitarios f12A");
 	jQuery.ajax({
 			url: '<portlet:resourceURL id="request_data2" />',
 			type: 'post',
 			dataType: 'json',
 			data: {
 				<portlet:namespace />s_empresa: $('#s_empresa').val(),
-				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val(),
-				//
+				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val(),				
 				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
 				},
@@ -1612,49 +1595,68 @@ function <portlet:namespace/>loadCostosUnitarios() {
 				dwr.util.setValue("i_costoUnitEmpad_p", redondeo(data.costoEmpP,2));
 				dwr.util.setValue("i_costoUnitAgent_p", redondeo(data.costoAgentP,2));
 				dwr.util.setValue("i_costoUnitEmpad_l", redondeo(data.costoEmpL,2));
-				dwr.util.setValue("i_costoUnitAgent_l", redondeo(data.costoAgentL,2));
-				
-				/*dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
-				dwr.util.setValue("i_costoUnitAgent_r", data.costoAgentR);
-				dwr.util.setValue("i_costoUnitEmpad_p", data.costoEmpP);
-				dwr.util.setValue("i_costoUnitAgent_p", data.costoAgentP);
-				dwr.util.setValue("i_costoUnitEmpad_l", data.costoEmpL);
-				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);*/
+				dwr.util.setValue("i_costoUnitAgent_l", redondeo(data.costoAgentL,2));			
 				
 				if( data.costoEmpR == '0' && data.costoAgentR == '0' && data.costoEmpP == '0' && data.costoAgentP == '0' && data.costoEmpL == '0' && data.costoAgentL == '0' ){
 					var addhtml2='No existe Costos Estándares Establecidos en el Formato 14A para la Distribuidora Eléctrica y Periodo a declarar seleccionado';					
 					$("#dialog-message-info-content").html(addhtml2);
 					$("#dialog-message-info").dialog( "open" );	
-				}
-				
-				//
-				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
-				//
-				dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
-				
+				}			
+				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);				
+				dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);				
 				dwr.util.setValue("etapaFinal", data.etapaFinal);
 				
 				recargarPeriodoEjecucion();
-
 				mostrarPeriodoEjecucion();
-				//---initBlockUI();
+				
+				//cambios para editar costos estadares elozano							
+				var flagEditarCostoEst = data.flagEditarCostoEst;
+				console.debug("flag de costo estandar al hacer nuevo formato 12A:  "+flagEditarCostoEst);
+				$('#hiddenFlagCostoEstandar').val(data.flagEditarCostoEst);//asigno el valor para despues comparar al momento de grabar o actualizar
+				if(flagEditarCostoEst=='S'){
+				 //habilito campos para la edicion	
+					$('#i_costoUnitAgent_r').removeAttr("disabled");
+					$('#i_costoUnitEmpad_r').removeAttr("disabled");
+					$('#i_costoUnitAgent_p').removeAttr("disabled");
+					$('#i_costoUnitEmpad_p').removeAttr("disabled");
+					if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+						$('#i_costoUnitAgent_l').removeAttr("disabled");
+						$('#i_costoUnitEmpad_l').removeAttr("disabled");										
+					}	
+					//obtengo los costos estandares del formato 14A					
+					dwr.util.setValue("hiddenCostoUAgenteR", redondeo(data.costoAgentR,2));
+					dwr.util.setValue("hiddenCostoUEmpR", redondeo(data.costoEmpR,2));
+					dwr.util.setValue("hiddenCostoUAgenteP", redondeo(data.costoAgentP,2));
+					dwr.util.setValue("hiddenCostoUEmpP", redondeo(data.costoEmpP,2));
+					dwr.util.setValue("hiddenCostoUAgenteL", redondeo(data.costoAgentL,2));
+					dwr.util.setValue("hiddenCostoUEmpL", redondeo(data.costoEmpL,2));				
+				}else{
+					$('#i_costoUnitAgent_r').attr("disabled",true);
+					$('#i_costoUnitEmpad_r').attr("disabled",true);
+					$('#i_costoUnitAgent_p').attr("disabled",true);
+					$('#i_costoUnitEmpad_p').attr("disabled",true);
+					if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+						$('#i_costoUnitEmpad_l').attr("disabled",true);
+						$('#i_costoUnitEmpad_l').attr("disabled",true);								
+					}			
+				}			
 			},error : function(){
 				alert("Error de conexión.");
 				initBlockUI();
 			}
-	});	 
-	
+	});
 }
 
+
 function <portlet:namespace/>loadCostosUnitariosSinRecarga() {
+	console.debug("Entrando a loadCostos unitarios sin recarga f12A");
 	jQuery.ajax({
 			url: '<portlet:resourceURL id="request_data2" />',
 			type: 'post',
 			dataType: 'json',
 			data: {
 				<portlet:namespace />s_empresa: $('#s_empresa').val(),
-				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val(),
-				//
+				<portlet:namespace />s_periodoenvio_present: $('#s_periodoenvio_present').val(),				
 				<portlet:namespace />anoEjecucion: $('#i_anioejecuc').val(),
 				<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
 				},
@@ -1665,30 +1667,20 @@ function <portlet:namespace/>loadCostosUnitariosSinRecarga() {
 				dwr.util.setValue("i_costoUnitEmpad_p", redondeo(data.costoEmpP,2));
 				dwr.util.setValue("i_costoUnitAgent_p", redondeo(data.costoAgentP,2));
 				dwr.util.setValue("i_costoUnitEmpad_l", redondeo(data.costoEmpL,2));
-				dwr.util.setValue("i_costoUnitAgent_l", redondeo(data.costoAgentL,2));
-				
-				/*dwr.util.setValue("i_costoUnitEmpad_r", data.costoEmpR);
-				dwr.util.setValue("i_costoUnitAgent_r", data.costoAgentR);
-				dwr.util.setValue("i_costoUnitEmpad_p", data.costoEmpP);
-				dwr.util.setValue("i_costoUnitAgent_p", data.costoAgentP);
-				dwr.util.setValue("i_costoUnitEmpad_l", data.costoEmpL);
-				dwr.util.setValue("i_costoUnitAgent_l", data.costoAgentL);*/
+				dwr.util.setValue("i_costoUnitAgent_l", redondeo(data.costoAgentL,2));		
 				
 				if( data.costoEmpR == '0' && data.costoAgentR == '0' && data.costoEmpP == '0' && data.costoAgentP == '0' && data.costoEmpL == '0' && data.costoAgentL == '0' ){
 					var addhtml2='No existe Costos Estándares Establecidos en el Formato 14A para la Distribuidora Eléctrica y Periodo a declarar seleccionado';					
 					$("#dialog-message-info-content").html(addhtml2);
 					$("#dialog-message-info").dialog( "open" );	
-				}
+				}				
 				
-				//
-				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);
-				//
-				dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);
-				
+				dwr.util.setValue("flagPeriodoEjecucion", data.flagPeriodoEjecucion);				
+				dwr.util.setValue("idGrupoInfo", data.idGrupoInfo);				
 				dwr.util.setValue("etapaFinal", data.etapaFinal);
 
 				mostrarPeriodoEjecucion();
-				//---initBlockUI();
+				
 			},error : function(){
 				alert("Error de conexión.");
 				initBlockUI();
@@ -1696,6 +1688,35 @@ function <portlet:namespace/>loadCostosUnitariosSinRecarga() {
 	});	 
 	
 }
+
+//cambios elozano para costos estandares
+function <portlet:namespace/>loadCostosEstandaresEditar(codEmpresa, periodoEnvio) {
+	console.debug("Entrando a loadCostos estandares al editar formato f12A");
+	jQuery.ajax({
+			url: '<portlet:resourceURL id="request_data2" />',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				<portlet:namespace />s_empresa: codEmpresa,
+				<portlet:namespace />s_periodoenvio_present: periodoEnvio			
+				},
+			success: function(data) {	
+				//redondeamos a 2
+				dwr.util.setValue("hiddenCostoUAgenteR", redondeo(data.costoAgentR,2));
+				dwr.util.setValue("hiddenCostoUEmpR", redondeo(data.costoEmpR,2));
+				dwr.util.setValue("hiddenCostoUAgenteP", redondeo(data.costoAgentP,2));
+				dwr.util.setValue("hiddenCostoUEmpP", redondeo(data.costoEmpP,2));
+				dwr.util.setValue("hiddenCostoUAgenteL", redondeo(data.costoAgentL,2));
+				dwr.util.setValue("hiddenCostoUEmpL", redondeo(data.costoEmpL,2));			
+				console.debug("Costo estandar unitario hidden al momento de editar formato seteado el valor:  "+ $('#hiddenCostoUAgenteR').val());
+			},error : function(){
+				alert("Error de conexión.");
+				initBlockUI();
+			}
+	});
+}
+
+
 
 function validarGrupoInformacion(){
 	
@@ -1748,15 +1769,14 @@ function <portlet:namespace/>cargarFormatoExcel(){
 		}else{
 			isSubmit=false;
 			$("#msjFileExcel").html("Archivo inválido");
-		}
-		//isSubmit=true;
-		//$("#msjFileExcel").html("");
+		}		
 	}
 	if(isSubmit){
 		frm.submit();
-	}
-	//frm.submit();
+	}	
 }
+
+
 function <portlet:namespace/>cargarFormatoTexto(){
 	var frm = document.getElementById('form-formatofise12a');
 	var nameFile=$("#archivoTxt").val();
@@ -1774,15 +1794,13 @@ function <portlet:namespace/>cargarFormatoTexto(){
 		}else{
 			isSubmit=false;
 			$("#msjFileTxt").html("Archivo inválido");
-		}
-		//isSubmit=true;
-		//$("#msjFileTxt").html("");
+		}		
 	}
 	if(isSubmit){
 		frm.submit();
 	}
-	//frm.submit();
 }
+
 function iniciarMensajeExcel(){
 	$("#msjFileExcel").html("");
 }
@@ -1812,12 +1830,16 @@ function <portlet:namespace/>mostrarFormularioCargaExcel(){
 		
 	}
 }
+
+
 function regresarFormularioCargaExcel(){
 	$('#flagCarga').val('');
 	iniciarMensajeExcel();
 	$("#dialog-form-cargaExcel").hide();
 	$('#divOverlay').hide();   
 }
+
+
 function <portlet:namespace/>mostrarFormularioCargaTexto(){
 	if (validarGrupoInformacion()){
 		if( validarUltimaEtapa() ){
@@ -1840,12 +1862,16 @@ function <portlet:namespace/>mostrarFormularioCargaTexto(){
 		
 	}
 }
+
+
 function regresarFormularioCargaTexto(){
 	$('#flagCarga').val('');
 	iniciarMensajeTxt();
 	$("#dialog-form-cargaTexto").hide();
 	$('#divOverlay').hide();   
 }
+
+
 function <portlet:namespace/>mostrarReportePdf(){
 	jQuery.ajax({
 		url : '<portlet:resourceURL id="reporte" />',
@@ -1870,6 +1896,8 @@ function <portlet:namespace/>mostrarReportePdf(){
 		}
 	});
 }
+
+
 function <portlet:namespace/>mostrarReporteExcel(){
 	jQuery.ajax({
 		url : '<portlet:resourceURL id="reporte" />',
@@ -1886,8 +1914,7 @@ function <portlet:namespace/>mostrarReporteExcel(){
 			<portlet:namespace />nombreArchivo: 'formato12A',
 			<portlet:namespace />tipoArchivo: '1'//XLS
 		},
-		success : function(gridData) {
-			//alert('entro');
+		success : function(gridData) {			
 			verReporte();
 		},error : function(){
 			alert("Error de conexión.");
@@ -1895,6 +1922,7 @@ function <portlet:namespace/>mostrarReporteExcel(){
 		}
 	});
 }
+
 function verReporte(){
 	window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
 	<%-- location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>'; --%>
@@ -1914,23 +1942,22 @@ function <portlet:namespace/>validacionFormato(){
 			<portlet:namespace />mesEjecucion: $('#s_mes_ejecuc').val()
 		},
 		success : function(data) {
-
 			if( data!=null ){
-				$("#dialog-form-observacion").dialog( "open" );
-
+				    $("#dialog-form-observacion").dialog( "open" );
 				    $('#grid_observacion').clearGridData(true);
 					$('#grid_observacion').jqGrid('setGridParam', {data: data}).trigger('reloadGrid');
 					$("#grid_observacion")[0].refreshIndex();
-
-				 initBlockUI();
+				    initBlockUI();
 			}
-
 		},error : function(){
 			alert("Error de conexión.");
 			initBlockUI();
 		}
 	});
 }
+
+
+
 function buidGridsObservacion(){
 	 jQuery("#grid_observacion").jqGrid({
 			datatype: "local",
@@ -1979,6 +2006,8 @@ function buidGridsObservacion(){
 		       } 
 		});
 }
+
+
 function <portlet:namespace/>mostrarReporteValidacion(){
 	jQuery.ajax({
 		url : '<portlet:resourceURL id="reporteValidacion" />',
@@ -1999,11 +2028,13 @@ function <portlet:namespace/>mostrarReporteValidacion(){
 		}
 	});
 }
+
 function confirmarEnvioDefinitivo(){	
 	var addhtml='¿Está seguro que desea realizar el Envío Definitivo del Formato 12A?';
 	$("#dialog-confirm-envio-content").html(addhtml);		 
 	$("#dialog-confirm-envio").dialog("open");
 }
+
 function <portlet:namespace/>envioDefinitivo(){
 	jQuery.ajax({
 		url : '<portlet:resourceURL id="envioDefinitivo" />',
@@ -2047,14 +2078,15 @@ function <portlet:namespace/>envioDefinitivo(){
 		}
 	});
 }
+
 function mostrarDescripcionPeriodo(anio,mes,etapa){
 	  var monthNames = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-	  var descripcionPeriodo;
-	  //alert(monthNames[mes-1]);
-	  descripcionPeriodo=''+monthNames[mes-1]+'-'+anio+' / '+etapa;
-	  //alert(descripcionPeriodo);
+	  var descripcionPeriodo;	 
+	  descripcionPeriodo=''+monthNames[mes-1]+'-'+anio+' / '+etapa;	 
 	  return descripcionPeriodo;
 }
+
+
 function <portlet:namespace/>mostrarReporteEnvioDefinitivo(){
 	jQuery.ajax({
 		url : '<portlet:resourceURL id="reporteEnvioDefinitivo" />',
@@ -2071,6 +2103,8 @@ function <portlet:namespace/>mostrarReporteEnvioDefinitivo(){
 		}
 	});
 }
+
+
 function <portlet:namespace/>mostrarReporteActaEnvio(){
 	var estado = $('#descEstado').val();	
 	if(estado=='Enviado'){
@@ -2092,12 +2126,12 @@ function <portlet:namespace/>mostrarReporteActaEnvio(){
 				initBlockUI();
 			}
 		});
-	}else{
-		//alert("Primero debe realizar el envío definitivo");
+	}else{		
 		$("#dialog-message-info-content").html('Primero debe realizar el Envío Definitivo del Formato 12A');
 		$("#dialog-message-info").dialog( "open" );
 	}
 }
+
 //funcion para desabiliar campos lima
 function deshabilitarLima(){
 	//LIMA
@@ -2105,21 +2139,10 @@ function deshabilitarLima(){
 	$('#i_nroAgentGlp_l').attr("disabled",true);
 	$('#i_despPersonal_l').attr("disabled",true);
 	$('#i_activExtraord_l').attr("disabled",true);
-	quitarEstiloEdicionLima();
-	
-	/*$('#i_nroEmpad_r').removeAttr("disabled");	
-	$('#i_nroAgentGlp_r').removeAttr("disabled");	
-	$('#i_despPersonal_r').removeAttr("disabled");
-	$('#i_activExtraord_r').removeAttr("disabled");
-	estiloEdicionRural();
-	//
-	$('#i_nroEmpad_p').removeAttr("disabled");	
-	$('#i_nroAgentGlp_p').removeAttr("disabled");	
-	$('#i_despPersonal_p').removeAttr("disabled");
-	$('#i_activExtraord_p').removeAttr("disabled");
-	estiloEdicionProvincia();*/
-	
+	quitarEstiloEdicionLima();	
 }
+
+
 //funcion para habilitar campos lima
 function habilitarLima(){
 	$('#i_nroEmpad_l').removeAttr("disabled");
@@ -2127,66 +2150,62 @@ function habilitarLima(){
 	$('#i_despPersonal_l').removeAttr("disabled");
 	$('#i_activExtraord_l').removeAttr("disabled");
 	estiloEdicionLima();
-	
-	/*$('#i_nroEmpad_r').attr("disabled",true);
-	$('#i_nroAgentGlp_r').attr("disabled",true);
-	$('#i_despPersonal_r').attr("disabled",true);
-	$('#i_activExtraord_r').attr("disabled",true);
-	quitarEstiloEdicionRural();
-	
-	$('#i_nroEmpad_p').attr("disabled",true);	
-	$('#i_nroAgentGlp_p').attr("disabled",true);
-	$('#i_despPersonal_p').attr("disabled",true);
-	$('#i_activExtraord_p').attr("disabled",true);
-	quitarEstiloEdicionProvincia();*/
 }
+
+
+
 //poner estilos de edicion para cada columna
 function estiloEdicionCabecera(){
-	$('#i_anioejecuc').addClass("fise-editable");
-	//$('#s_mes_ejecuc').addClass("fise-editable");
+	$('#i_anioejecuc').addClass("fise-editable");	
 }
+
 function estiloEdicionRural(){
 	$('#i_nroEmpad_r').addClass("fise-editable");
 	$('#i_nroAgentGlp_r').addClass("fise-editable");
 	$('#i_despPersonal_r').addClass("fise-editable");
 	$('#i_activExtraord_r').addClass("fise-editable");
 }
+
 function estiloEdicionProvincia(){
 	$('#i_nroEmpad_p').addClass("fise-editable");
 	$('#i_nroAgentGlp_p').addClass("fise-editable");
 	$('#i_despPersonal_p').addClass("fise-editable");
 	$('#i_activExtraord_p').addClass("fise-editable");
 }
+
 function estiloEdicionLima(){
 	$('#i_nroEmpad_l').addClass("fise-editable");
 	$('#i_nroAgentGlp_l').addClass("fise-editable");
 	$('#i_despPersonal_l').addClass("fise-editable");
 	$('#i_activExtraord_l').addClass("fise-editable");
 }
+
 //quitar estilos
 function quitarEstiloEdicionCabecera(){
-	$('#i_anioejecuc').removeClass("fise-editable");
-	//$('#s_mes_ejecuc').removeClass("fise-editable");
+	$('#i_anioejecuc').removeClass("fise-editable");	
 }
+
 function quitarEstiloEdicionRural(){
 	$('#i_nroEmpad_r').removeClass("fise-editable");
 	$('#i_nroAgentGlp_r').removeClass("fise-editable");
 	$('#i_despPersonal_r').removeClass("fise-editable");
 	$('#i_activExtraord_r').removeClass("fise-editable");
 }
+
 function quitarEstiloEdicionProvincia(){
 	$('#i_nroEmpad_p').removeClass("fise-editable");
 	$('#i_nroAgentGlp_p').removeClass("fise-editable");
 	$('#i_despPersonal_p').removeClass("fise-editable");
 	$('#i_activExtraord_p').removeClass("fise-editable");
 }
+
 function quitarEstiloEdicionLima(){
 	$('#i_nroEmpad_l').removeClass("fise-editable");
 	$('#i_nroAgentGlp_l').removeClass("fise-editable");
 	$('#i_despPersonal_l').removeClass("fise-editable");
 	$('#i_activExtraord_l').removeClass("fise-editable");
 }
-//
+
 
 
 </script>
