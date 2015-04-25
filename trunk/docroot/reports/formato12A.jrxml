@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato12A" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.1289478601075549"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="61"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
@@ -68,7 +68,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="520" splitType="Stretch">
+		<band height="484" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="40" width="140" height="16"/>
 				<textElement verticalAlignment="Middle">
@@ -84,7 +84,7 @@
 				<text><![CDATA[Rubro:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="484" y="131" width="71" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="484" y="123" width="71" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -92,7 +92,7 @@
 Lima]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="412" y="131" width="70" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="412" y="123" width="70" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -100,133 +100,133 @@ Lima]]></text>
 Provincias]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="340" y="131" width="70" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="340" y="123" width="70" height="35" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Rural]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="340" y="102" width="215" height="28" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="340" y="102" width="215" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Grupo de Beneficiarios según Zona]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="102" width="339" height="64" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="0" y="102" width="339" height="56" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Actividades]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="197" width="555" height="16"/>
+				<reportElement x="0" y="167" width="555" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1. Empadronamiento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="213" width="310" height="16"/>
+				<reportElement x="9" y="183" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.1 Número de empadronados]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="229" width="310" height="16"/>
+				<reportElement x="9" y="199" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[1.2 Costo Estándar Unitario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="245" width="310" height="16"/>
+				<reportElement x="9" y="215" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[1.3 Costo Total Empadronamiento  (1.1) x (1.2)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="273" width="555" height="16"/>
+				<reportElement x="0" y="245" width="555" height="16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2. Gestión de Red de Agentes GLP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="289" width="310" height="16"/>
+				<reportElement x="9" y="261" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[2.1 Número de Agentes Autorizados GLP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="305" width="310" height="16"/>
+				<reportElement x="9" y="277" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[2.2 Costo Estándar Unitario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="321" width="310" height="16"/>
+				<reportElement x="9" y="293" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2.3 Costo Total Gestión de Red de Agentes GLP (2.1) x (2.2)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="424" width="310" height="16"/>
+				<reportElement x="9" y="396" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Por Gestión de Red de Agentes GLP  (2.3)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="440" width="310" height="16"/>
+				<reportElement x="9" y="412" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Por Desplazamiento de Personal  *  (3)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="456" width="310" height="16"/>
+				<reportElement x="9" y="428" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Por Actividades Extraordinarias  **  (4)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="482" width="319" height="16"/>
+				<reportElement x="0" y="454" width="319" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[6. Total General a Reconocer  (1.3) + (2.3) + (3) + (4)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="349" width="319" height="16"/>
+				<reportElement x="0" y="321" width="319" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[3. Desplazamiento de Personal  *]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="365" width="316" height="16"/>
+				<reportElement x="3" y="337" width="316" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[4. Actividades Extraordinarias  **]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="392" width="555" height="16"/>
+				<reportElement x="0" y="364" width="555" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[5. Importe a reconocer a la Distribuidora Eléctrica]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="408" width="310" height="16"/>
+				<reportElement x="9" y="380" width="310" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -247,213 +247,213 @@ Provincias]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA[""+$P{ANO_PRESENTACION}+" / "+$P{DESC_MES_PRESENTACION}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="340" y="213" width="70" height="16"/>
+				<reportElement x="340" y="183" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_EMPAD_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="229" width="70" height="16"/>
+				<reportElement x="340" y="199" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_EMPAD_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="245" width="70" height="16"/>
+				<reportElement x="340" y="215" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_EMPAD_R}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="340" y="289" width="70" height="16"/>
+				<reportElement x="340" y="261" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENT_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="305" width="70" height="16"/>
+				<reportElement x="340" y="277" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_AGENT_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="321" width="70" height="16"/>
+				<reportElement x="340" y="293" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_AGENT_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="349" width="70" height="16"/>
+				<reportElement x="340" y="321" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DESPL_PERSONAL_R}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="365" width="70" height="16"/>
+				<reportElement x="340" y="337" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ACTIV_EXTRAORD_R}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="412" y="213" width="70" height="16"/>
+				<reportElement x="412" y="183" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="412" y="229" width="70" height="16"/>
+				<reportElement x="412" y="199" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="412" y="245" width="70" height="16"/>
+				<reportElement x="412" y="215" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_EMPAD_P}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="412" y="289" width="70" height="16"/>
+				<reportElement x="412" y="261" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENT_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="412" y="305" width="70" height="16"/>
+				<reportElement x="412" y="277" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_AGENT_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="412" y="321" width="70" height="16"/>
+				<reportElement mode="Transparent" x="412" y="293" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_AGENT_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="412" y="349" width="70" height="16"/>
+				<reportElement x="412" y="321" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DESPL_PERSONAL_P}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="412" y="365" width="70" height="16"/>
+				<reportElement x="412" y="337" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ACTIV_EXTRAORD_P}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="484" y="213" width="70" height="16"/>
+				<reportElement x="484" y="183" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_EMPAD_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="484" y="229" width="70" height="16"/>
+				<reportElement x="484" y="199" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_EMPAD_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="484" y="245" width="70" height="16"/>
+				<reportElement x="484" y="215" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_EMPAD_L}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="484" y="289" width="70" height="16"/>
+				<reportElement x="484" y="261" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENT_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="484" y="305" width="70" height="16"/>
+				<reportElement x="484" y="277" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_UNIT_AGENT_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="484" y="321" width="70" height="16"/>
+				<reportElement x="484" y="293" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{COSTO_TOTAL_AGENT_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="484" y="349" width="70" height="16"/>
+				<reportElement x="484" y="321" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{DESPL_PERSONAL_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="484" y="365" width="70" height="16"/>
+				<reportElement x="484" y="337" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{ACTIV_EXTRAORD_L}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="408" width="70" height="16"/>
+				<reportElement x="340" y="380" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{TOTAL_EMPAD}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="424" width="70" height="16"/>
+				<reportElement x="340" y="396" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{TOTAL_AGENT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="440" width="70" height="16"/>
+				<reportElement x="340" y="412" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{TOTAL_DESPL_PERSONAL}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="456" width="70" height="16"/>
+				<reportElement x="340" y="428" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{TOTAL_ACTIV_EXTRAORD}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="340" y="482" width="70" height="16"/>
+				<reportElement x="340" y="454" width="70" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{TOTAL_GENERAL}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="504" width="555" height="1" forecolor="#006699"/>
+				<reportElement x="0" y="476" width="555" height="1" forecolor="#006699"/>
 			</line>
 			<line>
-				<reportElement x="0" y="387" width="555" height="1" forecolor="#006699"/>
+				<reportElement x="0" y="359" width="555" height="1" forecolor="#006699"/>
 			</line>
 			<staticText>
 				<reportElement x="0" y="24" width="140" height="16"/>
@@ -463,13 +463,13 @@ Provincias]]></text>
 				<text><![CDATA[Distribuidora Eléctrica:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="476" width="555" height="1" forecolor="#006699"/>
+				<reportElement x="0" y="448" width="555" height="1" forecolor="#006699"/>
 			</line>
 			<line>
-				<reportElement x="0" y="342" width="555" height="1" forecolor="#006699"/>
+				<reportElement x="0" y="314" width="555" height="1" forecolor="#006699"/>
 			</line>
 			<line>
-				<reportElement x="0" y="266" width="555" height="1" forecolor="#006699"/>
+				<reportElement x="0" y="236" width="555" height="1" forecolor="#006699"/>
 			</line>
 			<staticText>
 				<reportElement x="0" y="72" width="140" height="16"/>
@@ -493,30 +493,51 @@ Provincias]]></text>
 				<text><![CDATA[Implementación]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="213" width="20" height="16"/>
+				<reportElement x="319" y="183" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[N°]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="245" width="20" height="16"/>
+				<reportElement x="319" y="215" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="229" width="20" height="16"/>
+				<reportElement x="319" y="199" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="305" width="20" height="16"/>
+				<reportElement x="319" y="277" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
+				</textElement>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="293" width="20" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="261" width="20" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="337" width="20" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
@@ -528,56 +549,35 @@ Provincias]]></text>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="289" width="20" height="16"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[N°]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="319" y="365" width="20" height="16"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[S/.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="319" y="349" width="20" height="16"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[S/.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="319" y="424" width="20" height="16"/>
+				<reportElement x="319" y="396" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="408" width="20" height="16"/>
+				<reportElement x="319" y="380" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="440" width="20" height="16"/>
+				<reportElement x="319" y="412" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="456" width="20" height="16"/>
+				<reportElement x="319" y="428" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="319" y="482" width="20" height="16"/>
+				<reportElement x="319" y="454" width="20" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -634,23 +634,24 @@ Provincias]]></text>
 				</textElement>
 				<text><![CDATA[(**)]]></text>
 			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="7" splitType="Stretch">
 			<textField>
-				<reportElement x="433" y="116" width="73" height="20"/>
+				<reportElement x="435" y="-22" width="73" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="506" y="116" width="47" height="20"/>
+				<reportElement x="508" y="-22" width="47" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
-	</pageFooter>
-	<summary>
-		<band height="10" splitType="Stretch"/>
 	</summary>
 </jasperReport>
