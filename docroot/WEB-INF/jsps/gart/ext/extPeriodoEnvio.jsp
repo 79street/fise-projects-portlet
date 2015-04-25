@@ -64,7 +64,7 @@ var periodoEnvio= {
 		f_codEmpresa:null,f_anoPres:null,f_mesPres:null,f_formato:null,f_etapa:null,f_estado:null,f_desde:null,
 		f_hasta:null,f_dias:null,f_flagEnvioObs:null,f_flagAnoMes:null,	f_flagCosto:null,
 		f_anoIniVigencia:null,f_anoFinVigencia:null,
-		f_secuencia:null,f_fechaAmpl:null,
+		f_secuencia:null,f_fechaAmpl:null,f_flagEditarCosto:null,//flageditarcosto = editar o no costos unitarios o estandaras
 	
 		//grillas
 		tablaResultados:null,
@@ -142,7 +142,8 @@ var periodoEnvio= {
 			this.f_flagAnoMes=$('#flagAnioMesEjec');	
 			this.f_flagCosto=$('#flagHabCostos');
 			this.f_anoIniVigencia=$('#anoIniVigencia');	
-			this.f_anoFinVigencia=$('#anoFinVigencia');			
+			this.f_anoFinVigencia=$('#anoFinVigencia');	
+			this.f_flagEditarCosto= $('#flagEditarCosto');
 			
 			//grillas			
 			this.tablaResultados=$("#<portlet:namespace/>grid_resultado_busqueda");
@@ -469,6 +470,16 @@ var periodoEnvio= {
 				// $('#rbtNo').checked = true;
 				 document.getElementById('rbtAmbos').checked = true;
 			}
+			
+			console.debug("Valor del flag editar costos estandares.:  "+bean.flagEditarCosto);
+			if(bean.flagEditarCosto=='S'){
+				// $('#rbtSi').checked = true;
+				 document.getElementById('rbtEditarCostoSi').checked = true;
+			}else{
+				// $('#rbtNo').checked = true;
+				 document.getElementById('rbtEditarCostoNo').checked = true;
+			}
+			
 			
 			console.debug("id formato al hacer editar o visualizar:  "+bean.formato);			
 			if(periodoEnvio.verificarFormato(bean.formato)==false){
@@ -842,7 +853,10 @@ var periodoEnvio= {
         	
         	$('#rbtAmbos').removeAttr("disabled");
         	$('#rbtDirecto').removeAttr("disabled");
-        	$('#rbtIndirecto').removeAttr("disabled");      	
+        	$('#rbtIndirecto').removeAttr("disabled"); 
+        	
+        	$('#rbtEditarCostoSi').removeAttr("disabled");
+        	$('#rbtEditarCostoNo').removeAttr("disabled");
         	
         	periodoEnvio.f_anoIniVigencia.removeAttr("disabled");
         	periodoEnvio.f_anoFinVigencia.removeAttr("disabled");
@@ -864,7 +878,10 @@ var periodoEnvio= {
         	
         	$('#rbtAmbos').attr("disabled",true);
         	$('#rbtDirecto').attr("disabled",true);
-        	$('#rbtIndirecto').attr("disabled",true);    
+        	$('#rbtIndirecto').attr("disabled",true);  
+        	
+        	$('#rbtEditarCostoSi').attr("disabled",true);
+        	$('#rbtEditarCostoNo').attr("disabled",true);        	
         	
         	periodoEnvio.f_anoIniVigencia.attr("disabled",true);
         	periodoEnvio.f_anoFinVigencia.attr("disabled",true); 

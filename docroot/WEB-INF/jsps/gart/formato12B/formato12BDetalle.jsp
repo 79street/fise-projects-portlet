@@ -1056,6 +1056,8 @@
 		<div class="ui-resizable-handle ui-resizable-sw" style="z-index: 1000;"></div>
 		<div class="ui-resizable-handle ui-resizable-ne" style="z-index: 1000;"></div>
 		<div class="ui-resizable-handle ui-resizable-nw" style="z-index: 1000;"></div>
+		
+		
 		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 			<div class="ui-dialog-buttonset">
 				<input type="button" class="net-button-small"
@@ -1067,6 +1069,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<div id="<portlet:namespace/>dialog-form-observacion"
 		class="net-frame-border" style="display: none; background: #fff;"
 		title=" Resultados de validación ">
@@ -1151,6 +1154,6 @@
               	</table>
 		</fieldset>
 		<br>
-	</div>
+	</div>	
 
 </form:form>

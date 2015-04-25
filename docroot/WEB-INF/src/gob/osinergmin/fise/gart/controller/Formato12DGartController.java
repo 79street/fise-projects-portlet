@@ -167,11 +167,7 @@ public class Formato12DGartController {
 		}
 		if( beanBusqueda!=null && beanBusqueda.getEtapaB()!=null ){
 			bean.setEtapaB(beanBusqueda.getEtapaB());
-		}		
-		/*bean.setAnioDesde(fiseUtil.obtenerNroAnioFechaActual());
-		bean.setMesDesde(String.valueOf(Integer.parseInt(fiseUtil.obtenerNroMesFechaActual()) - 1));
-		bean.setAnioHasta(fiseUtil.obtenerNroAnioFechaActual());
-		bean.setMesHasta(fiseUtil.obtenerNroMesFechaActual());*/
+		}	
 		
 		model.addAttribute("esAdministrador", fiseUtil.esAdministrador(renderRequest));
 
@@ -227,12 +223,7 @@ public class Formato12DGartController {
   					formato.setDescGrupoInformacion(formato.getFiseGrupoInformacion().getDescripcion());
   				}else{
   					formato.setDescGrupoInformacion(FiseConstants.BLANCO);
-  				}
-  				/*if(formato.getFechaEnvioDefinitivo()!=null){
-  					formato.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
-  				}else{
-  					formato.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-  				}*/
+  				}  			
   				
   				/**Obteniendo el flag de la operacion*/
   				String flagOper = commonService.obtenerEstadoProceso(formato.getId().getCodEmpresa(),FiseConstants.TIPO_FORMATO_12D,formato.getId().getAnoPresentacion(),
@@ -369,12 +360,7 @@ public class Formato12DGartController {
 					f.setDescGrupoInformacion(f.getFiseGrupoInformacion().getDescripcion());
 				}else{
 					f.setDescGrupoInformacion(FiseConstants.BLANCO);
-				}
-				/*if(f.getFechaEnvioDefinitivo()!=null){
-					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
-				}else{
-					f.setDescEstado(FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-				}*/
+				}	
 	
 				String flagOper = commonService.obtenerEstadoProceso(pk.getCodEmpresa(),FiseConstants.TIPO_FORMATO_12D,pk.getAnoPresentacion(),pk.getMesPresentacion(),pk.getEtapa());
   				

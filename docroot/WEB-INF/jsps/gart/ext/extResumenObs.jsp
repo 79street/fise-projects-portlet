@@ -90,8 +90,8 @@ var resumenObs= {
 			this.urlCargaGrupoInf='<portlet:resourceURL id="cargarGrupoInformacion" />';		
 			this.urlVerReporte12Pdf='<portlet:resourceURL id="verResumenObsMensualesPdf" />';
 			this.urlVerReporte12Excel='<portlet:resourceURL id="verResumenObsMensualesExcel" />';			
-			this.urlVerReporte14Pdf='<portlet:resourceURL id="verresumenObsF14B" />'; 
-			this.urlVerReporte14Excel='<portlet:resourceURL id="verresumenObsF14BExcel" />'; 
+			this.urlVerReporte14Pdf='<portlet:resourceURL id="verResumenObsBienalesPdf" />'; 
+			this.urlVerReporte14Excel='<portlet:resourceURL id="verResumenObsBienalesExcel" />'; 
 			
 		
 					

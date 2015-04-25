@@ -32,6 +32,11 @@ var notificarValidar= {
 		dialogInfo:null,
 		dialogInfoContent:null,
 		
+		//para estado de notificacion
+		dialogConfirmEstadoNotif:null,//para realizar la reprocesar observacion y verificar el estado
+		dialogConfirmContentEstadoNotif:null,//para realizar la reprocesar observacion y verificar el estado
+		
+		
 		//observacion manual
 		dialogEliminarObs:null,
 		dialogEliminarObsContent:null,
@@ -70,13 +75,16 @@ var notificarValidar= {
 		
 		
 		//urls
-		urlBusqueda: null,			
+		urlBusqueda: null,
+		urlBusquedaEliminar: null,
 	    urlProcesar:null,
 	    urlCargaGrupoInf:null,
 	    urlVerObservaciones:null,		
 		urlReporteObservaciones:null,
 		urlNotificar:null,
-		urlEliminar:null,		
+		urlEliminar:null,	
+		urlObtenerEstadoNotif:null,
+		
 		//cambios observacion  manual
 		urlBusquedaDetalle: null,			
 	    urlBuscarListaObs:null,
@@ -165,6 +173,10 @@ var notificarValidar= {
 			this.dialogErrorContent=$("#<portlet:namespace/>dialog-error-content");	
 			this.dialogInfo=$("#<portlet:namespace/>dialog-info");
 			this.dialogInfoContent=$("#<portlet:namespace/>dialog-info-content");
+			
+			this.dialogConfirmEstadoNotif=$("#<portlet:namespace/>dialog-confirm_estado_notif");
+			this.dialogConfirmContentEstadoNotif=$("#<portlet:namespace/>dialog-confirm-content_estado_notif");
+			
 			//observacion manual 		
 			this.dialogEliminarObs=$("#<portlet:namespace/>dialog-confirm_observacion");
 			this.dialogEliminarObsContent=$("#<portlet:namespace/>dialog-confirm-content_observacion");
@@ -204,13 +216,16 @@ var notificarValidar= {
 			
 			
 			//urls 
-			this.urlBusqueda='<portlet:resourceURL id="busquedaNotificacion" />';					
+			this.urlBusqueda='<portlet:resourceURL id="busquedaNotificacion" />';
+			this.urlBusquedaEliminar='<portlet:resourceURL id="busquedaNotificacionEliminar" />';			
 			this.urlProcesar='<portlet:resourceURL id="procesarNotificacion" />';
 			this.urlCargaGrupoInf='<portlet:resourceURL id="cargarGrupoInformacion" />';
 			this.urlVerObservaciones='<portlet:resourceURL id="verObservacionesValidacion" />';
 			this.urlReporteObservaciones='<portlet:resourceURL id="reporteValidacionNotificacion" />';
 			this.urlNotificar='<portlet:resourceURL id="notificarValidacion" />';
 			this.urlEliminar='<portlet:resourceURL id="eliminarNotificacion" />';
+			
+			this.urlObtenerEstadoNotif='<portlet:resourceURL id="obtenerEstadoNotificacion" />';
 			
 			//cambios pra observaciones manuales
 			this.urlBusquedaDetalle='<portlet:resourceURL id="verDetalleFormatos" />';
@@ -1042,7 +1057,7 @@ var notificarValidar= {
 		
 		
 		
-		//funcion para buscar
+		//funcion para buscar las notificaciones
 		buscarNotificacion : function () {	
 			console.debug("entranado a buscar function");
 			notificarValidar.blockUI();
@@ -1062,7 +1077,31 @@ var notificarValidar= {
 						notificarValidar.initBlockUI();
 					}
 				});			
-		},			
+		},
+		
+		//funcion para buscar las notificaciones despues de excluir un regristro
+		buscarNotificacionEliminar : function () {	
+			console.debug("entranado a buscar al excluir registro function");
+			notificarValidar.blockUI();
+			jQuery.ajax({			
+					url: notificarValidar.urlBusquedaEliminar+'&'+notificarValidar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',				
+					success: function(gridData) {					
+						notificarValidar.tablaResultados.clearGridData(true);
+						notificarValidar.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+						notificarValidar.tablaResultados[0].refreshIndex();
+						notificarValidar.initBlockUI();
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");
+						notificarValidar.initBlockUI();
+					}
+				});			
+		},
+		
+		
 		//function para el evento onchange en empresa para cargar el periodo
 		<portlet:namespace/>loadGrupoInformacion : function(){	
 			console.debug("entranado a cargar grupoInfo");
@@ -1081,8 +1120,37 @@ var notificarValidar= {
 					}
 			});
 		},		
-		//Function para procesar notificacion
+		
+		
+		//function para obtener el estado de notificacion
 		procesarNotificacion : function(){	
+			console.debug("entranado a cargar estado de notificacion");
+			jQuery.ajax({
+					url: notificarValidar.urlObtenerEstadoNotif+'&'+notificarValidar.formCommand.serialize(),
+					type: 'post',
+					dataType: 'json',
+					success: function(data) {		
+						var estado = data.resultado;	
+						console.debug("Estado notificacion obtenido:   "+estado);
+						if(estado=='SI'){
+							var addhtml='Los Formatos ya fuerón Notificados anteriormente. ¿Desea Reprocesar?. (Si Reprocesa se eliminarán las Obs. Automáticas.)';
+							notificarValidar.dialogConfirmContentEstadoNotif.html(addhtml);
+							notificarValidar.dialogConfirmEstadoNotif.dialog("open");		
+						}else{
+							notificarValidar.procesarNotificacionEstado();
+						}										
+					},error : function(){
+						var addhtmError='Error de conexión.';					
+						notificarValidar.dialogErrorContent.html(addhtmError);
+						notificarValidar.dialogError.dialog("open");
+						notificarValidar.initBlockUI();
+					}
+			});
+		},		
+		
+		
+		//Function para procesar notificacion cuando el estado es NO
+		procesarNotificacionEstado : function(){	
 			console.debug("entrando a procesar notificacion ");			
 			$.blockUI({ message: notificarValidar.mensajeProcesando});			 
 			jQuery.ajax({
@@ -1307,7 +1375,7 @@ var notificarValidar= {
 						var addhtml2='Registro excluido satisfactoriamente. Ese registro no será considerado para la Validación ni para la Notificación.';					
 						notificarValidar.dialogMessageContent.html(addhtml2);
 						notificarValidar.dialogMessageEliminar.dialog("open");
-						notificarValidar.buscarNotificacion();
+						notificarValidar.buscarNotificacionEliminar();
 						notificarValidar.initBlockUI();
 					}
 					else{
@@ -2360,6 +2428,23 @@ var notificarValidar= {
 				buttons: {
 					"Si": function() {
 						notificarValidar.eliminarObservacion(codObservacion,itemObservacion);
+						$( this ).dialog("close");
+					},
+					"No": function() {				
+						$( this ).dialog("close");
+					}
+				}
+			});	
+			
+			//dialogo para reprocesar notificacion si el estado es SI
+			notificarValidar.dialogConfirmEstadoNotif.dialog({
+				modal: true,
+				height: 200,
+				width: 450,			
+				autoOpen: false,
+				buttons: {
+					"Si": function() {
+						notificarValidar.procesarNotificacionEstado();
 						$( this ).dialog("close");
 					},
 					"No": function() {				

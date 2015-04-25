@@ -44,7 +44,9 @@ public class Formato12AGartJSON {
 	//
 	private String flag;//flag para controlar mostrar el formulario de ingreso cuando hay un error en carga de formulario excel o texto
 
-	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC, String flagPeriodoEjecucion, String flagOperacion) throws JSONException{
+		
+	public JSONObject asJSONObject(FiseFormato12AC fiseFormato12AC, String flagPeriodoEjecucion,
+			String flagOperacion,String flagCostoEstandar) throws JSONException{
 		
 		JSONObject jsonObj = new JSONObject();
 		
@@ -62,6 +64,9 @@ public class Formato12AGartJSON {
 		//formar flag de verificado
 		jsonObj.put("flagPeriodoEjecucion", flagPeriodoEjecucion);
 		
+		//cambio elozano para editar costo estandar
+		jsonObj.put("flagCostoEstandar", flagCostoEstandar);
+		
 		jsonObj.put("descEmpresa", fiseFormato12AC.getDescEmpresa());
 		jsonObj.put("anoPresentacion", fiseFormato12AC.getId().getAnoPresentacion());
 		jsonObj.put("mesPresentacion", fiseFormato12AC.getId().getMesPresentacion());
@@ -71,23 +76,6 @@ public class Formato12AGartJSON {
 		jsonObj.put("descMesPresentacion", fiseFormato12AC.getDescMesPresentacion());
 		jsonObj.put("descMesEjecucion", fiseFormato12AC.getDescMesEjecucion());
 
-//		if( FiseConstants.BLANCO.equals(flagOperacion) ){
-//			if(fiseFormato12AC.getFiseGrupoInformacion()!=null && fiseFormato12AC.getFiseGrupoInformacion().getDescripcion()!=null){
-//				jsonObj.put("grupoInfo", fiseFormato12AC.getFiseGrupoInformacion().getDescripcion());	
-//			}else{
-//				jsonObj.put("grupoInfo", FiseConstants.BLANCO);	
-//			}
-//			/*if(fiseFormato12AC.getFechaEnvioDefinitivo()!=null){
-//				jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_ENVIADO);
-//			}else{
-//				jsonObj.put("estado", FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
-//			}*/
-//			jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
-//		}else{
-//			jsonObj.put("grupoInfo", fiseFormato12AC.getDescGrupoInformacion());
-//			//jsonObj.put("estado", fiseFormato12AC.getDescEstado());
-//			jsonObj.put("estado", FormatoUtil.cambiaTextoAMinusculas(flagOperacion, 0));
-//		}
 		if(fiseFormato12AC.getFiseGrupoInformacion()!=null && fiseFormato12AC.getFiseGrupoInformacion().getDescripcion()!=null){
 			jsonObj.put("grupoInfo", fiseFormato12AC.getFiseGrupoInformacion().getDescripcion());	
 		}else{
@@ -378,5 +366,8 @@ public class Formato12AGartJSON {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
+	
+	
+	
 
 }

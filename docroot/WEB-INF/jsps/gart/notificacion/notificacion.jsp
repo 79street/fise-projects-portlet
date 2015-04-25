@@ -99,7 +99,7 @@ $(document).ready(function () {
 											</td>
 											<td style="aling:right"><input name="<portlet:namespace/>btnProcesarNotificacion"
 												id="<portlet:namespace/>btnProcesarNotificacion" type="button"
-												class="net-button-small" value="Procesar Validaci&oacute;n" style="aling:center" />
+												class="net-button-small" value="Reprocesar Validaci&oacute;n" style="aling:center" />
 											</td>
 										</tr>
 									</table>
@@ -791,6 +791,15 @@ $(document).ready(function () {
 			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
 			<br/>
 			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content_observacion">¿Está seguro?</label>
+		</p>
+	</div>
+	
+	
+	<div id="<portlet:namespace/>dialog-confirm_estado_notif" title="Mensaje de Confirmaci&oacute;n">
+		<p>	
+			<img src="/fise-projects-portlet/images/confirm.png" style="float:left; margin:20px 25px 20px 5px;">	
+			<br/>
+			<label class="labelCentrado" id="<portlet:namespace/>dialog-confirm-content_estado_notif">¿Está seguro?</label>
 		</p>
 	</div>
 	
