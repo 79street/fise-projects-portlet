@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato13A" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.5000000000000009"/>
-	<property name="ireport.x" value="434"/>
+	<property name="ireport.zoom" value="1.1269722013523678"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
@@ -539,15 +539,15 @@ $V{nroBenefPoteSecTipico6_1}+$V{nroBenefPoteSecTipico8_1}]]></variableExpression
 				<reportElement positionType="FixRelativeToBottom" x="280" y="65" width="252" height="1"/>
 			</line>
 			<textField>
-				<reportElement x="682" y="59" width="73" height="20"/>
-				<textElement textAlignment="Right">
+				<reportElement x="682" y="66" width="73" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="755" y="59" width="47" height="20"/>
-				<textElement>
+				<reportElement x="755" y="66" width="47" height="13"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
