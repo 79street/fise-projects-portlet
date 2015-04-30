@@ -348,7 +348,7 @@ $(document).ready(function () {
 											 </td>
 											 
 											 <td>
-											     <label style="font-size: 12px; font-weight: bold">Editar Costos Est.:</label>
+											     <label style="font-size: 12px; font-weight: bold">Editar Costos Estándares:</label>
 											 </td>
 											 <td>
 											    <input type="radio"	name="flagEditarCosto"

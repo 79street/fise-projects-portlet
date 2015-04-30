@@ -24,6 +24,7 @@ import net.sf.sojo.interchange.Serializer;
 import net.sf.sojo.interchange.json.JsonSerializer;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -265,7 +266,8 @@ public class FiseCargoFijoController {
 					
 			String mes = request.getParameter("codigoMes");
 			String anio = request.getParameter("anioRep");
-			String empresa = request.getParameter("codigoEmp");
+			String empresa = request.getParameter("codigoEmp");			
+			
 			c.setCodigoEmpresa(empresa);
 			c.setAnioReporte(anio);
 			c.setMesReporte(mes); 
@@ -340,7 +342,61 @@ public class FiseCargoFijoController {
 			logger.error("Error al eliminar los datos de cargos fijos: "+e.getMessage());
 		}  	
 		
-	}		
+	}	
+	
+	
+	@ResourceMapping("reporteCargosFijos")
+	public void reporteCargosFijos(ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("fiseCargoFijoBean")FiseCargoFijoBean c) {
+		try {
+			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
+	        HttpSession session = httpRequest.getSession();
+	        
+		    JSONArray jsonArray = new JSONArray();		    		    
+		    logger.info("Entrando a reportes de datos del proyecto fise"); 
+		    
+		    String mes = request.getParameter("codigoMes");
+			String anio = request.getParameter("anioRep");
+			String empresa = request.getParameter("codigoEmp");
+			
+			logger.info("empresa para el reporte:  "+empresa); 
+			logger.info("anio repo para el reporte:  "+anio); 
+			logger.info("mes para el reporte:  "+mes); 
+			
+			c.setCodigoEmpresa(empresa);
+			c.setAnioReporte(anio);
+			c.setMesReporte(mes); 
+			
+			String nombreReporte ="datosProyectoFISE";//request.getParameter("nombreReporte").trim();
+		    String nombreArchivo ="DATOS_DEL_PROYECTO_FISE";// request.getParameter("nombreArchivo").trim();
+		    String tipoFormato = FiseConstants.TIPO_FORMATO_14C;
+		    String tipoArchivo = request.getParameter("tipoArchivo").trim();//0 = PDF y 1= EXCEL	
+		    
+		    session.setAttribute("nombreReporte",nombreReporte);
+		    session.setAttribute("nombreArchivo",nombreArchivo);
+		    session.setAttribute("tipoFormato",tipoFormato);
+		    session.setAttribute("tipoArchivo",tipoArchivo);
+			
+		    c= fiseCargoFijoService.buscarFiseCargoFijoEditar(c.getCodigoEmpresa(), c.getAnioReporte(), c.getMesReporte());
+				        
+	        if(c!=null && c.getCodigoEmpresa()!=null){	
+	        	logger.info("codigo empresa map:  "+c.getCodigoEmpresa()); 
+	        	c.setDesEmpresa(mapaEmpresa.get(c.getCodigoEmpresa()));	        	
+	        	c.setDesMesRep(fiseUtil.getMapaMeses().get(Long.valueOf(c.getMesReporte())));		        	
+	           	session.setAttribute("mapa", fiseCargoFijoService.mapParametrosDatosProyectoFise(c)); 
+	        }	       
+		    response.setContentType("application/json");
+		    PrintWriter pw = response.getWriter();
+		    pw.write(jsonArray.toString());
+		    pw.flush();
+		    pw.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 
 }

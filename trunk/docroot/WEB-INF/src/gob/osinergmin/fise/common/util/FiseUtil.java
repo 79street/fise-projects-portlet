@@ -251,7 +251,8 @@ public class FiseUtil {
 		}
 	}
 	
-	public void configuracionExportarExcel(HttpSession session, String tipoFormato, String nombreExcel, String nombreHoja, List<?> lista){
+	public void configuracionExportarExcel(HttpSession session, String tipoFormato, String nombreExcel,
+			String nombreHoja, List<?> lista){
 		XlsWorkbookConfig xlsWorkbookConfig = new XlsWorkbookConfig();
 		xlsWorkbookConfig.setName(nombreExcel);
 		List<XlsTableConfig> tables = new LinkedList<XlsTableConfig>();
@@ -809,16 +810,17 @@ public class FiseUtil {
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setHTMLFormat(true);	
 			
-			String nombreUsuario = themeDisplay.getUser().getFullName();		
+			String nombreUsuario = "";//themeDisplay.getUser().getFullName();		
 			
 			String correoR = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
 			String correoD = themeDisplay.getUser().getEmailAddress();
 			logger.info("correo remitente: "+correoR);
 			logger.info("correo destinatario: "+correoD);
 			String correoMostrar = "";
-			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatariosByEmpresa(codEmpresa);	
+			List<CorreoBean> listaCorreoDestino = commonService.obtenerListaCorreosDestinatariosByEmpresa(codEmpresa);				
 			if(!FiseConstants.BLANCO.equals(correoR) && !FiseConstants.BLANCO.equals(correoD) &&
 					listaCorreoDestino!=null && !listaCorreoDestino.isEmpty()){
+				nombreUsuario = listaCorreoDestino.get(0).getUsuarioCorreo();
 				mailMessage.setFrom(new InternetAddress(correoR));
 				mailMessage.setSubject("Notificación de envío de observaciones para el usuario de la Distribuidora Eléctrica");
 				mailMessage.setTo(getArrayCorreoDestinatarios(listaCorreoDestino));			

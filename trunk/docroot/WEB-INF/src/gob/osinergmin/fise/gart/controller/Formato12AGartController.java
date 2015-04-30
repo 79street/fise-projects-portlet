@@ -418,6 +418,7 @@ public class Formato12AGartController {
 		try {
 			JSONObject jsonObj = new JSONObject();
 			String tipo = request.getParameter("tipo");   		 
+			
 			if(tipo.equals(FiseConstants.COD_GET)){//ver editar
 				
 				FiseFormato12AC formato = new FiseFormato12AC();
@@ -485,7 +486,7 @@ public class Formato12AGartController {
 		        			formato.getId().getEtapa();
 		        }
 		        //cambios eozano para editar costos estandares
-		        String flagEditarCostos = "";//falta el query
+		        String flagEditarCostos = "";
 		        for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 					if(codigoPeriodoEnvio.equals(p.getCodigoItem()) ){
 						flagPeriodo= p.getFlagPeriodoEjecucion();
@@ -516,6 +517,8 @@ public class Formato12AGartController {
 					String mesPresentacion = request.getParameter("mesPresentacion");
 					
 					String flagPeriodoEjecucion = request.getParameter("flagPeriodoEjecucion");
+					logger.info("Flag de flagPeriodoEjecucion formato 12A al grabar nuevo : "+flagPeriodoEjecucion); 
+					
 					String anoEjecucion="";
 					String mesEjecucion="";
 					if( "S".equals(flagPeriodoEjecucion) ){
@@ -606,6 +609,8 @@ public class Formato12AGartController {
 					String mesPresentacion = request.getParameter("mesPresentacion");
 					
 					String flagPeriodoEjecucion = request.getParameter("flagPeriodoEjecucion");
+					logger.info("Flag de flagPeriodoEjecucion formato 12A al actualizar : "+flagPeriodoEjecucion); 
+					
 					String anoEjecucion="";
 					String mesEjecucion="";
 					if( "S".equals(flagPeriodoEjecucion) ){
@@ -626,6 +631,7 @@ public class Formato12AGartController {
 					
 					String nroEmpadR = request.getParameter("nroEmpadR");
 					String costoUnitEmpadR = request.getParameter("costoUnitEmpadR");
+					logger.info("Costo unitario empadronados rural al actualizar:  "+costoUnitEmpadR); 
 					String nroAgentR = request.getParameter("nroAgentR");
 					String costoUnitAgentR = request.getParameter("costoUnitAgentR");
 					String despPersonalR = request.getParameter("despPersonalR");
@@ -1038,7 +1044,7 @@ public class Formato12AGartController {
     			anioEjecNew = uploadPortletRequest.getParameter("i_anioejecuc");
     			mesEjecNew = uploadPortletRequest.getParameter("s_mes_ejecuc");
 			}else{
-				anioEjecNew = anioPresNew;
+				anioEjecNew = anioPresNew; 
 		    	mesEjecNew = mesPresNew;
 			}
     	}
@@ -1052,17 +1058,18 @@ public class Formato12AGartController {
 		String mesEjecEdit = (String)pRequest.getPortletSession().getAttribute("mesEjecucionEdit", PortletSession.APPLICATION_SCOPE);
 		String etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapaEdit", PortletSession.APPLICATION_SCOPE);
 		String flagEditarCostoEdit = (String)pRequest.getPortletSession().getAttribute("flagEditarCostoEdit", PortletSession.APPLICATION_SCOPE);
-		
+		logger.error("Flag costos unitarios al editar pero excel:  "+flagEditarCostoEdit);
+		logger.error("Flag carga:  "+flagCarga);
 		FileEntry fileEntry=null;
 		if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIONUEVO) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, 
 					codEmpresaNew, anioPresNew, mesPresNew, anioEjecNew, mesEjecNew, etapaNew,flagEditarCostoNew);
-		}else if( flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
+		}else if(flagCarga.equals(FiseConstants.FLAG_CARGAEXCEL_FORMULARIOMODIFICACION) ){
 			fileEntry=this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
 			formatoMensaje = readExcelFile(fileEntry, themeDisplay.getUser(), flagCarga, codEmpresaEdit, 
 					anioPresEdit, mesPresEdit, anioPresEdit, mesPresEdit, etapaEdit,flagEditarCostoEdit);
-		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
+		}else if(flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIONUEVO) ){
 			fileEntry =this.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
 			formatoMensaje =	readTxtFile(fileEntry, uploadPortletRequest, themeDisplay.getUser(), flagCarga, codEmpresaNew, anioPresNew, mesPresNew, anioEjecNew, mesEjecNew, etapaNew);
 		}else if( flagCarga.equals(FiseConstants.FLAG_CARGATXT_FORMULARIOMODIFICACION) ){
@@ -1209,6 +1216,7 @@ public class Formato12AGartController {
 		int cont = 0;
 		
 		boolean process = false;
+		boolean empresaLima = false;
 		
 		try {
 			if (archivo != null) {
@@ -1238,7 +1246,12 @@ public class Formato12AGartController {
 					logger.info("nro de hoja seleccionada "+nroHojaSelec);
 					
 					if(process){
-						
+						//verificamos si la empresa es Lima
+						if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || 
+								FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa.trim()) ){
+							empresaLima = true;	
+						}				
+						logger.error("ES EMPRESA LIMA:  "+empresaLima); 
 						HSSFSheet hojaF12 = libro.getSheetAt(nroHojaSelec);						
 						
 						HSSFRow filaEmpresa = hojaF12.getRow(FiseConstants.NRO_FILA_CODEMPRESA_FORMATO12A);	//COD EMPRESA
@@ -1281,11 +1294,11 @@ public class Formato12AGartController {
 						
 						
 						//tipos
-						if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType()  ){
+						if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType()){
 							formulario.setCodigoEmpresa(celdaEmpresa.toString());
-						}else if( HSSFCell.CELL_TYPE_FORMULA == celdaEmpresa.getCellType()  ){
+						}else if( HSSFCell.CELL_TYPE_FORMULA == celdaEmpresa.getCellType()){
 							formulario.setCodigoEmpresa(celdaEmpresa.getRichStringCellValue().toString());
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaEmpresa.getCellType()  ){
+						}else if( HSSFCell.CELL_TYPE_BLANK == celdaEmpresa.getCellType()){
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_30)+FiseConstants.SALTO_LINEA;
 							cont++;
 							MensajeErrorBean error = new MensajeErrorBean();
@@ -1532,7 +1545,7 @@ public class Formato12AGartController {
 						formulario.setCostoUnitAgentL(new BigDecimal(0.00));						
 						
 						//LIMA
-						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
+						if(empresaLima){
 							
 							if( HSSFCell.CELL_TYPE_NUMERIC == nroEmpadLima.getCellType()  ){
 								formulario.setNroEmpadL(new Double(nroEmpadLima.getNumericCellValue()).longValue());
@@ -1550,7 +1563,7 @@ public class Formato12AGartController {
 							
 							if( HSSFCell.CELL_TYPE_NUMERIC == nroAgentLima.getCellType()  ){
 								formulario.setNroAgentL(new Double(nroAgentLima.getNumericCellValue()).longValue());
-							}else if( HSSFCell.CELL_TYPE_BLANK == nroAgentLima.getCellType()  ){
+							}else if(HSSFCell.CELL_TYPE_BLANK == nroAgentLima.getCellType()  ){
 								formulario.setNroAgentL(0L);
 							}else{
 								formulario.setNroAgentL(0);
@@ -1562,7 +1575,7 @@ public class Formato12AGartController {
 								listaError.add(error);
 							}
 							
-							if( HSSFCell.CELL_TYPE_NUMERIC == despPersonalL.getCellType()  ){
+							if(HSSFCell.CELL_TYPE_NUMERIC == despPersonalL.getCellType()  ){
 								formulario.setDesplPersonalL(new BigDecimal(despPersonalL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
 							}else if( HSSFCell.CELL_TYPE_BLANK == despPersonalL.getCellType()  ){
 								formulario.setDesplPersonalL(new BigDecimal(0.00));
@@ -1618,7 +1631,7 @@ public class Formato12AGartController {
 							}else{
 								formulario.setCostoUnitAgentL(new BigDecimal(String.valueOf(costoUniAgentLima)));
 							}						
-						}
+						}//fin del if lima = true
 						
 						//validar que siempre que ingrese un valor en la comlumna si se ingreso otro valor
 						if( BigDecimal.ZERO.equals(formulario.getNroEmpadR()) && !BigDecimal.ZERO.equals(formulario.getNroAgentR()) ){
@@ -1652,7 +1665,7 @@ public class Formato12AGartController {
 							listaError.add(error);
 						}
 						
-						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
+						if(empresaLima){
 							if( BigDecimal.ZERO.equals(formulario.getNroEmpadL()) && !BigDecimal.ZERO.equals(formulario.getNroAgentL()) ){
 								sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_340)+FiseConstants.SALTO_LINEA;
 								cont++;
@@ -1668,8 +1681,8 @@ public class Formato12AGartController {
 								error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_350));
 								listaError.add(error);
 							}
-						}
-						//
+						}//fin del if  lima= true
+						
 						
 						/**validaciones de consistencia de estructura de datos*/
 						//CODEMPRESA - 4
@@ -1716,7 +1729,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_100));
 							listaError.add(error);
 						}
-						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroEmpadL(),10) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroEntero(formulario.getNroEmpadL(),10) ){
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_110)+FiseConstants.SALTO_LINEA;
 							cont++;
 							MensajeErrorBean error = new MensajeErrorBean();
@@ -1741,7 +1754,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_130));
 							listaError.add(error);	
 						}
-						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentL(),6) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAgentL(),6) ){
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_140)+FiseConstants.SALTO_LINEA;
 							cont++;
 							MensajeErrorBean error = new MensajeErrorBean();
@@ -1766,7 +1779,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_160));
 							listaError.add(error);
 						}
-						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalL(),18,2) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalL(),18,2) ){
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_170)+FiseConstants.SALTO_LINEA;
 							cont++;
 							MensajeErrorBean error = new MensajeErrorBean();
@@ -1791,7 +1804,7 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_190));
 							listaError.add(error);
 						}
-						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordL(),18,2) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordL(),18,2) ){
 							sMsg = sMsg + mapaErrores.get(FiseConstants.COD_ERROR_F12_200)+FiseConstants.SALTO_LINEA;
 							cont++;
 							MensajeErrorBean error = new MensajeErrorBean();
@@ -1799,7 +1812,6 @@ public class Formato12AGartController {
 							error.setDescripcion(mapaErrores.get(FiseConstants.COD_ERROR_F12_200));
 							listaError.add(error);
 						}					
-						//variacion de periodo de ejecucion
 						
 						if( FiseConstants.BLANCO.equals(sMsg) ){
 							//obtenemos los costos unitarios del formato padre
@@ -1808,6 +1820,7 @@ public class Formato12AGartController {
 				  			FiseFormato14AD detalleLimaPadre = null;
 				  			
 				  			detalleRuralPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_RURAL_COD);
+				  			logger.info("detalle rural de costos unitarios:  "+detalleRuralPadre); 
 				  			if(detalleRuralPadre!=null ){
 				  				if("S".equals(flagCostoEditar)){
 				  					if(formulario.getCostoUnitEmpadR().compareTo(detalleRuralPadre.getCostoUnitarioEmpadronamiento())==1){
@@ -1825,13 +1838,14 @@ public class Formato12AGartController {
 				  				formulario.setCostoUnitAgentR(new BigDecimal(0.00));
 				  			}
 				  			detalleProvinciaPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_PROVINCIA_COD);
-				  			if( detalleProvinciaPadre!=null ){
+				  			logger.info("detalle provincia de costos unitarios:  "+detalleProvinciaPadre);
+				  			if(detalleProvinciaPadre!=null ){
 				  				if("S".equals(flagCostoEditar)){
-				  					if(formulario.getCostoUnitEmpadP().compareTo(detalleRuralPadre.getCostoUnitarioEmpadronamiento())==1){
-					  					formulario.setCostoUnitEmpadP(detalleRuralPadre.getCostoUnitarioEmpadronamiento());
+				  					if(formulario.getCostoUnitEmpadP().compareTo(detalleProvinciaPadre.getCostoUnitarioEmpadronamiento())==1){
+					  					formulario.setCostoUnitEmpadP(detalleProvinciaPadre.getCostoUnitarioEmpadronamiento());
 					  				}
-					  				if(formulario.getCostoUnitAgentP().compareTo(detalleRuralPadre.getCostoUntitarioAgenteGlp())==1){
-					  					formulario.setCostoUnitAgentP(detalleRuralPadre.getCostoUntitarioAgenteGlp());
+					  				if(formulario.getCostoUnitAgentP().compareTo(detalleProvinciaPadre.getCostoUntitarioAgenteGlp())==1){
+					  					formulario.setCostoUnitAgentP(detalleProvinciaPadre.getCostoUntitarioAgenteGlp());
 					  				}	
 				  				}else{
 				  				   formulario.setCostoUnitEmpadP(detalleProvinciaPadre.getCostoUnitarioEmpadronamiento());
@@ -1842,13 +1856,14 @@ public class Formato12AGartController {
 				  				formulario.setCostoUnitAgentP(new BigDecimal(0.00));
 				  			}
 				  			detalleLimaPadre = formato14Service.obtenerFormato14ADVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_LIMA_COD);
-				  			if( detalleLimaPadre!=null ){
+				  			logger.error("detalle lima de costos unitarios:  "+empresaLima+"   "+detalleLimaPadre);
+				  			if(empresaLima && detalleLimaPadre!=null ){
 				  				if("S".equals(flagCostoEditar)){
-				  					if(formulario.getCostoUnitEmpadL().compareTo(detalleRuralPadre.getCostoUnitarioEmpadronamiento())==1){
-					  					formulario.setCostoUnitEmpadL(detalleRuralPadre.getCostoUnitarioEmpadronamiento());
+				  					if(formulario.getCostoUnitEmpadL().compareTo(detalleLimaPadre.getCostoUnitarioEmpadronamiento())==1){
+					  					formulario.setCostoUnitEmpadL(detalleLimaPadre.getCostoUnitarioEmpadronamiento());
 					  				}
-					  				if(formulario.getCostoUnitAgentL().compareTo(detalleRuralPadre.getCostoUntitarioAgenteGlp())==1){
-					  					formulario.setCostoUnitAgentL(detalleRuralPadre.getCostoUntitarioAgenteGlp());
+					  				if(formulario.getCostoUnitAgentL().compareTo(detalleLimaPadre.getCostoUntitarioAgenteGlp())==1){
+					  					formulario.setCostoUnitAgentL(detalleLimaPadre.getCostoUntitarioAgenteGlp());
 					  				}
 				  				}else{
 				  				   formulario.setCostoUnitEmpadL(detalleLimaPadre.getCostoUnitarioEmpadronamiento());
@@ -1857,7 +1872,8 @@ public class Formato12AGartController {
 				  			}else{
 				  				formulario.setCostoUnitEmpadL(new BigDecimal(0.00));
 				  				formulario.setCostoUnitAgentL(new BigDecimal(0.00));
-				  			}							
+				  			}
+				  			
 							formulario.setUsuario(user.getLogin());
 							formulario.setTerminal(user.getLoginIP());
 							formulario.setTipoArchivo(FiseConstants.TIPOARCHIVO_XLS);
@@ -1879,6 +1895,7 @@ public class Formato12AGartController {
 									id.setAnoEjecucionGasto(formulario.getAnioPresent());
 									id.setMesEjecucionGasto(formulario.getMesPresent());
 									id.setEtapa(formulario.getEtapa());
+									logger.info("Ingresando a enviar el formularios al service de actualizar");
 									formatoModif = formatoService.obtenerFormato12ACByPK(id);
 									objeto = formatoService.modificarFormato12AC(formulario, formatoModif);
 								}								

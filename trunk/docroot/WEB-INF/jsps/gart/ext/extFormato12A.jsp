@@ -195,6 +195,16 @@ function soloNumerosDecimalesFormulario(){
 	$('#i_activExtraord_p').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_activExtraord_p',7,2)");
 	$('#i_despPersonal_l').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_despPersonal_l',7,2)");
 	$('#i_activExtraord_l').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_activExtraord_l',7,2)");
+	//cambios elozano
+	$('#i_costoUnitEmpad_r').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_costoUnitEmpad_r',7,2)");
+	$('#i_costoUnitEmpad_p').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_costoUnitEmpad_p',7,2)");
+	$('#i_costoUnitEmpad_l').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_costoUnitEmpad_l',7,2)");
+	
+	$('#i_costoUnitAgent_r').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_costoUnitAgent_r',7,2)");
+	$('#i_costoUnitAgent_p').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_costoUnitAgent_p',7,2)");
+	$('#i_costoUnitAgent_l').attr("onKeyUp","return soloNumerosDecimales(event, 2, 'i_costoUnitAgent_l',7,2)");
+	//fin de cambios elozano
+	
 }
 function realizarCalculoCampos(){
 	$('#i_nroEmpad_r').attr("onchange","calculoTotal()");
@@ -578,6 +588,7 @@ function validarBusqueda() {
 	  return true; 
 	}
 	
+	
 function validarFormulario() {				
 	 if($('#s_empresa').val().length == '' ) { 		   
 	    $("#dialog-message-warning-content").html('Debe seleccionar una Distribuidora Eléctrica');
@@ -626,8 +637,9 @@ function validarFormulario() {
 		    document.getElementById('i_nroEmpad_r').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitEmpad_r').val().length == '' ) {		  
-		    alert('Debe ingresar el costo unitario de empadronados para Rural');
+	  if($('#i_costoUnitEmpad_r').val().length == '' ) {		  		   
+		    $("#dialog-message-warning-content").html('Debe ingresar el costo unitario de empadronados para Rural');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_costoUnitEmpad_r').focus();
 		    return false; 
 	  }	
@@ -638,8 +650,9 @@ function validarFormulario() {
 		    document.getElementById('i_nroAgentGlp_r').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitAgent_r').val().length == '' ) {		  
-		    alert('Debe ingresar el costo unitario de agentes para Rural');
+	  if($('#i_costoUnitAgent_r').val().length == '' ) {		  		   
+		    $("#dialog-message-warning-content").html('Debe ingresar el costo unitario de agentes para Rural');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_costoUnitAgent_r').focus();
 		    return false; 
 	  }   
@@ -650,8 +663,9 @@ function validarFormulario() {
 		    document.getElementById('i_nroEmpad_p').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitEmpad_p').val().length == '' ) {		  
-		    alert('Debe ingresar el costo unitario de empadronados para Provincia');
+	  if($('#i_costoUnitEmpad_p').val().length == '' ) {			   
+		    $("#dialog-message-warning-content").html('Debe ingresar el costo unitario de empadronados para Provincia');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_costoUnitEmpad_p').focus();
 		    return false; 
 	  }	  
@@ -662,8 +676,9 @@ function validarFormulario() {
 		    document.getElementById('i_nroAgentGlp_p').focus();
 		    return false; 
 	  }
-	  if($('#i_costoUnitAgent_p').val().length == '' ) {		  
-		    alert('Debe ingresar el costo unitario de agentes para Provincia');
+	  if($('#i_costoUnitAgent_p').val().length == '' ) {		   
+		    $("#dialog-message-warning-content").html('Debe ingresar el costo unitario de agentes para Provincia');
+			$("#dialog-message-warning").dialog( "open" );
 		    document.getElementById('i_costoUnitAgent_p').focus();
 		    return false; 
 	  } 
@@ -678,8 +693,9 @@ function validarFormulario() {
 			    document.getElementById('i_nroEmpad_l').focus();
 			    return false; 
 		  }
-		  if($('#i_costoUnitEmpad_l').val().length == '' ) {		  
-			    alert('Debe ingresar el costo unitario de empadronados para Lima');
+		  if($('#i_costoUnitEmpad_l').val().length == '' ) {		  			    
+			    $("#dialog-message-warning-content").html('Debe ingresar el costo unitario de empadronados para Lima');
+				$("#dialog-message-warning").dialog( "open" );
 			    document.getElementById('i_costoUnitEmpad_l').focus();
 			    return false; 
 		  }	  
@@ -689,8 +705,9 @@ function validarFormulario() {
 			    document.getElementById('i_nroAgentGlp_l').focus();
 			    return false; 
 		  }
-		  if($('#i_costoUnitAgent_l').val().length == '' ) {		  
-			    alert('Debe ingresar el costo unitario de agentes para Lima');
+		  if($('#i_costoUnitAgent_l').val().length == '' ) {			  
+			    $("#dialog-message-warning-content").html('Debe ingresar el costo unitario de agentes para Lima');
+				$("#dialog-message-warning").dialog( "open" );
 			    document.getElementById('i_costoUnitAgent_l').focus();
 			    return false; 
 		  }	  											
@@ -701,34 +718,34 @@ function validarFormulario() {
 		  console.debug("Entrando a comparar valores de unitario emp R: "+parseFloat($('#i_costoUnitEmpad_r').val()).toFixed(2));
 		  console.debug("Entrando a comparar valores de unitario emp R: "+parseFloat($('#hiddenCostoUEmpR').val()).toFixed(2));	 
 		  if(parseFloat($('#i_costoUnitEmpad_r').val())>parseFloat($('#hiddenCostoUEmpR').val())){			  
-			  $("#dialog-message-warning-content").html('El costo unitario de empadronados para Rural no debe ser mayor a '+$('#hiddenCostoUEmpR').val());
+			  $("#dialog-message-warning-content").html('El Costo Estándar Unitario de Empadronamiento para Rural no debe ser mayor a '+$('#hiddenCostoUEmpR').val());
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_costoUnitEmpad_r').focus();
 			  return false;  
 		  }else if(parseFloat($('#i_costoUnitAgent_r').val())>parseFloat($('#hiddenCostoUAgenteR').val())){			  
-			  $("#dialog-message-warning-content").html('El costo unitario de agentes para Rural no debe ser mayor a '+$('#hiddenCostoUAgenteR').val());
+			  $("#dialog-message-warning-content").html('El Costo Estándar Unitario de Agentes para Rural no debe ser mayor a '+$('#hiddenCostoUAgenteR').val());
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_costoUnitAgent_r').focus();
 			  return false;  
 		  }else if(parseFloat($('#i_costoUnitEmpad_p').val())>parseFloat($('#hiddenCostoUEmpP').val())){			
-			  $("#dialog-message-warning-content").html('El costo unitario de empadronados para Provincia no debe ser mayor a '+$('#hiddenCostoUEmpP').val());
+			  $("#dialog-message-warning-content").html('El Costo Estándar Unitario de Empadronamiento para Provincia no debe ser mayor a '+$('#hiddenCostoUEmpP').val());
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_costoUnitEmpad_p').focus();
 			  return false;  
 		  }   	  
 		  if(parseFloat($('#i_costoUnitAgent_p').val())>parseFloat($('#hiddenCostoUAgenteP').val())){			
-			  $("#dialog-message-warning-content").html('El costo unitario de agentes para Provincia no debe ser mayor a '+$('#hiddenCostoUAgenteP').val());
+			  $("#dialog-message-warning-content").html('El Costo Estándar Unitario de Agentes para Provincia no debe ser mayor a '+$('#hiddenCostoUAgenteP').val());
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_costoUnitAgent_p').focus();
 			  return false;  
 		  }else if(isLima  &&  (parseFloat($('#i_costoUnitEmpad_l').val())>parseFloat($('#hiddenCostoUEmpL').val())) ){			 
-			  $("#dialog-message-warning-content").html('El costo unitario de empadronados para Lima no debe ser mayor a '+$('#hiddenCostoUEmpL').val());
+			  $("#dialog-message-warning-content").html('El Costo Estándar Unitario de Empadronamiento para Lima no debe ser mayor a '+$('#hiddenCostoUEmpL').val());
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_costoUnitEmpad_l').focus();
 			  return false;  
 		  }
 		  if(isLima && (parseFloat($('#i_costoUnitAgent_l').val())>parseFloat($('#hiddenCostoUAgenteL').val()))){			 
-			  $("#dialog-message-warning-content").html('El costo unitario de empadronados para Lima no debe ser mayor a '+$('#hiddenCostoUAgenteL').val());
+			  $("#dialog-message-warning-content").html('El Costo Estándar Unitario de Agentes para Lima no debe ser mayor a '+$('#hiddenCostoUAgenteL').val());
 			  $("#dialog-message-warning").dialog( "open" );	
 			  document.getElementById('i_costoUnitAgent_l').focus();
 			  return false;  
@@ -1169,12 +1186,14 @@ function verFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesE
 			}
 	});	
 }
+
+
 function editarFormato(codEmpresa,anoPresentacion,mesPresentacion,anoEjecucion,mesEjecucion,etapa,flagOperacion){	
 	var admin = $("#esAdmin").val();
 	console.debug(admin);
 	if(flagOperacion=='ABIERTO'){
 		var process=true;
-		if( etapa=='RECONOCIDO'  &&  admin=='false' ){
+		if(etapa=='RECONOCIDO'  &&  admin=='false' ){
 			process = false;
 		}
 		if(process){
@@ -1285,6 +1304,8 @@ function FillEditformato(row){
 	
 	$('#i_nroEmpad_l').val(row.nroEmpadL).css('text-align','right');
 	$('#i_costoUnitEmpad_l').val(redondeo(row.costoUnitEmpadL,2)).css('text-align','right');
+	console.debug("nro de emp vales poblar editar: "+row.nroEmpadL);
+	console.debug("costo unitario poblar editar: "+redondeo(row.costoUnitEmpadL,2));
 	$('#i_costoTotalEmpad_l').css('text-align','right');
 	$('#i_nroAgentGlp_l').val(row.nroAgentL).css('text-align','right');
 	$('#i_costoUnitAgent_l').val(redondeo(row.costoUnitAgentL,2)).css('text-align','right');
@@ -1336,7 +1357,7 @@ function FillEditformato(row){
 		$('#i_costoUnitEmpad_r').removeAttr("disabled");
 		$('#i_costoUnitAgent_p').removeAttr("disabled");
 		$('#i_costoUnitEmpad_p').removeAttr("disabled");
-		if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+		if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==trim($('#s_empresa').val())){
 			$('#i_costoUnitAgent_l').removeAttr("disabled");
 			$('#i_costoUnitEmpad_l').removeAttr("disabled");										
 		}	
@@ -1349,7 +1370,7 @@ function FillEditformato(row){
 		$('#i_costoUnitEmpad_r').attr("disabled",true);
 		$('#i_costoUnitAgent_p').attr("disabled",true);
 		$('#i_costoUnitEmpad_p').attr("disabled",true);
-		if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==$('#s_empresa').val()){
+		if($("#codEdelnor").val()==$('#s_empresa').val() || $("#codLuzSur").val()==trim($('#s_empresa').val())){
 			$('#i_costoUnitEmpad_l').attr("disabled",true);
 			$('#i_costoUnitEmpad_l').attr("disabled",true);								
 		}			
