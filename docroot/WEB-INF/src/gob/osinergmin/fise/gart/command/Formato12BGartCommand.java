@@ -166,6 +166,11 @@ public class Formato12BGartCommand implements Serializable {
 	
 	private String flagPeriodoEjecucion;
 	
+	//cambios elozano
+	private String flagEditarCostoUnit="";
+	
+	
+	
 	public static FiseFormato12BC toBeanCabecera(Formato12BGartCommand command) {
 
 		FiseFormato12BC bean = null;
@@ -245,8 +250,7 @@ public class Formato12BGartCommand implements Serializable {
 				command.setTerminalCreacion(bean.getTerminalCreacion());
 				command.setTotalReconocer(bean.getTotalReconocer());
 				command.setUsuarioActualizacion(bean.getUsuarioActualizacion());
-				command.setUsuarioCreacion(bean.getUsuarioCreacion());
-				//command.setDescEstado(bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_FECHAENVIO_ENVIADO : FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR);
+				command.setUsuarioCreacion(bean.getUsuarioCreacion());				
 				command.setDescEstado(FormatoUtil.cambiaTextoAMinusculas(command.getDescEstado(), 0));
 				command.setEstadoEnvio(bean.getFechaEnvioDefinitivo() != null ? FiseConstants.ESTADO_ENVIADO : FiseConstants.ESTADO_POR_ENVIAR);
 
@@ -366,7 +370,7 @@ public class Formato12BGartCommand implements Serializable {
 				for (FiseFormato12BD bean : lst) {
 					System.out.println("ID ZONA:  "+bean.getId().getIdZonaBenef()); 
 					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_RURAL) {
-						System.out.println("ID ZONA costo unitario :  "+bean.getCostoEstandarUnitAtencion()); 
+						System.out.println("ID ZONA costo unitario :  "+bean.getCostoEstandarUnitValeImpre()); 
 						command.setCostoEstandarUnitAtencion(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoEstandarUnitValDgCan(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoEstandarUnitValDisEl(bean.getCostoEstandarUnitValDisEl()!=null?bean.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
@@ -391,23 +395,6 @@ public class Formato12BGartCommand implements Serializable {
 						command.setTotalActividadesExtraord(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setTotalDesplazamientoPersonal(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setTotalGestionAdministrativa(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-
-					/*	command.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValDisEl().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalEntregaValDisEl().setScale(2, BigDecimal.ROUND_UP);
-						command.getCostoTotalImpresionVale().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalRepartoValesDomi().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN);*/
-
 					}
 					if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_PROVINCIA) {
 						command.setCostoEstandarUnitAtencionProv(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
@@ -435,22 +422,6 @@ public class Formato12BGartCommand implements Serializable {
 						command.setTotalDesplazamientoPersonalProv(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setTotalGestionAdministrativaProv(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 
-					/*	command.getCostoEstandarUnitAtencionProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValDgCanProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValDisElProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValeImpreProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValeReparProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValFiCanProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalAtencionConsReclProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalCanjeLiqValeDigProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalCanjeLiqValeFisProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalEntregaValDisElProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalImpresionValeProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalRepartoValesDomiProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalActividadesExtraordProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalDesplazamientoPersonalProv().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalGestionAdministrativaProv().setScale(2, BigDecimal.ROUND_DOWN);*/
-
 					} if (bean.getId().getIdZonaBenef() == FiseConstants.ZONA_LIMA) {
 						command.setCostoEstandarUnitAtencionLim(bean.getCostoEstandarUnitAtencion()!=null?bean.getCostoEstandarUnitAtencion().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoEstandarUnitValDgCanLim(bean.getCostoEstandarUnitValDgCan()!=null?bean.getCostoEstandarUnitValDgCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
@@ -458,6 +429,7 @@ public class Formato12BGartCommand implements Serializable {
 						command.setCostoEstandarUnitValeImpreLim(bean.getCostoEstandarUnitValeImpre()!=null?bean.getCostoEstandarUnitValeImpre().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoEstandarUnitValeReparLim(bean.getCostoEstandarUnitValeRepar()!=null?bean.getCostoEstandarUnitValeRepar().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoEstandarUnitValFiCanLim(bean.getCostoEstandarUnitValFiCan()!=null?bean.getCostoEstandarUnitValFiCan().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
+						
 						command.setCostoTotalAtencionConsReclLim(bean.getCostoTotalAtencionConsRecl()!=null?bean.getCostoTotalAtencionConsRecl().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoTotalCanjeLiqValeDigLim(bean.getCostoTotalCanjeLiqValeDig()!=null?bean.getCostoTotalCanjeLiqValeDig().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setCostoTotalCanjeLiqValeFisLim(bean.getCostoTotalCanjeLiqValeFis()!=null?bean.getCostoTotalCanjeLiqValeFis().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
@@ -473,22 +445,6 @@ public class Formato12BGartCommand implements Serializable {
 						command.setTotalActividadesExtraordLim(bean.getTotalActividadesExtraord()!=null?bean.getTotalActividadesExtraord().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setTotalDesplazamientoPersonalLim(bean.getTotalDesplazamientoPersonal()!=null?bean.getTotalDesplazamientoPersonal().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
 						command.setTotalGestionAdministrativaLim(bean.getTotalGestionAdministrativa()!=null?bean.getTotalGestionAdministrativa().setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-
-						/*command.getCostoEstandarUnitAtencionLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValDgCanLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValDisElLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValeImpreLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValeReparLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoEstandarUnitValFiCanLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalAtencionConsReclLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalCanjeLiqValeDigLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalCanjeLiqValeFisLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalEntregaValDisElLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalImpresionValeLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getCostoTotalRepartoValesDomiLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalActividadesExtraordLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalDesplazamientoPersonalLim().setScale(2, BigDecimal.ROUND_DOWN);
-						command.getTotalGestionAdministrativaLim().setScale(2, BigDecimal.ROUND_DOWN);*/
 					}
 				}
 
@@ -501,15 +457,7 @@ public class Formato12BGartCommand implements Serializable {
 		return command;
 
 	}
-
-	/*
-	 * public static List<Formato12BGartCommand>
-	 * toListCommandDetalle(List<FiseFormato12BD> lst){
-	 * List<Formato12BGartCommand> lstReturn=null; if(lst!=null &&
-	 * !lst.isEmpty()){ lstReturn=new ArrayList<Formato12BGartCommand>();
-	 * for(FiseFormato12BD bean:lst){ lstReturn.add(toCommandDetalleOne(bean));
-	 * } } return lstReturn; }
-	 */
+	
 
 	public static List<FiseFormato12BD> toBeanDetalle(Formato12BGartCommand command) {
 		List<FiseFormato12BD> lstresult = new ArrayList<FiseFormato12BD>();
@@ -593,7 +541,8 @@ public class Formato12BGartCommand implements Serializable {
 						pk.setIdZonaBenef(FiseConstants.ZONA_PROVINCIA);
 
 					} else if (nro == 2) {
-						if (command.getCodEmpresa().trim().equalsIgnoreCase("EDLN") || command.getCodEmpresa().trim().equalsIgnoreCase("LDS") ) {
+						if (command.getCodEmpresa().trim().equalsIgnoreCase("EDLN") || 
+								command.getCodEmpresa().trim().equalsIgnoreCase("LDS") ) {
 	                      	// lima
 							bean.setCostoEstandarUnitAtencion(command.getCostoEstandarUnitAtencionLim().setScale(2, BigDecimal.ROUND_DOWN));
 							bean.setCostoEstandarUnitValDgCan(command.getCostoEstandarUnitValDgCanLim().setScale(2, BigDecimal.ROUND_DOWN));
@@ -1572,6 +1521,13 @@ public class Formato12BGartCommand implements Serializable {
 	public void setFlagPeriodoEjecucion(String flagPeriodoEjecucion) {
 		this.flagPeriodoEjecucion = flagPeriodoEjecucion;
 	}
-	
+
+	public String getFlagEditarCostoUnit() {
+		return flagEditarCostoUnit;
+	}
+
+	public void setFlagEditarCostoUnit(String flagEditarCostoUnit) {
+		this.flagEditarCostoUnit = flagEditarCostoUnit;
+	}	
 
 }

@@ -396,7 +396,7 @@ $(document).ready(function () {
 												 <form:input path="numDoc"  cssStyle="width: 65px; text-align: right;"  onKeyPress="return isNumeric(event)" maxlength="13"/> 
 											  </td>
 											
-											 <td><label style="font-size: 12px; font-weight: bold">IGV:</label>
+											 <td><label style="font-size: 12px; font-weight: bold">IGV S/.:</label>
 											   </td>
 											  <td>
 												 <form:input path="igv"  cssStyle="width: 65px; text-align: right;"/>
@@ -457,7 +457,16 @@ $(document).ready(function () {
 											  <tr>												
 												 <td>
 												  <table style="width: 100%">
-												    <tr>													  
+												    <tr>												    
+												     <td width="17%" align="center">
+														<input type="button" class="boton" name="<portlet:namespace/>reportePdfCargoFijos" style="display: none;"
+																id="<portlet:namespace/>reportePdfCargoFijos" class="button net-button-small" value="Imprimir PDF" />
+													  </td>
+													  <td width="17%" align="center">
+														 <input type="button" class="boton" name="<portlet:namespace/>reporteExcelCargoFijos" style="display: none;"
+																id="<portlet:namespace/>reporteExcelCargoFijos" class="button net-button-small" value="Exportar excel" />
+													 </td>
+												    													  
 													 <td width="17%" align="center">													  
 														  <input type="button" class="net-button-small" id="<portlet:namespace/>actualizarCargoFijo"
 															   name="<portlet:namespace/>actualizarCargoFijo" value="Actualizar" style="display: none;"/>

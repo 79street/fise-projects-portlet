@@ -12,7 +12,6 @@ import gob.osinergmin.fise.domain.FiseFormato12BC;
 import gob.osinergmin.fise.domain.FiseFormato12BCPK;
 import gob.osinergmin.fise.domain.FiseFormato12BD;
 import gob.osinergmin.fise.domain.FiseFormato12BDOb;
-import gob.osinergmin.fise.domain.FiseFormato12BDPK;
 import gob.osinergmin.fise.domain.FiseFormato14BD;
 import gob.osinergmin.fise.domain.FiseGrupoInformacion;
 import gob.osinergmin.fise.domain.FisePeriodoEnvio;
@@ -24,7 +23,6 @@ import gob.osinergmin.fise.gart.service.CommonGartService;
 import gob.osinergmin.fise.gart.service.FisePeriodoEnvioGartService;
 import gob.osinergmin.fise.gart.service.Formato12BGartService;
 import gob.osinergmin.fise.gart.service.Formato14BGartService;
-import gob.osinergmin.fise.gart.xls.FormatoExcelImport;
 import gob.osinergmin.fise.util.FechaUtil;
 import gob.osinergmin.fise.util.FormatoUtil;
 
@@ -109,26 +107,24 @@ public class Formato12BGartController {
 
 	@Autowired
 	@Qualifier("fisePeriodoEnvioGartServiceImpl")
-	FisePeriodoEnvioGartService periodoService;
+	private FisePeriodoEnvioGartService periodoService;
 
 	@Autowired
 	@Qualifier("commonGartServiceImpl")
-	CommonGartService commonService;
+	private CommonGartService commonService;
 	
 	@Autowired
 	@Qualifier("cfgTablaGartServiceImpl")
-	CfgTablaGartService tablaService;
+	private CfgTablaGartService tablaService;
 	
 	@Autowired
 	@Qualifier("cfgCampoGartServiceImpl")
-	CfgCampoGartService campoService;
+	private CfgCampoGartService campoService;
 	
 	@Autowired
 	@Qualifier("formato14BGartServiceImpl")
-	Formato14BGartService formato14Service;
+	private Formato14BGartService formato14Service;
 
-	//private String nameEstado;
-	//private String nameGrupo;
 
 	List<MensajeErrorBean> listaObservaciones;
 	List<FisePeriodoEnvio> listaPeriodoEnvio;
@@ -186,7 +182,8 @@ public class Formato12BGartController {
 	}
 
 	@ResourceMapping("searchFormats")
-	public void grid(ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
+	public void grid(ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 
 		try {
 			JSONArray jsonArray = null;
@@ -205,8 +202,7 @@ public class Formato12BGartController {
 				fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_12B, FiseConstants.NOMBRE_EXCEL_FORMATO12B, FiseConstants.NOMBRE_HOJA_FORMATO12B, lstCommand);
 				jsonArray = Formato12BGartCommand.toListJSONCabecera(lstFise, commonService);
 				
-			}
-			
+			}			
 			  formato12BBusqueda=new Formato12BGartCommand();
 	          formato12BBusqueda.setAnioInicio(command.getAnioInicio());
 	          formato12BBusqueda.setAnioFin(command.getAnioFin());
@@ -222,15 +218,12 @@ public class Formato12BGartController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-
-		} finally {
-
-		}
-
+		} 
 	}
 
 	@ResourceMapping("loadPeriodoDeclaracion")
-	public void loadPeriodoDeclaracion(ModelMap model, ResourceRequest request, ResourceResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
+	public void loadPeriodoDeclaracion(ModelMap model, ResourceRequest request, ResourceResponse response, 
+			@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		try {
 			logger.info("codEmpresa::" + command.getCodEmpresa());
 			List<FisePeriodoEnvio> listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(command.getCodEmpresa().trim(), FiseConstants.NOMBRE_FORMATO_12B);
@@ -253,7 +246,8 @@ public class Formato12BGartController {
 	}
 	
 	@ResourceMapping("loadGrupoInformacion")
-  	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command){
+  	public void cargaFlagPeriodo(ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command){
 		try {			
   			response.setContentType("applicacion/json");
   			String periodoEnvio = command.getPeridoDeclaracion();
@@ -273,13 +267,13 @@ public class Formato12BGartController {
   			
   			if( periodoEnvio!=null ){
   				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
-  					if( periodoEnvio.equals(p.getCodigoItem()) ){
-  						jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());  						
+  					if(periodoEnvio.equals(p.getCodigoItem()) ){
+  						jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
+  						jsonObj.put("flagEditarCostosUnit", p.getFlagEditarCostosEst());
   						break;
   					}
   				}
-  			}
-  			
+  			}  			
 			anoEjecucion = anoPresentacion;
 			mesEjecucion = mesPresentacion;
   			
@@ -327,7 +321,8 @@ public class Formato12BGartController {
 	
 	//para la edicion del anio y mes de ejecucion
 	@ResourceMapping("loadGrupoInformacionEdit")
-  	public void cargaFlagPeriodoEdit(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command){
+  	public void cargaFlagPeriodoEdit(ResourceRequest request,ResourceResponse response,
+  			@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command){
 		try {			
   			response.setContentType("applicacion/json");
   			String periodoEnvio = command.getPeridoDeclaracion();
@@ -338,7 +333,7 @@ public class Formato12BGartController {
   			String anoEjecucion = "";
   			String mesEjecucion = "";
   			
-  			if( periodoEnvio!=null && periodoEnvio.length()>6 ){
+  			if(periodoEnvio!=null && periodoEnvio.length()>6 ){
   				anoPresentacion = periodoEnvio.substring(0, 4);
   				mesPresentacion = periodoEnvio.substring(4,6);
   			}
@@ -349,6 +344,7 @@ public class Formato12BGartController {
   			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
 				if( periodoEnvio.equals(p.getCodigoItem()) ){
 					jsonObj.put("flagPeriodoEjecucion", p.getFlagPeriodoEjecucion());
+					jsonObj.put("flagEditarCostosUnit", p.getFlagEditarCostosEst());
 					flagPeriodoEjecucion = p.getFlagPeriodoEjecucion();
 					break;
 				}
@@ -460,10 +456,66 @@ public class Formato12BGartController {
 			e.printStackTrace();
 		}
 	}
+	
+	//cambios elozano
+	@ResourceMapping("loadCostoUnitarioFijadoEditar")
+	public void loadCostoUnitarioFijadoEditar(ModelMap model, ResourceRequest request, ResourceResponse response, 
+			 @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
+		try {	
+			logger.info("Entrando a obtener costos unitarios fijados cuando edito un formato 12B");  
+			
+			PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+
+			String codEmpresa = (String)pRequest.getPortletSession().getAttribute("codEmpresaCostosUnitFijado", PortletSession.APPLICATION_SCOPE);
+			String anioPres = (String)pRequest.getPortletSession().getAttribute("anioPresCostosUnitFijado", PortletSession.APPLICATION_SCOPE);
+            int anioPresEnv = anioPres!=null?Integer.parseInt(anioPres):0;
+
+			List<FiseFormato14BD> lstfise14D = fiseUtil.getLstCostoUnitario(codEmpresa,anioPresEnv,null, null, FiseConstants.ETAPA_ESTABLECIDO);
+
+			JSONArray jsonArray = new JSONArray();
+			if(lstfise14D!=null && !lstfise14D.isEmpty()){
+				logger.info("Tamanio lista de costos unitarios costo uni fijado edit:  "+lstfise14D.size()); 
+				for (FiseFormato14BD fise14D : lstfise14D) {
+					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("codEmpresa", command.getCodEmpresa());
+					jsonObj.put("idZonaBenef", fise14D.getId().getIdZonaBenef());
+					jsonObj.put("costoUnitarioImpresionVales", fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitReprtoValeDomici", fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitEntregaValDisEl", fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitCanjeLiqValFisi", fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitCanjeValDigital", fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitarioPorAtencion", fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion().setScale(2, BigDecimal.ROUND_DOWN):0);
+					jsonObj.put("costoUnitarioGestionAdm", fise14D.getCostoTotalGestionAdministra()!=null?fise14D.getCostoTotalGestionAdministra().setScale(2, BigDecimal.ROUND_DOWN):0);
+					logger.info("cod empresa costo uni fijado edit :  "+command.getCodEmpresa()); 
+					logger.info("id Zona Benef costo uni fijado edit:  "+fise14D.getId().getIdZonaBenef()); 
+					logger.info("costo Unitario Impresion Vales costo uni fijado edit :  "+fise14D.getCostoUnitarioImpresionVales()); 
+					logger.info("costo Unit Reprto Vale Domici costo uni fijado edit:  "+fise14D.getCostoUnitReprtoValeDomici()); 
+					logger.info("costo Unit Entrega Val Dis El costo uni fijado edit:  "+fise14D.getCostoUnitEntregaValDisEl()); 
+					logger.info("costo Unit Canje Liq Val Fisi costo uni fijado edit:  "+fise14D.getCostoUnitCanjeLiqValFisi()); 
+					logger.info("costo Unit Canje Val Digital costo uni fijado edit:  "+fise14D.getCostoUnitCanjeValDigital()); 
+					logger.info("costo Unitario Por Atencion costo uni fijado edit:  "+fise14D.getCostoUnitarioPorAtencion()); 
+					logger.error("costo Unitario Por gestion adm costo uni fijado edit:  "+fise14D.getCostoTotalGestionAdministra()); 
+					jsonArray.put(jsonObj);
+				}
+			}
+			pRequest.getPortletSession().setAttribute("codEmpresaCostosUnitFijado", "", PortletSession.APPLICATION_SCOPE);
+			pRequest.getPortletSession().setAttribute("anioPresCostosUnitFijado", "", PortletSession.APPLICATION_SCOPE);
+			
+			logger.info(jsonArray.toString());
+            PrintWriter pw = response.getWriter();
+			pw.write(jsonArray.toString());
+			pw.flush();
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
+	
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "action=newFormato")
-	public String newFormato(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
+	public String newFormato(ModelMap model, RenderRequest renderRequest, RenderResponse renderResponse, 
+			@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 		
 		PortletRequest pRequest = (PortletRequest)renderRequest.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 		
@@ -515,10 +567,11 @@ public class Formato12BGartController {
 			command.setMesEjecucionGasto(mesEjec != null ? Integer.valueOf(mesEjec) : null);
 		}
 
-		command.setTipoOperacion((tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE : FiseConstants.ADD);
+		command.setTipoOperacion((tipoOperacion != null && 
+				tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE : FiseConstants.ADD);
 
 		if (command.getTipoOperacion().intValue() == FiseConstants.UPDATE) {
-			logger.info("aquisito update");
+			logger.info("entro a update");
 			FiseFormato12BCPK id = new FiseFormato12BCPK();
 			id.setAnoEjecucionGasto(anioEjec != null ? Integer.valueOf(anioEjec) : null);
 			id.setAnoPresentacion(anio != null ? Integer.valueOf(anio) : null);
@@ -526,9 +579,8 @@ public class Formato12BGartController {
 			id.setEtapa(etapa);
 			id.setMesEjecucionGasto(mesEjec != null ? Integer.valueOf(mesEjec) : null);
 			id.setMesPresentacion(mes != null ? Integer.valueOf(mes) : null);
-			FiseFormato12BC cabeceraBean = formatoService.getFormatoCabeceraById(id);
+			FiseFormato12BC cabeceraBean = formatoService.getFormatoCabeceraById(id);			
 			
-			//
 			String flagOper = commonService.obtenerEstadoProceso(id.getCodEmpresa(),FiseConstants.TIPO_FORMATO_12B,id.getAnoPresentacion(),id.getMesPresentacion(),id.getEtapa());
 			command.setDescEstado(flagOper);
 			
@@ -536,11 +588,11 @@ public class Formato12BGartController {
 			List<FiseFormato12BD> lstFiseDetalle = formatoService.getLstFormatoDetalle(id);
 			command = Formato12BGartCommand.toCommandDetalle(lstFiseDetalle, command);
 			
-		} 
+		}//fin de if actualizar 
+		
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(renderRequest));
 		command.setTipoOperacion((tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) ? FiseConstants.UPDATE : FiseConstants.ADD);
-		command.setListaMes(fiseUtil.getMapaMeses());
-		
+		command.setListaMes(fiseUtil.getMapaMeses());	
 		
 		if( listaError!=null && listaError.size()>0){
 			model.addAttribute("listaError", listaError);
@@ -557,25 +609,19 @@ public class Formato12BGartController {
           formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
           
           logger.info("ANIO INICIO CARGA NUEVO****"+command.getAnioInicio());
-          logger.info("MES INICIO CARGA NUEVO****"+command.getMesInicio());
-        
+          logger.info("MES INICIO CARGA NUEVO****"+command.getMesInicio());      
 		
 		return "formato12BDetalle";
 	}
-
-	/******/
+	
+	
 	@ActionMapping(params="action=uploadFile")
 	public void cargarDocumento(ActionRequest request,ActionResponse response,@ModelAttribute("formato12BCBean")Formato12BCBean bean){
 		
 		logger.error("--- cargar documento");
 		Formato12BMensajeBean formatoMensaje = new Formato12BMensajeBean();
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
-		
-		//String flagCarga = uploadPortletRequest.getParameter("flagCarga");
-    	//String codEmpresaNew = uploadPortletRequest.getParameter("codigoEmpresa");
-    	//String periodoEnvioPresNew = uploadPortletRequest.getParameter("periodoEnvio");
-    	//String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
+		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);	
     	
     	String codEmpresaNew = "";
     	String periodoEnvioPresNew = "";
@@ -595,7 +641,7 @@ public class Formato12BGartController {
 		String anoEjecucion = "";//uploadPortletRequest.getParameter("txtanoEjecucionGasto");
 		String mesEjecucion = "";//uploadPortletRequest.getParameter("txtmesEjecucionGasto");
 		
-		String flagPeriodoEjecucion = uploadPortletRequest.getParameter("flagPeriodoEjecucion");
+		String flagPeriodoEjecucion = "";//uploadPortletRequest.getParameter("flagPeriodoEjecucion");
 		
 		//recuperamos la pk en session solo cuando actualizo la carga de excel o text
         PortletRequest pRequest = (PortletRequest) request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -606,22 +652,26 @@ public class Formato12BGartController {
 		 String anioEjecEdit = (String)pRequest.getPortletSession().getAttribute("anoEjecucionEdit", PortletSession.APPLICATION_SCOPE);
 		 String mesEjecEdit = (String)pRequest.getPortletSession().getAttribute("mesEjecucionEdit", PortletSession.APPLICATION_SCOPE);
 		 etapaEdit = (String)pRequest.getPortletSession().getAttribute("etapaEdit", PortletSession.APPLICATION_SCOPE);
+		 //cambios elozano
+		 String flagEditarCostoEdit = (String)pRequest.getPortletSession().getAttribute("flagEditarCostoEdit", PortletSession.APPLICATION_SCOPE);
+		 String flagEditarCostoNew = "";//uploadPortletRequest.getParameter("hiddenFlagCostoEstandar");
+		//finnde cambios elozano
+		 String periodo = "";
 		
-		String periodo = "";
-		
-		if(tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))){
-			//codEmpresaEdit = uploadPortletRequest.getParameter("codEmpresaHidden");
-			/*periodoEnvioPresEdit = uploadPortletRequest.getParameter("peridoDeclaracionHidden");
-			if(periodoEnvioPresEdit!=null && periodoEnvioPresEdit.length()>6){
-	    		anioPresEdit = periodoEnvioPresEdit.substring(0, 4);
-	    		mesPresEdit = periodoEnvioPresEdit.substring(4, 6);
-	    		etapaEdit = periodoEnvioPresEdit.substring(6, periodoEnvioPresEdit.length());
-			}*/
+		if(tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))){		
 			periodo = periodoEnvioPresEdit;
 			bean.setCodigoEmpresa(codEmpresaEdit);
-		}else{
+		}else{ 
 			codEmpresaNew = uploadPortletRequest.getParameter("codEmpresa");
 			periodoEnvioPresNew = uploadPortletRequest.getParameter("peridoDeclaracion");
+			listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(codEmpresaNew, FiseConstants.NOMBRE_FORMATO_12B);
+			for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+				if(periodoEnvioPresNew.equals(p.getCodigoItem()) ){
+					flagPeriodoEjecucion= p.getFlagPeriodoEjecucion();
+					flagEditarCostoNew= p.getFlagEditarCostosEst();
+					break;
+				}
+			}			
 			if(periodoEnvioPresNew!=null && periodoEnvioPresNew.length()>6){
 	    		anioPresNew = periodoEnvioPresNew.substring(0, 4);
 	    		mesPresNew = periodoEnvioPresNew.substring(4, 6);
@@ -642,10 +692,12 @@ public class Formato12BGartController {
 		try{
 		if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"") ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);			
-			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, anoEjecucion, mesEjecucion, etapaNew);
+			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, 
+					anioPresNew, mesPresNew, anoEjecucion, mesEjecucion, etapaNew,flagEditarCostoNew);
 		}else if( tipoOperacion.equals(""+FiseConstants.UPDATE) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"") ){
 			fileEntry=fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit, etapaEdit);
+			formatoMensaje = readExcelFileNew(fileEntry, themeDisplay.getUser(), tipoOperacion, codEmpresaEdit, 
+					anioPresEdit, mesPresEdit, anioEjecEdit, mesEjecEdit, etapaEdit,flagEditarCostoEdit);
 		}else if( tipoOperacion.equals(""+FiseConstants.ADD) && typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"") ){
 			fileEntry =fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);			
 			formatoMensaje =	readTxtFileNew(fileEntry, uploadPortletRequest, themeDisplay.getUser(), tipoOperacion, codEmpresaNew, anioPresNew, mesPresNew, anoEjecucion, mesEjecucion, etapaNew);
@@ -657,8 +709,6 @@ public class Formato12BGartController {
 			
 		}catch (Exception e) {			
 		}
-		
-		//**************************
 		
 		if( formatoMensaje.getFiseFormato12BC()!=null ){
 			
@@ -711,13 +761,16 @@ public class Formato12BGartController {
 		pRequest.getPortletSession().setAttribute("anoEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
 		pRequest.getPortletSession().setAttribute("mesEjecucionEdit", "", PortletSession.APPLICATION_SCOPE);
 		pRequest.getPortletSession().setAttribute("etapaEdit", "", PortletSession.APPLICATION_SCOPE);
+		pRequest.getPortletSession().setAttribute("flagEditarCostoEdit", "", PortletSession.APPLICATION_SCOPE);
 		response.setRenderParameter("codEmpresaHidden", bean.getCodigoEmpresa());
 		response.setRenderParameter("peridoDeclaracion", periodo);
 		response.setRenderParameter("peridoDeclaracionHidden", periodo);
 		
 	}
 	
-	public Formato12BMensajeBean readExcelFileNew(FileEntry archivo, User user, String tipoOperacion, String codEmpresa, String anioPres, String mesPres, String anioIniVigencia, String anioFinVigencia, String etapaEdit) {
+	public Formato12BMensajeBean readExcelFileNew(FileEntry archivo, User user, String tipoOperacion, 
+			String codEmpresa, String anioPres, String mesPres, String anioIniVigencia, 
+			String anioFinVigencia, String etapaEdit,String flagEditarCosto) {
 		
 		//---------------------
 		//FLAG CARGA:
@@ -733,6 +786,7 @@ public class Formato12BGartController {
 		int cont = 0;
 		
 		boolean process = false;
+		boolean empresaLima = false;
 		
 		try {
 			if (archivo != null) {
@@ -762,6 +816,11 @@ public class Formato12BGartController {
 					logger.error("nro de hoja seleccionada "+nroHojaSelec);
 					
 					if(process){
+						//verificamos si la empresa es de Lima
+						if(FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || 
+								FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa.trim()) ){
+							empresaLima = true;
+						}			
 						
 						HSSFSheet hojaF12 = libro.getSheetAt(nroHojaSelec);					
 						
@@ -773,10 +832,18 @@ public class Formato12BGartController {
 						HSSFRow filaNroValesEntr = hojaF12.getRow(FiseConstants.NRO_FILA_NROVALESENTR_FORMATO12B);
 						HSSFRow filaNroValesFis = hojaF12.getRow(FiseConstants.NRO_FILA_NROVALESFIS_FORMATO12B);
 						HSSFRow filaNroValesDigit = hojaF12.getRow(FiseConstants.NRO_FILA_NROVALESDIGIT_FORMATO12B);
-						HSSFRow filaNroAten = hojaF12.getRow(FiseConstants.NRO_FILA_NROTOTALATEN_FORMATO12B);
-						//HSSFRow filaGestAdm = hojaF12.getRow(FiseConstants.NRO_FILA_GESTADM_FORMATO12B);
+						HSSFRow filaNroAten = hojaF12.getRow(FiseConstants.NRO_FILA_NROTOTALATEN_FORMATO12B);						
 						HSSFRow filaDesplPers = hojaF12.getRow(FiseConstants.NRO_FILA_DESPLPERSON_FORMATO12B);
-						HSSFRow filaActivExtr = hojaF12.getRow(FiseConstants.NRO_FILA_ACTIVEXTR_FORMATO12B);	
+						HSSFRow filaActivExtr = hojaF12.getRow(FiseConstants.NRO_FILA_ACTIVEXTR_FORMATO12B);
+						//cambios elozano costos unitarios
+						HSSFRow filaCostoUnitValesImp = hojaF12.getRow(FiseConstants.NRO_FILA_COSTOUNIT_VALESIMP_FORMATO12B);				
+						HSSFRow filaCostoUnitValesRep = hojaF12.getRow(FiseConstants.NRO_FILA_COSTOUNIT_VALESREP_FORMATO12B);
+						HSSFRow filaCostoUnitValesEntr = hojaF12.getRow(FiseConstants.NRO_FILA_COSTOUNIT_VALESENTR_FORMATO12B);
+						HSSFRow filaCostoUnitValesFis = hojaF12.getRow(FiseConstants.NRO_FILA_COSTOUNIT_VALESFIS_FORMATO12B);
+						HSSFRow filaCostoUnitValesDigit = hojaF12.getRow(FiseConstants.NRO_FILA_COSTOUNIT_VALESDIGIT_FORMATO12B);
+						HSSFRow filaCostoUnitAten = hojaF12.getRow(FiseConstants.NRO_FILA_COSTOUNIT_ATEN_FORMATO12B);
+						HSSFRow filaGestAdm = hojaF12.getRow(FiseConstants.NRO_FILA_GESTADM_FORMATO12B);
+						//fin de cambios elozano						
 						
 						Formato12BCBean formulario = new Formato12BCBean();
 						
@@ -789,8 +856,7 @@ public class Formato12BGartController {
 						HSSFCell celdaNroValesEntrR = filaNroValesEntr.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
 						HSSFCell celdaNroValesFisR = filaNroValesFis.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
 						HSSFCell celdaNroValesDigitR = filaNroValesDigit.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
-						HSSFCell celdaNroAtenR = filaNroAten.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
-						//HSSFCell celdaGestAdmR = filaGestAdm.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
+						HSSFCell celdaNroAtenR = filaNroAten.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);						
 						HSSFCell celdaDesplPersR = filaDesplPers.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
 						HSSFCell celdaActivExtrR = filaActivExtr.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);	
 						//PROVINCIA
@@ -799,8 +865,7 @@ public class Formato12BGartController {
 						HSSFCell celdaNroValesEntrP = filaNroValesEntr.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
 						HSSFCell celdaNroValesFisP = filaNroValesFis.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
 						HSSFCell celdaNroValesDigitP = filaNroValesDigit.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
-						HSSFCell celdaNroAtenP = filaNroAten.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
-						//HSSFCell celdaGestAdmP = filaGestAdm.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
+						HSSFCell celdaNroAtenP = filaNroAten.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);						
 						HSSFCell celdaDesplPersP = filaDesplPers.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
 						HSSFCell celdaActivExtrP = filaActivExtr.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);	
 						//LIMA
@@ -809,11 +874,38 @@ public class Formato12BGartController {
 						HSSFCell celdaNroValesEntrL = filaNroValesEntr.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
 						HSSFCell celdaNroValesFisL = filaNroValesFis.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
 						HSSFCell celdaNroValesDigitL = filaNroValesDigit.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
-						HSSFCell celdaNroAtenL = filaNroAten.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
-						//HSSFCell celdaGestAdmL = filaGestAdm.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
+						HSSFCell celdaNroAtenL = filaNroAten.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);						
 						HSSFCell celdaDesplPersL = filaDesplPers.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
 						HSSFCell celdaActivExtrL = filaActivExtr.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);	
 						
+						//cambios elozano costos unitarios
+						//RURAL
+						HSSFCell celdaCostoUniValesImpR = filaCostoUnitValesImp.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);				
+						HSSFCell celdaCostoUniValesRepR = filaCostoUnitValesRep.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
+						HSSFCell celdaCostoUniValesEntrR = filaCostoUnitValesEntr.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
+						HSSFCell celdaCostoUniValesFisR = filaCostoUnitValesFis.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
+						HSSFCell celdaCostoUniValesDigitR = filaCostoUnitValesDigit.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
+						HSSFCell celdaCostoUniAtenR = filaCostoUnitAten.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);
+						HSSFCell celdaGestAdmR = filaGestAdm.getCell(FiseConstants.NRO_CELDA_RURAL_FORMATO12B);						
+						//PROVINCIA
+						HSSFCell celdaCostoUniValesImpP = filaCostoUnitValesImp.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);				
+						HSSFCell celdaCostoUniValesRepP = filaCostoUnitValesRep.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
+						HSSFCell celdaCostoUniValesEntrP = filaCostoUnitValesEntr.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
+						HSSFCell celdaCostoUniValesFisP = filaCostoUnitValesFis.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
+						HSSFCell celdaCostoUniValesDigitP = filaCostoUnitValesDigit.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
+						HSSFCell celdaCostoUniAtenP = filaCostoUnitAten.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
+						HSSFCell celdaGestAdmP = filaGestAdm.getCell(FiseConstants.NRO_CELDA_PROVINCIA_FORMATO12B);
+						
+						//LIMA
+						HSSFCell celdaCostoUniValesImpL = filaCostoUnitValesImp.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);				
+						HSSFCell celdaCostoUniValesRepL = filaCostoUnitValesRep.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
+						HSSFCell celdaCostoUniValesEntrL = filaCostoUnitValesEntr.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
+						HSSFCell celdaCostoUniValesFisL = filaCostoUnitValesFis.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
+						HSSFCell celdaCostoUniValesDigitL = filaCostoUnitValesDigit.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
+						HSSFCell celdaCostoUniAtenL = filaCostoUnitAten.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);
+						HSSFCell celdaGestAdmL = filaGestAdm.getCell(FiseConstants.NRO_CELDA_LIMA_FORMATO12B);						
+						//fin de cambios elozano costos unitarios
+												
 						
 						//tipos
 						if( HSSFCell.CELL_TYPE_STRING == celdaEmpresa.getCellType()  ){
@@ -913,17 +1005,7 @@ public class Formato12BGartController {
 							formulario.setNroAtencionesR(0L);
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3684);
-						}
-						
-						/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaGestAdmR.getCellType()  ){
-							formulario.setGestionAdmR(new BigDecimal(celdaGestAdmR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaGestAdmR.getCellType()  ){
-							formulario.setGestionAdmR(new BigDecimal(0.00));
-						}else{
-							formulario.setGestionAdmR(new BigDecimal(0.00));
-							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3685);
-						}*/
+						}		
 						
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaDesplPersR.getCellType()  ){
 							formulario.setDesplPersonalR(new BigDecimal(celdaDesplPersR.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
@@ -1004,17 +1086,7 @@ public class Formato12BGartController {
 							formulario.setNroAtencionesP(0L);
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3693);
-						}
-						
-						/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaGestAdmP.getCellType()  ){
-							formulario.setGestionAdmP(new BigDecimal(celdaGestAdmP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
-						}else if( HSSFCell.CELL_TYPE_BLANK == celdaGestAdmP.getCellType()  ){
-							formulario.setGestionAdmP(new BigDecimal(0.00));
-						}else{
-							formulario.setGestionAdmP(new BigDecimal(0.00));
-							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3694);
-						}*/
+						}				
 						
 						if( HSSFCell.CELL_TYPE_NUMERIC == celdaDesplPersP.getCellType()  ){
 							formulario.setDesplPersonalP(new BigDecimal(celdaDesplPersP.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
@@ -1037,8 +1109,7 @@ public class Formato12BGartController {
 						}
 						
 						
-						if( FiseConstants.COD_EMPRESA_EDELNOR.equals(codEmpresa) || 
-								FiseConstants.COD_EMPRESA_LUZ_SUR.equals(codEmpresa) ){
+						if(empresaLima){
 							//LIMA
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaNroValesImpL.getCellType()  ){
 								formulario.setNroValeImpL(new Double(celdaNroValesImpL.getNumericCellValue()).longValue());
@@ -1098,17 +1169,7 @@ public class Formato12BGartController {
 								formulario.setNroAtencionesL(0L);
 								cont++;
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3702);
-							}
-							
-							/*if( HSSFCell.CELL_TYPE_NUMERIC == celdaGestAdmL.getCellType()  ){
-								formulario.setGestionAdmL(new BigDecimal(celdaGestAdmL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
-							}else if( HSSFCell.CELL_TYPE_BLANK == celdaGestAdmL.getCellType()  ){
-								formulario.setGestionAdmL(new BigDecimal(0.00));
-							}else{
-								formulario.setGestionAdmL(new BigDecimal(0.00));
-								cont++;
-								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3703);
-							}*/
+							}		
 							
 							if( HSSFCell.CELL_TYPE_NUMERIC == celdaDesplPersL.getCellType()  ){
 								formulario.setDesplPersonalL(new BigDecimal(celdaDesplPersL.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP));
@@ -1130,8 +1191,230 @@ public class Formato12BGartController {
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3705);
 							}
 							
-						}
-
+						}//fin del if lima = true
+						
+						//cambios elozano validacion costos unitarios solo si el flag es S = SI
+						
+						if("S".equals(flagEditarCosto)){
+							//RURAL
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesImpR))){					
+								formulario.setCostoUnitValImpR(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesImpR))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesImpR))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_19);
+							}else{
+								formulario.setCostoUnitValImpR(new BigDecimal(String.valueOf(celdaCostoUniValesImpR)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesRepR))){					
+								formulario.setCostoUnitValReparDomicR(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesRepR))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesRepR))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_23);
+							}else{
+								formulario.setCostoUnitValReparDomicR(new BigDecimal(String.valueOf(celdaCostoUniValesRepR)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesEntrR))){					
+								formulario.setCostoUnitValEntDisElR(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesEntrR))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesEntrR))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_26);
+							}else{
+								formulario.setCostoUnitValEntDisElR(new BigDecimal(String.valueOf(celdaCostoUniValesEntrR)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesFisR))){					
+								formulario.setCostoUnitValFisiCanjR(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesFisR))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesFisR))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_29);
+							}else{
+								formulario.setCostoUnitValFisiCanjR(new BigDecimal(String.valueOf(celdaCostoUniValesFisR)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesDigitR))){					
+								formulario.setCostoUnitValDigitCanjR(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesDigitR))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesDigitR))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_33);
+							}else{
+								formulario.setCostoUnitValDigitCanjR(new BigDecimal(String.valueOf(celdaCostoUniValesDigitR)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniAtenR))){					
+								formulario.setCostoUnitAtencionesR(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniAtenR))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniAtenR))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_36);
+							}else{
+								formulario.setCostoUnitAtencionesR(new BigDecimal(String.valueOf(celdaCostoUniAtenR)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaGestAdmR))){					
+								formulario.setGestionAdmR(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaGestAdmR))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaGestAdmR))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3685);
+							}else{
+								formulario.setGestionAdmR(new BigDecimal(String.valueOf(celdaGestAdmR)));
+							}
+							
+							//PROVINCIA
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesImpP))){					
+								formulario.setCostoUnitValImpP(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesImpP))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesImpP))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_21);
+							}else{
+								formulario.setCostoUnitValImpP(new BigDecimal(String.valueOf(celdaCostoUniValesImpP)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesRepP))){					
+								formulario.setCostoUnitValReparDomicP(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesRepP))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesRepP))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_24);
+							}else{
+								formulario.setCostoUnitValReparDomicP(new BigDecimal(String.valueOf(celdaCostoUniValesRepP)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesEntrP))){					
+								formulario.setCostoUnitValEntDisElP(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesEntrP))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesEntrP))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_27);
+							}else{
+								formulario.setCostoUnitValEntDisElP(new BigDecimal(String.valueOf(celdaCostoUniValesEntrP)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesFisP))){					
+								formulario.setCostoUnitValFisiCanjP(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesFisP))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesFisP))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_31);
+							}else{
+								formulario.setCostoUnitValFisiCanjP(new BigDecimal(String.valueOf(celdaCostoUniValesFisP)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesDigitP))){					
+								formulario.setCostoUnitValDigitCanjP(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesDigitP))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesDigitP))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_34);
+							}else{
+								formulario.setCostoUnitValDigitCanjP(new BigDecimal(String.valueOf(celdaCostoUniValesDigitP)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniAtenP))){					
+								formulario.setCostoUnitAtencionesP(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniAtenP))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniAtenP))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_37);
+							}else{
+								formulario.setCostoUnitAtencionesP(new BigDecimal(String.valueOf(celdaCostoUniAtenP)));
+							}
+							
+							if(FormatoUtil.isBlank(String.valueOf(celdaGestAdmP))){					
+								formulario.setGestionAdmP(new BigDecimal(0.00)); 
+							}else if(FormatoUtil.isNotBlank(String.valueOf(celdaGestAdmP))&&
+									!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaGestAdmP))){ 						
+								cont++;
+								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3694);
+							}else{
+								formulario.setGestionAdmP(new BigDecimal(String.valueOf(celdaGestAdmP)));
+							}
+							
+							//LIMA
+							if(empresaLima){
+								
+								if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesImpL))){					
+									formulario.setCostoUnitValImpL(new BigDecimal(0.00)); 
+								}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesImpL))&&
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesImpL))){ 						
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_22);
+								}else{
+									formulario.setCostoUnitValImpL(new BigDecimal(String.valueOf(celdaCostoUniValesImpL)));
+								}
+								
+								if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesRepL))){					
+									formulario.setCostoUnitValReparDomicL(new BigDecimal(0.00)); 
+								}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesRepL))&&
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesRepL))){ 						
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_25);
+								}else{
+									formulario.setCostoUnitValReparDomicL(new BigDecimal(String.valueOf(celdaCostoUniValesRepL)));
+								}
+								
+								if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesEntrL))){					
+									formulario.setCostoUnitValEntDisElL(new BigDecimal(0.00)); 
+								}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesEntrL))&&
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesEntrL))){ 						
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_28);
+								}else{
+									formulario.setCostoUnitValEntDisElL(new BigDecimal(String.valueOf(celdaCostoUniValesEntrL)));
+								}
+								
+								if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesFisL))){					
+									formulario.setCostoUnitValFisiCanjL(new BigDecimal(0.00)); 
+								}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesFisL))&&
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesFisL))){ 						
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_32);
+								}else{
+									formulario.setCostoUnitValFisiCanjL(new BigDecimal(String.valueOf(celdaCostoUniValesFisL)));
+								}
+								
+								if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniValesDigitL))){					
+									formulario.setCostoUnitValDigitCanjL(new BigDecimal(0.00)); 
+								}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniValesDigitL))&&
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniValesDigitL))){ 						
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_35);
+								}else{
+									formulario.setCostoUnitValDigitCanjL(new BigDecimal(String.valueOf(celdaCostoUniValesDigitL)));
+								}
+								
+								if(FormatoUtil.isBlank(String.valueOf(celdaCostoUniAtenL))){					
+									formulario.setCostoUnitAtencionesL(new BigDecimal(0.00)); 
+								}else if(FormatoUtil.isNotBlank(String.valueOf(celdaCostoUniAtenL))&&
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaCostoUniAtenL))){ 						
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_38);
+								}else{
+									formulario.setCostoUnitAtencionesL(new BigDecimal(String.valueOf(celdaCostoUniAtenL)));
+								}
+								
+								if(FormatoUtil.isBlank(String.valueOf(celdaGestAdmL))){					
+									formulario.setGestionAdmL(new BigDecimal(0.00)); 
+								}else if(FormatoUtil.isNotBlank(String.valueOf(celdaGestAdmL))&&
+										!FormatoUtil.validarCampoBigDecimalPositivoTxt(String.valueOf(celdaGestAdmL))){ 						
+									cont++;
+									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3703);
+								}else{
+									formulario.setGestionAdmL(new BigDecimal(String.valueOf(celdaGestAdmL)));
+								}		
+								
+							}//fin del if lima				
+							
+						}//fin del if flag =S					
 						
 						//VALIDACIONES DE OBLIGATOREIDAD
 						//validar que siempre que ingrese un valor en la comlumna si se ingreso otro valor
@@ -1155,8 +1438,7 @@ public class Formato12BGartController {
 //						}else if( BigDecimal.ZERO.equals(formulario.getNroAgentL()) && !BigDecimal.ZERO.equals(formulario.getNroBenefEmpadL()) ){
 //							cont++;
 //							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12_350);
-//						}
-						///
+//						}		
 						
 						
 						/**validacion de estructura de campos*/
@@ -1274,22 +1556,22 @@ public class Formato12BGartController {
 						//----LIMA
 						
 						//NRO VALES IMPR - 10
-						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValeImpL(),10) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValeImpL(),10) ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3697);
 						}
 						//NRO VALES REPART - 10
-						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValReparDomicL(),10) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValReparDomicL(),10) ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3698);
 						}
 						//NO VALES ENTR - 10
-						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValEntDisElL(),10) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValEntDisElL(),10) ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3699);
 						}
 						//NRO VALES FISICOS - 10
-						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValFisiCanjL(),10) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroEntero(formulario.getNroValFisiCanjL(),10) ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3700);
 						}
@@ -1299,7 +1581,7 @@ public class Formato12BGartController {
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3701);
 						}
 						//NRO ATENCIONES - 10
-						if( !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAtencionesL(),10) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroEntero(formulario.getNroAtencionesL(),10) ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3702);
 						}
@@ -1309,17 +1591,16 @@ public class Formato12BGartController {
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3703);
 						}*/
 						//DESPL PERSO - 18,2
-						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalL(),18,2) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroDecimal(formulario.getDesplPersonalL(),18,2) ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3704);
 						}
 						//ACTIV EXTRAORD - 18,2
-						if( !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordL(),18,2) ){
+						if(empresaLima && !FormatoUtil.validaCampoNumeroDecimal(formulario.getActivExtraordL(),18,2) ){
 							cont++;
 							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3705);
-						}
+						}					
 						
-						/**verificar*/
 						formulario.setAnioEjecuc(formulario.getAnioPresent());
 						formulario.setMesEjecuc(formulario.getMesPresent());
 						
@@ -1332,14 +1613,38 @@ public class Formato12BGartController {
 				  			FiseFormato14BD detalleLimaPadre = null;
 				  			
 				  			detalleRuralPadre = formato14Service.obtenerFormato14BDVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_RURAL_COD);
-				  			if( detalleRuralPadre!=null ){
-				  				formulario.setCostoUnitValImpR(detalleRuralPadre.getCostoUnitarioImpresionVales());
-				  				formulario.setCostoUnitValReparDomicR(detalleRuralPadre.getCostoUnitReprtoValeDomici());
-				  				formulario.setCostoUnitValEntDisElR(detalleRuralPadre.getCostoUnitEntregaValDisEl());
-				  				formulario.setCostoUnitValFisiCanjR(detalleRuralPadre.getCostoUnitCanjeLiqValFisi());
-				  				formulario.setCostoUnitValDigitCanjR(detalleRuralPadre.getCostoUnitCanjeValDigital());
-				  				formulario.setCostoUnitAtencionesR(detalleRuralPadre.getCostoUnitarioPorAtencion());
-				  				formulario.setGestionAdmR(detalleRuralPadre.getCostoTotalGestionAdministra()); 
+				  			if(detalleRuralPadre!=null ){
+				  				if("S".equals(flagEditarCosto)){
+				  					if(formulario.getCostoUnitValImpR().compareTo(detalleRuralPadre.getCostoUnitarioImpresionVales())==1){
+					  					formulario.setCostoUnitValImpR(detalleRuralPadre.getCostoUnitarioImpresionVales());
+					  				}
+					  				if(formulario.getCostoUnitValReparDomicR().compareTo(detalleRuralPadre.getCostoUnitReprtoValeDomici())==1){
+					  					formulario.setCostoUnitValReparDomicR(detalleRuralPadre.getCostoUnitReprtoValeDomici());
+					  				}
+					  				if(formulario.getCostoUnitValEntDisElR().compareTo(detalleRuralPadre.getCostoUnitEntregaValDisEl())==1){
+					  					formulario.setCostoUnitValEntDisElR(detalleRuralPadre.getCostoUnitEntregaValDisEl());
+					  				}
+					  				if(formulario.getCostoUnitValFisiCanjR().compareTo(detalleRuralPadre.getCostoUnitCanjeLiqValFisi())==1){
+					  					formulario.setCostoUnitValFisiCanjR(detalleRuralPadre.getCostoUnitCanjeLiqValFisi());
+					  				}
+					  				if(formulario.getCostoUnitValDigitCanjR().compareTo(detalleRuralPadre.getCostoUnitCanjeValDigital())==1){
+					  					formulario.setCostoUnitValDigitCanjR(detalleRuralPadre.getCostoUnitCanjeValDigital());
+					  				}
+					  				if(formulario.getCostoUnitAtencionesR().compareTo(detalleRuralPadre.getCostoUnitarioPorAtencion())==1){
+					  					formulario.setCostoUnitAtencionesR(detalleRuralPadre.getCostoUnitarioPorAtencion());
+					  				}
+					  				if(formulario.getGestionAdmR().compareTo(detalleRuralPadre.getCostoTotalGestionAdministra())==1){
+					  					formulario.setGestionAdmR(detalleRuralPadre.getCostoTotalGestionAdministra());
+					  				}					  				
+				  				}else{
+				  					formulario.setCostoUnitValImpR(detalleRuralPadre.getCostoUnitarioImpresionVales());
+					  				formulario.setCostoUnitValReparDomicR(detalleRuralPadre.getCostoUnitReprtoValeDomici());					  				
+					  				formulario.setCostoUnitValEntDisElR(detalleRuralPadre.getCostoUnitEntregaValDisEl());
+					  				formulario.setCostoUnitValFisiCanjR(detalleRuralPadre.getCostoUnitCanjeLiqValFisi());					  				
+					  				formulario.setCostoUnitValDigitCanjR(detalleRuralPadre.getCostoUnitCanjeValDigital());
+					  				formulario.setCostoUnitAtencionesR(detalleRuralPadre.getCostoUnitarioPorAtencion());					  				
+					  				formulario.setGestionAdmR(detalleRuralPadre.getCostoTotalGestionAdministra()); 
+				  				}			  				
 				  			}else{
 				  				formulario.setCostoUnitValImpR(new BigDecimal(0.00));
 				  				formulario.setCostoUnitValReparDomicR(new BigDecimal(0.00));
@@ -1350,14 +1655,38 @@ public class Formato12BGartController {
 				  				formulario.setGestionAdmR(new BigDecimal(0.00)); 
 				  			}
 				  			detalleProvinciaPadre = formato14Service.obtenerFormato14BDVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_PROVINCIA_COD);
-				  			if( detalleProvinciaPadre!=null ){
-				  				formulario.setCostoUnitValImpP(detalleProvinciaPadre.getCostoUnitarioImpresionVales());
-				  				formulario.setCostoUnitValReparDomicP(detalleProvinciaPadre.getCostoUnitReprtoValeDomici());
-				  				formulario.setCostoUnitValEntDisElP(detalleProvinciaPadre.getCostoUnitEntregaValDisEl());
-				  				formulario.setCostoUnitValFisiCanjP(detalleProvinciaPadre.getCostoUnitCanjeLiqValFisi());
-				  				formulario.setCostoUnitValDigitCanjP(detalleProvinciaPadre.getCostoUnitCanjeValDigital());
-				  				formulario.setCostoUnitAtencionesP(detalleProvinciaPadre.getCostoUnitarioPorAtencion());
-				  				formulario.setGestionAdmP(detalleProvinciaPadre.getCostoTotalGestionAdministra()); 
+				  			if(detalleProvinciaPadre!=null ){
+				  				if("S".equals(flagEditarCosto)){
+				  					if(formulario.getCostoUnitValImpP().compareTo(detalleProvinciaPadre.getCostoUnitarioImpresionVales())==1){
+					  					formulario.setCostoUnitValImpP(detalleProvinciaPadre.getCostoUnitarioImpresionVales());
+					  				}
+					  				if(formulario.getCostoUnitValReparDomicP().compareTo(detalleProvinciaPadre.getCostoUnitReprtoValeDomici())==1){
+					  					formulario.setCostoUnitValReparDomicP(detalleProvinciaPadre.getCostoUnitReprtoValeDomici());
+					  				}
+					  				if(formulario.getCostoUnitValEntDisElP().compareTo(detalleProvinciaPadre.getCostoUnitEntregaValDisEl())==1){
+					  					formulario.setCostoUnitValEntDisElP(detalleProvinciaPadre.getCostoUnitEntregaValDisEl());
+					  				}
+					  				if(formulario.getCostoUnitValFisiCanjP().compareTo(detalleProvinciaPadre.getCostoUnitCanjeLiqValFisi())==1){
+					  					formulario.setCostoUnitValFisiCanjP(detalleProvinciaPadre.getCostoUnitCanjeLiqValFisi());
+					  				}
+					  				if(formulario.getCostoUnitValDigitCanjP().compareTo(detalleProvinciaPadre.getCostoUnitCanjeValDigital())==1){
+					  					formulario.setCostoUnitValDigitCanjP(detalleProvinciaPadre.getCostoUnitCanjeValDigital());
+					  				}
+					  				if(formulario.getCostoUnitAtencionesP().compareTo(detalleProvinciaPadre.getCostoUnitarioPorAtencion())==1){
+					  					formulario.setCostoUnitAtencionesP(detalleProvinciaPadre.getCostoUnitarioPorAtencion());
+					  				}
+					  				if(formulario.getGestionAdmP().compareTo(detalleProvinciaPadre.getCostoTotalGestionAdministra())==1){
+					  					formulario.setGestionAdmP(detalleProvinciaPadre.getCostoTotalGestionAdministra());
+					  				}					  				
+				  				}else{
+				  					formulario.setCostoUnitValImpP(detalleProvinciaPadre.getCostoUnitarioImpresionVales());
+					  				formulario.setCostoUnitValReparDomicP(detalleProvinciaPadre.getCostoUnitReprtoValeDomici());
+					  				formulario.setCostoUnitValEntDisElP(detalleProvinciaPadre.getCostoUnitEntregaValDisEl());
+					  				formulario.setCostoUnitValFisiCanjP(detalleProvinciaPadre.getCostoUnitCanjeLiqValFisi());
+					  				formulario.setCostoUnitValDigitCanjP(detalleProvinciaPadre.getCostoUnitCanjeValDigital());
+					  				formulario.setCostoUnitAtencionesP(detalleProvinciaPadre.getCostoUnitarioPorAtencion());
+					  				formulario.setGestionAdmP(detalleProvinciaPadre.getCostoTotalGestionAdministra()); 
+				  				}			  				
 				  			}else{
 				  				formulario.setCostoUnitValImpP(new BigDecimal(0.00));
 				  				formulario.setCostoUnitValReparDomicP(new BigDecimal(0.00));
@@ -1368,14 +1697,38 @@ public class Formato12BGartController {
 				  				formulario.setGestionAdmP(new BigDecimal(0.00)); 
 				  			}
 				  			detalleLimaPadre = formato14Service.obtenerFormato14BDVigente(formulario.getCodigoEmpresa(), formulario.getAnioPresent(), FiseConstants.ZONABENEF_LIMA_COD);
-				  			if( detalleLimaPadre!=null ){
-				  				formulario.setCostoUnitValImpL(detalleLimaPadre.getCostoUnitarioImpresionVales());
-				  				formulario.setCostoUnitValReparDomicL(detalleLimaPadre.getCostoUnitReprtoValeDomici());
-				  				formulario.setCostoUnitValEntDisElL(detalleLimaPadre.getCostoUnitEntregaValDisEl());
-				  				formulario.setCostoUnitValFisiCanjL(detalleLimaPadre.getCostoUnitCanjeLiqValFisi());
-				  				formulario.setCostoUnitValDigitCanjL(detalleLimaPadre.getCostoUnitCanjeValDigital());
-				  				formulario.setCostoUnitAtencionesL(detalleLimaPadre.getCostoUnitarioPorAtencion());
-				  				formulario.setGestionAdmL(detalleLimaPadre.getCostoTotalGestionAdministra()); 
+				  			if(empresaLima && detalleLimaPadre!=null ){
+				  				if("S".equals(flagEditarCosto)){
+				  					if(formulario.getCostoUnitValImpL().compareTo(detalleLimaPadre.getCostoUnitarioImpresionVales())==1){
+					  					formulario.setCostoUnitValImpL(detalleLimaPadre.getCostoUnitarioImpresionVales());
+					  				}
+					  				if(formulario.getCostoUnitValReparDomicL().compareTo(detalleLimaPadre.getCostoUnitReprtoValeDomici())==1){
+					  					formulario.setCostoUnitValReparDomicL(detalleLimaPadre.getCostoUnitReprtoValeDomici());
+					  				}
+					  				if(formulario.getCostoUnitValEntDisElL().compareTo(detalleLimaPadre.getCostoUnitEntregaValDisEl())==1){
+					  					formulario.setCostoUnitValEntDisElL(detalleLimaPadre.getCostoUnitEntregaValDisEl());
+					  				}
+					  				if(formulario.getCostoUnitValFisiCanjL().compareTo(detalleLimaPadre.getCostoUnitCanjeLiqValFisi())==1){
+					  					formulario.setCostoUnitValFisiCanjL(detalleLimaPadre.getCostoUnitCanjeLiqValFisi());
+					  				}
+					  				if(formulario.getCostoUnitValDigitCanjL().compareTo(detalleLimaPadre.getCostoUnitCanjeValDigital())==1){
+					  					formulario.setCostoUnitValDigitCanjL(detalleLimaPadre.getCostoUnitCanjeValDigital());
+					  				}
+					  				if(formulario.getCostoUnitAtencionesL().compareTo(detalleLimaPadre.getCostoUnitarioPorAtencion())==1){
+					  					formulario.setCostoUnitAtencionesL(detalleLimaPadre.getCostoUnitarioPorAtencion());
+					  				}
+					  				if(formulario.getGestionAdmL().compareTo(detalleLimaPadre.getCostoTotalGestionAdministra())==1){
+					  					formulario.setGestionAdmL(detalleLimaPadre.getCostoTotalGestionAdministra());
+					  				}					  				
+				  				}else{
+				  					formulario.setCostoUnitValImpL(detalleLimaPadre.getCostoUnitarioImpresionVales());
+					  				formulario.setCostoUnitValReparDomicL(detalleLimaPadre.getCostoUnitReprtoValeDomici());
+					  				formulario.setCostoUnitValEntDisElL(detalleLimaPadre.getCostoUnitEntregaValDisEl());
+					  				formulario.setCostoUnitValFisiCanjL(detalleLimaPadre.getCostoUnitCanjeLiqValFisi());
+					  				formulario.setCostoUnitValDigitCanjL(detalleLimaPadre.getCostoUnitCanjeValDigital());
+					  				formulario.setCostoUnitAtencionesL(detalleLimaPadre.getCostoUnitarioPorAtencion());
+					  				formulario.setGestionAdmL(detalleLimaPadre.getCostoTotalGestionAdministra()); 
+				  				} 				
 				  			}else{
 				  				formulario.setCostoUnitValImpL(new BigDecimal(0.00));
 				  				formulario.setCostoUnitValReparDomicL(new BigDecimal(0.00));
@@ -1397,10 +1750,10 @@ public class Formato12BGartController {
 									Long.parseLong(mesPres) == formulario.getMesPresent() 
 									){
 								
-								if( (""+FiseConstants.ADD).equals(tipoOperacion) ){
+								if((""+FiseConstants.ADD).equals(tipoOperacion) ){
 									logger.error("Entrando a guardar carga exel nuevo"); 
 									objeto = formatoService.registrarFormato12BC(formulario);
-								}else if( (""+FiseConstants.UPDATE).equals(tipoOperacion) ){
+								}else if((""+FiseConstants.UPDATE).equals(tipoOperacion) ){
 									FiseFormato12BC formatoModif = new FiseFormato12BC();
 									FiseFormato12BCPK id = new FiseFormato12BCPK();
 									id.setCodEmpresa(formulario.getCodigoEmpresa());
@@ -1411,22 +1764,18 @@ public class Formato12BGartController {
 									id.setEtapa(formulario.getEtapa());
 									formatoModif = formatoService.getFormatoCabeceraById(id);
 									objeto = formatoService.modificarFormato12BC(formulario, formatoModif);
-								}
-								
+								}								
 							}else{
 								cont++;
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3706);
 							}
-						}
-						
+						}						
 					}else{						
 						cont++;
 						sMsg = sMsg + "No se encuentra la hoja "+FiseConstants.NOMBRE_HOJA_FORMATO12B+" en el archivo cargado";
 						throw new Exception("No se encuentra la hoja "+FiseConstants.NOMBRE_HOJA_FORMATO12B+" en el archivo cargado");
 					}
-
-				}
-					
+				}					
 			}
 			is.close();
 		} catch (Exception e) {
@@ -1514,10 +1863,7 @@ public class Formato12BGartController {
 								cont++;
 								sMsg = fiseUtil.agregarErrorBeanConMensajeEnFila(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3707, cont);
 							}
-						}/*else{
-							cont++;
-							sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F14B_3040);
-						}*/
+						}
 						sCurrentLine = br.readLine();
 						if( cont>3 ){
 							cont++;
@@ -1568,15 +1914,13 @@ public class Formato12BGartController {
 									cont++;
 									sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3710);
 									break;
-								}
-								
+								}								
 							}else{
 								process=false;
 								cont++;
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3722);
 								break;
-							}
-							
+							}							
 						}
 						if(process){
 							
@@ -1774,9 +2118,7 @@ public class Formato12BGartController {
 								  				formulario.setCostoUnitValFisiCanjL(new BigDecimal(0.00));
 								  				formulario.setCostoUnitValDigitCanjL(new BigDecimal(0.00));
 								  				formulario.setCostoUnitAtencionesL(new BigDecimal(0.00));
-											}
-											
-											
+											}						
 										}
 									}
 									
@@ -1957,29 +2299,23 @@ public class Formato12BGartController {
 							}else{
 								cont++;
 								sMsg = fiseUtil.agregarErrorBeanConMensaje(sMsg, mapaErrores, listaError, cont, FiseConstants.COD_ERROR_F12B_3720);
-							}
-							
+							}							
 						}
 					}else{
 						cont++;
 						sMsg = sMsg + "El archivo cargado debe contener información para el Formato 12B ";
 						throw new Exception("El archivo cargado debe contener información para el Formato 12B ");
 					}
-					is.close();
-					
+					is.close();					
 				}else{
 					cont++;
 					sMsg = sMsg + "El nombre del archivo debe corresponder al periodo a declarar ";
 					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
-				}
-				
-				
+				}				
 			}else{
 				throw new Exception(mapaErrores.get(FiseConstants.COD_ERROR_3666));
-			}
-			
-		}catch (Exception e) {			   
-			  //refer.setCondicion(false);				  
+			}			
+		}catch (Exception e) {					  
 			String error = e.getMessage();
 			if( FiseConstants.BLANCO.equals(error.trim()) ){
 				error = mapaErrores.get(FiseConstants.COD_ERROR_3633);
@@ -1990,701 +2326,21 @@ public class Formato12BGartController {
 			MensajeErrorBean errorBean = new MensajeErrorBean();
 			errorBean.setId(cont);
 			errorBean.setDescripcion(error);
-			listaError.add(errorBean);
-			  //throw new Exception(error); 
-			  			   
-		  }
-		//pRequest.getPortletSession().setAttribute("MensajeInformacion", sMsg, PortletSession.APPLICATION_SCOPE);
+			listaError.add(errorBean);			  			   
+		  }		
 		formatoMensaje.setFiseFormato12BC(objeto);
 		formatoMensaje.setMensajeError(sMsg);
 		if(listaError.size()>0)
 			formatoMensaje.setListaMensajeError(listaError);
 		
 		return formatoMensaje;
-	}
+	}	
 	
-	/*****/
-	
-	@ActionMapping(params = "action=uploadFile2")
-	public void uploadFile(ActionRequest request, ActionResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
-		logger.info("aqui en upload controller");
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(request);
-		
-		String tipoaccion = uploadPortletRequest.getParameter("tipoOperacion");
-		String typeFile = uploadPortletRequest.getParameter("typeFile");
-		
-		logger.info("TIPO FILE ::"+typeFile);
-		String codEmp = null;
-		String periodo = null;
-		
-		String anoEjecucion = uploadPortletRequest.getParameter("anoEjecucionGasto");
-		String mesEjecucion = uploadPortletRequest.getParameter("mesEjecucionGasto");
-		
-		if(tipoaccion != null && tipoaccion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))){
-			 codEmp = uploadPortletRequest.getParameter("codEmpresaHidden");
-			 periodo = uploadPortletRequest.getParameter("peridoDeclaracionHidden");
-			
-		}else{
-			 codEmp = uploadPortletRequest.getParameter("codEmpresa");
-			 periodo = uploadPortletRequest.getParameter("peridoDeclaracion");
-		}		
-		
-		FiseFormato12BCPK cabeceraPk = new FiseFormato12BCPK();
-		cabeceraPk.setCodEmpresa(codEmp);
-		if (periodo != null && periodo.length() > 6) {
-			cabeceraPk.setAnoPresentacion(Integer.parseInt(periodo.substring(0, 4)));
-			try{
-				cabeceraPk.setMesPresentacion(Integer.parseInt(periodo.substring(4, 6)));
-				cabeceraPk.setEtapa(periodo.substring(6, periodo.length()));
-			}catch(NumberFormatException e){
-				cabeceraPk.setMesPresentacion(Integer.parseInt(periodo.substring(4, 5)));
-				cabeceraPk.setEtapa(periodo.substring(5, periodo.length()));
-			}		
-			command.setPeridoDeclaracion(periodo);
-			command.setPeridoDeclaracion(FiseUtil.descripcionPeriodo(cabeceraPk.getMesPresentacion().longValue(), cabeceraPk.getAnoPresentacion().longValue(), cabeceraPk.getEtapa()));
-
-		}
-		cabeceraPk.setAnoEjecucionGasto(Integer.parseInt(anoEjecucion));
-		cabeceraPk.setMesEjecucionGasto(Integer.parseInt(mesEjecucion));
-		
-		logger.info("tipoaccion::" + tipoaccion);
-		logger.info("codEmp::" + codEmp);
-		logger.info("periodo::" + periodo);
-		
-		List<MensajeErrorBean> lstErrores=new ArrayList<MensajeErrorBean>();
-		
-			try{
-				if(typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_XLS+"")){
-					FileEntry fileEntry = fiseUtil.subirDocumento(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_XLS);
-					lstErrores = readExcelFile(fileEntry, themeDisplay, cabeceraPk, tipoaccion, fiseUtil);
-				}else if(typeFile.trim().equalsIgnoreCase(FiseConstants.TYPE_FILE_TXT+"")){
-					FileEntry fileEntry = fiseUtil.subirDocumentoTxt(request, uploadPortletRequest, FiseConstants.TIPOARCHIVO_TXT);
-					lstErrores = readTxtFile(fileEntry, themeDisplay, cabeceraPk, tipoaccion, fiseUtil);
-			   }
-				
-				
-			}catch(FileMimeTypeException ex){
-				ex.printStackTrace();
-				MensajeErrorBean msg = new MensajeErrorBean();
-				msg.setId(1);
-				msg.setDescripcion("Debe seleccionar una archivo");
-				lstErrores.add(msg);
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		
-		
-		if (lstErrores != null && !lstErrores.isEmpty()) {
-			if (tipoaccion != null && tipoaccion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) {
-				response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.UPDATE));
-				response.setRenderParameter("action", "viewFormato");
-
-			} else {
-				response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.ADD));
-				response.setRenderParameter("action", "newFormato");
-			}
-			response.setRenderParameter("error", lstErrores.get(0).getDescripcion().substring(lstErrores.get(0).getDescripcion().indexOf(":")+1 , lstErrores.get(0).getDescripcion().length()));
-		} else {
-			response.setRenderParameter("tipoOperacion", String.valueOf(FiseConstants.UPDATE));
-			response.setRenderParameter("error", "El Formato 12B se guardó satisfactoriamente");
-			response.setRenderParameter("action", "viewFormato");
-		}
-		
-
-		
-		response.setRenderParameter("codEmpresa", codEmp);
-		response.setRenderParameter("codEmpresaHidden", codEmp);
-		response.setRenderParameter("peridoDeclaracion", periodo);
-		response.setRenderParameter("peridoDeclaracionHidden", periodo);
-		response.setRenderParameter("anoPresentacion", cabeceraPk.getAnoPresentacion() + "");
-		response.setRenderParameter("mesPresentacion", cabeceraPk.getMesPresentacion() + "");
-		response.setRenderParameter("etapa", cabeceraPk.getEtapa());
-		response.setRenderParameter("anoEjecucionGasto", cabeceraPk.getAnoEjecucionGasto() + "");
-		response.setRenderParameter("mesEjecucionGasto", cabeceraPk.getMesEjecucionGasto() + "");
-		
-		
-
-	}
-
-	
-	public List<MensajeErrorBean> readExcelFile(FileEntry archivo, ThemeDisplay themeDisplay, FiseFormato12BCPK pk, String tipoOperacion, FiseUtil util) {
-		InputStream is = null;
-		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
-		int cont = 0;
-		try {
-
-			if (archivo != null) {
-				is = archivo.getContentStream();
-				HSSFWorkbook libro = new HSSFWorkbook(is);
-				if (libro != null) {
-					FiseFormato12BCPK resultPk = FormatoExcelImport.readSheetCabecera12B(libro);
-					List<FiseFormato12BD> lstDetalle = FormatoExcelImport.getListDetalleSheet12B(libro, resultPk, util);
-					if (resultPk != null) {
-						logger.info("empresa::" + pk.getCodEmpresa() + "vs" + resultPk.getCodEmpresa());
-						logger.info("anio::" + pk.getAnoPresentacion() + "vs" + resultPk.getAnoPresentacion());
-						logger.info("mes::" + pk.getMesPresentacion() + "vs" + resultPk.getMesPresentacion());
-						logger.info("etapa::" + pk.getEtapa() + "vs" + resultPk.getEtapa());
-
-						if (pk.getCodEmpresa().trim().equalsIgnoreCase(resultPk.getCodEmpresa().trim()) && pk.getAnoPresentacion().intValue() == resultPk.getAnoPresentacion().intValue() && pk.getMesPresentacion().intValue() == resultPk.getMesPresentacion().intValue()) {
-
-							FiseFormato12BC fise12BC = new FiseFormato12BC();
-							resultPk.setEtapa(pk.getEtapa());
-							resultPk.setAnoEjecucionGasto(resultPk.getAnoPresentacion());
-							resultPk.setMesEjecucionGasto(resultPk.getMesPresentacion());
-							fise12BC.setId(resultPk);
-							fise12BC.setNombreArchivoExcel(archivo.getTitle());
-							if (tipoOperacion != null && tipoOperacion.equalsIgnoreCase(String.valueOf(FiseConstants.UPDATE))) {
-								fise12BC = formatoService.getFormatoCabeceraById(fise12BC.getId());
-								fise12BC.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-								fise12BC.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-								fise12BC.setFechaActualizacion(new Date());
-								Integer upDate = formatoService.updateFormatoCabecera(fise12BC);
-								if (upDate != null && upDate > 0) {
-									if (lstDetalle != null && !lstDetalle.isEmpty()) {
-										for (FiseFormato12BD detalle : lstDetalle) {
-											detalle.getId().setEtapa(pk.getEtapa());
-											detalle.setUsuarioCreacion(fise12BC.getUsuarioCreacion());
-											detalle.setTerminalCreacion(fise12BC.getTerminalCreacion());
-											 detalle.setFechaCreacion(fise12BC.getFechaCreacion());
-											detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-											detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-											 detalle.setFechaActualizacion(new Date());
-											//formatoService.deleteFormatoObs(detalle.getId().getCodEmpresa().trim(), detalle.getId().getAnoPresentacion(), detalle.getId().getMesPresentacion(),detalle.getId().getEtapa(),detalle.getId().getAnoEjecucionGasto(), detalle.getId().getMesEjecucionGasto(),detalle.getId().getIdZonaBenef(),null);
-											formatoService.updateFormatoDetalle(detalle); 
-											
-										}
-									}
-									
-								}
-								
-							
-								
-							} else {
-
-								fise12BC.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-								fise12BC.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-								fise12BC.setFechaCreacion(new Date());
-								FiseGrupoInformacion grupoInfo = null;
-								long idGrupoInf = commonService.obtenerIdGrupoInformacion(fise12BC.getId().getAnoPresentacion().longValue(), fise12BC.getId().getMesPresentacion().longValue(),FiseConstants.MENSUAL.trim());
-								if (idGrupoInf != 0) {
-									grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
-									//nameGrupo = grupoInfo.getDescripcion();
-								}
-								fise12BC.setFiseGrupoInformacion(grupoInfo);
-
-								//nameEstado = FiseConstants.ESTADO_FECHAENVIO_POR_ENVIAR;
-								//nameEstado = "Abierto";
-								fise12BC = formatoService.saveFormatoCabecera(fise12BC);
-								logger.info("fise12BC" + fise12BC);
-								if (fise12BC != null) {
-									logger.info("diferente de nulo");
-									if (lstDetalle != null && !lstDetalle.isEmpty()) {
-									
-										for (FiseFormato12BD detalle : lstDetalle) {
-											detalle.getId().setEtapa(pk.getEtapa());
-											detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-											detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-											detalle.setFechaCreacion(new Date());
-											formatoService.saveFormatoDetalle(detalle);
-											
-
-										}
-									}
-								}
-
-							}
-
-							
-
-						} else {
-							throw new Exception("La Distribuidora Eléctrica y/o el Año Mes no coinciden con lo seleccionado");
-						}
-					}
-				}/* else {
-					throw new Exception("Libro vacio");
-				}*/
-
-			} else {
-				throw new Exception("El archivo cargado no contiene datos para ser procesado");
-			}
-		}/*catch(ConstraintViolationException c){
-			c.printStackTrace();
-			MensajeErrorBean msg = new MensajeErrorBean();
-			msg.setId(cont);
-			msg.setDescripcion("El formato ya existe");
-			listaError.add(msg);
-			
-		}*/ catch (DataIntegrityViolationException ex) {
-			ex.printStackTrace();
-			MensajeErrorBean msg = new MensajeErrorBean();
-			msg.setId(cont);
-			msg.setDescripcion("El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar");
-			listaError.add(msg);
-			
-		} catch (Exception ex) {
-			MensajeErrorBean msg = new MensajeErrorBean();
-			msg.setId(cont);
-			//msg.setDescripcion("Se produjo un error al guardar los datos del Formato 12B");
-			msg.setDescripcion(ex.toString());
-			listaError.add(msg);
-
-		}
-
-		return listaError;
-	}
-
-
-	public List<MensajeErrorBean> readTxtFile(FileEntry archivo, ThemeDisplay themeDisplay, FiseFormato12BCPK pk, String tipoOperacion, FiseUtil util) {
-		InputStream is = null;
-		List<MensajeErrorBean> listaError = new ArrayList<MensajeErrorBean>();
-		int cont = 0;
-		try {
-
-			if (archivo != null) {
-				is = archivo.getContentStream();
-				CfgTabla tabla = new CfgTabla();
-				tabla.setIdTabla(FiseConstants.ID_TABLA_FORMATO12B);
-				List<CfgCampo> listaCampo = campoService.listarCamposByTabla(tabla);
-				List<CfgCampo> listaCampoRead=new ArrayList<CfgCampo>();
-				int lenghtEmpresa=0;
-				int lenghtAnioPres=0;
-				int lenghtMesPres=0;
-				int lenghtAnioEjec=0;
-				int lenghtMesEjec=0;
-				int lenghtZona=0;
-				
-				int lenghtValesImp=0;
-				int lenghtValeRepartido=0;
-				int lenghtValeEntrDE=0;
-				int lenghtValeFisico=0;
-				int lenghtValeDigital=0;
-				int lenghtAtenciones=0;
-				int lenghtGestion=0;
-				int lenghtDesplazamiento=0;
-				int lenghtActividades=0;
-				int lenghtReconocer=0;
-				
-				int lenghtCostoValesImp=0;
-				int lenghtCostoValeRepartido=0;
-				int lenghtCostoValeEntrDE=0;
-				int lenghtCostoValeFisico=0;
-				int lenghtCostoValeDigital=0;
-				int lenghtCostoAtenciones=0;
-				int lenghtTotalValesImp=0;
-				int lenghtTotalValeRepartido=0;
-				int lenghtTotalValeEntrDE=0;
-				int lenghtTotalValeFisico=0;
-				int lenghtTotalValeDigital=0;
-				int lenghtTotalAtenciones=0;
-				
-				String nombreIdeal = FormatoUtil.nombreArchivoCargaTxt(Long.parseLong(pk.getAnoPresentacion().toString()), Long.parseLong(pk.getMesPresentacion().toString()), pk.getCodEmpresa(), FiseConstants.TIPO_FORMATO_12B);
-				if( nombreIdeal.trim().equals(archivo.getDescription().trim()) ){
-					//---
-					if(listaCampo!=null && !listaCampo.isEmpty()){
-						
-						for(CfgCampo campo:listaCampo){
-							boolean isAdd=false;
-							logger.info("COD CAMPO::"+campo.getCodCampo());
-							if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COD_EMPRESA.trim())){
-								isAdd=true;
-								lenghtEmpresa=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ANO_PRESENTACION.trim())){
-								isAdd=true;
-								lenghtAnioPres=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_MES_PRESENTACION.trim())){
-								isAdd=true;
-								lenghtMesPres=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_ANO_EJECUCION_GASTO.trim())){
-								isAdd=true;
-								lenghtAnioEjec=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_MES_EJECUCION_GASTO.trim())){
-								isAdd=true;
-								lenghtMesEjec=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_ID_ZONA_BENEF.trim())){
-								isAdd=true;
-								lenghtZona=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_IMPRESO.trim())){
-								isAdd=true;
-								lenghtValesImp=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_REPARTIDOS_DOMI.trim())){
-								isAdd=true;
-								lenghtValeRepartido=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_ENTREGADO_DIS_EL.trim())){
-								isAdd=true;
-								lenghtValeEntrDE=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_FISICOS_CANJEADOS.trim())){
-								isAdd=true;
-								lenghtValeFisico=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_VALES_DIGITAL_CANJEADOS.trim())){
-								isAdd=true;
-								lenghtValeDigital=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_NUMERO_ATENCIONES.trim())){
-								isAdd=true;
-								lenghtAtenciones=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_GESTION_ADMINISTRATIVA.trim())){
-								isAdd=true;
-								lenghtGestion=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_DESPLAZAMIENTO_PERSONAL.trim())){
-								isAdd=true;
-								lenghtDesplazamiento=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_ACTIVIDADES_EXTRAORD.trim())){
-								isAdd=true;
-								lenghtActividades=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase( FiseConstants.CAMPO_TOTAL_RECONOCER.trim())){
-								isAdd=true;
-								lenghtReconocer=campo.getLongitud().intValue();
-								//************************COSTOS*************************//
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_IMPRE.trim())){
-								isAdd=false;
-								lenghtCostoValesImp=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_IMPRESION_VALE.trim())){
-								isAdd=false;
-								lenghtTotalValesImp=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VALE_REPAR.trim())){
-								isAdd=false;
-								lenghtCostoValeRepartido=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_REPARTO_VALES_DOMI.trim())){
-								isAdd=false;
-								lenghtTotalValeRepartido=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_DIS_EL.trim())){
-								isAdd=false;
-								lenghtCostoValeEntrDE=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_ENTREGA_VAL_DIS_EL.trim())){
-								isAdd=false;
-								lenghtTotalValeEntrDE=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_FI_CAN.trim())){
-								isAdd=false;
-								lenghtCostoValeFisico=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_CANJE_LIQ_VALE_FIS.trim())){
-								isAdd=false;
-								lenghtTotalValeFisico=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_VAL_DG_CAN.trim())){
-								isAdd=false;
-								lenghtCostoValeDigital=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_CANJE_LIQ_VALE_DIG.trim())){
-								isAdd=false;
-								lenghtTotalValeDigital=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_ESTANDAR_UNIT_ATENCION.trim())){
-								isAdd=false;
-								lenghtCostoAtenciones=campo.getLongitud().intValue();
-							}else if(campo.getCodCampo().trim().equalsIgnoreCase(FiseConstants.CAMPO_COSTO_TOTAL_ATENCION_CONS_RECL.trim())){
-								isAdd=false;
-								lenghtTotalAtenciones=campo.getLongitud().intValue();
-							}
-							
-							if(isAdd){
-								listaCampoRead.add(campo);
-							}
-							
-						}
-					}
-					logger.info("CANTIDAD CAMPOS ::"+listaCampoRead.size());
-					BufferedReader br = new BufferedReader( new InputStreamReader(is));
-					//List<String> listaDetalleTxt= new ArrayList<String>();
-					String sCurrentLine;
-					
-					List<FiseFormato12BD> lstDetalle=new ArrayList<FiseFormato12BD>();
-				
-					while ((sCurrentLine = br.readLine()) != null) {
-						logger.info("total::"+sCurrentLine.length());
-						logger.info(sCurrentLine);
-						int posInicial=0;
-						String codEm=sCurrentLine.substring(posInicial, lenghtEmpresa);
-						posInicial=posInicial+lenghtEmpresa;
-						logger.info("codEm ::"+codEm+"/"+posInicial+"/"+lenghtAnioPres);//0+4
-						logger.info("sCurrentLine ::"+sCurrentLine.length());//0+4
-							
-						String anioPres=sCurrentLine.substring(posInicial, posInicial+lenghtAnioPres);
-						logger.info("anioPres ::"+anioPres+"/"+posInicial);
-						posInicial=posInicial+lenghtAnioPres;
-						String mesPres=sCurrentLine.substring(posInicial, posInicial+lenghtMesPres);
-						logger.info("mesPres ::"+mesPres+"/"+posInicial);
-						posInicial=posInicial+lenghtMesPres;
-						String anioEjec=sCurrentLine.substring(posInicial, posInicial+lenghtAnioEjec);
-						logger.info("anioEjec ::"+anioEjec+"/"+posInicial);
-						posInicial=posInicial+lenghtAnioEjec;
-						String mesEjec=sCurrentLine.substring(posInicial, posInicial+lenghtMesEjec);
-						logger.info("mesEjec ::"+mesEjec+"/"+posInicial);
-						posInicial=posInicial+lenghtMesEjec;
-						String idzon=sCurrentLine.substring(posInicial, posInicial+lenghtZona);
-						logger.info("idzon ::"+idzon+"/"+posInicial);
-						posInicial=posInicial+lenghtZona;
-							
-							
-						String numValesImp=sCurrentLine.substring(posInicial,posInicial+ lenghtValesImp);
-						posInicial=posInicial+lenghtValesImp+lenghtCostoValesImp+lenghtTotalValesImp;
-						String numValesRepar=sCurrentLine.substring(posInicial, posInicial+lenghtValeRepartido);
-						posInicial=posInicial+lenghtValeRepartido+lenghtCostoValeRepartido+lenghtTotalValeRepartido;
-						String numValesEntrDE=sCurrentLine.substring(posInicial, posInicial+lenghtValeEntrDE);
-						posInicial=posInicial+lenghtValeEntrDE+lenghtCostoValeEntrDE+lenghtTotalValeEntrDE;
-						String numValesFisico=sCurrentLine.substring(posInicial, posInicial+lenghtValeFisico);
-						posInicial=posInicial+lenghtValeFisico+lenghtCostoValeFisico+lenghtTotalValeFisico;
-						String numValesDigital=sCurrentLine.substring(posInicial, posInicial+lenghtValeDigital);
-						posInicial=posInicial+lenghtValeDigital+lenghtCostoValeDigital+lenghtTotalValeDigital;
-						String numValeAtenciones=sCurrentLine.substring(posInicial, posInicial+lenghtAtenciones);
-						posInicial=posInicial+lenghtAtenciones+lenghtCostoAtenciones+lenghtTotalAtenciones;
-						String numValeGestion=sCurrentLine.substring(posInicial, posInicial+lenghtGestion);
-						posInicial=posInicial+lenghtGestion;
-						String numValeDesplazamiento=sCurrentLine.substring(posInicial, posInicial+lenghtDesplazamiento);
-						posInicial=posInicial+lenghtDesplazamiento;
-						String numValeActividad=sCurrentLine.substring(posInicial, posInicial+lenghtActividades);
-						posInicial=posInicial+lenghtActividades;
-						String totalreconocer=sCurrentLine.substring(posInicial, posInicial+lenghtReconocer);
-							
-							
-						logger.info("codEm**LG ::"+codEm);
-						logger.info("anioPres**LG ::"+anioPres);
-						logger.info("mesPres**LG ::"+mesPres);
-						
-						logger.info("anioEjec**LG ::"+anioEjec);
-						logger.info("mesEjec**LG ::"+mesEjec);
-						logger.info("Zona**LG ::"+idzon);
-						logger.info("numValesImp**LG ::"+numValesImp);
-						logger.info("numValesRepar**LG ::"+numValesRepar);
-						logger.info("numValesEntrDE**LG ::"+numValesEntrDE);
-						logger.info("numValesFisico**LG ::"+numValesFisico);
-						logger.info("numValesDigital**LG ::"+numValesDigital);
-						logger.info("numValeAtenciones**LG ::"+numValeAtenciones);
-						logger.info("numValeGestion**LG ::"+numValeGestion);
-						logger.info("numValeDesplazamiento**LG ::"+numValeDesplazamiento);
-						logger.info("numValeActividad**LG ::"+numValeActividad);
-						logger.info("totalreconocer**LG ::"+totalreconocer);
-						  
-								 
-						validarCampos(anioPres, "Año de Presentación", 3, 0);//validar vacio
-						validarCampos(mesPres, "Mes de Presentación", 3, 0);//validar vacio
-						validarCampos(anioEjec, "Año de Ejecución", 3, 0);//validar vacio
-						validarCampos(mesEjec, "Mes de Ejecución", 3, 0);//validar vacio
-						validarCampos(anioPres, "Año de Presentacion", 1, 4);//validar tamaño
-						validarCampos(mesPres, "Mes de Presentación", 2, 0);//validar rango
-						validarCampos(anioEjec, "Año de Ejecución", 1, 4);//validar tamaño
-						validarCampos(mesEjec, "Mes de Ejecución", 2, 0);//validar rango
-						
-						/**validacion adicional*/
-						/*if( (Long.parseLong(anioEjec)*100+Long.parseLong(mesEjec))>(Long.parseLong(anioPres)*100+Long.parseLong(mesPres)) ){
-							throw new Exception("El Periodo de Ejecución no puede ser mayor al Periodo a Declarar");
-						}*/
-						
-						
-						validarCampos(numValesImp, "Número de vales Impreso", 4, 0);//number formart
-						validarCampos(numValesRepar, "Número de vales a Domicilio", 4, 0);//number formart
-						validarCampos(numValesEntrDE, "Número de vales de Distribuidora", 4, 0);//number formart
-						validarCampos(numValesFisico, "Número de vales Fisicos", 4, 0);//number formart
-						validarCampos(numValesDigital, "Número de vales Digitales", 4, 0);//number formart
-						validarCampos(numValeAtenciones, "Número Atenciones ", 4, 0);//number formart
-						validarCampos(numValeGestion, "Gestión administrativa", 5, 0);//number formart
-						validarCampos(numValeDesplazamiento, "Desplazamiento personal", 5, 0);//number formart
-						validarCampos(numValeActividad, "Actividades extraordinarias", 5, 0);//number formart
-						validarCampos(totalreconocer, "Total a reconocer", 5, 0);//number formart
-							
-						   
-						    
-						if(pk.getCodEmpresa().trim().equalsIgnoreCase(codEm.trim()) &&  pk.getAnoPresentacion()== Integer.parseInt(anioPres) && pk.getMesPresentacion()== Integer.parseInt(mesPres)
-								&& pk.getAnoEjecucionGasto()==Integer.parseInt(anioEjec) && pk.getMesEjecucionGasto()==Integer.parseInt(mesEjec)
-								){
-							
-							boolean process = true;
-								
-							if( FiseConstants.ZONABENEF_LIMA_COD_STRING.equals(idzon.trim()) ){
-								if( FiseConstants.COD_EMPRESA_EDELNOR.equalsIgnoreCase(pk.getCodEmpresa().trim()) || FiseConstants.COD_EMPRESA_LUZ_SUR.equalsIgnoreCase(pk.getCodEmpresa().trim()) ){
-									process = true;
-								}else{
-									process = false;
-								}
-							}else{
-								process = true;
-							}
-					
-							if(process){
-								FiseFormato12BDPK pkDetalle=new FiseFormato12BDPK();
-								FiseFormato12BD detalle=new FiseFormato12BD();
-								pkDetalle.setCodEmpresa(codEm);
-								pkDetalle.setAnoEjecucionGasto(Integer.parseInt(anioEjec));
-								pkDetalle.setAnoPresentacion(Integer.parseInt(anioEjec));
-								pkDetalle.setEtapa(pk.getEtapa());
-								pkDetalle.setIdZonaBenef(Integer.parseInt(idzon));
-								pkDetalle.setMesEjecucionGasto(Integer.parseInt(mesEjec));
-								pkDetalle.setMesPresentacion(Integer.parseInt(mesPres));
-									   
-								FiseFormato14BD fise14D=util.getDetalle14BDbyEmpAnioEtapa(pkDetalle.getCodEmpresa().trim(), pkDetalle.getAnoPresentacion(),null, pkDetalle.getIdZonaBenef(), FiseConstants.ETAPA_ESTABLECIDO);
-								// formato.setCostoEstandarUnitValeImpre((fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null)?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0.00));
-								detalle.setNumeroValesImpreso(numValesImp.trim()!=null && !numValesImp.trim().isEmpty()?Integer.parseInt(numValesImp.trim()):0);
-								detalle.setCostoEstandarUnitValeImpre(fise14D!=null && fise14D.getCostoUnitarioImpresionVales()!=null?fise14D.getCostoUnitarioImpresionVales():new BigDecimal(0));
-								detalle.setCostoTotalImpresionVale(detalle.getCostoEstandarUnitValeImpre().multiply(new BigDecimal(detalle.getNumeroValesImpreso())).setScale(2, BigDecimal.ROUND_DOWN));
-										  
-								detalle.setNumeroValesRepartidosDomi(numValesRepar.trim()!=null && !numValesRepar.trim().isEmpty()?Integer.parseInt(numValesRepar.trim()):0);
-								detalle.setCostoEstandarUnitValeRepar(fise14D!=null && fise14D.getCostoUnitReprtoValeDomici()!=null?fise14D.getCostoUnitReprtoValeDomici():new BigDecimal(0));
-								detalle.setCostoTotalRepartoValesDomi(detalle.getCostoEstandarUnitValeRepar().multiply(new BigDecimal(detalle.getNumeroValesRepartidosDomi())).setScale(2, BigDecimal.ROUND_DOWN));
-										  
-								detalle.setNumeroValesEntregadoDisEl(numValesEntrDE.trim()!=null && !numValesEntrDE.trim().isEmpty()?Integer.parseInt(numValesEntrDE.trim()):0);
-								detalle.setCostoEstandarUnitValDisEl(fise14D!=null && fise14D.getCostoUnitEntregaValDisEl()!=null?fise14D.getCostoUnitEntregaValDisEl():new BigDecimal(0));
-								detalle.setCostoTotalEntregaValDisEl(detalle.getCostoEstandarUnitValDisEl().multiply(new BigDecimal(detalle.getNumeroValesEntregadoDisEl()) ).setScale(2, BigDecimal.ROUND_DOWN));
-								  
-								detalle.setNumeroValesFisicosCanjeados(numValesFisico.trim()!=null && !numValesFisico.trim().isEmpty()?Integer.parseInt(numValesFisico.trim()):0);
-								detalle.setCostoEstandarUnitValFiCan(fise14D!=null && fise14D.getCostoUnitCanjeLiqValFisi()!=null?fise14D.getCostoUnitCanjeLiqValFisi():new BigDecimal(0));
-								detalle.setCostoTotalCanjeLiqValeFis(detalle.getCostoEstandarUnitValFiCan().multiply(new BigDecimal(detalle.getNumeroValesFisicosCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
-										  
-								detalle.setNumeroValesDigitalCanjeados(numValesDigital.trim()!=null && !numValesDigital.trim().isEmpty()?Integer.parseInt(numValesDigital.trim()):0);
-								detalle.setCostoEstandarUnitValDgCan(fise14D!=null && fise14D.getCostoUnitCanjeValDigital()!=null?fise14D.getCostoUnitCanjeValDigital():new BigDecimal(0));
-								detalle.setCostoTotalCanjeLiqValeDig(detalle.getCostoEstandarUnitValDgCan().multiply(new BigDecimal(detalle.getNumeroValesDigitalCanjeados()) ).setScale(2, BigDecimal.ROUND_DOWN));
-								  
-								detalle.setNumeroAtenciones(numValeAtenciones.trim()!=null && !numValeAtenciones.trim().isEmpty()?Integer.parseInt(numValeAtenciones.trim()):0);
-								detalle.setCostoEstandarUnitAtencion(fise14D!=null && fise14D.getCostoUnitarioPorAtencion()!=null?fise14D.getCostoUnitarioPorAtencion():new BigDecimal(0).setScale(2, BigDecimal.ROUND_DOWN));
-								detalle.setCostoTotalAtencionConsRecl(detalle.getCostoEstandarUnitAtencion().multiply(new BigDecimal(detalle.getNumeroAtenciones()) ));
-										  
-								detalle.setTotalGestionAdministrativa(numValeGestion.trim()!=null && !numValeGestion.trim().isEmpty()?new BigDecimal(numValeGestion.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0) );
-								detalle.setTotalDesplazamientoPersonal(numValeDesplazamiento.trim()!=null && !numValeDesplazamiento.trim().isEmpty()?new BigDecimal(numValeDesplazamiento.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-								detalle.setTotalActividadesExtraord(numValeActividad.trim()!=null && !numValeActividad.trim().isEmpty()?new BigDecimal(numValeActividad.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-										  
-								detalle.setTotalReconocer(totalreconocer.trim()!=null && !totalreconocer.trim().isEmpty()?new BigDecimal(totalreconocer.trim()).setScale(2, BigDecimal.ROUND_DOWN):new BigDecimal(0));
-									   
-										  
-										  
-								detalle.setId(pkDetalle);
-								lstDetalle.add(detalle);
-							}
-
-								   
-						}else{
-							//El archivo cargado no corresponde a la Distribuidora Eléctrica, Mes o Año de Presentación del registro del formulario
-							throw new Exception("El archivo cargado no corresponde a la Distribuidora Eléctrica, Año de Presentación, Mes de Presentación, Año de Ejecución o Mes de Ejecución del registro del formulario");
-						}
-							
-					}
-					if(lstDetalle!=null && !lstDetalle.isEmpty()){
-						FiseFormato12BCPK pkCabecera=new FiseFormato12BCPK();
-						FiseFormato12BC cabecera=new FiseFormato12BC();
-						 
-						pkCabecera.setCodEmpresa(lstDetalle.get(0).getId().getCodEmpresa());
-						pkCabecera.setAnoEjecucionGasto(lstDetalle.get(0).getId().getAnoEjecucionGasto());
-						pkCabecera.setAnoPresentacion(lstDetalle.get(0).getId().getAnoPresentacion());
-						pkCabecera.setEtapa(lstDetalle.get(0).getId().getEtapa());
-						pkCabecera.setMesEjecucionGasto(lstDetalle.get(0).getId().getMesEjecucionGasto());
-						pkCabecera.setMesPresentacion(lstDetalle.get(0).getId().getMesPresentacion());
-						cabecera.setId(pkCabecera);
-						cabecera.setNombreArchivoTexto(archivo.getTitle());
-						FiseGrupoInformacion grupoInfo = null;
-						long idGrupoInf = commonService.obtenerIdGrupoInformacion(cabecera.getId().getAnoPresentacion().longValue(), cabecera.getId().getMesPresentacion().longValue(),FiseConstants.MENSUAL.trim());
-						if (idGrupoInf != 0) {
-							grupoInfo = commonService.obtenerFiseGrupoInformacionByPK(idGrupoInf);
-							//nameGrupo = grupoInfo.getDescripcion();
-						}
-						cabecera.setFiseGrupoInformacion(grupoInfo);
-						 
-						 
-						
-						if(tipoOperacion.equalsIgnoreCase(FiseConstants.ADD+"")){
-							cabecera.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-							cabecera.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-							cabecera.setFechaCreacion(new Date());
-							 
-							cabecera=formatoService.saveFormatoCabecera(cabecera);
-							 
-							for(FiseFormato12BD detalle:lstDetalle){
-								detalle.setUsuarioCreacion(themeDisplay.getUser().getLogin());
-								detalle.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
-								detalle.setFechaCreacion(new Date());
-								formatoService.saveFormatoDetalle(detalle);
-							}
-							 
-						}else if(tipoOperacion.equalsIgnoreCase(FiseConstants.UPDATE+"")){
-							 
-							cabecera.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-							cabecera.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-							cabecera.setFechaActualizacion(new Date());
-							 
-	                        formatoService.updateFormatoCabecera(cabecera);
-							 
-							for(FiseFormato12BD detalle:lstDetalle){
-								detalle.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
-								detalle.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-								detalle.setFechaActualizacion(new Date());
-								formatoService.updateFormatoDetalle(detalle);
-							}
-						}
-						 
-					}else{
-						throw new Exception("El archivo cargado no contiene datos para ser procesado");
-					}
-					//---
-				}else{
-					throw new Exception("El nombre del archivo debe corresponder al periodo a declarar ");
-				}
-
-			} 
-			
-			
-			
-		}/*catch(ConstraintViolationException c){
-			c.printStackTrace();
-			MensajeErrorBean msg = new MensajeErrorBean();
-			msg.setId(cont);
-			msg.setDescripcion("El formato ya existe");
-			listaError.add(msg);
-			
-		} */catch (DataIntegrityViolationException ex) {
-			ex.printStackTrace();
-			MensajeErrorBean msg = new MensajeErrorBean();
-			msg.setId(cont);
-			//msg.setDescripcion(ex.toString());
-			msg.setDescripcion("El Formato ya existe para la Distribuidora Eléctrica y Periodo a Declarar");
-			listaError.add(msg);
-			
-		}catch (NumberFormatException ex) {
-			MensajeErrorBean msg = new MensajeErrorBean();
-			msg.setId(cont);
-			//msg.setDescripcion(ex.toString());
-			msg.setDescripcion("El formato no es válido");
-			listaError.add(msg);
-
-		} catch (Exception ex) {
-			MensajeErrorBean msg = new MensajeErrorBean();
-			msg.setId(cont);
-			msg.setDescripcion(ex.toString());
-			//msg.setDescripcion("Se produjo un error al guardar los datos del Formato 12B");
-			listaError.add(msg);
-
-		}
-
-		return listaError;
-	
-	}
-	
-	private void validarCampos(String valor,String nameCampo,int tipo,int length)throws NumberFormatException,Exception{
-		
-		if(tipo == 1){//longitud d campo
-			if(valor.trim().length()<length){
-				throw new Exception("Formato no válido para el campo "+nameCampo);
-			}
-		}else if(tipo == 2){//rango mes
-			if(Integer.parseInt(valor.trim())==0 || Integer.parseInt(valor.trim())>12){
-				throw new Exception("Rango no válido para "+nameCampo);
-			}
-		}else if(tipo == 3){//campo vacio
-			if(valor.length()==0){
-				throw new Exception("El campo "+nameCampo+ "no acepta valores vacios");
-			}
-		}else if(tipo == 4){
-			try{
-				Integer.parseInt(valor.trim());
-			}catch(Exception e){
-				throw new NumberFormatException("Formato no válido para el campo "+nameCampo);
-			}
-			
-		}else if(tipo == 5){
-			try{
-				Double.parseDouble(valor.trim());
-			}catch(Exception e){
-				throw new NumberFormatException("Formato no válido para el campo "+nameCampo);
-			}			
-		}
-	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "action=viewFormato")
-	public String viewFormato(ModelMap model, RenderRequest request, RenderResponse response, @ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
+	public String viewFormato(ModelMap model, RenderRequest request, RenderResponse response, 
+			@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
 
 		PortletRequest pRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
@@ -2693,9 +2349,10 @@ public class Formato12BGartController {
 		logger.info("command busqueda::"+command.getAnioInicio());
     
 		String codEmpresa = request.getParameter("codEmpresa");
-		String periodo = request.getParameter("periodoDeclaracion");
+		String periodo = request.getParameter("periodoDeclaracion");		
 		String codEmpresaHidden = request.getParameter("codEmpresaHidden");
 		String periodoHidden = request.getParameter("peridoDeclaracionHidden");
+		
 		String error = request.getParameter("error");
 
 		String anio = request.getParameter("anoPresentacion");
@@ -2703,6 +2360,8 @@ public class Formato12BGartController {
 		String etapa = request.getParameter("etapa");
 		String anioEjec = request.getParameter("anoEjecucionGasto");
 		String mesEjec = request.getParameter("mesEjecucionGasto");
+		
+		String codigoPeriodoEnvio = "";
 		
 		String msg = request.getParameter("msgTrans");
 		
@@ -2750,14 +2409,37 @@ public class Formato12BGartController {
 		id.setEtapa(command.getEtapa());
 		id.setMesEjecucionGasto(command.getMesEjecucionGasto());
 		id.setMesPresentacion(command.getMesPresentacion() != null ? Integer.valueOf(command.getMesPresentacion()) : null);
+	
 		FiseFormato12BC cabeceraBean = formatoService.getFormatoCabeceraById(id);
 		
 		String flagOper = commonService.obtenerEstadoProceso(id.getCodEmpresa(),FiseConstants.TIPO_FORMATO_12B,id.getAnoPresentacion(),id.getMesPresentacion(),id.getEtapa());
 		command.setDescEstado(flagOper);
 		
+		//cambios elozano para obtener el flag editar costos		
+		codigoPeriodoEnvio =String.valueOf(cabeceraBean.getId().getAnoPresentacion())+
+				FormatoUtil.rellenaIzquierda(String.valueOf(cabeceraBean.getId().getMesPresentacion()), '0', 2)+
+				cabeceraBean.getId().getEtapa();
+		listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(cabeceraBean.getId().getCodEmpresa(),
+				FiseConstants.NOMBRE_FORMATO_12B);
+		String flagEditarCostos = "";
+		for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+			if(codigoPeriodoEnvio.equals(p.getCodigoItem()) ){					
+				flagEditarCostos= p.getFlagEditarCostosEst();
+				break;
+			}
+		}		
+		//pongo en session el flag editar costos para utilizarlo en carga de excel al actualizar
+		pRequest.getPortletSession().setAttribute("flagEditarCostoEdit", flagEditarCostos, PortletSession.APPLICATION_SCOPE);
+        //fin cambios elozano	
+		
 		command = Formato12BGartCommand.toCommandCabecera(cabeceraBean,command);
+		
 		List<FiseFormato12BD> lstFiseDetalle = formatoService.getLstFormatoDetalle(id);
+		
 		command = Formato12BGartCommand.toCommandDetalle(lstFiseDetalle, command);
+		logger.info("Flag para editar costos al editar y visualizar formato:  "+flagEditarCostos);
+		command.setFlagEditarCostoUnit(flagEditarCostos);//cambio elozano
+		
 		command.setTipoOperacion(tipoOperacion != null ? Integer.parseInt(tipoOperacion) : FiseConstants.VIEW);
 		command.setListaEmpresas(fiseUtil.getEmpresaxUsuario(request));
 		command.setListaMes(fiseUtil.getMapaMeses());
@@ -2769,13 +2451,15 @@ public class Formato12BGartController {
 		
 		model.addAttribute("formato12BGartCommand", command);
 		
-		 formato12BBusqueda=new Formato12BGartCommand();
+		 formato12BBusqueda = new Formato12BGartCommand();
          formato12BBusqueda.setAnioInicio(command.getAnioInicio());
          formato12BBusqueda.setAnioFin(command.getAnioFin());
          formato12BBusqueda.setMesInicio(command.getMesInicio());
+         
          logger.info("MES INICIO CARGA ****"+command.getAnioInicio());
          logger.info("MES INICIO CARGA ****"+command.getMesInicio());
          logger.info("EMORESA CARGADA CARGA ****"+command.getCodEmpresaBusqueda());
+         
          formato12BBusqueda.setMesFin(command.getMesFin());
          formato12BBusqueda.setEtapaBusqueda(command.getEtapaBusqueda());
          formato12BBusqueda.setCodEmpresaBusqueda(command.getCodEmpresaBusqueda());
@@ -2787,10 +2471,16 @@ public class Formato12BGartController {
          pRequest.getPortletSession().setAttribute("anoEjecucionEdit", String.valueOf(cabeceraBean.getId().getAnoEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
          pRequest.getPortletSession().setAttribute("mesEjecucionEdit", String.valueOf(cabeceraBean.getId().getMesEjecucionGasto()), PortletSession.APPLICATION_SCOPE);
          pRequest.getPortletSession().setAttribute("etapaEdit", cabeceraBean.getId().getEtapa(), PortletSession.APPLICATION_SCOPE);
+         
+         //cambios elozano guardo el periodo en session para despues utilizarlo en obtener costos unit fijados
+         pRequest.getPortletSession().setAttribute("codEmpresaCostosUnitFijado", cabeceraBean.getId().getCodEmpresa(), PortletSession.APPLICATION_SCOPE);
+         pRequest.getPortletSession().setAttribute("anioPresCostosUnitFijado", String.valueOf(cabeceraBean.getId().getAnoPresentacion()), PortletSession.APPLICATION_SCOPE);
+         
 
 		return "formato12BDetalle";
 	}
 
+	
 	@ResourceMapping("saveNuevoFormato")
 	public void saveNuevoFormato(ModelMap model, ResourceRequest request, ResourceResponse response, 
 			@ModelAttribute("formato12BGartCommand") Formato12BGartCommand command) {
@@ -2806,11 +2496,11 @@ public class Formato12BGartController {
 			logger.info("perido:" + command.getPeridoDeclaracion());
 			logger.info("empresaHiden::" + command.getCodEmpresaHidden());
 			logger.info("peridoHiden::" + command.getPeridoDeclaracionHidden());
-			logger.info("tipoOperacion::" + command.getTipoOperacion());
+			logger.error("tipoOperacion::" + command.getTipoOperacion());
 			logger.info("año presentacion::" + command.getAnoPresentacion());
 			logger.info("requestEmp::" + request.getParameter("codEmpresaHidden"));
 			logger.info("requestPeriodo::" + request.getParameter("peridoDeclaracionHidden"));
-			logger.info("flag periodo ejecucion del bean :  "+command.getFlagPeriodoEjecucion());	   
+			logger.error("flag periodo ejecucion del bean :  "+command.getFlagPeriodoEjecucion());				
   			
 			Integer anoEjecucion=0;
 			Integer mesEjecucion=0;
@@ -2823,9 +2513,12 @@ public class Formato12BGartController {
 			
 			FiseFormato12BCPK pkCbcr = new FiseFormato12BCPK();
 			FiseFormato12BC result = null;
-            logger.info("flag tipo operacion:     "+command.getTipoOperacion());
-			if (command.getTipoOperacion() != null && 
+            
+			logger.info("flag tipo operacion:     "+command.getTipoOperacion());
+			
+            if (command.getTipoOperacion() != null && 
 					command.getTipoOperacion().intValue() == FiseConstants.UPDATE) {
+				
 				command.setCodEmpresa(command.getCodEmpresaHidden().trim());
 				command.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
 				command.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
@@ -2839,30 +2532,91 @@ public class Formato12BGartController {
 				pkCbcr.setEtapa(command.getEtapa());
 				result = formatoService.getFormatoCabeceraById(pkCbcr);
 				
-				String flagOper = commonService.obtenerEstadoProceso(pkCbcr.getCodEmpresa(),FiseConstants.TIPO_FORMATO_12B,pkCbcr.getAnoPresentacion(),pkCbcr.getMesPresentacion(),pkCbcr.getEtapa());
+				String flagOper = commonService.obtenerEstadoProceso(pkCbcr.getCodEmpresa(),
+						FiseConstants.TIPO_FORMATO_12B,pkCbcr.getAnoPresentacion(),
+						pkCbcr.getMesPresentacion(),pkCbcr.getEtapa());
+				
 				command.setDescEstado(flagOper);
 				
-				//cambios elozano
-				detalleRuralPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_RURAL_COD);
-	  			if( detalleRuralPadre!=null ){  				
-	  				command.setTotalGestionAdministrativa(detalleRuralPadre.getCostoTotalGestionAdministra()); 
-	  			}else{
-	  				command.setTotalGestionAdministrativa(new BigDecimal(0.00));  				
-	  			}
-	  			detalleProvinciaPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_PROVINCIA_COD);
-	  			if( detalleProvinciaPadre!=null ){  				
-	  				command.setTotalGestionAdministrativaProv(detalleProvinciaPadre.getCostoTotalGestionAdministra()); 
-	  			}else{  				
-	  				command.setTotalGestionAdministrativaProv(new BigDecimal(0.00)); 
-	  			}
-	  			detalleLimaPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_LIMA_COD);
-	  			if( detalleLimaPadre!=null ){  				
-	  				command.setTotalGestionAdministrativaLim(detalleLimaPadre.getCostoTotalGestionAdministra()); 
-	  			}else{  				
-	  				command.setTotalGestionAdministrativaLim(new BigDecimal(0.00));
-	  			}	
-				//fin cambios elozano
+				//cambios elozano				
+				String codigoPeriodoEnvio = "";
 				
+				listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(pkCbcr.getCodEmpresa(),
+						FiseConstants.NOMBRE_FORMATO_12B);
+				
+				codigoPeriodoEnvio =String.valueOf(pkCbcr.getAnoPresentacion())+
+						FormatoUtil.rellenaIzquierda(String.valueOf(pkCbcr.getMesPresentacion()), '0', 2)+
+						pkCbcr.getEtapa();
+				
+				String flagEditarCostos = "";
+				
+				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+					if(codigoPeriodoEnvio.equals(p.getCodigoItem()) ){					
+						flagEditarCostos= p.getFlagEditarCostosEst();
+						break;
+					}
+				}		
+				logger.error("flag editar costos al actualizar un formato 12B:  "+flagEditarCostos);
+				
+				if("N".equals(flagEditarCostos)){ 
+					detalleRuralPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_RURAL_COD);		  			
+					if( detalleRuralPadre!=null ){  
+						command.setCostoEstandarUnitValeImpre(detalleRuralPadre.getCostoUnitarioImpresionVales());
+						command.setCostoEstandarUnitValeRepar(detalleRuralPadre.getCostoUnitReprtoValeDomici());					  				
+						command.setCostoEstandarUnitValDisEl(detalleRuralPadre.getCostoUnitEntregaValDisEl());
+						command.setCostoEstandarUnitValFiCan(detalleRuralPadre.getCostoUnitCanjeLiqValFisi());					  				
+						command.setCostoEstandarUnitValDgCan(detalleRuralPadre.getCostoUnitCanjeValDigital());
+		  				command.setCostoEstandarUnitAtencion(detalleRuralPadre.getCostoUnitarioPorAtencion());	
+		  				command.setTotalGestionAdministrativa(detalleRuralPadre.getCostoTotalGestionAdministra()); 
+		  			}else{
+		  				command.setCostoEstandarUnitValeImpre(new BigDecimal(0.00));
+						command.setCostoEstandarUnitValeRepar(new BigDecimal(0.00));					  				
+						command.setCostoEstandarUnitValDisEl(new BigDecimal(0.00));
+						command.setCostoEstandarUnitValFiCan(new BigDecimal(0.00));					  				
+						command.setCostoEstandarUnitValDgCan(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitAtencion(new BigDecimal(0.00));			  				
+		  				command.setTotalGestionAdministrativa(new BigDecimal(0.00));  				
+		  			}
+		  			
+		  			detalleProvinciaPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_PROVINCIA_COD);
+		  			if( detalleProvinciaPadre!=null ){ 
+		  				command.setCostoEstandarUnitValeImpreProv(detalleProvinciaPadre.getCostoUnitarioImpresionVales());
+		  				command.setCostoEstandarUnitValeReparProv(detalleProvinciaPadre.getCostoUnitReprtoValeDomici());
+		  				command.setCostoEstandarUnitValDisElProv(detalleProvinciaPadre.getCostoUnitEntregaValDisEl());
+		  				command.setCostoEstandarUnitValFiCanProv(detalleProvinciaPadre.getCostoUnitCanjeLiqValFisi());
+		  				command.setCostoEstandarUnitValDgCanProv(detalleProvinciaPadre.getCostoUnitCanjeValDigital());
+		  				command.setCostoEstandarUnitAtencionProv(detalleProvinciaPadre.getCostoUnitarioPorAtencion());		  				 				
+		  				command.setTotalGestionAdministrativaProv(detalleProvinciaPadre.getCostoTotalGestionAdministra()); 
+		  			}else{  	
+		  				command.setCostoEstandarUnitValeImpreProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValeReparProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValDisElProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValFiCanProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValDgCanProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitAtencionProv(new BigDecimal(0.00));			  				
+		  				command.setTotalGestionAdministrativaProv(new BigDecimal(0.00)); 
+		  			}			
+		  			
+		  			detalleLimaPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_LIMA_COD);
+		  			if(detalleLimaPadre!=null ){  	
+		  				command.setCostoEstandarUnitValeImpreLim(detalleLimaPadre.getCostoUnitarioImpresionVales());
+		  				command.setCostoEstandarUnitValeReparLim(detalleLimaPadre.getCostoUnitReprtoValeDomici());
+		  				command.setCostoEstandarUnitValDisElLim(detalleLimaPadre.getCostoUnitEntregaValDisEl());
+		  				command.setCostoEstandarUnitValFiCanLim(detalleLimaPadre.getCostoUnitCanjeLiqValFisi());
+			  			command.setCostoEstandarUnitValDgCanLim(detalleLimaPadre.getCostoUnitCanjeValDigital());
+			  			command.setCostoEstandarUnitAtencionLim(detalleLimaPadre.getCostoUnitarioPorAtencion());	  				
+		  				command.setTotalGestionAdministrativaLim(detalleLimaPadre.getCostoTotalGestionAdministra()); 
+		  			}else{  
+		  				command.setCostoEstandarUnitValeImpreLim(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValeReparLim(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValDisElLim(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValFiCanLim(new BigDecimal(0.00));
+			  			command.setCostoEstandarUnitValDgCanLim(new BigDecimal(0.00));
+			  			command.setCostoEstandarUnitAtencionLim(new BigDecimal(0.00));			  				
+		  				command.setTotalGestionAdministrativaLim(new BigDecimal(0.00));
+		  			}	
+				}						
+				//fin cambios elozano				
 				
 				Formato12BGartCommand commandCabecera=Formato12BGartCommand.toCommandCabecera(result,command);
 				
@@ -2870,30 +2624,31 @@ public class Formato12BGartController {
 					result.setUsuarioActualizacion(command.getUsuarioActualizacion());
 					result.setTerminalActualizacion(command.getTerminalActualizacion());
 					result.setFechaActualizacion(new Date());
-					formatoService.updateFormatoCabecera(result);
-					logger.info("antes de setear costo Total digitales:::"+command.getCostoTotalCanjeLiqValeDig());
+					
+					formatoService.updateFormatoCabecera(result);		
 					
 					List<FiseFormato12BD> lstDetalle = Formato12BGartCommand.toBeanDetalle(command);
+					
 					if (lstDetalle != null && !lstDetalle.isEmpty()) {
-						for (FiseFormato12BD dtll : lstDetalle) {
-							logger.info("costo Total digitales:::"+dtll.getCostoTotalCanjeLiqValeDig());
-							dtll.setUsuarioCreacion(result.getUsuarioCreacion());
+						for (FiseFormato12BD dtll : lstDetalle) {							
+							 dtll.setUsuarioCreacion(result.getUsuarioCreacion());
 							 dtll.setTerminalCreacion(result.getTerminalCreacion());
 							 dtll.setFechaCreacion(result.getFechaCreacion());
-							dtll.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
+							 dtll.setUsuarioActualizacion(themeDisplay.getUser().getLogin());
 							 dtll.setTerminalActualizacion(themeDisplay.getUser().getLoginIP());
-							 dtll.setFechaActualizacion(new Date());
-							//formatoService.deleteFormatoObs(dtll.getId().getCodEmpresa().trim(), dtll.getId().getAnoPresentacion(), dtll.getId().getMesPresentacion(),dtll.getId().getEtapa(),dtll.getId().getAnoEjecucionGasto(), dtll.getId().getMesEjecucionGasto(),dtll.getId().getIdZonaBenef(),null);
-							formatoService.updateFormatoDetalle(dtll);  
-							 //dtll = formatoService.saveFormatoDetalle(dtll);
+							 dtll.setFechaActualizacion(new Date());							
+							formatoService.updateFormatoDetalle(dtll); 						
 						}
 					}
 				}				
-			} else {
+			} //fin del if tipo operacion = ACTUALIZAR
+            else{
+				//NUEVO
 				if (command != null && command.getPeridoDeclaracion().length() > 6) {
 					command.setAnoPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(0, 4)));
 					command.setMesPresentacion(Integer.parseInt(command.getPeridoDeclaracion().substring(4, 6)));
 					command.setEtapa(command.getPeridoDeclaracion().substring(6, command.getPeridoDeclaracion().length()));
+					
 					if( "S".equals(command.getFlagPeriodoEjecucion()) ){
 						command.setAnoEjecucionGasto(anoEjecucion);
 						command.setMesEjecucionGasto(mesEjecucion);
@@ -2901,6 +2656,7 @@ public class Formato12BGartController {
 						command.setAnoEjecucionGasto(command.getAnoPresentacion());
 						command.setMesEjecucionGasto(command.getMesPresentacion());
 					}
+					
 				}		
 				command.setUsuarioCreacion(themeDisplay.getUser().getLogin());
 				command.setTerminalCreacion(themeDisplay.getUser().getLoginIP());
@@ -2913,32 +2669,95 @@ public class Formato12BGartController {
 					command.setDescGrupo(grupoInfo.getDescripcion());
 				}
 				command.setIdGrupoInf((int) idGrupoInf);
-                 
-				 //cambios elozano
-				detalleRuralPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_RURAL_COD);
-	  			if( detalleRuralPadre!=null ){  				
-	  				command.setTotalGestionAdministrativa(detalleRuralPadre.getCostoTotalGestionAdministra()); 
-	  			}else{
-	  				command.setTotalGestionAdministrativa(new BigDecimal(0.00));  				
-	  			}
-	  			detalleProvinciaPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_PROVINCIA_COD);
-	  			if( detalleProvinciaPadre!=null ){  				
-	  				command.setTotalGestionAdministrativaProv(detalleProvinciaPadre.getCostoTotalGestionAdministra()); 
-	  			}else{  				
-	  				command.setTotalGestionAdministrativaProv(new BigDecimal(0.00)); 
-	  			}
-	  			detalleLimaPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_LIMA_COD);
-	  			if( detalleLimaPadre!=null ){  				
-	  				command.setTotalGestionAdministrativaLim(detalleLimaPadre.getCostoTotalGestionAdministra()); 
-	  			}else{  				
-	  				command.setTotalGestionAdministrativaLim(new BigDecimal(0.00));
-	  			}	
+
+				//cambios elozano
+				String codigoPeriodoEnvio = "";
+
+				listaPeriodoEnvio = periodoService.listarFisePeriodoEnvioMesAnioEtapa(command.getCodEmpresa(),
+						FiseConstants.NOMBRE_FORMATO_12B);
+
+				codigoPeriodoEnvio =String.valueOf(command.getAnoPresentacion())+
+						FormatoUtil.rellenaIzquierda(String.valueOf(command.getMesPresentacion()), '0', 2)+
+						command.getEtapa();
+
+				String flagEditarCostos = "";
+
+				for (FisePeriodoEnvio p : listaPeriodoEnvio) {
+					if(codigoPeriodoEnvio.equals(p.getCodigoItem()) ){					
+						flagEditarCostos= p.getFlagEditarCostosEst();
+						break;
+					}
+				}	
+				
+				logger.error("flag editar costos al registrar nuevo formato 12B:  "+flagEditarCostos); 
+													
+			    if("N".equals(flagEditarCostos)){						  			
+		  			detalleRuralPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_RURAL_COD);		  			
+					if( detalleRuralPadre!=null ){  
+						command.setCostoEstandarUnitValeImpre(detalleRuralPadre.getCostoUnitarioImpresionVales());
+						command.setCostoEstandarUnitValeRepar(detalleRuralPadre.getCostoUnitReprtoValeDomici());					  				
+						command.setCostoEstandarUnitValDisEl(detalleRuralPadre.getCostoUnitEntregaValDisEl());
+						command.setCostoEstandarUnitValFiCan(detalleRuralPadre.getCostoUnitCanjeLiqValFisi());					  				
+						command.setCostoEstandarUnitValDgCan(detalleRuralPadre.getCostoUnitCanjeValDigital());
+		  				command.setCostoEstandarUnitAtencion(detalleRuralPadre.getCostoUnitarioPorAtencion());	
+		  				command.setTotalGestionAdministrativa(detalleRuralPadre.getCostoTotalGestionAdministra()); 
+		  			}else{
+		  				command.setCostoEstandarUnitValeImpre(new BigDecimal(0.00));
+						command.setCostoEstandarUnitValeRepar(new BigDecimal(0.00));					  				
+						command.setCostoEstandarUnitValDisEl(new BigDecimal(0.00));
+						command.setCostoEstandarUnitValFiCan(new BigDecimal(0.00));					  				
+						command.setCostoEstandarUnitValDgCan(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitAtencion(new BigDecimal(0.00));			  				
+		  				command.setTotalGestionAdministrativa(new BigDecimal(0.00));  				
+		  			}
+		  			
+		  			detalleProvinciaPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_PROVINCIA_COD);
+		  			if( detalleProvinciaPadre!=null ){ 
+		  				command.setCostoEstandarUnitValeImpreProv(detalleProvinciaPadre.getCostoUnitarioImpresionVales());
+		  				command.setCostoEstandarUnitValeReparProv(detalleProvinciaPadre.getCostoUnitReprtoValeDomici());
+		  				command.setCostoEstandarUnitValDisElProv(detalleProvinciaPadre.getCostoUnitEntregaValDisEl());
+		  				command.setCostoEstandarUnitValFiCanProv(detalleProvinciaPadre.getCostoUnitCanjeLiqValFisi());
+		  				command.setCostoEstandarUnitValDgCanProv(detalleProvinciaPadre.getCostoUnitCanjeValDigital());
+		  				command.setCostoEstandarUnitAtencionProv(detalleProvinciaPadre.getCostoUnitarioPorAtencion());		  				 				
+		  				command.setTotalGestionAdministrativaProv(detalleProvinciaPadre.getCostoTotalGestionAdministra()); 
+		  			}else{  	
+		  				command.setCostoEstandarUnitValeImpreProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValeReparProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValDisElProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValFiCanProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValDgCanProv(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitAtencionProv(new BigDecimal(0.00));			  				
+		  				command.setTotalGestionAdministrativaProv(new BigDecimal(0.00)); 
+		  			}			
+		  			
+		  			detalleLimaPadre = formato14Service.obtenerFormato14BDVigente(command.getCodEmpresa(), command.getAnoPresentacion(), FiseConstants.ZONABENEF_LIMA_COD);
+		  			if(detalleLimaPadre!=null ){  	
+		  				command.setCostoEstandarUnitValeImpreLim(detalleLimaPadre.getCostoUnitarioImpresionVales());
+		  				command.setCostoEstandarUnitValeReparLim(detalleLimaPadre.getCostoUnitReprtoValeDomici());
+		  				command.setCostoEstandarUnitValDisElLim(detalleLimaPadre.getCostoUnitEntregaValDisEl());
+		  				command.setCostoEstandarUnitValFiCanLim(detalleLimaPadre.getCostoUnitCanjeLiqValFisi());
+			  			command.setCostoEstandarUnitValDgCanLim(detalleLimaPadre.getCostoUnitCanjeValDigital());
+			  			command.setCostoEstandarUnitAtencionLim(detalleLimaPadre.getCostoUnitarioPorAtencion());	  				
+		  				command.setTotalGestionAdministrativaLim(detalleLimaPadre.getCostoTotalGestionAdministra()); 
+		  			}else{  
+		  				command.setCostoEstandarUnitValeImpreLim(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValeReparLim(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValDisElLim(new BigDecimal(0.00));
+		  				command.setCostoEstandarUnitValFiCanLim(new BigDecimal(0.00));
+			  			command.setCostoEstandarUnitValDgCanLim(new BigDecimal(0.00));
+			  			command.setCostoEstandarUnitAtencionLim(new BigDecimal(0.00));			  				
+		  				command.setTotalGestionAdministrativaLim(new BigDecimal(0.00));
+		  			}		  			
+				}			
 				//fin cambios elozano
 				
 				result = formatoService.saveFormatoCabecera(Formato12BGartCommand.toBeanCabecera(command));
+				
 				if (result != null) {					
 					command.setDescEstado("Abierto");
+					
 					List<FiseFormato12BD> lstDetalle = Formato12BGartCommand.toBeanDetalle(command);
+					
 					if (lstDetalle != null && !lstDetalle.isEmpty()) {
 						for (FiseFormato12BD dtll : lstDetalle) {
 							dtll.setUsuarioCreacion(result.getUsuarioCreacion());
@@ -3048,14 +2867,12 @@ public class Formato12BGartController {
 				e.printStackTrace();
 			}
 			
-		}
-		
-		
-	
+		}	
 	}
 	
 	@ResourceMapping("showReporte")
-	public void showReporte(ResourceRequest request,ResourceResponse response, @ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
+	public void showReporte(ResourceRequest request,ResourceResponse response, 
+			@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
@@ -3068,8 +2885,7 @@ public class Formato12BGartController {
 		    logger.info("MES PRESENTACION::"+command.getMesPresentacion());
 		    logger.info("ANO PRESENTACION::"+command.getAnoPresentacion());
 		    logger.info("DES MES::"+command.getDescMesEjec());
-		    logger.info("ETAPA::"+command.getEtapa());
-		    
+		    logger.info("ETAPA::"+command.getEtapa());    
 		 
 		    
 		    String nombreReporte = request.getParameter("nombreReporte").trim();
@@ -3083,9 +2899,7 @@ public class Formato12BGartController {
 		    session.setAttribute("nombreReporte",nombreReporte);
 		    session.setAttribute("nombreArchivo",nombreArchivo);
 		    session.setAttribute("tipoFormato",tipoFormato);
-		    session.setAttribute("tipoArchivo",tipoArchivo);
-
-		    
+		    session.setAttribute("tipoArchivo",tipoArchivo);	    
 		
 		    FiseFormato12BCPK pk=new FiseFormato12BCPK();
 		    pk.setCodEmpresa(command.getCodEmpresaHidden());
@@ -3105,8 +2919,7 @@ public class Formato12BGartController {
 		    	bean.setDescEmpresa(formato.getAdmEmpresa().getDscCortaEmpresa());
 	        	bean.setDescMesPresentacion(FiseUtil.descripcionMes(formato.getId().getMesPresentacion()));
 	        	bean.setDescMesEjecucion(FiseUtil.descripcionMes(formato.getId().getMesEjecucionGasto()));
-	        	session.setAttribute("mapa", formatoService.mapearParametrosFormato12B(bean));
-		    	
+	        	session.setAttribute("mapa", formatoService.mapearParametrosFormato12B(bean));		    	
 		    }
 		    response.setContentType("application/json");
 		    PrintWriter pw = response.getWriter();
@@ -3120,7 +2933,8 @@ public class Formato12BGartController {
 
 
 	@ResourceMapping("showValidacion")
-	public void showValidacion(ModelMap model, ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
+	public void showValidacion(ModelMap model, ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
 	
 	HttpServletRequest req = PortalUtil.getHttpServletRequest(request);	        
     HttpSession session = req.getSession();
@@ -3164,17 +2978,13 @@ public class Formato12BGartController {
 					jsonObj.put("descripcion", error.getDescripcion());	
 					//agregar los valores
 					jsonArray.put(jsonObj);		
-				}
-		    			
+				}		    			
 		    	//**exportar excel
-		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, FiseConstants.NOMBRE_EXCEL_VALIDACION_F12B, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);
-		    	
-		    	
+		    	fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_FORMATO_VAL, FiseConstants.NOMBRE_EXCEL_VALIDACION_F12B, FiseConstants.NOMBRE_HOJA_VALIDACION, listaObservaciones);		    	    	
 		    }else{
 		    	
 		    }
-	    }
-	    
+	    }	    
 	    response.setContentType("application/json");
 	    PrintWriter pw = response.getWriter();
 	    logger.info(jsonArray.toString());
@@ -3189,7 +2999,8 @@ public class Formato12BGartController {
 	
 	
 	@ResourceMapping("showReporteValidacion")
-	public void showReporteValidacion(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
+	public void showReporteValidacion(ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
@@ -3479,7 +3290,8 @@ public class Formato12BGartController {
 
 	
 	@ResourceMapping("showReporteActaEnvio")
-	public void showReporteActaEnvio(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
+	public void showReporteActaEnvio(ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 			HttpSession session = httpRequest.getSession();
@@ -3526,10 +3338,7 @@ public class Formato12BGartController {
 				mapa.put(FiseConstants.PARAM_NRO_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?listaObservaciones.size():0);
 				mapa.put(FiseConstants.PARAM_MSG_OBSERVACIONES, (listaObservaciones!=null && !listaObservaciones.isEmpty())?FiseConstants.MSG_OBSERVACION_REPORTE_LLENO:FiseConstants.MSG_OBSERVACION_REPORTE_VACIO);
 				mapa.put(FiseConstants.PARAM_ANO_EJEC_F12B_R, (long)formato.getId().getAnoEjecucionGasto());
-				mapa.put(FiseConstants.PARAM_DESC_MES_EJEC_F12B, FiseUtil.descripcionMes(formato.getId().getMesEjecucionGasto()));
-				
-				//mapa.put(FiseConstants.PARAM_ANO_INICIO_VIGENCIA, (long)formato.getId().getAnoEjecucionGasto());
-			//	mapa.put(FiseConstants.PARAM_ANO_FIN_VIGENCIA,(long) formato.getId().getMesEjecucionGasto());
+				mapa.put(FiseConstants.PARAM_DESC_MES_EJEC_F12B, FiseUtil.descripcionMes(formato.getId().getMesEjecucionGasto()));			
 				mapa.put(FiseConstants.PARAM_FECHA_REGISTRO, formato.getFechaCreacion());
 				mapa.put(FiseConstants.PARAM_USUARIO_REGISTRO, formato.getUsuarioCreacion());
 				String dirCheckedImage = session.getServletContext().getRealPath("/reports/checked.jpg");
@@ -3577,7 +3386,8 @@ public class Formato12BGartController {
 	}
 
 	@ResourceMapping("showRptEnvioDefinitivo")
-	public void showRptEnvioDefinitivo(ResourceRequest request,ResourceResponse response,@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
+	public void showRptEnvioDefinitivo(ResourceRequest request,ResourceResponse response,
+			@ModelAttribute("formato12BGartCommand")Formato12BGartCommand command) {
 		try {
 			HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(request);
 	        HttpSession session = httpRequest.getSession();
@@ -3617,13 +3427,14 @@ public class Formato12BGartController {
 						(observacion.getId().getIdZonaBenef()==FiseConstants.ZONA_LIMA?FiseConstants.ZONABENEF_LIMA_DESC:
 						(observacion.getId().getIdZonaBenef()==FiseConstants.ZONA_PROVINCIA?FiseConstants.ZONABENEF_PROVINCIA_DESC:""))
 						):"");
-				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());
-				//obs.setDescripcion(mapaErrores.get(observacion.getFiseObservacion().getIdObservacion()));
-				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());
-				
+				obs.setCodigo(observacion.getFiseObservacion().getIdObservacion());		
+				obs.setDescripcion(observacion.getFiseObservacion().getDescripcion());				
 				listaObservaciones.add(obs);
 			}
 		}
 	}
+	
+	
+	
 
 }

@@ -256,24 +256,21 @@
 									<tr>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2 Costo Estándar
 											Unitario</td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValeImpre" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValeImpre" class=""
-											value="${formato12BGartCommand.costoEstandarUnitValeImpre}"
-											type="text" disabled="disabled"/></td> 
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValeImpreProv" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValeImpreProv"
-											value="${formato12BGartCommand.costoEstandarUnitValeImpreProv}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValeImpreLim" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValeImpreLim"
-											value="${formato12BGartCommand.costoEstandarUnitValeImpreLim}"
-											type="text" disabled="disabled" /></td>
+										<td align="center">							       
+										    <form:input path="costoEstandarUnitValeImpre"  cssStyle="width: 100px; text-align: right;"											       
+											            onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValeImpre')"
+											            onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionVale,formato12B.txtnroValesImpreso,formato12B.txtEtndrUnitValeImpre,'costoTotalImpresionVale','costoTotalImpresionVale','porImpresionVales');"											           
+											            cssClass="target" disabled="disabled" maxlength="12"/></td>							       
+										<td align="center">
+										    <form:input path="costoEstandarUnitValeImpreProv"  cssStyle="width: 100px; text-align: right;"
+										                onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValeImpreProv')"
+										                onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionValeProv,formato12B.txtnroValesImpresoProv,formato12B.txtEtndrUnitValeImpreProv,'costoTotalImpresionValeProv','costoTotalImpresionVale','porImpresionVales');"
+										                cssClass="target" disabled="disabled" maxlength="12"/></td> 											
+										<td align="center">
+										    <form:input path="costoEstandarUnitValeImpreLim" cssStyle="width: 100px; text-align: right;"	 
+												        onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValeImpreLim')"
+											            onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalImpresionValeLim,formato12B.txtnroValesImpresoLim,formato12B.txtEtndrUnitValeImpreLim,'costoTotalImpresionValeLim','costoTotalImpresionVale','porImpresionVales');"
+														cssClass="target" disabled="disabled" maxlength="12"/> </td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -342,24 +339,21 @@
 									<tr>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2 Costo Estándar
 											Unitario</td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValeRepar" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValeRepar"
-											value="${formato12BGartCommand.costoEstandarUnitValeRepar}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValeReparProv" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValeReparProv"
-											value="${formato12BGartCommand.costoEstandarUnitValeReparProv}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValeReparLim" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValeReparLim"
-											value="${formato12BGartCommand.costoEstandarUnitValeReparLim}"
-											type="text" disabled="disabled" /></td>
+										<td align="center">													
+											  <form:input path="costoEstandarUnitValeRepar" cssStyle="width: 100px; text-align: right;"	 
+												       onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValeRepar')"
+											           onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomi,formato12B.txtnroValesRepartidosDomi,formato12B.txtEtndrUnitValeRepar,'costoTotalRepartoValesDomi','costoTotalRepartoValesDomi','porRepartoDom');"
+											     	  cssClass="target" disabled="disabled" maxlength="12"/></td>											     	  
+										<td align="center">
+										    <form:input path="costoEstandarUnitValeReparProv" cssStyle="width: 100px; text-align: right;"	 
+												        onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValeReparProv')"
+											            onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomiProv,formato12B.txtnroValesRepartidosDomiProv,formato12B.txtEtndrUnitValeReparProv,'costoTotalRepartoValesDomiProv','costoTotalRepartoValesDomi','porRepartoDom');"
+											     	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										    <form:input path="costoEstandarUnitValeReparLim" cssStyle="width: 100px; text-align: right;"	 
+												       onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValeReparLim')"
+											           onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalRepartoValesDomiLim,formato12B.txtnroValesRepartidosDomiLim,formato12B.txtEtndrUnitValeReparLim,'costoTotalRepartoValesDomiLim','costoTotalRepartoValesDomi','porRepartoDom');"
+											     	  cssClass="target" disabled="disabled" maxlength="12"/></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -418,12 +412,12 @@
 										<td align="center"><form:input
 												path="numeroValesEntregadoDisElProv" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesEntregadoDisElProv')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElProv,formato12B.txtnroValesEntregadoDisElProv,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisElProv','costoTotalEntregaValDisEl','porEntregaValesDE');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElProv,formato12B.txtnroValesEntregadoDisElProv,formato12B.txtEtndrUnitValDisElProv,'costoTotalEntregaValDisElProv','costoTotalEntregaValDisEl','porEntregaValesDE');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 										<td align="center"><form:input
 												path="numeroValesEntregadoDisElLim" cssClass="target"
 												disabled="false" onkeypress="formato12B.validateInputTextNumber('numeroValesEntregadoDisElLim')"
-												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElLim,formato12B.txtnroValesEntregadoDisElLim,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisElLim','costoTotalEntregaValDisEl','porEntregaValesDE');"
+												onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElLim,formato12B.txtnroValesEntregadoDisElLim,formato12B.txtEtndrUnitValDisElLim,'costoTotalEntregaValDisElLim','costoTotalEntregaValDisEl','porEntregaValesDE');"
 												cssStyle="width: 100px; text-align: right;" /></td>
 									</tr>
 									<tr>
@@ -432,24 +426,21 @@
 									<tr>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2 Costo Estándar
 											Unitario</td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValDisEl" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValDisEl"
-											value="${formato12BGartCommand.costoEstandarUnitValDisEl}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValDisElProv" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValDisElProv"
-											value="${formato12BGartCommand.costoEstandarUnitValDisElProv}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValDisElLim" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValDisElLim"
-											value="${formato12BGartCommand.costoEstandarUnitValDisElLim}"
-											type="text" disabled="disabled" /></td>
+										<td align="center">
+										      <form:input path="costoEstandarUnitValDisEl" cssStyle="width: 100px; text-align: right;"											       
+											     	   onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValDisEl')"
+											          onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisEl,formato12B.txtnroValesEntregadoDisEl,formato12B.txtEtndrUnitValDisEl,'costoTotalEntregaValDisEl','costoTotalEntregaValDisEl','porEntregaValesDE');"
+											     	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										      <form:input path="costoEstandarUnitValDisElProv" cssStyle="width: 100px; text-align: right;"											       
+											     	     onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValDisElProv')"
+											            onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElProv,formato12B.txtnroValesEntregadoDisElProv,formato12B.txtEtndrUnitValDisElProv,'costoTotalEntregaValDisElProv','costoTotalEntregaValDisEl','porEntregaValesDE');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										     <form:input path="costoEstandarUnitValDisElLim" cssStyle="width: 100px; text-align: right;"											       
+											     	    onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValDisElLim')"
+											            onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalEntregaValDisElLim,formato12B.txtnroValesEntregadoDisElLim,formato12B.txtEtndrUnitValDisElLim,'costoTotalEntregaValDisElLim','costoTotalEntregaValDisEl','porEntregaValesDE');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -518,24 +509,21 @@
 									<tr>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2 Costo Estándar
 											Unitario</td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValFiCan" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValFiCan"
-											value="${formato12BGartCommand.costoEstandarUnitValFiCan}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValFiCanProv" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValFiCanProv"
-											value="${formato12BGartCommand.costoEstandarUnitValFiCanProv}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValFiCanLim" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValFiCanLim"
-											value="${formato12BGartCommand.costoEstandarUnitValFiCanLim}"
-											type="text" disabled="disabled" /></td>
+										<td align="center">
+										      <form:input path="costoEstandarUnitValFiCan" cssStyle="width: 100px; text-align: right;"											       
+											     	   onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValFiCan')"
+											          onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFis,formato12B.txtnroValesFisicosCanjeados,formato12B.txtEtndrUnitValFiCan,'costoTotalCanjeLiqValeFis','costoTotalCanjeLiqValeFis','porValesFisicos');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										       <form:input path="costoEstandarUnitValFiCanProv" cssStyle="width: 100px; text-align: right;"											       
+											     	      onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValFiCanProv')"
+											              onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFisProv,formato12B.txtnroValesFisicosCanjeadosProv,formato12B.txtEtndrUnitValFiCanProv,'costoTotalCanjeLiqValeFisProv','costoTotalCanjeLiqValeFis','porValesFisicos');"
+												       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										       <form:input path="costoEstandarUnitValFiCanLim" cssStyle="width: 100px; text-align: right;"											       
+											     	  onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValFiCanLim')"
+											          onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeFisLim,formato12B.txtnroValesFisicosCanjeadosLim,formato12B.txtEtndrUnitValFiCanLim,'costoTotalCanjeLiqValeFisLim','costoTotalCanjeLiqValeFis','porValesFisicos');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -605,24 +593,21 @@
 									<tr>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2 Costo Estándar
 											Unitario</td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValDgCan" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValDgCan"
-											value="${formato12BGartCommand.costoEstandarUnitValDgCan}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValDgCanProv" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValDgCanProv"
-											value="${formato12BGartCommand.costoEstandarUnitValDgCanProv}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitValDgCanLim" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitValDgCanLim"
-											value="${formato12BGartCommand.costoEstandarUnitValDgCanLim}"
-											type="text" disabled="disabled" /></td>
+										<td align="center">
+										      <form:input path="costoEstandarUnitValDgCan" cssStyle="width: 100px; text-align: right;"											       
+											     	  onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValDgCan')"
+											          onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDig,formato12B.txtnroValesDigitalCanjeados,formato12B.txtEtndrUnitValDgCan,'costoTotalCanjeLiqValeDig','costoTotalCanjeLiqValeDig','porValesDigitales');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										       <form:input path="costoEstandarUnitValDgCanProv" cssStyle="width: 100px; text-align: right;"											       
+											     	  onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValDgCanProv')"
+											          onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigProv,formato12B.txtnroValesDigitalCanjeadosProv,formato12B.txtEtndrUnitValDgCanProv,'costoTotalCanjeLiqValeDigProv','costoTotalCanjeLiqValeDig','porValesDigitales');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										        <form:input path="costoEstandarUnitValDgCanLim" cssStyle="width: 100px; text-align: right;"											       
+											     	  onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitValDgCanLim')"
+											          onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalCanjeLiqValeDigLim,formato12B.txtnroValesDigitalCanjeadosLim,formato12B.txtEtndrUnitValDgCanLim,'costoTotalCanjeLiqValeDigLim','costoTotalCanjeLiqValeDig','porValesDigitales');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -690,24 +675,21 @@
 									<tr>
 										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2 Costo Estándar
 											Unitario</td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitAtencion" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitAtencion"
-											value="${formato12BGartCommand.costoEstandarUnitAtencion}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitAtencionProv" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitAtencionProv"
-											value="${formato12BGartCommand.costoEstandarUnitAtencionProv}"
-											type="text" disabled="disabled" /></td>
-										<td align="center"><form:input type="hidden"
-												path="costoEstandarUnitAtencionLim" /> <input
-											style="width: 100px; text-align: right;"
-											id="txtcostoEstandarUnitAtencionLim"
-											value="${formato12BGartCommand.costoEstandarUnitAtencionLim}"
-											type="text" disabled="disabled" /></td>
+										<td align="center">
+										       <form:input path="costoEstandarUnitAtencion" cssStyle="width: 100px; text-align: right;"											       
+											     	  onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitAtencion')"
+											          onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsRecl,formato12B.txtnroAtenciones,formato12B.txtEtndrUnitAtencion,'costoTotalAtencionConsRecl','costoTotalAtencionConsRecl','porAtencionReclamos');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										       <form:input path="costoEstandarUnitAtencionProv" cssStyle="width: 100px; text-align: right;"											       
+											     	  onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitAtencionProv')"
+											          onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsReclProv,formato12B.txtnroAtencionesProv,formato12B.txtEtndrUnitAtencionProv,'costoTotalAtencionConsReclProv','costoTotalAtencionConsRecl','porAtencionReclamos');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
+										<td align="center">
+										        <form:input path="costoEstandarUnitAtencionLim" cssStyle="width: 100px; text-align: right;"											       
+											     	   onkeypress="formato12B.validateInputTextDecimal('costoEstandarUnitAtencionLim')"
+											           onblur="formato12B.loadCostoTotatByInput(formato12B.txtTotalAtencionConsReclLim,formato12B.txtnroAtencionesLim,formato12B.txtEtndrUnitAtencionLim,'costoTotalAtencionConsReclLim','costoTotalAtencionConsRecl','porAtencionReclamos');"
+											       	  cssClass="target" disabled="disabled" maxlength="12"/></td>
 									</tr>
 									<tr>
 										<td colspan="4" height="3px"></td>
@@ -750,9 +732,30 @@
 
 									<tr style="padding-top: 10px:">
 										<td>7. Gestión Administrativa</td>
-										<td align="center"><form:input  path="totalGestionAdministrativa" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativa')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" maxlength="12" /></td>
-										<td align="center"><form:input  path="totalGestionAdministrativaProv" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaProv')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
-										<td align="center"><form:input  path="totalGestionAdministrativaLim" onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaLim')" onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" cssClass="target" disabled="true" cssStyle="width: 100px; text-align: right;" maxlength="12"/></td>
+										<td align="center">
+										   <form:input  path="totalGestionAdministrativa" 
+										                onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativa')" 
+										                onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" 
+										                cssClass="target" disabled="true" 
+										                cssStyle="width: 100px; text-align: right;" 
+										                maxlength="12" />
+									    </td>
+										<td align="center">
+										     <form:input  path="totalGestionAdministrativaProv" 
+										                  onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaProv')" 
+										                  onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" 
+										                  cssClass="target" disabled="true" 
+										                  cssStyle="width: 100px; text-align: right;" 
+										                  maxlength="12"/>
+										</td>
+										<td align="center">
+										     <form:input  path="totalGestionAdministrativaLim" 
+										                  onkeypress="formato12B.validateInputTextDecimal('totalGestionAdministrativaLim')" 
+										                  onblur="formato12B.loadGestion('porGestionAdm','totalGestionAdministrativa')" 
+										                  cssClass="target" disabled="true" 
+										                  cssStyle="width: 100px; text-align: right;" 
+										                  maxlength="12"/>
+										</td>
 									</tr>
 									<tr>
 										<td colspan="4" height="10px"></td>
@@ -1155,5 +1158,46 @@
 		</fieldset>
 		<br>
 	</div>	
+	
+	<!-- cambios elozano para editar costos unitarios -->	
+	<input type="hidden" id="hiddenFlagCostoEstandar" value="${formato12BGartCommand.flagEditarCostoUnit}" />
+	
+	<!-- Impresion de vales -->
+	<input type="hidden" id="hiddenCostoUIVR" value="" />
+	<input type="hidden" id="hiddenCostoUIVP" value="" />
+	<input type="hidden" id="hiddenCostoUIVL" value="" />
+	
+	<!--Reparto de vales a domicilio -->
+	<input type="hidden" id="hiddenCostoURDR" value="" />
+	<input type="hidden" id="hiddenCostoURDP" value="" />	
+	<input type="hidden" id="hiddenCostoURDL" value="" />
+	
+	<!--Entreda de vales en la distribuidora electrica -->
+	<input type="hidden" id="hiddenCostoUDER" value="" />
+	<input type="hidden" id="hiddenCostoUDEP" value="" />	
+	<input type="hidden" id="hiddenCostoUDEL" value="" />
+	
+	<!--Canje y liquidacion de vales fisicos -->
+	<input type="hidden" id="hiddenCostoUVFR" value="" />
+	<input type="hidden" id="hiddenCostoUVFP" value="" />	
+	<input type="hidden" id="hiddenCostoUVFL" value="" />
+	
+	<!--Canje y liquidacion de vales digitales -->
+	<input type="hidden" id="hiddenCostoUVDR" value="" />
+	<input type="hidden" id="hiddenCostoUVDP" value="" />
+	<input type="hidden" id="hiddenCostoUVDL" value="" />
+	
+	<!--Atencion de solicitudes consulta o reclamos-->
+	<input type="hidden" id="hiddenCostoUASR" value="" />
+	<input type="hidden" id="hiddenCostoUASP" value="" />	
+	<input type="hidden" id="hiddenCostoUASL" value="" />
+	
+	<!--Gestion administrativa-->	
+	<input type="hidden" id="hiddenCostoUGAR" value="" />
+	<input type="hidden" id="hiddenCostoUGAP" value="" />
+	<input type="hidden" id="hiddenCostoUGAL" value="" />	
+	
+	
+	
 
 </form:form>

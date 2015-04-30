@@ -45,14 +45,16 @@ var fiseCargoFijo= {
 		urlActualizar:null,
 		urlEditarView:null,		
 	    urlEliminar:null,
-	   
+	    urlReporte:null,//url para reporte cuando visualizo el formulario		
 		
 		//botones		
 		botonBuscar:null,
 		botonNuevo:null,
 		botonRegresar:null,		
 		botonGrabar:null,
-		botonActualizar:null,			
+		botonActualizar:null,		
+		botonReportePdf:null,
+		botonReporteExcel:null,
 		
 		//varibales de busqueda
 		i_codEmpresa:null,
@@ -126,14 +128,16 @@ var fiseCargoFijo= {
 			this.urlActualizar='<portlet:resourceURL id="actualizarCargosFijos" />';
 			this.urlEditarView='<portlet:resourceURL id="editarViewCargosFijos" />';			
 			this.urlEliminar='<portlet:resourceURL id="eliminarCargosFijos" />';	
-			
+			this.urlReporte='<portlet:resourceURL id="reporteCargosFijos" />';	
 			
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarCargosFijos");
 			this.botonNuevo=$("#<portlet:namespace/>btnNuevoCargoFijo");
 			this.botonRegresar=$("#<portlet:namespace/>regresarCargoFijo");			
 			this.botonGrabar=$("#<portlet:namespace/>guardarCargoFijo");
-			this.botonActualizar=$("#<portlet:namespace/>actualizarCargoFijo");		
+			this.botonActualizar=$("#<portlet:namespace/>actualizarCargoFijo");	
+			this.botonReportePdf=$("#<portlet:namespace/>reportePdfCargoFijos");
+			this.botonReporteExcel=$("#<portlet:namespace/>reporteExcelCargoFijos");
 			
 			//variables de busqueda		
 			this.i_codEmpresa=$('#codEmpresaBusq');
@@ -214,6 +218,13 @@ var fiseCargoFijo= {
 				fiseCargoFijo.<portlet:namespace/>actualizarCargoFijo();
 			});		
 			
+			fiseCargoFijo.botonReportePdf.click(function() {
+				fiseCargoFijo.<portlet:namespace/>mostrarReportePdfCargoFijos();
+			});
+			
+			fiseCargoFijo.botonReporteExcel.click(function() {
+				fiseCargoFijo.<portlet:namespace/>mostrarReporteExcelCargoFijos();
+			});
 			
 		    fiseCargoFijo.botonRegresar.click(function() {
 		    	fiseCargoFijo.<portlet:namespace/>regresarCargoFijo();
@@ -334,7 +345,9 @@ var fiseCargoFijo= {
 			fiseCargoFijo.habilitarCamposView();
 			
 		    $('#<portlet:namespace/>guardarCargoFijo').css('display','block');
-			$('#<portlet:namespace/>actualizarCargoFijo').css('display','none');			
+			$('#<portlet:namespace/>actualizarCargoFijo').css('display','none');
+			$('#<portlet:namespace/>reportePdfCargoFijos').css('display','none');
+			$('#<portlet:namespace/>reporteExcelCargoFijos').css('display','none');
 		},
 		
 		//function para inicializar el formulario
@@ -470,7 +483,7 @@ var fiseCargoFijo= {
 					data: {						  
 					      <portlet:namespace />codigoEmp: cod_Empresa,
 					      <portlet:namespace />anioRep: anio_Rep,
-					      <portlet:namespace />codigoMes: mes_Rep					      
+					      <portlet:namespace />codigoMes: mes_Rep					     
 						},
 					success: function(data) {
 					    if (data != null){															
@@ -486,7 +499,9 @@ var fiseCargoFijo= {
 					    	
 					    	fiseCargoFijo.initBlockUI();				    	
 					    	$('#<portlet:namespace/>guardarCargoFijo').css('display','none');
-							$('#<portlet:namespace/>actualizarCargoFijo').css('display','none');		    					    							
+							$('#<portlet:namespace/>actualizarCargoFijo').css('display','none');
+							$('#<portlet:namespace/>reportePdfCargoFijos').css('display','block');
+							$('#<portlet:namespace/>reporteExcelCargoFijos').css('display','block');
 				        }						
 						else{							
 							var addhtmError='Error al visualizar los datos del registro seleccionado.';					
@@ -502,6 +517,68 @@ var fiseCargoFijo= {
 					}
 			});	
 		},
+		
+		
+		//funcion para mostrar reporte en pdf cuando se visualiza
+		<portlet:namespace/>mostrarReportePdfCargoFijos : function(){
+			jQuery.ajax({
+				url : fiseCargoFijo.urlReporte+'&'+fiseCargoFijo.formCommand.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {					
+					<portlet:namespace />codigoEmp: fiseCargoFijo.f_empresa.val(),
+					<portlet:namespace />anioRep: fiseCargoFijo.f_anioRep.val(),
+					<portlet:namespace />codigoMes: fiseCargoFijo.f_mesRep.val(),						
+					<portlet:namespace />tipoArchivo: '0'//PDF
+				},
+				success : function(gridData) {
+					if(gridData!=null){
+						fiseCargoFijo.verReporteCargoFIjo();	
+					}else{					
+						var addhtmError='Error al mostrar el reporte de Datos del Proyecto FISE.';					
+						fiseCargoFijo.dialogErrorContent.html(addhtmError);
+						fiseCargoFijo.dialogError.dialog("open");
+						fiseCargoFijo.initBlockUI();
+					}					
+				},error : function(){
+					var addhtmError='Error de conexión.';					
+					fiseCargoFijo.dialogErrorContent.html(addhtmError);
+					fiseCargoFijo.dialogError.dialog("open");
+					fiseCargoFijo.initBlockUI();
+				}
+			});
+		},
+		
+		//funcion para mostrar reporte en exel cuando se visualiza
+		<portlet:namespace/>mostrarReporteExcelCargoFijos : function(){
+			jQuery.ajax({
+				url : fiseCargoFijo.urlReporte+'&'+fiseCargoFijo.formCommand.serialize(),
+				type : 'post',
+				dataType : 'json',
+				data : {
+					<portlet:namespace />codigoEmpresa: fiseCargoFijo.f_empresa.val(),
+					<portlet:namespace />anioReporte: fiseCargoFijo.f_anioRep.val(),
+					<portlet:namespace />mesReporte: fiseCargoFijo.f_mesRep.val(),					
+					<portlet:namespace />tipoArchivo: '1'//XLS
+				},
+				success : function(gridData) {
+					if(gridData!=null){
+						fiseCargoFijo.verReporteCargoFIjo();	
+					}else{						
+						var addhtmError='Error al mostrar el reporte de Datos del Proyecto FISE.';					
+						fiseCargoFijo.dialogErrorContent.html(addhtmError);
+						fiseCargoFijo.dialogError.dialog("open");
+						fiseCargoFijo.initBlockUI();		
+					}					
+				},error : function(){
+					var addhtmError='Error de conexión.';					
+					fiseCargoFijo.dialogErrorContent.html(addhtmError);
+					fiseCargoFijo.dialogError.dialog("open");
+					fiseCargoFijo.initBlockUI();
+				}
+			});
+		},	
+		
 		
 		//Function para editar los datos del formulario
 		editarCargoFijo : function(cod_Empresa, anio_Rep, mes_Rep){	
@@ -531,7 +608,9 @@ var fiseCargoFijo= {
 								
 								fiseCargoFijo.initBlockUI();			
 								$('#<portlet:namespace/>guardarCargoFijo').css('display','none');
-								$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');													
+								$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');
+								$('#<portlet:namespace/>reportePdfCargoFijos').css('display','none');
+								$('#<portlet:namespace/>reporteExcelCargoFijos').css('display','none');
 					         }
 							else{								
 								var addhtmError='Error al recuperar los datos del registro seleccionado.';					
@@ -880,7 +959,9 @@ var fiseCargoFijo= {
 							fiseCargoFijo.dialogMessage.dialog("open");							
 							fiseCargoFijo.initBlockUI();
 							$('#<portlet:namespace/>guardarCargoFijo').css('display','none');
-							$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');							
+							$('#<portlet:namespace/>actualizarCargoFijo').css('display','block');
+							$('#<portlet:namespace/>reportePdfCargoFijos').css('display','none');
+							$('#<portlet:namespace/>reporteExcelCargoFijos').css('display','none');
 						}else if(data.resultado == "Error"){							
 							var addhtmError='Se produjo un error al guardar el registro de Datos del Proyecto FISE.';					
 							fiseCargoFijo.dialogErrorContent.html(addhtmError);
@@ -1350,6 +1431,11 @@ var fiseCargoFijo= {
 			}else{
 				return true;
 			}		
+		},
+		
+		//funcion para ver reposrte en una nueva pestaña
+		verReporteCargoFIjo : function(){
+			window.open('<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ViewReport")%>','_newtab');
 		},
 		
 		//funcion para regresar
