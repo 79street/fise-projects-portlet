@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DatosProyectoFISE" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0000000000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="86"/>
+	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
+	<parameter name="ANIO_REPORTADO" class="java.lang.String"/>
+	<parameter name="MES_REPORTADO" class="java.lang.String"/>
+	<parameter name="ESTADO" class="java.lang.String"/>
+	<parameter name="GLOSA" class="java.lang.String"/>
+	<parameter name="NRO_USU_BENEF_R" class="java.lang.Long"/>
+	<parameter name="NRO_USU_BENEF_P" class="java.lang.Long"/>
+	<parameter name="NRO_USU_BENEF_L" class="java.lang.Long"/>
+	<parameter name="NRO_USU_EMPADRONADO_BENEF_R" class="java.lang.Long"/>
+	<parameter name="NRO_USU_EMPADRONADO_BENEF_P" class="java.lang.Long"/>
+	<parameter name="NRO_USU_EMPADRONADO_BENEF_L" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_FISICOS_EMIT_R" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_FISICOS_EMIT_P" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_FISICOS_EMIT_L" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_DIGITAL_EMIT_R" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_DIGITAL_EMIT_P" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_DIGITAL_EMIT_L" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_FISICOS_CANJ_R" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_FISICOS_CANJ_P" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_FISICOS_CANJ_L" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_DIGITAL_CANJ_R" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_DIGITAL_CANJ_P" class="java.lang.Long"/>
+	<parameter name="NRO_VAL_DIGITAL_CANJ_L" class="java.lang.Long"/>
+	<parameter name="NRO_AGENTES_R" class="java.lang.Long"/>
+	<parameter name="NRO_AGENTES_P" class="java.lang.Long"/>
+	<parameter name="NRO_AGENTES_L" class="java.lang.Long"/>
+	<parameter name="CARGO_FIJO_MES_R" class="java.math.BigDecimal"/>
+	<parameter name="CARGO_FIJO_MES_P" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="CARGO_FIJO_MES_L" class="java.math.BigDecimal"/>
+	<parameter name="MONTO_TRANSF_CANJE" class="java.math.BigDecimal"/>
+	<parameter name="FECHA_INFORME_SUST" class="java.lang.String"/>
+	<parameter name="NRO_DOC_INFORME_SUST" class="java.lang.String"/>
+	<parameter name="APLICA_IGV" class="java.lang.String"/>
+	<parameter name="FECHA_RECEP_INF" class="java.lang.String"/>
+	<parameter name="NRO_DOC_RECEP_INF" class="java.lang.String"/>
+	<parameter name="IGV" class="java.math.BigDecimal"/>
+	<parameter name="IMG" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="10" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="548" splitType="Stretch">
+			<staticText>
+				<reportElement x="338" y="22" width="93" height="16"/>
+				<textElement/>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<image hAlign="Center">
+				<reportElement x="0" y="0" width="280" height="60"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{IMG}]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="true">
+				<reportElement x="431" y="22" width="124" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="88" width="555" height="18" forecolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Variables/Parámetros de Control Mensual del FISE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="141" width="140" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Año Reportado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="121" width="140" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Distribuidora Eléctrica:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="161" width="140" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Mes Reportado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="246" width="284" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número de Usuarios Beneficiarios:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="375" y="223" width="89" height="23" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Urbano Provincias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="285" y="202" width="269" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Grupo de Beneficiarios según Zona]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="285" y="223" width="89" height="23" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Rural]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="465" y="223" width="89" height="23" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Urbano Lima]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="246" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_USU_BENEF_R}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="374" y="246" width="90" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_USU_BENEF_P}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="246" width="90" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_USU_BENEF_L}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="140" y="121" width="414" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DESC_EMPRESA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="140" y="141" width="414" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ANIO_REPORTADO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="140" y="161" width="414" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{MES_REPORTADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="266" width="284" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número de Usuarios Empadronados Beneficiarios:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="286" width="284" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número de Vales Físicos Emitidos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="306" width="284" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número de Vales Digitales Emitidos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="326" width="284" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número de Vales Físicos Canjeados:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="346" width="284" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número de Vales Digitales Canjeados:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="366" width="284" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número de Agentes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="386" width="284" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Cargo Fijo del Mes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="414" width="179" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Monto Transferido por Canje:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="434" width="179" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Informe de Sustento: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="434" width="179" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha Recepción de Información:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="454" width="179" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número Doc. Recepción Informe:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="454" width="179" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Número Doc. Informe Sustento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="474" width="179" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[IGV S/.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="181" width="140" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Estado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="494" width="90" height="53"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Glosa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="406" width="554" height="8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="202" width="284" height="44" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Parámetros de Control]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="91" y="494" width="463" height="53"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{GLOSA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="140" y="181" width="414" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ESTADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="474" width="179" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Aplica IGV:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="266" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_USU_EMPADRONADO_BENEF_R}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="374" y="266" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_USU_EMPADRONADO_BENEF_P}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="266" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_USU_EMPADRONADO_BENEF_L}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="286" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_FISICOS_EMIT_R}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="374" y="286" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_FISICOS_EMIT_P}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="286" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_FISICOS_EMIT_L}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="306" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_DIGITAL_EMIT_R}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="374" y="306" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_DIGITAL_EMIT_P}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="306" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_DIGITAL_EMIT_L}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="326" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_FISICOS_CANJ_R}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="374" y="326" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_FISICOS_CANJ_P}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="326" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_FISICOS_CANJ_L}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="346" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_DIGITAL_CANJ_R}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="374" y="346" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_DIGITAL_CANJ_P}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="346" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_VAL_DIGITAL_CANJ_L}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="366" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENTES_R}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="374" y="366" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENTES_P}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="366" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$P{NRO_AGENTES_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="284" y="386" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CARGO_FIJO_MES_R}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="374" y="386" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CARGO_FIJO_MES_P}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="464" y="386" width="90" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{CARGO_FIJO_MES_L}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="179" y="414" width="105" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{MONTO_TRANSF_CANJE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="434" width="105" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{FECHA_INFORME_SUST}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="454" width="105" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{NRO_DOC_INFORME_SUST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="474" width="105" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{APLICA_IGV}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="434" width="90" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{FECHA_RECEP_INF}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="464" y="454" width="90" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{NRO_DOC_RECEP_INF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="474" width="90" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{IGV}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="434" y="2" width="73" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="507" y="2" width="47" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

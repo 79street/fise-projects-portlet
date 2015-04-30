@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formato12A" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.1289478601075549"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="61"/>
+	<property name="ireport.y" value="335"/>
 	<parameter name="DESC_EMPRESA" class="java.lang.String"/>
 	<parameter name="ANO_PRESENTACION" class="java.lang.Long"/>
 	<parameter name="DESC_MES_PRESENTACION" class="java.lang.String"/>
@@ -595,7 +595,7 @@ Provincias]]></text>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="140" splitType="Stretch">
+		<band height="113" splitType="Stretch">
 			<line>
 				<reportElement x="41" y="95" width="437" height="1"/>
 			</line>
@@ -637,16 +637,16 @@ Provincias]]></text>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="7" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="435" y="-22" width="73" height="20"/>
+				<reportElement x="435" y="1" width="73" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="508" y="-22" width="47" height="20"/>
+				<reportElement x="508" y="1" width="47" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
