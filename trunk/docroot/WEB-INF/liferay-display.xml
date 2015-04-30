@@ -28,5 +28,6 @@
 		<portlet id="gartParametros"/>
 		<portlet id="gartArchivoSustento"/>
 		<portlet id="gartResumenObservaciones"/>
+		<portlet id="gartTipoDocReferencia"/>
 	</category>
 </display>

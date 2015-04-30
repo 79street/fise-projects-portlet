@@ -819,4 +819,38 @@
 	</portlet>
 	
 	
+	<portlet>
+		<portlet-name>gartTipoDocReferencia</portlet-name>
+		<display-name>GartTipoDocReferencia</display-name>
+		<portlet-class>
+			org.springframework.web.portlet.DispatcherPortlet
+		</portlet-class>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>/WEB-INF/context/portlet/gart-tipoDocReferencia-portlet.xml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>TIPO DE DOCUMENTO DE REFERENCIA </title>
+			<short-title>GartTipoDocReferencia</short-title>
+			<keywords>GartTipoDocReferencia</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	
 </portlet-app>
