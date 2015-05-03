@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/jsps/gart/ext/extObservacion.jsp"%>
+<%@include file="/WEB-INF/jsps/gart/ext/extTipoPersonal.jsp"%>
 
 
 <link href="/fise-projects-portlet/css/tablas.css" rel="stylesheet" type="text/css">
@@ -8,13 +8,13 @@
 
 <script type="text/javascript">
 $(document).ready(function () {	
-	fiseObservacion.init();
+	tipoPersonalVar.init();
 });
 </script>
            
            
 <form:form method="POST" style="padding:17px;padding-top:0px;" 
-            modelAttribute="fiseObservacionBean">
+            modelAttribute="tipoPersonalBean">
             
             
             	
@@ -48,7 +48,7 @@ $(document).ready(function () {
 											<td colspan="4"></td>
 										</tr>
 										<tr>
-											<td><output>Id Observación:</output></td>
+											<td><output>Id Tipo Personal:</output></td>
 											<td>
 											 <form:input path="idBusq" size="10"/>		
 											</td>
@@ -66,8 +66,8 @@ $(document).ready(function () {
 											<td></td>
 											<td></td>
 											<td></td>											
-											<td><input name="<portlet:namespace/>btnBuscarObservaciones"
-												id="<portlet:namespace/>btnBuscarObservaciones" type="button"
+											<td><input name="<portlet:namespace/>btnBuscarTipoPersonal"
+												id="<portlet:namespace/>btnBuscarTipoPersonal" type="button"
 												class="net-button-small" value="Buscar" style="aling: center" />
 											</td>
 										</tr>
@@ -101,8 +101,8 @@ $(document).ready(function () {
 										<td align="right" width="90px">
 											<div id="d_opc_crear">
 												<input type="button" class="net-button-small"
-													id="<portlet:namespace/>btnNuevaObservacion"
-													name="<portlet:namespace/>btnNuevaObservacion" value="Nuevo" />
+													id="<portlet:namespace/>btnNuevoTipoPersonal"
+													name="<portlet:namespace/>btnNuevoTipoPersonal" value="Nuevo" />
 											</div>
 										</td>
 										<td align="right" width="90px">											
@@ -130,7 +130,7 @@ $(document).ready(function () {
 	
 									<table class="" border="0" width="100%">
 									   <tr class="filete-bottom">
-											<td><output class="net-titulo">OBSERVACIONES</output>
+											<td><output class="net-titulo">TIPO DE PERSONAL</output>
 											</td>
 										</tr>
 										<tr height="10px">
@@ -140,13 +140,13 @@ $(document).ready(function () {
 									     <td>											
 										   <table style="width: 100%;" border="0">
 											  <tr>											  
-											    <td><label style="font-size: 12px; font-weight: bold">Id Observación:</label>
+											    <td style="width: 150px;"><label style="font-size: 12px; font-weight: bold">Id Tipo Personal:</label>
 												</td>
 											    <td>
 											      <form:input path="id" size="10"/> 
 											   </td>
 											   
-											   <td><label style="font-size: 12px; font-weight: bold">Descripción:</label>
+											   <td style="width: 100px;"><label style="font-size: 12px; font-weight: bold">Descripción:</label>
 											   </td>
 											   <td>
 												 <form:textarea path="descripcion" cols="30" rows="4"/>  
@@ -170,15 +170,15 @@ $(document).ready(function () {
 												  <table style="width: 100%">
 												    <tr>													  
 													 <td width="17%" align="center">													  
-														  <input type="button" class="net-button-small" id="<portlet:namespace/>actualizarfiseObservacion"
-															   name="<portlet:namespace/>actualizarfiseObservacion" value="Actualizar" style="display: none;"/>
+														  <input type="button" class="net-button-small" id="<portlet:namespace/>btnActualizarTipoPersonal"
+															   name="<portlet:namespace/>btnActualizarTipoPersonal" value="Actualizar" style="display: none;"/>
 																												
-														<input type="button" class="net-button-small" id="<portlet:namespace/>guardarfiseObservacion"
-															   name="<portlet:namespace/>guardarfiseObservacion" value="Grabar" />									   
+														<input type="button" class="net-button-small" id="<portlet:namespace/>btnGuardarTipoPersonal"
+															   name="<portlet:namespace/>btnGuardarTipoPersonal" value="Grabar" />									   
 													 </td>													
 													 <td width="17%" align="center">
-														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarfiseObservacion" 
-															  name="<portlet:namespace/>regresarfiseObservacion" value="Regresar" />
+														<input type="button" class="net-button-small" id="<portlet:namespace/>btnRegresarTipoPersonal" 
+															  name="<portlet:namespace/>btnRegresarTipoPersonal" value="Regresar" />
 													 </td>
 												 </tr>
 											  </table>

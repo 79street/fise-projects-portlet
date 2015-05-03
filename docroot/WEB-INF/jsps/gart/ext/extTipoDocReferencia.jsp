@@ -107,9 +107,9 @@ var fiseTipoDocRef= {
 			//botones
 			this.botonBuscar=$("#<portlet:namespace/>btnBuscarTipoDocRefe");
 			this.botonNuevo=$("#<portlet:namespace/>btnNuevaTipoDocRefe");
-			this.botonRegresar=$("#<portlet:namespace/>regresarTipoDocRefe");			
-			this.botonGrabar=$("#<portlet:namespace/>guardarTipoDocRefe");
-			this.botonActualizar=$("#<portlet:namespace/>actualizarTipoDocRefe");		
+			this.botonRegresar=$("#<portlet:namespace/>btnRegresarTipoDocRefe");			
+			this.botonGrabar=$("#<portlet:namespace/>btnGuardarTipoDocRefe");
+			this.botonActualizar=$("#<portlet:namespace/>btnActualizarTipoDocRefe");		
 			
 			//variables de busqueda
 			this.i_idBusq=$('#idBusq');
@@ -242,8 +242,8 @@ var fiseTipoDocRef= {
 						
 			console.debug("boton nuevo registro:  ");
 			
-			$('#<portlet:namespace/>guardarTipoDocRefe').css('display','block');
-			$('#<portlet:namespace/>actualizarTipoDocRefe').css('display','none');
+			$('#<portlet:namespace/>btnGuardarTipoDocRefe').css('display','block');
+			$('#<portlet:namespace/>btnActualizarTipoDocRefe').css('display','none');
 		},
 		
 		//Function para Visualizar los datos del formulario		
@@ -271,8 +271,8 @@ var fiseTipoDocRef= {
 				        	fiseTipoDocRef.f_descripcion.attr("disabled",true);
 				        	
 					    	
-					    	$('#<portlet:namespace/>guardarTipoDocRefe').css('display','none');
-					    	$('#<portlet:namespace/>actualizarTipoDocRefe').css('display','none');
+					    	$('#<portlet:namespace/>btnGuardarTipoDocRefe').css('display','none');
+					    	$('#<portlet:namespace/>btnActualizarTipoDocRefe').css('display','none');
 					    							
 				        }						
 						else{							
@@ -314,8 +314,8 @@ var fiseTipoDocRef= {
 								fiseTipoDocRef.f_id.attr("disabled",true);			        	
 					        	fiseTipoDocRef.f_descripcion.removeAttr("disabled");
 								
-								$('#<portlet:namespace/>guardarTipoDocRefe').css('display','none');
-								$('#<portlet:namespace/>actualizarTipoDocRefe').css('display','block');	
+								$('#<portlet:namespace/>btnGuardarTipoDocRefe').css('display','none');
+								$('#<portlet:namespace/>btnActualizarTipoDocRefe').css('display','block');	
 								//ESTILOS								
 					         }
 							else{								
@@ -405,8 +405,8 @@ var fiseTipoDocRef= {
 							fiseTipoDocRef.f_id.attr("disabled",true);			        	
 				        	fiseTipoDocRef.f_descripcion.removeAttr("disabled");
 							
-							$('#<portlet:namespace/>guardarTipoDocRefe').css('display','none');
-							$('#<portlet:namespace/>actualizarTipoDocRefe').css('display','block');
+							$('#<portlet:namespace/>btnGuardarTipoDocRefe').css('display','none');
+							$('#<portlet:namespace/>btnActualizarTipoDocRefe').css('display','block');
 							
 						}else if(data.resultado == "Error"){							
 							var addhtmError='Se produjo un error al guardar Tipo de Documento de Referencia.';					

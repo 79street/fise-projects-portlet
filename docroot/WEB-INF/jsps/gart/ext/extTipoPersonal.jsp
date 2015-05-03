@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 
-var fiseObservacion= {
+var tipoPersonalVar= {
 		
 	    //decalaracion de los elementos del html	
 		formCommand : null,
@@ -68,7 +68,7 @@ var fiseObservacion= {
 		
 		init : function() {
 			
-			this.formCommand=$('#fiseObservacionBean');
+			this.formCommand=$('#tipoPersonalBean');
 			
 			//divs
 			this.divBuscar=$("#<portlet:namespace/>div_buscar");
@@ -97,21 +97,21 @@ var fiseObservacion= {
 			
 			
 			//urls
-			this.urlBusqueda='<portlet:resourceURL id="busquedaObservaciones" />';			
-			this.urlGrabar='<portlet:resourceURL id="grabarObservacion" />';			
-			this.urlActualizar='<portlet:resourceURL id="actualizarObservacion" />';
-			this.urlEditarView='<portlet:resourceURL id="editarViewObservacion" />';			
-			this.urlEliminar='<portlet:resourceURL id="eliminarObservacion" />';
-			this.urlNuevo='<portlet:resourceURL id="nuevoRegistroObservacion" />';
+			this.urlBusqueda='<portlet:resourceURL id="busquedaTipoPersonal" />';			
+			this.urlGrabar='<portlet:resourceURL id="grabarTipoPersonal" />';			
+			this.urlActualizar='<portlet:resourceURL id="actualizarTipoPersonal" />';
+			this.urlEditarView='<portlet:resourceURL id="editarViewTipoPersonal" />';			
+			this.urlEliminar='<portlet:resourceURL id="eliminarTipoPersonal" />';
+			this.urlNuevo='<portlet:resourceURL id="nuevoRegistroTipoPersonal" />';
 			
 			
 			
 			//botones
-			this.botonBuscar=$("#<portlet:namespace/>btnBuscarObservaciones");
-			this.botonNuevo=$("#<portlet:namespace/>btnNuevaObservacion");
-			this.botonRegresar=$("#<portlet:namespace/>regresarfiseObservacion");			
-			this.botonGrabar=$("#<portlet:namespace/>guardarfiseObservacion");
-			this.botonActualizar=$("#<portlet:namespace/>actualizarfiseObservacion");		
+			this.botonBuscar=$("#<portlet:namespace/>btnBuscarTipoPersonal");
+			this.botonNuevo=$("#<portlet:namespace/>btnNuevoTipoPersonal");
+			this.botonRegresar=$("#<portlet:namespace/>btnRegresarTipoPersonal");			
+			this.botonGrabar=$("#<portlet:namespace/>btnGuardarTipoPersonal");
+			this.botonActualizar=$("#<portlet:namespace/>btnActualizarTipoPersonal");		
 			
 			//variables de busqueda
 			this.i_idBusq=$('#idBusq');
@@ -129,44 +129,45 @@ var fiseObservacion= {
 			
 			
 			//llamado a la funciones de cada boton
-			fiseObservacion.botonBuscar.click(function() {
-				fiseObservacion.buscarfiseObservacion();
+			tipoPersonalVar.botonBuscar.click(function() {
+				tipoPersonalVar.buscarTipoPersonal();
 			});			
 			
-			fiseObservacion.botonNuevo.click(function() {
-				fiseObservacion.<portlet:namespace/>nuevofiseObservacion();
+			tipoPersonalVar.botonNuevo.click(function() {
+				tipoPersonalVar.<portlet:namespace/>nuevoTipoPersonal();
 		    });
 			
-			fiseObservacion.botonGrabar.click(function() {
-				fiseObservacion.<portlet:namespace/>guardarfiseObservacion();
+			tipoPersonalVar.botonGrabar.click(function() {
+				tipoPersonalVar.<portlet:namespace/>guardarTipoPersonal();
 			});
 			
-			fiseObservacion.botonActualizar.click(function() {
-				fiseObservacion.<portlet:namespace/>actualizarfiseObservacion();
+			tipoPersonalVar.botonActualizar.click(function() {
+				tipoPersonalVar.<portlet:namespace/>actualizarTipoPersonal();
 			});		
 			
 			
-		    fiseObservacion.botonRegresar.click(function() {
-		    	fiseObservacion.<portlet:namespace/>regresarfiseObservacion();
+		    tipoPersonalVar.botonRegresar.click(function() {
+		    	tipoPersonalVar.<portlet:namespace/>regresarTipoPersonal();
 		    });			
 		    
-		    fiseObservacion.initDialogs();
+		    tipoPersonalVar.initDialogs();
 		    
 		    //eventos por defecto		   
-			fiseObservacion.botonBuscar.trigger('click');
-			fiseObservacion.initBlockUI();
+			tipoPersonalVar.botonBuscar.trigger('click');
+			tipoPersonalVar.initBlockUI();
 		},
+		
 		//funcion para armar el modelo de la grilla para el resultado
 		buildGrids : function () {	
-			fiseObservacion.tablaResultados.jqGrid({
+			tipoPersonalVar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Observación','Descripción de Observación','Ver','Editar'],
+		       colNames: ['Id Tipo Personal','Descripción','Ver','Editar','Eliminar'],
 		       colModel: [
-                       { name: 'idObservacion', index: 'idObservacion', width: 20},
+                       { name: 'idTipPersonal', index: 'idTipPersonal', width: 20,align:'center'},
 					   { name: 'descripcion', index: 'descripcion', width: 80},					  
-		               { name: 'view', index: 'view', width: 20,align:'center' },
-		               { name: 'edit', index: 'edit', width: 20,align:'center' }
-		              /*  { name: 'elim', index: 'elim', width: 20,align:'center' } */  
+		               { name: 'view', index: 'view', width: 15,align:'center' },
+		               { name: 'edit', index: 'edit', width: 15,align:'center' },
+		               { name: 'elim', index: 'elim', width: 15,align:'center' }  
 		               
 			   	    ],
 			   	 multiselect: false,
@@ -176,326 +177,329 @@ var fiseObservacion= {
 				   	autowidth: true,
 					rownumbers: true,
 					shrinkToFit:true,
-					pager: fiseObservacion.paginadoResultados,
+					pager: tipoPersonalVar.paginadoResultados,
 				    viewrecords: true,
 				   	caption: "Resultado(s) de la búsqueda",
 				    sortorder: "asc",	   	    	   	   
 		       gridComplete: function(){
-		      		var ids = fiseObservacion.tablaResultados.jqGrid('getDataIDs');
+		      		var ids = tipoPersonalVar.tablaResultados.jqGrid('getDataIDs');
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
-		      			var ret = fiseObservacion.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseObservacion.verfiseObservacion('"+ret.idObservacion+"');\" /></a> ";
-		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseObservacion.editarfiseObservacion('"+ret.idObservacion+"');\" /></a> ";
-		      			/* elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseObservacion.confirmarEliminarfiseObservacion('"+ret.idObservacion+"');\" /></a> "; */              			
-		      			fiseObservacion.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
-		      			fiseObservacion.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
-		      			/* fiseObservacion.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim}); */
+		      			var ret = tipoPersonalVar.tablaResultados.jqGrid('getRowData',cl);           
+		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"tipoPersonalVar.verTipoPersonal('"+ret.idTipPersonal+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"tipoPersonalVar.editarTipoPersonal('"+ret.idTipPersonal+"');\" /></a> ";
+		      			elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"tipoPersonalVar.confirmarEliminarTipoPersonal('"+ret.idTipPersonal+"');\" /></a> ";              			
+		      			tipoPersonalVar.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
+		      			tipoPersonalVar.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
+		      			tipoPersonalVar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
 		      		}
 		      }
 		  	});
-			fiseObservacion.tablaResultados.jqGrid('navGrid',fiseObservacion.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});	
-			fiseObservacion.tablaResultados.jqGrid('navButtonAdd',fiseObservacion.paginadoResultados,{
+			tipoPersonalVar.tablaResultados.jqGrid('navGrid',tipoPersonalVar.paginadoResultados,{add:false,edit:false,del:false,search: false,refresh: false});	
+			tipoPersonalVar.tablaResultados.jqGrid('navButtonAdd',tipoPersonalVar.paginadoResultados,{
 			       caption:"Exportar a Excel",
 			       buttonicon: "ui-icon-bookmark",
 			       onClickButton : function () {
-			    	   var ids = fiseObservacion.tablaResultados.jqGrid('getDataIDs');
+			    	   var ids = tipoPersonalVar.tablaResultados.jqGrid('getDataIDs');
 				       if(ids!=0){
 				    		  location.href = '<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/ExportExcelPlus")%>';   
 				       }else{
 				    	var addhtmInfo='No existe información para exportar a Excel';				
-				    	fiseObservacion.dialogInfoContent.html(addhtmInfo);
-				    	fiseObservacion.dialogInfo.dialog("open");
+				    	tipoPersonalVar.dialogInfoContent.html(addhtmInfo);
+				    	tipoPersonalVar.dialogInfo.dialog("open");
 				       }  		       
 			       } 
 			});  
 		},
 		//funcion para buscar
-		buscarfiseObservacion : function () {		
-			fiseObservacion.blockUI();
+		buscarTipoPersonal : function () {		
+			tipoPersonalVar.blockUI();
 			jQuery.ajax({			
-					url: fiseObservacion.urlBusqueda+'&'+fiseObservacion.formCommand.serialize(),
+					url: tipoPersonalVar.urlBusqueda+'&'+tipoPersonalVar.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',				
 					success: function(gridData) {					
-							fiseObservacion.tablaResultados.clearGridData(true);
-							fiseObservacion.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
-							fiseObservacion.tablaResultados[0].refreshIndex();
-							fiseObservacion.initBlockUI();
+							tipoPersonalVar.tablaResultados.clearGridData(true);
+							tipoPersonalVar.tablaResultados.jqGrid('setGridParam', {data: gridData}).trigger('reloadGrid');
+							tipoPersonalVar.tablaResultados[0].refreshIndex();
+							tipoPersonalVar.initBlockUI();
 					},error : function(){
 						var addhtmError='Error de conexión.';					
-						fiseObservacion.dialogErrorContent.html(addhtmError);
-						fiseObservacion.dialogError.dialog("open");
-						fiseObservacion.initBlockUI();
+						tipoPersonalVar.dialogErrorContent.html(addhtmError);
+						tipoPersonalVar.dialogError.dialog("open");
+						tipoPersonalVar.initBlockUI();
 					}
 				});			
 		},		
+		
 		//funcion para nuevo registro
-		<portlet:namespace/>nuevofiseObservacion : function(){	
+		<portlet:namespace/>nuevoTipoPersonal : function(){	
 			jQuery.ajax({			
-				url: fiseObservacion.urlNuevo+'&'+fiseObservacion.formCommand.serialize(),
+				url: tipoPersonalVar.urlNuevo+'&'+tipoPersonalVar.formCommand.serialize(),
 				type: 'post',
 				dataType: 'json',				
 				success: function(data) {					
-					fiseObservacion.f_id.val(data.id);
-					fiseObservacion.f_descripcion.val('');			
-					fiseObservacion.f_id.attr("disabled",true);  	
-		        	fiseObservacion.f_descripcion.removeAttr("disabled");	
+					tipoPersonalVar.f_id.val(data.id);
+					tipoPersonalVar.f_descripcion.val('');			
+					tipoPersonalVar.f_id.attr("disabled",true);  	
+		        	tipoPersonalVar.f_descripcion.removeAttr("disabled");	
 					
-					fiseObservacion.divNuevo.show();
-					fiseObservacion.divBuscar.hide();		
+					tipoPersonalVar.divNuevo.show();
+					tipoPersonalVar.divBuscar.hide();		
 								
 					console.debug("boton nuevo registro:  ");
 					
-					$('#<portlet:namespace/>guardarfiseObservacion').css('display','block');
-					$('#<portlet:namespace/>actualizarfiseObservacion').css('display','none');	
+					$('#<portlet:namespace/>btnGuardarTipoPersonal').css('display','block');
+					$('#<portlet:namespace/>btnActualizarTipoPersonal').css('display','none');	
 					
 				},error : function(){
 					var addhtmError='Error de conexión.';					
-					fiseObservacion.dialogErrorContent.html(addhtmError);
-					fiseObservacion.dialogError.dialog("open");
-					fiseObservacion.initBlockUI();
+					tipoPersonalVar.dialogErrorContent.html(addhtmError);
+					tipoPersonalVar.dialogError.dialog("open");
+					tipoPersonalVar.initBlockUI();
 				}
 			});			
 		},
 		
 		//Function para Visualizar los datos del formulario		
-		verfiseObservacion : function(idObservacion){	
-			$.blockUI({ message: fiseObservacion.mensajeObteniendoDatos});
+		verTipoPersonal : function(id_TipoPersonal){	
+			$.blockUI({ message: tipoPersonalVar.mensajeObteniendoDatos});
 			jQuery.ajax({
-					url: fiseObservacion.urlEditarView+'&'+fiseObservacion.formCommand.serialize(),
+					url: tipoPersonalVar.urlEditarView+'&'+tipoPersonalVar.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {						  
-					      <portlet:namespace />id: idObservacion					 
+					      <portlet:namespace />id: id_TipoPersonal,
+					      <portlet:namespace />codigo: id_TipoPersonal
 						},
 					success: function(data) {
 					    if (data != null){															
-					    	fiseObservacion.divNuevo.show();
-					    	fiseObservacion.divBuscar.hide();	
+					    	tipoPersonalVar.divNuevo.show();
+					    	tipoPersonalVar.divBuscar.hide();	
 					    	
-					    	fiseObservacion.llenarDatosEditar(data);
+					    	tipoPersonalVar.llenarDatosEditar(data);
 					    	
-					    	fiseObservacion.initBlockUI();				    	
+					    	tipoPersonalVar.initBlockUI();				    	
 					    			
-							fiseObservacion.f_id.attr("disabled",true);				        	
-				        	fiseObservacion.f_descripcion.attr("disabled",true);
+							tipoPersonalVar.f_id.attr("disabled",true);				        	
+				        	tipoPersonalVar.f_descripcion.attr("disabled",true);
 				        	
 					    	
-					    	$('#<portlet:namespace/>guardarfiseObservacion').css('display','none');
-					    	$('#<portlet:namespace/>actualizarfiseObservacion').css('display','none');
+					    	$('#<portlet:namespace/>btnGuardarTipoPersonal').css('display','none');
+					    	$('#<portlet:namespace/>btnActualizarTipoPersonal').css('display','none');
 					    							
 				        }						
 						else{							
 							var addhtmError='Error al visualizar los datos del registro seleccionado.';					
-							fiseObservacion.dialogErrorContent.html(addhtmError);
-							fiseObservacion.dialogError.dialog("open");	
-							fiseObservacion.initBlockUI();
+							tipoPersonalVar.dialogErrorContent.html(addhtmError);
+							tipoPersonalVar.dialogError.dialog("open");	
+							tipoPersonalVar.initBlockUI();
 						}
 					},error : function(){
 						var addhtmError='Error de conexión.';					
-						fiseObservacion.dialogErrorContent.html(addhtmError);
-						fiseObservacion.dialogError.dialog("open");
-						fiseObservacion.initBlockUI();
+						tipoPersonalVar.dialogErrorContent.html(addhtmError);
+						tipoPersonalVar.dialogError.dialog("open");
+						tipoPersonalVar.initBlockUI();
 					}
 			});	
 		},
 		//Function para editar los datos del formulario
-		editarfiseObservacion : function(idObservacion){	
+		editarTipoPersonal : function(id_tipoPersonal){	
 			    console.debug("entrando a editar ");		
-				$.blockUI({ message: fiseObservacion.mensajeObteniendoDatos });			 
+				$.blockUI({ message: tipoPersonalVar.mensajeObteniendoDatos });			 
 				jQuery.ajax({
-						url: fiseObservacion.urlEditarView+'&'+fiseObservacion.formCommand.serialize(),
+						url: tipoPersonalVar.urlEditarView+'&'+tipoPersonalVar.formCommand.serialize(),
 						type: 'post',
 						dataType: 'json',
 						data: {							
-						   <portlet:namespace />id: idObservacion						   				  
+						   <portlet:namespace />id: id_tipoPersonal						   				  
 						},
 						success: function(data) {				
 							if (data != null){															
-								fiseObservacion.divNuevo.show();
-								fiseObservacion.divBuscar.hide();	
+								tipoPersonalVar.divNuevo.show();
+								tipoPersonalVar.divBuscar.hide();	
 								
-								fiseObservacion.llenarDatosEditar(data);
+								tipoPersonalVar.llenarDatosEditar(data);
 								
-								fiseObservacion.initBlockUI();					
+								tipoPersonalVar.initBlockUI();					
 											
-								fiseObservacion.f_id.attr("disabled",true);			        	
-					        	fiseObservacion.f_descripcion.removeAttr("disabled");
+								tipoPersonalVar.f_id.attr("disabled",true);			        	
+					        	tipoPersonalVar.f_descripcion.removeAttr("disabled");
 								
-								$('#<portlet:namespace/>guardarfiseObservacion').css('display','none');
-								$('#<portlet:namespace/>actualizarfiseObservacion').css('display','block');	
+								$('#<portlet:namespace/>btnGuardarTipoPersonal').css('display','none');
+								$('#<portlet:namespace/>btnActualizarTipoPersonal').css('display','block');	
 								//ESTILOS								
 					         }
 							else{								
 								var addhtmError='Error al recuperar los datos del registro seleccionado.';					
-								fiseObservacion.dialogErrorContent.html(addhtmError);
-								fiseObservacion.dialogError.dialog("open");	
-								fiseObservacion.initBlockUI();
+								tipoPersonalVar.dialogErrorContent.html(addhtmError);
+								tipoPersonalVar.dialogError.dialog("open");	
+								tipoPersonalVar.initBlockUI();
 							}
 						},error : function(){
 							var addhtmError='Error de conexión.';					
-							fiseObservacion.dialogErrorContent.html(addhtmError);
-							fiseObservacion.dialogError.dialog("open");
-							fiseObservacion.initBlockUI();
+							tipoPersonalVar.dialogErrorContent.html(addhtmError);
+							tipoPersonalVar.dialogError.dialog("open");
+							tipoPersonalVar.initBlockUI();
 						}
 				});		
 		},
 		//funcion  para llenar los campos para editar
 		llenarDatosEditar : function(bean){	
-			fiseObservacion.f_id.val(bean.id);
-			fiseObservacion.f_descripcion.val(bean.descripcion);  	
+			tipoPersonalVar.f_id.val(bean.id);
+			tipoPersonalVar.f_descripcion.val(bean.descripcion);  	
 		},
 		/**Function para confirmar si quiere eliminar el registro o no*/
-		confirmarEliminarfiseObservacion : function(idObservacion){
-			console.debug("entranado a eliminar confirmar:  "+idObservacion);
+		confirmarEliminarTipoPersonal : function(idTipoPersonal){
+			console.debug("entranado a eliminar confirmar:  "+idTipoPersonal);
 			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
-			fiseObservacion.dialogConfirmContent.html(addhtml);
-			fiseObservacion.dialogConfirm.dialog("open");	
-			id_observacion=idObservacion;
+			tipoPersonalVar.dialogConfirmContent.html(addhtml);
+			tipoPersonalVar.dialogConfirm.dialog("open");	
+			id_TipoPersonal=idTipoPersonal;
 		},
 		/**Function para  eliminar el registro una vez hecho la confirmacion*/
-		eliminarfiseObservacion : function(id_observacion){
-			console.debug("entranado a eliminar:  "+id_observacion);
-			$.blockUI({ message: fiseObservacion.mensajeEliminando });
+		eliminarTipoPersonal : function(id_TipoPersonal){
+			console.debug("entranado a eliminar:  "+id_TipoPersonal);
+			$.blockUI({ message: tipoPersonalVar.mensajeEliminando });
 			jQuery.ajax({
-				url: fiseObservacion.urlEliminar+'&'+fiseObservacion.formCommand.serialize(),
+				url: tipoPersonalVar.urlEliminar+'&'+tipoPersonalVar.formCommand.serialize(),
 				type: 'post',
 				dataType: 'json',
 				data: {				
-				   <portlet:namespace />id: id_observacion				  
+				   <portlet:namespace />id: id_TipoPersonal				  
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
 						var addhtml2='El registro fue eliminado satisfactoriamente';					
-						fiseObservacion.dialogMessageContent.html(addhtml2);
-						fiseObservacion.dialogMessage.dialog("open");
-						fiseObservacion.buscarfiseObservacion();
-						fiseObservacion.initBlockUI();
+						tipoPersonalVar.dialogMessageContent.html(addhtml2);
+						tipoPersonalVar.dialogMessage.dialog("open");
+						tipoPersonalVar.buscartipoPersonalVar();
+						tipoPersonalVar.initBlockUI();
 					}
 					else{						
 						var addhtmError='Error al eliminar el registro.';					
-						fiseObservacion.dialogErrorContent.html(addhtmError);
-						fiseObservacion.dialogError.dialog("open");	
-						fiseObservacion.initBlockUI();
+						tipoPersonalVar.dialogErrorContent.html(addhtmError);
+						tipoPersonalVar.dialogError.dialog("open");	
+						tipoPersonalVar.initBlockUI();
 					}
 				},error : function(){
 					var addhtmError='Error de conexión.';					
-					fiseObservacion.dialogErrorContent.html(addhtmError);
-					fiseObservacion.dialogError.dialog("open");
-					fiseObservacion.initBlockUI();
+					tipoPersonalVar.dialogErrorContent.html(addhtmError);
+					tipoPersonalVar.dialogError.dialog("open");
+					tipoPersonalVar.initBlockUI();
 				}
 			});
 		},
+		
 		//Funcion para Grabar nuevo registro
-		<portlet:namespace/>guardarfiseObservacion: function(){
-			if (fiseObservacion.validarFormulario()){
-				$.blockUI({ message: fiseObservacion.mensajeGuardando });
+		<portlet:namespace/>guardarTipoPersonal: function(){
+			if (tipoPersonalVar.validarFormulario()){
+				$.blockUI({ message: tipoPersonalVar.mensajeGuardando });
 				 jQuery.ajax({
-					 url: fiseObservacion.urlGrabar+'&'+fiseObservacion.formCommand.serialize(),
+					 url: tipoPersonalVar.urlGrabar+'&'+tipoPersonalVar.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {											
-						<portlet:namespace />id: fiseObservacion.f_id.val(),
-						<portlet:namespace />descripcion: fiseObservacion.f_descripcion.val() 																
+						<portlet:namespace />id: tipoPersonalVar.f_id.val(),
+						<portlet:namespace />descripcion: tipoPersonalVar.f_descripcion.val() 																
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='La Observación se guardó satisfactoriamente';
+							var addhtml2='El Tipo de Personal se guardó satisfactoriamente';
 							
-							fiseObservacion.dialogMessageContent.html(addhtml2);
-							fiseObservacion.dialogMessage.dialog("open");							
-							fiseObservacion.initBlockUI();						
+							tipoPersonalVar.dialogMessageContent.html(addhtml2);
+							tipoPersonalVar.dialogMessage.dialog("open");							
+							tipoPersonalVar.initBlockUI();						
 										
-							fiseObservacion.f_id.attr("disabled",true);			        	
-				        	fiseObservacion.f_descripcion.removeAttr("disabled");
+							tipoPersonalVar.f_id.attr("disabled",true);			        	
+				        	tipoPersonalVar.f_descripcion.removeAttr("disabled");
 							
-							$('#<portlet:namespace/>guardarfiseObservacion').css('display','none');
-							$('#<portlet:namespace/>actualizarfiseObservacion').css('display','block');
+							$('#<portlet:namespace/>btnGuardarTipoPersonal').css('display','none');
+							$('#<portlet:namespace/>btnActualizarTipoPersonal').css('display','block');
 							
 						}else if(data.resultado == "Error"){							
-							var addhtmError='Se produjo un error al guardar la Observación.';					
-							fiseObservacion.dialogErrorContent.html(addhtmError);
-							fiseObservacion.dialogError.dialog("open");						
-							fiseObservacion.initBlockUI();
+							var addhtmError='Se produjo un error al guardar el Tipo de Personal.';					
+							tipoPersonalVar.dialogErrorContent.html(addhtmError);
+							tipoPersonalVar.dialogError.dialog("open");						
+							tipoPersonalVar.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtmlInfo='Ya existe registrado una Observación con este Id.';
-							fiseObservacion.dialogInfoContent.html(addhtmlInfo);
-							fiseObservacion.dialogInfo.dialog("open");						
-							fiseObservacion.initBlockUI();
+							var addhtmlInfo='Ya existe registrado un Tipo de Personal con este Id.';
+							tipoPersonalVar.dialogInfoContent.html(addhtmlInfo);
+							tipoPersonalVar.dialogInfo.dialog("open");						
+							tipoPersonalVar.initBlockUI();
 						}
 					},error : function(){
 						var addhtmError='Error de conexión.';					
-						fiseObservacion.dialogErrorContent.html(addhtmError);
-						fiseObservacion.dialogError.dialog("open");
-						fiseObservacion.initBlockUI();
+						tipoPersonalVar.dialogErrorContent.html(addhtmError);
+						tipoPersonalVar.dialogError.dialog("open");
+						tipoPersonalVar.initBlockUI();
 					}
 				});			
 			}
 		},
 		//Funcion para actualizar un registro
-		<portlet:namespace/>actualizarfiseObservacion : function(){
-			if (fiseObservacion.validarFormulario()){
-				$.blockUI({ message: fiseObservacion.mensajeActualizando });
+		<portlet:namespace/>actualizarTipoPersonal : function(){
+			if (tipoPersonalVar.validarFormulario()){
+				$.blockUI({ message: tipoPersonalVar.mensajeActualizando });
 				 jQuery.ajax({
-					 url: fiseObservacion.urlActualizar+'&'+fiseObservacion.formCommand.serialize(),
+					 url: tipoPersonalVar.urlActualizar+'&'+tipoPersonalVar.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {
-						<portlet:namespace />id: fiseObservacion.f_id.val(),
-						<portlet:namespace />descripcion: fiseObservacion.f_descripcion.val() 	
+						<portlet:namespace />id: tipoPersonalVar.f_id.val(),
+						<portlet:namespace />descripcion: tipoPersonalVar.f_descripcion.val() 	
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='La Observación se actualizó satisfactoriamente';
-							fiseObservacion.dialogMessageContent.html(addhtml2);
-							fiseObservacion.dialogMessage.dialog("open");						
-							fiseObservacion.initBlockUI();								
+							var addhtml2='El Tipo de Personal se actualizó satisfactoriamente';
+							tipoPersonalVar.dialogMessageContent.html(addhtml2);
+							tipoPersonalVar.dialogMessage.dialog("open");						
+							tipoPersonalVar.initBlockUI();								
 						}else if(data.resultado == "Error"){						
-							var addhtmError='Se produjo un error al actualizar la Observación.';					
-							fiseObservacion.dialogErrorContent.html(addhtmError);
-							fiseObservacion.dialogError.dialog("open");				
-							fiseObservacion.initBlockUI();
+							var addhtmError='Se produjo un error al actualizar el Tipo de Personal.';					
+							tipoPersonalVar.dialogErrorContent.html(addhtmError);
+							tipoPersonalVar.dialogError.dialog("open");				
+							tipoPersonalVar.initBlockUI();
 						}
 					},error : function(){
 						var addhtmError='Error de conexión.';					
-						fiseObservacion.dialogErrorContent.html(addhtmError);
-						fiseObservacion.dialogError.dialog("open");
-						fiseObservacion.initBlockUI();
+						tipoPersonalVar.dialogErrorContent.html(addhtmError);
+						tipoPersonalVar.dialogError.dialog("open");
+						tipoPersonalVar.initBlockUI();
 					}
 				});						
 			}
 		},
 		//funcion para validar ingreso de datos
 		validarFormulario : function() {
-			console.debug("tamaño de descripcion:  "+fiseObservacion.f_descripcion.val().length);
-			if(fiseObservacion.f_id.val().length == ''){				
-				var addhtmAlert='Debe ingresar el id de Observación.';					
-				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
-				fiseObservacion.dialogValidacion.dialog("open");
-				//fiseObservacion.f_id.focus();
-				cod_focus=fiseObservacion.f_id;
+			console.debug("tamaño de descripcion:  "+tipoPersonalVar.f_descripcion.val().length);
+			if(tipoPersonalVar.f_id.val().length == ''){				
+				var addhtmAlert='Debe ingresar el id de Tipo de Personal.';					
+				tipoPersonalVar.dialogValidacionContent.html(addhtmAlert);
+				tipoPersonalVar.dialogValidacion.dialog("open");
+				//tipoPersonalVar.f_id.focus();
+				cod_focus=tipoPersonalVar.f_id;
 			  	return false; 
-			}else if(fiseObservacion.f_descripcion.val().length == ''){				
+			}else if(tipoPersonalVar.f_descripcion.val().length == ''){				
 				var addhtmAlert='Debe ingresar descripción.';					
-				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
-				fiseObservacion.dialogValidacion.dialog("open");
-				//fiseObservacion.f_descripcion.focus();
-				cod_focus=fiseObservacion.f_descripcion;
+				tipoPersonalVar.dialogValidacionContent.html(addhtmAlert);
+				tipoPersonalVar.dialogValidacion.dialog("open");
+				//tipoPersonalVar.f_descripcion.focus();
+				cod_focus=tipoPersonalVar.f_descripcion;
 			  	return false; 
-			}else if(!validarLetra(fiseObservacion.f_descripcion.val())){				
+			}else if(!validarLetra(tipoPersonalVar.f_descripcion.val())){				
 				var addhtmAlert='Debe ingresar una Descripción válida.';					
-				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
-				fiseObservacion.dialogValidacion.dialog("open");
-				//fiseObservacion.f_descripcion.focus();
-				cod_focus=fiseObservacion.f_descripcion;
+				tipoPersonalVar.dialogValidacionContent.html(addhtmAlert);
+				tipoPersonalVar.dialogValidacion.dialog("open");
+				//tipoPersonalVar.f_descripcion.focus();
+				cod_focus=tipoPersonalVar.f_descripcion;
 			  	return false; 
-			}else if(fiseObservacion.f_descripcion.val().length > 499){				
+			}else if(tipoPersonalVar.f_descripcion.val().length > 499){				
 				var addhtmAlert='La  descripción acepta como máximo 500 caracteres.';					
-				fiseObservacion.dialogValidacionContent.html(addhtmAlert);
-				fiseObservacion.dialogValidacion.dialog("open");
-				//fiseObservacion.f_descripcion.focus();
-				cod_focus=fiseObservacion.f_descripcion;
+				tipoPersonalVar.dialogValidacionContent.html(addhtmAlert);
+				tipoPersonalVar.dialogValidacion.dialog("open");
+				//tipoPersonalVar.f_descripcion.focus();
+				cod_focus=tipoPersonalVar.f_descripcion;
 			  	return false; 
 			}else{
 				return true;
@@ -503,11 +507,11 @@ var fiseObservacion= {
 		},
 		
 		//funcion para regresar
-		<portlet:namespace/>regresarfiseObservacion : function(){			
-			fiseObservacion.divNuevo.hide();
-			fiseObservacion.divBuscar.show();
+		<portlet:namespace/>regresarTipoPersonal : function(){			
+			tipoPersonalVar.divNuevo.hide();
+			tipoPersonalVar.divBuscar.show();
 					
-			fiseObservacion.botonBuscar.trigger('click');
+			tipoPersonalVar.botonBuscar.trigger('click');
 		},
 		
 		ponerFocus : function(cadena){		
@@ -516,7 +520,7 @@ var fiseObservacion= {
 		
 		//DIALOGOS
 		initDialogs : function(){	
-			fiseObservacion.dialogMessage.dialog({
+			tipoPersonalVar.dialogMessage.dialog({
 				modal: true,
 				autoOpen: false,
 				width: 450,	
@@ -527,14 +531,14 @@ var fiseObservacion= {
 				}
 			});
 			//dialogo para eliminar registro
-			fiseObservacion.dialogConfirm.dialog({
+			tipoPersonalVar.dialogConfirm.dialog({
 				modal: true,
 				height: 200,
 				width: 450,			
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
-						fiseObservacion.eliminarfiseObservacion(id_observacion);
+						tipoPersonalVar.eliminarTipoPersonal(id_TipoPersonal);
 						$( this ).dialog("close");
 					},
 					"No": function() {				
@@ -543,19 +547,19 @@ var fiseObservacion= {
 				}
 			});	
 			
-			fiseObservacion.dialogValidacion.dialog({
+			tipoPersonalVar.dialogValidacion.dialog({
 				modal: true,
 				autoOpen: false,
 				width: 450,		
 				buttons: {
 					Aceptar: function() {
-						fiseObservacion.ponerFocus(cod_focus);
+						tipoPersonalVar.ponerFocus(cod_focus);
 						$( this ).dialog("close");
 					}
 				}
 			});
 			
-			fiseObservacion.dialogError.dialog({
+			tipoPersonalVar.dialogError.dialog({
 				modal: true,
 				autoOpen: false,
 				width: 450,		
@@ -566,7 +570,7 @@ var fiseObservacion= {
 				}
 			});
 			
-			fiseObservacion.dialogInfo.dialog({
+			tipoPersonalVar.dialogInfo.dialog({
 				modal: true,
 				autoOpen: false,
 				width: 450,		
