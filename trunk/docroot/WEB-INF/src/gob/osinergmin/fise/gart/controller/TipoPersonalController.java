@@ -7,6 +7,7 @@ import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseTipPersonal;
 import gob.osinergmin.fise.gart.service.FiseTipPersonalService;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -71,13 +72,13 @@ public class TipoPersonalController {
     		p.setDescripcion("");   		
     		model.addAttribute("model", p);    		
 		} catch (Exception e) {
-			logger.info("Ocurrio un errror al caragar la pagina observaciones"); 
+			logger.info("Ocurrio un errror al caragar la pagina tipo de personal"); 
 			e.printStackTrace();
 		}		
-		return "fiseTipoPersonal";
+		return "fiseTipoPersonal";//nombre de la pagina a resolver
 	}
 	
-	@ResourceMapping("busquedaObservaciones")
+	@ResourceMapping("busquedaTipoPersonal")
   	public void busqueda(ResourceRequest request,ResourceResponse response,
   			@ModelAttribute("tipoPersonalBean")TipoPersonalBean p){
 		
@@ -97,9 +98,9 @@ public class TipoPersonalController {
   			List<FiseTipPersonal> listaPersonal = fiseTipPersonalService.buscarFiseTipPersonal(id, descripcion); 	 			
   			logger.info("tamaño de la lista tipos de personal   :"+listaPersonal.size());   			 			
   			  			
-  			fiseUtil.configuracionExportarExcel(session, FiseConstants.OBSERVACIONES_EXPORT_EXEL, 
-  					"OBSERVACIONES", //title
-  					"OBSERVACIONES", //nombre hoja
+  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_PERSONAL_EXPORT_EXEL, 
+  					"TIPO_PERSONAL", //title
+  					"TIPO_PERSONAL", //nombre hoja
   					listaPersonal);
   			
   			
@@ -123,8 +124,8 @@ public class TipoPersonalController {
 		return data;
 	}
 	
-	@ResourceMapping("nuevoRegistroObservacion")
-	public void nuevoRegistroObservacion(ModelMap model,ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("nuevoRegistroTipoPersonal")
+	public void nuevoRegistroTipoPersonal(ModelMap model,ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoPersonalBean")TipoPersonalBean p) { 		
 		try {	
 			String id ="0";
@@ -149,8 +150,8 @@ public class TipoPersonalController {
 	}
 	
 
-	@ResourceMapping("grabarObservacion")
-	public void grabarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("grabarTipoPersonal")
+	public void grabarTipoPersonal(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoPersonalBean")TipoPersonalBean p) { 
 		JSONObject jsonObj = new JSONObject();
 		try {		
@@ -186,8 +187,8 @@ public class TipoPersonalController {
 	}	
 	
 	
-	@ResourceMapping("actualizarObservacion")
-	public void actualizarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("actualizarTipoPersonal")
+	public void actualizarTipoPersonal(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoPersonalBean")TipoPersonalBean p) { 
 		JSONObject jsonObj = new JSONObject();
 		try {		
@@ -219,12 +220,17 @@ public class TipoPersonalController {
 	}
 	
 	
-	@ResourceMapping("editarViewObservacion")
-	public void editarObservacion(ModelMap model,ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("editarViewTipoPersonal")
+	public void editarTipoPersonal(ModelMap model,ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoPersonalBean")TipoPersonalBean p) { 		
 		try {	
 			String data;			
-			logger.info("id para editar y visualizar "+p.getId());					
+			logger.info("id para editar y visualizar "+p.getId());	
+			
+			String codigoId = request.getParameter("codigo");
+			if(FormatoUtil.isBlank(p.getId())){ 
+				p.setId(codigoId); 
+			}
 			
 			p= fiseTipPersonalService.buscarFiseTipPersonalEditar(p.getId());
 			
@@ -247,8 +253,8 @@ public class TipoPersonalController {
 		return data;
 	}
 	
-	@ResourceMapping("eliminarObservacion")
-	public void eliminarObservacion(ModelMap model, ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("eliminarTipoPersonal")
+	public void eliminarTipoPersonal(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoPersonalBean")TipoPersonalBean p) { 	
 		
 		JSONObject jsonObj = new JSONObject();

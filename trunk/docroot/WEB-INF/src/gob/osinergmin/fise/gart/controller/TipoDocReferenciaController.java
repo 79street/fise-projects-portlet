@@ -121,7 +121,7 @@ public class TipoDocReferenciaController {
 	}
 	
 	@ResourceMapping("grabarTipoDocReferencia")
-	public void grabarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
+	public void grabarTipoDocReferencia(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipDocReferenciaBean")TipDocReferenciaBean p) { 
 		JSONObject jsonObj = new JSONObject();
 		try {		
@@ -158,7 +158,7 @@ public class TipoDocReferenciaController {
 	
 	
 	@ResourceMapping("actualizarTipoDocReferencia")
-	public void actualizarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
+	public void actualizarTipoDocReferencia(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipDocReferenciaBean")TipDocReferenciaBean p) { 
 		JSONObject jsonObj = new JSONObject();
 		try {		
@@ -191,7 +191,7 @@ public class TipoDocReferenciaController {
 	
 	
 	@ResourceMapping("editarViewTipoDocReferencia")
-	public void editarObservacion(ModelMap model,ResourceRequest request,ResourceResponse response,
+	public void editarTipoDocReferencia(ModelMap model,ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipDocReferenciaBean")TipDocReferenciaBean p) { 		
 		try {	
 			String data;		
@@ -224,7 +224,7 @@ public class TipoDocReferenciaController {
 	}
 	
 	@ResourceMapping("eliminarTipoDocReferencia")
-	public void eliminarObservacion(ModelMap model, ResourceRequest request,ResourceResponse response,
+	public void eliminarTipoDocReferencia(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipDocReferenciaBean")TipDocReferenciaBean p) { 	
 		
 		JSONObject jsonObj = new JSONObject();

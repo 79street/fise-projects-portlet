@@ -170,15 +170,15 @@ $(document).ready(function () {
 												  <table style="width: 100%">
 												    <tr>													  
 													 <td width="17%" align="center">													  
-														  <input type="button" class="net-button-small" id="<portlet:namespace/>actualizarTipoDocRefe"
-															   name="<portlet:namespace/>actualizarTipoDocRefe" value="Actualizar" style="display: none;"/>
+														  <input type="button" class="net-button-small" id="<portlet:namespace/>btnActualizarTipoDocRefe"
+															   name="<portlet:namespace/>btnActualizarTipoDocRefe" value="Actualizar" style="display: none;"/>
 																												
-														<input type="button" class="net-button-small" id="<portlet:namespace/>guardarTipoDocRefe"
-															   name="<portlet:namespace/>guardarTipoDocRefe" value="Grabar" />									   
+														<input type="button" class="net-button-small" id="<portlet:namespace/>btnGuardarTipoDocRefe"
+															   name="<portlet:namespace/>btnGuardarTipoDocRefe" value="Grabar" />									   
 													 </td>													
 													 <td width="17%" align="center">
-														<input type="button" class="net-button-small" id="<portlet:namespace/>regresarTipoDocRefe" 
-															  name="<portlet:namespace/>regresarTipoDocRefe" value="Regresar" />
+														<input type="button" class="net-button-small" id="<portlet:namespace/>btnRegresarTipoDocRefe" 
+															  name="<portlet:namespace/>btnRegresarTipoDocRefe" value="Regresar" />
 													 </td>
 												 </tr>
 											  </table>

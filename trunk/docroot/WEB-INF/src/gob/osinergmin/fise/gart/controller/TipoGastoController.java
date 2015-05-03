@@ -7,6 +7,7 @@ import gob.osinergmin.fise.common.util.FiseUtil;
 import gob.osinergmin.fise.constant.FiseConstants;
 import gob.osinergmin.fise.domain.FiseTipGasto;
 import gob.osinergmin.fise.gart.service.FiseTipGastoGartService;
+import gob.osinergmin.fise.util.FormatoUtil;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -75,7 +76,7 @@ public class TipoGastoController {
 		return "fiseTipoGasto";
 	}
 	
-	@ResourceMapping("busquedaObservaciones")
+	@ResourceMapping("busquedaTiposGasto")
   	public void busqueda(ResourceRequest request,ResourceResponse response,
   			@ModelAttribute("tipoGastoBean")TipoGastoBean p){
 		
@@ -95,9 +96,9 @@ public class TipoGastoController {
   			List<FiseTipGasto> listaGasto = fiseTipGastoService.buscarFiseTipGasto(id, descripcion); 	 			
   			logger.info("tamaño de la lista de tipos de gasto   :"+listaGasto.size());   			 			
   			  			
-  			fiseUtil.configuracionExportarExcel(session, FiseConstants.OBSERVACIONES_EXPORT_EXEL, 
-  					"OBSERVACIONES", //title
-  					"OBSERVACIONES", //nombre hoja
+  			fiseUtil.configuracionExportarExcel(session, FiseConstants.TIPO_GASTO_EXPORT_EXEL, 
+  					"TIPO_GASTO", //title
+  					"TIPO_GASTO", //nombre hoja
   					listaGasto);
   			
   			
@@ -123,8 +124,8 @@ public class TipoGastoController {
 	
 	
 
-	@ResourceMapping("grabarObservacion")
-	public void grabarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("grabarTipoGastos")
+	public void grabarTiposGasto(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoGastoBean")TipoGastoBean p) { 
 		JSONObject jsonObj = new JSONObject();
 		try {		
@@ -160,8 +161,8 @@ public class TipoGastoController {
 	}	
 	
 	
-	@ResourceMapping("actualizarObservacion")
-	public void actualizarObservaciones(ModelMap model, ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("actualizarTipoGastos")
+	public void actualizarTiposGasto(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoGastoBean")TipoGastoBean p) { 
 		JSONObject jsonObj = new JSONObject();
 		try {		
@@ -193,13 +194,16 @@ public class TipoGastoController {
 	}
 	
 	
-	@ResourceMapping("editarViewObservacion")
-	public void editarObservacion(ModelMap model,ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("editarViewTipoGasto")
+	public void editarTiposGasto(ModelMap model,ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoGastoBean")TipoGastoBean p) { 		
 		try {	
 			String data;			
-			logger.info("id para editar y visualizar "+p.getId());					
-			
+			logger.info("id para editar y visualizar "+p.getId());	
+			String codigoId = request.getParameter("codigo");
+			if(FormatoUtil.isBlank(p.getId())){ 
+				p.setId(codigoId); 
+			}			
 			p= fiseTipGastoService.buscarFiseTipGastoEditar(p.getId());
 			
 			data = toStringJSON(p);						
@@ -221,8 +225,8 @@ public class TipoGastoController {
 		return data;
 	}
 	
-	@ResourceMapping("eliminarObservacion")
-	public void eliminarObservacion(ModelMap model, ResourceRequest request,ResourceResponse response,
+	@ResourceMapping("eliminarTipoGasto")
+	public void eliminarTiposGastos(ModelMap model, ResourceRequest request,ResourceResponse response,
 			@ModelAttribute("tipoGastoBean")TipoGastoBean p) { 	
 		
 		JSONObject jsonObj = new JSONObject();

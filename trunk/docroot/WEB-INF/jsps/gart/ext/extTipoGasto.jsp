@@ -43,8 +43,7 @@ var fiseTipoGastoVar= {
 		urlGrabar:null,
 		urlActualizar:null,
 		urlEditarView:null,		
-	    urlEliminar:null,
-	    urlNuevo:null,
+	    urlEliminar:null,	   
 		
 		//botones		
 		botonBuscar:null,
@@ -97,13 +96,11 @@ var fiseTipoGastoVar= {
 			
 			
 			//urls
-			this.urlBusqueda='<portlet:resourceURL id="busquedaObservaciones" />';			
-			this.urlGrabar='<portlet:resourceURL id="grabarObservacion" />';			
-			this.urlActualizar='<portlet:resourceURL id="actualizarTipoGasto" />';
-			this.urlEditarView='<portlet:resourceURL id="editarViewObservacion" />';			
-			this.urlEliminar='<portlet:resourceURL id="eliminarObservacion" />';
-			this.urlNuevo='<portlet:resourceURL id="nuevoRegistroObservacion" />';
-			
+			this.urlBusqueda='<portlet:resourceURL id="busquedaTiposGasto" />';			
+			this.urlGrabar='<portlet:resourceURL id="grabarTipoGastos" />';			
+			this.urlActualizar='<portlet:resourceURL id="actualizarTipoGastos" />';
+			this.urlEditarView='<portlet:resourceURL id="editarViewTipoGasto" />';			
+			this.urlEliminar='<portlet:resourceURL id="eliminarTipoGasto" />';		
 			
 			
 			//botones
@@ -130,24 +127,24 @@ var fiseTipoGastoVar= {
 			
 			//llamado a la funciones de cada boton
 			fiseTipoGastoVar.botonBuscar.click(function() {
-				fiseTipoGastoVar.buscarfiseTipoGastoVar();
+				fiseTipoGastoVar.buscarfiseTipoGasto();
 			});			
 			
 			fiseTipoGastoVar.botonNuevo.click(function() {
-				fiseTipoGastoVar.<portlet:namespace/>nuevofiseTipoGastoVar();
+				fiseTipoGastoVar.<portlet:namespace/>nuevofiseTipoGasto();
 		    });
 			
 			fiseTipoGastoVar.botonGrabar.click(function() {
-				fiseTipoGastoVar.<portlet:namespace/>guardarfiseTipoGastoVar();
+				fiseTipoGastoVar.<portlet:namespace/>guardarfiseTipoGasto();
 			});
 			
 			fiseTipoGastoVar.botonActualizar.click(function() {
-				fiseTipoGastoVar.<portlet:namespace/>actualizarfiseTipoGastoVar();
+				fiseTipoGastoVar.<portlet:namespace/>actualizarfiseTipoGasto();
 			});		
 			
 			
 		    fiseTipoGastoVar.botonRegresar.click(function() {
-		    	fiseTipoGastoVar.<portlet:namespace/>regresarfiseTipoGastoVar();
+		    	fiseTipoGastoVar.<portlet:namespace/>regresarfiseTipoGasto();
 		    });			
 		    
 		    fiseTipoGastoVar.initDialogs();
@@ -160,13 +157,13 @@ var fiseTipoGastoVar= {
 		buildGrids : function () {	
 			fiseTipoGastoVar.tablaResultados.jqGrid({
 			   datatype: "local",
-		       colNames: ['Id Observación','Descripción de Observación','Ver','Editar'],
+		       colNames: ['Id Tipo Gasto','Descripción','Ver','Editar','Eliminar'],
 		       colModel: [
-                       { name: 'idObservacion', index: 'idObservacion', width: 20},
+                       { name: 'idTipGasto', index: 'idTipGasto', width: 20,align:'center'},
 					   { name: 'descripcion', index: 'descripcion', width: 80},					  
-		               { name: 'view', index: 'view', width: 20,align:'center' },
-		               { name: 'edit', index: 'edit', width: 20,align:'center' }
-		              /*  { name: 'elim', index: 'elim', width: 20,align:'center' } */  
+		               { name: 'view', index: 'view', width: 15,align:'center' },
+		               { name: 'edit', index: 'edit', width: 15,align:'center' },
+		               { name: 'elim', index: 'elim', width: 15,align:'center' }   
 		               
 			   	    ],
 			   	 multiselect: false,
@@ -185,12 +182,12 @@ var fiseTipoGastoVar= {
 		      		for(var i=0;i < ids.length;i++){
 		      			var cl = ids[i];
 		      			var ret = fiseTipoGastoVar.tablaResultados.jqGrid('getRowData',cl);           
-		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseTipoGastoVar.verfiseTipoGastoVar('"+ret.idObservacion+"');\" /></a> ";
-		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseTipoGastoVar.editarfiseTipoGastoVar('"+ret.idObservacion+"');\" /></a> ";
-		      			/* elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseTipoGastoVar.confirmarEliminarfiseTipoGastoVar('"+ret.idObservacion+"');\" /></a> "; */              			
+		      			view = "<a href='#'><img border='0' title='Ver' src='/net-theme/images/img-net/file.png'  align='center' onclick=\"fiseTipoGastoVar.verfiseTipoGasto('"+ret.idTipGasto+"');\" /></a> ";
+		      			edit = "<a href='#'><img border='0' title='Editar' src='/net-theme/images/img-net/edit.png'  align='center' onclick=\"fiseTipoGastoVar.editarfiseTipoGasto('"+ret.idTipGasto+"');\" /></a> ";
+		      		    elim = "<a href='#'><img border='0' title='Eliminar' src='/net-theme/images/img-net/elim.png'  align='center' onclick=\"fiseTipoGastoVar.confirmarEliminarfiseTipoGasto('"+ret.idTipGasto+"');\" /></a> ";              			
 		      			fiseTipoGastoVar.tablaResultados.jqGrid('setRowData',ids[i],{view:view});
 		      			fiseTipoGastoVar.tablaResultados.jqGrid('setRowData',ids[i],{edit:edit});
-		      			/* fiseTipoGastoVar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim}); */
+		      			fiseTipoGastoVar.tablaResultados.jqGrid('setRowData',ids[i],{elim:elim});
 		      		}
 		      }
 		  	});
@@ -211,7 +208,7 @@ var fiseTipoGastoVar= {
 			});  
 		},
 		//funcion para buscar
-		buscarfiseTipoGastoVar : function () {		
+		buscarfiseTipoGasto : function () {		
 			fiseTipoGastoVar.blockUI();
 			jQuery.ajax({			
 					url: fiseTipoGastoVar.urlBusqueda+'&'+fiseTipoGastoVar.formCommand.serialize(),
@@ -229,45 +226,34 @@ var fiseTipoGastoVar= {
 						fiseTipoGastoVar.initBlockUI();
 					}
 				});			
-		},		
+		},
+		
 		//funcion para nuevo registro
-		<portlet:namespace/>nuevofiseTipoGastoVar : function(){	
-			jQuery.ajax({			
-				url: fiseTipoGastoVar.urlNuevo+'&'+fiseTipoGastoVar.formCommand.serialize(),
-				type: 'post',
-				dataType: 'json',				
-				success: function(data) {					
-					fiseTipoGastoVar.f_id.val(data.id);
-					fiseTipoGastoVar.f_descripcion.val('');			
-					fiseTipoGastoVar.f_id.attr("disabled",true);  	
-		        	fiseTipoGastoVar.f_descripcion.removeAttr("disabled");	
-					
-					fiseTipoGastoVar.divNuevo.show();
-					fiseTipoGastoVar.divBuscar.hide();		
-								
-					console.debug("boton nuevo registro:  ");
-					
-					$('#<portlet:namespace/>guardarfiseTipoGastoVar').css('display','block');
-					$('#<portlet:namespace/>actualizarfiseTipoGastoVar').css('display','none');	
-					
-				},error : function(){
-					var addhtmError='Error de conexión.';					
-					fiseTipoGastoVar.dialogErrorContent.html(addhtmError);
-					fiseTipoGastoVar.dialogError.dialog("open");
-					fiseTipoGastoVar.initBlockUI();
-				}
-			});			
+		<portlet:namespace/>nuevofiseTipoGasto : function(){	
+			fiseTipoGastoVar.f_id.val('');
+			fiseTipoGastoVar.f_descripcion.val('');			
+			fiseTipoGastoVar.f_id.removeAttr("disabled");
+        	fiseTipoGastoVar.f_descripcion.removeAttr("disabled");	
+			
+			fiseTipoGastoVar.divNuevo.show();
+			fiseTipoGastoVar.divBuscar.hide();		
+						
+			console.debug("boton nuevo registro:  ");
+			
+			$('#<portlet:namespace/>btnGuardarTipoGasto').css('display','block');
+			$('#<portlet:namespace/>btnActualizarTipoGasto').css('display','none');	
 		},
 		
 		//Function para Visualizar los datos del formulario		
-		verfiseTipoGastoVar : function(idObservacion){	
+		verfiseTipoGasto : function(id_tipoGasto){	
 			$.blockUI({ message: fiseTipoGastoVar.mensajeObteniendoDatos});
 			jQuery.ajax({
 					url: fiseTipoGastoVar.urlEditarView+'&'+fiseTipoGastoVar.formCommand.serialize(),
 					type: 'post',
 					dataType: 'json',
 					data: {						  
-					      <portlet:namespace />id: idObservacion					 
+					      <portlet:namespace />id: id_tipoGasto,
+					      <portlet:namespace />codigo: id_tipoGasto
 						},
 					success: function(data) {
 					    if (data != null){															
@@ -282,8 +268,8 @@ var fiseTipoGastoVar= {
 				        	fiseTipoGastoVar.f_descripcion.attr("disabled",true);
 				        	
 					    	
-					    	$('#<portlet:namespace/>guardarfiseTipoGastoVar').css('display','none');
-					    	$('#<portlet:namespace/>actualizarfiseTipoGastoVar').css('display','none');
+					    	$('#<portlet:namespace/>btnGuardarTipoGasto').css('display','none');
+					    	$('#<portlet:namespace/>btnActualizarTipoGasto').css('display','none');
 					    							
 				        }						
 						else{							
@@ -300,8 +286,9 @@ var fiseTipoGastoVar= {
 					}
 			});	
 		},
+		
 		//Function para editar los datos del formulario
-		editarfiseTipoGastoVar : function(idObservacion){	
+		editarfiseTipoGasto : function(id_tipoGasto){	
 			    console.debug("entrando a editar ");		
 				$.blockUI({ message: fiseTipoGastoVar.mensajeObteniendoDatos });			 
 				jQuery.ajax({
@@ -309,7 +296,8 @@ var fiseTipoGastoVar= {
 						type: 'post',
 						dataType: 'json',
 						data: {							
-						   <portlet:namespace />id: idObservacion						   				  
+						   <portlet:namespace />id: id_tipoGasto,
+						   <portlet:namespace />codigo: id_tipoGasto
 						},
 						success: function(data) {				
 							if (data != null){															
@@ -323,8 +311,8 @@ var fiseTipoGastoVar= {
 								fiseTipoGastoVar.f_id.attr("disabled",true);			        	
 					        	fiseTipoGastoVar.f_descripcion.removeAttr("disabled");
 								
-								$('#<portlet:namespace/>guardarfiseTipoGastoVar').css('display','none');
-								$('#<portlet:namespace/>actualizarfiseTipoGastoVar').css('display','block');	
+								$('#<portlet:namespace/>btnGuardarTipoGasto').css('display','none');
+								$('#<portlet:namespace/>btnActualizarTipoGasto').css('display','block');	
 								//ESTILOS								
 					         }
 							else{								
@@ -347,23 +335,23 @@ var fiseTipoGastoVar= {
 			fiseTipoGastoVar.f_descripcion.val(bean.descripcion);  	
 		},
 		/**Function para confirmar si quiere eliminar el registro o no*/
-		confirmarEliminarfiseTipoGastoVar : function(idObservacion){
-			console.debug("entranado a eliminar confirmar:  "+idObservacion);
+		confirmarEliminarfiseTipoGasto : function(idTipoGasto){
+			console.debug("entranado a eliminar confirmar:  "+idTipoGasto);
 			var addhtml='¿Está seguro que desea eliminar el registro seleccionado?';
 			fiseTipoGastoVar.dialogConfirmContent.html(addhtml);
 			fiseTipoGastoVar.dialogConfirm.dialog("open");	
-			id_observacion=idObservacion;
+			id_tipoGasto=idTipoGasto;
 		},
-		/**Function para  eliminar el registro una vez hecho la confirmacion*/
-		eliminarfiseTipoGastoVar : function(id_observacion){
-			console.debug("entranado a eliminar:  "+id_observacion);
+		/**Function para  eliminar el registro una vez hecho la confirmacion*/ 
+		eliminarfiseTipoGasto : function(id_tipoGasto){
+			console.debug("entranado a eliminar:  "+id_tipoGasto);
 			$.blockUI({ message: fiseTipoGastoVar.mensajeEliminando });
 			jQuery.ajax({
 				url: fiseTipoGastoVar.urlEliminar+'&'+fiseTipoGastoVar.formCommand.serialize(),
 				type: 'post',
 				dataType: 'json',
 				data: {				
-				   <portlet:namespace />id: id_observacion				  
+				   <portlet:namespace />id: id_tipoGasto				  
 					},
 				success: function(data) {
 					if (data.resultado == "OK"){
@@ -386,9 +374,10 @@ var fiseTipoGastoVar= {
 					fiseTipoGastoVar.initBlockUI();
 				}
 			});
-		},
+		},	
+		
 		//Funcion para Grabar nuevo registro
-		<portlet:namespace/>guardarfiseTipoGastoVar: function(){
+		<portlet:namespace/>guardarfiseTipoGasto: function(){
 			if (fiseTipoGastoVar.validarFormulario()){
 				$.blockUI({ message: fiseTipoGastoVar.mensajeGuardando });
 				 jQuery.ajax({
@@ -401,7 +390,7 @@ var fiseTipoGastoVar= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='La Observación se guardó satisfactoriamente';
+							var addhtml2='El Tipo de Gasto se guardó satisfactoriamente';
 							
 							fiseTipoGastoVar.dialogMessageContent.html(addhtml2);
 							fiseTipoGastoVar.dialogMessage.dialog("open");							
@@ -410,16 +399,16 @@ var fiseTipoGastoVar= {
 							fiseTipoGastoVar.f_id.attr("disabled",true);			        	
 				        	fiseTipoGastoVar.f_descripcion.removeAttr("disabled");
 							
-							$('#<portlet:namespace/>guardarfiseTipoGastoVar').css('display','none');
-							$('#<portlet:namespace/>actualizarfiseTipoGastoVar').css('display','block');
+							$('#<portlet:namespace/>btnGuardarTipoGasto').css('display','none');
+							$('#<portlet:namespace/>btnActualizarTipoGasto').css('display','block');
 							
 						}else if(data.resultado == "Error"){							
-							var addhtmError='Se produjo un error al guardar la Observación.';					
+							var addhtmError='Se produjo un error al guardar el Tipo de Gasto.';					
 							fiseTipoGastoVar.dialogErrorContent.html(addhtmError);
 							fiseTipoGastoVar.dialogError.dialog("open");						
 							fiseTipoGastoVar.initBlockUI();
 						}else if(data.resultado=="Duplicado"){
-							var addhtmlInfo='Ya existe registrado una Observación con este Id.';
+							var addhtmlInfo='Ya existe registrado un Tipo de Gasto con este Id.';
 							fiseTipoGastoVar.dialogInfoContent.html(addhtmlInfo);
 							fiseTipoGastoVar.dialogInfo.dialog("open");						
 							fiseTipoGastoVar.initBlockUI();
@@ -433,8 +422,9 @@ var fiseTipoGastoVar= {
 				});			
 			}
 		},
+		
 		//Funcion para actualizar un registro
-		<portlet:namespace/>actualizarfiseTipoGastoVar : function(){
+		<portlet:namespace/>actualizarfiseTipoGasto : function(){
 			if (fiseTipoGastoVar.validarFormulario()){
 				$.blockUI({ message: fiseTipoGastoVar.mensajeActualizando });
 				 jQuery.ajax({
@@ -447,12 +437,12 @@ var fiseTipoGastoVar= {
 						},
 					success: function(data) {			
 						if (data.resultado == "OK"){				
-							var addhtml2='La Observación se actualizó satisfactoriamente';
+							var addhtml2='El Tipo de Gasto se actualizó satisfactoriamente';
 							fiseTipoGastoVar.dialogMessageContent.html(addhtml2);
 							fiseTipoGastoVar.dialogMessage.dialog("open");						
 							fiseTipoGastoVar.initBlockUI();								
 						}else if(data.resultado == "Error"){						
-							var addhtmError='Se produjo un error al actualizar la Observación.';					
+							var addhtmError='Se produjo un error al actualizar el Tipo de Gasto.';					
 							fiseTipoGastoVar.dialogErrorContent.html(addhtmError);
 							fiseTipoGastoVar.dialogError.dialog("open");				
 							fiseTipoGastoVar.initBlockUI();
@@ -470,7 +460,7 @@ var fiseTipoGastoVar= {
 		validarFormulario : function() {
 			console.debug("tamaño de descripcion:  "+fiseTipoGastoVar.f_descripcion.val().length);
 			if(fiseTipoGastoVar.f_id.val().length == ''){				
-				var addhtmAlert='Debe ingresar el id de Observación.';					
+				var addhtmAlert='Debe ingresar el id de Tipo de Gasto.';					
 				fiseTipoGastoVar.dialogValidacionContent.html(addhtmAlert);
 				fiseTipoGastoVar.dialogValidacion.dialog("open");
 				//fiseTipoGastoVar.f_id.focus();
@@ -503,7 +493,7 @@ var fiseTipoGastoVar= {
 		},
 		
 		//funcion para regresar
-		<portlet:namespace/>regresarfiseTipoGastoVar : function(){			
+		<portlet:namespace/>regresarfiseTipoGasto : function(){			
 			fiseTipoGastoVar.divNuevo.hide();
 			fiseTipoGastoVar.divBuscar.show();
 					
@@ -534,7 +524,7 @@ var fiseTipoGastoVar= {
 				autoOpen: false,
 				buttons: {
 					"Si": function() {
-						fiseTipoGastoVar.eliminarfiseTipoGastoVar(id_observacion);
+						fiseTipoGastoVar.eliminarfiseTipoGasto(id_tipoGasto);
 						$( this ).dialog("close");
 					},
 					"No": function() {				
